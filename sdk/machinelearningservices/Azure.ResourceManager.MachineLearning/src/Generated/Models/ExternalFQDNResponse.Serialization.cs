@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ExternalFQDNResponse. </summary>
-    internal partial class ExternalFQDNResponse : IJsonModel<ExternalFQDNResponse>
+    public partial class ExternalFQDNResponse : IJsonModel<ExternalFQDNResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (FQDNEndpointsPropertyBag item in Value)
+                foreach (FqdnEndpointsPropertyBag item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<FQDNEndpointsPropertyBag> value = default;
+            IList<FqdnEndpointsPropertyBag> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FQDNEndpointsPropertyBag> array = new List<FQDNEndpointsPropertyBag>();
+                    List<FqdnEndpointsPropertyBag> array = new List<FqdnEndpointsPropertyBag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FQDNEndpointsPropertyBag.DeserializeFQDNEndpointsPropertyBag(item, options));
+                        array.Add(FqdnEndpointsPropertyBag.DeserializeFqdnEndpointsPropertyBag(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalFQDNResponse(value ?? new ChangeTrackingList<FQDNEndpointsPropertyBag>(), additionalBinaryDataProperties);
+            return new ExternalFQDNResponse(value ?? new ChangeTrackingList<FqdnEndpointsPropertyBag>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -15,26 +15,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    internal partial class IListOfRaiBlocklistItemPropertiesBasicDataOperationSource : IOperationSource<IList<RaiBlocklistItemPropertiesBasicData>>
+    internal partial class IListOfRaiBlocklistItemDataOperationSource : IOperationSource<IList<RaiBlocklistItemData>>
     {
         /// <summary></summary>
-        internal IListOfRaiBlocklistItemPropertiesBasicDataOperationSource()
+        internal IListOfRaiBlocklistItemDataOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        IList<RaiBlocklistItemPropertiesBasicData> IOperationSource<IList<RaiBlocklistItemPropertiesBasicData>>.CreateResult(Response response, CancellationToken cancellationToken)
+        IList<RaiBlocklistItemData> IOperationSource<IList<RaiBlocklistItemData>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            IList<RaiBlocklistItemPropertiesBasicData> value = default;
+            IList<RaiBlocklistItemData> value = default;
             if (document.RootElement.ValueKind != JsonValueKind.Null)
             {
-                List<RaiBlocklistItemPropertiesBasicData> valueResult = new List<RaiBlocklistItemPropertiesBasicData>();
+                List<RaiBlocklistItemData> valueResult = new List<RaiBlocklistItemData>();
                 foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
                 {
-                    valueResult.Add(RaiBlocklistItemPropertiesBasicData.DeserializeRaiBlocklistItemPropertiesBasicData(valueResultElement, ModelSerializationExtensions.WireOptions));
+                    valueResult.Add(RaiBlocklistItemData.DeserializeRaiBlocklistItemData(valueResultElement, ModelSerializationExtensions.WireOptions));
                 }
                 value = valueResult;
             }
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<IList<RaiBlocklistItemPropertiesBasicData>> IOperationSource<IList<RaiBlocklistItemPropertiesBasicData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<RaiBlocklistItemData>> IOperationSource<IList<RaiBlocklistItemData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            IList<RaiBlocklistItemPropertiesBasicData> value = default;
+            IList<RaiBlocklistItemData> value = default;
             if (document.RootElement.ValueKind != JsonValueKind.Null)
             {
-                List<RaiBlocklistItemPropertiesBasicData> valueResult = new List<RaiBlocklistItemPropertiesBasicData>();
+                List<RaiBlocklistItemData> valueResult = new List<RaiBlocklistItemData>();
                 foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
                 {
-                    valueResult.Add(RaiBlocklistItemPropertiesBasicData.DeserializeRaiBlocklistItemPropertiesBasicData(valueResultElement, ModelSerializationExtensions.WireOptions));
+                    valueResult.Add(RaiBlocklistItemData.DeserializeRaiBlocklistItemData(valueResultElement, ModelSerializationExtensions.WireOptions));
                 }
                 value = valueResult;
             }

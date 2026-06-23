@@ -699,11 +699,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetConnections().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RaiBlocklistPropertiesBasicResources in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of RaiBlocklistPropertiesBasicResources and their operations over a RaiBlocklistPropertiesBasicResource. </returns>
-        public virtual RaiBlocklistPropertiesBasicCollection GetRaiBlocklistPropertiesBasicResources()
+        /// <summary> Gets a collection of RaiBlocklists in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
+        /// <returns> An object representing collection of RaiBlocklists and their operations over a RaiBlocklistResource. </returns>
+        public virtual RaiBlocklistCollection GetRaiBlocklists()
         {
-            return GetCachedClient(client => new RaiBlocklistPropertiesBasicCollection(client, Id));
+            return GetCachedClient(client => new RaiBlocklistCollection(client, Id));
         }
 
         /// <summary> Gets the specified custom blocklist associated with the Azure OpenAI connection. </summary>
@@ -712,11 +712,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RaiBlocklistPropertiesBasicResource>> GetRaiBlocklistPropertiesBasicResourceAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RaiBlocklistResource>> GetRaiBlocklistResourceAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistName, nameof(raiBlocklistName));
 
-            return await GetRaiBlocklistPropertiesBasicResources().GetAsync(raiBlocklistName, cancellationToken).ConfigureAwait(false);
+            return await GetRaiBlocklists().GetAsync(raiBlocklistName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified custom blocklist associated with the Azure OpenAI connection. </summary>
@@ -725,11 +725,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RaiBlocklistPropertiesBasicResource> GetRaiBlocklistPropertiesBasicResource(string raiBlocklistName, CancellationToken cancellationToken = default)
+        public virtual Response<RaiBlocklistResource> GetRaiBlocklist(string raiBlocklistName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistName, nameof(raiBlocklistName));
 
-            return GetRaiBlocklistPropertiesBasicResources().Get(raiBlocklistName, cancellationToken);
+            return GetRaiBlocklists().Get(raiBlocklistName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ConnectionRaiPolicies in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>

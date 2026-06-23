@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets outbound rules. </summary>
         public virtual MachineLearningOutboundRuleBasicCollection GetMachineLearningOutboundRuleBasics()
         {
-            ResourceIdentifier managedNetworkId = ManagedNetworkSettingsPropertiesBasicResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LegacyManagedNetworkName);
+            ResourceIdentifier managedNetworkId = MachineLearningManagedNetworkSettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, LegacyManagedNetworkName);
             return new MachineLearningOutboundRuleBasicCollection(Client, managedNetworkId);
         }
         /// <summary> Gets an outbound rule. </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning
                 return endpoints;
             }
 
-            foreach (FQDNEndpointsPropertyBag item in response.Value)
+            foreach (FqdnEndpointsPropertyBag item in response.Value)
             {
                 if (item?.Properties is not null)
                 {

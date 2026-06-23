@@ -11,25 +11,25 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The PTUDeploymentUsage. </summary>
-    public partial class PTUDeploymentUsage
+    /// <summary> The PtuDeploymentUsage. </summary>
+    public partial class PtuDeploymentUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PTUDeploymentUsage"/>. </summary>
-        internal PTUDeploymentUsage()
+        /// <summary> Initializes a new instance of <see cref="PtuDeploymentUsage"/>. </summary>
+        internal PtuDeploymentUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PTUDeploymentUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PtuDeploymentUsage"/>. </summary>
         /// <param name="collectionQuotaUsage"> Usage number from the collection level quota. </param>
         /// <param name="deploymentName"> Deployment name. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="usage"> Usage number from subscription level quota. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PTUDeploymentUsage(long? collectionQuotaUsage, string deploymentName, string resourceGroup, long? usage, string workspaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PtuDeploymentUsage(long? collectionQuotaUsage, string deploymentName, string resourceGroup, long? usage, string workspaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionQuotaUsage = collectionQuotaUsage;
             DeploymentName = deploymentName;

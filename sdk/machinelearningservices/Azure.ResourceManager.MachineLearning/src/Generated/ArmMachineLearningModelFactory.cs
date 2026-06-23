@@ -847,10 +847,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.FQDNEndpointsPropertyBag"/> instance for mocking. </returns>
-        public static FQDNEndpointsPropertyBag FQDNEndpointsPropertyBag(MachineLearningFqdnEndpoints properties = default)
+        /// <returns> A new <see cref="Models.FqdnEndpointsPropertyBag"/> instance for mocking. </returns>
+        public static FqdnEndpointsPropertyBag FqdnEndpointsPropertyBag(MachineLearningFqdnEndpoints properties = default)
         {
-            return new FQDNEndpointsPropertyBag(properties, default);
+            return new FqdnEndpointsPropertyBag(properties, default);
         }
 
         /// <param name="category"></param>
@@ -8459,10 +8459,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="raiBlocklistDescription"> Description of the block list. </param>
-        /// <returns> A new <see cref="MachineLearning.RaiBlocklistPropertiesBasicData"/> instance for mocking. </returns>
-        public static RaiBlocklistPropertiesBasicData RaiBlocklistPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string raiBlocklistDescription = default)
+        /// <returns> A new <see cref="MachineLearning.RaiBlocklistData"/> instance for mocking. </returns>
+        public static RaiBlocklistData RaiBlocklistData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string raiBlocklistDescription = default)
         {
-            return new RaiBlocklistPropertiesBasicData(
+            return new RaiBlocklistData(
                 id,
                 name,
                 resourceType,
@@ -8492,10 +8492,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> RAI Custom Blocklist Item properties. </param>
-        /// <returns> A new <see cref="MachineLearning.RaiBlocklistItemPropertiesBasicData"/> instance for mocking. </returns>
-        public static RaiBlocklistItemPropertiesBasicData RaiBlocklistItemPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiBlocklistItemProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.RaiBlocklistItemData"/> instance for mocking. </returns>
+        public static RaiBlocklistItemData RaiBlocklistItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiBlocklistItemProperties properties = default)
         {
-            return new RaiBlocklistItemPropertiesBasicData(
+            return new RaiBlocklistItemData(
                 id,
                 name,
                 resourceType,
@@ -8810,10 +8810,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the managed network settings of a machine learning workspace. </param>
-        /// <returns> A new <see cref="MachineLearning.ManagedNetworkSettingsPropertiesBasicData"/> instance for mocking. </returns>
-        public static ManagedNetworkSettingsPropertiesBasicData ManagedNetworkSettingsPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningManagedNetworkSettingsData"/> instance for mocking. </returns>
+        public static MachineLearningManagedNetworkSettingsData MachineLearningManagedNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)
         {
-            return new ManagedNetworkSettingsPropertiesBasicData(
+            return new MachineLearningManagedNetworkSettingsData(
                 id,
                 name,
                 resourceType,
@@ -8972,11 +8972,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="quota"> The total number of quota. </param>
         /// <param name="usageDetails"> Usage details for each deployment. </param>
         /// <returns> A new <see cref="Models.UsageAndQuotaDetails"/> instance for mocking. </returns>
-        public static UsageAndQuotaDetails UsageAndQuotaDetails(string modelCollection = default, long? quota = default, IEnumerable<PTUDeploymentUsage> usageDetails = default)
+        public static UsageAndQuotaDetails UsageAndQuotaDetails(string modelCollection = default, long? quota = default, IEnumerable<PtuDeploymentUsage> usageDetails = default)
         {
-            usageDetails ??= new ChangeTrackingList<PTUDeploymentUsage>();
+            usageDetails ??= new ChangeTrackingList<PtuDeploymentUsage>();
 
-            return new UsageAndQuotaDetails(modelCollection, quota, (usageDetails ?? new ChangeTrackingList<PTUDeploymentUsage>()).ToList(), default);
+            return new UsageAndQuotaDetails(modelCollection, quota, (usageDetails ?? new ChangeTrackingList<PtuDeploymentUsage>()).ToList(), default);
         }
 
         /// <param name="collectionQuotaUsage"> Usage number from the collection level quota. </param>
@@ -8984,10 +8984,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceGroup"> Resource group name. </param>
         /// <param name="usage"> Usage number from subscription level quota. </param>
         /// <param name="workspaceName"> Workspace name. </param>
-        /// <returns> A new <see cref="Models.PTUDeploymentUsage"/> instance for mocking. </returns>
-        public static PTUDeploymentUsage PTUDeploymentUsage(long? collectionQuotaUsage = default, string deploymentName = default, string resourceGroup = default, long? usage = default, string workspaceName = default)
+        /// <returns> A new <see cref="Models.PtuDeploymentUsage"/> instance for mocking. </returns>
+        public static PtuDeploymentUsage PtuDeploymentUsage(long? collectionQuotaUsage = default, string deploymentName = default, string resourceGroup = default, long? usage = default, string workspaceName = default)
         {
-            return new PTUDeploymentUsage(
+            return new PtuDeploymentUsage(
                 collectionQuotaUsage,
                 deploymentName,
                 resourceGroup,

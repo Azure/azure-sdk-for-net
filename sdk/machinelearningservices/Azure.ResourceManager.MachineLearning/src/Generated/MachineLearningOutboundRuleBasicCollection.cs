@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="MachineLearningOutboundRuleBasicResource"/> and their operations.
-    /// Each <see cref="MachineLearningOutboundRuleBasicResource"/> in the collection will belong to the same instance of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/>.
-    /// To get a <see cref="MachineLearningOutboundRuleBasicCollection"/> instance call the GetOutboundRules method from an instance of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/>.
+    /// Each <see cref="MachineLearningOutboundRuleBasicResource"/> in the collection will belong to the same instance of <see cref="MachineLearningManagedNetworkSettingsResource"/>.
+    /// To get a <see cref="MachineLearningOutboundRuleBasicCollection"/> instance call the GetOutboundRules method from an instance of <see cref="MachineLearningManagedNetworkSettingsResource"/>.
     /// </summary>
     public partial class MachineLearningOutboundRuleBasicCollection : ArmCollection, IEnumerable<MachineLearningOutboundRuleBasicResource>, IAsyncEnumerable<MachineLearningOutboundRuleBasicResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedNetworkSettingsPropertiesBasicResource.ResourceType)
+            if (id.ResourceType != MachineLearningManagedNetworkSettingsResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedNetworkSettingsPropertiesBasicResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningManagedNetworkSettingsResource.ResourceType), nameof(id));
             }
         }
 

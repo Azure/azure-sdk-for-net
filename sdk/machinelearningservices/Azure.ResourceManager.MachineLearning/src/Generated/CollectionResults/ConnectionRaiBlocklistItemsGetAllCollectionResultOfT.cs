@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class ConnectionRaiBlocklistItemsGetAllCollectionResultOfT : Pageable<RaiBlocklistItemPropertiesBasicData>
+    internal partial class ConnectionRaiBlocklistItemsGetAllCollectionResultOfT : Pageable<RaiBlocklistItemData>
     {
         private readonly ConnectionRaiBlocklistItems _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConnectionRaiBlocklistItemsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RaiBlocklistItemPropertiesBasicData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<RaiBlocklistItemData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     yield break;
                 }
-                RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<RaiBlocklistItemPropertiesBasicData>.FromValues((IReadOnlyList<RaiBlocklistItemPropertiesBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                RaiBlocklistItemArmPaginatedResult result = RaiBlocklistItemArmPaginatedResult.FromResponse(response);
+                yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

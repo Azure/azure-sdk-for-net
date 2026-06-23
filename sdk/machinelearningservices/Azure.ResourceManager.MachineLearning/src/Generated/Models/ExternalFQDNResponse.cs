@@ -12,7 +12,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ExternalFQDNResponse. </summary>
-    internal partial class ExternalFQDNResponse
+    public partial class ExternalFQDNResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ExternalFQDNResponse"/>. </summary>
         internal ExternalFQDNResponse()
         {
-            Value = new ChangeTrackingList<FQDNEndpointsPropertyBag>();
+            Value = new ChangeTrackingList<FqdnEndpointsPropertyBag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalFQDNResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalFQDNResponse(IList<FQDNEndpointsPropertyBag> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalFQDNResponse(IList<FqdnEndpointsPropertyBag> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the Value. </summary>
         [WirePath("value")]
-        public IList<FQDNEndpointsPropertyBag> Value { get; }
+        public IList<FqdnEndpointsPropertyBag> Value { get; }
     }
 }

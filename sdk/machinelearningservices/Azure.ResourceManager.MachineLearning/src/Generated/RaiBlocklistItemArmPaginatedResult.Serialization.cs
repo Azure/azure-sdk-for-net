@@ -14,64 +14,64 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of RaiBlocklistPropertiesBasicResource items. </summary>
-    internal partial class RaiBlocklistPropertiesBasicResourceArmPaginatedResult : IJsonModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>
+    /// <summary> Paged collection of RaiBlocklistItemResource items. </summary>
+    internal partial class RaiBlocklistItemArmPaginatedResult : IJsonModel<RaiBlocklistItemArmPaginatedResult>
     {
-        /// <summary> Initializes a new instance of <see cref="RaiBlocklistPropertiesBasicResourceArmPaginatedResult"/> for deserialization. </summary>
-        internal RaiBlocklistPropertiesBasicResourceArmPaginatedResult()
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemArmPaginatedResult"/> for deserialization. </summary>
+        internal RaiBlocklistItemArmPaginatedResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiBlocklistPropertiesBasicResourceArmPaginatedResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RaiBlocklistItemArmPaginatedResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRaiBlocklistPropertiesBasicResourceArmPaginatedResult(document.RootElement, options);
+                        return DeserializeRaiBlocklistItemResourceArmPaginatedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicResourceArmPaginatedResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemArmPaginatedResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicResourceArmPaginatedResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemArmPaginatedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiBlocklistItemArmPaginatedResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicResourceArmPaginatedResult IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RaiBlocklistItemArmPaginatedResult IPersistableModel<RaiBlocklistItemArmPaginatedResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiBlocklistItemArmPaginatedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistPropertiesBasicResourceArmPaginatedResult"/> from. </param>
-        internal static RaiBlocklistPropertiesBasicResourceArmPaginatedResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistItemArmPaginatedResult"/> from. </param>
+        internal static RaiBlocklistItemArmPaginatedResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRaiBlocklistPropertiesBasicResourceArmPaginatedResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRaiBlocklistItemResourceArmPaginatedResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiBlocklistItemArmPaginatedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicResourceArmPaginatedResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemArmPaginatedResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RaiBlocklistPropertiesBasicData item in Value)
+            foreach (RaiBlocklistItemData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicResourceArmPaginatedResult IJsonModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RaiBlocklistItemArmPaginatedResult IJsonModel<RaiBlocklistItemArmPaginatedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RaiBlocklistPropertiesBasicResourceArmPaginatedResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RaiBlocklistItemArmPaginatedResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicResourceArmPaginatedResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemArmPaginatedResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRaiBlocklistPropertiesBasicResourceArmPaginatedResult(document.RootElement, options);
+            return DeserializeRaiBlocklistItemResourceArmPaginatedResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RaiBlocklistPropertiesBasicResourceArmPaginatedResult DeserializeRaiBlocklistPropertiesBasicResourceArmPaginatedResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiBlocklistItemArmPaginatedResult DeserializeRaiBlocklistItemResourceArmPaginatedResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<RaiBlocklistPropertiesBasicData> value = default;
+            IList<RaiBlocklistItemData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RaiBlocklistPropertiesBasicData> array = new List<RaiBlocklistPropertiesBasicData>();
+                    List<RaiBlocklistItemData> array = new List<RaiBlocklistItemData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RaiBlocklistPropertiesBasicData.DeserializeRaiBlocklistPropertiesBasicData(item, options));
+                        array.Add(RaiBlocklistItemData.DeserializeRaiBlocklistItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RaiBlocklistPropertiesBasicResourceArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
+            return new RaiBlocklistItemArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

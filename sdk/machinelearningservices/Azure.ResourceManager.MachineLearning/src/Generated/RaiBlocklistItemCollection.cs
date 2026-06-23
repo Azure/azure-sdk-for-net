@@ -19,31 +19,31 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RaiBlocklistItemPropertiesBasicResource"/> and their operations.
-    /// Each <see cref="RaiBlocklistItemPropertiesBasicResource"/> in the collection will belong to the same instance of <see cref="RaiBlocklistPropertiesBasicResource"/>.
-    /// To get a <see cref="RaiBlocklistItemPropertiesBasicCollection"/> instance call the GetRaiBlocklistItemPropertiesBasics method from an instance of <see cref="RaiBlocklistPropertiesBasicResource"/>.
+    /// A class representing a collection of <see cref="RaiBlocklistItemResource"/> and their operations.
+    /// Each <see cref="RaiBlocklistItemResource"/> in the collection will belong to the same instance of <see cref="RaiBlocklistResource"/>.
+    /// To get a <see cref="RaiBlocklistItemCollection"/> instance call the GetRaiBlocklistItems method from an instance of <see cref="RaiBlocklistResource"/>.
     /// </summary>
-    public partial class RaiBlocklistItemPropertiesBasicCollection : ArmCollection, IEnumerable<RaiBlocklistItemPropertiesBasicResource>, IAsyncEnumerable<RaiBlocklistItemPropertiesBasicResource>
+    public partial class RaiBlocklistItemCollection : ArmCollection, IEnumerable<RaiBlocklistItemResource>, IAsyncEnumerable<RaiBlocklistItemResource>
     {
         private readonly ClientDiagnostics _connectionRaiBlocklistItemClientDiagnostics;
         private readonly ConnectionRaiBlocklistItem _connectionRaiBlocklistItemRestClient;
         private readonly ClientDiagnostics _connectionRaiBlocklistItemsClientDiagnostics;
         private readonly ConnectionRaiBlocklistItems _connectionRaiBlocklistItemsRestClient;
 
-        /// <summary> Initializes a new instance of RaiBlocklistItemPropertiesBasicCollection for mocking. </summary>
-        protected RaiBlocklistItemPropertiesBasicCollection()
+        /// <summary> Initializes a new instance of RaiBlocklistItemCollection for mocking. </summary>
+        protected RaiBlocklistItemCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemPropertiesBasicCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RaiBlocklistItemPropertiesBasicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RaiBlocklistItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RaiBlocklistItemPropertiesBasicResource.ResourceType, out string raiBlocklistItemPropertiesBasicApiVersion);
-            _connectionRaiBlocklistItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", RaiBlocklistItemPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RaiBlocklistItemResource.ResourceType, out string raiBlocklistItemPropertiesBasicApiVersion);
+            _connectionRaiBlocklistItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", RaiBlocklistItemResource.ResourceType.Namespace, Diagnostics);
             _connectionRaiBlocklistItemRestClient = new ConnectionRaiBlocklistItem(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, Endpoint, raiBlocklistItemPropertiesBasicApiVersion ?? "2026-03-15-preview");
-            _connectionRaiBlocklistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", RaiBlocklistItemPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
+            _connectionRaiBlocklistItemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", RaiBlocklistItemResource.ResourceType.Namespace, Diagnostics);
             _connectionRaiBlocklistItemsRestClient = new ConnectionRaiBlocklistItems(_connectionRaiBlocklistItemsClientDiagnostics, Pipeline, Endpoint, raiBlocklistItemPropertiesBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.MachineLearning
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RaiBlocklistPropertiesBasicResource.ResourceType)
+            if (id.ResourceType != RaiBlocklistResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RaiBlocklistPropertiesBasicResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RaiBlocklistResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Create. </description>
+        /// <description> RaiBlocklistItems_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RaiBlocklistItemPropertiesBasicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string raiBlocklistItemName, RaiBlocklistItemPropertiesBasicData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RaiBlocklistItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string raiBlocklistItemName, RaiBlocklistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, RaiBlocklistItemPropertiesBasicData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, RaiBlocklistItemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource> operation = new MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource>(
-                    new RaiBlocklistItemPropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<RaiBlocklistItemResource> operation = new MachineLearningArmOperation<RaiBlocklistItemResource>(
+                    new RaiBlocklistItemResourceOperationSource(Client),
                     _connectionRaiBlocklistItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Create. </description>
+        /// <description> RaiBlocklistItems_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RaiBlocklistItemPropertiesBasicResource> CreateOrUpdate(WaitUntil waitUntil, string raiBlocklistItemName, RaiBlocklistItemPropertiesBasicData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RaiBlocklistItemResource> CreateOrUpdate(WaitUntil waitUntil, string raiBlocklistItemName, RaiBlocklistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, RaiBlocklistItemPropertiesBasicData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, RaiBlocklistItemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource> operation = new MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource>(
-                    new RaiBlocklistItemPropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<RaiBlocklistItemResource> operation = new MachineLearningArmOperation<RaiBlocklistItemResource>(
+                    new RaiBlocklistItemResourceOperationSource(Client),
                     _connectionRaiBlocklistItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RaiBlocklistItemPropertiesBasicResource>> GetAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RaiBlocklistItemResource>> GetAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.Get");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.Get");
             scope.Start();
             try
             {
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RaiBlocklistItemPropertiesBasicData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                Response<RaiBlocklistItemData> response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RaiBlocklistItemPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RaiBlocklistItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RaiBlocklistItemPropertiesBasicResource> Get(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        public virtual Response<RaiBlocklistItemResource> Get(string raiBlocklistItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.Get");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.Get");
             scope.Start();
             try
             {
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RaiBlocklistItemPropertiesBasicData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                Response<RaiBlocklistItemData> response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RaiBlocklistItemPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RaiBlocklistItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_List. </description>
+        /// <description> RaiBlocklistItems_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -290,14 +290,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RaiBlocklistItemPropertiesBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RaiBlocklistItemPropertiesBasicResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RaiBlocklistItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RaiBlocklistItemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new ConnectionRaiBlocklistItemsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new ConnectionRaiBlocklistItemsGetAllAsyncCollectionResultOfT(
                 _connectionRaiBlocklistItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "RaiBlocklistItemPropertiesBasicCollection.GetAll"), data => new RaiBlocklistItemPropertiesBasicResource(Client, data));
+                "RaiBlocklistItemCollection.GetAll"), data => new RaiBlocklistItemResource(Client, data));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_List. </description>
+        /// <description> RaiBlocklistItems_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RaiBlocklistItemPropertiesBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RaiBlocklistItemPropertiesBasicResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RaiBlocklistItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RaiBlocklistItemResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new ConnectionRaiBlocklistItemsGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new ConnectionRaiBlocklistItemsGetAllCollectionResultOfT(
                 _connectionRaiBlocklistItemsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "RaiBlocklistItemPropertiesBasicCollection.GetAll"), data => new RaiBlocklistItemPropertiesBasicResource(Client, data));
+                "RaiBlocklistItemCollection.GetAll"), data => new RaiBlocklistItemResource(Client, data));
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.Exists");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.Exists");
             scope.Start();
             try
             {
@@ -380,14 +380,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RaiBlocklistItemPropertiesBasicData> response = default;
+                Response<RaiBlocklistItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiBlocklistItemPropertiesBasicData)null, result);
+                        response = Response.FromValue((RaiBlocklistItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.Exists");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.Exists");
             scope.Start();
             try
             {
@@ -437,14 +437,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RaiBlocklistItemPropertiesBasicData> response = default;
+                Response<RaiBlocklistItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiBlocklistItemPropertiesBasicData)null, result);
+                        response = Response.FromValue((RaiBlocklistItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -479,11 +479,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RaiBlocklistItemPropertiesBasicResource>> GetIfExistsAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RaiBlocklistItemResource>> GetIfExistsAsync(string raiBlocklistItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -494,23 +494,23 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RaiBlocklistItemPropertiesBasicData> response = default;
+                Response<RaiBlocklistItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiBlocklistItemPropertiesBasicData)null, result);
+                        response = Response.FromValue((RaiBlocklistItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RaiBlocklistItemPropertiesBasicResource>(response.GetRawResponse());
+                    return new NoValueResponse<RaiBlocklistItemResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RaiBlocklistItemPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RaiBlocklistItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RaiBlocklistItemPropertiesBasicResources_Get. </description>
+        /// <description> RaiBlocklistItems_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -540,11 +540,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiBlocklistItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RaiBlocklistItemPropertiesBasicResource> GetIfExists(string raiBlocklistItemName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RaiBlocklistItemResource> GetIfExists(string raiBlocklistItemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiBlocklistItemName, nameof(raiBlocklistItemName));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemPropertiesBasicCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistItemCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -555,23 +555,23 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, raiBlocklistItemName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RaiBlocklistItemPropertiesBasicData> response = default;
+                Response<RaiBlocklistItemData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(RaiBlocklistItemData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiBlocklistItemPropertiesBasicData)null, result);
+                        response = Response.FromValue((RaiBlocklistItemData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RaiBlocklistItemPropertiesBasicResource>(response.GetRawResponse());
+                    return new NoValueResponse<RaiBlocklistItemResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RaiBlocklistItemPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new RaiBlocklistItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        IEnumerator<RaiBlocklistItemPropertiesBasicResource> IEnumerable<RaiBlocklistItemPropertiesBasicResource>.GetEnumerator()
+        IEnumerator<RaiBlocklistItemResource> IEnumerable<RaiBlocklistItemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<RaiBlocklistItemPropertiesBasicResource> IAsyncEnumerable<RaiBlocklistItemPropertiesBasicResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<RaiBlocklistItemResource> IAsyncEnumerable<RaiBlocklistItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

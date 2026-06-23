@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of ManagedNetworkSettingsPropertiesBasicResource items. </summary>
+    /// <summary> Paged collection of MachineLearningManagedNetworkSettingsResource items. </summary>
     internal partial class ManagedNetworkListResult : IJsonModel<ManagedNetworkListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/> for deserialization. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ManagedNetworkSettingsPropertiesBasicData item in Value)
+            foreach (MachineLearningManagedNetworkSettingsData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<ManagedNetworkSettingsPropertiesBasicData> value = default;
+            IList<MachineLearningManagedNetworkSettingsData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ManagedNetworkSettingsPropertiesBasicData> array = new List<ManagedNetworkSettingsPropertiesBasicData>();
+                    List<MachineLearningManagedNetworkSettingsData> array = new List<MachineLearningManagedNetworkSettingsData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkSettingsPropertiesBasicData.DeserializeManagedNetworkSettingsPropertiesBasicData(item, options));
+                        array.Add(MachineLearningManagedNetworkSettingsData.DeserializeMachineLearningManagedNetworkSettingsData(item, options));
                     }
                     value = array;
                     continue;

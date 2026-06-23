@@ -13,52 +13,52 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The PTUDeploymentUsage. </summary>
-    public partial class PTUDeploymentUsage : IJsonModel<PTUDeploymentUsage>
+    /// <summary> The PtuDeploymentUsage. </summary>
+    public partial class PtuDeploymentUsage : IJsonModel<PtuDeploymentUsage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PTUDeploymentUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PtuDeploymentUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PTUDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PtuDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePTUDeploymentUsage(document.RootElement, options);
+                        return DeserializePtuDeploymentUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PTUDeploymentUsage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PtuDeploymentUsage)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PTUDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PtuDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PTUDeploymentUsage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PtuDeploymentUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PTUDeploymentUsage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PtuDeploymentUsage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PTUDeploymentUsage IPersistableModel<PTUDeploymentUsage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PtuDeploymentUsage IPersistableModel<PtuDeploymentUsage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PTUDeploymentUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PtuDeploymentUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PTUDeploymentUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PtuDeploymentUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PTUDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PtuDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PTUDeploymentUsage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PtuDeploymentUsage)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CollectionQuotaUsage))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PTUDeploymentUsage IJsonModel<PTUDeploymentUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PtuDeploymentUsage IJsonModel<PtuDeploymentUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PTUDeploymentUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PtuDeploymentUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PTUDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PtuDeploymentUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PTUDeploymentUsage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PtuDeploymentUsage)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePTUDeploymentUsage(document.RootElement, options);
+            return DeserializePtuDeploymentUsage(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PTUDeploymentUsage DeserializePTUDeploymentUsage(JsonElement element, ModelReaderWriterOptions options)
+        internal static PtuDeploymentUsage DeserializePtuDeploymentUsage(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PTUDeploymentUsage(
+            return new PtuDeploymentUsage(
                 collectionQuotaUsage,
                 deploymentName,
                 resourceGroup,

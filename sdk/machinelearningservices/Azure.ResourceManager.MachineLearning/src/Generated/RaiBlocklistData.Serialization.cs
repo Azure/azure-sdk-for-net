@@ -17,51 +17,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> RaiBlocklistPropertiesBasicResource is a preview-only resource. </summary>
-    public partial class RaiBlocklistPropertiesBasicData : ResourceData, IJsonModel<RaiBlocklistPropertiesBasicData>
+    /// <summary> RaiBlocklistResource is a preview-only resource. </summary>
+    public partial class RaiBlocklistData : ResourceData, IJsonModel<RaiBlocklistData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRaiBlocklistPropertiesBasicData(document.RootElement, options);
+                        return DeserializeRaiBlocklistData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiBlocklistPropertiesBasicData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiBlocklistData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicData IPersistableModel<RaiBlocklistPropertiesBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiBlocklistPropertiesBasicData)PersistableModelCreateCore(data, options);
+        RaiBlocklistData IPersistableModel<RaiBlocklistData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiBlocklistData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiBlocklistPropertiesBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiBlocklistData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="raiBlocklistPropertiesBasicData"> The <see cref="RaiBlocklistPropertiesBasicData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RaiBlocklistPropertiesBasicData raiBlocklistPropertiesBasicData)
+        /// <param name="raiBlocklistPropertiesBasicData"> The <see cref="RaiBlocklistData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiBlocklistData raiBlocklistPropertiesBasicData)
         {
             if (raiBlocklistPropertiesBasicData == null)
             {
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.MachineLearning
             return RequestContent.Create(raiBlocklistPropertiesBasicData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistPropertiesBasicData"/> from. </param>
-        internal static RaiBlocklistPropertiesBasicData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistData"/> from. </param>
+        internal static RaiBlocklistData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRaiBlocklistPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRaiBlocklistData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiBlocklistPropertiesBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiBlocklistData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -117,24 +117,24 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicData IJsonModel<RaiBlocklistPropertiesBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiBlocklistPropertiesBasicData)JsonModelCreateCore(ref reader, options);
+        RaiBlocklistData IJsonModel<RaiBlocklistData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiBlocklistData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiBlocklistPropertiesBasicData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRaiBlocklistPropertiesBasicData(document.RootElement, options);
+            return DeserializeRaiBlocklistData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RaiBlocklistPropertiesBasicData DeserializeRaiBlocklistPropertiesBasicData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiBlocklistData DeserializeRaiBlocklistData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RaiBlocklistPropertiesBasicData(
+            return new RaiBlocklistData(
                 new ResourceIdentifier(id),
                 name,
                 resourceType,

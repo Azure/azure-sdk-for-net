@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     // Customized: preserve the legacy async pageable add-bulk surface. The TypeSpec operation is an
     // LRO action with an array final result, which the generator models as ArmOperation<IReadOnlyList<T>>
     // rather than an async pageable operation.
-    internal partial class RaiBlocklistPropertiesBasicResourceAddBulkAsyncCollectionResult : AsyncPageable<RaiBlocklistItemPropertiesBasicData>
+    internal partial class RaiBlocklistResourceAddBulkAsyncCollectionResult : AsyncPageable<RaiBlocklistItemData>
     {
         private readonly ConnectionRaiBlocklistItem _client;
         private readonly Guid _subscriptionId;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly IEnumerable<RaiBlocklistItemBulkContent> _body;
         private readonly RequestContext _context;
 
-        public RaiBlocklistPropertiesBasicResourceAddBulkAsyncCollectionResult(ConnectionRaiBlocklistItem client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkContent> body, RequestContext context)
+        public RaiBlocklistResourceAddBulkAsyncCollectionResult(ConnectionRaiBlocklistItem client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkContent> body, RequestContext context)
             : base(context?.CancellationToken ?? default)
         {
             _client = client;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
             _context = context;
         }
 
-        public override async IAsyncEnumerable<Page<RaiBlocklistItemPropertiesBasicData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<RaiBlocklistItemData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             if (continuationToken != null)
             {
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.MachineLearning
             }
 
             Response response = await GetResponseAsync().ConfigureAwait(false);
-            RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-            yield return Page<RaiBlocklistItemPropertiesBasicData>.FromValues((IReadOnlyList<RaiBlocklistItemPropertiesBasicData>)result.Value, result.NextLink?.OriginalString, response);
+            RaiBlocklistItemArmPaginatedResult result = RaiBlocklistItemArmPaginatedResult.FromResponse(response);
+            yield return Page<RaiBlocklistItemData>.FromValues((IReadOnlyList<RaiBlocklistItemData>)result.Value, result.NextLink?.OriginalString, response);
         }
 
         private async ValueTask<Response> GetResponseAsync()
         {
             RequestContent content = MachineLearningSerializationHelpers.CreateEnumerableContent(_body);
             HttpMessage message = _client.CreateAddBulkRequest(_subscriptionId, _resourceGroupName, _workspaceName, _connectionName, _raiBlocklistName, content, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RaiBlocklistPropertiesBasicResource.AddBulk");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RaiBlocklistResource.AddBulk");
             scope.Start();
             try
             {

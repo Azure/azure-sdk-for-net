@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointModelDeprecationProperties"/>. </summary>
-        /// <param name="fineTune"> The datetime of deprecation of the fineTune Model. </param>
-        /// <param name="inference"> The datetime of deprecation of the inference Model. </param>
+        /// <param name="fineTuneOn"> The datetime of deprecation of the fineTune Model. </param>
+        /// <param name="inferenceOn"> The datetime of deprecation of the inference Model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointModelDeprecationProperties(DateTimeOffset? fineTune, DateTimeOffset? inference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointModelDeprecationProperties(DateTimeOffset? fineTuneOn, DateTimeOffset? inferenceOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FineTune = fineTune;
-            Inference = inference;
+            FineTuneOn = fineTuneOn;
+            InferenceOn = inferenceOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The datetime of deprecation of the fineTune Model. </summary>
         [WirePath("fineTune")]
-        public DateTimeOffset? FineTune { get; }
+        public DateTimeOffset? FineTuneOn { get; }
 
         /// <summary> The datetime of deprecation of the inference Model. </summary>
         [WirePath("inference")]
-        public DateTimeOffset? Inference { get; }
+        public DateTimeOffset? InferenceOn { get; }
     }
 }

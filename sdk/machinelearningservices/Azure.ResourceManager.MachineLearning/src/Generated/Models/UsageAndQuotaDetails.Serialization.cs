@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("usageDetails"u8);
                 writer.WriteStartArray();
-                foreach (PTUDeploymentUsage item in UsageDetails)
+                foreach (PtuDeploymentUsage item in UsageDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             string modelCollection = default;
             long? quota = default;
-            IList<PTUDeploymentUsage> usageDetails = default;
+            IList<PtuDeploymentUsage> usageDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<PTUDeploymentUsage> array = new List<PTUDeploymentUsage>();
+                    List<PtuDeploymentUsage> array = new List<PtuDeploymentUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PTUDeploymentUsage.DeserializePTUDeploymentUsage(item, options));
+                        array.Add(PtuDeploymentUsage.DeserializePtuDeploymentUsage(item, options));
                     }
                     usageDetails = array;
                     continue;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UsageAndQuotaDetails(modelCollection, quota, usageDetails ?? new ChangeTrackingList<PTUDeploymentUsage>(), additionalBinaryDataProperties);
+            return new UsageAndQuotaDetails(modelCollection, quota, usageDetails ?? new ChangeTrackingList<PtuDeploymentUsage>(), additionalBinaryDataProperties);
         }
     }
 }

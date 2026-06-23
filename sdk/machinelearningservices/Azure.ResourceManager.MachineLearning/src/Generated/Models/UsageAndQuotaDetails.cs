@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="UsageAndQuotaDetails"/>. </summary>
         internal UsageAndQuotaDetails()
         {
-            UsageDetails = new ChangeTrackingList<PTUDeploymentUsage>();
+            UsageDetails = new ChangeTrackingList<PtuDeploymentUsage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UsageAndQuotaDetails"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="quota"> The total number of quota. </param>
         /// <param name="usageDetails"> Usage details for each deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageAndQuotaDetails(string modelCollection, long? quota, IList<PTUDeploymentUsage> usageDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UsageAndQuotaDetails(string modelCollection, long? quota, IList<PtuDeploymentUsage> usageDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelCollection = modelCollection;
             Quota = quota;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Usage details for each deployment. </summary>
         [WirePath("usageDetails")]
-        public IList<PTUDeploymentUsage> UsageDetails { get; }
+        public IList<PtuDeploymentUsage> UsageDetails { get; }
     }
 }

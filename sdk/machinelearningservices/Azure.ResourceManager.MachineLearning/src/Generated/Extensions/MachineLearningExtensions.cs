@@ -867,39 +867,39 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RaiBlocklistPropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistPropertiesBasicResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklist(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RaiBlocklistPropertiesBasicResource"/> object. </returns>
-        public static RaiBlocklistPropertiesBasicResource GetRaiBlocklistPropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
+        public static RaiBlocklistResource GetRaiBlocklist(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistPropertiesBasicResource(id);
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklist(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RaiBlocklistItemPropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItemPropertiesBasicResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItem(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RaiBlocklistItemPropertiesBasicResource"/> object. </returns>
-        public static RaiBlocklistItemPropertiesBasicResource GetRaiBlocklistItemPropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
+        public static RaiBlocklistItemResource GetRaiBlocklistItem(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItemPropertiesBasicResource(id);
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItem(id);
         }
 
         /// <summary>
@@ -975,21 +975,21 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MachineLearningManagedNetworkSettingsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetManagedNetworkSettingsPropertiesBasicResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningManagedNetworkSettingsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> object. </returns>
-        public static ManagedNetworkSettingsPropertiesBasicResource GetManagedNetworkSettingsPropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningManagedNetworkSettingsResource"/> object. </returns>
+        public static MachineLearningManagedNetworkSettingsResource GetMachineLearningManagedNetworkSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetManagedNetworkSettingsPropertiesBasicResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningManagedNetworkSettingsResource(id);
         }
 
         /// <summary>

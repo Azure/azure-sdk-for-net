@@ -12,33 +12,33 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of MachineLearningManagedNetworkSettingsResource items. </summary>
-    internal partial class ManagedNetworkListResult
+    /// <summary> Paged collection of RaiBlocklistItemResource items. </summary>
+    internal partial class RaiBlocklistItemArmPaginatedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
-        /// <param name="value"> The MachineLearningManagedNetworkSettingsResource items on this page. </param>
-        internal ManagedNetworkListResult(IEnumerable<MachineLearningManagedNetworkSettingsData> value)
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemArmPaginatedResult"/>. </summary>
+        /// <param name="value"> The RaiBlocklistItemResource items on this page. </param>
+        internal RaiBlocklistItemArmPaginatedResult(IEnumerable<RaiBlocklistItemData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkListResult"/>. </summary>
-        /// <param name="value"> The MachineLearningManagedNetworkSettingsResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemArmPaginatedResult"/>. </summary>
+        /// <param name="value"> The RaiBlocklistItemResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkListResult(IList<MachineLearningManagedNetworkSettingsData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiBlocklistItemArmPaginatedResult(IList<RaiBlocklistItemData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The MachineLearningManagedNetworkSettingsResource items on this page. </summary>
+        /// <summary> The RaiBlocklistItemResource items on this page. </summary>
         [WirePath("value")]
-        public IList<MachineLearningManagedNetworkSettingsData> Value { get; }
+        public IList<RaiBlocklistItemData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

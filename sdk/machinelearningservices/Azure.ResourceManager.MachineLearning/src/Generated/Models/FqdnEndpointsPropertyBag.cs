@@ -12,20 +12,20 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Property bag for FQDN endpoints result. </summary>
-    public partial class FQDNEndpointsPropertyBag
+    public partial class FqdnEndpointsPropertyBag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FQDNEndpointsPropertyBag"/>. </summary>
-        internal FQDNEndpointsPropertyBag()
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpointsPropertyBag"/>. </summary>
+        internal FqdnEndpointsPropertyBag()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FQDNEndpointsPropertyBag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FqdnEndpointsPropertyBag"/>. </summary>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FQDNEndpointsPropertyBag(MachineLearningFqdnEndpoints properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FqdnEndpointsPropertyBag(MachineLearningFqdnEndpoints properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -17,69 +17,74 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> ManagedNetworkSettingsPropertiesBasicResource is a preview-only resource. </summary>
-    public partial class ManagedNetworkSettingsPropertiesBasicData : ResourceData, IJsonModel<ManagedNetworkSettingsPropertiesBasicData>
+    /// <summary> RaiBlocklistItemResource is a preview-only resource. </summary>
+    public partial class RaiBlocklistItemData : ResourceData, IJsonModel<RaiBlocklistItemData>
     {
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemData"/> for deserialization. </summary>
+        internal RaiBlocklistItemData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedNetworkSettingsPropertiesBasicData(document.RootElement, options);
+                        return DeserializeRaiBlocklistItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiBlocklistItemData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicData IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedNetworkSettingsPropertiesBasicData)PersistableModelCreateCore(data, options);
+        RaiBlocklistItemData IPersistableModel<RaiBlocklistItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiBlocklistItemData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiBlocklistItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="managedNetworkSettingsPropertiesBasicData"> The <see cref="ManagedNetworkSettingsPropertiesBasicData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedNetworkSettingsPropertiesBasicData managedNetworkSettingsPropertiesBasicData)
+        /// <param name="raiBlocklistItemPropertiesBasicData"> The <see cref="RaiBlocklistItemData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiBlocklistItemData raiBlocklistItemPropertiesBasicData)
         {
-            if (managedNetworkSettingsPropertiesBasicData == null)
+            if (raiBlocklistItemPropertiesBasicData == null)
             {
                 return null;
             }
-            return RequestContent.Create(managedNetworkSettingsPropertiesBasicData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(raiBlocklistItemPropertiesBasicData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedNetworkSettingsPropertiesBasicData"/> from. </param>
-        internal static ManagedNetworkSettingsPropertiesBasicData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistItemData"/> from. </param>
+        internal static RaiBlocklistItemData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedNetworkSettingsPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRaiBlocklistItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkSettingsPropertiesBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiBlocklistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,17 +95,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -120,24 +122,24 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicData IJsonModel<ManagedNetworkSettingsPropertiesBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedNetworkSettingsPropertiesBasicData)JsonModelCreateCore(ref reader, options);
+        RaiBlocklistItemData IJsonModel<RaiBlocklistItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiBlocklistItemData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedNetworkSettingsPropertiesBasicData(document.RootElement, options);
+            return DeserializeRaiBlocklistItemData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedNetworkSettingsPropertiesBasicData DeserializeManagedNetworkSettingsPropertiesBasicData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiBlocklistItemData DeserializeRaiBlocklistItemData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ManagedNetworkSettingsProperties properties = default;
+            RaiBlocklistItemProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,11 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ManagedNetworkSettingsProperties.DeserializeManagedNetworkSettingsProperties(prop.Value, options);
+                    properties = RaiBlocklistItemProperties.DeserializeRaiBlocklistItemProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkSettingsPropertiesBasicData(
+            return new RaiBlocklistItemData(
                 new ResourceIdentifier(id),
                 name,
                 resourceType,

@@ -19,27 +19,27 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> and their operations.
-    /// Each <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
-    /// To get a <see cref="ManagedNetworkSettingsPropertiesBasicCollection"/> instance call the GetManagedNetworkSettingsPropertiesBasics method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// A class representing a collection of <see cref="MachineLearningManagedNetworkSettingsResource"/> and their operations.
+    /// Each <see cref="MachineLearningManagedNetworkSettingsResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningManagedNetworkSettingsCollection"/> instance call the GetMachineLearningManagedNetworkSettingsResources method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
-    public partial class ManagedNetworkSettingsPropertiesBasicCollection : ArmCollection, IEnumerable<ManagedNetworkSettingsPropertiesBasicResource>, IAsyncEnumerable<ManagedNetworkSettingsPropertiesBasicResource>
+    public partial class MachineLearningManagedNetworkSettingsCollection : ArmCollection, IEnumerable<MachineLearningManagedNetworkSettingsResource>, IAsyncEnumerable<MachineLearningManagedNetworkSettingsResource>
     {
         private readonly ClientDiagnostics _managedNetworkSettingsClientDiagnostics;
         private readonly ManagedNetworkSettings _managedNetworkSettingsRestClient;
 
-        /// <summary> Initializes a new instance of ManagedNetworkSettingsPropertiesBasicCollection for mocking. </summary>
-        protected ManagedNetworkSettingsPropertiesBasicCollection()
+        /// <summary> Initializes a new instance of MachineLearningManagedNetworkSettingsCollection for mocking. </summary>
+        protected MachineLearningManagedNetworkSettingsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsPropertiesBasicCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedNetworkSettingsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedNetworkSettingsPropertiesBasicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningManagedNetworkSettingsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ManagedNetworkSettingsPropertiesBasicResource.ResourceType, out string managedNetworkSettingsPropertiesBasicApiVersion);
-            _managedNetworkSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ManagedNetworkSettingsPropertiesBasicResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MachineLearningManagedNetworkSettingsResource.ResourceType, out string managedNetworkSettingsPropertiesBasicApiVersion);
+            _managedNetworkSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningManagedNetworkSettingsResource.ResourceType.Namespace, Diagnostics);
             _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Put. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Put. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ManagedNetworkSettingsPropertiesBasicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNetworkName, ManagedNetworkSettingsPropertiesBasicData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningManagedNetworkSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNetworkName, MachineLearningManagedNetworkSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
-                    new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource> operation = new MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource>(
+                    new MachineLearningManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Put. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Put. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ManagedNetworkSettingsPropertiesBasicResource> CreateOrUpdate(WaitUntil waitUntil, string managedNetworkName, ManagedNetworkSettingsPropertiesBasicData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningManagedNetworkSettingsResource> CreateOrUpdate(WaitUntil waitUntil, string managedNetworkName, MachineLearningManagedNetworkSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, ManagedNetworkSettingsPropertiesBasicData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
-                    new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource> operation = new MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource>(
+                    new MachineLearningManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ManagedNetworkSettingsPropertiesBasicResource>> GetAsync(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningManagedNetworkSettingsResource>> GetAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                Response<MachineLearningManagedNetworkSettingsData> response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedNetworkSettingsPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningManagedNetworkSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ManagedNetworkSettingsPropertiesBasicResource> Get(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningManagedNetworkSettingsResource> Get(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.Get");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                Response<MachineLearningManagedNetworkSettingsData> response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedNetworkSettingsPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningManagedNetworkSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_List. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedNetworkSettingsPropertiesBasicResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningManagedNetworkSettingsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningManagedNetworkSettingsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedNetworkSettingsPropertiesBasicData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningManagedNetworkSettingsData, MachineLearningManagedNetworkSettingsResource>(new ManagedNetworkSettingsGetAllAsyncCollectionResultOfT(
                 _managedNetworkSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ManagedNetworkSettingsPropertiesBasicCollection.GetAll"), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
+                "MachineLearningManagedNetworkSettingsCollection.GetAll"), data => new MachineLearningManagedNetworkSettingsResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_List. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedNetworkSettingsPropertiesBasicResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningManagedNetworkSettingsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningManagedNetworkSettingsResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedNetworkSettingsPropertiesBasicData, ManagedNetworkSettingsPropertiesBasicResource>(new ManagedNetworkSettingsGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningManagedNetworkSettingsData, MachineLearningManagedNetworkSettingsResource>(new ManagedNetworkSettingsGetAllCollectionResultOfT(
                 _managedNetworkSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ManagedNetworkSettingsPropertiesBasicCollection.GetAll"), data => new ManagedNetworkSettingsPropertiesBasicResource(Client, data));
+                "MachineLearningManagedNetworkSettingsCollection.GetAll"), data => new MachineLearningManagedNetworkSettingsResource(Client, data));
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.Exists");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = default;
+                Response<MachineLearningManagedNetworkSettingsData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkSettingsPropertiesBasicData)null, result);
+                        response = Response.FromValue((MachineLearningManagedNetworkSettingsData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.Exists");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = default;
+                Response<MachineLearningManagedNetworkSettingsData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkSettingsPropertiesBasicData)null, result);
+                        response = Response.FromValue((MachineLearningManagedNetworkSettingsData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ManagedNetworkSettingsPropertiesBasicResource>> GetIfExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MachineLearningManagedNetworkSettingsResource>> GetIfExistsAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = default;
+                Response<MachineLearningManagedNetworkSettingsData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkSettingsPropertiesBasicData)null, result);
+                        response = Response.FromValue((MachineLearningManagedNetworkSettingsData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ManagedNetworkSettingsPropertiesBasicResource>(response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningManagedNetworkSettingsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedNetworkSettingsPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningManagedNetworkSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ManagedNetworkSettingsPropertiesBasicResource> GetIfExists(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MachineLearningManagedNetworkSettingsResource> GetIfExists(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicCollection.GetIfExists");
+            using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("MachineLearningManagedNetworkSettingsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ManagedNetworkSettingsPropertiesBasicData> response = default;
+                Response<MachineLearningManagedNetworkSettingsData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkSettingsPropertiesBasicData)null, result);
+                        response = Response.FromValue((MachineLearningManagedNetworkSettingsData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ManagedNetworkSettingsPropertiesBasicResource>(response.GetRawResponse());
+                    return new NoValueResponse<MachineLearningManagedNetworkSettingsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedNetworkSettingsPropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningManagedNetworkSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        IEnumerator<ManagedNetworkSettingsPropertiesBasicResource> IEnumerable<ManagedNetworkSettingsPropertiesBasicResource>.GetEnumerator()
+        IEnumerator<MachineLearningManagedNetworkSettingsResource> IEnumerable<MachineLearningManagedNetworkSettingsResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ManagedNetworkSettingsPropertiesBasicResource> IAsyncEnumerable<ManagedNetworkSettingsPropertiesBasicResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MachineLearningManagedNetworkSettingsResource> IAsyncEnumerable<MachineLearningManagedNetworkSettingsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

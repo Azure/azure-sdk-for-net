@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(EndpointModelDeprecationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FineTune))
+            if (Optional.IsDefined(FineTuneOn))
             {
                 writer.WritePropertyName("fineTune"u8);
-                writer.WriteStringValue(FineTune.Value, "O");
+                writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (Optional.IsDefined(Inference))
+            if (Optional.IsDefined(InferenceOn))
             {
                 writer.WritePropertyName("inference"u8);
-                writer.WriteStringValue(Inference.Value, "O");
+                writer.WriteStringValue(InferenceOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            DateTimeOffset? fineTune = default;
-            DateTimeOffset? inference = default;
+            DateTimeOffset? fineTuneOn = default;
+            DateTimeOffset? inferenceOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    fineTune = prop.Value.GetDateTimeOffset("O");
+                    fineTuneOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("inference"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    inference = prop.Value.GetDateTimeOffset("O");
+                    inferenceOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EndpointModelDeprecationProperties(fineTune, inference, additionalBinaryDataProperties);
+            return new EndpointModelDeprecationProperties(fineTuneOn, inferenceOn, additionalBinaryDataProperties);
         }
     }
 }

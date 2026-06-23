@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MachineLearning
     [CodeGenSuppress("AddBulk", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkContent>), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteBulkAsync", typeof(WaitUntil), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteBulk", typeof(WaitUntil), typeof(IEnumerable<string>), typeof(CancellationToken))]
-    public partial class RaiBlocklistPropertiesBasicResource
+    public partial class RaiBlocklistResource
     {
         /// <summary> Add multiple blocklist items to the specified blocklist associated with the Azure OpenAI connection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="body"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RaiBlocklistItemPropertiesBasicResource> AddBulkAsync(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RaiBlocklistItemResource> AddBulkAsync(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkAsyncCollectionResult(
+            return new AsyncPageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistResourceAddBulkAsyncCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 body,
-                context), data => new RaiBlocklistItemPropertiesBasicResource(Client, data));
+                context), data => new RaiBlocklistItemResource(Client, data));
         }
 
         /// <summary> Add multiple blocklist items to the specified blocklist associated with the Azure OpenAI connection. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="body"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RaiBlocklistItemPropertiesBasicResource> AddBulk(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
+        public virtual Pageable<RaiBlocklistItemResource> AddBulk(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult(
+            return new PageableWrapper<RaiBlocklistItemData, RaiBlocklistItemResource>(new RaiBlocklistResourceAddBulkCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 body,
-                context), data => new RaiBlocklistItemPropertiesBasicResource(Client, data));
+                context), data => new RaiBlocklistItemResource(Client, data));
         }
 
         /// <summary> Delete multiple blocklist items from the specified blocklist associated with the Azure OpenAI connection. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistPropertiesBasicResource.DeleteBulk");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.DeleteBulk");
             scope.Start();
             try
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistPropertiesBasicResource.DeleteBulk");
+            using DiagnosticScope scope = _connectionRaiBlocklistItemClientDiagnostics.CreateScope("RaiBlocklistResource.DeleteBulk");
             scope.Start();
             try
             {

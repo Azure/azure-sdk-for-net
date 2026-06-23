@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Passwords))
             {
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string location = default;
+            AzureLocation? location = default;
             IList<MachineLearningPasswordDetail> passwords = default;
             string username = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +145,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("passwords"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="passwords"></param>
         /// <param name="username"> The username of the workspace ACR. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryListCredentialsResult(string location, IList<MachineLearningPasswordDetail> passwords, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryListCredentialsResult(AzureLocation? location, IList<MachineLearningPasswordDetail> passwords, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Passwords = passwords;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The location of the workspace ACR. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Gets the Passwords. </summary>
         [WirePath("passwords")]

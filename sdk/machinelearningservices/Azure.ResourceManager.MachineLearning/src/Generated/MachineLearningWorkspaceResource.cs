@@ -2550,11 +2550,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetManagedNetworkSettingsRules().Get(ruleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedNetworkSettingsPropertiesBasicResources in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedNetworkSettingsPropertiesBasicResources and their operations over a ManagedNetworkSettingsPropertiesBasicResource. </returns>
-        public virtual ManagedNetworkSettingsPropertiesBasicCollection GetManagedNetworkSettingsPropertiesBasicResources()
+        /// <summary> Gets a collection of MachineLearningManagedNetworkSettingsResources in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningManagedNetworkSettingsResources and their operations over a MachineLearningManagedNetworkSettingsResource. </returns>
+        public virtual MachineLearningManagedNetworkSettingsCollection GetMachineLearningManagedNetworkSettingsResources()
         {
-            return GetCachedClient(client => new ManagedNetworkSettingsPropertiesBasicCollection(client, Id));
+            return GetCachedClient(client => new MachineLearningManagedNetworkSettingsCollection(client, Id));
         }
 
         /// <summary> Get API for managed network settings of a machine learning workspace. </summary>
@@ -2563,11 +2563,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedNetworkSettingsPropertiesBasicResource>> GetManagedNetworkSettingsPropertiesBasicResourceAsync(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningManagedNetworkSettingsResource>> GetMachineLearningManagedNetworkSettingsResourceAsync(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            return await GetManagedNetworkSettingsPropertiesBasicResources().GetAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningManagedNetworkSettingsResources().GetAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get API for managed network settings of a machine learning workspace. </summary>
@@ -2576,11 +2576,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedNetworkSettingsPropertiesBasicResource> GetManagedNetworkSettingsPropertiesBasicResource(string managedNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningManagedNetworkSettingsResource> GetMachineLearningManagedNetworkSettingsResource(string managedNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
-            return GetManagedNetworkSettingsPropertiesBasicResources().Get(managedNetworkName, cancellationToken);
+            return GetMachineLearningManagedNetworkSettingsResources().Get(managedNetworkName, cancellationToken);
         }
     }
 }
