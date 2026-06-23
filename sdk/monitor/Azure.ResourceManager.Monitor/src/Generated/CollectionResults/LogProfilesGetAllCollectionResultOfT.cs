@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     yield break;
                 }
-                Models.LogProfileCollection result = Models.LogProfileCollection.FromResponse(response);
+                LogProfileListResult result = LogProfileListResult.FromResponse(response);
                 yield return Page<LogProfileData>.FromValues((IReadOnlyList<LogProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))

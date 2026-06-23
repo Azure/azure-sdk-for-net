@@ -13,23 +13,23 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of log profiles. </summary>
-    public partial class LogProfileCollection
+    internal partial class LogProfileListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileListResult"/>. </summary>
         /// <param name="value"> the values of the log profiles. </param>
-        internal LogProfileCollection(IEnumerable<LogProfileData> value)
+        internal LogProfileListResult(IEnumerable<LogProfileData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogProfileListResult"/>. </summary>
         /// <param name="value"> the values of the log profiles. </param>
         /// <param name="nextLink"> the URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogProfileCollection(IList<LogProfileData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogProfileListResult(IList<LogProfileData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

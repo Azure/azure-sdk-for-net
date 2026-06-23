@@ -2150,16 +2150,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default), default);
         }
 
-        /// <param name="value"> the values of the log profiles. </param>
-        /// <param name="nextLink"> the URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Models.LogProfileCollection"/> instance for mocking. </returns>
-        public static LogProfileCollection LogProfileCollection(IEnumerable<LogProfileData> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<LogProfileData>();
-
-            return new LogProfileCollection((value ?? new ChangeTrackingList<LogProfileData>()).ToList(), nextLink, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
