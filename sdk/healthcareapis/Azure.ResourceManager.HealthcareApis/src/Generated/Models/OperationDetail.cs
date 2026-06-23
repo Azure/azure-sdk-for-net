@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="actionType"> Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
         /// <param name="properties"> Properties of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDetail(string name, bool? isDataAction, OperationDisplay display, string origin, ActionType? actionType, OperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationDetail(string name, bool? isDataAction, OperationDisplay display, string origin, OperationActionType? actionType, OperationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsDataAction = isDataAction;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public string Origin { get; }
 
         /// <summary> Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </summary>
-        public ActionType? ActionType { get; }
+        public OperationActionType? ActionType { get; }
 
         /// <summary> Properties of the operation. </summary>
         internal OperationProperties Properties { get; }

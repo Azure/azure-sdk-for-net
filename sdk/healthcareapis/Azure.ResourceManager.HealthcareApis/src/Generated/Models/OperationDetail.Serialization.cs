@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             bool? isDataAction = default;
             OperationDisplay display = default;
             string origin = default;
-            ActionType? actionType = default;
+            OperationActionType? actionType = default;
             OperationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    actionType = new ActionType(prop.Value.GetString());
+                    actionType = new OperationActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

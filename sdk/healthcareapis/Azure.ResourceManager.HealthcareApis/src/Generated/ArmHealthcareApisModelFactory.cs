@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="actionType"> Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
         /// <param name="operationServiceSpecification"> Service specifications of the operation. </param>
         /// <returns> A new <see cref="Models.OperationDetail"/> instance for mocking. </returns>
-        public static OperationDetail OperationDetail(string name = default, bool? isDataAction = default, OperationDisplay display = default, string origin = default, ActionType? actionType = default, ServiceSpecification operationServiceSpecification = default)
+        public static OperationDetail OperationDetail(string name = default, bool? isDataAction = default, OperationDisplay display = default, string origin = default, OperationActionType? actionType = default, ServiceSpecification operationServiceSpecification = default)
         {
             return new OperationDetail(
                 name,

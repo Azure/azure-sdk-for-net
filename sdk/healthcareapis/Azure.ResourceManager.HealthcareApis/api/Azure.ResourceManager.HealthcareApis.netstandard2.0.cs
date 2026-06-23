@@ -641,22 +641,6 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
 }
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.HealthcareApis.Models.ActionType Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HealthcareApis.Models.ActionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.ActionType left, Azure.ResourceManager.HealthcareApis.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HealthcareApis.Models.ActionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.HealthcareApis.Models.ActionType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.ActionType left, Azure.ResourceManager.HealthcareApis.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class ArmHealthcareApisModelFactory
     {
         public static Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration DicomServiceAuthenticationConfiguration(string authority = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
@@ -706,7 +690,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.LogSpecification LogSpecification(string name = null, string displayName = null, string blobDuration = null) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.MetricDimension MetricDimension(string name = null, string displayName = null, bool? isExportedForShoebox = default(bool?)) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.MetricSpecification MetricSpecification(string name = null, string displayName = null, string displayDescription = null, string unit = null, string category = null, string aggregationType = null, System.Collections.Generic.IEnumerable<string> supportedAggregationTypes = null, System.Collections.Generic.IEnumerable<string> supportedTimeGrainTypes = null, bool? isFillGapWithZero = default(bool?), string metricFilterPattern = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.Models.MetricDimension> dimensions = null, bool? isInternal = default(bool?), string sourceMdmAccount = null, string sourceMdmNamespace = null, bool? enableRegionalMdmAccount = default(bool?), string resourceIdDimensionNameOverride = null) { throw null; }
-        public static Azure.ResourceManager.HealthcareApis.Models.OperationDetail OperationDetail(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.HealthcareApis.Models.OperationDisplay display = null, string origin = null, Azure.ResourceManager.HealthcareApis.Models.ActionType? actionType = default(Azure.ResourceManager.HealthcareApis.Models.ActionType?), Azure.ResourceManager.HealthcareApis.Models.ServiceSpecification operationServiceSpecification = null) { throw null; }
+        public static Azure.ResourceManager.HealthcareApis.Models.OperationDetail OperationDetail(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.HealthcareApis.Models.OperationDisplay display = null, string origin = null, Azure.ResourceManager.HealthcareApis.Models.OperationActionType? actionType = default(Azure.ResourceManager.HealthcareApis.Models.OperationActionType?), Azure.ResourceManager.HealthcareApis.Models.ServiceSpecification operationServiceSpecification = null) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.OperationResultsDescription OperationResultsDescription(string id = null, string name = null, Azure.ResourceManager.HealthcareApis.Models.OperationResultStatus? status = default(Azure.ResourceManager.HealthcareApis.Models.OperationResultStatus?), string startTime = null, string endTime = null, System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.ServiceSpecification ServiceSpecification(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.Models.LogSpecification> logSpecifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.Models.MetricSpecification> metricSpecifications = null) { throw null; }
@@ -1389,10 +1373,26 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.MetricSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.MetricSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationActionType : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.OperationActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationActionType(string value) { throw null; }
+        public static Azure.ResourceManager.HealthcareApis.Models.OperationActionType Internal { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HealthcareApis.Models.OperationActionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.OperationActionType left, Azure.ResourceManager.HealthcareApis.Models.OperationActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HealthcareApis.Models.OperationActionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HealthcareApis.Models.OperationActionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.OperationActionType left, Azure.ResourceManager.HealthcareApis.Models.OperationActionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OperationDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.OperationDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.OperationDetail>
     {
         internal OperationDetail() { }
-        public Azure.ResourceManager.HealthcareApis.Models.ActionType? ActionType { get { throw null; } }
+        public Azure.ResourceManager.HealthcareApis.Models.OperationActionType? ActionType { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.OperationDisplay Display { get { throw null; } }
         public bool? IsDataAction { get { throw null; } }
         public string Name { get { throw null; } }
