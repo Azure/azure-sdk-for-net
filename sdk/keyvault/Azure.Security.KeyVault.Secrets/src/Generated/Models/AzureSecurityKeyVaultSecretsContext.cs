@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Secrets
     [ModelReaderWriterBuildable(typeof(SecretListResult))]
     [ModelReaderWriterBuildable(typeof(SecretRestoreParameters))]
     [ModelReaderWriterBuildable(typeof(SecretSetParameters))]
-    internal partial class AzureSecurityKeyVaultSecretsContext : ModelReaderWriterContext
+    public partial class AzureSecurityKeyVaultSecretsContext : ModelReaderWriterContext
     {
     }
 }
