@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<PrivateDnsZoneResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, privateZoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, privateZoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken).ConfigureAwait(false);
 
         // Preserve the shipped overload that accepted raw ETag headers before MatchConditions became the generated pattern.
         /// <summary> Creates or updates a Private DNS zone. Does not modify Links to virtual networks or DNS records within the zone. </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<PrivateDnsZoneResource> CreateOrUpdate(WaitUntil waitUntil, string privateZoneName, PrivateDnsZoneData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, privateZoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken);
+            => CreateOrUpdate(waitUntil, privateZoneName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken);
     }
 }

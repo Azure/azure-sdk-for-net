@@ -18,11 +18,6 @@ using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.Cod
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary> A class representing the PrivateDnsAaaaRecord data model. </summary>
-    [CodeGenSuppressAttribute("Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppressAttribute("Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppressAttribute("Write", typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppressAttribute("Create", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
-    [CodeGenSuppressAttribute("GetFormatFromOptions", typeof(ModelReaderWriterOptions))]
     public partial class PrivateDnsAaaaRecordData : PrivateDnsBaseRecordData, IJsonModel<PrivateDnsAaaaRecordData>
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateDnsAaaaRecordData"/> from. </param>

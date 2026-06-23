@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<PrivateDnsARecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string aRecordName, PrivateDnsARecordData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, aRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, aRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Creates or updates a DNS A record set. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<PrivateDnsARecordResource> CreateOrUpdate(WaitUntil waitUntil, string aRecordName, PrivateDnsARecordData data, ETag? ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, aRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken);
+            => CreateOrUpdate(waitUntil, aRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch != null ? new ETag(ifNoneMatch) : default(ETag?) }, cancellationToken);
 
         /// <summary> Lists the A record sets in a DNS zone. </summary>
         /// <param name="top"> The maximum number of record sets to return. </param>
