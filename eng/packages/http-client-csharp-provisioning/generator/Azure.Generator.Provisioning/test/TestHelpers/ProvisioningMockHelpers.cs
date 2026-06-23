@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.SourceInput;
+using Moq;
 using System;
 using System.IO;
 using System.Reflection;
@@ -24,6 +27,19 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 .Invoke([config]);
 
             var generator = new ProvisioningGenerator(context);
+            var mockInputNamespace = new Mock<InputNamespace>(
+                "Azure.Provisioning.Tests",
+                Array.Empty<string>(),
+                Array.Empty<InputLiteralType>(),
+                Array.Empty<InputEnumType>(),
+                Array.Empty<InputModelType>(),
+                Array.Empty<InputClient>(),
+                new InputAuth(null, null));
+            var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
+            mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
+            typeof(ManagementClientGenerator)
+                .GetField("<InputLibrary>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(generator, mockInputLibrary.Object);
             typeof(Azure.Generator.Management.ManagementInputLibrary)
                 .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(generator.InputLibrary, new ArmProviderSchema([], []));

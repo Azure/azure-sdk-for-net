@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
 
@@ -20,9 +21,6 @@
 
   <ItemGroup>
     <None Update="TestHelpers\Configuration.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestHelpers\tspCodeModel.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
