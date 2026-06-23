@@ -8,10 +8,19 @@
   `@@access(KeyVault, Access.internal, "csharp")` in
   specification/keyvault/data-plane/Secrets/client.tsp (Azure/azure-rest-api-specs).
 
-  This script applies a single residual workaround the emitter cannot yet
-  express in the spec: a positional argument-order swap in the emitted
-  UpdateSecret call sites. The fix will be deleted as soon as the upstream
-  @azure-typespec/http-client-csharp emitter ships the upstream fix.
+  This script applies two narrowly-scoped workarounds that the spec cannot
+  express; each is tracked against the upstream emitter:
+
+    Patch 1: UpdateSecret call-site argument order is swapped relative to the
+             builder declaration. Tracking: Azure/azure-sdk-for-net#60160.
+
+    Patch 2: AzureSecurityKeyVaultSecretsContext (the MRW ModelReaderWriterContext)
+             is emitted public even though the rest of the KeyVault namespace is
+             marked Access.internal. Tracking: Azure/azure-sdk-for-net#60161.
+
+  Once both upstream fixes ship and the library-local emitter pin
+  (sdk/keyvault/Azure.Security.KeyVault.Secrets/emitter-package.json) moves
+  past those builds, this whole script can be deleted.
 #>
 [CmdletBinding()]
 param(
