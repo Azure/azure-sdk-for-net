@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
@@ -203,7 +205,7 @@ public class AuthenticationPolicyCreateTests
     }
 
     [Test]
-    public void Create_WithApiKeyCredentialSource_AndScope_ThrowsInvalidOperationException()
+    public void Create_WithApiKeyCredentialSource_AndScope_IgnoresScopeAndUsesProviderKey()
     {
         TestClientSettings settings = new();
         IConfigurationRoot config = new ConfigurationBuilder()
@@ -222,11 +224,15 @@ public class AuthenticationPolicyCreateTests
         string? scopeValue = settings.Credential.AdditionalProperties!["Scope"];
         Assert.That(scopeValue, Is.EqualTo("https://example.com/.default"), "Scope should be readable from AdditionalProperties");
 
-        // This should throw because scope is not applicable for ApiKey
-        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() =>
-            AuthenticationPolicy.Create(settings));
+        // Scope is meaningless for API-key auth and is silently ignored, so a
+        // TokenProvider supplied by a customer resolver can coexist with
+        // a stray Scope value in config.
+        PipelinePolicy policy = AuthenticationPolicy.Create(settings);
 
-        Assert.That(ex!.Message, Does.Contain("Scope is not applicable for API key authentication"));
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+        ApiKeyAuthenticationPolicy apiKeyPolicy = (ApiKeyAuthenticationPolicy)policy;
+        string? key = GetKeyFromApiKeyPolicy(apiKeyPolicy);
+        Assert.That(key, Is.EqualTo("api-key"));
     }
 
     [Test]
@@ -293,6 +299,53 @@ public class AuthenticationPolicyCreateTests
         BearerTokenPolicy bearerPolicy = (BearerTokenPolicy)policy;
         string? scope = GetScopeFromBearerTokenPolicy(bearerPolicy);
         Assert.That(scope, Is.EqualTo("https://example.com/.default"));
+    }
+
+    [Test]
+    public void Create_WithTokenCredentialSource_AndScopeAtRoot_ReadsScope()
+    {
+        // Verifies that Create reads Scope from the root of the credential
+        // section, supporting writers that store Scope directly on the
+        // credential section rather than under AdditionalProperties.
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+                ["TestClient:Credential:Scope"] = "https://example.com/.default"
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+        settings.CredentialProvider = new TestTokenProvider("test-token");
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<BearerTokenPolicy>());
+        string? scope = GetScopeFromBearerTokenPolicy((BearerTokenPolicy)policy);
+        Assert.That(scope, Is.EqualTo("https://example.com/.default"));
+    }
+
+    [Test]
+    public void Create_WithTokenCredentialSource_AndScopeAtBothLocations_PrefersRoot()
+    {
+        // When Scope appears at both the root and under AdditionalProperties,
+        // the root value wins.
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+                ["TestClient:Credential:Scope"] = "https://new-shape/.default",
+                ["TestClient:Credential:AdditionalProperties:Scope"] = "https://legacy-shape/.default"
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+        settings.CredentialProvider = new TestTokenProvider("test-token");
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        string? scope = GetScopeFromBearerTokenPolicy((BearerTokenPolicy)policy);
+        Assert.That(scope, Is.EqualTo("https://new-shape/.default"));
     }
 
     [Test]
@@ -429,6 +482,176 @@ public class AuthenticationPolicyCreateTests
         Assert.That(key, Is.Not.Null);
         Assert.That(key, Is.EqualTo(longKey));
         Assert.That(key!.Length, Is.EqualTo(10000));
+    }
+
+    // -------- End-to-end: GetClientSettings then AuthenticationPolicy.Create --------
+    //
+    // SCM does not synthesize a TokenProvider for inline ApiKey
+    // configurations — the consuming library reads CredentialSettings.Key
+    // directly when TokenProvider is null. AuthenticationPolicy.Create
+    // also falls back to Credential.Key for ApiKey, so it produces a working
+    // policy end-to-end without any CredentialResolver participation.
+
+    [Test]
+    public void Create_AfterGetClientSettings_ApiKeySource_UsesInlineKey()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Endpoint"] = "https://example.com",
+                ["TestClient:Credential:CredentialSource"] = "ApiKey",
+                ["TestClient:Credential:Key"] = "inline-secret",
+            })
+            .Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            Array.Empty<CredentialResolver>());
+
+        // SCM does not auto-fill TokenProvider for inline ApiKey configs.
+        Assert.That(settings.CredentialProvider, Is.Null);
+        Assert.That(settings.Credential!.Key, Is.EqualTo("inline-secret"));
+
+        // AuthenticationPolicy.Create must still produce the right policy by
+        // reading Credential.Key directly when TokenProvider is null.
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+        Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("inline-secret"));
+    }
+
+    [Test]
+    public void Create_AfterGetClientSettings_ApiKeyAlias_UsesInlineKey()
+    {
+        // The "ApiKeyCredential" alias must normalize to the same handling
+        // path and still produce a working policy from Credential.Key.
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Endpoint"] = "https://example.com",
+                ["TestClient:Credential:CredentialSource"] = "ApiKeyCredential",
+                ["TestClient:Credential:Key"] = "alias-secret",
+            })
+            .Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            Array.Empty<CredentialResolver>());
+
+        Assert.That(settings.CredentialProvider, Is.Null);
+        Assert.That(settings.Credential!.Key, Is.EqualTo("alias-secret"));
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+        Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("alias-secret"));
+    }
+
+    [Test]
+    public void Create_AfterGetClientSettings_ApiKeyWithStrayScope_IgnoresScopeAndUsesInlineKey()
+    {
+        // ApiKey configs may carry a stray Scope value (e.g., in mixed configs
+        // shared with token-credential clients). Create must NOT throw — it
+        // ignores Scope and reads Credential.Key directly.
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Endpoint"] = "https://example.com",
+                ["TestClient:Credential:CredentialSource"] = "ApiKey",
+                ["TestClient:Credential:Key"] = "scoped-secret",
+                ["TestClient:Credential:AdditionalProperties:Scope"] = "https://example.com/.default",
+            })
+            .Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            Array.Empty<CredentialResolver>());
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+        Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("scoped-secret"));
+    }
+
+    [Test]
+    public void Create_CustomerResolverProducesProviderForApiKey_PolicyUsesProviderKey()
+    {
+        // Customers can still claim ApiKey sections with their own
+        // CredentialResolver — for example, to back the key with a vault
+        // lookup. AuthenticationPolicy.Create reads from TokenProvider
+        // when it is non-null, falling back to Credential.Key only when it is.
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Endpoint"] = "https://example.com",
+                ["TestClient:Credential:CredentialSource"] = "ApiKey",
+                ["TestClient:Credential:Key"] = "config-key-should-be-overridden",
+            })
+            .Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>(
+            "TestClient",
+            new VaultLikeApiKeyResolver("vault-key"));
+
+        Assert.That(settings.CredentialProvider, Is.Not.Null);
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<ApiKeyAuthenticationPolicy>());
+        Assert.That(GetKeyFromApiKeyPolicy((ApiKeyAuthenticationPolicy)policy), Is.EqualTo("vault-key"));
+    }
+
+    // -------- Phase 1.9: legacy ClientSettings.CredentialProvider routes through Credential.TokenProvider --------
+
+    [Test]
+    public void Create_TokenSource_LegacyCredentialProviderField_RoutesThroughCredential()
+    {
+        // Callers who only know about the legacy ClientSettings.CredentialProvider
+        // continue to produce a working policy — the setter writes through
+        // to Credential.TokenProvider, which Create reads.
+        TestClientSettings settings = new();
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["TestClient:Credential:CredentialSource"] = "TokenCredential",
+                ["TestClient:Credential:Scope"] = "https://example.com/.default",
+            })
+            .Build();
+        settings.Bind(config.GetSection("TestClient"));
+
+        var provider = new TestTokenProvider("legacy-only");
+        settings.CredentialProvider = provider;
+
+        AuthenticationPolicy policy = AuthenticationPolicy.Create(settings);
+
+        Assert.That(policy, Is.InstanceOf<BearerTokenPolicy>());
+        Assert.That(GetScopeFromBearerTokenPolicy((BearerTokenPolicy)policy), Is.EqualTo("https://example.com/.default"));
+
+        BearerTokenPolicy bearer = (BearerTokenPolicy)policy;
+        FieldInfo providerField = typeof(BearerTokenPolicy).GetField("_tokenProvider", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        AuthenticationTokenProvider wired = (AuthenticationTokenProvider)providerField.GetValue(bearer)!;
+        Assert.That(wired, Is.SameAs(provider),
+            "Setting ClientSettings.CredentialProvider must wire the policy via Credential.TokenProvider.");
+    }
+
+    private sealed class VaultLikeApiKeyResolver : CredentialResolver
+    {
+        private readonly string _key;
+        public VaultLikeApiKeyResolver(string key) => _key = key;
+
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            string? source = credentialSection["CredentialSource"];
+            if (string.Equals(source, "ApiKey", StringComparison.OrdinalIgnoreCase))
+            {
+                provider = new TestTokenProvider(_key);
+                return true;
+            }
+            provider = null;
+            return false;
+        }
     }
 
     private class TestTokenProvider : AuthenticationTokenProvider

@@ -12,7 +12,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_SessionFiles : SamplesBase
 {
@@ -30,21 +29,17 @@ public class Sample_SessionFiles : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
         #endregion
         #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
         ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
-        string sessionKey = Guid.NewGuid().ToString("N");
         string sessionId = Guid.NewGuid().ToString("N");
         ProjectAgentSession session = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            isolationKey: sessionKey,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -80,9 +75,9 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Async
-        SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-        Console.WriteLine($"The path {response.Path} contains the next files:");
-        foreach (SessionDirectoryEntry entry in response.Entries)
+        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        Console.WriteLine($"The path contains the next files:");
+        await foreach (SessionDirectoryEntry entry in response)
         {
             Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
         }
@@ -103,7 +98,7 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
         await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }
 
@@ -120,21 +115,16 @@ public class Sample_SessionFiles : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
         #region Snippet:Sample_CreateAgentAndSession_SessionFiles_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
-        string sessionKey = Guid.NewGuid().ToString();
         string sessionId = Guid.NewGuid().ToString();
         ProjectAgentSession session = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId,
-            isolationKey: sessionKey,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -171,9 +161,9 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-        Console.WriteLine($"The path {response.Path} contains the next files:");
-        foreach (SessionDirectoryEntry entry in response.Entries)
+        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        Console.WriteLine($"The path contains the next files:");
+        foreach (SessionDirectoryEntry entry in response)
         {
             Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
         }
@@ -194,7 +184,7 @@ public class Sample_SessionFiles : SamplesBase
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
         sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }
 

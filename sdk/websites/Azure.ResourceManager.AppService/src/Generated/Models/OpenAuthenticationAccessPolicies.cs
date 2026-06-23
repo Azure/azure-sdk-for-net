@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> AuthenticationPolicy of type Open. </summary>
+    /// <summary>
+    /// AuthenticationPolicy of type Open.
+    /// Serialized Name: OpenAuthenticationAccessPolicies
+    /// </summary>
     internal partial class OpenAuthenticationAccessPolicies
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
-        /// <param name="openAuthenticationPolicyList"> Open authentication policies. </param>
+        /// <param name="openAuthenticationPolicyList">
+        /// Open authentication policies.
+        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Open authentication policies. </summary>
+        /// <summary>
+        /// Open authentication policies.
+        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
+        /// </summary>
         [WirePath("policies")]
         public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get; }
     }

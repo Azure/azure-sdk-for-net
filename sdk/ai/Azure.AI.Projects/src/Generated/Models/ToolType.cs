@@ -33,6 +33,8 @@ namespace Azure.AI.Projects
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
+        private const string FabricIqPreviewValue = "fabric_iq_preview";
+        private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -114,6 +116,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the WorkIqPreview. </summary>
         public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
+
+        /// <summary> Gets the FabricIqPreview. </summary>
+        public static ToolType FabricIqPreview { get; } = new ToolType(FabricIqPreviewValue);
+
+        /// <summary> Gets the ToolboxSearchPreview. </summary>
+        public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

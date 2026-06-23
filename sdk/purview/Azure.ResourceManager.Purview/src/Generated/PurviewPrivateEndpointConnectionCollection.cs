@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
-                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    new PurviewPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Purview
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, PurviewPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PurviewArmOperation<PurviewPrivateEndpointConnectionResource> operation = new PurviewArmOperation<PurviewPrivateEndpointConnectionResource>(
-                    new PurviewPrivateEndpointConnectionOperationSource(Client),
+                    new PurviewPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -46,22 +46,18 @@ namespace Azure.ResourceManager.Network.Samples
                 VpnProtocols = { VpnGatewayTunnelingProtocol.IkeV2 },
                 VpnClientRootCertificates = {new VpnServerConfigVpnClientRootCertificate
 {
-Name = "vpnServerConfigVpnClientRootCert1",
 PublicCertData = BinaryData.FromObjectAsJson("MIIC5zCCAc+gAwIBAgIQErQ0Hk4aDJxIA+Q5RagB+jANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAtQMlNSb290Q2VydDAeFw0xNzEyMTQyMTA3MzhaFw0xODEyMTQyMTI3MzhaMBYxFDASBgNVBAMMC1AyU1Jvb3RDZXJ0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArP7/NQXmW7cQ/ZR1mv3Y3I29Lt7HTOqzo/1KUOoVH3NItbQIRAQbwKy3UWrOFz4eGNX2GWtNRMdCyWsKeqy9Ltsdfcm1IbKXkl84DFeU/ZacXu4Dl3xX3gV5du4TLZjEowJELyur11Ea2YcjPRQ/FzAF9/hGuboS1HZQEPLx4FdUs9OxCYOtc0MxBCwLfVTTRqarb0Ne+arNYd4kCzIhAke1nOyKAJBda5ZL+VHy3S5S8qGlD46jm8HXugmAkUygS4oIIXOmj/1O9sNAi3LN60zufSzCmP8Rm/iUGX+DHAGGiXxwZOKQLEDaZXKqoHjMPP0XudmSWwOIbyeQVrLhkwIDAQABozEwLzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFEfeNU2trYxNLF9ONmuJUsT13pKDMA0GCSqGSIb3DQEBCwUAA4IBAQBmM6RJzsGGipxyMhimHKN2xlkejhVsgBoTAhOU0llW9aUSwINJ9zFUGgI8IzUFy1VG776fchHp0LMRmPSIUYk5btEPxbsrPtumPuMH8EQGrS+Rt4pD+78c8H1fEPkq5CmDl/PKu4JoFGv+aFcE+Od0hlILstIF10Qysf++QXDolKfzJa/56bgMeYKFiju73loiRM57ns8ddXpfLl792UVpRkFU62LNns6Y1LKTwapmUF4IvIuAIzd6LZNOQng64LAKXtKnViJ1JQiXwf4CEzhgvAti3/ejpb3U90hsrUcyZi6wBv9bZLcAJRWpz61JNYliM1d1grSwQDKGXNQE4xuN"),
 }},
                 VpnClientRevokedCertificates = {new VpnServerConfigVpnClientRevokedCertificate
 {
-Name = "vpnServerConfigVpnClientRevokedCert1",
 Thumbprint = "83FFBFC8848B5A5836C94D0112367E16148A286F",
 }},
                 RadiusServerRootCertificates = {new VpnServerConfigRadiusServerRootCertificate
 {
-Name = "vpnServerConfigRadiusServerRootCer1",
 PublicCertData = BinaryData.FromObjectAsJson("MIIC5zCCAc+gAwIBAgIQErQ0Hk4aDJxIA+Q5RagB+jANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAtQMlNSb290Q2VydDAeFw0xNzEyMTQyMTA3MzhaFw0xODEyMTQyMTI3MzhaMBYxFDASBgNVBAMMC1AyU1Jvb3RDZXJ0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArP7/NQXmW7cQ/ZR1mv3Y3I29Lt7HTOqzo/1KUOoVH3NItbQIRAQbwKy3UWrOFz4eGNX2GWtNRMdCyWsKeqy9Ltsdfcm1IbKXkl84DFeU/ZacXu4Dl3xX3gV5du4TLZjEowJELyur11Ea2YcjPRQ/FzAF9/hGuboS1HZQEPLx4FdUs9OxCYOtc0MxBCwLfVTTRqarb0Ne+arNYd4kCzIhAke1nOyKAJBda5ZL+VHy3S5S8qGlD46jm8HXugmAkUygS4oIIXOmj/1O9sNAi3LN60zufSzCmP8Rm/iUGX+DHAGGiXxwZOKQLEDaZXKqoHjMPP0XudmSWwOIbyeQVrLhkwIDAQABozEwLzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFEfeNU2trYxNLF9ONmuJUsT13pKDMA0GCSqGSIb3DQEBCwUAA4IBAQBmM6RJzsGGipxyMhimHKN2xlkejhVsgBoTAhOU0llW9aUSwINJ9zFUGgI8IzUFy1VG776fchHp0LMRmPSIUYk5btEPxbsrPtumPuMH8EQGrS+Rt4pD+78c8H1fEPkq5CmDl/PKu4JoFGv+aFcE+Od0hlILstIF10Qysf++QXDolKfzJa/56bgMeYKFiju73loiRM57ns8ddXpfLl792UVpRkFU62LNns6Y1LKTwapmUF4IvIuAIzd6LZNOQng64LAKXtKnViJ1JQiXwf4CEzhgvAti3/ejpb3U90hsrUcyZi6wBv9bZLcAJRWpz61JNYliM1d1grSwQDKGXNQE4xuM"),
 }},
                 RadiusClientRootCertificates = {new VpnServerConfigRadiusClientRootCertificate
 {
-Name = "vpnServerConfigRadiusClientRootCert1",
 Thumbprint = "83FFBFC8848B5A5836C94D0112367E16148A286F",
 }},
                 VpnClientIPsecPolicies = {new IPsecPolicy(
@@ -84,24 +80,20 @@ IsDefault = true,
 Priority = 0,
 PolicyMembers = {new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy1",
 AttributeType = VpnPolicyMemberAttributeType.RadiusAzureGroupId,
 AttributeValue = "6ad1bd08",
 }},
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnServerConfiguration1/vpnServerConfigurationPolicyGroups/policyGroup1"),
-Name = "policyGroup1",
 }, new VpnServerConfigurationPolicyGroupData
 {
 IsDefault = true,
 Priority = 0,
 PolicyMembers = {new VpnServerConfigurationPolicyGroupMember
 {
-Name = "policy2",
 AttributeType = VpnPolicyMemberAttributeType.CertificateGroupId,
 AttributeValue = "red.com",
 }},
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnServerConfiguration1/vpnServerConfigurationPolicyGroups/policyGroup2"),
-Name = "policyGroup2",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -109,7 +101,7 @@ Name = "policyGroup2",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<VpnServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vpnServerConfigurationName, data);
+            ArmOperation<VpnServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, vpnServerConfigurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnServerConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="properties"> HostPool properties that can be patched. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, HostPoolPatchProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HostPoolPatchProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Tags = tags;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> HostPool properties that can be patched. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.MaxSessionLimit = value.Value;
+                Properties.MaxSessionLimit = value;
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.PersonalDesktopAssignmentType = value.Value;
+                Properties.PersonalDesktopAssignmentType = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.LoadBalancerType = value.Value;
+                Properties.LoadBalancerType = value;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.Ring = value.Value;
+                Properties.Ring = value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.IsValidationEnvironment = value.Value;
+                Properties.IsValidationEnvironment = value;
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.SsoSecretType = value.Value;
+                Properties.SsoSecretType = value;
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.PreferredAppGroupType = value.Value;
+                Properties.PreferredAppGroupType = value;
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.StartVmOnConnect = value.Value;
+                Properties.StartVmOnConnect = value;
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.ManagedPrivateUdp = value.Value;
+                Properties.ManagedPrivateUdp = value;
             }
         }
 
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.DirectUdp = value.Value;
+                Properties.DirectUdp = value;
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.PublicUdp = value.Value;
+                Properties.PublicUdp = value;
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.RelayUdp = value.Value;
+                Properties.RelayUdp = value;
             }
         }
 
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new HostPoolPatchProperties();
                 }
-                Properties.AllowRdpShortPathWithPrivateLink = value.Value;
+                Properties.AllowRdpShortPathWithPrivateLink = value;
             }
         }
     }

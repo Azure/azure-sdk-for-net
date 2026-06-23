@@ -1,14 +1,28 @@
 # Release History
 
-## 12.27.0-beta.2 (Unreleased)
+## 12.28.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on Data Lake clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `DataLakeSasBuilder`.
 
 ### Other Changes
+
+## 12.27.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.27.0-beta.1
+
+## 12.26.0 (2026-05-12)
+
+### Features Added
+- Includes all features from 12.26.0-beta.1
+
+### Bugs Fixed
+- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
 
 ## 12.27.0-beta.1 (2026-03-24)
 

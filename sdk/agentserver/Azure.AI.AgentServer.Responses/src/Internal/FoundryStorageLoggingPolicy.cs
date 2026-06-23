@@ -91,16 +91,22 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     {
         var sw = Stopwatch.StartNew();
         var clientRequestId = message.Request.ClientRequestId;
-        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId);
+        var traceParent = GetTraceParent(message);
+        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId, traceParent);
 
+        bool transportFailureLogged = false;
         try
         {
             ProcessNext(message, pipeline);
         }
+        catch (Exception ex) when (LogAndFilterTransportException(message, clientRequestId, traceParent, sw, ex, out transportFailureLogged))
+        {
+            throw; // unreachable — filter always returns false
+        }
         finally
         {
             sw.Stop();
-            LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+            LogOutcome(message, clientRequestId, traceParent, sw.ElapsedMilliseconds, transportFailureLogged);
         }
     }
 
@@ -109,39 +115,87 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
     {
         var sw = Stopwatch.StartNew();
         var clientRequestId = message.Request.ClientRequestId;
-        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId);
+        var traceParent = GetTraceParent(message);
+        LogRequestStarted(message.Request.Method.ToString(), MaskStorageUrl(message.Request.Uri.ToString()), clientRequestId, traceParent);
 
+        bool transportFailureLogged = false;
         try
         {
             await ProcessNextAsync(message, pipeline);
         }
+        catch (Exception ex) when (LogAndFilterTransportException(message, clientRequestId, traceParent, sw, ex, out transportFailureLogged))
+        {
+            throw; // unreachable — filter always returns false
+        }
         finally
         {
             sw.Stop();
-            LogResponse(message, clientRequestId, sw.ElapsedMilliseconds);
+            LogOutcome(message, clientRequestId, traceParent, sw.ElapsedMilliseconds, transportFailureLogged);
         }
     }
 
-    private void LogResponse(HttpMessage message, string clientRequestId, long durationMs)
+    /// <summary>
+    /// Exception filter that logs transport failures. Always returns false so the
+    /// exception continues to propagate — we never swallow it.
+    /// </summary>
+    private bool LogAndFilterTransportException(HttpMessage message, string clientRequestId, string? traceParent, Stopwatch sw, Exception ex, out bool logged)
+    {
+        logged = false;
+        if (!message.HasResponse)
+        {
+            sw.Stop();
+            LogTransportFailure(
+                ex,
+                message.Request.Method.ToString(),
+                MaskStorageUrl(message.Request.Uri.ToString()),
+                sw.ElapsedMilliseconds,
+                clientRequestId,
+                traceParent);
+            logged = true;
+        }
+
+        return false; // never catch — let the exception propagate
+    }
+
+    private void LogOutcome(HttpMessage message, string clientRequestId, string? traceParent, long durationMs, bool transportFailureLogged)
+    {
+        if (message.HasResponse)
+        {
+            LogResponse(message, clientRequestId, traceParent, durationMs);
+        }
+        else if (!transportFailureLogged)
+        {
+            // No response and no exception — an inner policy short-circuited the pipeline.
+            LogTransportFailureNoException(
+                message.Request.Method.ToString(),
+                MaskStorageUrl(message.Request.Uri.ToString()),
+                durationMs,
+                clientRequestId,
+                traceParent);
+        }
+    }
+
+    private static string? GetTraceParent(HttpMessage message)
+    {
+        message.Request.Headers.TryGetValue(PlatformHeaders.TraceParent, out var traceParent);
+        return traceParent;
+    }
+
+    private void LogResponse(HttpMessage message, string clientRequestId, string? traceParent, long durationMs)
     {
         var response = message.Response;
-        if (response is null)
-        {
-            return;
-        }
 
         var uri = MaskStorageUrl(message.Request.Uri.ToString());
 
         // Extract service-side correlation headers.
-        response.Headers.TryGetValue("x-ms-request-id", out var serviceRequestId);
-        response.Headers.TryGetValue("x-request-id", out var xRequestId);
+        response.Headers.TryGetValue(PlatformHeaders.RequestId, out var xRequestId);
         response.Headers.TryGetValue("apim-request-id", out var apimRequestId);
 
         // Check if isolation headers were sent on the outbound request.
         var hasUserIsolationKey = message.Request.Headers.TryGetValue(
-            IsolationContext.UserIsolationKeyHeaderName, out _);
+            PlatformHeaders.UserIsolationKey, out _);
         var hasChatIsolationKey = message.Request.Headers.TryGetValue(
-            IsolationContext.ChatIsolationKeyHeaderName, out _);
+            PlatformHeaders.ChatIsolationKey, out _);
 
         if (response.IsError)
         {
@@ -151,7 +205,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
                 response.Status,
                 durationMs,
                 clientRequestId,
-                serviceRequestId,
+                traceParent,
                 xRequestId,
                 apimRequestId,
                 hasUserIsolationKey,
@@ -165,7 +219,7 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
                 response.Status,
                 durationMs,
                 clientRequestId,
-                serviceRequestId,
+                traceParent,
                 xRequestId,
                 apimRequestId,
                 hasUserIsolationKey,
@@ -175,12 +229,18 @@ internal sealed partial class FoundryStorageLoggingPolicy : HttpPipelinePolicy
 
     // --- LoggerMessage source-generated methods ---
 
-    [LoggerMessage(Level = LogLevel.Debug, Message = "Foundry storage {Method} {Uri} starting (x-ms-client-request-id: {ClientRequestId})")]
-    private partial void LogRequestStarted(string method, string uri, string clientRequestId);
+    [LoggerMessage(Level = LogLevel.Debug, Message = "Foundry storage {Method} {Uri} starting (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
+    private partial void LogRequestStarted(string method, string uri, string clientRequestId, string? traceParent);
 
-    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} {Uri} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
-    private partial void LogRequestSucceeded(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
+    [LoggerMessage(Level = LogLevel.Information, Message = "Foundry storage {Method} {Uri} completed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
+    private partial void LogRequestSucceeded(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
 
-    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} {Uri} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, x-ms-request-id: {ServiceRequestId}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
-    private partial void LogRequestFailed(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? serviceRequestId, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Foundry storage {Method} {Uri} failed HTTP {StatusCode} in {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent}, x-request-id: {XRequestId}, apim-request-id: {ApimRequestId}, HasUserIsolationKey: {HasUserIsolationKey}, HasChatIsolationKey: {HasChatIsolationKey})")]
+    private partial void LogRequestFailed(string method, string uri, int statusCode, long durationMs, string clientRequestId, string? traceParent, string? xRequestId, string? apimRequestId, bool hasUserIsolationKey, bool hasChatIsolationKey);
+
+    [LoggerMessage(Level = LogLevel.Error, Message = "Foundry storage {Method} {Uri} transport failure after {DurationMs}ms (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
+    private partial void LogTransportFailure(Exception exception, string method, string uri, long durationMs, string clientRequestId, string? traceParent);
+
+    [LoggerMessage(Level = LogLevel.Error, Message = "Foundry storage {Method} {Uri} completed with no response and no exception after {DurationMs}ms — pipeline may have been short-circuited (x-ms-client-request-id: {ClientRequestId}, traceparent: {TraceParent})")]
+    private partial void LogTransportFailureNoException(string method, string uri, long durationMs, string clientRequestId, string? traceParent);
 }

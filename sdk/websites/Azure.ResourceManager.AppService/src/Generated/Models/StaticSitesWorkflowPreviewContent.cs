@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Request entity for previewing the Static Site workflow. </summary>
+    /// <summary>
+    /// Request entity for previewing the Static Site workflow
+    /// Serialized Name: StaticSitesWorkflowPreviewRequest
+    /// </summary>
     public partial class StaticSitesWorkflowPreviewContent : ResourceData
     {
         /// <summary>
@@ -57,10 +60,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryUri"> URL for the repository of the static site. </param>
-        /// <param name="branch"> The target branch in the repository. </param>
-        /// <param name="buildProperties"> Build properties to configure on the repository. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="repositoryUri">
+        /// URL for the repository of the static site.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.repositoryUrl
+        /// </param>
+        /// <param name="branch">
+        /// The target branch in the repository.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.branch
+        /// </param>
+        /// <param name="buildProperties">
+        /// Build properties to configure on the repository.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.buildProperties
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,16 +86,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> URL for the repository of the static site. </summary>
+        /// <summary>
+        /// URL for the repository of the static site.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.repositoryUrl
+        /// </summary>
         [WirePath("properties.repositoryUrl")]
         public Uri RepositoryUri { get; set; }
-        /// <summary> The target branch in the repository. </summary>
+        /// <summary>
+        /// The target branch in the repository.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.branch
+        /// </summary>
         [WirePath("properties.branch")]
         public string Branch { get; set; }
-        /// <summary> Build properties to configure on the repository. </summary>
+        /// <summary>
+        /// Build properties to configure on the repository.
+        /// Serialized Name: StaticSitesWorkflowPreviewRequest.properties.buildProperties
+        /// </summary>
         [WirePath("properties.buildProperties")]
         public StaticSiteBuildProperties BuildProperties { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

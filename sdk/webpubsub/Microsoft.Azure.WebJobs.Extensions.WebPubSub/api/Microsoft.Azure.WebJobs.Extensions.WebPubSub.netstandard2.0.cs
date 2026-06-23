@@ -179,6 +179,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         public WebPubSubContextAttribute() { }
         public WebPubSubContextAttribute(params string[] connections) { }
+        [System.ObsoleteAttribute("Use Connections instead.")]
+        public string Connection { get { throw null; } set { } }
         public string[] Connections { get { throw null; } set { } }
     }
     public partial class WebPubSubFunctionsOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
@@ -203,6 +205,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName) { }
         public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, params string[] connections) { }
         public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerAcceptedClientProtocols ClientProtocols { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use Connections instead.")]
+        public string Connection { get { throw null; } set { } }
         public string[] Connections { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public string EventName { get { throw null; } }

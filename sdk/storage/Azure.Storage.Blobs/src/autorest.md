@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/15d7f54a5389d5906ffb4e56bb2f38fe5525c0d3/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-06-06/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/33687e934eb68f8269f8183e148035aeb52ee8c2/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-10-06/blob.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true

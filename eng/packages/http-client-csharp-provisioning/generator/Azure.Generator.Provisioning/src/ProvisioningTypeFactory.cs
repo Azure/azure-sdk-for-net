@@ -4,6 +4,7 @@
 using Azure.Generator.Management;
 using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
+using Azure.Generator.Provisioning.Utilities;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
@@ -56,48 +57,21 @@ namespace Azure.Generator.Provisioning
             // Let the mgmt base resolve known system types (ResourceIdentifier, AzureLocation, etc.)
             var mgmtType = base.CreateCSharpTypeCore(inputType);
 
-            // For model types: if resolved to a system type that's a ProvisionableConstruct, return as-is.
-            // Otherwise, for non-ProvisionableConstruct system types (ResponseError from mgmt),
-            // wrap in BicepValue<T> since they can't be used with DefineModelProperty.
-            if (inputType is InputModelType)
+            if (mgmtType != null && BicepTypeHelpers.IsProvisioningType(mgmtType))
             {
-                if (mgmtType != null && mgmtType.IsFrameworkType
-                    && !typeof(ProvisionableConstruct).IsAssignableFrom(mgmtType.FrameworkType))
-                {
-                    return new CSharpType(typeof(BicepValue<>), mgmtType);
-                }
                 return mgmtType;
             }
 
-            // For enum types, wrap in BicepValue<T>
-            // System enums: mgmtType is the system CSharpType
-            // Non-system enums: mgmtType is our ProvisioningEnumProvider.Type
-            if (inputType is InputEnumType)
+            if (mgmtType != null && mgmtType.IsList)
             {
-                if (mgmtType != null)
-                    return new CSharpType(typeof(BicepValue<>), mgmtType);
-                // Fallback: shouldn't happen now that ProvisioningEnumProvider is wired up
-                return new CSharpType(typeof(BicepValue<>), typeof(string));
+                return new CSharpType(typeof(BicepList<>), UnwrapBicepValue(mgmtType.Arguments[0]));
             }
 
-            // For array types, produce BicepList<T> — element type should NOT be BicepValue-wrapped
-            if (inputType is InputArrayType arrayType)
+            if (mgmtType != null && mgmtType.IsDictionary)
             {
-                var elementType = GetUnwrappedCSharpType(arrayType.ValueType);
-                if (elementType != null)
-                    return new CSharpType(typeof(BicepList<>), elementType);
+                return new CSharpType(typeof(BicepDictionary<>), UnwrapBicepValue(mgmtType.Arguments[1]));
             }
 
-            // For dictionary types, produce BicepDictionary<TValue> — value type should NOT be BicepValue-wrapped
-            if (inputType is InputDictionaryType dictType)
-            {
-                var valueType = GetUnwrappedCSharpType(dictType.ValueType);
-                if (valueType != null)
-                    return new CSharpType(typeof(BicepDictionary<>), valueType);
-            }
-
-            // For all other non-model, non-enum types resolved by base (primitives, date/time, duration, etc.),
-            // wrap in BicepValue<T>
             if (mgmtType != null)
             {
                 return new CSharpType(typeof(BicepValue<>), mgmtType);
@@ -106,31 +80,8 @@ namespace Azure.Generator.Provisioning
             return mgmtType;
         }
 
-        /// <summary>
-        /// Resolves an InputType to its raw CSharpType without BicepValue wrapping.
-        /// Used for BicepList/BicepDictionary element types which handle wrapping internally.
-        /// </summary>
-        private CSharpType? GetUnwrappedCSharpType(InputType inputType)
-        {
-            // For model types, check provisioning mapping first, then fall back to base
-            if (inputType is InputModelType inputModel)
-            {
-                if (KnownProvisioningTypes.TryGetProvisioningType(inputModel.CrossLanguageDefinitionId, out var provType))
-                    return provType;
-                return base.CreateCSharpTypeCore(inputType) ?? CreateCSharpType(inputType);
-            }
-
-            // For enum types, check provisioning mapping first, then fall back to base
-            if (inputType is InputEnumType inputEnum)
-            {
-                if (KnownProvisioningTypes.TryGetProvisioningType(inputEnum.CrossLanguageDefinitionId, out var provEnumType))
-                    return provEnumType;
-                return base.CreateCSharpTypeCore(inputType) ?? typeof(string);
-            }
-
-            // For all other types, use the base resolution (returns raw .NET type)
-            return base.CreateCSharpTypeCore(inputType);
-        }
+        private static CSharpType UnwrapBicepValue(CSharpType type)
+            => BicepTypeHelpers.IsBicepValueType(type) ? type.Arguments[0] : type;
 
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
@@ -153,16 +104,32 @@ namespace Azure.Generator.Provisioning
             var outputLib = ProvisioningGenerator.Instance.OutputLibrary;
             if (outputLib.TryGetResourcesByModel(model, out var resources))
             {
-                if (resources.Count == 1)
+                // When the same input model backs multiple resources (e.g. a parent
+                // resource and a virtual child "revisions" view that reuses the parent's
+                // payload), CreateModel must return a single representative provider.
+                // From the model side any of them works — they all serialize the same
+                // input model — but the mgmt FlattenPropertyVisitor builds
+                // OutputFlattenPropertyMap by calling CreateModel on the input model and
+                // mutates the returned provider's properties to add the flattened
+                // forwarding accessors. Prefer the canonical provider whose ResourceName
+                // matches the input model's own name so that flattening lands on the
+                // parent resource (the writable surface customers consume) and not on a
+                // child view. If none matches, fall back to the candidate with the
+                // alphabetically-smallest ResourceName for deterministic selection.
+                ProvisioningResourceProvider? canonical = null;
+                foreach (var candidate in resources)
                 {
-                    return resources[0];
+                    if (string.Equals(candidate.ResourceProjection?.ResourceName, model.Name, StringComparison.Ordinal))
+                    {
+                        return candidate;
+                    }
+                    if (canonical == null
+                        || string.CompareOrdinal(candidate.ResourceProjection?.ResourceName, canonical.ResourceProjection?.ResourceName) < 0)
+                    {
+                        canonical = candidate;
+                    }
                 }
-                // Multiple resources share the same model — not yet supported
-                throw new NotSupportedException(
-                    $"Model '{model.Name}' is shared by {resources.Count} resource types " +
-                    $"({string.Join(", ", resources.Select(r => r.Name))}). " +
-                    $"Multiple resources sharing the same model is not yet supported. " +
-                    $"See https://github.com/Azure/azure-sdk-for-net/issues/56733");
+                return canonical!;
             }
 
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)

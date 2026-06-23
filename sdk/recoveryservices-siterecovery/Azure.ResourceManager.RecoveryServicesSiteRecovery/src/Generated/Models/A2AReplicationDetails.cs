@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,18 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2AReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
-        internal A2AReplicationDetails()
+        internal A2AReplicationDetails() : base("A2A")
         {
             ProtectedDisks = new ChangeTrackingList<A2AProtectedDiskDetails>();
             UnprotectedDisks = new ChangeTrackingList<A2AUnprotectedDiskDetails>();
             ProtectedManagedDisks = new ChangeTrackingList<A2AProtectedManagedDiskDetails>();
             VmNics = new ChangeTrackingList<VmNicDetails>();
-            InstanceType = "A2A";
+            ReasonsBlockingReinstallDetails = new ChangeTrackingList<A2AAgentReinstallBlockingErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
         /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
@@ -83,7 +84,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="churnOptionSelected"> A value indicating the churn option selected by user. </param>
-        internal A2AReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, ResourceIdentifier protectionClusterId, bool? isClusterInfraReady, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="agentReinstallAttemptToVersion"> The agent version to which last agent reinstall was attempted. </param>
+        /// <param name="osFamilyName"> The OS family name. </param>
+        /// <param name="distroName"> The distro name. </param>
+        /// <param name="distroNameForWhichAgentIsInstalled"> The agent os name last agent reinstall was attempted. </param>
+        /// <param name="isAgentUpgradeable"> A value indicating whether replication agent upgradeable. </param>
+        /// <param name="isAgentReinstallRequired"> A value indicating whether replication agent reinstallation is required. </param>
+        /// <param name="reasonsBlockingReInstall"> value for reason blocking reinstall. </param>
+        /// <param name="reasonsBlockingReinstallDetails"> whether reinstall is possible or not. </param>
+        /// <param name="isAgentUpgradeInProgress"> A value indicating whether replication agent Upgrade is In-Progress. </param>
+        /// <param name="autoAgentUpgradeRetryCount"> auto agent upgrade retry count. </param>
+        /// <param name="isAgentUpgradeRetryThresholdExhausted"> A value indicating whether replication agent Upgrade retry exhausted. </param>
+        /// <param name="platformFaultDomain"> the platform fault domain. </param>
+        internal A2AReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, ResourceIdentifier protectionClusterId, bool? isClusterInfraReady, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected, string agentReinstallAttemptToVersion, string osFamilyName, string distroName, string distroNameForWhichAgentIsInstalled, bool? isAgentUpgradeable, bool? isAgentReinstallRequired, string reasonsBlockingReInstall, IList<A2AAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails, bool? isAgentUpgradeInProgress, long? autoAgentUpgradeRetryCount, bool? isAgentUpgradeRetryThresholdExhausted, int? platformFaultDomain) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricObjectId = fabricObjectId;
             InitialPrimaryZone = initialPrimaryZone;
@@ -141,120 +154,222 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             ChurnOptionSelected = churnOptionSelected;
-            InstanceType = instanceType ?? "A2A";
+            AgentReinstallAttemptToVersion = agentReinstallAttemptToVersion;
+            OsFamilyName = osFamilyName;
+            DistroName = distroName;
+            DistroNameForWhichAgentIsInstalled = distroNameForWhichAgentIsInstalled;
+            IsAgentUpgradeable = isAgentUpgradeable;
+            IsAgentReinstallRequired = isAgentReinstallRequired;
+            ReasonsBlockingReInstall = reasonsBlockingReInstall;
+            ReasonsBlockingReinstallDetails = reasonsBlockingReinstallDetails;
+            IsAgentUpgradeInProgress = isAgentUpgradeInProgress;
+            AutoAgentUpgradeRetryCount = autoAgentUpgradeRetryCount;
+            IsAgentUpgradeRetryThresholdExhausted = isAgentUpgradeRetryThresholdExhausted;
+            PlatformFaultDomain = platformFaultDomain;
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
         public ResourceIdentifier FabricObjectId { get; }
+
         /// <summary> The initial primary availability zone. </summary>
         public string InitialPrimaryZone { get; }
+
         /// <summary> The initial primary fabric location. </summary>
         public AzureLocation? InitialPrimaryFabricLocation { get; }
+
         /// <summary> The initial recovery availability zone. </summary>
         public string InitialRecoveryZone { get; }
+
         /// <summary> The initial primary extended location. </summary>
         public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
+
         /// <summary> The initial recovery extended location. </summary>
         public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
+
         /// <summary> The initial recovery fabric location. </summary>
         public AzureLocation? InitialRecoveryFabricLocation { get; }
+
         /// <summary> The multi vm group Id. </summary>
         public string MultiVmGroupId { get; }
+
         /// <summary> The multi vm group name. </summary>
         public string MultiVmGroupName { get; }
+
         /// <summary> Whether Multi VM group is auto created or specified by user. </summary>
         public MultiVmGroupCreateOption? MultiVmGroupCreateOption { get; }
+
         /// <summary> The management Id. </summary>
         public string ManagementId { get; }
+
         /// <summary> The replication protection cluster Id. </summary>
         public ResourceIdentifier ProtectionClusterId { get; }
+
         /// <summary> A value indicating if the cluster infra is ready or not. </summary>
         public bool? IsClusterInfraReady { get; }
+
         /// <summary> The list of protected disks. </summary>
         public IReadOnlyList<A2AProtectedDiskDetails> ProtectedDisks { get; }
+
         /// <summary> The list of unprotected disks. </summary>
         public IReadOnlyList<A2AUnprotectedDiskDetails> UnprotectedDisks { get; }
+
         /// <summary> The list of protected managed disks. </summary>
         public IReadOnlyList<A2AProtectedManagedDiskDetails> ProtectedManagedDisks { get; }
+
         /// <summary> The recovery boot diagnostic storage account Arm Id. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; }
+
         /// <summary> Primary fabric location. </summary>
         public AzureLocation? PrimaryFabricLocation { get; }
+
         /// <summary> The recovery fabric location. </summary>
         public AzureLocation? RecoveryFabricLocation { get; }
+
         /// <summary> The type of operating system. </summary>
         public string OSType { get; }
+
         /// <summary> The size of recovery virtual machine. </summary>
         public string RecoveryAzureVmSize { get; }
+
         /// <summary> The name of recovery virtual machine. </summary>
         public string RecoveryAzureVmName { get; }
+
         /// <summary> The recovery resource group. </summary>
         public ResourceIdentifier RecoveryAzureResourceGroupId { get; }
+
         /// <summary> The recovery cloud service. </summary>
         public string RecoveryCloudService { get; }
+
         /// <summary> The recovery availability set. </summary>
         public string RecoveryAvailabilitySet { get; }
+
         /// <summary> The recovery virtual network. </summary>
         public ResourceIdentifier SelectedRecoveryAzureNetworkId { get; }
+
         /// <summary> The test failover virtual network. </summary>
         public ResourceIdentifier SelectedTfoAzureNetworkId { get; }
+
         /// <summary> The virtual machine nic details. </summary>
         public IReadOnlyList<VmNicDetails> VmNics { get; }
+
         /// <summary> The synced configuration details. </summary>
         public A2AVmSyncedConfigDetails VmSyncedConfigDetails { get; }
+
         /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
         public int? MonitoringPercentageCompletion { get; }
+
         /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
         public string MonitoringJobType { get; }
+
         /// <summary> The last heartbeat received from the source server. </summary>
         public DateTimeOffset? LastHeartbeat { get; }
+
         /// <summary> The agent version. </summary>
         public string AgentVersion { get; }
+
         /// <summary> Agent expiry date. </summary>
         public DateTimeOffset? AgentExpireOn { get; }
+
         /// <summary> A value indicating whether replication agent update is required. </summary>
         public bool? IsReplicationAgentUpdateRequired { get; }
+
         /// <summary> Agent certificate expiry date. </summary>
         public DateTimeOffset? AgentCertificateExpireOn { get; }
+
         /// <summary> A value indicating whether agent certificate update is required. </summary>
         public bool? IsReplicationAgentCertificateUpdateRequired { get; }
+
         /// <summary> The recovery fabric object Id. </summary>
         public ResourceIdentifier RecoveryFabricObjectId { get; }
+
         /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
+
         /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
+
         /// <summary> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </summary>
         public string LifecycleId { get; }
+
         /// <summary> The test failover fabric object Id. </summary>
         public ResourceIdentifier TestFailoverRecoveryFabricObjectId { get; }
+
         /// <summary> The last RPO value in seconds. </summary>
         public long? RpoInSeconds { get; }
+
         /// <summary> The time (in UTC) when the last RPO value was calculated by Protection Service. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
+
         /// <summary> The primary availability zone. </summary>
         public string PrimaryAvailabilityZone { get; }
+
         /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; }
+
         /// <summary> The primary Extended Location. </summary>
         public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
+
         /// <summary> The recovery Extended Location. </summary>
         public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
+
         /// <summary> The encryption type of the VM. </summary>
         public SiteRecoveryVmEncryptionType? VmEncryptionType { get; }
+
         /// <summary> The test failover vm name. </summary>
         public string TfoAzureVmName { get; }
+
         /// <summary> The recovery azure generation. </summary>
         public string RecoveryAzureGeneration { get; }
+
         /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; }
+
         /// <summary> A value indicating whether the auto protection is enabled. </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; }
+
         /// <summary> The recovery virtual machine scale set id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; }
+
         /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; }
+
         /// <summary> A value indicating the churn option selected by user. </summary>
         public ChurnOptionSelected? ChurnOptionSelected { get; }
+
+        /// <summary> The agent version to which last agent reinstall was attempted. </summary>
+        public string AgentReinstallAttemptToVersion { get; }
+
+        /// <summary> The OS family name. </summary>
+        public string OsFamilyName { get; }
+
+        /// <summary> The distro name. </summary>
+        public string DistroName { get; }
+
+        /// <summary> The agent os name last agent reinstall was attempted. </summary>
+        public string DistroNameForWhichAgentIsInstalled { get; }
+
+        /// <summary> A value indicating whether replication agent upgradeable. </summary>
+        public bool? IsAgentUpgradeable { get; }
+
+        /// <summary> A value indicating whether replication agent reinstallation is required. </summary>
+        public bool? IsAgentReinstallRequired { get; }
+
+        /// <summary> value for reason blocking reinstall. </summary>
+        public string ReasonsBlockingReInstall { get; }
+
+        /// <summary> whether reinstall is possible or not. </summary>
+        public IList<A2AAgentReinstallBlockingErrorDetails> ReasonsBlockingReinstallDetails { get; }
+
+        /// <summary> A value indicating whether replication agent Upgrade is In-Progress. </summary>
+        public bool? IsAgentUpgradeInProgress { get; }
+
+        /// <summary> auto agent upgrade retry count. </summary>
+        public long? AutoAgentUpgradeRetryCount { get; }
+
+        /// <summary> A value indicating whether replication agent Upgrade retry exhausted. </summary>
+        public bool? IsAgentUpgradeRetryThresholdExhausted { get; }
+
+        /// <summary> the platform fault domain. </summary>
+        public int? PlatformFaultDomain { get; }
     }
 }

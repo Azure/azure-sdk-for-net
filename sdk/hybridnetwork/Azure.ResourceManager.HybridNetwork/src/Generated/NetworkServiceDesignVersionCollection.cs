@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkServiceDesignVersionCollection : ArmCollection, IEnumerable<NetworkServiceDesignVersionResource>, IAsyncEnumerable<NetworkServiceDesignVersionResource>
     {
-        private readonly ClientDiagnostics _networkServiceDesignVersionClientDiagnostics;
-        private readonly NetworkServiceDesignVersionsRestOperations _networkServiceDesignVersionRestClient;
+        private readonly ClientDiagnostics _networkServiceDesignVersionsClientDiagnostics;
+        private readonly NetworkServiceDesignVersions _networkServiceDesignVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkServiceDesignVersionCollection for mocking. </summary>
         protected NetworkServiceDesignVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkServiceDesignVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkServiceDesignVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkServiceDesignVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkServiceDesignVersionResource.ResourceType, out string networkServiceDesignVersionApiVersion);
-            _networkServiceDesignVersionRestClient = new NetworkServiceDesignVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkServiceDesignVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkServiceDesignVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", NetworkServiceDesignVersionResource.ResourceType.Namespace, Diagnostics);
+            _networkServiceDesignVersionsRestClient = new NetworkServiceDesignVersions(_networkServiceDesignVersionsClientDiagnostics, Pipeline, Endpoint, networkServiceDesignVersionApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkServiceDesignGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkServiceDesignGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkServiceDesignGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a network service design version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="data"> Parameters supplied to the create or update network service design version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkServiceDesignVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionClientDiagnostics, Pipeline, _networkServiceDesignVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, NetworkServiceDesignVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<NetworkServiceDesignVersionResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(
+                    new NetworkServiceDesignVersionOperationSource(Client),
+                    _networkServiceDesignVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a network service design version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="data"> Parameters supplied to the create or update network service design version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkServiceDesignVersionResource> CreateOrUpdate(WaitUntil waitUntil, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionOperationSource(Client), _networkServiceDesignVersionClientDiagnostics, Pipeline, _networkServiceDesignVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, NetworkServiceDesignVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<NetworkServiceDesignVersionResource> operation = new HybridNetworkArmOperation<NetworkServiceDesignVersionResource>(
+                    new NetworkServiceDesignVersionOperationSource(Client),
+                    _networkServiceDesignVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about a network service design version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> GetAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkServiceDesignVersionData> response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about a network service design version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkServiceDesignVersionResource> Get(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkServiceDesignVersionData> response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about a list of network service design versions under a network service design group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkServiceDesignVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkServiceDesignVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkServiceDesignVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionsGetByNetworkServiceDesignGroupAsyncCollectionResultOfT(
+                _networkServiceDesignVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "NetworkServiceDesignVersionCollection.GetAll"), data => new NetworkServiceDesignVersionResource(Client, data));
         }
 
         /// <summary>
         /// Gets information about a list of network service design versions under a network service design group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_ListByNetworkServiceDesignGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="NetworkServiceDesignVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkServiceDesignVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkServiceDesignVersionData, NetworkServiceDesignVersionResource>(new NetworkServiceDesignVersionsGetByNetworkServiceDesignGroupCollectionResultOfT(
+                _networkServiceDesignVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "NetworkServiceDesignVersionCollection.GetAll"), data => new NetworkServiceDesignVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkServiceDesignVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkServiceDesignVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkServiceDesignVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkServiceDesignVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkServiceDesignVersionResource>> GetIfExistsAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkServiceDesignVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkServiceDesignVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkServiceDesignVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkServiceDesignVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkServiceDesignVersionResource> GetIfExists(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
-            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _networkServiceDesignVersionsClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkServiceDesignVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkServiceDesignVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkServiceDesignVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkServiceDesignVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkServiceDesignVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkServiceDesignVersionResource> IAsyncEnumerable<NetworkServiceDesignVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

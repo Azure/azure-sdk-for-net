@@ -15,7 +15,7 @@ using Azure.ResourceManager.TrafficManager;
 namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> The result of the request or operation. </summary>
-    internal partial class TrafficManagerDeleteOperationResult : IJsonModel<TrafficManagerDeleteOperationResult>
+    public partial class TrafficManagerDeleteOperationResult : IJsonModel<TrafficManagerDeleteOperationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 throw new FormatException($"The model {nameof(TrafficManagerDeleteOperationResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationResult))
+            if (options.Format != "W" && Optional.IsDefined(IsSuccessful))
             {
                 writer.WritePropertyName("boolean"u8);
-                writer.WriteBooleanValue(OperationResult.Value);
+                writer.WriteBooleanValue(IsSuccessful.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            bool? operationResult = default;
+            bool? isSuccessful = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    operationResult = prop.Value.GetBoolean();
+                    isSuccessful = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficManagerDeleteOperationResult(operationResult, additionalBinaryDataProperties);
+            return new TrafficManagerDeleteOperationResult(isSuccessful, additionalBinaryDataProperties);
         }
     }
 }

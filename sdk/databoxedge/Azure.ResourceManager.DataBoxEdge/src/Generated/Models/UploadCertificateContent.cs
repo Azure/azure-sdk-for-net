@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new RawCertificateData();
                 }
-                Properties.AuthenticationType = value.Value;
+                Properties.AuthenticationType = value;
             }
         }
 

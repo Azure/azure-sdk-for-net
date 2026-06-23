@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the export run. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportRunProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExportRun(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportRunProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the export run. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ExecutionType = value.Value;
+                Properties.ExecutionType = value;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.SubmittedOn = value.Value;
+                Properties.SubmittedOn = value;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingStartOn = value.Value;
+                Properties.ProcessingStartOn = value;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingEndOn = value.Value;
+                Properties.ProcessingEndOn = value;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 

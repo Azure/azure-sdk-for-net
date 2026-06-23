@@ -144,6 +144,10 @@ namespace Azure.AI.VoiceLive
                         return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
                     case "input_audio.clear":
                         return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
+                    case "input_text.delta":
+                        return ClientEventInputTextDelta.DeserializeClientEventInputTextDelta(element, options);
+                    case "input_text.done":
+                        return ClientEventInputTextDone.DeserializeClientEventInputTextDone(element, options);
                     case "input_audio_buffer.append":
                         return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
                     case "input_audio_buffer.commit":
@@ -162,6 +166,10 @@ namespace Azure.AI.VoiceLive
                         return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
                     case "conversation.item.retrieve":
                         return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                    case "output_audio_buffer.clear":
+                        return ClientEventOutputAudioBufferClear.DeserializeClientEventOutputAudioBufferClear(element, options);
+                    case "rtc.call.sdp.create":
+                        return ClientEventRtcCallSdpCreate.DeserializeClientEventRtcCallSdpCreate(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);

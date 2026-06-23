@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.Source = value.Value;
+                Properties.Source = value;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.CreatedOn = value.Value;
+                Properties.CreatedOn = value;
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.CloseOn = value.Value;
+                Properties.CloseOn = value;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.ModifiedOn = value.Value;
+                Properties.ModifiedOn = value;
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.StatusModifiedOn = value.Value;
+                Properties.StatusModifiedOn = value;
             }
         }
     }

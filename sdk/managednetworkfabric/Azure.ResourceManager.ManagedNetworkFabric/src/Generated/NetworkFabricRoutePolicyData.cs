@@ -13,105 +13,158 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricRoutePolicy data model.
-    /// The RoutePolicy resource definition.
-    /// </summary>
+    /// <summary> The RoutePolicy resource definition. </summary>
     public partial class NetworkFabricRoutePolicyData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkFabricRoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId) : base(location)
-        {
-            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
-
-            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
-            NetworkFabricId = networkFabricId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="statements"> Route Policy statements. </param>
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
-        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IList<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <exception cref="ArgumentNullException"> <paramref name="statements"/> or <paramref name="networkFabricId"/> is null. </exception>
+        public NetworkFabricRoutePolicyData(AzureLocation location, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId) : base(location)
         {
-            Annotation = annotation;
-            DefaultAction = defaultAction;
-            Statements = statements;
-            NetworkFabricId = networkFabricId;
-            AddressFamilyType = addressFamilyType;
-            ConfigurationState = configurationState;
-            ProvisioningState = provisioningState;
-            AdministrativeState = administrativeState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Argument.AssertNotNull(statements, nameof(statements));
+            Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+
+            Properties = new RoutePolicyProperties(statements, networkFabricId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/> for deserialization. </summary>
-        internal NetworkFabricRoutePolicyData()
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricRoutePolicyData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The RoutePolicy properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RoutePolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The RoutePolicy properties. </summary>
+        internal RoutePolicyProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </summary>
-        public CommunityActionType? DefaultAction { get; set; }
+        public CommunityActionType? DefaultAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyProperties();
+                }
+                Properties.DefaultAction = value;
+            }
+        }
+
         /// <summary> Route Policy statements. </summary>
-        public IList<RoutePolicyStatementProperties> Statements { get; }
+        public IList<RoutePolicyStatementProperties> Statements
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyProperties();
+                }
+                return Properties.Statements;
+            }
+        }
+
         /// <summary> Arm Resource ID of Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; set; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyProperties();
+                }
+                Properties.NetworkFabricId = value;
+            }
+        }
+
         /// <summary> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </summary>
-        public AddressFamilyType? AddressFamilyType { get; set; }
+        public AddressFamilyType? AddressFamilyType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressFamilyType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutePolicyProperties();
+                }
+                Properties.AddressFamilyType = value;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
+        /// <summary> Details status of the last operation performed on the resource. </summary>
+        public string LastOperationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastOperationDetails;
+            }
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
 
             // invoke the operation
-            await packetCapture.DeleteAsync(WaitUntil.Completed);
+            await packetCapture.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -113,7 +113,7 @@ LocalIPAddress = "10.0.0.4",
 LocalPort = "80",
 }},
             };
-            ArmOperation<PacketCaptureResource> lro = await packetCapture.UpdateAsync(WaitUntil.Completed, content);
+            ArmOperation<PacketCaptureResource> lro = await packetCapture.UpdateAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             PacketCaptureResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -145,7 +145,7 @@ LocalPort = "80",
             PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
 
             // invoke the operation
-            await packetCapture.StopAsync(WaitUntil.Completed);
+            await packetCapture.StopAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -172,7 +172,7 @@ LocalPort = "80",
             PacketCaptureResource packetCapture = client.GetPacketCaptureResource(packetCaptureResourceId);
 
             // invoke the operation
-            ArmOperation<PacketCaptureQueryStatusResult> lro = await packetCapture.GetStatusAsync(WaitUntil.Completed);
+            ArmOperation<PacketCaptureQueryStatusResult> lro = await packetCapture.GetStatusAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             PacketCaptureQueryStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

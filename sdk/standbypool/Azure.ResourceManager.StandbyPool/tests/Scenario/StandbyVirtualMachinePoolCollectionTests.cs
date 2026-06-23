@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Re-record after Azure.ResourceManager.Compute dependency release: https://github.com/Azure/azure-sdk-for-net/issues/60036")]
         public async Task ListStandbyVirtualMachinePoolByResourcGroup()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");

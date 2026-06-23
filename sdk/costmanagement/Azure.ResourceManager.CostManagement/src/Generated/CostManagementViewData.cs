@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the view. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ViewProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ViewProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the view. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.ModifiedOn = value.Value;
+                Properties.ModifiedOn = value;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Chart = value.Value;
+                Properties.Chart = value;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Accumulated = value.Value;
+                Properties.Accumulated = value;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Metric = value.Value;
+                Properties.Metric = value;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.TypePropertiesQueryType = value.Value;
+                Properties.TypePropertiesQueryType = value;
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.Timeframe = value.Value;
+                Properties.Timeframe = value;
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ViewProperties();
                 }
-                Properties.IncludeMonetaryCommitment = value.Value;
+                Properties.IncludeMonetaryCommitment = value;
             }
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct SecurityRuleDirection : IEquatable<SecurityRuleDirection>
     {
         private readonly string _value;
+        /// <summary> Inbound. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Outbound. </summary>
+        private const string OutboundValue = "Outbound";
 
         /// <summary> Initializes a new instance of <see cref="SecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityRuleDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
+            _value = value;
+        }
 
         /// <summary> Inbound. </summary>
         public static SecurityRuleDirection Inbound { get; } = new SecurityRuleDirection(InboundValue);
+
         /// <summary> Outbound. </summary>
         public static SecurityRuleDirection Outbound { get; } = new SecurityRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="SecurityRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityRuleDirection left, SecurityRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityRuleDirection left, SecurityRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityRuleDirection(string value) => new SecurityRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityRuleDirection?(string value) => value == null ? null : new SecurityRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

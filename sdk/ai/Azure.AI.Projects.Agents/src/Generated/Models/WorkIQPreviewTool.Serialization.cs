@@ -77,6 +77,8 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -87,8 +89,17 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("work_iq_preview"u8);
-            writer.WriteObjectValue(WorkIqPreview, options);
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,14 +129,20 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string projectConnectionId = default;
             string name = default;
             string description = default;
-            WorkIQPreviewToolParameters workIqPreview = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("project_connection_id"u8))
+                {
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -138,9 +155,18 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("work_iq_preview"u8))
+                if (prop.NameEquals("tool_configs"u8))
                 {
-                    workIqPreview = WorkIQPreviewToolParameters.DeserializeWorkIQPreviewToolParameters(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +174,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, name, description, workIqPreview);
+            return new WorkIQPreviewTool(
+                @type,
+                additionalBinaryDataProperties,
+                projectConnectionId,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

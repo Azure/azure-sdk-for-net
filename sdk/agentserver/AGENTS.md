@@ -199,7 +199,7 @@ string comparisons like `$(TargetFramework) != 'net462'`.
 
 When another production assembly needs internal types, eliminate the cross-library dependency:
 - Add `@@usage(..., Usage.input | Usage.output)` in `client.tsp` for public constructors on generated models.
-- Use the public model factory (`AzureAIAgentServerResponsesModelFactory`).
+- Use the internal model factory (`AgentServerResponsesModelFactory`) or public constructors.
 - Add a public constructor or factory method via partial-class customization.
 
 ### 2.6 Copyright headers

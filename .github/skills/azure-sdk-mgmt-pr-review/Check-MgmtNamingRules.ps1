@@ -26,6 +26,13 @@
 .PARAMETER ExcludeRules
     Array of rule IDs to skip (e.g., 'SUFFIX001', 'BOOL001').
 
+.PARAMETER ListNewTypes
+    When set, the script does not run rule checks. Instead it emits a deterministic
+    inventory of every public class/struct/enum declaration, tagging each NEW or
+    EXISTING relative to -BaselineApiFilePath (or all NEW when no baseline is given).
+    Use this as the bounded worklist for the reviewer's exhaustive contextual-naming
+    pass so no new public type is missed across review rounds.
+
 .EXAMPLE
     .\Check-MgmtNamingRules.ps1 -PackagePath sdk/compute/Azure.ResourceManager.Compute
     .\Check-MgmtNamingRules.ps1 -ApiFilePath sdk/compute/Azure.ResourceManager.Compute/api/Azure.ResourceManager.Compute.net10.0.cs
@@ -43,7 +50,10 @@ param(
     [string]$BaselineApiFilePath,
 
     [Parameter(Mandatory = $false)]
-    [string[]]$ExcludeRules = @()
+    [string[]]$ExcludeRules = @(),
+
+    [Parameter(Mandatory = $false)]
+    [switch]$ListNewTypes
 )
 
 Set-StrictMode -Version Latest
@@ -117,6 +127,7 @@ $totalLines = $lines.Count
 
 # Load baseline API file for filtering (if provided)
 $baselineLines = @{}
+$baselineTypeKeys = @{}
 if ($BaselineApiFilePath) {
     if (-not (Test-Path $BaselineApiFilePath)) {
         throw "Baseline API file not found: $BaselineApiFilePath"
@@ -148,26 +159,47 @@ $typeStartDepth = 0
 # Collected type info for cross-referencing
 $typeInfos = @{}  # short name -> @{ Kind; Bases; Namespace; Line }
 
-# First pass: collect all type declarations and their base types.
-for ($i = 0; $i -lt $totalLines; $i++) {
-    $line = $lines[$i]
+function Get-TypeKey([string]$namespace, [string]$kind, [string]$name) {
+    return "$namespace|$kind|$name"
+}
 
-    if ($line -match '^\s*namespace\s+([\w.]+)') {
-        $currentNamespace = $Matches[1]
-        continue
+function Get-TypeInfosFromApiLines([string[]]$apiLines) {
+    $infos = @{}
+    $namespace = ''
+
+    for ($lineIndex = 0; $lineIndex -lt $apiLines.Count; $lineIndex++) {
+        $line = $apiLines[$lineIndex]
+
+        if ($line -match '^\s*namespace\s+([\w.]+)') {
+            $namespace = $Matches[1]
+            continue
+        }
+
+        # Match type declarations: public partial class Foo : Bar, IBaz
+        if ($line -match '^\s*public\s+(?:(?:partial|abstract|static|sealed|readonly)\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
+            $shortName = $Matches['name']
+            $kind = $Matches['kind']
+            $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
+            $infos[$shortName] = @{
+                Kind      = $kind
+                Bases     = $bases
+                Namespace = $namespace
+                Line      = $lineIndex + 1
+                Key       = Get-TypeKey $namespace $kind $shortName
+            }
+        }
     }
 
-    # Match type declarations: public partial class Foo : Bar, IBaz
-    if ($line -match '^\s*public\s+(?:partial\s+|abstract\s+|static\s+|sealed\s+)*(?<kind>class|struct|enum|interface)\s+(?<name>\w+)(?:<[^>]+>)?\s*(?::\s*(?<bases>.+?))?\s*$') {
-        $shortName = $Matches['name']
-        $kind = $Matches['kind']
-        $bases = if ($Matches['bases']) { $Matches['bases'].Trim() } else { '' }
-        $typeInfos[$shortName] = @{
-            Kind      = $kind
-            Bases     = $bases
-            Namespace = $currentNamespace
-            Line      = $i + 1
-        }
+    return $infos
+}
+
+# First pass: collect all type declarations and their base types.
+$typeInfos = Get-TypeInfosFromApiLines $lines
+
+if ($BaselineApiFilePath) {
+    $baselineTypeInfos = Get-TypeInfosFromApiLines (Get-Content $BaselineApiFilePath)
+    foreach ($baselineTypeInfo in $baselineTypeInfos.Values) {
+        $baselineTypeKeys[$baselineTypeInfo.Key] = $true
     }
 }
 
@@ -187,6 +219,59 @@ function Get-RpPrefix([string]$ns) {
     return ''
 }
 
+function Get-PascalCaseTokens([string]$name) {
+    if ([string]::IsNullOrWhiteSpace($name)) {
+        return @()
+    }
+
+    return @([regex]::Matches($name, '[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+') | ForEach-Object { $_.Value })
+}
+
+#endregion
+
+#region --- Inventory mode (-ListNewTypes) ---
+
+# Emits a deterministic, complete worklist of public class/struct/enum declarations.
+# When a baseline is provided, each entry is tagged NEW (type name/kind absent from
+# the baseline) or EXISTING. This gives the reviewer a bounded list to apply the
+# contextual-naming judgment to exhaustively, so no new public type is missed across
+# review rounds. Interfaces are excluded (not part of the model naming surface).
+if ($ListNewTypes) {
+    $inventory = foreach ($name in $typeInfos.Keys) {
+        $info = $typeInfos[$name]
+        if ($info.Kind -eq 'interface') { continue }
+        $isNew = $true
+        if ($BaselineApiFilePath) {
+            $isNew = -not $baselineTypeKeys.ContainsKey($info.Key)
+        }
+        [pscustomobject]@{
+            Line   = $info.Line
+            Kind   = $info.Kind
+            Name   = $name
+            Status = if ($isNew) { 'NEW' } else { 'EXISTING' }
+        }
+    }
+
+    $inventory = @($inventory | Sort-Object Line)
+    $newCount = @($inventory | Where-Object { $_.Status -eq 'NEW' }).Count
+
+    Write-Host "`n=== New public type inventory (contextual-naming worklist) ===" -ForegroundColor Cyan
+    Write-Host "File: $(Split-Path $ApiFilePath -Leaf)"
+    if ($BaselineApiFilePath) {
+        Write-Host "Baseline: $(Split-Path $BaselineApiFilePath -Leaf) (NEW = type name/kind absent from baseline)"
+    } else {
+        Write-Host "Baseline: <none> (all public types are in scope)"
+    }
+    Write-Host "Total public types: $($inventory.Count); NEW (in scope): $newCount" -ForegroundColor Yellow
+    Write-Host "-----------------------------------------------------------"
+    foreach ($entry in $inventory) {
+        Write-Host ("{0,-9} Line {1,-6} {2,-8} {3}" -f $entry.Status, $entry.Line, $entry.Kind, $entry.Name)
+    }
+    Write-Host "-----------------------------------------------------------"
+    Write-Host "Evaluate every NEW entry above against the contextual-naming rule and record a verdict for each." -ForegroundColor Cyan
+    return
+}
+
 #endregion
 
 #region --- Rule Checks ---
@@ -199,6 +284,7 @@ $badSuffixes = @(
     @{ Suffix = 'Parameter';  Id = 'SUFFIX002'; Suggestion = "Rename to '*Content' or '*Patch'" }
     @{ Suffix = 'Request';    Id = 'SUFFIX003'; Suggestion = "Rename to '*Content'" }
     @{ Suffix = 'Response';   Id = 'SUFFIX005'; Suggestion = "Rename to '*Result'" }
+    @{ Suffix = 'Update';     Id = 'SUFFIX010'; Suggestion = "Rename to '*Patch' (PATCH body convention) or '*Content'" }
 )
 
 foreach ($typeName in $typeInfos.Keys) {
@@ -505,65 +591,150 @@ for ($i = 0; $i -lt $totalLines; $i++) {
 }
 
 # =====================================================
-# RULE: CONTEXT - Ambiguous/generic type names without service prefix
+# RULE: ACRONYM002 - Generic 3+ letter all-caps run inside a type name
+# Catches NNI, IPV, BFD, etc. that aren't in the curated list above.
+# Only flags when the run is followed by a PascalCase-style boundary
+# (next char is uppercase-then-lowercase or a digit). All-caps runs at the
+# very end of an identifier are intentionally NOT flagged here, because we
+# can't tell from the name alone whether the trailing run is a meaningful
+# acronym or a wholly capitalised single token.
 # =====================================================
-# These are known generic names that should be prefixed with service/resource context.
-$ambiguousPatterns = @(
-    'ProvisioningState'
-    'EncryptionStatus'
-    'EncryptionState'
-    'PublicNetworkAccess'
-    'PrivateEndpointConnection'
-    'PrivateEndpointConnectionData'
-    'PrivateLinkResource'
-    'PrivateLinkResourceData'
-    'PrivateLinkServiceConnectionState'
-    'ConnectionState'
-    'AccessLevel'
-    'CreatedByType'
-    'ManagedServiceIdentity'
-    'UserAssignedIdentity'
-    'EncryptionProperties'
-    'NetworkRuleSet'
-    'Sku'
-    'SkuName'
-    'SkuTier'
-    'Kind'
-    'Plan'
-    'Usage'
-    'UsageName'
-    'Capability'
-    'CheckNameAvailabilityResult'
-    'CheckNameAvailabilityRequest'
-    'NameAvailabilityReason'
-)
-
 foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ACRONYM002') { continue }
     $info = $typeInfos[$typeName]
-    if ($info.Kind -eq 'interface') { continue }
-    if ($ExcludeRules -contains 'CONTEXT001') { continue }
-
-    # Skip types in .Models namespace that start with the RP prefix (already qualified)
-    $rpPrefix = Get-RpPrefix $info.Namespace
-
-    if ($typeName -in $ambiguousPatterns) {
-        # Check if the type name is exactly one of the ambiguous patterns
-        # (not prefixed with the RP name)
-        if ([string]::IsNullOrEmpty($rpPrefix)) {
-            $suggestion = "Type '$typeName' is a generic/ambiguous name. Consider adding a service or resource prefix for clarity."
-        }
-        else {
-            $suggestion = "Rename to '${rpPrefix}${typeName}' or similar qualified name."
-        }
+    foreach ($m in [regex]::Matches($typeName, '(?<![A-Z])[A-Z]{3,}(?=[A-Z][a-z]|\d)')) {
+        $val = $m.Value
+        # skip already-handled curated acronyms
+        if ($acronymPatterns | Where-Object { $_.AllCaps -eq $val }) { continue }
+        $pascal = $val.Substring(0,1) + $val.Substring(1).ToLowerInvariant()
+        $renamed = $typeName.Substring(0, $m.Index) + $pascal + $typeName.Substring($m.Index + $m.Length)
         $violations.Add([NamingViolation]::new(
-            'CONTEXT001', 'Warning', 'Contextual Naming',
+            'ACRONYM002', 'Warning', 'Acronym Casing',
             $typeName, '',
-            "Type '$typeName' is a generic/ambiguous name. It should include a service or resource prefix for clarity.",
-            $suggestion,
+            "Type '$typeName' contains the all-caps run '$val'. .NET conventions require 3+ letter acronyms to be PascalCase.",
+            "Rename to '$renamed'.",
             $info.Line
-        ))
+        )) | Out-Null
     }
 }
+
+# =====================================================
+# RULE: ARMCOMMON - Do not redefine ARM common types
+# =====================================================
+$armCommonTypes = @{
+    'OperationStatusResult'         = 'Use Azure.ResourceManager.Models.ArmOperationStatus / ArmOperation pattern instead of redefining.'
+    'ManagedServiceIdentity'        = 'Use Azure.ResourceManager.Models.ManagedServiceIdentity from Azure.ResourceManager.'
+    'ManagedServiceIdentityType'    = 'Use Azure.ResourceManager.Models.ManagedServiceIdentityType from Azure.ResourceManager.'
+    'ManagedServiceIdentityPatch'   = 'Reuse the patch model from Azure.ResourceManager rather than redefining.'
+    'TagsUpdate'                    = 'Use the Tags update pattern provided by Azure.ResourceManager (or rename to a service-prefixed *Patch model that only carries Tags).'
+    'TagsPatch'                     = 'Use the Tags update pattern provided by Azure.ResourceManager.'
+    'ErrorResponse'                 = 'Use Azure.ResponseError; do not redefine ErrorResponse on the public surface.'
+    'ErrorDetail'                   = 'Use Azure.ResponseError / ErrorDetail from Azure.ResourceManager.Models; do not redefine.'
+    'UserAssignedIdentity'          = 'Use Azure.ResourceManager.Models.UserAssignedIdentity.'
+    'SystemData'                    = 'SystemData is exposed via ResourceData.SystemData; do not redefine.'
+    'TrackedResource'               = 'Inherit TrackedResourceData instead of defining a new TrackedResource model.'
+}
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'ARMCOMMON001') { continue }
+    if ($armCommonTypes.ContainsKey($typeName)) {
+        $info = $typeInfos[$typeName]
+        $violations.Add([NamingViolation]::new(
+            'ARMCOMMON001', 'Error', 'ARM Common Type',
+            $typeName, '',
+            "Type '$typeName' duplicates an ARM common type. $($armCommonTypes[$typeName])",
+            "Remove this type and reuse the corresponding type from Azure.ResourceManager / Azure.Core.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# RULE: RESINFIX - 'Resource' before Data/Collection suffix
+# =====================================================
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESINFIX001') { continue }
+    $info = $typeInfos[$typeName]
+    if (($typeName -like '*ResourceData' -or $typeName -like '*ResourceCollection') -and
+        $typeName -notlike '*PrivateLinkResource*') {
+        $renamed = $typeName -replace 'Resource(Data|Collection)$','$1'
+        $violations.Add([NamingViolation]::new(
+            'RESINFIX001', 'Warning', 'Resource Infix',
+            $typeName, '',
+            "Type '$typeName' includes 'Resource' before '$($typeName -replace '.*Resource','')'. Mgmt convention drops the 'Resource' infix on Data/Collection types (PrivateLinkResource is the only exception).",
+            "Rename to '$renamed'.",
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# RULE: RESNAME001 - Single-word generic resource trio names
+# =====================================================
+# After stripping the reserved ARM suffix (Resource / Data / Collection), the
+# remaining noun must still carry RP/domain context. A bare single word like
+# 'Drill', 'Goal', 'Recovery', 'Enrollment' is too generic - reviewers cannot
+# tell which RP it belongs to in IntelliSense and the name will collide with
+# similarly-generic types from other mgmt packages. This rule fires only when
+# the class actually inherits the ARM resource trio base (ArmResource /
+# ResourceData / TrackedResourceData / ArmCollection) so plain models named
+# 'FooData' that aren't resource data types are not flagged here.
+$resourceNameAllowList = @(
+    'GenericResource'     # ARM common, intentionally generic
+)
+foreach ($typeName in $typeInfos.Keys) {
+    if ($ExcludeRules -contains 'RESNAME001') { continue }
+    if ($resourceNameAllowList -contains $typeName) { continue }
+    $info = $typeInfos[$typeName]
+
+    $noun = $null
+    $suffix = $null
+    if ($typeName -like '*Resource' -and (Test-InheritsFrom $typeName 'ArmResource')) {
+        $noun = $typeName -replace 'Resource$',''
+        $suffix = 'Resource'
+    }
+    elseif ($typeName -like '*Data' -and (
+            (Test-InheritsFrom $typeName 'ResourceData') -or
+            (Test-InheritsFrom $typeName 'TrackedResourceData'))) {
+        $noun = $typeName -replace 'Data$',''
+        $suffix = 'Data'
+        # Strip an optional 'Resource' infix so we evaluate the same noun as the
+        # *Resource / *Collection classes (RESINFIX001 already flags the infix).
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    elseif ($typeName -like '*Collection' -and (Test-InheritsFrom $typeName 'ArmCollection')) {
+        $noun = $typeName -replace 'Collection$',''
+        $suffix = 'Collection'
+        if ($noun -like '*Resource' -and $noun -ne 'Resource') {
+            $noun = $noun -replace 'Resource$',''
+        }
+    }
+    if (-not $noun) { continue }
+    # Single-word noun: starts with a capital letter and has no further capitals.
+    # This catches 'Drill', 'Goal', 'Recovery', 'Enrollment' but allows
+    # 'DrillRun', 'RecoveryPlan', 'GoalAssignment', 'UsagePlan', etc.
+    if ($noun -cmatch '^[A-Z][a-z]+$') {
+        $message = "Resource trio noun '$noun' is a single generic word. After stripping the reserved '$suffix' suffix, the name carries no RP/domain context and will collide with similarly-named types in other mgmt packages."
+        $fix = "Rename the whole trio ('${noun}Resource' / '${noun}Data' / '${noun}Collection') with an RP/domain prefix so the noun becomes multi-word and service-scoped (e.g., '<RpPrefix>${noun}*')."
+        $violations.Add([NamingViolation]::new(
+            'RESNAME001', 'Warning', 'Resource Naming',
+            $typeName, '',
+            $message,
+            $fix,
+            $info.Line
+        )) | Out-Null
+    }
+}
+
+# =====================================================
+# Contextual / generic naming is intentionally NOT enforced by this script.
+# =====================================================
+# Naming context is too case-by-case to encode reliably in regex/allowlists -
+# any rule we tried was either too noisy (flagging legitimate ARM patterns) or
+# too narrow (missing real offenders). Reviewers (human or AI) make this call
+# based on the type's role in the API and the surrounding namespace, guided by
+# the "Contextual Naming for Types" section in SKILL.md.
 
 # =====================================================
 # RULE: ENUM - Plural enum names should be singular

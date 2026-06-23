@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.Test
                 blobName,
                 constants,
                 isDirectory: true);
-            var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants, includeDirectory:true);
+            var signature = BuildIdentitySignature(includeBlob: true, includeSnapshot: false, containerName, blobName, constants, includeDirectory: true);
 
             // Act
             BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetUserDelegationKey(constants), constants.Sas.Account);
@@ -303,6 +303,85 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(SasExtensions.ConvertRequestDictToKeyList(constants.Sas.RequestQueryParameters), sasQueryParameters.RequestQueryParameters);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public void GenerateUserDelegationSasUri_Blob_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            Uri blobUri = new BlobUriBuilder(new Uri($"https://{constants.Sas.Account}.blob.core.windows.net"))
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+            }.ToUri();
+            BlobClient blobClient = InstrumentClient(new BlobClient(blobUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            BlobSasBuilder builder = new BlobSasBuilder(BlobSasPermissions.Read, constants.Sas.ExpiryTime)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                DelegatedUserObjectId = constants.Sas.DelegatedObjectId,        // sduoid
+                RequestHeaders = constants.Sas.RequestHeaders,                  // srh
+                RequestQueryParameters = constants.Sas.RequestQueryParameters,  // srq
+            };
+
+            // Act
+            string viaClient = blobClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, blobClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_04_06)]
+        public void GenerateUserDelegationSasUri_Container_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            TestConstants constants = TestConstants.Create(this);
+            string containerName = GetNewContainerName();
+            Uri containerUri = new BlobUriBuilder(new Uri($"https://{constants.Sas.Account}.blob.core.windows.net"))
+            {
+                BlobContainerName = containerName,
+            }.ToUri();
+            BlobContainerClient containerClient = InstrumentClient(new BlobContainerClient(containerUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            BlobSasBuilder builder = new BlobSasBuilder(BlobContainerSasPermissions.Read, constants.Sas.ExpiryTime)
+            {
+                BlobContainerName = containerName,
+                DelegatedUserObjectId = constants.Sas.DelegatedObjectId,        // sduoid
+                RequestHeaders = constants.Sas.RequestHeaders,                  // srh
+                RequestQueryParameters = constants.Sas.RequestQueryParameters,  // srq
+            };
+
+            // Act
+            string viaClient = containerClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, containerClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
         }
 
         [RecordedTest]

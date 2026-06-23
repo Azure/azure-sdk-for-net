@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> RegisteredServer properties. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegisteredServerProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegisteredServerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> RegisteredServer properties. </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ServerManagementErrorCode = value.Value;
+                Properties.ServerManagementErrorCode = value;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ClusterId = value.Value;
+                Properties.ClusterId = value;
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ServerId = value.Value;
+                Properties.ServerId = value;
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.StorageSyncServiceUid = value.Value;
+                Properties.StorageSyncServiceUid = value;
             }
         }
 
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ResourceLocation = value.Value;
+                Properties.ResourceLocation = value;
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ServiceLocation = value.Value;
+                Properties.ServiceLocation = value;
             }
         }
 
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.ApplicationId = value.Value;
+                Properties.ApplicationId = value;
             }
         }
 
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.StorageSync
                 {
                     Properties = new RegisteredServerProperties();
                 }
-                Properties.LatestApplicationId = value.Value;
+                Properties.LatestApplicationId = value;
             }
         }
 

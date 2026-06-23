@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     Properties = new ElasticSanUpdateProperties();
                 }
-                Properties.BaseSizeTiB = value.Value;
+                Properties.BaseSizeTiB = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     Properties = new ElasticSanUpdateProperties();
                 }
-                Properties.ExtendedCapacitySizeTiB = value.Value;
+                Properties.ExtendedCapacitySizeTiB = value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     Properties = new ElasticSanUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

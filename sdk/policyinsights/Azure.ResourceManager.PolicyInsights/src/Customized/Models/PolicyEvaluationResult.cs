@@ -6,6 +6,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
+// This getter is from GA custom code
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyEvaluationResult

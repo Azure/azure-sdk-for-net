@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualRouterPeering data model.
-    /// Virtual Router Peering resource.
-    /// </summary>
+    /// <summary> Virtual Router Peering resource. </summary>
     public partial class VirtualRouterPeeringData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
@@ -25,32 +23,69 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="peerAsn"> Peer ASN. </param>
-        /// <param name="peerIP"> Peer IP. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> The properties of the Virtual Router Peering. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualRouterPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualRouterPeeringProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PeerAsn = peerAsn;
-            PeerIP = peerIP;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The properties of the Virtual Router Peering. </summary>
+        [WirePath("properties")]
+        internal VirtualRouterPeeringProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Peer ASN. </summary>
         [WirePath("properties.peerAsn")]
-        public long? PeerAsn { get; set; }
+        public long? PeerAsn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerAsn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPeeringProperties();
+                }
+                Properties.PeerAsn = value;
+            }
+        }
+
         /// <summary> Peer IP. </summary>
         [WirePath("properties.peerIp")]
-        public string PeerIP { get; set; }
+        public string PeerIp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerIp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualRouterPeeringProperties();
+                }
+                Properties.PeerIp = value;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

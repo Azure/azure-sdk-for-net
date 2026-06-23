@@ -4,10 +4,7 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <!-- https://github.com/Azure/azure-sdk-for-net/issues/53975 -->
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
-    <ProjectReference Include="..\..\..\identity\Azure.Identity.Broker\src\Azure.Identity.Broker.csproj" />
+    <PackageReference Include="Azure.Identity.Broker" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorWebApplicationFirewallPolicyResourceState : IEquatable<FrontDoorWebApplicationFirewallPolicyResourceState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorWebApplicationFirewallPolicyResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Creating { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(CreatingValue);
+
         /// <summary> Enabling. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Enabling { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Enabled { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Disabling { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Disabled { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(DisabledValue);
+
         /// <summary> Deleting. </summary>
         public static FrontDoorWebApplicationFirewallPolicyResourceState Deleting { get; } = new FrontDoorWebApplicationFirewallPolicyResourceState(DeletingValue);
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorWebApplicationFirewallPolicyResourceState left, FrontDoorWebApplicationFirewallPolicyResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorWebApplicationFirewallPolicyResourceState left, FrontDoorWebApplicationFirewallPolicyResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorWebApplicationFirewallPolicyResourceState(string value) => new FrontDoorWebApplicationFirewallPolicyResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorWebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorWebApplicationFirewallPolicyResourceState?(string value) => value == null ? null : new FrontDoorWebApplicationFirewallPolicyResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorWebApplicationFirewallPolicyResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorWebApplicationFirewallPolicyResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

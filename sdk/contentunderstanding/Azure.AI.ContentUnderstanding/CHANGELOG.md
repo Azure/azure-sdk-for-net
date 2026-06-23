@@ -1,5 +1,31 @@
 # Release History
 
+## 1.2.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.2 (2026-06-11)
+
+### Bugs Fixed
+
+- Filtered service-emitted `LLMStats:` telemetry entries from the rendered `rai_warnings` front matter in `ToLlmInput`.
+
+### Other Changes
+
+- Updated `ToLlmInput` page markers from `<!-- page N -->` to `<!-- InputPageNumber: N -->` and avoided duplicate marker injection when the service markdown already includes `InputPageNumber` markers.
+
+## 1.2.0-beta.1 (2026-04-30)
+
+### Features Added
+
+- Added `ToLlmInput` extension method that converts `AnalysisResult` into LLM-friendly text with YAML front matter and markdown content. Supports documents, audio/video, and classification hierarchies.
+
 ## 1.1.0 (2026-04-21)
 
 ### Features Added

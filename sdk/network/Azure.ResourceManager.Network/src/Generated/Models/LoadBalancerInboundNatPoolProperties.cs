@@ -8,13 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of Inbound NAT pool. </summary>
     public partial class LoadBalancerInboundNatPoolProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPoolProperties"/>. </summary>
         /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
         /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
@@ -26,7 +29,6 @@ namespace Azure.ResourceManager.Network.Models
             FrontendPortRangeStart = frontendPortRangeStart;
             FrontendPortRangeEnd = frontendPortRangeEnd;
             BackendPort = backendPort;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPoolProperties"/>. </summary>
@@ -39,8 +41,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal LoadBalancerInboundNatPoolProperties(WritableSubResource frontendIPConfiguration, LoadBalancingTransportProtocol protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerInboundNatPoolProperties(NetworkSubResource frontendIPConfiguration, LoadBalancingTransportProtocol protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             Protocol = protocol;
@@ -51,84 +53,61 @@ namespace Azure.ResourceManager.Network.Models
             EnableFloatingIP = enableFloatingIP;
             EnableTcpReset = enableTcpReset;
             ProvisioningState = provisioningState;
-            AdditionalProperties = additionalProperties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPoolProperties"/> for deserialization. </summary>
-        internal LoadBalancerInboundNatPoolProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A reference to frontend IP addresses. </summary>
-        internal WritableSubResource FrontendIPConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("frontendIPConfiguration.id")]
-        public ResourceIdentifier FrontendIPConfigurationId
-        {
-            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
-            set
-            {
-                if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
-                FrontendIPConfiguration.Id = value;
-            }
-        }
+        [WirePath("frontendIPConfiguration")]
+        internal NetworkSubResource FrontendIPConfiguration { get; set; }
 
         /// <summary> The reference to the transport protocol used by the inbound NAT pool. </summary>
         [WirePath("protocol")]
         public LoadBalancingTransportProtocol Protocol { get; set; }
+
         /// <summary> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </summary>
         [WirePath("frontendPortRangeStart")]
         public int FrontendPortRangeStart { get; set; }
+
         /// <summary> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </summary>
         [WirePath("frontendPortRangeEnd")]
         public int FrontendPortRangeEnd { get; set; }
+
         /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </summary>
         [WirePath("backendPort")]
         public int BackendPort { get; set; }
+
         /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
         [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
+
         /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
         [WirePath("enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
+
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
         [WirePath("enableTcpReset")]
         public bool? EnableTcpReset { get; set; }
+
         /// <summary> The provisioning state of the inbound NAT pool resource. </summary>
         [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("AdditionalProperties")]
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("frontendIPConfiguration.id")]
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get
+            {
+                return FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
+            }
+            set
+            {
+                if (FrontendIPConfiguration is null)
+                {
+                    FrontendIPConfiguration = new NetworkSubResource();
+                }
+                FrontendIPConfiguration.Id = value;
+            }
+        }
     }
 }

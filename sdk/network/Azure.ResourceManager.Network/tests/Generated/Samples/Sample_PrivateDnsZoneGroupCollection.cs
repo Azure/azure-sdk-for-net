@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Samples
 PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/privateDnsZones/zone1.com",
 }},
             };
-            ArmOperation<PrivateDnsZoneGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, data);
+            ArmOperation<PrivateDnsZoneGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateDnsZoneGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

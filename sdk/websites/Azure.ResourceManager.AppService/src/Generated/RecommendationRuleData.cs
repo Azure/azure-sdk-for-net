@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the RecommendationRule data model.
     /// Represents a recommendation rule that the recommendation engine can perform.
+    /// Serialized Name: RecommendationRule
     /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
@@ -62,26 +63,67 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="recommendationName"> Unique name of the rule. </param>
-        /// <param name="displayName"> UI friendly name of the rule. </param>
-        /// <param name="message"> Localized name of the rule (Good for UI). </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: RecommendationRule.kind
+        /// </param>
+        /// <param name="recommendationName">
+        /// Unique name of the rule.
+        /// Serialized Name: RecommendationRule.properties.recommendationName
+        /// </param>
+        /// <param name="displayName">
+        /// UI friendly name of the rule.
+        /// Serialized Name: RecommendationRule.properties.displayName
+        /// </param>
+        /// <param name="message">
+        /// Localized name of the rule (Good for UI).
+        /// Serialized Name: RecommendationRule.properties.message
+        /// </param>
         /// <param name="recommendationId">
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
+        /// Serialized Name: RecommendationRule.properties.recommendationId
         /// </param>
-        /// <param name="description"> Localized detailed description of the rule. </param>
-        /// <param name="actionName"> Name of action that is recommended by this rule in string. </param>
-        /// <param name="level"> Level of impact indicating how critical this rule is. </param>
-        /// <param name="channels"> List of available channels that this rule applies. </param>
-        /// <param name="categoryTags"> The list of category tags that this recommendation rule belongs to. </param>
-        /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
-        /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
-        /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
-        /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description">
+        /// Localized detailed description of the rule.
+        /// Serialized Name: RecommendationRule.properties.description
+        /// </param>
+        /// <param name="actionName">
+        /// Name of action that is recommended by this rule in string.
+        /// Serialized Name: RecommendationRule.properties.actionName
+        /// </param>
+        /// <param name="level">
+        /// Level of impact indicating how critical this rule is.
+        /// Serialized Name: RecommendationRule.properties.level
+        /// </param>
+        /// <param name="channels">
+        /// List of available channels that this rule applies.
+        /// Serialized Name: RecommendationRule.properties.channels
+        /// </param>
+        /// <param name="categoryTags">
+        /// The list of category tags that this recommendation rule belongs to.
+        /// Serialized Name: RecommendationRule.properties.categoryTags
+        /// </param>
+        /// <param name="isDynamic">
+        /// True if this is associated with a dynamically added rule
+        /// Serialized Name: RecommendationRule.properties.isDynamic
+        /// </param>
+        /// <param name="extensionName">
+        /// Extension name of the portal if exists. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.extensionName
+        /// </param>
+        /// <param name="bladeName">
+        /// Deep link to a blade on the portal. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.bladeName
+        /// </param>
+        /// <param name="forwardLink">
+        /// Forward link to an external document associated with the rule. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.forwardLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecommendationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string recommendationName, string displayName, string message, Guid? recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             RecommendationName = recommendationName;
             DisplayName = displayName;
             Message = message;
@@ -95,54 +137,93 @@ namespace Azure.ResourceManager.AppService
             ExtensionName = extensionName;
             BladeName = bladeName;
             ForwardLink = forwardLink;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Unique name of the rule. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: RecommendationRule.kind
+        /// </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
+        /// <summary>
+        /// Unique name of the rule.
+        /// Serialized Name: RecommendationRule.properties.recommendationName
+        /// </summary>
         [WirePath("properties.recommendationName")]
         public string RecommendationName { get; set; }
-        /// <summary> UI friendly name of the rule. </summary>
+        /// <summary>
+        /// UI friendly name of the rule.
+        /// Serialized Name: RecommendationRule.properties.displayName
+        /// </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Localized name of the rule (Good for UI). </summary>
+        /// <summary>
+        /// Localized name of the rule (Good for UI).
+        /// Serialized Name: RecommendationRule.properties.message
+        /// </summary>
         [WirePath("properties.message")]
         public string Message { get; set; }
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
+        /// Serialized Name: RecommendationRule.properties.recommendationId
         /// </summary>
         [WirePath("properties.recommendationId")]
         public Guid? RecommendationId { get; set; }
-        /// <summary> Localized detailed description of the rule. </summary>
+        /// <summary>
+        /// Localized detailed description of the rule.
+        /// Serialized Name: RecommendationRule.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Name of action that is recommended by this rule in string. </summary>
+        /// <summary>
+        /// Name of action that is recommended by this rule in string.
+        /// Serialized Name: RecommendationRule.properties.actionName
+        /// </summary>
         [WirePath("properties.actionName")]
         public string ActionName { get; set; }
-        /// <summary> Level of impact indicating how critical this rule is. </summary>
+        /// <summary>
+        /// Level of impact indicating how critical this rule is.
+        /// Serialized Name: RecommendationRule.properties.level
+        /// </summary>
         [WirePath("properties.level")]
         public NotificationLevel? Level { get; set; }
-        /// <summary> List of available channels that this rule applies. </summary>
+        /// <summary>
+        /// List of available channels that this rule applies.
+        /// Serialized Name: RecommendationRule.properties.channels
+        /// </summary>
         [WirePath("properties.channels")]
         public RecommendationChannel? Channels { get; set; }
-        /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
+        /// <summary>
+        /// The list of category tags that this recommendation rule belongs to.
+        /// Serialized Name: RecommendationRule.properties.categoryTags
+        /// </summary>
         [WirePath("properties.categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; }
-        /// <summary> True if this is associated with a dynamically added rule. </summary>
+        /// <summary>
+        /// True if this is associated with a dynamically added rule
+        /// Serialized Name: RecommendationRule.properties.isDynamic
+        /// </summary>
         [WirePath("properties.isDynamic")]
         public bool? IsDynamic { get; set; }
-        /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
+        /// <summary>
+        /// Extension name of the portal if exists. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.extensionName
+        /// </summary>
         [WirePath("properties.extensionName")]
         public string ExtensionName { get; set; }
-        /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
+        /// <summary>
+        /// Deep link to a blade on the portal. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.bladeName
+        /// </summary>
         [WirePath("properties.bladeName")]
         public string BladeName { get; set; }
-        /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
+        /// <summary>
+        /// Forward link to an external document associated with the rule. Applicable to dynamic rule only.
+        /// Serialized Name: RecommendationRule.properties.forwardLink
+        /// </summary>
         [WirePath("properties.forwardLink")]
         public string ForwardLink { get; set; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

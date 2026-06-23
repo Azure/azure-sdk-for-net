@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> response = await _client.GetAllRangeListInternal(
+            Response<ShareFileRangeList> response = await _client.GetAllRangeListInternal(
                 marker: continuationToken,
                 pageSizeHint: pageSizeHint ?? Constants.File.DefaultGetRangeListPageSize,
                 range: _range,

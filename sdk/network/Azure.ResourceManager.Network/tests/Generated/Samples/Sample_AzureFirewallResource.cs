@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            await azureFirewall.DeleteAsync(WaitUntil.Completed);
+            await azureFirewall.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<AzureFirewallResource> lro = await azureFirewall.UpdateAsync(WaitUntil.Completed, networkTagsObject);
+            ArmOperation<AzureFirewallResource> lro = await azureFirewall.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
             AzureFirewallResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Samples
             AzureFirewallResource azureFirewall = client.GetAzureFirewallResource(azureFirewallResourceId);
 
             // invoke the operation
-            ArmOperation<LearnedIPPrefixesListResult> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed);
+            ArmOperation<LearnedIPPrefixesListResult> lro = await azureFirewall.GetLearnedPrefixesAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             LearnedIPPrefixesListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -305,7 +305,7 @@ Destinations = {"10.1.2.0"},
 DestinationPorts = {"123", "80"},
 }},
             };
-            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, content);
+            await azureFirewall.PacketCaptureAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -358,7 +358,7 @@ DestinationPorts = {"123", "80"},
 }},
                 Operation = AzureFirewallPacketCaptureOperationType.Status,
             };
-            ArmOperation<AzureFirewallPacketCaptureResult> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, content);
+            ArmOperation<AzureFirewallPacketCaptureResult> lro = await azureFirewall.PacketCaptureOperationAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             AzureFirewallPacketCaptureResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

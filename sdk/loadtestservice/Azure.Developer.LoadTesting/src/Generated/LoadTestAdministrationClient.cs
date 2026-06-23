@@ -2042,7 +2042,7 @@ namespace Azure.Developer.LoadTesting
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCloneTestRequest(testId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2086,7 +2086,7 @@ namespace Azure.Developer.LoadTesting
 
             CloneTestRequest spreadModel = new CloneTestRequest(newTestId, displayName, description, default);
             Operation<BinaryData> result = await CloneTestAsync(waitUntil, testId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTestAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.CloneTest");
         }
 
         /// <summary> Generate AI Recommendations to author a load test plan using the uploaded browser recording file. </summary>
@@ -2130,7 +2130,7 @@ namespace Azure.Developer.LoadTesting
                 Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
                 using HttpMessage message = CreateGenerateTestPlanRecommendationsRequest(testId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendationsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendations", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2164,7 +2164,7 @@ namespace Azure.Developer.LoadTesting
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
             Operation<BinaryData> result = await GenerateTestPlanRecommendationsAsync(waitUntil, testId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendationsAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (LoadTest)response, ClientDiagnostics, "LoadTestAdministrationClient.GenerateTestPlanRecommendations");
         }
 
         /// <summary>
