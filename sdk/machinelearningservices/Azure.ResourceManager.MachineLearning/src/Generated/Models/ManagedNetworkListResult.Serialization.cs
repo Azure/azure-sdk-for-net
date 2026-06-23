@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ManagedNetworkSettingsPropertiesBasicResourceData item in Value)
+            foreach (ManagedNetworkSettingsPropertiesBasicData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<ManagedNetworkSettingsPropertiesBasicResourceData> value = default;
+            IList<ManagedNetworkSettingsPropertiesBasicData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ManagedNetworkSettingsPropertiesBasicResourceData> array = new List<ManagedNetworkSettingsPropertiesBasicResourceData>();
+                    List<ManagedNetworkSettingsPropertiesBasicData> array = new List<ManagedNetworkSettingsPropertiesBasicData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkSettingsPropertiesBasicResourceData.DeserializeManagedNetworkSettingsPropertiesBasicResourceData(item, options));
+                        array.Add(ManagedNetworkSettingsPropertiesBasicData.DeserializeManagedNetworkSettingsPropertiesBasicData(item, options));
                     }
                     value = array;
                     continue;

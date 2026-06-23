@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RaiPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string raiPolicyName, RaiPolicyPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RaiPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string raiPolicyName, RaiPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
             Argument.AssertNotNull(data, nameof(data));
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, RaiPolicyPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, RaiPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<RaiPolicyResource> operation = new MachineLearningArmOperation<RaiPolicyResource>(
                     new RaiPolicyResourceOperationSource(Client),
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RaiPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string raiPolicyName, RaiPolicyPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RaiPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string raiPolicyName, RaiPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
             Argument.AssertNotNull(data, nameof(data));
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, RaiPolicyPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, RaiPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<RaiPolicyResource> operation = new MachineLearningArmOperation<RaiPolicyResource>(
                     new RaiPolicyResourceOperationSource(Client),
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RaiPolicyPropertiesBasicResourceData> response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiPolicyData> response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RaiPolicyPropertiesBasicResourceData> response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiPolicyData> response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiPolicyPropertiesBasicResourceData, RaiPolicyResource>(new RaiPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllAsyncCollectionResultOfT(
                 _raiPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiPolicyPropertiesBasicResourceData, RaiPolicyResource>(new RaiPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<RaiPolicyData, RaiPolicyResource>(new RaiPoliciesGetAllCollectionResultOfT(
                 _raiPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RaiPolicyPropertiesBasicResourceData> response = default;
+                Response<RaiPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiPolicyPropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((RaiPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -435,14 +435,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RaiPolicyPropertiesBasicResourceData> response = default;
+                Response<RaiPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiPolicyPropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((RaiPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -492,14 +492,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RaiPolicyPropertiesBasicResourceData> response = default;
+                Response<RaiPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiPolicyPropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((RaiPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -553,14 +553,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, raiPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RaiPolicyPropertiesBasicResourceData> response = default;
+                Response<RaiPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RaiPolicyPropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((RaiPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RaiBlocklistItemPropertiesBasicResourceData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkAsyncCollectionResult(
+            return new AsyncPageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkAsyncCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RaiBlocklistItemPropertiesBasicResourceData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult(
+            return new PageableWrapper<RaiBlocklistItemPropertiesBasicData, RaiBlocklistItemPropertiesBasicResource>(new RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult(
                 _connectionRaiBlocklistItemRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

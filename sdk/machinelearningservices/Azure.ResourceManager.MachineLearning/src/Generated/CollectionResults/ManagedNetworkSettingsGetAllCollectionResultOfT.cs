@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class ManagedNetworkSettingsGetAllCollectionResultOfT : Pageable<ManagedNetworkSettingsPropertiesBasicResourceData>
+    internal partial class ManagedNetworkSettingsGetAllCollectionResultOfT : Pageable<ManagedNetworkSettingsPropertiesBasicData>
     {
         private readonly ManagedNetworkSettings _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ManagedNetworkSettingsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedNetworkSettingsPropertiesBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ManagedNetworkSettingsPropertiesBasicData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 ManagedNetworkListResult result = ManagedNetworkListResult.FromResponse(response);
-                yield return Page<ManagedNetworkSettingsPropertiesBasicResourceData>.FromValues((IReadOnlyList<ManagedNetworkSettingsPropertiesBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ManagedNetworkSettingsPropertiesBasicData>.FromValues((IReadOnlyList<ManagedNetworkSettingsPropertiesBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

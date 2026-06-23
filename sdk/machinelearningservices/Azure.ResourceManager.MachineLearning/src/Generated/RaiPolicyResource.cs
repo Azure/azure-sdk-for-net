@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning
     {
         private readonly ClientDiagnostics _raiPolicyClientDiagnostics;
         private readonly RaiPolicy _raiPolicyRestClient;
-        private readonly RaiPolicyPropertiesBasicResourceData _data;
+        private readonly RaiPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/endpoints/raiPolicies";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of <see cref="RaiPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RaiPolicyResource(ArmClient client, RaiPolicyPropertiesBasicResourceData data) : this(client, data.Id)
+        internal RaiPolicyResource(ArmClient client, RaiPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual RaiPolicyPropertiesBasicResourceData Data
+        public virtual RaiPolicyData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RaiPolicyPropertiesBasicResourceData> response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiPolicyData> response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _raiPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RaiPolicyPropertiesBasicResourceData> response = Response.FromValue(RaiPolicyPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiPolicyData> response = Response.FromValue(RaiPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RaiPolicyResource>> UpdateAsync(WaitUntil waitUntil, RaiPolicyPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RaiPolicyResource>> UpdateAsync(WaitUntil waitUntil, RaiPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiPolicyPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<RaiPolicyResource> operation = new MachineLearningArmOperation<RaiPolicyResource>(
                     new RaiPolicyResourceOperationSource(Client),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RaiPolicyResource> Update(WaitUntil waitUntil, RaiPolicyPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RaiPolicyResource> Update(WaitUntil waitUntil, RaiPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiPolicyPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _raiPolicyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<RaiPolicyResource> operation = new MachineLearningArmOperation<RaiPolicyResource>(
                     new RaiPolicyResourceOperationSource(Client),

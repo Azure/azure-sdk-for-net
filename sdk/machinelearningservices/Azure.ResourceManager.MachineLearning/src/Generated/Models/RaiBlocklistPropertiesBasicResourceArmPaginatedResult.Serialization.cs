@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RaiBlocklistPropertiesBasicResourceData item in Value)
+            foreach (RaiBlocklistPropertiesBasicData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<RaiBlocklistPropertiesBasicResourceData> value = default;
+            IList<RaiBlocklistPropertiesBasicData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RaiBlocklistPropertiesBasicResourceData> array = new List<RaiBlocklistPropertiesBasicResourceData>();
+                    List<RaiBlocklistPropertiesBasicData> array = new List<RaiBlocklistPropertiesBasicData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RaiBlocklistPropertiesBasicResourceData.DeserializeRaiBlocklistPropertiesBasicResourceData(item, options));
+                        array.Add(RaiBlocklistPropertiesBasicData.DeserializeRaiBlocklistPropertiesBasicData(item, options));
                     }
                     value = array;
                     continue;

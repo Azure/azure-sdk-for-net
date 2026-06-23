@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    public partial class ManagedNetworkSettingsPropertiesBasicResource : IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>
+    public partial class ManagedNetworkSettingsPropertiesBasicResource : IJsonModel<ManagedNetworkSettingsPropertiesBasicData>
     {
-        private static IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ManagedNetworkSettingsPropertiesBasicData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedNetworkSettingsPropertiesBasicResourceData();
+        private static IJsonModel<ManagedNetworkSettingsPropertiesBasicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedNetworkSettingsPropertiesBasicData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>)Data).Write(writer, options);
+        void IJsonModel<ManagedNetworkSettingsPropertiesBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkSettingsPropertiesBasicData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicResourceData IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ManagedNetworkSettingsPropertiesBasicData IJsonModel<ManagedNetworkSettingsPropertiesBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkSettingsPropertiesBasicResourceData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
+        BinaryData IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkSettingsPropertiesBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicResourceData IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkSettingsPropertiesBasicResourceData>(data, options, AzureResourceManagerMachineLearningContext.Default);
+        ManagedNetworkSettingsPropertiesBasicData IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkSettingsPropertiesBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ManagedNetworkSettingsPropertiesBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

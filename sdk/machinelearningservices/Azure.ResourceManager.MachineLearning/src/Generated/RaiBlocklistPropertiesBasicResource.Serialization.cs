@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    public partial class RaiBlocklistPropertiesBasicResource : IJsonModel<RaiBlocklistPropertiesBasicResourceData>
+    public partial class RaiBlocklistPropertiesBasicResource : IJsonModel<RaiBlocklistPropertiesBasicData>
     {
-        private static IJsonModel<RaiBlocklistPropertiesBasicResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<RaiBlocklistPropertiesBasicData> s_dataDeserializationInstance;
 
-        private static IJsonModel<RaiBlocklistPropertiesBasicResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiBlocklistPropertiesBasicResourceData();
+        private static IJsonModel<RaiBlocklistPropertiesBasicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiBlocklistPropertiesBasicData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiBlocklistPropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistPropertiesBasicResourceData>)Data).Write(writer, options);
+        void IJsonModel<RaiBlocklistPropertiesBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiBlocklistPropertiesBasicData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicResourceData IJsonModel<RaiBlocklistPropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        RaiBlocklistPropertiesBasicData IJsonModel<RaiBlocklistPropertiesBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiBlocklistPropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiBlocklistPropertiesBasicResourceData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
+        BinaryData IPersistableModel<RaiBlocklistPropertiesBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiBlocklistPropertiesBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiBlocklistPropertiesBasicResourceData IPersistableModel<RaiBlocklistPropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistPropertiesBasicResourceData>(data, options, AzureResourceManagerMachineLearningContext.Default);
+        RaiBlocklistPropertiesBasicData IPersistableModel<RaiBlocklistPropertiesBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiBlocklistPropertiesBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiBlocklistPropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<RaiBlocklistPropertiesBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

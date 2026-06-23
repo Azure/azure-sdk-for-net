@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         ManagedNetworkSettingsPropertiesBasicResource IOperationSource<ManagedNetworkSettingsPropertiesBasicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ManagedNetworkSettingsPropertiesBasicResourceData data = ManagedNetworkSettingsPropertiesBasicResourceData.DeserializeManagedNetworkSettingsPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ManagedNetworkSettingsPropertiesBasicData data = ManagedNetworkSettingsPropertiesBasicData.DeserializeManagedNetworkSettingsPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedNetworkSettingsPropertiesBasicResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         async ValueTask<ManagedNetworkSettingsPropertiesBasicResource> IOperationSource<ManagedNetworkSettingsPropertiesBasicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ManagedNetworkSettingsPropertiesBasicResourceData data = ManagedNetworkSettingsPropertiesBasicResourceData.DeserializeManagedNetworkSettingsPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ManagedNetworkSettingsPropertiesBasicData data = ManagedNetworkSettingsPropertiesBasicData.DeserializeManagedNetworkSettingsPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedNetworkSettingsPropertiesBasicResource(_client, data);
         }
     }

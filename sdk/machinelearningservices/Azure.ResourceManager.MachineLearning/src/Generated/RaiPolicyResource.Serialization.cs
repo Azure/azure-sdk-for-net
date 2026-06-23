@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    public partial class RaiPolicyResource : IJsonModel<RaiPolicyPropertiesBasicResourceData>
+    public partial class RaiPolicyResource : IJsonModel<RaiPolicyData>
     {
-        private static IJsonModel<RaiPolicyPropertiesBasicResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<RaiPolicyData> s_dataDeserializationInstance;
 
-        private static IJsonModel<RaiPolicyPropertiesBasicResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiPolicyPropertiesBasicResourceData();
+        private static IJsonModel<RaiPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiPolicyData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiPolicyPropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyPropertiesBasicResourceData>)Data).Write(writer, options);
+        void IJsonModel<RaiPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiPolicyData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiPolicyPropertiesBasicResourceData IJsonModel<RaiPolicyPropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiPolicyPropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiPolicyPropertiesBasicResourceData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
+        BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiPolicyData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiPolicyPropertiesBasicResourceData IPersistableModel<RaiPolicyPropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyPropertiesBasicResourceData>(data, options, AzureResourceManagerMachineLearningContext.Default);
+        RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiPolicyData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiPolicyPropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

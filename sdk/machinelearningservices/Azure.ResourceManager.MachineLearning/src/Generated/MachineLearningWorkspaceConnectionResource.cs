@@ -701,9 +701,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Gets a collection of RaiBlocklistPropertiesBasicResources in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
         /// <returns> An object representing collection of RaiBlocklistPropertiesBasicResources and their operations over a RaiBlocklistPropertiesBasicResource. </returns>
-        public virtual RaiBlocklistPropertiesBasicResourceCollection GetRaiBlocklistPropertiesBasicResources()
+        public virtual RaiBlocklistPropertiesBasicCollection GetRaiBlocklistPropertiesBasicResources()
         {
-            return GetCachedClient(client => new RaiBlocklistPropertiesBasicResourceCollection(client, Id));
+            return GetCachedClient(client => new RaiBlocklistPropertiesBasicCollection(client, Id));
         }
 
         /// <summary> Gets the specified custom blocklist associated with the Azure OpenAI connection. </summary>

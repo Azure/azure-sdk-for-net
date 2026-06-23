@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning
     // Customized: preserve the legacy pageable add-bulk surface. The TypeSpec operation is an LRO
     // action with an array final result, which the generator models as ArmOperation<IReadOnlyList<T>>
     // rather than a pageable operation.
-    internal partial class RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult : Pageable<RaiBlocklistItemPropertiesBasicResourceData>
+    internal partial class RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult : Pageable<RaiBlocklistItemPropertiesBasicData>
     {
         private readonly ConnectionRaiBlocklistItem _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
             _context = context;
         }
 
-        public override IEnumerable<Page<RaiBlocklistItemPropertiesBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<RaiBlocklistItemPropertiesBasicData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             if (continuationToken != null)
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             Response response = GetResponse();
             RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-            yield return Page<RaiBlocklistItemPropertiesBasicResourceData>.FromValues((IReadOnlyList<RaiBlocklistItemPropertiesBasicResourceData>)result.Value, result.NextLink?.OriginalString, response);
+            yield return Page<RaiBlocklistItemPropertiesBasicData>.FromValues((IReadOnlyList<RaiBlocklistItemPropertiesBasicData>)result.Value, result.NextLink?.OriginalString, response);
         }
 
         private Response GetResponse()

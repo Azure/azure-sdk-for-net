@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyPropertiesBasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="value"> The RaiPolicyPropertiesBasicResource items on this page. </param>
-        internal RaiPolicyPropertiesBasicResourceArmPaginatedResult(IEnumerable<RaiPolicyPropertiesBasicResourceData> value)
+        internal RaiPolicyPropertiesBasicResourceArmPaginatedResult(IEnumerable<RaiPolicyData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> The RaiPolicyPropertiesBasicResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyPropertiesBasicResourceArmPaginatedResult(IList<RaiPolicyPropertiesBasicResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyPropertiesBasicResourceArmPaginatedResult(IList<RaiPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The RaiPolicyPropertiesBasicResource items on this page. </summary>
         [WirePath("value")]
-        public IList<RaiPolicyPropertiesBasicResourceData> Value { get; }
+        public IList<RaiPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

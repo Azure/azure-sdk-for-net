@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="value"> The RaiBlocklistItemPropertiesBasicResource items on this page. </param>
-        internal RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult(IEnumerable<RaiBlocklistItemPropertiesBasicResourceData> value)
+        internal RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult(IEnumerable<RaiBlocklistItemPropertiesBasicData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> The RaiBlocklistItemPropertiesBasicResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult(IList<RaiBlocklistItemPropertiesBasicResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiBlocklistItemPropertiesBasicResourceArmPaginatedResult(IList<RaiBlocklistItemPropertiesBasicData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The RaiBlocklistItemPropertiesBasicResource items on this page. </summary>
         [WirePath("value")]
-        public IList<RaiBlocklistItemPropertiesBasicResourceData> Value { get; }
+        public IList<RaiBlocklistItemPropertiesBasicData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -18,9 +18,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a ManagedNetworkSettingsPropertiesBasicResource along with the instance operations that can be performed on it.
+    /// A class representing a ManagedNetworkSettingsPropertiesBasic along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetManagedNetworkSettingsPropertiesBasicResources method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetManagedNetworkSettingsPropertiesBasics method.
     /// </summary>
     public partial class ManagedNetworkSettingsPropertiesBasicResource : ArmResource
     {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly ManagedNetworkSettings _managedNetworkSettingsRestClient;
         private readonly ClientDiagnostics _outboundRulesClientDiagnostics;
         private readonly OutboundRules _outboundRulesRestClient;
-        private readonly ManagedNetworkSettingsPropertiesBasicResourceData _data;
+        private readonly ManagedNetworkSettingsPropertiesBasicData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/managedNetworks";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsPropertiesBasicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedNetworkSettingsPropertiesBasicResource(ArmClient client, ManagedNetworkSettingsPropertiesBasicResourceData data) : this(client, data.Id)
+        internal ManagedNetworkSettingsPropertiesBasicResource(ArmClient client, ManagedNetworkSettingsPropertiesBasicData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedNetworkSettingsPropertiesBasicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string managedNetworkSettingsPropertiesBasicResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string managedNetworkSettingsPropertiesBasicApiVersion);
             _managedNetworkSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicResourceApiVersion ?? "2026-03-15-preview");
+            _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicApiVersion ?? "2026-03-15-preview");
             _outboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _outboundRulesRestClient = new OutboundRules(_outboundRulesClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicResourceApiVersion ?? "2026-03-15-preview");
+            _outboundRulesRestClient = new OutboundRules(_outboundRulesClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ManagedNetworkSettingsPropertiesBasicResourceData Data
+        public virtual ManagedNetworkSettingsPropertiesBasicData Data
         {
             get
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicResourceData.FromResponse(result), result);
+                Response<ManagedNetworkSettingsPropertiesBasicData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedNetworkSettingsPropertiesBasicResourceData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicResourceData.FromResponse(result), result);
+                Response<ManagedNetworkSettingsPropertiesBasicData> response = Response.FromValue(ManagedNetworkSettingsPropertiesBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The Managed Network Settings object of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<ManagedNetworkSettingsPropertiesBasicResource>> UpdateAsync(WaitUntil waitUntil, ManagedNetworkSettingsPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagedNetworkSettingsPropertiesBasicResource>> UpdateAsync(WaitUntil waitUntil, ManagedNetworkSettingsPropertiesBasicData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedNetworkSettingsPropertiesBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
                     new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The Managed Network Settings object of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<ManagedNetworkSettingsPropertiesBasicResource> Update(WaitUntil waitUntil, ManagedNetworkSettingsPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagedNetworkSettingsPropertiesBasicResource> Update(WaitUntil waitUntil, ManagedNetworkSettingsPropertiesBasicData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedNetworkSettingsClientDiagnostics.CreateScope("ManagedNetworkSettingsPropertiesBasicResource.Update");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedNetworkSettingsPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedNetworkSettingsPropertiesBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkSettingsPropertiesBasicResource>(
                     new ManagedNetworkSettingsPropertiesBasicResourceOperationSource(Client),
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary> Gets a collection of OutboundRules in the <see cref="ManagedNetworkSettingsPropertiesBasicResource"/>. </summary>
-        /// <returns> An object representing collection of OutboundRules and their operations over a MachineLearningOutboundRuleBasicResource. </returns>
-        public virtual MachineLearningOutboundRuleBasicCollection GetOutboundRules()
+        /// <summary> Gets a collection of MachineLearningOutboundRuleBasics in the <see cref="ManagedNetworkSettingsPropertiesBasicResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningOutboundRuleBasics and their operations over a MachineLearningOutboundRuleBasicResource. </returns>
+        public virtual MachineLearningOutboundRuleBasicCollection GetMachineLearningOutboundRuleBasics()
         {
-            return GetCachedClient(client => new MachineLearningOutboundRuleBasicCollection(client, Id));
+            return this.GetCachedClient(client => new MachineLearningOutboundRuleBasicCollection(client, Id));
         }
 
         /// <summary> The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace. </summary>
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningOutboundRuleBasicResource>> GetOutboundRuleAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningOutboundRuleBasicResource>> GetMachineLearningOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return await GetOutboundRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningOutboundRuleBasics().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace. </summary>
@@ -442,11 +442,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearningOutboundRuleBasicResource> GetOutboundRule(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningOutboundRuleBasicResource> GetMachineLearningOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return GetOutboundRules().Get(ruleName, cancellationToken);
+            return GetMachineLearningOutboundRuleBasics().Get(ruleName, cancellationToken);
         }
     }
 }

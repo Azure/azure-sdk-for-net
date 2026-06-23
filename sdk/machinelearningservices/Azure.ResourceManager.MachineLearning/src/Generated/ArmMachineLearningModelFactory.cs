@@ -6815,10 +6815,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Azure OpenAI Content Filters properties. </param>
-        /// <returns> A new <see cref="MachineLearning.RaiPolicyPropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static RaiPolicyPropertiesBasicResourceData RaiPolicyPropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiPolicyProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.RaiPolicyData"/> instance for mocking. </returns>
+        public static RaiPolicyData RaiPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiPolicyProperties properties = default)
         {
-            return new RaiPolicyPropertiesBasicResourceData(
+            return new RaiPolicyData(
                 id,
                 name,
                 resourceType,
@@ -8459,10 +8459,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="raiBlocklistDescription"> Description of the block list. </param>
-        /// <returns> A new <see cref="MachineLearning.RaiBlocklistPropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static RaiBlocklistPropertiesBasicResourceData RaiBlocklistPropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string raiBlocklistDescription = default)
+        /// <returns> A new <see cref="MachineLearning.RaiBlocklistPropertiesBasicData"/> instance for mocking. </returns>
+        public static RaiBlocklistPropertiesBasicData RaiBlocklistPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string raiBlocklistDescription = default)
         {
-            return new RaiBlocklistPropertiesBasicResourceData(
+            return new RaiBlocklistPropertiesBasicData(
                 id,
                 name,
                 resourceType,
@@ -8492,10 +8492,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> RAI Custom Blocklist Item properties. </param>
-        /// <returns> A new <see cref="MachineLearning.RaiBlocklistItemPropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static RaiBlocklistItemPropertiesBasicResourceData RaiBlocklistItemPropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiBlocklistItemProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.RaiBlocklistItemPropertiesBasicData"/> instance for mocking. </returns>
+        public static RaiBlocklistItemPropertiesBasicData RaiBlocklistItemPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiBlocklistItemProperties properties = default)
         {
-            return new RaiBlocklistItemPropertiesBasicResourceData(
+            return new RaiBlocklistItemPropertiesBasicData(
                 id,
                 name,
                 resourceType,
@@ -8810,10 +8810,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the managed network settings of a machine learning workspace. </param>
-        /// <returns> A new <see cref="MachineLearning.ManagedNetworkSettingsPropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static ManagedNetworkSettingsPropertiesBasicResourceData ManagedNetworkSettingsPropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.ManagedNetworkSettingsPropertiesBasicData"/> instance for mocking. </returns>
+        public static ManagedNetworkSettingsPropertiesBasicData ManagedNetworkSettingsPropertiesBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)
         {
-            return new ManagedNetworkSettingsPropertiesBasicResourceData(
+            return new ManagedNetworkSettingsPropertiesBasicData(
                 id,
                 name,
                 resourceType,

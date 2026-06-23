@@ -13,37 +13,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> Azure OpenAI Content Filters resource. </summary>
-    public partial class RaiPolicyPropertiesBasicResourceData : ResourceData
+    /// <summary> ManagedNetworkSettingsPropertiesBasicResource is a preview-only resource. </summary>
+    public partial class ManagedNetworkSettingsPropertiesBasicData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyPropertiesBasicResourceData"/>. </summary>
-        /// <param name="properties"> Azure OpenAI Content Filters properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public RaiPolicyPropertiesBasicResourceData(RaiPolicyProperties properties)
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsPropertiesBasicData"/>. </summary>
+        public ManagedNetworkSettingsPropertiesBasicData()
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyPropertiesBasicResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsPropertiesBasicData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Azure OpenAI Content Filters properties. </param>
+        /// <param name="properties"> The properties of the managed network settings of a machine learning workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyPropertiesBasicResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiPolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ManagedNetworkSettingsPropertiesBasicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedNetworkSettingsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Azure OpenAI Content Filters properties. </summary>
+        /// <summary> The properties of the managed network settings of a machine learning workspace. </summary>
         [WirePath("properties")]
-        public RaiPolicyProperties Properties { get; set; }
+        public ManagedNetworkSettingsProperties Properties { get; set; }
     }
 }

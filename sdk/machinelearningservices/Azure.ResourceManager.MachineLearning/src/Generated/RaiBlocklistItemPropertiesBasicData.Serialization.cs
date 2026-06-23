@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> Azure OpenAI Content Filters resource. </summary>
-    public partial class RaiPolicyPropertiesBasicResourceData : ResourceData, IJsonModel<RaiPolicyPropertiesBasicResourceData>
+    /// <summary> RaiBlocklistItemPropertiesBasicResource is a preview-only resource. </summary>
+    public partial class RaiBlocklistItemPropertiesBasicData : ResourceData, IJsonModel<RaiBlocklistItemPropertiesBasicData>
     {
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyPropertiesBasicResourceData"/> for deserialization. </summary>
-        internal RaiPolicyPropertiesBasicResourceData()
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemPropertiesBasicData"/> for deserialization. </summary>
+        internal RaiBlocklistItemPropertiesBasicData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRaiPolicyPropertiesBasicResourceData(document.RootElement, options);
+                        return DeserializeRaiBlocklistItemPropertiesBasicData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RaiPolicyPropertiesBasicResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemPropertiesBasicData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RaiPolicyPropertiesBasicResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiBlocklistItemPropertiesBasicData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RaiPolicyPropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiBlocklistItemPropertiesBasicData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiPolicyPropertiesBasicResourceData IPersistableModel<RaiPolicyPropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiPolicyPropertiesBasicResourceData)PersistableModelCreateCore(data, options);
+        RaiBlocklistItemPropertiesBasicData IPersistableModel<RaiBlocklistItemPropertiesBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiBlocklistItemPropertiesBasicData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RaiPolicyPropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiBlocklistItemPropertiesBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="raiPolicyPropertiesBasicResourceData"> The <see cref="RaiPolicyPropertiesBasicResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RaiPolicyPropertiesBasicResourceData raiPolicyPropertiesBasicResourceData)
+        /// <param name="raiBlocklistItemPropertiesBasicData"> The <see cref="RaiBlocklistItemPropertiesBasicData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiBlocklistItemPropertiesBasicData raiBlocklistItemPropertiesBasicData)
         {
-            if (raiPolicyPropertiesBasicResourceData == null)
+            if (raiBlocklistItemPropertiesBasicData == null)
             {
                 return null;
             }
-            return RequestContent.Create(raiPolicyPropertiesBasicResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(raiBlocklistItemPropertiesBasicData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiPolicyPropertiesBasicResourceData"/> from. </param>
-        internal static RaiPolicyPropertiesBasicResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiBlocklistItemPropertiesBasicData"/> from. </param>
+        internal static RaiBlocklistItemPropertiesBasicData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRaiPolicyPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRaiBlocklistItemPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RaiPolicyPropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiBlocklistItemPropertiesBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiPolicyPropertiesBasicResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemPropertiesBasicData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -122,44 +122,40 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RaiPolicyPropertiesBasicResourceData IJsonModel<RaiPolicyPropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiPolicyPropertiesBasicResourceData)JsonModelCreateCore(ref reader, options);
+        RaiBlocklistItemPropertiesBasicData IJsonModel<RaiBlocklistItemPropertiesBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiBlocklistItemPropertiesBasicData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiBlocklistItemPropertiesBasicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RaiPolicyPropertiesBasicResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiBlocklistItemPropertiesBasicData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRaiPolicyPropertiesBasicResourceData(document.RootElement, options);
+            return DeserializeRaiBlocklistItemPropertiesBasicData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RaiPolicyPropertiesBasicResourceData DeserializeRaiPolicyPropertiesBasicResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiBlocklistItemPropertiesBasicData DeserializeRaiBlocklistItemPropertiesBasicData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RaiPolicyProperties properties = default;
+            RaiBlocklistItemProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = RaiPolicyProperties.DeserializeRaiPolicyProperties(prop.Value, options);
+                    properties = RaiBlocklistItemProperties.DeserializeRaiBlocklistItemProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,8 +191,8 @@ namespace Azure.ResourceManager.MachineLearning
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RaiPolicyPropertiesBasicResourceData(
-                id,
+            return new RaiBlocklistItemPropertiesBasicData(
+                new ResourceIdentifier(id),
                 name,
                 resourceType,
                 systemData,

@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class ConnectionRaiBlocklistsGetAllAsyncCollectionResultOfT : AsyncPageable<RaiBlocklistPropertiesBasicResourceData>
+    internal partial class ConnectionRaiBlocklistsGetAllAsyncCollectionResultOfT : AsyncPageable<RaiBlocklistPropertiesBasicData>
     {
         private readonly ConnectionRaiBlocklists _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ConnectionRaiBlocklistsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RaiBlocklistPropertiesBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<RaiBlocklistPropertiesBasicData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 RaiBlocklistPropertiesBasicResourceArmPaginatedResult result = RaiBlocklistPropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<RaiBlocklistPropertiesBasicResourceData>.FromValues((IReadOnlyList<RaiBlocklistPropertiesBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<RaiBlocklistPropertiesBasicData>.FromValues((IReadOnlyList<RaiBlocklistPropertiesBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

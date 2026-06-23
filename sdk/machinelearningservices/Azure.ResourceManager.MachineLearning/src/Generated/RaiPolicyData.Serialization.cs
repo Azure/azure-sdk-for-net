@@ -17,69 +17,74 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> ManagedNetworkSettingsPropertiesBasicResource is a preview-only resource. </summary>
-    public partial class ManagedNetworkSettingsPropertiesBasicResourceData : ResourceData, IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>
+    /// <summary> Azure OpenAI Content Filters resource. </summary>
+    public partial class RaiPolicyData : ResourceData, IJsonModel<RaiPolicyData>
     {
+        /// <summary> Initializes a new instance of <see cref="RaiPolicyData"/> for deserialization. </summary>
+        internal RaiPolicyData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedNetworkSettingsPropertiesBasicResourceData(document.RootElement, options);
+                        return DeserializeRaiPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicResourceData IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedNetworkSettingsPropertiesBasicResourceData)PersistableModelCreateCore(data, options);
+        RaiPolicyData IPersistableModel<RaiPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiPolicyData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="managedNetworkSettingsPropertiesBasicResourceData"> The <see cref="ManagedNetworkSettingsPropertiesBasicResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedNetworkSettingsPropertiesBasicResourceData managedNetworkSettingsPropertiesBasicResourceData)
+        /// <param name="raiPolicyData"> The <see cref="RaiPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RaiPolicyData raiPolicyData)
         {
-            if (managedNetworkSettingsPropertiesBasicResourceData == null)
+            if (raiPolicyData == null)
             {
                 return null;
             }
-            return RequestContent.Create(managedNetworkSettingsPropertiesBasicResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(raiPolicyData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedNetworkSettingsPropertiesBasicResourceData"/> from. </param>
-        internal static ManagedNetworkSettingsPropertiesBasicResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RaiPolicyData"/> from. </param>
+        internal static RaiPolicyData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedNetworkSettingsPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeRaiPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,17 +95,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiPolicyData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -120,44 +122,40 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsPropertiesBasicResourceData IJsonModel<ManagedNetworkSettingsPropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedNetworkSettingsPropertiesBasicResourceData)JsonModelCreateCore(ref reader, options);
+        RaiPolicyData IJsonModel<RaiPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiPolicyData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsPropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsPropertiesBasicResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiPolicyData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedNetworkSettingsPropertiesBasicResourceData(document.RootElement, options);
+            return DeserializeRaiPolicyData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedNetworkSettingsPropertiesBasicResourceData DeserializeManagedNetworkSettingsPropertiesBasicResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiPolicyData DeserializeRaiPolicyData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ManagedNetworkSettingsProperties properties = default;
+            RaiPolicyProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -185,11 +183,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ManagedNetworkSettingsProperties.DeserializeManagedNetworkSettingsProperties(prop.Value, options);
+                    properties = RaiPolicyProperties.DeserializeRaiPolicyProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,8 +191,8 @@ namespace Azure.ResourceManager.MachineLearning
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkSettingsPropertiesBasicResourceData(
-                id,
+            return new RaiPolicyData(
+                new ResourceIdentifier(id),
                 name,
                 resourceType,
                 systemData,

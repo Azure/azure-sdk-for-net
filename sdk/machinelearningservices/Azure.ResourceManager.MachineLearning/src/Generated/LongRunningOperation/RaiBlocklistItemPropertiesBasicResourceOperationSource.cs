@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         RaiBlocklistItemPropertiesBasicResource IOperationSource<RaiBlocklistItemPropertiesBasicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RaiBlocklistItemPropertiesBasicResourceData data = RaiBlocklistItemPropertiesBasicResourceData.DeserializeRaiBlocklistItemPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            RaiBlocklistItemPropertiesBasicData data = RaiBlocklistItemPropertiesBasicData.DeserializeRaiBlocklistItemPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RaiBlocklistItemPropertiesBasicResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         async ValueTask<RaiBlocklistItemPropertiesBasicResource> IOperationSource<RaiBlocklistItemPropertiesBasicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RaiBlocklistItemPropertiesBasicResourceData data = RaiBlocklistItemPropertiesBasicResourceData.DeserializeRaiBlocklistItemPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            RaiBlocklistItemPropertiesBasicData data = RaiBlocklistItemPropertiesBasicData.DeserializeRaiBlocklistItemPropertiesBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RaiBlocklistItemPropertiesBasicResource(_client, data);
         }
     }

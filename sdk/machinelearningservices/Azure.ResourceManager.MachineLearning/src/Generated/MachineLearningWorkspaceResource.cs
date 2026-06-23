@@ -2552,9 +2552,9 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Gets a collection of ManagedNetworkSettingsPropertiesBasicResources in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
         /// <returns> An object representing collection of ManagedNetworkSettingsPropertiesBasicResources and their operations over a ManagedNetworkSettingsPropertiesBasicResource. </returns>
-        public virtual ManagedNetworkSettingsPropertiesBasicResourceCollection GetManagedNetworkSettingsPropertiesBasicResources()
+        public virtual ManagedNetworkSettingsPropertiesBasicCollection GetManagedNetworkSettingsPropertiesBasicResources()
         {
-            return GetCachedClient(client => new ManagedNetworkSettingsPropertiesBasicResourceCollection(client, Id));
+            return GetCachedClient(client => new ManagedNetworkSettingsPropertiesBasicCollection(client, Id));
         }
 
         /// <summary> Get API for managed network settings of a machine learning workspace. </summary>

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         RaiPolicyResource IOperationSource<RaiPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RaiPolicyPropertiesBasicResourceData data = RaiPolicyPropertiesBasicResourceData.DeserializeRaiPolicyPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            RaiPolicyData data = RaiPolicyData.DeserializeRaiPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RaiPolicyResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         async ValueTask<RaiPolicyResource> IOperationSource<RaiPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RaiPolicyPropertiesBasicResourceData data = RaiPolicyPropertiesBasicResourceData.DeserializeRaiPolicyPropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            RaiPolicyData data = RaiPolicyData.DeserializeRaiPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new RaiPolicyResource(_client, data);
         }
     }

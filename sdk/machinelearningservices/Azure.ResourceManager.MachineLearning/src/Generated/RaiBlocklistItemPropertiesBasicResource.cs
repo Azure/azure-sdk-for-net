@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a RaiBlocklistItemPropertiesBasicResource along with the instance operations that can be performed on it.
+    /// A class representing a RaiBlocklistItemPropertiesBasic along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RaiBlocklistItemPropertiesBasicResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RaiBlocklistPropertiesBasicResource"/> using the GetRaiBlocklistItemPropertiesBasicResources method.
+    /// Otherwise you can get one from its parent resource <see cref="RaiBlocklistPropertiesBasicResource"/> using the GetRaiBlocklistItemPropertiesBasics method.
     /// </summary>
     public partial class RaiBlocklistItemPropertiesBasicResource : ArmResource
     {
         private readonly ClientDiagnostics _connectionRaiBlocklistItemClientDiagnostics;
         private readonly ConnectionRaiBlocklistItem _connectionRaiBlocklistItemRestClient;
-        private readonly RaiBlocklistItemPropertiesBasicResourceData _data;
+        private readonly RaiBlocklistItemPropertiesBasicData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/connections/raiBlocklists/raiBlocklistItems";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemPropertiesBasicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RaiBlocklistItemPropertiesBasicResource(ArmClient client, RaiBlocklistItemPropertiesBasicResourceData data) : this(client, data.Id)
+        internal RaiBlocklistItemPropertiesBasicResource(ArmClient client, RaiBlocklistItemPropertiesBasicData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RaiBlocklistItemPropertiesBasicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string raiBlocklistItemPropertiesBasicResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string raiBlocklistItemPropertiesBasicApiVersion);
             _connectionRaiBlocklistItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRaiBlocklistItemRestClient = new ConnectionRaiBlocklistItem(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, Endpoint, raiBlocklistItemPropertiesBasicResourceApiVersion ?? "2026-03-15-preview");
+            _connectionRaiBlocklistItemRestClient = new ConnectionRaiBlocklistItem(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, Endpoint, raiBlocklistItemPropertiesBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual RaiBlocklistItemPropertiesBasicResourceData Data
+        public virtual RaiBlocklistItemPropertiesBasicData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RaiBlocklistItemPropertiesBasicResourceData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiBlocklistItemPropertiesBasicData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RaiBlocklistItemPropertiesBasicResourceData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicResourceData.FromResponse(result), result);
+                Response<RaiBlocklistItemPropertiesBasicData> response = Response.FromValue(RaiBlocklistItemPropertiesBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RaiBlocklistItemPropertiesBasicResource.
+        /// Update a RaiBlocklistItemPropertiesBasic.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RaiBlocklistItemPropertiesBasicResource>> UpdateAsync(WaitUntil waitUntil, RaiBlocklistItemPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RaiBlocklistItemPropertiesBasicResource>> UpdateAsync(WaitUntil waitUntil, RaiBlocklistItemPropertiesBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiBlocklistItemPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiBlocklistItemPropertiesBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource> operation = new MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource>(
                     new RaiBlocklistItemPropertiesBasicResourceOperationSource(Client),
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RaiBlocklistItemPropertiesBasicResource.
+        /// Update a RaiBlocklistItemPropertiesBasic.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RaiBlocklistItemPropertiesBasicResource> Update(WaitUntil waitUntil, RaiBlocklistItemPropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RaiBlocklistItemPropertiesBasicResource> Update(WaitUntil waitUntil, RaiBlocklistItemPropertiesBasicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiBlocklistItemPropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRaiBlocklistItemRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RaiBlocklistItemPropertiesBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource> operation = new MachineLearningArmOperation<RaiBlocklistItemPropertiesBasicResource>(
                     new RaiBlocklistItemPropertiesBasicResourceOperationSource(Client),
