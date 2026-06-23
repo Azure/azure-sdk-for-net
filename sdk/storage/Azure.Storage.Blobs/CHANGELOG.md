@@ -3,6 +3,7 @@
 ## 12.30.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
 
 ### Breaking Changes
 
