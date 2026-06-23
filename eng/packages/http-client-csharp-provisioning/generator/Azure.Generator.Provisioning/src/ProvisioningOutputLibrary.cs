@@ -173,25 +173,6 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
-            // TODO: CodeGen* attribute definitions (CodeGenType, CodeGenMember, etc.) are
-            // included in base OutputLibrary.BuildTypeProviders() via the internal property
-            // CodeModelGenerator.CustomCodeAttributeProviders. Since we can't call base and
-            // the property is inaccessible, we discover them by convention using reflection.
-            // This should be replaced by a base.BuildTypeProviders() call once the above
-            // ManagementOutputLibrary issue is resolved.
-            foreach (var type in typeof(TypeProvider).Assembly.GetTypes())
-            {
-                if (typeof(TypeProvider).IsAssignableFrom(type)
-                    && !type.IsAbstract
-                    && type.Name.EndsWith("AttributeDefinition"))
-                {
-                    if (Activator.CreateInstance(type) is TypeProvider attrProvider)
-                    {
-                        providers.Add(attrProvider);
-                    }
-                }
-            }
-
             return [.. providers];
         }
 
