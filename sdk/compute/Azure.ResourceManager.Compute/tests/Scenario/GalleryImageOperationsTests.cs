@@ -92,12 +92,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
-        // TODO: Re-enable once the new mgmt generator supports the equivalent of autorest.md's
-        // `update-required-copy: GalleryImage: OSType`. The old hand-rolled SetTags copied OSType from
-        // the current resource into the patch (otherwise Azure returns 409 on PATCH without osType).
-        // The new generated SetTags sends only Tags, causing recording mismatch in playback and 409 in live.
-        // Tracking: https://github.com/Azure/azure-sdk-for-net/issues/59095
-        [TestCase(false, Ignore = "Generator regression: SetTags PATCH must include osType for GalleryImage. See TODO above.")]
+        [TestCase(false, Ignore = "Recording needs to be refreshed after restoring GalleryImage tag PATCH required-copy behavior. See #59095.")]
         public async Task SetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
