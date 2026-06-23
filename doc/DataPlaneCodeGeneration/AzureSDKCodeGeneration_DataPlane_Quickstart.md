@@ -36,7 +36,7 @@ dotnet build /t:GenerateCode /p:Trace=true -v d
 
 #### Run against a local spec
 
-By default the generator syncs the TypeSpec from the remote `azure-rest-api-specs` repo using the `repo` and `commit`
+By default the generator syncs the TypeSpec from the remote repo specified by the `repo` and `commit`
 values in `tsp-location.yaml`. To generate against a local clone of the spec instead (for example, to test in-progress
 TypeSpec changes before they are merged), pass the `LocalSpecRepo` property.
 
@@ -45,7 +45,7 @@ TypeSpec changes before they are merged), pass the `LocalSpecRepo` property.
 `directory` property in `tsp-location.yaml`.
 
 ```dotnetcli
-dotnet build /t:GenerateCode /p:LocalSpecRepo="C:\src\azure-rest-api-specs\specification\anomalydetector\AnomalyDetector"
+dotnet build /t:GenerateCode /p:LocalSpecRepo="C:\src\azure-rest-api-specs\specification\cognitiveservices\AnomalyDetector"
 ```
 
 This maps to `tsp-client`'s `--local-spec-repo` argument.
