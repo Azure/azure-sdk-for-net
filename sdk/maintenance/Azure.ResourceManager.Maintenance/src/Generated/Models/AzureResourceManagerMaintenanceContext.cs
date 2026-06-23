@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Maintenance
     [ModelReaderWriterBuildable(typeof(MaintenanceGroupConfigurationAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceLinuxPatchSettings))]
     [ModelReaderWriterBuildable(typeof(MaintenancePatchConfiguration))]
+    [ModelReaderWriterBuildable(typeof(MaintenancePublicConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceResourceGroupConfigurationAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceScheduledEventApproveResult))]
     [ModelReaderWriterBuildable(typeof(MaintenanceSubscriptionConfigurationAssignmentResource))]

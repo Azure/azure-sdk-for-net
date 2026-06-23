@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceGroupApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
-        public virtual MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
+        public virtual MaintenanceGroupApplyUpdateResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
         {
-            MaintenanceGroupApplyUpdateResource.ValidateResourceId(id);
-            return new MaintenanceGroupApplyUpdateResource(Client, id);
+            MaintenancePublicConfigurationResource.ValidateResourceId(id);
+            return new MaintenancePublicConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

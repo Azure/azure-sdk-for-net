@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary> Gets a collection of MaintenanceGroupApplyUpdates in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceGroupApplyUpdates and their operations over a MaintenanceGroupApplyUpdateResource. </returns>
-        public virtual MaintenanceGroupApplyUpdateCollection GetMaintenanceGroupApplyUpdates()
+        /// <summary> Gets a collection of MaintenancePublicConfigurations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenancePublicConfigurations and their operations over a MaintenancePublicConfigurationResource. </returns>
+        public virtual MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations()
         {
-            return this.GetCachedClient(client => new MaintenanceGroupApplyUpdateCollection(client, Id));
+            return this.GetCachedClient(client => new MaintenancePublicConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceGroupApplyUpdateResource>> GetMaintenanceGroupApplyUpdateAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetMaintenanceGroupApplyUpdates().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenancePublicConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdate(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetMaintenanceGroupApplyUpdates().Get(resourceName, cancellationToken);
+            return GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MaintenanceSubscriptionConfigurationAssignments in the <see cref="SubscriptionResource"/>. </summary>
