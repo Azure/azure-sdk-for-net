@@ -11,10 +11,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
-#pragma warning disable CS1591 // Compatibility overloads mirror existing generated API documentation.
-
 namespace Azure.ResourceManager.IotHub
 {
+    /// <summary>
+    /// A class representing a collection of <see cref="IotHubPrivateEndpointConnectionResource"/> and their operations.
+    /// Each <see cref="IotHubPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get a <see cref="IotHubPrivateEndpointConnectionCollection"/> instance call the GetIotHubPrivateEndpointConnections method from an instance of <see cref="IotHubDescriptionResource"/>.
+    /// </summary>
     public partial class IotHubPrivateEndpointConnectionCollection
     {
         // Customization justification:
@@ -23,30 +26,119 @@ namespace Azure.ResourceManager.IotHub
         // only supplied the private endpoint connection name. These overloads preserve that parent-scoped
         // collection experience by deriving the IoT Hub name from Id.Name and delegating to the generated
         // REST client/child resource operations.
+        /// <summary>
+        /// Update the state of the specified private endpoint connection associated with the IotHub.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="data"> The private endpoint connection data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<IotHubPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
             => await GetChildResource(privateEndpointConnectionName).UpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Update the state of the specified private endpoint connection associated with the IotHub.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="data"> The private endpoint connection data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<IotHubPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
             => GetChildResource(privateEndpointConnectionName).Update(waitUntil, data, cancellationToken);
 
+        /// <summary>
+        /// Get private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
             => await GetChildResource(privateEndpointConnectionName).GetAsync(cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Get private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotHubPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
             => GetChildResource(privateEndpointConnectionName).Get(cancellationToken);
 
+        /// <summary> Checks whether a private endpoint connection resource exists. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             NullableResponse<IotHubPrivateEndpointConnectionResource> response = await GetIfExistsAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.HasValue, response.GetRawResponse());
         }
 
+        /// <summary> Checks whether a private endpoint connection resource exists. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             NullableResponse<IotHubPrivateEndpointConnectionResource> response = GetIfExists(privateEndpointConnectionName, cancellationToken);
             return Response.FromValue(response.HasValue, response.GetRawResponse());
         }
 
+        /// <summary> Tries to get details for this private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<IotHubPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -55,6 +147,9 @@ namespace Azure.ResourceManager.IotHub
             return CreateNullableResponse(message.Response);
         }
 
+        /// <summary> Tries to get details for this private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<IotHubPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -63,11 +158,47 @@ namespace Azure.ResourceManager.IotHub
             return CreateNullableResponse(message.Response);
         }
 
+        /// <summary>
+        /// List private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<IotHubPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return new IotHubPrivateEndpointConnectionResourceAsyncPageable(this, cancellationToken);
         }
 
+        /// <summary>
+        /// List private endpoint connection properties
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<IotHubPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             return Pageable<IotHubPrivateEndpointConnectionResource>.FromPages(GetAllPages(cancellationToken));
@@ -158,5 +289,3 @@ namespace Azure.ResourceManager.IotHub
         }
     }
 }
-
-#pragma warning restore CS1591
