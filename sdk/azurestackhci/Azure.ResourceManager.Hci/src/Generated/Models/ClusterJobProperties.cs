@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary>
     /// Cluster Job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/> and <see cref="HciConfigureCvmJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HciConfigureSdnIntegrationJobProperties"/>, <see cref="HciConfigureCvmJobProperties"/>, <see cref="HciAddServerJobProperties"/>, <see cref="HciRepairServerJobProperties"/>, <see cref="GpuCreatePartitionJobProperties"/>, <see cref="GpuSwitchModeJobProperties"/>, <see cref="VmConnectProvisionJobProperties"/>, and <see cref="VmConnectRemoveJobProperties"/>.
     /// </summary>
     public abstract partial class ClusterJobProperties
     {

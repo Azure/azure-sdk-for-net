@@ -8,16 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Execution policy for an activity. </summary>
     public partial class PipelineActivityPolicy
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="PipelineActivityPolicy"/>. </summary>
         public PipelineActivityPolicy()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineActivityPolicy"/>. </summary>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>
         /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="isSecureOutputEnabled"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal PipelineActivityPolicy(DataFactoryElement<string> timeout, DataFactoryElement<int> retry, int? retryIntervalInSeconds, bool? isSecureInputEnabled, bool? isSecureOutputEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
             Timeout = timeout;
@@ -34,49 +38,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             RetryIntervalInSeconds = retryIntervalInSeconds;
             IsSecureInputEnabled = isSecureInputEnabled;
             IsSecureOutputEnabled = isSecureOutputEnabled;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> Timeout { get; set; }
+
         /// <summary> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
         public DataFactoryElement<int> Retry { get; set; }
+
         /// <summary> Interval between each retry attempt (in seconds). The default is 30 sec. </summary>
         public int? RetryIntervalInSeconds { get; set; }
+
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
         public bool? IsSecureInputEnabled { get; set; }
+
         /// <summary> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </summary>
         public bool? IsSecureOutputEnabled { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

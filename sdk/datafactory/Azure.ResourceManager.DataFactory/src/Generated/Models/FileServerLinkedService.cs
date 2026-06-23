@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,12 +18,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/>. </summary>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
-        public FileServerLinkedService(DataFactoryElement<string> host)
+        public FileServerLinkedService(DataFactoryElement<string> host) : base("FileServer")
         {
             Argument.AssertNotNull(host, nameof(host));
 
-            Host = host;
-            LinkedServiceType = "FileServer";
+            TypeProperties = new FileServerLinkedServiceTypeProperties(host);
         }
 
         /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/>. </summary>
@@ -32,32 +32,67 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
-        /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to logon the server. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal FileServerLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> File system linked service properties. </param>
+        /// <param name="password"></param>
+        internal FileServerLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, FileServerLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            UserId = userId;
+            TypeProperties = typeProperties;
             Password = password;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "FileServer";
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileServerLinkedService"/> for deserialization. </summary>
-        internal FileServerLinkedService()
-        {
-        }
+        /// <summary> File system linked service properties. </summary>
+        internal FileServerLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FileServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserId { get; set; }
-        /// <summary> Password to logon the server. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FileServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserId = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FileServerLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

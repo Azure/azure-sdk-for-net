@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
-        public CosmosDBMongoDBApiLinkedService(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
+        public CosmosDBMongoDBApiLinkedService(DataFactoryElement<string> connectionString, DataFactoryElement<string> database) : base("CosmosDbMongoDbApi")
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
 
-            ConnectionString = connectionString;
-            Database = database;
-            LinkedServiceType = "CosmosDbMongoDbApi";
+            TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties(connectionString, database);
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/>. </summary>
@@ -35,28 +34,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="isServerVersionAbove32"> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
-        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> isServerVersionAbove32, DataFactoryElement<string> connectionString, DataFactoryElement<string> database) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> CosmosDB (MongoDB API) linked service properties. </param>
+        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, CosmosDbMongoDbApiLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            IsServerVersionAbove32 = isServerVersionAbove32;
-            ConnectionString = connectionString;
-            Database = database;
-            LinkedServiceType = linkedServiceType ?? "CosmosDbMongoDbApi";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/> for deserialization. </summary>
-        internal CosmosDBMongoDBApiLinkedService()
-        {
-        }
+        /// <summary> CosmosDB (MongoDB API) linked service properties. </summary>
+        internal CosmosDbMongoDbApiLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> IsServerVersionAbove32 { get; set; }
+        public DataFactoryElement<bool> IsServerVersionAbove32
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.IsServerVersionAbove32;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                }
+                TypeProperties.IsServerVersionAbove32 = value;
+            }
+        }
+
         /// <summary> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CosmosDbMongoDbApiLinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
     }
 }
