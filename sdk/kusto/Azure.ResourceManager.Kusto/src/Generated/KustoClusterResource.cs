@@ -2376,7 +2376,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2424,7 +2424,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2471,7 +2471,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<KustoClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2514,7 +2514,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<KustoClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -2556,7 +2556,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -2602,7 +2602,7 @@ namespace Azure.ResourceManager.Kusto
                 else
                 {
                     KustoClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    KustoClusterPatch patch = new KustoClusterPatch();
+                    KustoClusterPatch patch = new KustoClusterPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

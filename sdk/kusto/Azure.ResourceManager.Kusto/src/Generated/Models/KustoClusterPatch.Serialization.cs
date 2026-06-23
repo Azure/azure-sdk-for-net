@@ -17,8 +17,13 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Class representing an update to a Kusto cluster. </summary>
-    public partial class KustoClusterPatch : ResourceData, IJsonModel<KustoClusterPatch>
+    public partial class KustoClusterPatch : TrackedResourceData, IJsonModel<KustoClusterPatch>
     {
+        /// <summary> Initializes a new instance of <see cref="KustoClusterPatch"/> for deserialization. </summary>
+        internal KustoClusterPatch()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -88,27 +93,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 throw new FormatException($"The model {nameof(KustoClusterPatch)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -186,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
             KustoSku sku = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
@@ -249,7 +233,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

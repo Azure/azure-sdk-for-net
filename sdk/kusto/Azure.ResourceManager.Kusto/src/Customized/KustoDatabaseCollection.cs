@@ -61,5 +61,17 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, KustoDatabaseData data, CancellationToken cancellationToken) =>
             CreateOrUpdate(waitUntil, databaseName, data, null, cancellationToken);
+
+        /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoDatabaseResource> GetAllAsync(CancellationToken cancellationToken) =>
+            GetAllAsync(null, null, cancellationToken);
+
+        /// <summary> Returns the list of databases of the given Kusto cluster. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoDatabaseResource> GetAll(CancellationToken cancellationToken) =>
+            GetAll(null, null, cancellationToken);
     }
 }

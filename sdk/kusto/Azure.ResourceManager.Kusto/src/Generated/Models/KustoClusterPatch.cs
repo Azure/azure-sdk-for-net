@@ -14,15 +14,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Class representing an update to a Kusto cluster. </summary>
-    public partial class KustoClusterPatch : ResourceData
+    public partial class KustoClusterPatch : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterPatch"/>. </summary>
-        public KustoClusterPatch()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public KustoClusterPatch(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
@@ -32,28 +32,20 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
         /// <param name="zones"> The availability zones of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="properties"> The cluster properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ClusterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ClusterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Tags = tags;
-            Location = location;
             Sku = sku;
             Zones = zones;
             Identity = identity;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> Resource location. </summary>
-        public string Location { get; set; }
 
         /// <summary> The SKU of the cluster. </summary>
         public KustoSku Sku { get; set; }

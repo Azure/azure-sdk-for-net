@@ -951,13 +951,13 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> Resource location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
         /// <param name="zones"> The availability zones of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="state"> The state of the resource. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="clusterUri"> The cluster URI. </param>
+        /// <param name="uri"> The cluster URI. </param>
         /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
         /// <param name="stateReason"> The reason for the cluster's current state. </param>
         /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default)
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri uri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -998,10 +998,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 sku,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                state is null && provisioningState is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
                     state,
                     provisioningState,
-                    clusterUri,
+                    default,
                     dataIngestionUri,
                     stateReason,
                     (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
@@ -1368,89 +1368,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KustoClusterPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The SKU of the cluster. </param>
-        /// <param name="zones"> The availability zones of the cluster. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
-        /// <param name="state"> The state of the resource. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="uri"> The cluster URI. </param>
-        /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
-        /// <param name="stateReason"> The reason for the cluster's current state. </param>
-        /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
-        /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
-        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster's disks are encrypted. </param>
-        /// <param name="isStreamingIngestEnabled"> A boolean value that indicates if the streaming ingest is enabled. </param>
-        /// <param name="virtualNetworkConfiguration"> Virtual network definition. </param>
-        /// <param name="keyVaultProperties"> KeyVault properties for the cluster encryption. </param>
-        /// <param name="isPurgeEnabled"> A boolean value that indicates if the purge operations are enabled. </param>
-        /// <param name="languageExtensionsValue"> List of the cluster's language extensions. </param>
-        /// <param name="isDoubleEncryptionEnabled"> A boolean value that indicates if double encryption is enabled. </param>
-        /// <param name="publicNetworkAccess"> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </param>
-        /// <param name="allowedIPRangeList"> The list of ips in the format of CIDR allowed to connect to the cluster. </param>
-        /// <param name="engineType"> The engine type. </param>
-        /// <param name="acceptedAudiences"> The cluster's accepted audiences. </param>
-        /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
-        /// <param name="calloutPolicies"> List of callout policies for egress from Cluster. </param>
-        /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
-        /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
-        /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
-        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
-        /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
-        /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri uri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default)
-        {
-            return new KustoClusterPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                sku,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                state is null && provisioningState is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
-                    state,
-                    provisioningState,
-                    default,
-                    dataIngestionUri,
-                    stateReason,
-                    (trustedExternalTenants ?? new ChangeTrackingList<KustoClusterTrustedExternalTenant>()).ToList(),
-                    optimizedAutoscale,
-                    isDiskEncryptionEnabled,
-                    isStreamingIngestEnabled,
-                    virtualNetworkConfiguration,
-                    keyVaultProperties,
-                    isPurgeEnabled,
-                    (languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(),
-                    isDoubleEncryptionEnabled,
-                    publicNetworkAccess,
-                    (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
-                    engineType,
-                    (acceptedAudiences ?? new ChangeTrackingList<AcceptedAudience>()).ToList(),
-                    isAutoStopEnabled,
-                    restrictOutboundNetworkAccess,
-                    (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
-                    (calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>()).ToList(),
-                    publicIPType,
-                    virtualClusterGraduationProperties,
-                    (privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>()).ToList(),
-                    migrationCluster,
-                    zoneStatus,
-                    default),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoScriptData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1671,7 +1588,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                location,
                 sku,
                 default,
                 identity,
@@ -1835,7 +1752,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
+                location,
                 sku,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
