@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipal"/>. </summary>
         /// <param name="role"> Database principal role. </param>
         /// <param name="name"> Database principal name. </param>
-        /// <param name="type"> Database principal type. </param>
+        /// <param name="principalType"> Database principal type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public KustoDatabasePrincipal(KustoDatabasePrincipalRole role, string name, KustoDatabasePrincipalType @type)
+        public KustoDatabasePrincipal(KustoDatabasePrincipalRole role, string name, KustoDatabasePrincipalType principalType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Role = role;
             Name = name;
-            Type = @type;
+            PrincipalType = principalType;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoDatabasePrincipal"/>. </summary>
         /// <param name="role"> Database principal role. </param>
         /// <param name="name"> Database principal name. </param>
-        /// <param name="type"> Database principal type. </param>
+        /// <param name="principalType"> Database principal type. </param>
         /// <param name="fqn"> Database principal fully qualified name. </param>
         /// <param name="email"> Database principal email if exists. </param>
         /// <param name="appId"> Application id - relevant only for application principal type. </param>
         /// <param name="tenantName"> The tenant name of the principal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KustoDatabasePrincipal(KustoDatabasePrincipalRole role, string name, KustoDatabasePrincipalType @type, string fqn, string email, string appId, string tenantName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KustoDatabasePrincipal(KustoDatabasePrincipalRole role, string name, KustoDatabasePrincipalType principalType, string fqn, string email, string appId, string tenantName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Name = name;
-            Type = @type;
+            PrincipalType = principalType;
             Fqn = fqn;
             Email = email;
             AppId = appId;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public string Name { get; set; }
 
         /// <summary> Database principal type. </summary>
-        public KustoDatabasePrincipalType Type { get; set; }
+        public KustoDatabasePrincipalType PrincipalType { get; set; }
 
         /// <summary> Database principal fully qualified name. </summary>
         public string Fqn { get; set; }

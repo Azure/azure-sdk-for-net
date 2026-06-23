@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(PrincipalType.ToString());
             if (Optional.IsDefined(Fqn))
             {
                 writer.WritePropertyName("fqn"u8);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             KustoDatabasePrincipalRole role = default;
             string name = default;
-            KustoDatabasePrincipalType @type = default;
+            KustoDatabasePrincipalType principalType = default;
             string fqn = default;
             string email = default;
             string appId = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new KustoDatabasePrincipalType(prop.Value.GetString());
+                    principalType = new KustoDatabasePrincipalType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fqn"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoDatabasePrincipal(
                 role,
                 name,
-                @type,
+                principalType,
                 fqn,
                 email,
                 appId,
