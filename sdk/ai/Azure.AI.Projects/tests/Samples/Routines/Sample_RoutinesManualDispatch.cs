@@ -2,23 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable AAIP001
 
-public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
+public class Sample_RoutinesManualDispatch : SamplesRoutineBase
 {
     [Test]
     [AsyncOnly]
-    public async Task RoutinesScheduleTriggerAsync()
+    public async Task RoutinesManualDispatchAsync()
     {
-        #region Snippet:Sample_CreateClient_RoutinesScheduleTrigger
+        #region Snippet:Sample_CreateClient_RoutinesManualDispatch
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         string routineName = "sample-routine";
@@ -28,10 +31,10 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
         string agentName = TestEnvironment.HOSTED_AGENT_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         #endregion
-        #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Async
         ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClient.GetAgentAsync(
             agentName: agentName)).Value.GetLatestVersion();
         #endregion
@@ -39,26 +42,25 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         try
         { await routinesClient.DeleteRoutineAsync(routineName); } catch { }
 
-        #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_CreateRoutine_RoutinesManualDispatch_Async
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
-            Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
-        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
-        routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-        ));
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by manual dispatch sample.", enabled: true);
+        routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>()));
         ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
             routineName: routineName,
             options: routineOptions
         );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
         #endregion
 
-        #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_DispatchTask_RoutinesManualDispatch_Async
+        DispatchRoutineResponse dispatch = await routinesClient.DispatchAsyncRoutineAsync(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+        Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
+        #endregion
+        #region Snippet:Sample_WaitForTask_RoutinesManualDispatch_Async
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
@@ -95,14 +97,19 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         #endregion
 
-        #region Snippet:Sample_PrintOutput_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_PrintOutput_RoutinesManualDispatch_Async
         Console.WriteLine($"The response Id is {completedRun.ResponseId}");
-        // Note: retrieving the response body produced by a routine-dispatched
-        // run via `projectClient.GetProjectOpenAIClient().GetProjectResponsesClient().GetResponseAsync(completedRun.responseId)` is
-        // not yet supported by the service for this scenario.
+        //  Currently the response retrieval is not supported.
+        //ProjectResponsesClient oaiClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        //ResponseResult result = await oaiClient.GetResponseAsync(new GetResponseOptions(responseId: completedRun.ResponseId));
+        //if (result.Error is not null)
+        //{
+        //    throw new InvalidOperationException($"The response, triggered by routine resulted in error. Code: {result.Error.Code}, Message: {result.Error.Message}");
+        //}
+        //Console.WriteLine($"Response: {result.GetOutputText()}");
         #endregion
 
-        #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_DeleteRoutine_RoutinesManualDispatch_Async
         await routinesClient.DeleteRoutineAsync(routineName);
         Console.WriteLine("Routine deleted");
         #endregion
@@ -110,7 +117,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
 
     [Test]
     [SyncOnly]
-    public void RoutinesScheduleTriggerSync()
+    public void RoutinesManualDispatchSync()
     {
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -121,9 +128,9 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
         string agentName = TestEnvironment.HOSTED_AGENT_NAME;
 #endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
-        #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_GetHostedAgent_RoutinesManualDispatch_Sync
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
             agentName: agentName).Value.GetLatestVersion();
         #endregion
@@ -132,26 +139,25 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         { routinesClient.DeleteRoutine(routineName); }
         catch { }
 
-        #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_CreateRoutine_RoutinesManualDispatch_Sync
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
-            Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
-        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
-        routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-        ));
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by manual dispatch sample.", enabled: true);
+        routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>()));
         ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
             routineName: routineName,
             options: routineOptions
         );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
         #endregion
 
-        #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_DispatchTask_RoutinesManualDispatch_Sync
+        DispatchRoutineResponse dispatch = routinesClient.DispatchAsyncRoutine(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+        Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
+        #endregion
+        #region Snippet:Sample_WaitForTask_RoutinesManualDispatch_Sync
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
@@ -188,19 +194,24 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         #endregion
 
-        #region Snippet:Sample_PrintOutput_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_PrintOutput_RoutinesManualDispatch_Sync
         Console.WriteLine($"The response Id is {completedRun.ResponseId}");
-        // Note: retrieving the response body produced by a routine-dispatched
-        // run via `projectClient.GetProjectOpenAIClient().GetProjectResponsesClient().GetResponseAsync(completedRun.responseId)` is
-        // not yet supported by the service for this scenario.
+        //  Currently the response retrieval is not supported.
+        //ProjectResponsesClient oaiClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        //ResponseResult result = oaiClient.GetResponse(new GetResponseOptions(responseId: completedRun.ResponseId));
+        //if (result.Error is not null)
+        //{
+        //    throw new InvalidOperationException($"The response, triggered by routine resulted in error. Code: {result.Error.Code}, Message: {result.Error.Message}");
+        //}
+        //Console.WriteLine($"Response: {result.GetOutputText()}");
         #endregion
 
-        #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_DeleteRoutine_RoutinesManualDispatch_Sync
         routinesClient.DeleteRoutine(routineName);
         Console.WriteLine("Routine deleted");
         #endregion
     }
 
-    public Sample_RoutinesScheduleTrigger(bool isAsync) : base(isAsync)
+    public Sample_RoutinesManualDispatch(bool isAsync) : base(isAsync)
     { }
 }
