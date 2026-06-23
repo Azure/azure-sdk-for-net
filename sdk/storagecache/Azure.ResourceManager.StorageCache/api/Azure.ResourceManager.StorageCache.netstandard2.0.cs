@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.StorageCache
         public System.DateTimeOffset? LastStartedTimeUTC { get { throw null; } }
         public System.DateTimeOffset? LastSuccessfulIterationCompletionTimeUTC { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StorageCache.Models.AutoExportStatusType? State { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageCache.Models.AutoExportStatusType? State { get { throw null; } [System.ObsoleteAttribute("This setter does not work because this service-defined status is not meant to be settable.", false)] set { } }
         public string StatusCode { get { throw null; } }
         public string StatusMessage { get { throw null; } }
         public long? TotalFilesExported { get { throw null; } }
