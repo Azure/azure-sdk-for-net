@@ -250,5 +250,134 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.Throws<ArgumentException>(() => client.GetCertificateOperation(string.Empty));
             Assert.ThrowsAsync<ArgumentException>(() => client.GetCertificateOperationAsync(string.Empty));
         }
+
+        // ----- GetCertificateVersion: version parameter validation -----
+
+        [Test]
+        public void GetCertificateVersion_NullVersion_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.GetCertificateVersion("name", null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCertificateVersionAsync("name", null));
+        }
+
+        [Test]
+        public void GetCertificateVersion_EmptyVersion_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentException>(() => client.GetCertificateVersion("name", string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCertificateVersionAsync("name", string.Empty));
+        }
+
+        // ----- UpdateCertificatePolicy -----
+
+        [Test]
+        public void UpdateCertificatePolicy_NullName_Throws()
+        {
+            var client = NewClient();
+            var policy = CertificatePolicy.Default;
+            Assert.Throws<ArgumentNullException>(() => client.UpdateCertificatePolicy(null, policy));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateCertificatePolicyAsync(null, policy));
+        }
+
+        [Test]
+        public void UpdateCertificatePolicy_EmptyName_Throws()
+        {
+            var client = NewClient();
+            var policy = CertificatePolicy.Default;
+            Assert.Throws<ArgumentException>(() => client.UpdateCertificatePolicy(string.Empty, policy));
+            Assert.ThrowsAsync<ArgumentException>(() => client.UpdateCertificatePolicyAsync(string.Empty, policy));
+        }
+
+        [Test]
+        public void UpdateCertificatePolicy_NullPolicy_Throws()
+        {
+            var client = NewClient();
+            // ParamName MUST be the public parameter name, not the internal
+            // serializer arg ("serializable"). Guards against the implementation
+            // detail leaking into the public contract.
+            var ex = Assert.Throws<ArgumentNullException>(() => client.UpdateCertificatePolicy("name", null));
+            Assert.AreEqual("policy", ex.ParamName);
+            var aex = Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateCertificatePolicyAsync("name", null));
+            Assert.AreEqual("policy", aex.ParamName);
+        }
+
+        // ----- GetCertificatePolicy -----
+
+        [Test]
+        public void GetCertificatePolicy_NullName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.GetCertificatePolicy(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCertificatePolicyAsync(null));
+        }
+
+        [Test]
+        public void GetCertificatePolicy_EmptyName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentException>(() => client.GetCertificatePolicy(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCertificatePolicyAsync(string.Empty));
+        }
+
+        // ----- Issuer operations -----
+
+        [Test]
+        public void CreateIssuer_NullIssuer_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.CreateIssuer(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateIssuerAsync(null));
+        }
+
+        [Test]
+        public void UpdateIssuer_NullIssuer_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.UpdateIssuer(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateIssuerAsync(null));
+        }
+
+        [Test]
+        public void GetIssuer_NullName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.GetIssuer(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.GetIssuerAsync(null));
+        }
+
+        [Test]
+        public void GetIssuer_EmptyName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentException>(() => client.GetIssuer(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetIssuerAsync(string.Empty));
+        }
+
+        [Test]
+        public void DeleteIssuer_NullName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.DeleteIssuer(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteIssuerAsync(null));
+        }
+
+        [Test]
+        public void DeleteIssuer_EmptyName_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentException>(() => client.DeleteIssuer(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.DeleteIssuerAsync(string.Empty));
+        }
+
+        // ----- Contacts -----
+
+        [Test]
+        public void SetContacts_NullContacts_Throws()
+        {
+            var client = NewClient();
+            Assert.Throws<ArgumentNullException>(() => client.SetContacts(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => client.SetContactsAsync(null));
+        }
     }
 }

@@ -342,6 +342,16 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
+                // First call uses _pipeline (legacy KeyVaultPipeline) by design,
+                // not oversight: the GET /certificates/{name}/ shape recorded in
+                // existing cassettes (always-trailing-slash) differs from the
+                // shape _generated.GetCertificate emits (no trailing slash when
+                // version is null). Switching the first call to _generated would
+                // require re-recording every DownloadCertificate live test. The
+                // second call (managed-secret fetch) legitimately belongs on
+                // _pipeline because it hits the /secrets/ endpoint and uses an
+                // outContentType query the generated client does not expose for
+                // this path.
                 KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version);
                 Response<KeyVaultSecret> secretResponse;
                 if (options.OutContentType != null)
@@ -477,6 +487,10 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
+                // First call uses _pipeline (legacy KeyVaultPipeline) by design,
+                // not oversight: see DownloadCertificate (sync) for the full
+                // explanation. Switching to _generated would require re-recording
+                // every DownloadCertificate live test.
                 KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version).ConfigureAwait(false);
                 Response<KeyVaultSecret> secretResponse;
                 if (options.OutContentType != null)
@@ -587,6 +601,7 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<KeyVaultCertificate> GetCertificateVersion(string certificateName, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(GetCertificateVersion)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
@@ -1200,6 +1215,7 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<CertificatePolicy> UpdateCertificatePolicy(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
@@ -1226,6 +1242,7 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual async Task<Response<CertificatePolicy>> UpdateCertificatePolicyAsync(string certificateName, CertificatePolicy policy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(policy, nameof(policy));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(CertificateClient)}.{nameof(UpdateCertificatePolicy)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);

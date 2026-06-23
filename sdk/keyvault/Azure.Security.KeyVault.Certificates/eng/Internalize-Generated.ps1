@@ -81,14 +81,28 @@ if ($restClient) {
             uri.AppendPath(certificateName, true);`r`n            if (certificateVersion != null)`r`n            {`r`n                uri.AppendPath("/", false);`r`n                uri.AppendPath(certificateVersion, true);`r`n            }
 "@
     $text = $pattern.Replace($text, $replacement)
+    # Buggy shape contains the line `uri.AppendPath("/", false);` BEFORE the
+    # `if (certificateVersion != null)` block. If we still see that pair, the
+    # patch failed to apply on freshly emitted code (it is silent on already-
+    # patched re-runs).
+    if ([regex]::IsMatch($text, '(?ms)uri\.AppendPath\(certificateName, true\);\r?\n            uri\.AppendPath\("/", false\);\r?\n            if \(certificateVersion != null\)')) {
+        Write-Warning "Patch 2 (trailing-slash for null certificateVersion) failed to apply - emitter output shape changed. Verify CreateGetCertificateRequest / CreateUpdateCertificateRequest."
+    }
 
     # Patch 3: contacts collection URL is missing the trailing slash. Recordings
     # ship with /certificates/contacts/. Only matches the bare collection form.
     $text = $text -replace '("\/certificates\/contacts)(", false\))', '$1/$2'
+    # Buggy shape (no trailing slash) should be absent after patch.
+    if ([regex]::IsMatch($text, '"\/certificates\/contacts", false\)')) {
+        Write-Warning "Patch 3 (contacts trailing slash) failed to apply - verify /certificates/contacts URL shape."
+    }
 
     # Patch 4: issuers LIST URL ("/certificates/issuers") is the only bare-collection
     # path that needs the trailing slash; the per-issuer routes already include it.
     $text = $text -replace 'AppendPath\("\/certificates\/issuers", false\)', 'AppendPath("/certificates/issuers/", false)'
+    if ([regex]::IsMatch($text, 'AppendPath\("\/certificates\/issuers", false\)')) {
+        Write-Warning "Patch 4 (issuers LIST trailing slash) failed to apply - verify /certificates/issuers URL shape."
+    }
 
     # Patch 5: PurgeDeletedCertificate is the only DELETE in the generated
     # client that doesn't set Accept (because it returns 204 No Content -- the
@@ -97,6 +111,9 @@ if ($restClient) {
     $purgeBlock     = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            return message;"
     $purgeBlockFix  = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            request.Headers.SetValue(`"Accept`", `"application/json`");`n            return message;"
     $text = $text.Replace($purgeBlock, $purgeBlockFix)
+    if ($text.Contains($purgeBlock)) {
+        Write-Warning "Patch 5 (PurgeDeletedCertificate Accept header) failed to apply - verify the 204-classifier block shape or line endings."
+    }
 
     if ($text -ne $original) {
         [System.IO.File]::WriteAllText($restClient.FullName, $text)
