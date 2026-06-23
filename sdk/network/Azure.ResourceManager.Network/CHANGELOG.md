@@ -1,12 +1,14 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.16.0 (2026-06-22)
 
 ### Features Added
 
+- Upgraded api-version to 2025-07-01.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- This is the first GA release generated from TypeSpec. Some obsolete APIs were added as migration compatibility shims and are not supported by the TypeSpec-generated SDK; please review obsolete messages for replacement guidance.
 
 ### Other Changes
 
