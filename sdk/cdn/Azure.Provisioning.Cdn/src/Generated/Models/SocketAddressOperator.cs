@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum SocketAddressOperator
     {
-        /// <summary> Any. </summary>
         Any,
-        /// <summary> IPMatch. </summary>
         IPMatch
     }
 }

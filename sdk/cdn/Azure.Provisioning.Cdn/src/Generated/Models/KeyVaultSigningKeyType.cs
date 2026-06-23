@@ -12,7 +12,6 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum KeyVaultSigningKeyType
     {
-        /// <summary> KeyVaultSigningKey. </summary>
         [DataMember(Name = "KeyVaultSigningKeyParameters")]
         KeyVaultSigningKey
     }

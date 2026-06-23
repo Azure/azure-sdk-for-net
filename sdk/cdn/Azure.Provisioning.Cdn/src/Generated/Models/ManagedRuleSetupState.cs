@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes if the managed rule is in enabled or disabled state. </summary>
     public enum ManagedRuleSetupState
     {
-        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary> Enabled. </summary>
         Enabled
     }
 }

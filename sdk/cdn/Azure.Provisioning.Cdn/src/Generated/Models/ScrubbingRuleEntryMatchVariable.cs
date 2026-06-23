@@ -10,11 +10,8 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The variable to be scrubbed from the logs. </summary>
     public enum ScrubbingRuleEntryMatchVariable
     {
-        /// <summary> RequestIPAddress. </summary>
         RequestIPAddress,
-        /// <summary> RequestUri. </summary>
         RequestUri,
-        /// <summary> QueryStringArgNames. </summary>
         QueryStringArgNames
     }
 }

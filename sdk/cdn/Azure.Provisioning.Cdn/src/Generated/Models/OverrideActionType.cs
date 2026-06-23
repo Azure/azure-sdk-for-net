@@ -10,13 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Defines the action to take on rule match. </summary>
     public enum OverrideActionType
     {
-        /// <summary> Allow. </summary>
         Allow,
-        /// <summary> Block. </summary>
         Block,
-        /// <summary> Log. </summary>
         Log,
-        /// <summary> Redirect. </summary>
         Redirect
     }
 }

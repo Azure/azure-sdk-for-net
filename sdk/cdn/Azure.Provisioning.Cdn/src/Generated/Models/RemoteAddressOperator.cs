@@ -10,11 +10,8 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum RemoteAddressOperator
     {
-        /// <summary> Any. </summary>
         Any,
-        /// <summary> IPMatch. </summary>
         IPMatch,
-        /// <summary> GeoMatch. </summary>
         GeoMatch
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> TLS protocol version that will be used for Https. </summary>
@@ -12,9 +14,11 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> None. </summary>
         None,
-        /// <summary> TLS10. </summary>
-        TLS10,
-        /// <summary> TLS12. </summary>
-        TLS12
+        /// <summary> Tls1_0. </summary>
+        [DataMember(Name = "TLS10")]
+        Tls1_0,
+        /// <summary> Tls1_2. </summary>
+        [DataMember(Name = "TLS12")]
+        Tls1_2
     }
 }

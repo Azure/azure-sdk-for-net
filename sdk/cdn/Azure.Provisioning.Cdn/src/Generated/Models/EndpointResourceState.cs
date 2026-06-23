@@ -10,17 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Resource status of the endpoint. </summary>
     public enum EndpointResourceState
     {
-        /// <summary> Creating. </summary>
         Creating,
-        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary> Running. </summary>
         Running,
-        /// <summary> Starting. </summary>
         Starting,
-        /// <summary> Stopped. </summary>
         Stopped,
-        /// <summary> Stopping. </summary>
         Stopping
     }
 }

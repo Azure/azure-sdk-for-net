@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </summary>
     public enum HttpsRedirect
     {
-        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
         Disabled
     }
 }

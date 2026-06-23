@@ -10,7 +10,6 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum RequestSchemeOperator
     {
-        /// <summary> Equal. </summary>
         Equal
     }
 }

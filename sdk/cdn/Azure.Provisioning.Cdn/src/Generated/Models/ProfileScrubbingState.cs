@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
     public enum ProfileScrubbingState
     {
-        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
         Disabled
     }
 }

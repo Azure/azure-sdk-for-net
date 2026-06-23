@@ -12,13 +12,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The protocol of an established TLS connection. </summary>
     public enum DeliveryRuleSslProtocol
     {
-        /// <summary> TLSv1. </summary>
-        TLSv1,
-        /// <summary> TLSv11. </summary>
+        [DataMember(Name = "TLSv1")]
+        Tls1_0,
         [DataMember(Name = "TLSv1.1")]
-        TLSv11,
-        /// <summary> TLSv12. </summary>
+        Tls1_1,
         [DataMember(Name = "TLSv1.2")]
-        TLSv12
+        Tls1_2
     }
 }

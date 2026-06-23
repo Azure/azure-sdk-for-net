@@ -10,23 +10,14 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Match variable to compare against. </summary>
     public enum WafMatchVariable
     {
-        /// <summary> RemoteAddr. </summary>
         RemoteAddr,
-        /// <summary> SocketAddr. </summary>
         SocketAddr,
-        /// <summary> RequestMethod. </summary>
         RequestMethod,
-        /// <summary> RequestHeader. </summary>
         RequestHeader,
-        /// <summary> RequestUri. </summary>
         RequestUri,
-        /// <summary> QueryString. </summary>
         QueryString,
-        /// <summary> RequestBody. </summary>
         RequestBody,
-        /// <summary> Cookies. </summary>
         Cookies,
-        /// <summary> PostArgs. </summary>
         PostArgs
     }
 }

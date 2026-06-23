@@ -10,15 +10,10 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Provisioning status of the origin group. </summary>
     public enum OriginGroupProvisioningState
     {
-        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary> Failed. </summary>
         Failed,
-        /// <summary> Updating. </summary>
         Updating,
-        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary> Creating. </summary>
         Creating
     }
 }

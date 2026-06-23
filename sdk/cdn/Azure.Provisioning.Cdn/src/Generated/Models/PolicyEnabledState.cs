@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
     public enum PolicyEnabledState
     {
-        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary> Enabled. </summary>
         Enabled
     }
 }

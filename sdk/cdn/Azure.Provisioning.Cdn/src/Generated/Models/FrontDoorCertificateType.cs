@@ -10,11 +10,8 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Defines the source of the SSL certificate. </summary>
     public enum FrontDoorCertificateType
     {
-        /// <summary> CustomerCertificate. </summary>
         CustomerCertificate,
-        /// <summary> ManagedCertificate. </summary>
         ManagedCertificate,
-        /// <summary> AzureFirstPartyManagedCertificate. </summary>
         AzureFirstPartyManagedCertificate
     }
 }

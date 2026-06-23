@@ -12,10 +12,8 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum RequestSchemeMatchConditionMatchValue
     {
-        /// <summary> Http. </summary>
         [DataMember(Name = "HTTP")]
         Http,
-        /// <summary> Https. </summary>
         [DataMember(Name = "HTTPS")]
         Https
     }

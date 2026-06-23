@@ -10,7 +10,6 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes the action that shall be taken when the certificate is updated in Key Vault. </summary>
     public enum CertificateUpdateAction
     {
-        /// <summary> NoAction. </summary>
         NoAction
     }
 }

@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </summary>
     public enum FrontDoorMinimumTlsVersion
     {
-        /// <summary> TLS10. </summary>
-        TLS10,
-        /// <summary> TLS12. </summary>
-        TLS12,
-        /// <summary> TLS13. </summary>
-        TLS13
+        /// <summary> Tls1_0. </summary>
+        [DataMember(Name = "TLS10")]
+        Tls1_0,
+        /// <summary> Tls1_2. </summary>
+        [DataMember(Name = "TLS12")]
+        Tls1_2,
+        /// <summary> Tls1_3. </summary>
+        [DataMember(Name = "TLS13")]
+        Tls1_3
     }
 }

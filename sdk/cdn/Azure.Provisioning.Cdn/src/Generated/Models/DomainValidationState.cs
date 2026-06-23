@@ -10,23 +10,14 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
     public enum DomainValidationState
     {
-        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary> Submitting. </summary>
         Submitting,
-        /// <summary> Pending. </summary>
         Pending,
-        /// <summary> Rejected. </summary>
         Rejected,
-        /// <summary> TimedOut. </summary>
         TimedOut,
-        /// <summary> PendingRevalidation. </summary>
         PendingRevalidation,
-        /// <summary> Approved. </summary>
         Approved,
-        /// <summary> RefreshingValidationToken. </summary>
         RefreshingValidationToken,
-        /// <summary> InternalError. </summary>
         InternalError
     }
 }

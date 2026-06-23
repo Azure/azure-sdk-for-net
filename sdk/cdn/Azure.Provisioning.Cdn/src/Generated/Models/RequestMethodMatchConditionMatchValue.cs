@@ -12,25 +12,18 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum RequestMethodMatchConditionMatchValue
     {
-        /// <summary> Get. </summary>
         [DataMember(Name = "GET")]
         Get,
-        /// <summary> Head. </summary>
         [DataMember(Name = "HEAD")]
         Head,
-        /// <summary> Post. </summary>
         [DataMember(Name = "POST")]
         Post,
-        /// <summary> Put. </summary>
         [DataMember(Name = "PUT")]
         Put,
-        /// <summary> Delete. </summary>
         [DataMember(Name = "DELETE")]
         Delete,
-        /// <summary> Options. </summary>
         [DataMember(Name = "OPTIONS")]
         Options,
-        /// <summary> Trace. </summary>
         [DataMember(Name = "TRACE")]
         Trace
     }

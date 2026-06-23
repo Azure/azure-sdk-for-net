@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Cdn
     /// StandardPlus_955BandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using 95-5 peak bandwidth billing model.
     /// StandardPlus_AvgBandWidth_ChinaCdn = The SKU name for a China CDN live-streaming profile using monthly average peak bandwidth billing model.
     /// </summary>
-    public partial class CdnSku : ProvisionableConstruct
+    internal partial class CdnSku : ProvisionableConstruct
     {
         private BicepValue<CdnSkuName> _name;
 

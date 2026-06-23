@@ -10,13 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Defines how Frontdoor caches requests that include query strings. You can ignore any query strings when caching, ignore specific query strings, cache every request with a unique URL, or cache specific query strings. </summary>
     public enum RuleQueryStringCachingBehavior
     {
-        /// <summary> IgnoreQueryString. </summary>
         IgnoreQueryString,
-        /// <summary> UseQueryString. </summary>
         UseQueryString,
-        /// <summary> IgnoreSpecifiedQueryStrings. </summary>
         IgnoreSpecifiedQueryStrings,
-        /// <summary> IncludeSpecifiedQueryStrings. </summary>
         IncludeSpecifiedQueryStrings
     }
 }

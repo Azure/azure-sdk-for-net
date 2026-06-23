@@ -10,15 +10,10 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Provisioning status of the custom domain. </summary>
     public enum CustomHttpsProvisioningState
     {
-        /// <summary> Enabling. </summary>
         Enabling,
-        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary> Disabling. </summary>
         Disabling,
-        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary> Failed. </summary>
         Failed
     }
 }

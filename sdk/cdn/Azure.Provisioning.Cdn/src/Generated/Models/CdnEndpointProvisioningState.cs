@@ -10,15 +10,10 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Provisioning status of the endpoint. </summary>
     public enum CdnEndpointProvisioningState
     {
-        /// <summary> Succeeded. </summary>
         Succeeded,
-        /// <summary> Failed. </summary>
         Failed,
-        /// <summary> Updating. </summary>
         Updating,
-        /// <summary> Deleting. </summary>
         Deleting,
-        /// <summary> Creating. </summary>
         Creating
     }
 }

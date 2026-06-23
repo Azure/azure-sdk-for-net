@@ -10,7 +10,6 @@ namespace Azure.Provisioning.Cdn
     /// <summary> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </summary>
     public enum ScrubbingRuleEntryMatchOperator
     {
-        /// <summary> EqualsAny. </summary>
         EqualsAny
     }
 }

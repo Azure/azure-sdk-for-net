@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Cdn
 {
     /// <summary> Properties of the custom domain created on the CDN endpoint. </summary>
-    public partial class DeepCreatedCustomDomainProperties : ProvisionableConstruct
+    internal partial class DeepCreatedCustomDomainProperties : ProvisionableConstruct
     {
         private BicepValue<string> _hostName;
         private BicepValue<string> _validationData;

@@ -10,17 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Resource status of the policy. </summary>
     public enum PolicyResourceState
     {
-        /// <summary> Creating. </summary>
         Creating,
-        /// <summary> Enabling. </summary>
         Enabling,
-        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary> Disabling. </summary>
         Disabling,
-        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary> Deleting. </summary>
         Deleting
     }
 }

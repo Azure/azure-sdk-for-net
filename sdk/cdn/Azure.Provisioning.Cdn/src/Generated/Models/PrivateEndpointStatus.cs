@@ -10,15 +10,10 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The approval status for the connection to the Private Link. </summary>
     public enum PrivateEndpointStatus
     {
-        /// <summary> Pending. </summary>
         Pending,
-        /// <summary> Approved. </summary>
         Approved,
-        /// <summary> Rejected. </summary>
         Rejected,
-        /// <summary> Disconnected. </summary>
         Disconnected,
-        /// <summary> Timeout. </summary>
         Timeout
     }
 }

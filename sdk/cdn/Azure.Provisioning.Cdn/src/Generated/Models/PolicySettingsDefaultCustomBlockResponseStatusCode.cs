@@ -12,19 +12,14 @@ namespace Azure.Provisioning.Cdn
     /// <summary> If the action type is block, this field defines the default customer overridable http response status code. </summary>
     public enum PolicySettingsDefaultCustomBlockResponseStatusCode
     {
-        /// <summary> TwoHundred. </summary>
         [DataMember(Name = "200")]
         TwoHundred,
-        /// <summary> FourHundredThree. </summary>
         [DataMember(Name = "403")]
         FourHundredThree,
-        /// <summary> FourHundredFive. </summary>
         [DataMember(Name = "405")]
         FourHundredFive,
-        /// <summary> FourHundredSix. </summary>
         [DataMember(Name = "406")]
         FourHundredSix,
-        /// <summary> FourHundredTwentyNine. </summary>
         [DataMember(Name = "429")]
         FourHundredTwentyNine
     }

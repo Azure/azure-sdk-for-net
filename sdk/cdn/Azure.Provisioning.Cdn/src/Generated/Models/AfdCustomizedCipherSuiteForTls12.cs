@@ -12,23 +12,17 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum AfdCustomizedCipherSuiteForTls12
     {
-        /// <summary> ECDHERSAAES128GCMSHA256. </summary>
         [DataMember(Name = "ECDHE_RSA_AES128_GCM_SHA256")]
-        ECDHERSAAES128GCMSHA256,
-        /// <summary> ECDHERSAAES256GCMSHA384. </summary>
+        Ecdhe_Rsa_Aes128_Gcm_Sha256,
         [DataMember(Name = "ECDHE_RSA_AES256_GCM_SHA384")]
-        ECDHERSAAES256GCMSHA384,
-        /// <summary> DHERSAAES256GCMSHA384. </summary>
+        Ecdhe_Rsa_Aes256_Gcm_Sha384,
         [DataMember(Name = "DHE_RSA_AES256_GCM_SHA384")]
-        DHERSAAES256GCMSHA384,
-        /// <summary> DHERSAAES128GCMSHA256. </summary>
+        Dhe_Rsa_Aes256_Gcm_Sha384,
         [DataMember(Name = "DHE_RSA_AES128_GCM_SHA256")]
-        DHERSAAES128GCMSHA256,
-        /// <summary> ECDHERSAAES128SHA256. </summary>
+        Dhe_Rsa_Aes128_Gcm_Sha256,
         [DataMember(Name = "ECDHE_RSA_AES128_SHA256")]
-        ECDHERSAAES128SHA256,
-        /// <summary> ECDHERSAAES256SHA384. </summary>
+        Ecdhe_Rsa_Aes128_Sha256,
         [DataMember(Name = "ECDHE_RSA_AES256_SHA384")]
-        ECDHERSAAES256SHA384
+        Ecdhe_Rsa_Aes256_Sha384
     }
 }

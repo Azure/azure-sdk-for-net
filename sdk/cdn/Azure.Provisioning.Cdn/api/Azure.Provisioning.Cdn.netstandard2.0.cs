@@ -4,33 +4,33 @@ namespace Azure.Provisioning.Cdn
     {
         Customized = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS10_2019")]
-        TLS102019 = 1,
+        Tls1_0_2019 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12_2022")]
-        TLS122022 = 2,
+        Tls1_2_2022 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12_2023")]
-        TLS122023 = 3,
+        Tls1_2_2023 = 3,
     }
     public enum AfdCustomizedCipherSuiteForTls12
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES128_GCM_SHA256")]
-        ECDHERSAAES128GCMSHA256 = 0,
+        Ecdhe_Rsa_Aes128_Gcm_Sha256 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES256_GCM_SHA384")]
-        ECDHERSAAES256GCMSHA384 = 1,
+        Ecdhe_Rsa_Aes256_Gcm_Sha384 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="DHE_RSA_AES256_GCM_SHA384")]
-        DHERSAAES256GCMSHA384 = 2,
+        Dhe_Rsa_Aes256_Gcm_Sha384 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="DHE_RSA_AES128_GCM_SHA256")]
-        DHERSAAES128GCMSHA256 = 3,
+        Dhe_Rsa_Aes128_Gcm_Sha256 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES128_SHA256")]
-        ECDHERSAAES128SHA256 = 4,
+        Ecdhe_Rsa_Aes128_Sha256 = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="ECDHE_RSA_AES256_SHA384")]
-        ECDHERSAAES256SHA384 = 5,
+        Ecdhe_Rsa_Aes256_Sha384 = 5,
     }
     public enum AfdCustomizedCipherSuiteForTls13
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_AES_128_GCM_SHA256")]
-        TLSAES128GCMSHA256 = 0,
+        Tls_Aes_128_Gcm_Sha256 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_AES_256_GCM_SHA384")]
-        TLSAES256GCMSHA384 = 1,
+        Tls_Aes_256_Gcm_Sha384 = 1,
     }
     public partial class AzureFirstPartyManagedCertificateProperties : Azure.Provisioning.Cdn.FrontDoorSecretProperties
     {
@@ -163,8 +163,10 @@ namespace Azure.Provisioning.Cdn
     public enum CdnMinimumTlsVersion
     {
         None = 0,
-        TLS10 = 1,
-        TLS12 = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS10")]
+        Tls1_0 = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12")]
+        Tls1_2 = 2,
     }
     public partial class CdnOrigin : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -238,12 +240,6 @@ namespace Azure.Provisioning.Cdn
         {
             public static readonly string V2025_06_01;
         }
-    }
-    public partial class CdnSku : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public CdnSku() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnSkuName> Name { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public enum CdnSkuName
     {
@@ -439,13 +435,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DeepCreatedCustomDomainProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public DeepCreatedCustomDomainProperties() { }
-        public Azure.Provisioning.BicepValue<string> HostName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ValidationData { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class DeepCreatedOrigin : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DeepCreatedOrigin() { }
@@ -625,11 +614,12 @@ namespace Azure.Provisioning.Cdn
     }
     public enum DeliveryRuleSslProtocol
     {
-        TLSv1 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1")]
+        Tls1_0 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1.1")]
-        TLSv11 = 1,
+        Tls1_1 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLSv1.2")]
-        TLSv12 = 2,
+        Tls1_2 = 2,
     }
     public partial class DeliveryRuleSslProtocolCondition : Azure.Provisioning.Cdn.DeliveryRuleCondition
     {
@@ -813,9 +803,12 @@ namespace Azure.Provisioning.Cdn
     }
     public enum FrontDoorMinimumTlsVersion
     {
-        TLS10 = 0,
-        TLS12 = 1,
-        TLS13 = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS10")]
+        Tls1_0 = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS12")]
+        Tls1_2 = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS13")]
+        Tls1_3 = 2,
     }
     public partial class FrontDoorOrigin : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -1159,21 +1152,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ManagedRuleDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagedRuleDefinition() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ManagedRuleGroupDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagedRuleGroupDefinition() { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleGroupName { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleDefinition> Rules { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class ManagedRuleGroupOverrideSetting : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagedRuleGroupOverrideSetting() { }
@@ -1187,29 +1165,6 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OverrideActionType> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.ManagedRuleSetupState> EnabledState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RuleId { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ManagedRuleSetDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagedRuleSetDefinition() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnSkuName> SkuName { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ManagedRuleSetDefinitionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagedRuleSetDefinitionProperties() { }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleSetType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RuleSetVersion { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ManagedRuleSetupState

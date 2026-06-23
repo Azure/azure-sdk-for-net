@@ -10,11 +10,8 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Caching behavior for the requests. </summary>
     public enum CacheBehaviorSetting
     {
-        /// <summary> BypassCache. </summary>
         BypassCache,
-        /// <summary> Override. </summary>
         Override,
-        /// <summary> SetIfMissing. </summary>
         SetIfMissing
     }
 }

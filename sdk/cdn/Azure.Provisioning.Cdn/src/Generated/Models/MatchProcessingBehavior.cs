@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
     public enum MatchProcessingBehavior
     {
-        /// <summary> Continue. </summary>
         Continue,
-        /// <summary> Stop. </summary>
         Stop
     }
 }

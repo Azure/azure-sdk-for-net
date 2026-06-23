@@ -10,9 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Supported protocols for the customer's endpoint. </summary>
     public enum FrontDoorEndpointProtocol
     {
-        /// <summary> Http. </summary>
         Http,
-        /// <summary> Https. </summary>
         Https
     }
 }

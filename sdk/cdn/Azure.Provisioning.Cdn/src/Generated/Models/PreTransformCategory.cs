@@ -12,19 +12,13 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes what transforms are applied before matching. </summary>
     public enum PreTransformCategory
     {
-        /// <summary> Lowercase. </summary>
         Lowercase,
-        /// <summary> Uppercase. </summary>
         Uppercase,
-        /// <summary> Trim. </summary>
         Trim,
-        /// <summary> UriDecode. </summary>
         [DataMember(Name = "UrlDecode")]
         UriDecode,
-        /// <summary> UriEncode. </summary>
         [DataMember(Name = "UrlEncode")]
         UriEncode,
-        /// <summary> RemoveNulls. </summary>
         RemoveNulls
     }
 }

@@ -12,43 +12,30 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Name of the pricing tier. </summary>
     public enum CdnSkuName
     {
-        /// <summary> StandardVerizon. </summary>
         [DataMember(Name = "Standard_Verizon")]
         StandardVerizon,
-        /// <summary> PremiumVerizon. </summary>
         [DataMember(Name = "Premium_Verizon")]
         PremiumVerizon,
-        /// <summary> CustomVerizon. </summary>
         [DataMember(Name = "Custom_Verizon")]
         CustomVerizon,
-        /// <summary> StandardAkamai. </summary>
         [DataMember(Name = "Standard_Akamai")]
         StandardAkamai,
-        /// <summary> StandardChinaCdn. </summary>
         [DataMember(Name = "Standard_ChinaCdn")]
         StandardChinaCdn,
-        /// <summary> StandardMicrosoft. </summary>
         [DataMember(Name = "Standard_Microsoft")]
         StandardMicrosoft,
-        /// <summary> StandardAzureFrontDoor. </summary>
         [DataMember(Name = "Standard_AzureFrontDoor")]
         StandardAzureFrontDoor,
-        /// <summary> PremiumAzureFrontDoor. </summary>
         [DataMember(Name = "Premium_AzureFrontDoor")]
         PremiumAzureFrontDoor,
-        /// <summary> Standard955BandWidthChinaCdn. </summary>
         [DataMember(Name = "Standard_955BandWidth_ChinaCdn")]
         Standard955BandWidthChinaCdn,
-        /// <summary> StandardAvgBandWidthChinaCdn. </summary>
         [DataMember(Name = "Standard_AvgBandWidth_ChinaCdn")]
         StandardAvgBandWidthChinaCdn,
-        /// <summary> StandardPlusChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_ChinaCdn")]
         StandardPlusChinaCdn,
-        /// <summary> StandardPlus955BandWidthChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_955BandWidth_ChinaCdn")]
         StandardPlus955BandWidthChinaCdn,
-        /// <summary> StandardPlusAvgBandWidthChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_AvgBandWidth_ChinaCdn")]
         StandardPlusAvgBandWidthChinaCdn
     }
