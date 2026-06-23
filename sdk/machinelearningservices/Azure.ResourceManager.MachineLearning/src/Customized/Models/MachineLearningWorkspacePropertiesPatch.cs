@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     // Customized: replace latest-emitter generated setter that targets a read-only nested property.
     [CodeGenSuppress("EncryptionKeyIdentifier")]
-    public partial class WorkspacePropertiesUpdateParameters
+    public partial class MachineLearningWorkspacePropertiesPatch
     {
         /// <summary> Gets the KeyIdentifier. </summary>
         [WirePath("encryption.keyVaultProperties.keyIdentifier")]

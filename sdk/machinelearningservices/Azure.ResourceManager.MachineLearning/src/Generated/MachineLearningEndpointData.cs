@@ -13,30 +13,30 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> EndpointResourcePropertiesBasicResource is a preview-only resource. </summary>
-    public partial class EndpointResourcePropertiesBasicResourceData : ResourceData
+    /// <summary> MachineLearningEndpointResource is a preview-only resource. </summary>
+    public partial class MachineLearningEndpointData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointData"/>. </summary>
         /// <param name="properties"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public EndpointResourcePropertiesBasicResourceData(EndpointResourceProperties properties)
+        public MachineLearningEndpointData(EndpointResourceProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointResourcePropertiesBasicResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MachineLearningEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

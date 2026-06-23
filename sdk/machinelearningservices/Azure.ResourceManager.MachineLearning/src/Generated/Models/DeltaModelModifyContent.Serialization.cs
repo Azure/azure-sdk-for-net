@@ -15,61 +15,61 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Contract base for DeltaModelChangeRequest. Used for adding or removing. </summary>
-    public partial class DeltaModelModifyRequest : IJsonModel<DeltaModelModifyRequest>
+    public partial class DeltaModelModifyContent : IJsonModel<DeltaModelModifyContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeltaModelModifyRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeltaModelModifyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeltaModelModifyRequest(document.RootElement, options);
+                        return DeserializeDeltaModelModifyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeltaModelModifyRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeltaModelModifyContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeltaModelModifyRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeltaModelModifyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeltaModelModifyRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeltaModelModifyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeltaModelModifyRequest IPersistableModel<DeltaModelModifyRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeltaModelModifyContent IPersistableModel<DeltaModelModifyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeltaModelModifyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeltaModelModifyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="deltaModelModifyRequest"> The <see cref="DeltaModelModifyRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DeltaModelModifyRequest deltaModelModifyRequest)
+        /// <param name="deltaModelModifyContent"> The <see cref="DeltaModelModifyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeltaModelModifyContent deltaModelModifyContent)
         {
-            if (deltaModelModifyRequest == null)
+            if (deltaModelModifyContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(deltaModelModifyRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(deltaModelModifyContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeltaModelModifyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeltaModelModifyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeltaModelModifyRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeltaModelModifyContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(AddDeltaModels))
             {
@@ -139,24 +139,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeltaModelModifyRequest IJsonModel<DeltaModelModifyRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeltaModelModifyContent IJsonModel<DeltaModelModifyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeltaModelModifyRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeltaModelModifyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeltaModelModifyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeltaModelModifyRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeltaModelModifyContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeltaModelModifyRequest(document.RootElement, options);
+            return DeserializeDeltaModelModifyContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeltaModelModifyRequest DeserializeDeltaModelModifyRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeltaModelModifyContent DeserializeDeltaModelModifyContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeltaModelModifyRequest(addDeltaModels ?? new ChangeTrackingList<string>(), removeDeltaModels ?? new ChangeTrackingList<string>(), targetBaseModel, additionalBinaryDataProperties);
+            return new DeltaModelModifyContent(addDeltaModels ?? new ChangeTrackingList<string>(), removeDeltaModels ?? new ChangeTrackingList<string>(), targetBaseModel, additionalBinaryDataProperties);
         }
     }
 }

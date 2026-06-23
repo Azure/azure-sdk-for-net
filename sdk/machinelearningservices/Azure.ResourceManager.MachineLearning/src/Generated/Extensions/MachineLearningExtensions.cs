@@ -921,21 +921,21 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EndpointResourcePropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetEndpointResourcePropertiesBasicResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningEndpoint(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointResourcePropertiesBasicResource"/> object. </returns>
-        public static EndpointResourcePropertiesBasicResource GetEndpointResourcePropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
+        public static MachineLearningEndpointResource GetMachineLearningEndpoint(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMachineLearningArmClient(client).GetEndpointResourcePropertiesBasicResource(id);
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningEndpoint(id);
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     // Customized: restore legacy model factory overloads whose return/parameter types were normalized by TypeSpec generation.
+    [CodeGenSuppress("MachineLearningError", typeof(ResponseError))]
     [CodeGenSuppress("MachineLearningPrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(WorkspacePrivateEndpointResource), typeof(MachineLearningPrivateLinkServiceConnectionState), typeof(MachineLearningPrivateEndpointConnectionProvisioningState?), typeof(ManagedServiceIdentity), typeof(MachineLearningSku))]
     public static partial class ArmMachineLearningModelFactory
     {

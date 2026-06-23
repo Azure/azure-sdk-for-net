@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("osPatchingErrors"u8);
                 writer.WriteStartArray();
-                foreach (ErrorResponse item in OsPatchingErrors)
+                foreach (MachineLearningError item in OsPatchingErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string latestPatchTime = default;
             bool? rebootPending = default;
             string scheduledRebootTime = default;
-            IList<ErrorResponse> osPatchingErrors = default;
+            IList<MachineLearningError> osPatchingErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     osPatchingErrors = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 latestPatchTime,
                 rebootPending,
                 scheduledRebootTime,
-                osPatchingErrors ?? new ChangeTrackingList<ErrorResponse>(),
+                osPatchingErrors ?? new ChangeTrackingList<MachineLearningError>(),
                 additionalBinaryDataProperties);
         }
     }

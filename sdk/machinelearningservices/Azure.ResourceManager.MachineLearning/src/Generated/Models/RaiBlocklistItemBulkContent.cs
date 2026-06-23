@@ -12,21 +12,21 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The Cognitive Services RaiBlocklist Item request body. </summary>
-    public partial class RaiBlocklistItemBulkRequest
+    public partial class RaiBlocklistItemBulkContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemBulkRequest"/>. </summary>
-        public RaiBlocklistItemBulkRequest()
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemBulkContent"/>. </summary>
+        public RaiBlocklistItemBulkContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemBulkRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiBlocklistItemBulkContent"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiBlocklistItemBulkRequest(string name, RaiBlocklistItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiBlocklistItemBulkContent(string name, RaiBlocklistItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;

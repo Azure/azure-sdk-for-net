@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class EndpointGetAllCollectionResultOfT : Pageable<EndpointResourcePropertiesBasicResourceData>
+    internal partial class EndpointGetAllCollectionResultOfT : Pageable<MachineLearningEndpointData>
     {
         private readonly Endpoint _client;
         private readonly Guid _subscriptionId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EndpointGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EndpointResourcePropertiesBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MachineLearningEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 EndpointResourcePropertiesBasicResourceArmPaginatedResult result = EndpointResourcePropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<EndpointResourcePropertiesBasicResourceData>.FromValues((IReadOnlyList<EndpointResourcePropertiesBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MachineLearningEndpointData>.FromValues((IReadOnlyList<MachineLearningEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

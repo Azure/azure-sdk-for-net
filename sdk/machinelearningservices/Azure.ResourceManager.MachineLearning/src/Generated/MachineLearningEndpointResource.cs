@@ -18,40 +18,40 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a EndpointResourcePropertiesBasicResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EndpointResourcePropertiesBasicResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetEndpointResourcePropertiesBasicResources method.
+    /// A class representing a MachineLearningEndpoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningEndpoints method.
     /// </summary>
-    public partial class EndpointResourcePropertiesBasicResource : ArmResource
+    public partial class MachineLearningEndpointResource : ArmResource
     {
         private readonly ClientDiagnostics _endpointClientDiagnostics;
         private readonly Endpoint _endpointRestClient;
-        private readonly EndpointResourcePropertiesBasicResourceData _data;
+        private readonly MachineLearningEndpointData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/endpoints";
 
-        /// <summary> Initializes a new instance of EndpointResourcePropertiesBasicResource for mocking. </summary>
-        protected EndpointResourcePropertiesBasicResource()
+        /// <summary> Initializes a new instance of MachineLearningEndpointResource for mocking. </summary>
+        protected MachineLearningEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal EndpointResourcePropertiesBasicResource(ArmClient client, EndpointResourcePropertiesBasicResourceData data) : this(client, data.Id)
+        internal MachineLearningEndpointResource(ArmClient client, MachineLearningEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal EndpointResourcePropertiesBasicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string endpointResourcePropertiesBasicResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string machineLearningEndpointApiVersion);
             _endpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _endpointRestClient = new Endpoint(_endpointClientDiagnostics, Pipeline, Endpoint, endpointResourcePropertiesBasicResourceApiVersion ?? "2026-03-15-preview");
+            _endpointRestClient = new Endpoint(_endpointClientDiagnostics, Pipeline, Endpoint, machineLearningEndpointApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual EndpointResourcePropertiesBasicResourceData Data
+        public virtual MachineLearningEndpointData Data
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningEndpoints_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointResourcePropertiesBasicResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.Get");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EndpointResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningEndpointData> response = Response.FromValue(MachineLearningEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EndpointResourcePropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
+        /// <description> MachineLearningEndpoints_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointResourcePropertiesBasicResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.Get");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EndpointResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningEndpointData> response = Response.FromValue(MachineLearningEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new EndpointResourcePropertiesBasicResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_GetModels. </description>
+        /// <description> MachineLearningEndpoints_GetModels. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "EndpointResourcePropertiesBasicResource.GetModels");
+                "MachineLearningEndpointResource.GetModels");
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_GetModels. </description>
+        /// <description> MachineLearningEndpoints_GetModels. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "EndpointResourcePropertiesBasicResource.GetModels");
+                "MachineLearningEndpointResource.GetModels");
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_ListKeys. </description>
+        /// <description> MachineLearningEndpoints_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -283,14 +283,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EndpointKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.GetKeys");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.GetKeys");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_ListKeys. </description>
+        /// <description> MachineLearningEndpoints_ListKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -331,14 +331,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EndpointKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.GetKeys");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.GetKeys");
             scope.Start();
             try
             {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_RegenerateKeys. </description>
+        /// <description> MachineLearningEndpoints_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.RegenerateKeys");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_RegenerateKeys. </description>
+        /// <description> MachineLearningEndpoints_RegenerateKeys. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.RegenerateKeys");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a EndpointResourcePropertiesBasicResource.
+        /// Update a MachineLearningEndpoint.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_CreateOrUpdate. </description>
+        /// <description> MachineLearningEndpoints_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -491,11 +491,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Endpoint resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<EndpointResourcePropertiesBasicResource>> UpdateAsync(WaitUntil waitUntil, EndpointResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningEndpointResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.Update");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.Update");
             scope.Start();
             try
             {
@@ -503,10 +503,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EndpointResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<EndpointResourcePropertiesBasicResource> operation = new MachineLearningArmOperation<EndpointResourcePropertiesBasicResource>(
-                    new EndpointResourcePropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningEndpointResource> operation = new MachineLearningArmOperation<MachineLearningEndpointResource>(
+                    new MachineLearningEndpointResourceOperationSource(Client),
                     _endpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a EndpointResourcePropertiesBasicResource.
+        /// Update a MachineLearningEndpoint.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> EndpointResourcePropertiesBasicResources_CreateOrUpdate. </description>
+        /// <description> MachineLearningEndpoints_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="EndpointResourcePropertiesBasicResource"/>. </description>
+        /// <description> <see cref="MachineLearningEndpointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> Endpoint resource object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<EndpointResourcePropertiesBasicResource> Update(WaitUntil waitUntil, EndpointResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningEndpointResource> Update(WaitUntil waitUntil, MachineLearningEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("EndpointResourcePropertiesBasicResource.Update");
+            using DiagnosticScope scope = _endpointClientDiagnostics.CreateScope("MachineLearningEndpointResource.Update");
             scope.Start();
             try
             {
@@ -562,10 +562,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EndpointResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<EndpointResourcePropertiesBasicResource> operation = new MachineLearningArmOperation<EndpointResourcePropertiesBasicResource>(
-                    new EndpointResourcePropertiesBasicResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningEndpointResource> operation = new MachineLearningArmOperation<MachineLearningEndpointResource>(
+                    new MachineLearningEndpointResourceOperationSource(Client),
                     _endpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        /// <summary> Gets a collection of EndpointDeployments in the <see cref="EndpointResourcePropertiesBasicResource"/>. </summary>
+        /// <summary> Gets a collection of EndpointDeployments in the <see cref="MachineLearningEndpointResource"/>. </summary>
         /// <returns> An object representing collection of EndpointDeployments and their operations over a EndpointDeploymentResource. </returns>
         public virtual EndpointDeploymentCollection GetEndpointDeployments()
         {
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.MachineLearning
             return GetEndpointDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RaiPolicies in the <see cref="EndpointResourcePropertiesBasicResource"/>. </summary>
+        /// <summary> Gets a collection of RaiPolicies in the <see cref="MachineLearningEndpointResource"/>. </summary>
         /// <returns> An object representing collection of RaiPolicies and their operations over a RaiPolicyResource. </returns>
         public virtual RaiPolicyCollection GetRaiPolicies()
         {

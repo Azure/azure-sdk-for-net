@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -145,18 +146,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string cosmosDbResourceId = default;
+            ResourceIdentifier cosmosDbResourceId = default;
             IdentityForCmk identity = default;
             KeyVaultProperties keyVaultProperties = default;
-            string searchAccountResourceId = default;
+            ResourceIdentifier searchAccountResourceId = default;
             MachineLearningEncryptionStatus status = default;
-            string storageAccountResourceId = default;
+            ResourceIdentifier storageAccountResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("cosmosDbResourceId"u8))
                 {
-                    cosmosDbResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cosmosDbResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -175,7 +180,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("searchAccountResourceId"u8))
                 {
-                    searchAccountResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -185,7 +194,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    storageAccountResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

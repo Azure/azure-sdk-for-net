@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <param name="tags"> The resource tags for the machine learning workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspacePatch(ManagedServiceIdentity identity, WorkspacePropertiesUpdateParameters properties, MachineLearningSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningWorkspacePatch(ManagedServiceIdentity identity, MachineLearningWorkspacePropertiesPatch properties, MachineLearningSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Properties = properties;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The properties that the machine learning workspace will be updated with. </summary>
         [WirePath("properties")]
-        internal WorkspacePropertiesUpdateParameters Properties { get; set; }
+        internal MachineLearningWorkspacePropertiesPatch Properties { get; set; }
 
         /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
         [WirePath("sku")]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.AllowRoleAssignmentOnRG = value;
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ApplicationInsights = value;
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ContainerRegistry = value;
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.Description = value;
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.EnableDataIsolation = value;
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.EnableSoftwareBillOfMaterials = value;
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.FeatureStoreSettings = value;
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.FriendlyName = value;
             }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ImageBuildCompute = value;
             }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 return Properties.IpAllowlist;
             }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ManagedNetwork = value;
             }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.NetworkAcls = value;
             }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.PrimaryUserAssignedIdentity = value;
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.PublicNetworkAccessType = value;
             }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ServerlessComputeSettings = value;
             }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.SoftDeleteRetentionInDays = value;
             }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.SystemDatastoresAuthMode = value;
             }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.IsV1LegacyMode = value;
             }
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
             }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new WorkspacePropertiesUpdateParameters();
+                    Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.EncryptionKeyIdentifier = value;
             }

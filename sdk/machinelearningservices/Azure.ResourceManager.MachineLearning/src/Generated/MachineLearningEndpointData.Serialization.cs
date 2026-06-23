@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> EndpointResourcePropertiesBasicResource is a preview-only resource. </summary>
-    public partial class EndpointResourcePropertiesBasicResourceData : ResourceData, IJsonModel<EndpointResourcePropertiesBasicResourceData>
+    /// <summary> MachineLearningEndpointResource is a preview-only resource. </summary>
+    public partial class MachineLearningEndpointData : ResourceData, IJsonModel<MachineLearningEndpointData>
     {
-        /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceData"/> for deserialization. </summary>
-        internal EndpointResourcePropertiesBasicResourceData()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointData"/> for deserialization. </summary>
+        internal MachineLearningEndpointData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointResourcePropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEndpointResourcePropertiesBasicResourceData(document.RootElement, options);
+                        return DeserializeMachineLearningEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourcePropertiesBasicResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointResourcePropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourcePropertiesBasicResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EndpointResourcePropertiesBasicResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MachineLearningEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointResourcePropertiesBasicResourceData IPersistableModel<EndpointResourcePropertiesBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EndpointResourcePropertiesBasicResourceData)PersistableModelCreateCore(data, options);
+        MachineLearningEndpointData IPersistableModel<MachineLearningEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningEndpointData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EndpointResourcePropertiesBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MachineLearningEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="endpointResourcePropertiesBasicResourceData"> The <see cref="EndpointResourcePropertiesBasicResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(EndpointResourcePropertiesBasicResourceData endpointResourcePropertiesBasicResourceData)
+        /// <param name="machineLearningEndpointData"> The <see cref="MachineLearningEndpointData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MachineLearningEndpointData machineLearningEndpointData)
         {
-            if (endpointResourcePropertiesBasicResourceData == null)
+            if (machineLearningEndpointData == null)
             {
                 return null;
             }
-            return RequestContent.Create(endpointResourcePropertiesBasicResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(machineLearningEndpointData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EndpointResourcePropertiesBasicResourceData"/> from. </param>
-        internal static EndpointResourcePropertiesBasicResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineLearningEndpointData"/> from. </param>
+        internal static MachineLearningEndpointData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeEndpointResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMachineLearningEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EndpointResourcePropertiesBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MachineLearningEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointResourcePropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourcePropertiesBasicResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEndpointData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointResourcePropertiesBasicResourceData IJsonModel<EndpointResourcePropertiesBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EndpointResourcePropertiesBasicResourceData)JsonModelCreateCore(ref reader, options);
+        MachineLearningEndpointData IJsonModel<MachineLearningEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningEndpointData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointResourcePropertiesBasicResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourcePropertiesBasicResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEndpointData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEndpointResourcePropertiesBasicResourceData(document.RootElement, options);
+            return DeserializeMachineLearningEndpointData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EndpointResourcePropertiesBasicResourceData DeserializeEndpointResourcePropertiesBasicResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MachineLearningEndpointData DeserializeMachineLearningEndpointData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,10 +155,6 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EndpointResourcePropertiesBasicResourceData(
+            return new MachineLearningEndpointData(
                 id,
                 name,
                 resourceType,

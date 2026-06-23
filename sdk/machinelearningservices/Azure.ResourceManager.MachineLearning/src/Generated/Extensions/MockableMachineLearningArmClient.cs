@@ -467,13 +467,13 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             return new ConnectionRaiPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EndpointResourcePropertiesBasicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResourcePropertiesBasicResource"/> object. </returns>
-        public virtual EndpointResourcePropertiesBasicResource GetEndpointResourcePropertiesBasicResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
+        public virtual MachineLearningEndpointResource GetMachineLearningEndpoint(ResourceIdentifier id)
         {
-            EndpointResourcePropertiesBasicResource.ValidateResourceId(id);
-            return new EndpointResourcePropertiesBasicResource(Client, id);
+            MachineLearningEndpointResource.ValidateResourceId(id);
+            return new MachineLearningEndpointResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ManagedNetworkSettingsRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>

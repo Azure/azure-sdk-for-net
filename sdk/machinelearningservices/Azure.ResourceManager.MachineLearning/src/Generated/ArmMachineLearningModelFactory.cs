@@ -20,14 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMachineLearningModelFactory
     {
-
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ResponseError error = default)
-        {
-            return new ErrorResponse(error, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -301,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </param>
         /// <returns> A new <see cref="Models.EncryptionProperty"/> instance for mocking. </returns>
-        public static EncryptionProperty EncryptionProperty(string cosmosDbResourceId = default, string userAssignedIdentity = default, KeyVaultProperties keyVaultProperties = default, string searchAccountResourceId = default, MachineLearningEncryptionStatus status = default, string storageAccountResourceId = default)
+        public static EncryptionProperty EncryptionProperty(ResourceIdentifier cosmosDbResourceId = default, string userAssignedIdentity = default, KeyVaultProperties keyVaultProperties = default, ResourceIdentifier searchAccountResourceId = default, MachineLearningEncryptionStatus status = default, ResourceIdentifier storageAccountResourceId = default)
         {
             return new EncryptionProperty(
                 cosmosDbResourceId,
@@ -596,7 +588,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MachineLearningWorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new WorkspacePropertiesUpdateParameters(
+            return new MachineLearningWorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new MachineLearningWorkspacePropertiesPatch(
                 allowRoleAssignmentOnRG,
                 applicationInsights,
                 containerRegistry,
@@ -640,12 +632,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <returns> A new <see cref="Models.WorkspacePropertiesUpdateParameters"/> instance for mocking. </returns>
-        public static WorkspacePropertiesUpdateParameters WorkspacePropertiesUpdateParameters(bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, string encryptionKeyIdentifier = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default)
+        /// <returns> A new <see cref="Models.MachineLearningWorkspacePropertiesPatch"/> instance for mocking. </returns>
+        public static MachineLearningWorkspacePropertiesPatch MachineLearningWorkspacePropertiesPatch(bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, string encryptionKeyIdentifier = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default)
         {
             ipAllowlist ??= new ChangeTrackingList<string>();
 
-            return new WorkspacePropertiesUpdateParameters(
+            return new MachineLearningWorkspacePropertiesPatch(
                 allowRoleAssignmentOnRG,
                 applicationInsights,
                 containerRegistry,
@@ -3200,12 +3192,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="deltaModels"> Gets or sets collection of delta models to retrieve status for. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
-        /// <returns> A new <see cref="Models.DeltaModelStatusRequest"/> instance for mocking. </returns>
-        public static DeltaModelStatusRequest DeltaModelStatusRequest(IEnumerable<string> deltaModels = default, string targetBaseModel = default)
+        /// <returns> A new <see cref="Models.DeltaModelStatusContent"/> instance for mocking. </returns>
+        public static DeltaModelStatusContent DeltaModelStatusContent(IEnumerable<string> deltaModels = default, string targetBaseModel = default)
         {
             deltaModels ??= new ChangeTrackingList<string>();
 
-            return new DeltaModelStatusRequest((deltaModels ?? new ChangeTrackingList<string>()).ToList(), targetBaseModel, default);
+            return new DeltaModelStatusContent((deltaModels ?? new ChangeTrackingList<string>()).ToList(), targetBaseModel, default);
         }
 
         /// <param name="actualInstanceCount"> Gets or sets actual instance count. </param>
@@ -3239,22 +3231,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="count"> Gets or sets number of delta models to return. Default: -1, means that all will be returned. </param>
         /// <param name="skipToken"> Gets or sets skip token for paginated response. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
-        /// <returns> A new <see cref="Models.DeltaModelListRequest"/> instance for mocking. </returns>
-        public static DeltaModelListRequest DeltaModelListRequest(int? count = default, string skipToken = default, string targetBaseModel = default)
+        /// <returns> A new <see cref="Models.DeltaModelListContent"/> instance for mocking. </returns>
+        public static DeltaModelListContent DeltaModelListContent(int? count = default, string skipToken = default, string targetBaseModel = default)
         {
-            return new DeltaModelListRequest(count, skipToken, targetBaseModel, default);
+            return new DeltaModelListContent(count, skipToken, targetBaseModel, default);
         }
 
         /// <param name="addDeltaModels"> Gets or sets delta models to remove. </param>
         /// <param name="removeDeltaModels"> Gets or sets delta models to remove. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
-        /// <returns> A new <see cref="Models.DeltaModelModifyRequest"/> instance for mocking. </returns>
-        public static DeltaModelModifyRequest DeltaModelModifyRequest(IEnumerable<string> addDeltaModels = default, IEnumerable<string> removeDeltaModels = default, string targetBaseModel = default)
+        /// <returns> A new <see cref="Models.DeltaModelModifyContent"/> instance for mocking. </returns>
+        public static DeltaModelModifyContent DeltaModelModifyContent(IEnumerable<string> addDeltaModels = default, IEnumerable<string> removeDeltaModels = default, string targetBaseModel = default)
         {
             addDeltaModels ??= new ChangeTrackingList<string>();
             removeDeltaModels ??= new ChangeTrackingList<string>();
 
-            return new DeltaModelModifyRequest((addDeltaModels ?? new ChangeTrackingList<string>()).ToList(), (removeDeltaModels ?? new ChangeTrackingList<string>()).ToList(), targetBaseModel, default);
+            return new DeltaModelModifyContent((addDeltaModels ?? new ChangeTrackingList<string>()).ToList(), (removeDeltaModels ?? new ChangeTrackingList<string>()).ToList(), targetBaseModel, default);
         }
 
         /// <param name="actualCapacityInfo"> Gets or sets the actual capacity info for the group. </param>
@@ -7204,16 +7196,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <returns> A new <see cref="Models.OsPatchingStatus"/> instance for mocking. </returns>
-        public static OsPatchingStatus OsPatchingStatus(PatchStatus? patchStatus = default, string latestPatchTime = default, bool? rebootPending = default, string scheduledRebootTime = default, IEnumerable<ErrorResponse> osPatchingErrors = default)
+        public static OsPatchingStatus OsPatchingStatus(PatchStatus? patchStatus = default, string latestPatchTime = default, bool? rebootPending = default, string scheduledRebootTime = default, IEnumerable<MachineLearningError> osPatchingErrors = default)
         {
-            osPatchingErrors ??= new ChangeTrackingList<ErrorResponse>();
+            osPatchingErrors ??= new ChangeTrackingList<MachineLearningError>();
 
             return new OsPatchingStatus(
                 patchStatus,
                 latestPatchTime,
                 rebootPending,
                 scheduledRebootTime,
-                (osPatchingErrors ?? new ChangeTrackingList<ErrorResponse>()).ToList(),
+                (osPatchingErrors ?? new ChangeTrackingList<MachineLearningError>()).ToList(),
                 default);
         }
 
@@ -8481,10 +8473,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="name"></param>
         /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
-        /// <returns> A new <see cref="Models.RaiBlocklistItemBulkRequest"/> instance for mocking. </returns>
-        public static RaiBlocklistItemBulkRequest RaiBlocklistItemBulkRequest(string name = default, RaiBlocklistItemProperties properties = default)
+        /// <returns> A new <see cref="Models.RaiBlocklistItemBulkContent"/> instance for mocking. </returns>
+        public static RaiBlocklistItemBulkContent RaiBlocklistItemBulkContent(string name = default, RaiBlocklistItemProperties properties = default)
         {
-            return new RaiBlocklistItemBulkRequest(name, properties, default);
+            return new RaiBlocklistItemBulkContent(name, properties, default);
         }
 
         /// <param name="isRegex"> If the pattern is a regex pattern. </param>
@@ -8517,10 +8509,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="MachineLearning.EndpointResourcePropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static EndpointResourcePropertiesBasicResourceData EndpointResourcePropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointResourceProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningEndpointData"/> instance for mocking. </returns>
+        public static MachineLearningEndpointData MachineLearningEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointResourceProperties properties = default)
         {
-            return new EndpointResourcePropertiesBasicResourceData(
+            return new MachineLearningEndpointData(
                 id,
                 name,
                 resourceType,

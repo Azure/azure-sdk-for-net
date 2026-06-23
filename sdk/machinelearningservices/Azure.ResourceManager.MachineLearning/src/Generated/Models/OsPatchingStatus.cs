@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="OsPatchingStatus"/>. </summary>
         internal OsPatchingStatus()
         {
-            OsPatchingErrors = new ChangeTrackingList<ErrorResponse>();
+            OsPatchingErrors = new ChangeTrackingList<MachineLearningError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OsPatchingStatus"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? rebootPending, string scheduledRebootTime, IList<ErrorResponse> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OsPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? rebootPending, string scheduledRebootTime, IList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchStatus = patchStatus;
             LatestPatchTime = latestPatchTime;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Collection of errors encountered when doing os patching. </summary>
         [WirePath("osPatchingErrors")]
-        public IList<ErrorResponse> OsPatchingErrors { get; }
+        public IList<MachineLearningError> OsPatchingErrors { get; }
     }
 }

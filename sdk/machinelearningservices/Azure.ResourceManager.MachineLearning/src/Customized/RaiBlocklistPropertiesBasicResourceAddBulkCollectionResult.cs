@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.MachineLearning
         private readonly string _workspaceName;
         private readonly string _connectionName;
         private readonly string _raiBlocklistName;
-        private readonly IEnumerable<RaiBlocklistItemBulkRequest> _body;
+        private readonly IEnumerable<RaiBlocklistItemBulkContent> _body;
         private readonly RequestContext _context;
 
-        public RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult(ConnectionRaiBlocklistItem client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkRequest> body, RequestContext context)
+        public RaiBlocklistPropertiesBasicResourceAddBulkCollectionResult(ConnectionRaiBlocklistItem client, Guid subscriptionId, string resourceGroupName, string workspaceName, string connectionName, string raiBlocklistName, IEnumerable<RaiBlocklistItemBulkContent> body, RequestContext context)
             : base(context?.CancellationToken ?? default)
         {
             _client = client;

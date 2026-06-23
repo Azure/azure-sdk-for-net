@@ -11,23 +11,23 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DeltaModelStatusRequest. </summary>
-    public partial class DeltaModelStatusRequest
+    /// <summary> The DeltaModelStatusContent. </summary>
+    public partial class DeltaModelStatusContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusRequest"/>. </summary>
-        public DeltaModelStatusRequest()
+        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusContent"/>. </summary>
+        public DeltaModelStatusContent()
         {
             DeltaModels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusContent"/>. </summary>
         /// <param name="deltaModels"> Gets or sets collection of delta models to retrieve status for. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaModelStatusRequest(IList<string> deltaModels, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaModelStatusContent(IList<string> deltaModels, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeltaModels = deltaModels;
             TargetBaseModel = targetBaseModel;

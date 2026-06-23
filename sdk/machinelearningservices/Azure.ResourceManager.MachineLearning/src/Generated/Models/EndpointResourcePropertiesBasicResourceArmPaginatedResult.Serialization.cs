@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of EndpointResourcePropertiesBasicResource items. </summary>
+    /// <summary> Paged collection of MachineLearningEndpointResource items. </summary>
     internal partial class EndpointResourcePropertiesBasicResourceArmPaginatedResult : IJsonModel<EndpointResourcePropertiesBasicResourceArmPaginatedResult>
     {
         /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceArmPaginatedResult"/> for deserialization. </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (EndpointResourcePropertiesBasicResourceData item in Value)
+            foreach (MachineLearningEndpointData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<EndpointResourcePropertiesBasicResourceData> value = default;
+            IList<MachineLearningEndpointData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<EndpointResourcePropertiesBasicResourceData> array = new List<EndpointResourcePropertiesBasicResourceData>();
+                    List<MachineLearningEndpointData> array = new List<MachineLearningEndpointData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EndpointResourcePropertiesBasicResourceData.DeserializeEndpointResourcePropertiesBasicResourceData(item, options));
+                        array.Add(MachineLearningEndpointData.DeserializeMachineLearningEndpointData(item, options));
                     }
                     value = array;
                     continue;

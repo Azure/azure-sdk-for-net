@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProperty(string cosmosDbResourceId, IdentityForCmk identity, KeyVaultProperties keyVaultProperties, string searchAccountResourceId, MachineLearningEncryptionStatus status, string storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionProperty(ResourceIdentifier cosmosDbResourceId, IdentityForCmk identity, KeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CosmosDbResourceId = cosmosDbResourceId;
             Identity = identity;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </summary>
         [WirePath("cosmosDbResourceId")]
-        public string CosmosDbResourceId { get; set; }
+        public ResourceIdentifier CosmosDbResourceId { get; set; }
 
         /// <summary> Identity to be used with the keyVault. </summary>
         [WirePath("identity")]
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </summary>
         [WirePath("searchAccountResourceId")]
-        public string SearchAccountResourceId { get; set; }
+        public ResourceIdentifier SearchAccountResourceId { get; set; }
 
         /// <summary> Indicates whether or not the encryption is enabled for the workspace. </summary>
         [WirePath("status")]
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </summary>
         [WirePath("storageAccountResourceId")]
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
 
         /// <summary> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </summary>
         [WirePath("identity.userAssignedIdentity")]

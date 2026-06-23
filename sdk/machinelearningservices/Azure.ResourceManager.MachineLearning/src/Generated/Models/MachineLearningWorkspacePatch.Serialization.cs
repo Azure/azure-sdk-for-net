@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            WorkspacePropertiesUpdateParameters properties = default;
+            MachineLearningWorkspacePropertiesPatch properties = default;
             MachineLearningSku sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    properties = WorkspacePropertiesUpdateParameters.DeserializeWorkspacePropertiesUpdateParameters(prop.Value, options);
+                    properties = MachineLearningWorkspacePropertiesPatch.DeserializeMachineLearningWorkspacePropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

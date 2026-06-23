@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearning
     // Customized: preserve GA add-bulk/delete-bulk shapes. Add-bulk was pageable in GA, while the
     // TypeSpec operation is an LRO action with an array final result; delete-bulk also needs manual
     // enumerable body serialization to match the generated REST client request contract.
-    [CodeGenSuppress("AddBulkAsync", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkRequest>), typeof(CancellationToken))]
-    [CodeGenSuppress("AddBulk", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkRequest>), typeof(CancellationToken))]
+    [CodeGenSuppress("AddBulkAsync", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkContent>), typeof(CancellationToken))]
+    [CodeGenSuppress("AddBulk", typeof(WaitUntil), typeof(IEnumerable<RaiBlocklistItemBulkContent>), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteBulkAsync", typeof(WaitUntil), typeof(IEnumerable<string>), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteBulk", typeof(WaitUntil), typeof(IEnumerable<string>), typeof(CancellationToken))]
     public partial class RaiBlocklistPropertiesBasicResource
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="body"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RaiBlocklistItemPropertiesBasicResource> AddBulkAsync(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkRequest> body, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RaiBlocklistItemPropertiesBasicResource> AddBulkAsync(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="body"> Properties describing the custom blocklist items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RaiBlocklistItemPropertiesBasicResource> AddBulk(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkRequest> body, CancellationToken cancellationToken = default)
+        public virtual Pageable<RaiBlocklistItemPropertiesBasicResource> AddBulk(WaitUntil waitUntil, IEnumerable<RaiBlocklistItemBulkContent> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

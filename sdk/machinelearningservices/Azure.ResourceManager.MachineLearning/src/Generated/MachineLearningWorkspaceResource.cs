@@ -2484,11 +2484,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetWorkspaceConnectionPropertiesV2BasicResources().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EndpointResourcePropertiesBasicResources in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of EndpointResourcePropertiesBasicResources and their operations over a EndpointResourcePropertiesBasicResource. </returns>
-        public virtual EndpointResourcePropertiesBasicResourceCollection GetEndpointResourcePropertiesBasicResources()
+        /// <summary> Gets a collection of MachineLearningEndpoints in the <see cref="MachineLearningWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of MachineLearningEndpoints and their operations over a MachineLearningEndpointResource. </returns>
+        public virtual MachineLearningEndpointCollection GetMachineLearningEndpoints()
         {
-            return GetCachedClient(client => new EndpointResourcePropertiesBasicResourceCollection(client, Id));
+            return GetCachedClient(client => new MachineLearningEndpointCollection(client, Id));
         }
 
         /// <summary> Gets endpoint resource. </summary>
@@ -2497,11 +2497,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointResourcePropertiesBasicResource>> GetEndpointResourcePropertiesBasicResourceAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEndpointResource>> GetMachineLearningEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return await GetEndpointResourcePropertiesBasicResources().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets endpoint resource. </summary>
@@ -2510,11 +2510,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EndpointResourcePropertiesBasicResource> GetEndpointResourcePropertiesBasicResource(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningEndpointResource> GetMachineLearningEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return GetEndpointResourcePropertiesBasicResources().Get(endpointName, cancellationToken);
+            return GetMachineLearningEndpoints().Get(endpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedNetworkSettingsRules in the <see cref="MachineLearningWorkspaceResource"/>. </summary>

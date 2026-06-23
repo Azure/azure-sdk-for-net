@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a collection of <see cref="EndpointDeploymentResource"/> and their operations.
-    /// Each <see cref="EndpointDeploymentResource"/> in the collection will belong to the same instance of <see cref="EndpointResourcePropertiesBasicResource"/>.
-    /// To get a <see cref="EndpointDeploymentCollection"/> instance call the GetEndpointDeployments method from an instance of <see cref="EndpointResourcePropertiesBasicResource"/>.
+    /// Each <see cref="EndpointDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningEndpointResource"/>.
+    /// To get a <see cref="EndpointDeploymentCollection"/> instance call the GetEndpointDeployments method from an instance of <see cref="MachineLearningEndpointResource"/>.
     /// </summary>
     public partial class EndpointDeploymentCollection : ArmCollection, IEnumerable<EndpointDeploymentResource>, IAsyncEnumerable<EndpointDeploymentResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != EndpointResourcePropertiesBasicResource.ResourceType)
+            if (id.ResourceType != MachineLearningEndpointResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EndpointResourcePropertiesBasicResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningEndpointResource.ResourceType), nameof(id));
             }
         }
 

@@ -12,33 +12,33 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of EndpointResourcePropertiesBasicResource items. </summary>
+    /// <summary> Paged collection of MachineLearningEndpointResource items. </summary>
     internal partial class EndpointResourcePropertiesBasicResourceArmPaginatedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceArmPaginatedResult"/>. </summary>
-        /// <param name="value"> The EndpointResourcePropertiesBasicResource items on this page. </param>
-        internal EndpointResourcePropertiesBasicResourceArmPaginatedResult(IEnumerable<EndpointResourcePropertiesBasicResourceData> value)
+        /// <param name="value"> The MachineLearningEndpointResource items on this page. </param>
+        internal EndpointResourcePropertiesBasicResourceArmPaginatedResult(IEnumerable<MachineLearningEndpointData> value)
         {
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceArmPaginatedResult"/>. </summary>
-        /// <param name="value"> The EndpointResourcePropertiesBasicResource items on this page. </param>
+        /// <param name="value"> The MachineLearningEndpointResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointResourcePropertiesBasicResourceArmPaginatedResult(IList<EndpointResourcePropertiesBasicResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointResourcePropertiesBasicResourceArmPaginatedResult(IList<MachineLearningEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The EndpointResourcePropertiesBasicResource items on this page. </summary>
+        /// <summary> The MachineLearningEndpointResource items on this page. </summary>
         [WirePath("value")]
-        public IList<EndpointResourcePropertiesBasicResourceData> Value { get; }
+        public IList<MachineLearningEndpointData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -12,18 +12,18 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The parameters for updating a machine learning workspace. </summary>
-    public partial class WorkspacePropertiesUpdateParameters
+    public partial class MachineLearningWorkspacePropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkspacePropertiesUpdateParameters"/>. </summary>
-        public WorkspacePropertiesUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
+        public MachineLearningWorkspacePropertiesPatch()
         {
             IpAllowlist = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkspacePropertiesUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePropertiesPatch"/>. </summary>
         /// <param name="allowRoleAssignmentOnRG"></param>
         /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
         /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
         /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspacePropertiesUpdateParameters(bool? allowRoleAssignmentOnRG, string applicationInsights, string containerRegistry, string description, bool? enableDataIsolation, bool? enableSoftwareBillOfMaterials, EncryptionUpdateProperties encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, string imageBuildCompute, IList<string> ipAllowlist, ManagedNetworkSettings managedNetwork, NetworkAcls networkAcls, string primaryUserAssignedIdentity, PublicNetworkAccess? publicNetworkAccessType, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, int? softDeleteRetentionInDays, SystemDatastoresAuthMode? systemDatastoresAuthMode, bool? isV1LegacyMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningWorkspacePropertiesPatch(bool? allowRoleAssignmentOnRG, string applicationInsights, string containerRegistry, string description, bool? enableDataIsolation, bool? enableSoftwareBillOfMaterials, EncryptionUpdateProperties encryption, FeatureStoreSettings featureStoreSettings, string friendlyName, string imageBuildCompute, IList<string> ipAllowlist, ManagedNetworkSettings managedNetwork, NetworkAcls networkAcls, string primaryUserAssignedIdentity, PublicNetworkAccess? publicNetworkAccessType, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, int? softDeleteRetentionInDays, SystemDatastoresAuthMode? systemDatastoresAuthMode, bool? isV1LegacyMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowRoleAssignmentOnRG = allowRoleAssignmentOnRG;
             ApplicationInsights = applicationInsights;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct AuthMode : IEquatable<AuthMode>
     {
         private readonly string _value;
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="AuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value;
         }
 
-        /// <summary> Gets the AAD. </summary>
-        public static AuthMode AAD { get; } = new AuthMode(AADValue);
+        /// <summary> Gets the Aad. </summary>
+        public static AuthMode Aad { get; } = new AuthMode(AadValue);
 
         /// <summary> Determines if two <see cref="AuthMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

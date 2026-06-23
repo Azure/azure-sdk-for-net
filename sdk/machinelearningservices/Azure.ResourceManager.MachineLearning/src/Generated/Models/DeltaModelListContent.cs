@@ -11,23 +11,23 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The DeltaModelListRequest. </summary>
-    public partial class DeltaModelListRequest
+    /// <summary> The DeltaModelListContent. </summary>
+    public partial class DeltaModelListContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelListRequest"/>. </summary>
-        public DeltaModelListRequest()
+        /// <summary> Initializes a new instance of <see cref="DeltaModelListContent"/>. </summary>
+        public DeltaModelListContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelListRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeltaModelListContent"/>. </summary>
         /// <param name="count"> Gets or sets number of delta models to return. Default: -1, means that all will be returned. </param>
         /// <param name="skipToken"> Gets or sets skip token for paginated response. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaModelListRequest(int? count, string skipToken, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaModelListContent(int? count, string skipToken, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             SkipToken = skipToken;

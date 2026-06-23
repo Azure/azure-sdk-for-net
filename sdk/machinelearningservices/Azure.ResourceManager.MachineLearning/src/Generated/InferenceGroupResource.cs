@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> DeltaModelBaseRequest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeltaModelStatusResponse>> GetDeltaModelsStatusAsyncAsync(DeltaModelStatusRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeltaModelStatusResponse>> GetDeltaModelsStatusAsyncAsync(DeltaModelStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inferenceGroupsRestClient.CreateGetDeltaModelsStatusAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelStatusRequest.ToRequestContent(content), context);
+                HttpMessage message = _inferenceGroupsRestClient.CreateGetDeltaModelsStatusAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeltaModelStatusResponse> response = Response.FromValue(DeltaModelStatusResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> DeltaModelBaseRequest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeltaModelStatusResponse> GetDeltaModelsStatusAsync(DeltaModelStatusRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<DeltaModelStatusResponse> GetDeltaModelsStatusAsync(DeltaModelStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inferenceGroupsRestClient.CreateGetDeltaModelsStatusAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelStatusRequest.ToRequestContent(content), context);
+                HttpMessage message = _inferenceGroupsRestClient.CreateGetDeltaModelsStatusAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeltaModelStatusResponse> response = Response.FromValue(DeltaModelStatusResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetDeltaModelsAsyncAsync(DeltaModelListRequest content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<string> GetDeltaModelsAsyncAsync(DeltaModelListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                DeltaModelListRequest.ToRequestContent(content),
+                DeltaModelListContent.ToRequestContent(content),
                 context,
                 "InferenceGroupResource.GetDeltaModelsAsync");
         }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetDeltaModelsAsync(DeltaModelListRequest content, CancellationToken cancellationToken = default)
+        public virtual Pageable<string> GetDeltaModelsAsync(DeltaModelListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.MachineLearning
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                DeltaModelListRequest.ToRequestContent(content),
+                DeltaModelListContent.ToRequestContent(content),
                 context,
                 "InferenceGroupResource.GetDeltaModelsAsync");
         }
@@ -805,10 +805,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> DeltaModelModifyRequest. </param>
+        /// <param name="content"> DeltaModelModifyContent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ModifyDeltaModelsAsyncAsync(WaitUntil waitUntil, DeltaModelModifyRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ModifyDeltaModelsAsyncAsync(WaitUntil waitUntil, DeltaModelModifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inferenceGroupsRestClient.CreateModifyDeltaModelsAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelModifyRequest.ToRequestContent(content), context);
+                HttpMessage message = _inferenceGroupsRestClient.CreateModifyDeltaModelsAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelModifyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_inferenceGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -858,10 +858,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> DeltaModelModifyRequest. </param>
+        /// <param name="content"> DeltaModelModifyContent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ModifyDeltaModelsAsync(WaitUntil waitUntil, DeltaModelModifyRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ModifyDeltaModelsAsync(WaitUntil waitUntil, DeltaModelModifyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inferenceGroupsRestClient.CreateModifyDeltaModelsAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelModifyRequest.ToRequestContent(content), context);
+                HttpMessage message = _inferenceGroupsRestClient.CreateModifyDeltaModelsAsyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, DeltaModelModifyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_inferenceGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
