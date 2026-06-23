@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("startTimeUtc"u8);
-            writer.WriteStringValue(StartTimeUtc, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("requestor"u8);
             writer.WriteStringValue(Requestor);
             if (Optional.IsDefined(Justification))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<JitNetworkAccessRequestVirtualMachine> virtualMachines = default;
-            DateTimeOffset startTimeUtc = default;
+            DateTimeOffset startOn = default;
             string requestor = default;
             string justification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("requestor"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JitNetworkAccessRequestInfo(virtualMachines, startTimeUtc, requestor, justification, additionalBinaryDataProperties);
+            return new JitNetworkAccessRequestInfo(virtualMachines, startOn, requestor, justification, additionalBinaryDataProperties);
         }
     }
 }

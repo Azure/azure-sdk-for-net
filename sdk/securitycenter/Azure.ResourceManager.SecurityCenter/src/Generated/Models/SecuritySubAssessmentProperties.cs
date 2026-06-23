@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="impact"> Description of the impact of this sub-assessment. </param>
         /// <param name="category"> Category of the sub-assessment. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="timeGenerated"> The date and time the sub-assessment was generated. </param>
+        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="additionalData"> Details of the sub-assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySubAssessmentProperties(string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? timeGenerated, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySubAssessmentProperties(string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VulnerabilityId = vulnerabilityId;
             DisplayName = displayName;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Impact = impact;
             Category = category;
             Description = description;
-            TimeGenerated = timeGenerated;
+            GeneratedOn = generatedOn;
             ResourceDetails = resourceDetails;
             AdditionalData = additionalData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Description { get; }
 
         /// <summary> The date and time the sub-assessment was generated. </summary>
-        public DateTimeOffset? TimeGenerated { get; }
+        public DateTimeOffset? GeneratedOn { get; }
 
         /// <summary> Details of the resource that was assessed. </summary>
         public SecurityCenterResourceDetails ResourceDetails { get; set; }

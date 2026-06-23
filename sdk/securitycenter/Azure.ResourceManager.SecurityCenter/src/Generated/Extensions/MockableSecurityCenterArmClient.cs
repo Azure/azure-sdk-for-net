@@ -880,13 +880,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="scanResultId"></param>
         /// <param name="databaseName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
-
             return GetSqlVulnerabilityAssessmentScanResults(scope).Get(scanResultId, databaseName, cancellationToken);
         }
 
@@ -895,13 +891,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="scanResultId"></param>
         /// <param name="databaseName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
-
             return await GetSqlVulnerabilityAssessmentScanResults(scope).GetAsync(scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 

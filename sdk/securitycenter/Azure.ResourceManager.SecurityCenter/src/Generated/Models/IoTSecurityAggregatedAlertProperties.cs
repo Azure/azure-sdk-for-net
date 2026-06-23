@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="IoTSecurityAggregatedAlertProperties"/>. </summary>
         /// <param name="alertType"> Name of the alert type. </param>
         /// <param name="alertDisplayName"> Display name of the alert type. </param>
-        /// <param name="aggregatedDateUtc"> Date of detection. </param>
+        /// <param name="aggregatedOn"> Date of detection. </param>
         /// <param name="vendorName"> Name of the organization that raised the alert. </param>
         /// <param name="reportedSeverity"> Assessed alert severity. </param>
         /// <param name="remediationSteps"> Recommended steps for remediation. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecurityAggregatedAlertProperties(string alertType, string alertDisplayName, DateTimeOffset? aggregatedDateUtc, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTSecurityAggregatedAlertProperties(string alertType, string alertDisplayName, DateTimeOffset? aggregatedOn, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
             AlertDisplayName = alertDisplayName;
-            AggregatedDateUtc = aggregatedDateUtc;
+            AggregatedOn = aggregatedOn;
             VendorName = vendorName;
             ReportedSeverity = reportedSeverity;
             RemediationSteps = remediationSteps;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string AlertDisplayName { get; }
 
         /// <summary> Date of detection. </summary>
-        public DateTimeOffset? AggregatedDateUtc { get; }
+        public DateTimeOffset? AggregatedOn { get; }
 
         /// <summary> Name of the organization that raised the alert. </summary>
         public string VendorName { get; }

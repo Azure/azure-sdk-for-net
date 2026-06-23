@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionPolicyProperties"/>. </summary>
-        /// <param name="lastModifiedUtc"> Describes the last UTC time the policy was modified. </param>
+        /// <param name="lastModifiedOn"> Describes the last UTC time the policy was modified. </param>
         /// <param name="version"> Describes the version of the policy. </param>
         /// <param name="labels"> Dictionary of sensitivity labels. </param>
         /// <param name="informationTypes"> The sensitivity information types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformationProtectionPolicyProperties(DateTimeOffset? lastModifiedUtc, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, InformationType> informationTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformationProtectionPolicyProperties(DateTimeOffset? lastModifiedOn, string version, IDictionary<string, SensitivityLabel> labels, IDictionary<string, InformationType> informationTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastModifiedUtc = lastModifiedUtc;
+            LastModifiedOn = lastModifiedOn;
             Version = version;
             Labels = labels;
             InformationTypes = informationTypes;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Describes the last UTC time the policy was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Describes the version of the policy. </summary>
         public string Version { get; }

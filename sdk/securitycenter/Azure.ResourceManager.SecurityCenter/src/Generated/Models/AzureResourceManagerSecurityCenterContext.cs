@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanOperationResultProperties))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanProperties))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResource))]
-    [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultData))]
+    [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResult))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultProperties))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentScanResultResource))]
     [ModelReaderWriterBuildable(typeof(SqlVulnerabilityAssessmentSettingsData))]

@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.SecurityCenter
         internal InformationProtectionPolicyProperties Properties { get; set; }
 
         /// <summary> Describes the last UTC time the policy was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc
+        public DateTimeOffset? LastModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastModifiedUtc;
+                return Properties is null ? default : Properties.LastModifiedOn;
             }
         }
 

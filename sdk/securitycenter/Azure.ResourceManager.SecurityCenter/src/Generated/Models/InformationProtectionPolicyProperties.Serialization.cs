@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(InformationProtectionPolicyProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            DateTimeOffset? lastModifiedUtc = default;
+            DateTimeOffset? lastModifiedOn = default;
             string version = default;
             IDictionary<string, SensitivityLabel> labels = default;
             IDictionary<string, InformationType> informationTypes = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    lastModifiedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InformationProtectionPolicyProperties(lastModifiedUtc, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, InformationType>(), additionalBinaryDataProperties);
+            return new InformationProtectionPolicyProperties(lastModifiedOn, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, InformationType>(), additionalBinaryDataProperties);
         }
     }
 }

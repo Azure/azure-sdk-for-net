@@ -88,14 +88,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 return Properties is null ? default : Properties.Description;
             }
         }
-
-        /// <summary> The date and time the sub-assessment was generated. </summary>
-        public DateTimeOffset? TimeGenerated
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TimeGenerated;
-            }
-        }
     }
 }

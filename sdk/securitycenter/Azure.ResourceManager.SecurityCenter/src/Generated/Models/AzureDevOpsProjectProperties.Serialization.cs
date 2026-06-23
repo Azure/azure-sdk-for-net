@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
-                writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
+                writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string provisioningStatusMessage = default;
-            DateTimeOffset? provisioningStatusUpdateTimeUtc = default;
+            DateTimeOffset? provisioningStatusUpdatedOn = default;
             DevOpsProvisioningState? provisioningState = default;
             string parentOrgName = default;
             string projectId = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    provisioningStatusUpdateTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    provisioningStatusUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return new AzureDevOpsProjectProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 parentOrgName,
                 projectId,

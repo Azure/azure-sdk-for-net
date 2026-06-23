@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregatedDateUtc))
+            if (options.Format != "W" && Optional.IsDefined(AggregatedOn))
             {
                 writer.WritePropertyName("aggregatedDateUtc"u8);
-                writer.WriteStringValue(AggregatedDateUtc.Value, "D");
+                writer.WriteStringValue(AggregatedOn.Value, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string alertType = default;
             string alertDisplayName = default;
-            DateTimeOffset? aggregatedDateUtc = default;
+            DateTimeOffset? aggregatedOn = default;
             string vendorName = default;
             ReportedSeverity? reportedSeverity = default;
             string remediationSteps = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    aggregatedDateUtc = prop.Value.GetDateTimeOffset("D");
+                    aggregatedOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("vendorName"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IoTSecurityAggregatedAlertProperties(
                 alertType,
                 alertDisplayName,
-                aggregatedDateUtc,
+                aggregatedOn,
                 vendorName,
                 reportedSeverity,
                 remediationSteps,

@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Date of detection. </summary>
-        public DateTimeOffset? AggregatedOn => AggregatedDateUtc;
+        public DateTimeOffset? AggregatedOn => Properties?.AggregatedOn;
     }
 }

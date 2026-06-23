@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="GitHubRepositoryProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="repoUri"> Gets or sets GitHub Repository url. </param>
         /// <param name="parentOwnerName"> Gets or sets parent GitHub Owner name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string repoId, string repoName, string repoFullName, OnboardingState? onboardingState, string repoUri, string parentOwnerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubRepositoryProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdatedOn, DevOpsProvisioningState? provisioningState, string repoId, string repoName, string repoFullName, OnboardingState? onboardingState, string repoUri, string parentOwnerName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
-            ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
+            ProvisioningStatusUpdatedOn = provisioningStatusUpdatedOn;
             ProvisioningState = provisioningState;
             RepoId = repoId;
             RepoName = repoName;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ProvisioningStatusMessage { get; }
 
         /// <summary> Gets the time when resource was last checked. </summary>
-        public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
+        public DateTimeOffset? ProvisioningStatusUpdatedOn { get; }
 
         /// <summary>
         /// The provisioning state of the resource.

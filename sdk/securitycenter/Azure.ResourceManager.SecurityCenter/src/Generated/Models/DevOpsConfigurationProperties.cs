@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="capabilities"> List of capabilities assigned to the DevOps configuration during the discovery process. </param>
         /// <param name="agentlessConfiguration"> Details about Agentless configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, Authorization authorization, AutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList, IReadOnlyList<DevOpsCapability> capabilities, AgentlessConfiguration agentlessConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdatedOn, DevOpsProvisioningState? provisioningState, Authorization authorization, AutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList, IReadOnlyList<DevOpsCapability> capabilities, AgentlessConfiguration agentlessConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
-            ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
+            ProvisioningStatusUpdatedOn = provisioningStatusUpdatedOn;
             ProvisioningState = provisioningState;
             Authorization = authorization;
             AutoDiscovery = autoDiscovery;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ProvisioningStatusMessage { get; }
 
         /// <summary> Gets the time when resource was last checked. </summary>
-        public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
+        public DateTimeOffset? ProvisioningStatusUpdatedOn { get; }
 
         /// <summary>
         /// The provisioning state of the resource.

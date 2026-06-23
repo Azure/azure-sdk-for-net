@@ -1550,12 +1550,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scanResultId"></param>
         /// <param name="databaseName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        internal static Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
             return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResult(scope, scanResultId, databaseName, cancellationToken);
         }
 
@@ -1571,12 +1568,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="scanResultId"></param>
         /// <param name="databaseName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        internal static async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
             return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResultAsync(scope, scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 

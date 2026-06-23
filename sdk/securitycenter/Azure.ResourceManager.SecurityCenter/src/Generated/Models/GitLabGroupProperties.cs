@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="GitLabGroupProperties"/>. </summary>
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitLabGroupProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, string fullyQualifiedName, string fullyQualifiedFriendlyName, string uri, OnboardingState? onboardingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitLabGroupProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdatedOn, DevOpsProvisioningState? provisioningState, string fullyQualifiedName, string fullyQualifiedFriendlyName, string uri, OnboardingState? onboardingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
-            ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
+            ProvisioningStatusUpdatedOn = provisioningStatusUpdatedOn;
             ProvisioningState = provisioningState;
             FullyQualifiedName = fullyQualifiedName;
             FullyQualifiedFriendlyName = fullyQualifiedFriendlyName;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string ProvisioningStatusMessage { get; }
 
         /// <summary> Gets the time when resource was last checked. </summary>
-        public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
+        public DateTimeOffset? ProvisioningStatusUpdatedOn { get; }
 
         /// <summary>
         /// The provisioning state of the resource.

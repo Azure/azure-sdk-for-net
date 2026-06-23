@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndTimeUtc, "O");
+            writer.WriteStringValue(EndOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             string allowedSourceAddressPrefix = default;
-            DateTimeOffset endTimeUtc = default;
+            DateTimeOffset endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endTimeUtc, additionalBinaryDataProperties);
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endOn, additionalBinaryDataProperties);
         }
     }
 }

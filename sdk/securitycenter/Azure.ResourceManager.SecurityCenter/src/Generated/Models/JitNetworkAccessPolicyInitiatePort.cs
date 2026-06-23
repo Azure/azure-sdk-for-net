@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
-        /// <param name="endTimeUtc"> The time to close the request in UTC. </param>
-        public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endTimeUtc)
+        /// <param name="endOn"> The time to close the request in UTC. </param>
+        public JitNetworkAccessPolicyInitiatePort(int number, DateTimeOffset endOn)
         {
             Number = number;
-            EndTimeUtc = endTimeUtc;
+            EndOn = endOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyInitiatePort"/>. </summary>
         /// <param name="number"></param>
         /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
-        /// <param name="endTimeUtc"> The time to close the request in UTC. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endTimeUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessPolicyInitiatePort(int number, string allowedSourceAddressPrefix, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Number = number;
             AllowedSourceAddressPrefix = allowedSourceAddressPrefix;
-            EndTimeUtc = endTimeUtc;
+            EndOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,8 +43,5 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </summary>
         public string AllowedSourceAddressPrefix { get; set; }
-
-        /// <summary> The time to close the request in UTC. </summary>
-        public DateTimeOffset EndTimeUtc { get; }
     }
 }

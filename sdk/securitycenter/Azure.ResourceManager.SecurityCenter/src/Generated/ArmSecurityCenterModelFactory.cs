@@ -1388,19 +1388,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="lastModifiedUtc"> Describes the last UTC time the policy was modified. </param>
+        /// <param name="lastModifiedOn"> Describes the last UTC time the policy was modified. </param>
         /// <param name="version"> Describes the version of the policy. </param>
         /// <param name="labels"> Dictionary of sensitivity labels. </param>
         /// <param name="informationTypes"> The sensitivity information types. </param>
         /// <returns> A new <see cref="SecurityCenter.InformationProtectionPolicyData"/> instance for mocking. </returns>
-        public static InformationProtectionPolicyData InformationProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedUtc = default, string version = default, IDictionary<string, SensitivityLabel> labels = default, IDictionary<string, InformationType> informationTypes = default)
+        public static InformationProtectionPolicyData InformationProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedOn = default, string version = default, IDictionary<string, SensitivityLabel> labels = default, IDictionary<string, InformationType> informationTypes = default)
         {
             return new InformationProtectionPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                lastModifiedUtc is null && version is null && labels is null && informationTypes is null ? default : new InformationProtectionPolicyProperties(lastModifiedUtc, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, InformationType>(), default),
+                lastModifiedOn is null && version is null && labels is null && informationTypes is null ? default : new InformationProtectionPolicyProperties(lastModifiedOn, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, InformationType>(), default),
                 default);
         }
 
@@ -2506,7 +2506,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2526,11 +2526,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </param>
         /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
         /// <returns> A new <see cref="Models.AzureDevOpsOrgProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgProperties AzureDevOpsOrgProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
+        public static AzureDevOpsOrgProperties AzureDevOpsOrgProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
         {
             return new AzureDevOpsOrgProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 onboardingState,
                 actionableRemediation,
@@ -2616,7 +2616,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2637,11 +2637,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
         /// </param>
         /// <returns> A new <see cref="Models.GitHubOwnerProperties"/> instance for mocking. </returns>
-        public static GitHubOwnerProperties GitHubOwnerProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string ownerUri = default, string gitHubInternalId = default, OnboardingState? onboardingState = default)
+        public static GitHubOwnerProperties GitHubOwnerProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string ownerUri = default, string gitHubInternalId = default, OnboardingState? onboardingState = default)
         {
             return new GitHubOwnerProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 ownerUri,
                 gitHubInternalId,
@@ -2677,7 +2677,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2705,11 +2705,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
         /// </param>
         /// <returns> A new <see cref="Models.GitLabGroupProperties"/> instance for mocking. </returns>
-        public static GitLabGroupProperties GitLabGroupProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string uri = default, OnboardingState? onboardingState = default)
+        public static GitLabGroupProperties GitLabGroupProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string uri = default, OnboardingState? onboardingState = default)
         {
             return new GitLabGroupProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 fullyQualifiedName,
                 fullyQualifiedFriendlyName,
@@ -2746,7 +2746,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2769,14 +2769,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="capabilities"> List of capabilities assigned to the DevOps configuration during the discovery process. </param>
         /// <param name="agentlessConfiguration"> Details about Agentless configuration. </param>
         /// <returns> A new <see cref="Models.DevOpsConfigurationProperties"/> instance for mocking. </returns>
-        public static DevOpsConfigurationProperties DevOpsConfigurationProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string authorizationCode = default, AutoDiscovery? autoDiscovery = default, IEnumerable<string> topLevelInventoryList = default, IEnumerable<DevOpsCapability> capabilities = default, AgentlessConfiguration agentlessConfiguration = default)
+        public static DevOpsConfigurationProperties DevOpsConfigurationProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string authorizationCode = default, AutoDiscovery? autoDiscovery = default, IEnumerable<string> topLevelInventoryList = default, IEnumerable<DevOpsCapability> capabilities = default, AgentlessConfiguration agentlessConfiguration = default)
         {
             topLevelInventoryList ??= new ChangeTrackingList<string>();
             capabilities ??= new ChangeTrackingList<DevOpsCapability>();
 
             return new DevOpsConfigurationProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 authorizationCode is null ? default : new Authorization(authorizationCode, default),
                 autoDiscovery,
@@ -2843,7 +2843,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2865,11 +2865,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </param>
         /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
         /// <returns> A new <see cref="Models.AzureDevOpsProjectProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsProjectProperties AzureDevOpsProjectProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string parentOrgName = default, string projectId = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
+        public static AzureDevOpsProjectProperties AzureDevOpsProjectProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string parentOrgName = default, string projectId = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
         {
             return new AzureDevOpsProjectProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 parentOrgName,
                 projectId,
@@ -2896,7 +2896,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -2928,11 +2928,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// NotApplicable - the onboarding state is not applicable to the current endpoint.
         /// </param>
         /// <returns> A new <see cref="Models.GitLabProjectProperties"/> instance for mocking. </returns>
-        public static GitLabProjectProperties GitLabProjectProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string fullyQualifiedParentGroupName = default, string uri = default, OnboardingState? onboardingState = default)
+        public static GitLabProjectProperties GitLabProjectProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string fullyQualifiedParentGroupName = default, string uri = default, OnboardingState? onboardingState = default)
         {
             return new GitLabProjectProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 fullyQualifiedName,
                 fullyQualifiedFriendlyName,
@@ -3065,15 +3065,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="virtualMachines"></param>
-        /// <param name="startTimeUtc"> The start time of the request in UTC. </param>
+        /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
         /// <returns> A new <see cref="Models.JitNetworkAccessRequestInfo"/> instance for mocking. </returns>
-        public static JitNetworkAccessRequestInfo JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startTimeUtc = default, string requestor = default, string justification = default)
+        public static JitNetworkAccessRequestInfo JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines = default, DateTimeOffset startOn = default, string requestor = default, string justification = default)
         {
             virtualMachines ??= new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>();
 
-            return new JitNetworkAccessRequestInfo((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>()).ToList(), startTimeUtc, requestor, justification, default);
+            return new JitNetworkAccessRequestInfo((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessRequestVirtualMachine>()).ToList(), startOn, requestor, justification, default);
         }
 
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
@@ -3089,12 +3089,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="number"></param>
         /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </param>
         /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </param>
-        /// <param name="endTimeUtc"> The date &amp; time at which the request ends in UTC. </param>
+        /// <param name="endOn"> The date &amp; time at which the request ends in UTC. </param>
         /// <param name="status"> The status of the port. </param>
         /// <param name="statusReason"> A description of why the `status` has its value. </param>
         /// <param name="mappedPort"> The port which is mapped to this port's `number` in the Azure Firewall, if applicable. </param>
         /// <returns> A new <see cref="Models.JitNetworkAccessRequestPort"/> instance for mocking. </returns>
-        public static JitNetworkAccessRequestPort JitNetworkAccessRequestPort(int number = default, string allowedSourceAddressPrefix = default, IEnumerable<string> allowedSourceAddressPrefixes = default, DateTimeOffset endTimeUtc = default, JitNetworkAccessPortStatus status = default, JitNetworkAccessPortStatusReason statusReason = default, int? mappedPort = default)
+        public static JitNetworkAccessRequestPort JitNetworkAccessRequestPort(int number = default, string allowedSourceAddressPrefix = default, IEnumerable<string> allowedSourceAddressPrefixes = default, DateTimeOffset endOn = default, JitNetworkAccessPortStatus status = default, JitNetworkAccessPortStatusReason statusReason = default, int? mappedPort = default)
         {
             allowedSourceAddressPrefixes ??= new ChangeTrackingList<string>();
 
@@ -3102,7 +3102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 number,
                 allowedSourceAddressPrefix,
                 (allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                endTimeUtc,
+                endOn,
                 status,
                 statusReason,
                 mappedPort,
@@ -3131,11 +3131,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="number"></param>
         /// <param name="allowedSourceAddressPrefix"> Source of the allowed traffic. If omitted, the request will be for the source IP address of the initiate request. </param>
-        /// <param name="endTimeUtc"> The time to close the request in UTC. </param>
+        /// <param name="endOn"> The time to close the request in UTC. </param>
         /// <returns> A new <see cref="Models.JitNetworkAccessPolicyInitiatePort"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyInitiatePort JitNetworkAccessPolicyInitiatePort(int number = default, string allowedSourceAddressPrefix = default, DateTimeOffset endTimeUtc = default)
+        public static JitNetworkAccessPolicyInitiatePort JitNetworkAccessPolicyInitiatePort(int number = default, string allowedSourceAddressPrefix = default, DateTimeOffset endOn = default)
         {
-            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endTimeUtc, default);
+            return new JitNetworkAccessPolicyInitiatePort(number, allowedSourceAddressPrefix, endOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3483,10 +3483,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
-        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanResultData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanResultData SqlVulnerabilityAssessmentScanResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanResultProperties properties = default)
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResult"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResult SqlVulnerabilityAssessmentScanResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanResultProperties properties = default)
         {
-            return new SqlVulnerabilityAssessmentScanResultData(
+            return new SqlVulnerabilityAssessmentScanResult(
                 id,
                 name,
                 resourceType,
@@ -4234,7 +4234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="alertType"> Name of the alert type. </param>
         /// <param name="alertDisplayName"> Display name of the alert type. </param>
-        /// <param name="aggregatedDateUtc"> Date of detection. </param>
+        /// <param name="aggregatedOn"> Date of detection. </param>
         /// <param name="vendorName"> Name of the organization that raised the alert. </param>
         /// <param name="reportedSeverity"> Assessed alert severity. </param>
         /// <param name="remediationSteps"> Recommended steps for remediation. </param>
@@ -4247,7 +4247,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="SecurityCenter.IotSecurityAggregatedAlertData"/> instance for mocking. </returns>
-        public static IotSecurityAggregatedAlertData IotSecurityAggregatedAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, string alertDisplayName = default, DateTimeOffset? aggregatedDateUtc = default, string vendorName = default, ReportedSeverity? reportedSeverity = default, string remediationSteps = default, string description = default, long? count = default, string effectedResourceType = default, string systemSource = default, string actionTaken = default, string logAnalyticsQuery = default, IEnumerable<IotSecurityAggregatedAlertTopDevice> topDevicesList = default, IDictionary<string, string> tags = default)
+        public static IotSecurityAggregatedAlertData IotSecurityAggregatedAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, string alertDisplayName = default, DateTimeOffset? aggregatedOn = default, string vendorName = default, ReportedSeverity? reportedSeverity = default, string remediationSteps = default, string description = default, long? count = default, string effectedResourceType = default, string systemSource = default, string actionTaken = default, string logAnalyticsQuery = default, IEnumerable<IotSecurityAggregatedAlertTopDevice> topDevicesList = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4256,10 +4256,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                alertType is null && alertDisplayName is null && aggregatedDateUtc is null && vendorName is null && reportedSeverity is null && remediationSteps is null && description is null && count is null && effectedResourceType is null && systemSource is null && actionTaken is null && logAnalyticsQuery is null && topDevicesList is null ? default : new IoTSecurityAggregatedAlertProperties(
+                alertType is null && alertDisplayName is null && aggregatedOn is null && vendorName is null && reportedSeverity is null && remediationSteps is null && description is null && count is null && effectedResourceType is null && systemSource is null && actionTaken is null && logAnalyticsQuery is null && topDevicesList is null ? default : new IoTSecurityAggregatedAlertProperties(
                     alertType,
                     alertDisplayName,
-                    aggregatedDateUtc,
+                    aggregatedOn,
                     vendorName,
                     reportedSeverity,
                     remediationSteps,
@@ -4476,7 +4476,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -4501,11 +4501,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </param>
         /// <param name="actionableRemediation"> Configuration payload for PR Annotations. </param>
         /// <returns> A new <see cref="Models.AzureDevOpsRepositoryProperties"/> instance for mocking. </returns>
-        public static AzureDevOpsRepositoryProperties AzureDevOpsRepositoryProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string parentOrgName = default, string parentProjectName = default, string repoId = default, string repoUri = default, string visibility = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
+        public static AzureDevOpsRepositoryProperties AzureDevOpsRepositoryProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string parentOrgName = default, string parentProjectName = default, string repoId = default, string repoUri = default, string visibility = default, OnboardingState? onboardingState = default, ActionableRemediation actionableRemediation = default)
         {
             return new AzureDevOpsRepositoryProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 parentOrgName,
                 parentProjectName,
@@ -4535,7 +4535,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
         /// Pending - Provisioning pending.
@@ -4570,11 +4570,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="repoUri"> Gets or sets GitHub Repository url. </param>
         /// <param name="parentOwnerName"> Gets or sets parent GitHub Owner name. </param>
         /// <returns> A new <see cref="Models.GitHubRepositoryProperties"/> instance for mocking. </returns>
-        public static GitHubRepositoryProperties GitHubRepositoryProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdateTimeUtc = default, DevOpsProvisioningState? provisioningState = default, string repoId = default, string repoName = default, string repoFullName = default, OnboardingState? onboardingState = default, string repoUri = default, string parentOwnerName = default)
+        public static GitHubRepositoryProperties GitHubRepositoryProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string repoId = default, string repoName = default, string repoFullName = default, OnboardingState? onboardingState = default, string repoUri = default, string parentOwnerName = default)
         {
             return new GitHubRepositoryProperties(
                 provisioningStatusMessage,
-                provisioningStatusUpdateTimeUtc,
+                provisioningStatusUpdatedOn,
                 provisioningState,
                 repoId,
                 repoName,
@@ -4920,18 +4920,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="impact"> Description of the impact of this sub-assessment. </param>
         /// <param name="category"> Category of the sub-assessment. </param>
         /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="timeGenerated"> The date and time the sub-assessment was generated. </param>
+        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
         /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
         /// <param name="additionalData"> Details of the sub-assessment. </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
-        public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vulnerabilityId = default, string displayName = default, SubAssessmentStatus status = default, string remediation = default, string impact = default, string category = default, string description = default, DateTimeOffset? timeGenerated = default, SecurityCenterResourceDetails resourceDetails = default, SecuritySubAssessmentAdditionalInfo additionalData = default)
+        public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vulnerabilityId = default, string displayName = default, SubAssessmentStatus status = default, string remediation = default, string impact = default, string category = default, string description = default, DateTimeOffset? generatedOn = default, SecurityCenterResourceDetails resourceDetails = default, SecuritySubAssessmentAdditionalInfo additionalData = default)
         {
             return new SecuritySubAssessmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                vulnerabilityId is null && displayName is null && status is null && remediation is null && impact is null && category is null && description is null && timeGenerated is null && resourceDetails is null && additionalData is null ? default : new SecuritySubAssessmentProperties(
+                vulnerabilityId is null && displayName is null && status is null && remediation is null && impact is null && category is null && description is null && generatedOn is null && resourceDetails is null && additionalData is null ? default : new SecuritySubAssessmentProperties(
                     vulnerabilityId,
                     displayName,
                     status,
@@ -4939,7 +4939,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     impact,
                     category,
                     description,
-                    timeGenerated,
+                    generatedOn,
                     resourceDetails,
                     additionalData,
                     default),

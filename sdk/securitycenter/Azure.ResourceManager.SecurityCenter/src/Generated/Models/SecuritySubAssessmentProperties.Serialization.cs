@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeGenerated))
+            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
             {
                 writer.WritePropertyName("timeGenerated"u8);
-                writer.WriteStringValue(TimeGenerated.Value, "O");
+                writer.WriteStringValue(GeneratedOn.Value, "O");
             }
             if (Optional.IsDefined(ResourceDetails))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string impact = default;
             string category = default;
             string description = default;
-            DateTimeOffset? timeGenerated = default;
+            DateTimeOffset? generatedOn = default;
             SecurityCenterResourceDetails resourceDetails = default;
             SecuritySubAssessmentAdditionalInfo additionalData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    timeGenerated = prop.Value.GetDateTimeOffset("O");
+                    generatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceDetails"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 impact,
                 category,
                 description,
-                timeGenerated,
+                generatedOn,
                 resourceDetails,
                 additionalData,
                 additionalBinaryDataProperties);

@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
-        /// <param name="startTimeUtc"> The start time of the request in UTC. </param>
+        /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> or <paramref name="requestor"/> is null. </exception>
-        public JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startTimeUtc, string requestor)
+        public JitNetworkAccessRequestInfo(IEnumerable<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor)
         {
             Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
             Argument.AssertNotNull(requestor, nameof(requestor));
 
             VirtualMachines = virtualMachines.ToList();
-            StartTimeUtc = startTimeUtc;
+            StartOn = startOn;
             Requestor = requestor;
         }
 
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestInfo"/>. </summary>
         /// <param name="virtualMachines"></param>
-        /// <param name="startTimeUtc"> The start time of the request in UTC. </param>
+        /// <param name="startOn"> The start time of the request in UTC. </param>
         /// <param name="requestor"> The identity of the person who made the request. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessRequestInfo(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startTimeUtc, string requestor, string justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessRequestInfo(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, DateTimeOffset startOn, string requestor, string justification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachines = virtualMachines;
-            StartTimeUtc = startTimeUtc;
+            StartOn = startOn;
             Requestor = requestor;
             Justification = justification;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,9 +50,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Gets the VirtualMachines. </summary>
         public IList<JitNetworkAccessRequestVirtualMachine> VirtualMachines { get; }
-
-        /// <summary> The start time of the request in UTC. </summary>
-        public DateTimeOffset StartTimeUtc { get; set; }
 
         /// <summary> The identity of the person who made the request. </summary>
         public string Requestor { get; set; }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The date and time the sub-assessment was generated. </summary>
-        public DateTimeOffset? GeneratedOn => TimeGenerated;
+        public DateTimeOffset? GeneratedOn => Properties?.GeneratedOn;
 
         /// <summary> Details of the sub-assessment. </summary>
         public SecuritySubAssessmentAdditionalInfo AdditionalData

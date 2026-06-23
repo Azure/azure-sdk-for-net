@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndTimeUtc, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason"u8);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             int number = default;
             string allowedSourceAddressPrefix = default;
             IList<string> allowedSourceAddressPrefixes = default;
-            DateTimeOffset endTimeUtc = default;
+            DateTimeOffset endOn = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
             int? mappedPort = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 number,
                 allowedSourceAddressPrefix,
                 allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
-                endTimeUtc,
+                endOn,
                 status,
                 statusReason,
                 mappedPort,

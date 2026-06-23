@@ -58,15 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Date of detection. </summary>
-        public DateTimeOffset? AggregatedDateUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AggregatedDateUtc;
-            }
-        }
-
         /// <summary> Name of the organization that raised the alert. </summary>
         public string VendorName
         {
