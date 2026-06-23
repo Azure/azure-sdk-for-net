@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <summary> Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
-        public virtual MaintenanceGroupApplyUpdateResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
+        public virtual MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
         {
             MaintenancePublicConfigurationResource.ValidateResourceId(id);
             return new MaintenancePublicConfigurationResource(Client, id);
