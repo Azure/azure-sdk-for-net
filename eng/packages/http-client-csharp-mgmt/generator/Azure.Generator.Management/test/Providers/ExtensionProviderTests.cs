@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Utilities;
 using Humanizer;
 using NUnit.Framework;
 
@@ -88,6 +89,17 @@ namespace Azure.Generator.Management.Tests.Providers
                 Assert.That(mockableResource.Methods.Count, Is.GreaterThan(0),
                     $"MockableResourceProvider '{mockableResource.Name}' should have at least one method to be included in the output.");
             }
+        }
+
+        [TestCase]
+        public void Verify_MockingCrefQualifiesModelParameters()
+        {
+            var model = InputFactory.Model("ResponseType", clientNamespace: "Samples.Models");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var modelType = plugin.Object.TypeFactory.CreateCSharpType(model);
+            Assert.That(modelType, Is.Not.Null);
+
+            Assert.That(modelType!.GetXmlDocTypeName(), Is.EqualTo("Samples.Models.ResponseType"));
         }
     }
 }

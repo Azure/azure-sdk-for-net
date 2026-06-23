@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
 
 ### Bugs Fixed
 - Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.

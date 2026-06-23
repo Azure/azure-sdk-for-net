@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicDetails"> List of NIC Details of device. </param>
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
-        /// <param name="sdnProperties"> oftware Defined Networking Properties of the cluster. </param>
+        /// <param name="sdnProperties"> Software Defined Networking Properties of the device. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, SdnProperties sdnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("hostNetwork")]
         public HciEdgeDeviceHostNetwork HostNetwork { get; }
 
-        /// <summary> oftware Defined Networking Properties of the cluster. </summary>
+        /// <summary> Software Defined Networking Properties of the device. </summary>
         [WirePath("sdnProperties")]
         public SdnProperties SdnProperties { get; }
     }

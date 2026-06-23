@@ -11,15 +11,20 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The ChangeRingRequestProperties. </summary>
+    /// <summary> Properties for the change-ring request. </summary>
     internal partial class ChangeRingRequestProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChangeRingRequestProperties"/>. </summary>
-        public ChangeRingRequestProperties()
+        /// <param name="targetRing"> The target ring for the cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetRing"/> is null. </exception>
+        public ChangeRingRequestProperties(string targetRing)
         {
+            Argument.AssertNotNull(targetRing, nameof(targetRing));
+
+            TargetRing = targetRing;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChangeRingRequestProperties"/>. </summary>
@@ -33,6 +38,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The target ring for the cluster. </summary>
         [WirePath("targetRing")]
-        public string TargetRing { get; set; }
+        public string TargetRing { get; }
     }
 }
