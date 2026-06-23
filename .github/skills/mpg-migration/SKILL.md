@@ -29,6 +29,7 @@ Ask the user only when the spec repo path is missing, a fix requires files beyon
 1. If resuming, read the draft SDK PR description first and continue from its phase/blockers.
 2. Check `git status` in SDK and spec repos, then sync both to latest `main` without disturbing unrelated dirty files.
 3. Fresh migration only: inventory and remove old SDK custom code (`src/Custom/`, `src/Customization/`, `src/Customized/`, hand-written partials, old shims) before first generation. Re-add only proven-needed compatibility shims later.
+   - During inventory, explicitly search for enum-like member renames using `[CodeGenMember]` on `enum` members or extensible-enum `readonly struct` static members. Prefer moving these to `client.tsp` with scoped `@@clientName(..., Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")`, then regenerate and remove the SDK custom file. Keep SDK-side `[CodeGenMember]` only when the renamed member is synthesized by the C# generator and has no TypeSpec target.
 4. Remove AutoRest config: delete `<IncludeAutorestDependency>true</IncludeAutorestDependency>` and remove/replace `src/autorest.md`.
 5. Set `tsp-location.yaml` to `emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json`.
 6. Generate with saved inputs so `tspCodeModel.json` is preserved for hierarchy checks. `-Services` must be the exact package folder name, not service directory:
@@ -82,6 +83,7 @@ Common decorator fixes:
 | Needs pageable return type | `@@markAsPageable(Interface.op, "csharp")` |
 | Flatten properties envelope | `@@flattenProperty(Model.properties, "csharp")` |
 | Operation name collision | `@@clientLocation(Interface.op, "GroupName", "csharp")` |
+| Enum/extensible-enum member needs exact shipped C# name, including underscores | `@@clientName(Enum.Member, Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")` |
 
 SDK custom code goes in the package's existing customization folder (`src/Custom/`, `src/Customization/`, or `src/Customized/`). Use MCP tools for deterministic edits when available, then hand-write only remaining shim logic. Useful MCP edits include `add_using_directive`, `remove_using_directive`, `regex_replacement`, `nullable_annotation_fix`, `rename_codegen_type`, and `add_codegen_suppress`. Regenerate when `CodeGen*` attributes change.
 
