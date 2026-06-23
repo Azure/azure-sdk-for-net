@@ -651,5 +651,102 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNotNull(op.Value);
             Assert.AreEqual("x", op.Value.Name);
         }
+        [Test]
+        public void BackupArgumentValidation()
+        {
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.BackupSecretAsync(null));
+            Assert.ThrowsAsync<ArgumentException>(() => Client.BackupSecretAsync(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => Client.BackupSecret(null));
+            Assert.Throws<ArgumentException>(() => Client.BackupSecret(string.Empty));
+        }
+
+        // -------------------------------------------------------------------
+        // LRO status-code mapping: 200 -> Success, 403 -> Success (access denied
+        // but proves the operation completed), 404 -> Pending, 5xx -> Failure.
+        // -------------------------------------------------------------------
+
+        [TestCase(200, true)]
+        [TestCase(403, true)]
+        [TestCase(404, false)]
+        public async Task DeleteSecretOperation_PollStatusMapping(int statusCode, bool expectCompleted)
+        {
+            var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1"",""recoveryId"":""https://example.vault.azure.net/deletedsecrets/x""}";
+            var pollResponse = new MockResponse(statusCode);
+            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+
+            var transport = new MockTransport(
+                new MockResponse(200).WithJson(payload),
+                pollResponse);
+
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            DeleteSecretOperation op = await client.StartDeleteSecretAsync("x");
+            Assert.IsFalse(op.HasCompleted, "Should be pending before first poll.");
+            await op.UpdateStatusAsync();
+            Assert.AreEqual(expectCompleted, op.HasCompleted,
+                $"HTTP {statusCode} should map to {(expectCompleted ? "Completed" : "Pending")}.");
+        }
+
+        [Test]
+        public async Task DeleteSecretOperation_ServerError_Fails()
+        {
+            var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1"",""recoveryId"":""https://example.vault.azure.net/deletedsecrets/x""}";
+            var transport = new MockTransport(
+                new MockResponse(200).WithJson(payload),
+                new MockResponse(500));
+
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            DeleteSecretOperation op = await client.StartDeleteSecretAsync("x");
+            Assert.ThrowsAsync<RequestFailedException>(() => op.UpdateStatusAsync().AsTask());
+        }
+
+        [TestCase(200, true)]
+        [TestCase(403, true)]
+        [TestCase(404, false)]
+        public async Task RecoverDeletedSecretOperation_PollStatusMapping(int statusCode, bool expectCompleted)
+        {
+            var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
+            var pollResponse = new MockResponse(statusCode);
+            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+
+            var transport = new MockTransport(
+                new MockResponse(200).WithJson(payload),
+                pollResponse);
+
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            RecoverDeletedSecretOperation op = await client.StartRecoverDeletedSecretAsync("x");
+            Assert.IsFalse(op.HasCompleted, "Should be pending before first poll.");
+            await op.UpdateStatusAsync();
+            Assert.AreEqual(expectCompleted, op.HasCompleted,
+                $"HTTP {statusCode} should map to {(expectCompleted ? "Completed" : "Pending")}.");
+        }
+
+        [Test]
+        public async Task RecoverDeletedSecretOperation_ServerError_Fails()
+        {
+            var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
+            var transport = new MockTransport(
+                new MockResponse(200).WithJson(payload),
+                new MockResponse(500));
+
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            RecoverDeletedSecretOperation op = await client.StartRecoverDeletedSecretAsync("x");
+            Assert.ThrowsAsync<RequestFailedException>(() => op.UpdateStatusAsync().AsTask());
+        }
     }
 }

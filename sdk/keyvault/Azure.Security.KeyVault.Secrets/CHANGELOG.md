@@ -6,6 +6,17 @@
 
 ### Breaking Changes
 
+- The OpenTelemetry / `DiagnosticListener` activity names for the three paged operations have changed.
+  Consumers filtering by activity name should update their rules:
+
+  | Old activity name (≤ 4.11.0) | New activity name (4.12.0-beta.1+) |
+  |---|---|
+  | `SecretClient.GetPropertiesOfSecrets` | `KeyVaultSecretsClient.GetSecrets` |
+  | `SecretClient.GetPropertiesOfSecretVersions` | `KeyVaultSecretsClient.GetSecretVersions` |
+  | `SecretClient.GetDeletedSecrets` | `KeyVaultSecretsClient.GetDeletedSecrets` |
+
+  All other operation activity names (`SecretClient.GetSecret`, `SecretClient.SetSecret`, etc.) are unchanged.
+
 ### Bugs Fixed
 
 ### Other Changes

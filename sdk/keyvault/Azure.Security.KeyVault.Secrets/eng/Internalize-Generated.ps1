@@ -47,7 +47,23 @@ if ($kvClient) {
                             'CreateUpdateSecretRequest(secretName, secretVersion, content, context)'
 
     if ($text -ne $original) {
+        # Verify the replacement landed correctly before persisting.
+        if ($text -notmatch 'CreateUpdateSecretRequest\(secretName,\s*secretVersion,\s*content,\s*context\)') {
+            Write-Error "FATAL: UpdateSecret arg-order patch produced unexpected output in $($kvClient.FullName). " +
+                        "The regex replacement ran but the expected fixed pattern is absent. " +
+                        "Inspect the file manually before continuing."
+            exit 1
+        }
         [System.IO.File]::WriteAllText($kvClient.FullName, $text)
         Write-Host '  patched: KeyVaultSecretsClient.cs (UpdateSecret arg order)'
+    }
+    elseif ($text -notmatch 'CreateUpdateSecretRequest\(secretName,\s*secretVersion,\s*content,\s*context\)') {
+        # Neither the bug pattern nor the fixed pattern was found — the emitter may have
+        # changed the call shape in a way the regex does not recognize. Fail loudly so
+        # the arg-order bug cannot silently ship.
+        Write-Error "FATAL: Neither the bugged nor the fixed UpdateSecret call-site pattern was found in " +
+                    "$($kvClient.FullName). The emitter may have changed the generated call shape. " +
+                    "Verify UpdateSecret argument order manually and update this script."
+        exit 1
     }
 }

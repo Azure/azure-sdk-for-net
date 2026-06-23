@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Secrets
         protected RecoverDeletedSecretOperation() {}
 
         /// <inheritdoc/>
-        public override string Id => _value.Id.AbsoluteUri;
+        public override string Id => _value.Id?.AbsoluteUri ?? string.Empty;
 
         /// <summary>
         /// Gets the <see cref="SecretProperties"/> of the secret being recovered.

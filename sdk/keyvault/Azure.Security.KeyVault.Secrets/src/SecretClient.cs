@@ -80,7 +80,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>Initializes a new instance of the <see cref="SecretClient"/> class from settings.</summary>
         [Experimental("SCME0002")]
         public SecretClient(SecretClientSettings settings)
-            : this(settings?.VaultUri, settings?.CredentialProvider as TokenCredential, settings?.Options) { }
+            : this(
+                (settings ?? throw new ArgumentNullException(nameof(settings))).VaultUri,
+                settings.CredentialProvider as TokenCredential,
+                settings.Options) { }
 
         /// <summary>The vault URI used to construct this client.</summary>
         public virtual Uri VaultUri => _vaultUri;
