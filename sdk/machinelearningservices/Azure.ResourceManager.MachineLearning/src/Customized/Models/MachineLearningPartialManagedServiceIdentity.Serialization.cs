@@ -12,6 +12,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: serialization companion for the GA-compatible partial identity model.
+    // The TypeSpec generator writes the generated schema shape, so this custom serializer preserves the
+    // previous SDK property names and user-assigned identity dictionary wire payload.
     public partial class MachineLearningPartialManagedServiceIdentity : IUtf8JsonSerializable, IJsonModel<MachineLearningPartialManagedServiceIdentity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPartialManagedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));

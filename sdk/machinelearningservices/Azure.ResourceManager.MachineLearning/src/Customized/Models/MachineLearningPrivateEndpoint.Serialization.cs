@@ -11,6 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: serialize ResourceIdentifier-backed private endpoint ids as their wire strings.
+    // The TypeSpec generator does not preserve the previous SDK ResourceIdentifier customization here,
+    // so this serializer keeps the GA property types while matching the service payload.
     public partial class MachineLearningPrivateEndpoint : IUtf8JsonSerializable, IJsonModel<MachineLearningPrivateEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPrivateEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);

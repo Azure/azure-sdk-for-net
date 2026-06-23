@@ -16,6 +16,9 @@ namespace Azure.ResourceManager.MachineLearning
     /// Each <see cref="MachineLearningComponentVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningComponentContainerResource" />.
     /// To get a <see cref="MachineLearningComponentVersionCollection" /> instance call the GetMachineLearningComponentVersions method from an instance of <see cref="MachineLearningComponentContainerResource" />.
     /// </summary>
+    // Customized: preserve the GA list overloads that used the previous parameter set/order.
+    // The TypeSpec generator only emits the current operation signature, so these hidden overloads
+    // forward to the generated overload to keep source compatibility with the previous SDK.
     public partial class MachineLearningComponentVersionCollection
     {
         /// <summary>

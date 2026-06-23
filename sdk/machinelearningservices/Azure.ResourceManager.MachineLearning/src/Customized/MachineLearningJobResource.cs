@@ -10,6 +10,9 @@ using Azure;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    // Customized: preserve the GA UpdateAsync overload that omitted CancellationToken.
+    // The TypeSpec generator emits the current overload with a cancellation token, so this hidden
+    // overload forwards to it to keep source compatibility with the previous SDK.
     public partial class MachineLearningJobResource
     {
         /// <summary>

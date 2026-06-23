@@ -13,6 +13,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: serialization companion for the internal ComputeSchedules helper.
+    // The TypeSpec generator would serialize a generated public model, so this custom serializer keeps
+    // the compatibility-only helper internal while preserving the same wire payload.
     internal partial class ComputeSchedules : IUtf8JsonSerializable, IJsonModel<ComputeSchedules>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSchedules>)this).Write(writer, new ModelReaderWriterOptions("W"));
