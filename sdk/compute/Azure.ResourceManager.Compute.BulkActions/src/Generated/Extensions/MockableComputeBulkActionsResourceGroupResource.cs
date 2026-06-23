@@ -60,11 +60,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperation");
             scope.Start();
             try
@@ -109,11 +106,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeallocateResourceOperationResult> BulkDeallocateOperation(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<DeallocateResourceOperationResult> BulkDeallocateOperation(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperation");
             scope.Start();
             try
@@ -158,11 +152,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperation");
             scope.Start();
             try
@@ -207,11 +198,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<HibernateResourceOperationResult> BulkHibernateOperation(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<HibernateResourceOperationResult> BulkHibernateOperation(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperation");
             scope.Start();
             try
@@ -256,11 +244,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkStartOperation");
             scope.Start();
             try
@@ -305,11 +290,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<StartResourceOperationResult> BulkStartOperation(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<StartResourceOperationResult> BulkStartOperation(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkStartOperation");
             scope.Start();
             try
@@ -354,11 +336,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperation");
             scope.Start();
             try
@@ -403,11 +382,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DeleteResourceOperationResult> BulkDeleteOperation(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<DeleteResourceOperationResult> BulkDeleteOperation(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperation");
             scope.Start();
             try
@@ -452,11 +428,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatus");
             scope.Start();
             try
@@ -501,11 +474,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatus");
             scope.Start();
             try
@@ -550,11 +520,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkCancelOperations");
             scope.Start();
             try
@@ -599,11 +566,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CancelBulkOperationsResult> BulkCancelOperations(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
+        internal virtual Response<CancelBulkOperationsResult> BulkCancelOperations(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkCancelOperations");
             scope.Start();
             try
