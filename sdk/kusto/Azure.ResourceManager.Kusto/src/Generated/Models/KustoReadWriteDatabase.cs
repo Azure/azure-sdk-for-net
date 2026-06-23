@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,69 +17,112 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoReadWriteDatabase : KustoDatabaseData
     {
         /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
-        public KustoReadWriteDatabase()
+        public KustoReadWriteDatabase() : base(KustoKind.ReadWrite)
         {
-            Kind = KustoKind.ReadWrite;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoReadWriteDatabase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
-        /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
-        /// <param name="statistics"> The statistics of the database. </param>
-        /// <param name="isFollowed"> Indicates whether the database is followed. </param>
-        /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
-        /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
-        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed, KustoKeyVaultProperties keyVaultProperties, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The database properties. </param>
+        internal KustoReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReadWriteDatabaseProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            SoftDeletePeriod = softDeletePeriod;
-            HotCachePeriod = hotCachePeriod;
-            Statistics = statistics;
-            IsFollowed = isFollowed;
-            KeyVaultProperties = keyVaultProperties;
-            SuspensionDetails = suspensionDetails;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> The database properties. </summary>
+        internal ReadWriteDatabaseProperties Properties { get; set; }
+
         /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
-        /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
-        [WirePath("properties.softDeletePeriod")]
-        public TimeSpan? SoftDeletePeriod { get; set; }
-        /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
-        [WirePath("properties.hotCachePeriod")]
-        public TimeSpan? HotCachePeriod { get; set; }
-        /// <summary> The statistics of the database. </summary>
-        internal DatabaseStatistics Statistics { get; }
-        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
-        [WirePath("properties.statistics.size")]
-        public float? StatisticsSize
+        public KustoProvisioningState? ProvisioningState
         {
-            get => Statistics?.Size;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        public TimeSpan? SoftDeletePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeletePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReadWriteDatabaseProperties();
+                }
+                Properties.SoftDeletePeriod = value;
+            }
+        }
+
+        /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        public TimeSpan? HotCachePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HotCachePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReadWriteDatabaseProperties();
+                }
+                Properties.HotCachePeriod = value;
+            }
         }
 
         /// <summary> Indicates whether the database is followed. </summary>
-        [WirePath("properties.isFollowed")]
-        public bool? IsFollowed { get; }
+        public bool? IsFollowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFollowed;
+            }
+        }
+
         /// <summary> KeyVault properties for the database encryption. </summary>
-        [WirePath("properties.keyVaultProperties")]
-        public KustoKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
-        internal SuspensionDetails SuspensionDetails { get; }
+        public KustoKeyVaultProperties KeyVaultProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReadWriteDatabaseProperties();
+                }
+                Properties.KeyVaultProperties = value;
+            }
+        }
+
+        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        public float? StatisticsSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatisticsSize;
+            }
+        }
+
         /// <summary> The starting date and time of the suspension state. </summary>
-        [WirePath("properties.suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
-            get => SuspensionDetails?.SuspensionStartOn;
+            get
+            {
+                return Properties is null ? default : Properties.SuspensionStartOn;
+            }
         }
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary>
-    /// A class representing the KustoScript data model.
-    /// Class representing a database script.
-    /// </summary>
+    /// <summary> Class representing a database script. </summary>
     public partial class KustoScriptData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
         public KustoScriptData()
@@ -57,55 +25,164 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoScriptData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scriptUri"> The url to the KQL script blob file. Must not be used together with scriptContent property. </param>
-        /// <param name="scriptUriSasToken"> The SaS token that provide read access to the file which contain the script. Must be provided when using scriptUrl property. </param>
-        /// <param name="scriptContent"> The script content. This property should be used when the script is provide inline and not through file in a SA. Must not be used together with scriptUrl and scriptUrlSasToken properties. </param>
-        /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
-        /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
-        /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, KustoScriptLevel? scriptLevel, PrincipalPermissionsAction? principalPermissionsAction, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The database script. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ScriptUri = scriptUri;
-            ScriptUriSasToken = scriptUriSasToken;
-            ScriptContent = scriptContent;
-            ForceUpdateTag = forceUpdateTag;
-            ShouldContinueOnErrors = shouldContinueOnErrors;
-            ProvisioningState = provisioningState;
-            ScriptLevel = scriptLevel;
-            PrincipalPermissionsAction = principalPermissionsAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The database script. </summary>
+        internal ScriptProperties Properties { get; set; }
+
         /// <summary> The url to the KQL script blob file. Must not be used together with scriptContent property. </summary>
-        [WirePath("properties.scriptUrl")]
-        public Uri ScriptUri { get; set; }
+        public Uri ScriptUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ScriptUri = value;
+            }
+        }
+
         /// <summary> The SaS token that provide read access to the file which contain the script. Must be provided when using scriptUrl property. </summary>
-        [WirePath("properties.scriptUrlSasToken")]
-        public string ScriptUriSasToken { get; set; }
+        public string ScriptUriSasToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptUriSasToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ScriptUriSasToken = value;
+            }
+        }
+
         /// <summary> The script content. This property should be used when the script is provide inline and not through file in a SA. Must not be used together with scriptUrl and scriptUrlSasToken properties. </summary>
-        [WirePath("properties.scriptContent")]
-        public string ScriptContent { get; set; }
+        public string ScriptContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ScriptContent = value;
+            }
+        }
+
         /// <summary> A unique string. If changed the script will be applied again. </summary>
-        [WirePath("properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
+
         /// <summary> Flag that indicates whether to continue if one of the command fails. </summary>
-        [WirePath("properties.continueOnErrors")]
-        public bool? ShouldContinueOnErrors { get; set; }
+        public bool? ShouldContinueOnErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ShouldContinueOnErrors;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ShouldContinueOnErrors = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </summary>
-        [WirePath("properties.scriptLevel")]
-        public KustoScriptLevel? ScriptLevel { get; set; }
+        public KustoScriptLevel? ScriptLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScriptLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ScriptLevel = value;
+            }
+        }
+
         /// <summary> Indicates if the permissions for the script caller are kept following completion of the script. </summary>
-        [WirePath("properties.principalPermissionsAction")]
-        public PrincipalPermissionsAction? PrincipalPermissionsAction { get; set; }
+        public PrincipalPermissionsAction? PrincipalPermissionsAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalPermissionsAction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.PrincipalPermissionsAction = value;
+            }
+        }
+
+        /// <summary> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </summary>
+        public string ManagedIdentityResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ScriptProperties();
+                }
+                Properties.ManagedIdentityResourceId = value;
+            }
+        }
     }
 }

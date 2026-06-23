@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,89 +17,132 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoReadOnlyFollowingDatabase : KustoDatabaseData
     {
         /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
-        public KustoReadOnlyFollowingDatabase()
+        public KustoReadOnlyFollowingDatabase() : base(KustoKind.ReadOnlyFollowing)
         {
-            Kind = KustoKind.ReadOnlyFollowing;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoReadOnlyFollowingDatabase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
-        /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
-        /// <param name="statistics"> The statistics of the database. </param>
-        /// <param name="leaderClusterResourceId"> The name of the leader cluster. </param>
-        /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration cluster. </param>
-        /// <param name="principalsModificationKind"> The principals modification kind of the database. </param>
-        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
-        /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        /// <param name="suspensionDetails"> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string originalDatabaseName, KustoDatabaseShareOrigin? databaseShareOrigin, SuspensionDetails suspensionDetails) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The database properties. </param>
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReadOnlyFollowingDatabaseProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            SoftDeletePeriod = softDeletePeriod;
-            HotCachePeriod = hotCachePeriod;
-            Statistics = statistics;
-            LeaderClusterResourceId = leaderClusterResourceId;
-            AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
-            PrincipalsModificationKind = principalsModificationKind;
-            TableLevelSharingProperties = tableLevelSharingProperties;
-            OriginalDatabaseName = originalDatabaseName;
-            DatabaseShareOrigin = databaseShareOrigin;
-            SuspensionDetails = suspensionDetails;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> The database properties. </summary>
+        internal ReadOnlyFollowingDatabaseProperties Properties { get; set; }
+
         /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
-        /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
-        [WirePath("properties.softDeletePeriod")]
-        public TimeSpan? SoftDeletePeriod { get; }
-        /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
-        [WirePath("properties.hotCachePeriod")]
-        public TimeSpan? HotCachePeriod { get; set; }
-        /// <summary> The statistics of the database. </summary>
-        internal DatabaseStatistics Statistics { get; }
-        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
-        [WirePath("properties.statistics.size")]
-        public float? StatisticsSize
+        public KustoProvisioningState? ProvisioningState
         {
-            get => Statistics?.Size;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        public TimeSpan? SoftDeletePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeletePeriod;
+            }
+        }
+
+        /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        public TimeSpan? HotCachePeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HotCachePeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReadOnlyFollowingDatabaseProperties();
+                }
+                Properties.HotCachePeriod = value;
+            }
         }
 
         /// <summary> The name of the leader cluster. </summary>
-        [WirePath("properties.leaderClusterResourceId")]
-        public string LeaderClusterResourceId { get; }
+        public string LeaderClusterResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LeaderClusterResourceId;
+            }
+        }
+
         /// <summary> The name of the attached database configuration cluster. </summary>
-        [WirePath("properties.attachedDatabaseConfigurationName")]
-        public string AttachedDatabaseConfigurationName { get; }
+        public string AttachedDatabaseConfigurationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AttachedDatabaseConfigurationName;
+            }
+        }
+
         /// <summary> The principals modification kind of the database. </summary>
-        [WirePath("properties.principalsModificationKind")]
-        public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind { get; }
+        public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalsModificationKind;
+            }
+        }
+
         /// <summary> Table level sharing specifications. </summary>
-        [WirePath("properties.tableLevelSharingProperties")]
-        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
+        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableLevelSharingProperties;
+            }
+        }
+
         /// <summary> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </summary>
-        [WirePath("properties.originalDatabaseName")]
-        public string OriginalDatabaseName { get; }
+        public string OriginalDatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginalDatabaseName;
+            }
+        }
+
         /// <summary> The origin of the following setup. </summary>
-        [WirePath("properties.databaseShareOrigin")]
-        public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
-        /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
-        internal SuspensionDetails SuspensionDetails { get; }
+        public KustoDatabaseShareOrigin? DatabaseShareOrigin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseShareOrigin;
+            }
+        }
+
+        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        public float? StatisticsSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatisticsSize;
+            }
+        }
+
         /// <summary> The starting date and time of the suspension state. </summary>
-        [WirePath("properties.suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
-            get => SuspensionDetails?.SuspensionStartOn;
+            get
+            {
+                return Properties is null ? default : Properties.SuspensionStartOn;
+            }
         }
     }
 }

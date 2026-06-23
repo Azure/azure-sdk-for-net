@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary>
-    /// A class representing the SandboxCustomImage data model.
-    /// Class representing a Kusto sandbox custom image.
-    /// </summary>
+    /// <summary> Class representing a Kusto sandbox custom image. </summary>
     public partial class SandboxCustomImageData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SandboxCustomImageData"/>. </summary>
         public SandboxCustomImageData()
@@ -57,40 +25,99 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Initializes a new instance of <see cref="SandboxCustomImageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="language"> The language name, for example Python. </param>
-        /// <param name="languageVersion"> The version of the language. Either this property or baseImageName should be specified. </param>
-        /// <param name="baseImageName"> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </param>
-        /// <param name="requirementsFileContent"> The requirements file content. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageLanguage? language, string languageVersion, string baseImageName, string requirementsFileContent, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A sandbox custom image. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SandboxCustomImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SandboxCustomImageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Language = language;
-            LanguageVersion = languageVersion;
-            BaseImageName = baseImageName;
-            RequirementsFileContent = requirementsFileContent;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> A sandbox custom image. </summary>
+        internal SandboxCustomImageProperties Properties { get; set; }
+
         /// <summary> The language name, for example Python. </summary>
-        [WirePath("properties.language")]
-        public SandboxCustomImageLanguage? Language { get; set; }
+        public SandboxCustomImageLanguage? Language
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Language;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SandboxCustomImageProperties();
+                    }
+                    Properties.Language = value.Value;
+                }
+            }
+        }
+
         /// <summary> The version of the language. Either this property or baseImageName should be specified. </summary>
-        [WirePath("properties.languageVersion")]
-        public string LanguageVersion { get; set; }
+        public string LanguageVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LanguageVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SandboxCustomImageProperties();
+                }
+                Properties.LanguageVersion = value;
+            }
+        }
+
         /// <summary> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </summary>
-        [WirePath("properties.baseImageName")]
-        public string BaseImageName { get; set; }
+        public string BaseImageName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BaseImageName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SandboxCustomImageProperties();
+                }
+                Properties.BaseImageName = value;
+            }
+        }
+
         /// <summary> The requirements file content. </summary>
-        [WirePath("properties.requirementsFileContent")]
-        public string RequirementsFileContent { get; set; }
+        public string RequirementsFileContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequirementsFileContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SandboxCustomImageProperties();
+                }
+                Properties.RequirementsFileContent = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

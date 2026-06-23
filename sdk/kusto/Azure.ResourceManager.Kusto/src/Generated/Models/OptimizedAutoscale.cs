@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains the optimized auto scale definition. </summary>
     public partial class OptimizedAutoscale
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OptimizedAutoscale"/>. </summary>
         /// <param name="version"> The version of the template defined, for instance 1. </param>
@@ -63,32 +34,26 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="isEnabled"> A boolean value that indicate if the optimized autoscale feature is enabled or not. </param>
         /// <param name="minimum"> Minimum allowed instances count. </param>
         /// <param name="maximum"> Maximum allowed instances count. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizedAutoscale(int version, bool isEnabled, int minimum, int maximum, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OptimizedAutoscale(int version, bool isEnabled, int minimum, int maximum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             IsEnabled = isEnabled;
             Minimum = minimum;
             Maximum = maximum;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OptimizedAutoscale"/> for deserialization. </summary>
-        internal OptimizedAutoscale()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the template defined, for instance 1. </summary>
-        [WirePath("version")]
         public int Version { get; set; }
+
         /// <summary> A boolean value that indicate if the optimized autoscale feature is enabled or not. </summary>
-        [WirePath("isEnabled")]
         public bool IsEnabled { get; set; }
+
         /// <summary> Minimum allowed instances count. </summary>
-        [WirePath("minimum")]
         public int Minimum { get; set; }
+
         /// <summary> Maximum allowed instances count. </summary>
-        [WirePath("maximum")]
         public int Maximum { get; set; }
     }
 }

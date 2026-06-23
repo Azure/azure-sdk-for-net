@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Properties of the key vault. </summary>
     public partial class KustoKeyVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoKeyVaultProperties"/>. </summary>
         public KustoKeyVaultProperties()
@@ -54,28 +25,32 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="keyName"> The name of the key vault key. </param>
         /// <param name="keyVersion"> The version of the key vault key. </param>
         /// <param name="keyVaultUri"> The Uri of the key vault. </param>
-        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string userIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. The identity must have 'Get', 'Wrap Key', and 'Unwrap Key' permissions on the Key Vault key, or be assigned the 'Key Vault Crypto Service Encryption User' role. </param>
+        /// <param name="federatedIdentityClientId"> The application (client) ID of the multi-tenant Microsoft Entra application. Used for cross-tenant customer-managed key scenarios where the encryption key is stored in a different tenant than the cluster. The application must be configured with the user-assigned managed identity as a federated identity credential. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string userIdentity, string federatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
             KeyVaultUri = keyVaultUri;
             UserIdentity = userIdentity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            FederatedIdentityClientId = federatedIdentityClientId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the key vault key. </summary>
-        [WirePath("keyName")]
         public string KeyName { get; set; }
+
         /// <summary> The version of the key vault key. </summary>
-        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
+
         /// <summary> The Uri of the key vault. </summary>
-        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
-        /// <summary> The user assigned identity (ARM resource id) that has access to the key. </summary>
-        [WirePath("userIdentity")]
+
+        /// <summary> The user assigned identity (ARM resource id) that has access to the key. The identity must have 'Get', 'Wrap Key', and 'Unwrap Key' permissions on the Key Vault key, or be assigned the 'Key Vault Crypto Service Encryption User' role. </summary>
         public string UserIdentity { get; set; }
+
+        /// <summary> The application (client) ID of the multi-tenant Microsoft Entra application. Used for cross-tenant customer-managed key scenarios where the encryption key is stored in a different tenant than the cluster. The application must be configured with the user-assigned managed identity as a federated identity credential. </summary>
+        public string FederatedIdentityClientId { get; set; }
     }
 }

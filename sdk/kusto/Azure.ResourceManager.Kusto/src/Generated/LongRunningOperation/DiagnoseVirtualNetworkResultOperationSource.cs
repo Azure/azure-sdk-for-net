@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class DiagnoseVirtualNetworkResultOperationSource : IOperationSource<DiagnoseVirtualNetworkResult>
+    /// <summary></summary>
+    internal partial class DiagnoseVirtualNetworkResultOperationSource : IOperationSource<DiagnoseVirtualNetworkResult>
     {
-        DiagnoseVirtualNetworkResult IOperationSource<DiagnoseVirtualNetworkResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal DiagnoseVirtualNetworkResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        DiagnoseVirtualNetworkResult IOperationSource<DiagnoseVirtualNetworkResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DiagnoseVirtualNetworkResult> IOperationSource<DiagnoseVirtualNetworkResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return DiagnoseVirtualNetworkResult.DeserializeDiagnoseVirtualNetworkResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
