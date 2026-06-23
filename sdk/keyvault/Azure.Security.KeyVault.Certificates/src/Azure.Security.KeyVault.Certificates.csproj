@@ -29,9 +29,6 @@
     leaves those types `public partial` so the C# compiler merges them with
     the hand-written `public partial` declarations. Hand-written owns the
     customer-facing API; generated contributes additive MRW JSON support.
-    (The generated nullable string implicit cast on CertificatePolicyAction
-    is removed by eng/Internalize-Generated.ps1 Patch 6 to preserve the
-    handwritten non-nullable ArgumentNullException contract.)
 
     Inputs is intentionally scoped to .\Generated only (plus the script itself)
     so incremental builds don't re-run the script when unrelated handwritten

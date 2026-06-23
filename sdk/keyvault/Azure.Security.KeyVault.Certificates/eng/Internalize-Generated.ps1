@@ -22,13 +22,15 @@
                  Accept header).
                  Tracking: Azure/azure-sdk-for-net#60162.
 
-    Patch 6: remove the nullable op_Implicit(string) -> CertificatePolicyAction?
-             that silently swallows null instead of throwing.
-             Tracking: Azure/azure-sdk-for-net#60163.
-
   Once the upstream emitter fixes ship and we bump the library-local emitter
   pin, the corresponding patches (and eventually this whole script) can be
   deleted.
+
+  Note: the nullable `op_Implicit(string) -> CertificatePolicyAction?` emitted
+  on the extensible-enum struct is intentional framework behavior — per
+  JoshLove-msft on Azure/azure-sdk-for-net#60163 (closed not-a-bug):
+  "Having an implicit operator throw an exception is against the .NET
+   Framework design guidelines." So this script does NOT strip that operator.
 #>
 [CmdletBinding()]
 param(
@@ -125,30 +127,6 @@ if ($restClient) {
     # directly by return, with no Accept header in between), the patch missed.
     if ([regex]::IsMatch($text, '(?ms)PipelineMessageClassifier204\);\r?\n            Request request = message\.Request;\r?\n            request\.Uri = uri;\r?\n            request\.Method = RequestMethod\.Delete;\r?\n            return message;')) {
         Write-Warning "Patch 5 (PurgeDeletedCertificate Accept header) failed to apply - verify the 204-classifier block shape."
-    }
-
-    # Patch 6: the generated `op_Implicit(string) -> CertificatePolicyAction?`
-    # silently turns a null string into a null CertificatePolicyAction?. The
-    # legacy non-nullable operator on the handwritten partial throws
-    # ArgumentNullException, and customer code that assigns string-typed
-    # nullable values relied on that throw. Remove the generated nullable
-    # overload (and its preceding doc-comment block) so the handwritten throw
-    # stays the only contract.
-    $caPath = Join-Path $GeneratedRoot 'Models\CertificatePolicyAction.cs'
-    if (Test-Path $caPath) {
-        $caText     = [System.IO.File]::ReadAllText($caPath)
-        $caOriginal = $caText
-        $nullableOpPattern = [regex] @"
-(?ms)\r?\n        /// <summary> Converts a string to a <see cref="CertificatePolicyAction"/>\. </summary>\r?\n        /// <param name="value"> The value\. </param>\r?\n        public static implicit operator CertificatePolicyAction\?\(string value\) => value == null \? null : new CertificatePolicyAction\(value\);\r?\n
-"@
-        $caText = $nullableOpPattern.Replace($caText, "`r`n")
-        if ($caText -ne $caOriginal) {
-            [System.IO.File]::WriteAllText($caPath, $caText)
-            Write-Host '  patched: Models/CertificatePolicyAction.cs (remove nullable op_Implicit)'
-        }
-        elseif ($caText.Contains('public static implicit operator CertificatePolicyAction?(string value)')) {
-            Write-Warning "Patch 6 (remove nullable CertificatePolicyAction operator) failed to apply - operator still present."
-        }
     }
 
     if ($text -ne $original) {
