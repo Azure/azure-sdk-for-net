@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customized: generated resource methods call data serialization helpers, but the generator does
-// not emit a serialization partial for this ResourceData-compatible model.
+// Customized: the generator emits an empty IJsonModel partial for MachineLearningWorkspaceConnectionData
+// while generated methods still require ToRequestContent/FromResponse and data deserialization helpers.
 
 #nullable disable
 
