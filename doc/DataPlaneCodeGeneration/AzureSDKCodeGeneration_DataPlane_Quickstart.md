@@ -45,7 +45,7 @@ TypeSpec changes before they are merged), pass the `LocalSpecRepo` property.
 `directory` property in `tsp-location.yaml`.
 
 ```dotnetcli
-dotnet build /t:GenerateCode /p:LocalSpecRepo="C:\src\azure-rest-api-specs\specification\anomalydetector\AnomalyDetector"
+dotnet build /t:GenerateCode /p:LocalSpecRepo="C:\src\azure-rest-api-specs\specification\cognitiveservices\AnomalyDetector"
 ```
 
 This maps to `tsp-client`'s `--local-spec-repo` argument.
