@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PrivateDns
                 data => createResource(client, data));
         }
 
-            internal static Pageable<TResource> GetAll<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, PrivateDnsRecordData, TResource> createResource)
+        internal static Pageable<TResource> GetAll<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, PrivateDnsRecordData, TResource> createResource)
         {
             RequestContext context = new RequestContext
             {
@@ -115,21 +115,21 @@ namespace Azure.ResourceManager.PrivateDns
                 data => createResource(client, data));
         }
 
-            internal PrivateDnsARecordData ToARecordData() => new PrivateDnsARecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsARecordData ToARecordData() => new PrivateDnsARecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsAaaaRecordData ToAaaaRecordData() => new PrivateDnsAaaaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsAaaaRecordData ToAaaaRecordData() => new PrivateDnsAaaaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsCnameRecordData ToCnameRecordData() => new PrivateDnsCnameRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsCnameRecordData ToCnameRecordData() => new PrivateDnsCnameRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsMXRecordData ToMXRecordData() => new PrivateDnsMXRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsMXRecordData ToMXRecordData() => new PrivateDnsMXRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsPtrRecordData ToPtrRecordData() => new PrivateDnsPtrRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsPtrRecordData ToPtrRecordData() => new PrivateDnsPtrRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsSoaRecordData ToSoaRecordData() => new PrivateDnsSoaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsSoaRecordData ToSoaRecordData() => new PrivateDnsSoaRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsSrvRecordData ToSrvRecordData() => new PrivateDnsSrvRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsSrvRecordData ToSrvRecordData() => new PrivateDnsSrvRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-            internal PrivateDnsTxtRecordData ToTxtRecordData() => new PrivateDnsTxtRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
+        internal PrivateDnsTxtRecordData ToTxtRecordData() => new PrivateDnsTxtRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
         private PrivateDnsRecordSetProperties EnsureProperties()
         {
