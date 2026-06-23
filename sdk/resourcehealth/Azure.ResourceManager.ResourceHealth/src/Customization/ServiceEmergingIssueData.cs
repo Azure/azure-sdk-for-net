@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ServiceEmergingIssueData
     {
         /// <summary> The list of emerging issues of banner type. </summary>
-        [CodeGenMember("StatusBanners")]
         public IReadOnlyList<EmergingIssueBannerType> StatusBanners
         {
             get
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> The list of emerging issues of active event type. </summary>
-        [CodeGenMember("StatusActiveEvents")]
         public IReadOnlyList<EmergingIssueActiveEventType> StatusActiveEvents
         {
             get

@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ResourceHealthMetadataEntityData
     {
         /// <summary> The list of keys on which this entity depends on. </summary>
-        [CodeGenMember("DependsOn")]
         public IReadOnlyList<string> DependsOn
         {
             get
@@ -22,7 +21,6 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> The list of scenarios applicable to this metadata entity. </summary>
-        [CodeGenMember("ApplicableScenarios")]
         public IReadOnlyList<MetadataEntityScenario> ApplicableScenarios
         {
             get
@@ -32,7 +30,6 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> The list of supported values. </summary>
-        [CodeGenMember("SupportedValues")]
         public IReadOnlyList<MetadataSupportedValueDetail> SupportedValues
         {
             get
