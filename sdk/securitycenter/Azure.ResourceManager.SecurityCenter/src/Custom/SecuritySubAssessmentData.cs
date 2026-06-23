@@ -9,8 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Generated code follows the current TypeSpec constructor and nested property graph; the GA SDK exposed parameterless constructors and flattened or differently typed properties that would otherwise collide with generated members, so CodeGenSuppress lets this partial preserve the GA shape explicitly.
-    [CodeGenSuppress("SecuritySubAssessmentData")]
+    // Generated code follows the current TypeSpec nested property graph; the GA SDK exposed flattened or differently typed properties that would otherwise collide with generated members, so CodeGenSuppress lets this partial preserve the GA shape explicitly.
     [CodeGenSuppress("AdditionalData")]
     [CodeGenSuppress("ResourceDetails")]
     [CodeGenSuppress("Status")]
