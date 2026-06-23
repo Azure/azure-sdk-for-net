@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ImageDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Exists))
+            if (Optional.IsDefined(DoesExist))
             {
                 writer.WritePropertyName("exists"u8);
-                writer.WriteBooleanValue(Exists.Value);
+                writer.WriteBooleanValue(DoesExist.Value);
             }
             if (Optional.IsDefined(Image))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            bool? exists = default;
+            bool? doesExist = default;
             ImageInfo image = default;
             VulnerabilityFindings vulnerabilityFindings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    exists = prop.Value.GetBoolean();
+                    doesExist = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("image"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageDetails(exists, image, vulnerabilityFindings, additionalBinaryDataProperties);
+            return new ImageDetails(doesExist, image, vulnerabilityFindings, additionalBinaryDataProperties);
         }
     }
 }

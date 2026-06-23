@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serverlessComputeCustomSubnet"u8);
                 writer.WriteStringValue(ServerlessComputeCustomSubnet);
             }
-            if (Optional.IsDefined(ServerlessComputeNoPublicIP))
+            if (Optional.IsDefined(HasNoPublicIP))
             {
                 writer.WritePropertyName("serverlessComputeNoPublicIP"u8);
-                writer.WriteBooleanValue(ServerlessComputeNoPublicIP.Value);
+                writer.WriteBooleanValue(HasNoPublicIP.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ResourceIdentifier serverlessComputeCustomSubnet = default;
-            bool? serverlessComputeNoPublicIP = default;
+            bool? hasNoPublicIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    serverlessComputeNoPublicIP = prop.Value.GetBoolean();
+                    hasNoPublicIP = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServerlessComputeSettings(serverlessComputeCustomSubnet, serverlessComputeNoPublicIP, additionalBinaryDataProperties);
+            return new ServerlessComputeSettings(serverlessComputeCustomSubnet, hasNoPublicIP, additionalBinaryDataProperties);
         }
     }
 }

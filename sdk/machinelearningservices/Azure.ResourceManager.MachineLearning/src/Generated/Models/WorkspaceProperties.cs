@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
         /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
-        /// <param name="provisionNetworkNow"> Set to trigger the provisioning of the managed VNet with the default Options when creating a Workspace with the managed VNet enabled, or else it does nothing. </param>
+        /// <param name="isProvisionNetworkNow"> Set to trigger the provisioning of the managed VNet with the default Options when creating a Workspace with the managed VNet enabled, or else it does nothing. </param>
         /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
         /// <param name="serverlessComputeSettings"> Settings for serverless compute in a workspace. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
         /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(Uri agentsEndpointUri, bool? allowPublicAccessWhenBehindVnet, bool? allowRoleAssignmentOnRG, string applicationInsights, IList<string> associatedWorkspaces, IList<string> containerRegistries, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, bool? enableSimplifiedCmk, bool? enableSoftwareBillOfMaterials, EncryptionProperty encryption, IList<string> existingWorkspaces, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, IList<string> ipAllowlist, string keyVault, IList<string> keyVaults, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, NetworkAcls networkAcls, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? provisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, int? softDeleteRetentionInDays, string storageAccount, IList<string> storageAccounts, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(Uri agentsEndpointUri, bool? allowPublicAccessWhenBehindVnet, bool? allowRoleAssignmentOnRG, string applicationInsights, IList<string> associatedWorkspaces, IList<string> containerRegistries, string containerRegistry, string description, Uri discoveryUri, bool? enableDataIsolation, bool? enableServiceSideCMKEncryption, bool? enableSimplifiedCmk, bool? enableSoftwareBillOfMaterials, EncryptionProperty encryption, IList<string> existingWorkspaces, FeatureStoreSettings featureStoreSettings, string friendlyName, bool? isHbiWorkspace, ResourceIdentifier hubResourceId, string imageBuildCompute, IList<string> ipAllowlist, string keyVault, IList<string> keyVaults, ManagedNetworkSettings managedNetwork, Uri mlFlowTrackingUri, NetworkAcls networkAcls, MachineLearningNotebookResourceInfo notebookInfo, string primaryUserAssignedIdentity, IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections, int? privateLinkCount, bool? isProvisionNetworkNow, MachineLearningProvisioningState? provisioningState, PublicNetworkAccess? publicNetworkAccess, ServerlessComputeSettings serverlessComputeSettings, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string serviceProvisionedResourceGroup, IList<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources, int? softDeleteRetentionInDays, string storageAccount, IList<string> storageAccounts, bool? isStorageHnsEnabled, SystemDatastoresAuthMode? systemDatastoresAuthMode, Guid? tenantId, bool? isV1LegacyMode, WorkspaceHubConfig workspaceHubConfig, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentsEndpointUri = agentsEndpointUri;
             AllowPublicAccessWhenBehindVnet = allowPublicAccessWhenBehindVnet;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
             PrivateEndpointConnections = privateEndpointConnections;
             PrivateLinkCount = privateLinkCount;
-            ProvisionNetworkNow = provisionNetworkNow;
+            IsProvisionNetworkNow = isProvisionNetworkNow;
             ProvisioningState = provisioningState;
             PublicNetworkAccess = publicNetworkAccess;
             ServerlessComputeSettings = serverlessComputeSettings;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Set to trigger the provisioning of the managed VNet with the default Options when creating a Workspace with the managed VNet enabled, or else it does nothing. </summary>
         [WirePath("provisionNetworkNow")]
-        public bool? ProvisionNetworkNow { get; set; }
+        public bool? IsProvisionNetworkNow { get; set; }
 
         /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
         [WirePath("provisioningState")]

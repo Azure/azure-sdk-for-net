@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(SecretExpiry)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpirableSecret))
+            if (Optional.IsDefined(IsExpirableSecret))
             {
                 writer.WritePropertyName("expirableSecret"u8);
-                writer.WriteBooleanValue(ExpirableSecret.Value);
+                writer.WriteBooleanValue(IsExpirableSecret.Value);
             }
             if (Optional.IsDefined(ExpireAfterHours))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            bool? expirableSecret = default;
+            bool? isExpirableSecret = default;
             int? expireAfterHours = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    expirableSecret = prop.Value.GetBoolean();
+                    isExpirableSecret = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("expireAfterHours"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecretExpiry(expirableSecret, expireAfterHours, additionalBinaryDataProperties);
+            return new SecretExpiry(isExpirableSecret, expireAfterHours, additionalBinaryDataProperties);
         }
     }
 }

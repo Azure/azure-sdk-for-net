@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(RaiBlocklistConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Blocking))
+            if (Optional.IsDefined(IsBlocking))
             {
                 writer.WritePropertyName("blocking"u8);
-                writer.WriteBooleanValue(Blocking.Value);
+                writer.WriteBooleanValue(IsBlocking.Value);
             }
             if (Optional.IsDefined(BlocklistName))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            bool? blocking = default;
+            bool? isBlocking = default;
             string blocklistName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    blocking = prop.Value.GetBoolean();
+                    isBlocking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("blocklistName"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RaiBlocklistConfig(blocking, blocklistName, additionalBinaryDataProperties);
+            return new RaiBlocklistConfig(isBlocking, blocklistName, additionalBinaryDataProperties);
         }
     }
 }

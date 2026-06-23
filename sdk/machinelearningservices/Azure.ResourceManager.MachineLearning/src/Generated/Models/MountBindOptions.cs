@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         /// <param name="propagation"> Type of Bind Option. </param>
-        /// <param name="createHostPath"> Indicate whether to create host path. </param>
+        /// <param name="shouldCreateHostPath"> Indicate whether to create host path. </param>
         /// <param name="selinux"> Mention the selinux options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MountBindOptions(string propagation, bool? createHostPath, string selinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MountBindOptions(string propagation, bool? shouldCreateHostPath, string selinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Propagation = propagation;
-            CreateHostPath = createHostPath;
+            ShouldCreateHostPath = shouldCreateHostPath;
             Selinux = selinux;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Indicate whether to create host path. </summary>
         [WirePath("createHostPath")]
-        public bool? CreateHostPath { get; set; }
+        public bool? ShouldCreateHostPath { get; set; }
 
         /// <summary> Mention the selinux options. </summary>
         [WirePath("selinux")]

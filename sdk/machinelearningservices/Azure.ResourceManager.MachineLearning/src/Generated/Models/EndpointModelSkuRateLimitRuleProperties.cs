@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="EndpointModelSkuRateLimitRuleProperties"/>. </summary>
         /// <param name="count"></param>
-        /// <param name="dynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
+        /// <param name="isDynamicThrottlingEnabled"> If the dynamic throttling is enabled. </param>
         /// <param name="key"></param>
         /// <param name="matchPatterns"></param>
         /// <param name="minCount"></param>
         /// <param name="renewalPeriod"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointModelSkuRateLimitRuleProperties(float? count, bool? dynamicThrottlingEnabled, string key, IList<EndpointModelSkuRateLimitRulePatternProperties> matchPatterns, float? minCount, float? renewalPeriod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointModelSkuRateLimitRuleProperties(float? count, bool? isDynamicThrottlingEnabled, string key, IList<EndpointModelSkuRateLimitRulePatternProperties> matchPatterns, float? minCount, float? renewalPeriod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
-            DynamicThrottlingEnabled = dynamicThrottlingEnabled;
+            IsDynamicThrottlingEnabled = isDynamicThrottlingEnabled;
             Key = key;
             MatchPatterns = matchPatterns;
             MinCount = minCount;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> If the dynamic throttling is enabled. </summary>
         [WirePath("dynamicThrottlingEnabled")]
-        public bool? DynamicThrottlingEnabled { get; }
+        public bool? IsDynamicThrottlingEnabled { get; }
 
         /// <summary> Gets the Key. </summary>
         [WirePath("key")]

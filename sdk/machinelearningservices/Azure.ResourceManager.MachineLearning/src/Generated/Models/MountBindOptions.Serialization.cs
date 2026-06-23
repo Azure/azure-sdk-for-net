@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("propagation"u8);
                 writer.WriteStringValue(Propagation);
             }
-            if (Optional.IsDefined(CreateHostPath))
+            if (Optional.IsDefined(ShouldCreateHostPath))
             {
                 writer.WritePropertyName("createHostPath"u8);
-                writer.WriteBooleanValue(CreateHostPath.Value);
+                writer.WriteBooleanValue(ShouldCreateHostPath.Value);
             }
             if (Optional.IsDefined(Selinux))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string propagation = default;
-            bool? createHostPath = default;
+            bool? shouldCreateHostPath = default;
             string selinux = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        createHostPath = null;
+                        shouldCreateHostPath = null;
                         continue;
                     }
-                    createHostPath = prop.Value.GetBoolean();
+                    shouldCreateHostPath = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("selinux"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MountBindOptions(propagation, createHostPath, selinux, additionalBinaryDataProperties);
+            return new MountBindOptions(propagation, shouldCreateHostPath, selinux, additionalBinaryDataProperties);
         }
     }
 }

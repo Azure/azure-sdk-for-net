@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("allowedContentLevel"u8);
                 writer.WriteStringValue(AllowedContentLevel.Value.ToString());
             }
-            if (Optional.IsDefined(Blocking))
+            if (Optional.IsDefined(IsBlocking))
             {
                 writer.WritePropertyName("blocking"u8);
-                writer.WriteBooleanValue(Blocking.Value);
+                writer.WriteBooleanValue(IsBlocking.Value);
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             AllowedContentLevel? allowedContentLevel = default;
-            bool? blocking = default;
+            bool? isBlocking = default;
             bool? enabled = default;
             string name = default;
             RaiPolicyContentSource? source = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    blocking = prop.Value.GetBoolean();
+                    isBlocking = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new RaiPolicyContentFilter(
                 allowedContentLevel,
-                blocking,
+                isBlocking,
                 enabled,
                 name,
                 source,

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("latestPatchTime"u8);
                 writer.WriteStringValue(LatestPatchTime);
             }
-            if (Optional.IsDefined(RebootPending))
+            if (Optional.IsDefined(IsRebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
-                writer.WriteBooleanValue(RebootPending.Value);
+                writer.WriteBooleanValue(IsRebootPending.Value);
             }
             if (Optional.IsDefined(ScheduledRebootTime))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             PatchStatus? patchStatus = default;
             string latestPatchTime = default;
-            bool? rebootPending = default;
+            bool? isRebootPending = default;
             string scheduledRebootTime = default;
             IList<MachineLearningError> osPatchingErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    rebootPending = prop.Value.GetBoolean();
+                    isRebootPending = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("scheduledRebootTime"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new OsPatchingStatus(
                 patchStatus,
                 latestPatchTime,
-                rebootPending,
+                isRebootPending,
                 scheduledRebootTime,
                 osPatchingErrors ?? new ChangeTrackingList<MachineLearningError>(),
                 additionalBinaryDataProperties);

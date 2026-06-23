@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("privateLinkCount"u8);
                 writer.WriteNumberValue(PrivateLinkCount.Value);
             }
-            if (Optional.IsDefined(ProvisionNetworkNow))
+            if (Optional.IsDefined(IsProvisionNetworkNow))
             {
                 writer.WritePropertyName("provisionNetworkNow"u8);
-                writer.WriteBooleanValue(ProvisionNetworkNow.Value);
+                writer.WriteBooleanValue(IsProvisionNetworkNow.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string primaryUserAssignedIdentity = default;
             IReadOnlyList<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default;
             int? privateLinkCount = default;
-            bool? provisionNetworkNow = default;
+            bool? isProvisionNetworkNow = default;
             MachineLearningProvisioningState? provisioningState = default;
             PublicNetworkAccess? publicNetworkAccess = default;
             ServerlessComputeSettings serverlessComputeSettings = default;
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    provisionNetworkNow = prop.Value.GetBoolean();
+                    isProvisionNetworkNow = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 privateEndpointConnections ?? new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>(),
                 privateLinkCount,
-                provisionNetworkNow,
+                isProvisionNetworkNow,
                 provisioningState,
                 publicNetworkAccess,
                 serverlessComputeSettings,

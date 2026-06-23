@@ -12,25 +12,25 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Contract returning to user the delta models. </summary>
-    public partial class DeltaModelStatusResponse
+    public partial class DeltaModelStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusResponse"/>. </summary>
-        internal DeltaModelStatusResponse()
+        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusResult"/>. </summary>
+        internal DeltaModelStatusResult()
         {
             DeltaModels = new ChangeTrackingDictionary<string, IList<DeltaModelCurrentState>>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeltaModelStatusResult"/>. </summary>
         /// <param name="actualInstanceCount"> Gets or sets actual instance count. </param>
         /// <param name="deltaModels"> Gets or sets dictionary representing modelID and its current state. </param>
         /// <param name="expectedInstanceCount"> Gets or sets expected instance count. </param>
         /// <param name="revisionId"> Gets or sets revision ID. </param>
         /// <param name="targetBaseModel"> Gets or sets target base model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaModelStatusResponse(int? actualInstanceCount, IDictionary<string, IList<DeltaModelCurrentState>> deltaModels, int? expectedInstanceCount, string revisionId, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaModelStatusResult(int? actualInstanceCount, IDictionary<string, IList<DeltaModelCurrentState>> deltaModels, int? expectedInstanceCount, string revisionId, string targetBaseModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActualInstanceCount = actualInstanceCount;
             DeltaModels = deltaModels;

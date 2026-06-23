@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(DynamicThrottlingEnabled))
+            if (Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
-                writer.WriteBooleanValue(DynamicThrottlingEnabled.Value);
+                writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
             if (Optional.IsDefined(Key))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             float? count = default;
-            bool? dynamicThrottlingEnabled = default;
+            bool? isDynamicThrottlingEnabled = default;
             string key = default;
             IList<EndpointModelSkuRateLimitRulePatternProperties> matchPatterns = default;
             float? minCount = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    dynamicThrottlingEnabled = prop.Value.GetBoolean();
+                    isDynamicThrottlingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("key"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new EndpointModelSkuRateLimitRuleProperties(
                 count,
-                dynamicThrottlingEnabled,
+                isDynamicThrottlingEnabled,
                 key,
                 matchPatterns ?? new ChangeTrackingList<EndpointModelSkuRateLimitRulePatternProperties>(),
                 minCount,

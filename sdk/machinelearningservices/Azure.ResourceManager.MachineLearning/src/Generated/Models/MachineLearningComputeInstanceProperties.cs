@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="enableOSPatching"> Enable Auto OS Patching. Possible values are: true, false. </param>
         /// <param name="enableRootAccess"> Enable root access. Possible values are: true, false. </param>
         /// <param name="enableSSO"> Enable SSO (single sign on). Possible values are: true, false. </param>
-        /// <param name="releaseQuotaOnStop"> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </param>
+        /// <param name="shouldReleaseQuotaOnStop"> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableOSPatching, bool? enableRootAccess, bool? enableSSO, bool? releaseQuotaOnStop, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableOSPatching, bool? enableRootAccess, bool? enableSSO, bool? shouldReleaseQuotaOnStop, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnableOSPatching = enableOSPatching;
             EnableRootAccess = enableRootAccess;
             EnableSSO = enableSSO;
-            ReleaseQuotaOnStop = releaseQuotaOnStop;
+            ShouldReleaseQuotaOnStop = shouldReleaseQuotaOnStop;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
             SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </summary>
         [WirePath("releaseQuotaOnStop")]
-        public bool? ReleaseQuotaOnStop { get; set; }
+        public bool? ShouldReleaseQuotaOnStop { get; set; }
 
         /// <summary> Settings for a personal compute instance. </summary>
         [WirePath("personalComputeInstanceSettings")]

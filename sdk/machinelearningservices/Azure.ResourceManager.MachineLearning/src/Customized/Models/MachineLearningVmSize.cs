@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
         [WirePath("premiumIO")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsPremiumIOSupported => PremiumIO;
+        public bool? IsPremiumIOSupported => SupportsPremiumIO;
     }
 }

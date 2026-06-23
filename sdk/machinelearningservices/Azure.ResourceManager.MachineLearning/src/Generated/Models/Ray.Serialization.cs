@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(IncludeDashboard))
+            if (Optional.IsDefined(IsIncludeDashboard))
             {
                 writer.WritePropertyName("includeDashboard"u8);
-                writer.WriteBooleanValue(IncludeDashboard.Value);
+                writer.WriteBooleanValue(IsIncludeDashboard.Value);
             }
             if (Optional.IsDefined(DashboardPort))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? port = default;
             string address = default;
-            bool? includeDashboard = default;
+            bool? isIncludeDashboard = default;
             int? dashboardPort = default;
             string headNodeAdditionalArgs = default;
             string workerNodeAdditionalArgs = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    includeDashboard = prop.Value.GetBoolean();
+                    isIncludeDashboard = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dashboardPort"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalBinaryDataProperties,
                 port,
                 address,
-                includeDashboard,
+                isIncludeDashboard,
                 dashboardPort,
                 headNodeAdditionalArgs,
                 workerNodeAdditionalArgs);

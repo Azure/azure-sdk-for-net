@@ -11,8 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore GA property name. A client.tsp @@clientName decorator for this property
-    // was tested, but the generated declaration still emits CreateHostPath.
+    // Customized: preserve the previous GA property name after the generated property was renamed to
+    // ShouldCreateHostPath to satisfy SDK naming guidance.
     public partial class MountBindOptions
     {
         /// <summary> Indicate whether to create host path. </summary>
@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DoesCreateHostPath
         {
-            get => CreateHostPath;
-            set => CreateHostPath = value;
+            get => ShouldCreateHostPath;
+            set => ShouldCreateHostPath = value;
         }
     }
 }

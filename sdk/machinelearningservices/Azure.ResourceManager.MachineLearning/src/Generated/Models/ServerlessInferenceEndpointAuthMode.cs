@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         private readonly string _value;
         private const string KeyValue = "Key";
-        private const string AADValue = "AAD";
-        private const string KeyAndAADValue = "KeyAndAAD";
+        private const string AadValue = "AAD";
+        private const string KeyAndAadValue = "KeyAndAAD";
 
         /// <summary> Initializes a new instance of <see cref="ServerlessInferenceEndpointAuthMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Gets the Key. </summary>
         public static ServerlessInferenceEndpointAuthMode Key { get; } = new ServerlessInferenceEndpointAuthMode(KeyValue);
 
-        /// <summary> Gets the AAD. </summary>
-        public static ServerlessInferenceEndpointAuthMode AAD { get; } = new ServerlessInferenceEndpointAuthMode(AADValue);
+        /// <summary> Gets the Aad. </summary>
+        public static ServerlessInferenceEndpointAuthMode Aad { get; } = new ServerlessInferenceEndpointAuthMode(AadValue);
 
-        /// <summary> Gets the KeyAndAAD. </summary>
-        public static ServerlessInferenceEndpointAuthMode KeyAndAAD { get; } = new ServerlessInferenceEndpointAuthMode(KeyAndAADValue);
+        /// <summary> Gets the KeyAndAad. </summary>
+        public static ServerlessInferenceEndpointAuthMode KeyAndAad { get; } = new ServerlessInferenceEndpointAuthMode(KeyAndAadValue);
 
         /// <summary> Determines if two <see cref="ServerlessInferenceEndpointAuthMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

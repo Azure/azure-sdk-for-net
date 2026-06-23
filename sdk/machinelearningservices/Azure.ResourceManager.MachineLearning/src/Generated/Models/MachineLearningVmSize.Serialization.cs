@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("lowPriorityCapable"u8);
                 writer.WriteBooleanValue(LowPriorityCapable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PremiumIO))
+            if (options.Format != "W" && Optional.IsDefined(SupportsPremiumIO))
             {
                 writer.WritePropertyName("premiumIO"u8);
-                writer.WriteBooleanValue(PremiumIO.Value);
+                writer.WriteBooleanValue(SupportsPremiumIO.Value);
             }
             if (Optional.IsDefined(EstimatedVmPrices))
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? maxResourceVolumeMB = default;
             double? memoryGB = default;
             bool? lowPriorityCapable = default;
-            bool? premiumIO = default;
+            bool? supportsPremiumIO = default;
             MachineLearningEstimatedVmPrices estimatedVmPrices = default;
             IReadOnlyList<string> supportedComputeTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    premiumIO = prop.Value.GetBoolean();
+                    supportsPremiumIO = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("estimatedVMPrices"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 maxResourceVolumeMB,
                 memoryGB,
                 lowPriorityCapable,
-                premiumIO,
+                supportsPremiumIO,
                 estimatedVmPrices,
                 supportedComputeTypes ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("enableSSO"u8);
                 writer.WriteBooleanValue(EnableSSO.Value);
             }
-            if (Optional.IsDefined(ReleaseQuotaOnStop))
+            if (Optional.IsDefined(ShouldReleaseQuotaOnStop))
             {
                 writer.WritePropertyName("releaseQuotaOnStop"u8);
-                writer.WriteBooleanValue(ReleaseQuotaOnStop.Value);
+                writer.WriteBooleanValue(ShouldReleaseQuotaOnStop.Value);
             }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableOSPatching = default;
             bool? enableRootAccess = default;
             bool? enableSSO = default;
-            bool? releaseQuotaOnStop = default;
+            bool? shouldReleaseQuotaOnStop = default;
             PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
             SetupScripts setupScriptsSettings = default;
             MachineLearningComputeInstanceLastOperation lastOperation = default;
@@ -477,10 +477,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        releaseQuotaOnStop = null;
+                        shouldReleaseQuotaOnStop = null;
                         continue;
                     }
-                    releaseQuotaOnStop = prop.Value.GetBoolean();
+                    shouldReleaseQuotaOnStop = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("personalComputeInstanceSettings"u8))
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 enableOSPatching,
                 enableRootAccess,
                 enableSSO,
-                releaseQuotaOnStop,
+                shouldReleaseQuotaOnStop,
                 personalComputeInstanceSettings,
                 setupScriptsSettings,
                 lastOperation,

@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="OsPatchingStatus"/>. </summary>
         /// <param name="patchStatus"> The os patching status. </param>
         /// <param name="latestPatchTime"> Time of the latest os patching. </param>
-        /// <param name="rebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
+        /// <param name="isRebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
         /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? rebootPending, string scheduledRebootTime, IList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OsPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? isRebootPending, string scheduledRebootTime, IList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchStatus = patchStatus;
             LatestPatchTime = latestPatchTime;
-            RebootPending = rebootPending;
+            IsRebootPending = isRebootPending;
             ScheduledRebootTime = scheduledRebootTime;
             OsPatchingErrors = osPatchingErrors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies whether this compute instance is pending for reboot to finish os patching. </summary>
         [WirePath("rebootPending")]
-        public bool? RebootPending { get; }
+        public bool? IsRebootPending { get; }
 
         /// <summary> Time of scheduled reboot. </summary>
         [WirePath("scheduledRebootTime")]

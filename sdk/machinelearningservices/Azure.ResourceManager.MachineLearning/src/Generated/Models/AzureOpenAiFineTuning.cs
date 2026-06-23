@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="validationData"> Validation data for fine tuning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperParameters"> HyperParameters for fine tuning Azure Open AI model. </param>
-        internal AzureOpenAiFineTuning(MachineLearningJobInput model, ModelProvider modelProvider, FineTuningTaskType taskType, MachineLearningJobInput trainingData, MachineLearningJobInput validationData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAiHyperParameters hyperParameters) : base(model, modelProvider, taskType, trainingData, validationData, additionalBinaryDataProperties)
+        internal AzureOpenAiFineTuning(MachineLearningJobInput model, ModelProvider modelProvider, FineTuningTaskType taskType, MachineLearningJobInput trainingData, MachineLearningJobInput validationData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOpenAiHyperContent hyperParameters) : base(model, modelProvider, taskType, trainingData, validationData, additionalBinaryDataProperties)
         {
             HyperParameters = hyperParameters;
         }
 
         /// <summary> HyperParameters for fine tuning Azure Open AI model. </summary>
         [WirePath("hyperParameters")]
-        public AzureOpenAiHyperParameters HyperParameters { get; set; }
+        public AzureOpenAiHyperContent HyperParameters { get; set; }
     }
 }

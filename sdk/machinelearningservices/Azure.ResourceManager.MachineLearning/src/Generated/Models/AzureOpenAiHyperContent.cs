@@ -12,22 +12,22 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure Open AI hyperparameters for fine tuning. </summary>
-    public partial class AzureOpenAiHyperParameters
+    public partial class AzureOpenAiHyperContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAiHyperParameters"/>. </summary>
-        public AzureOpenAiHyperParameters()
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAiHyperContent"/>. </summary>
+        public AzureOpenAiHyperContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAiHyperParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAiHyperContent"/>. </summary>
         /// <param name="batchSize"> Number of examples in each batch. A larger batch size means that model parameters are updated less frequently, but with lower variance. </param>
         /// <param name="learningRateMultiplier"> Scaling factor for the learning rate. A smaller learning rate may be useful to avoid over fitting. </param>
         /// <param name="nEpochs"> The number of epochs to train the model for. An epoch refers to one full cycle through the training dataset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureOpenAiHyperParameters(int? batchSize, double? learningRateMultiplier, int? nEpochs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureOpenAiHyperContent(int? batchSize, double? learningRateMultiplier, int? nEpochs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BatchSize = batchSize;
             LearningRateMultiplier = learningRateMultiplier;

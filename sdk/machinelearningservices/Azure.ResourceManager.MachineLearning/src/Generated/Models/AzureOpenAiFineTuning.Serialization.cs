@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningJobInput trainingData = default;
             MachineLearningJobInput validationData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureOpenAiHyperParameters hyperParameters = default;
+            AzureOpenAiHyperContent hyperParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("model"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         hyperParameters = null;
                         continue;
                     }
-                    hyperParameters = AzureOpenAiHyperParameters.DeserializeAzureOpenAiHyperParameters(prop.Value, options);
+                    hyperParameters = AzureOpenAiHyperContent.DeserializeAzureOpenAiHyperContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

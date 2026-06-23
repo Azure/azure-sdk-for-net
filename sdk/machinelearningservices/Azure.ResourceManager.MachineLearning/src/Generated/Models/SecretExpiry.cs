@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretExpiry"/>. </summary>
-        /// <param name="expirableSecret"> Indicates if the secret is expirable. </param>
+        /// <param name="isExpirableSecret"> Indicates if the secret is expirable. </param>
         /// <param name="expireAfterHours"> Number of hours after which the secret will expire. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretExpiry(bool? expirableSecret, int? expireAfterHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecretExpiry(bool? isExpirableSecret, int? expireAfterHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpirableSecret = expirableSecret;
+            IsExpirableSecret = isExpirableSecret;
             ExpireAfterHours = expireAfterHours;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if the secret is expirable. </summary>
         [WirePath("expirableSecret")]
-        public bool? ExpirableSecret { get; set; }
+        public bool? IsExpirableSecret { get; set; }
 
         /// <summary> Number of hours after which the secret will expire. </summary>
         [WirePath("expireAfterHours")]

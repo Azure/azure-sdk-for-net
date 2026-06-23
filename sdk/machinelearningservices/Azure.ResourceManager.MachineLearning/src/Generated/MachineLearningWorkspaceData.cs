@@ -524,11 +524,11 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Set to trigger the provisioning of the managed VNet with the default Options when creating a Workspace with the managed VNet enabled, or else it does nothing. </summary>
         [WirePath("properties.provisionNetworkNow")]
-        public bool? ProvisionNetworkNow
+        public bool? IsProvisionNetworkNow
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisionNetworkNow;
+                return Properties is null ? default : Properties.IsProvisionNetworkNow;
             }
             set
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     Properties = new WorkspaceProperties();
                 }
-                Properties.ProvisionNetworkNow = value;
+                Properties.IsProvisionNetworkNow = value;
             }
         }
 

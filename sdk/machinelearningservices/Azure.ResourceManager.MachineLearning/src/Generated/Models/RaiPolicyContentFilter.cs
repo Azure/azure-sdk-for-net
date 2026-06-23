@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiPolicyContentFilter"/>. </summary>
         /// <param name="allowedContentLevel"> Level at which content is filtered. </param>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If isBlocking would occur. </param>
         /// <param name="enabled"> If the ContentFilter is enabled. </param>
         /// <param name="name"> Name of ContentFilter. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyContentFilter(AllowedContentLevel? allowedContentLevel, bool? blocking, bool? enabled, string name, RaiPolicyContentSource? source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyContentFilter(AllowedContentLevel? allowedContentLevel, bool? isBlocking, bool? enabled, string name, RaiPolicyContentSource? source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedContentLevel = allowedContentLevel;
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             Enabled = enabled;
             Name = name;
             Source = source;
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("allowedContentLevel")]
         public AllowedContentLevel? AllowedContentLevel { get; set; }
 
-        /// <summary> If blocking would occur. </summary>
+        /// <summary> If isBlocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
 
         /// <summary> If the ContentFilter is enabled. </summary>
         [WirePath("enabled")]

@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="maxResourceVolumeMB"> The resource volume size, in MB, allowed by the virtual machine size. </param>
         /// <param name="memoryGB"> The amount of memory, in GB, supported by the virtual machine size. </param>
         /// <param name="lowPriorityCapable"> Specifies if the virtual machine size supports low priority VMs. </param>
-        /// <param name="premiumIO"> Specifies if the virtual machine size supports premium IO. </param>
+        /// <param name="supportsPremiumIO"> Specifies if the virtual machine size supports premium IO. </param>
         /// <param name="estimatedVmPrices"> The estimated price information for using a VM. </param>
         /// <param name="supportedComputeTypes"> Specifies the compute types supported by the virtual machine size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningVmSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? premiumIO, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningVmSize(string name, string family, int? vcpUs, int? gpus, int? osVhdSizeMB, int? maxResourceVolumeMB, double? memoryGB, bool? lowPriorityCapable, bool? supportsPremiumIO, MachineLearningEstimatedVmPrices estimatedVmPrices, IReadOnlyList<string> supportedComputeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Family = family;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MaxResourceVolumeMB = maxResourceVolumeMB;
             MemoryGB = memoryGB;
             LowPriorityCapable = lowPriorityCapable;
-            PremiumIO = premiumIO;
+            SupportsPremiumIO = supportsPremiumIO;
             EstimatedVmPrices = estimatedVmPrices;
             SupportedComputeTypes = supportedComputeTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies if the virtual machine size supports premium IO. </summary>
         [WirePath("premiumIO")]
-        public bool? PremiumIO { get; }
+        public bool? SupportsPremiumIO { get; }
 
         /// <summary> The estimated price information for using a VM. </summary>
         [WirePath("estimatedVMPrices")]

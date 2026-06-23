@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="port"> The port of the head ray process. </param>
         /// <param name="address"> The address of Ray head node. </param>
-        /// <param name="includeDashboard"> Provide this argument to start the Ray dashboard GUI. </param>
+        /// <param name="isIncludeDashboard"> Provide this argument to start the Ray dashboard GUI. </param>
         /// <param name="dashboardPort"> The port to bind the dashboard server to. </param>
         /// <param name="headNodeAdditionalArgs"> Additional arguments passed to ray start in head node. </param>
         /// <param name="workerNodeAdditionalArgs"> Additional arguments passed to ray start in worker node. </param>
-        internal Ray(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? port, string address, bool? includeDashboard, int? dashboardPort, string headNodeAdditionalArgs, string workerNodeAdditionalArgs) : base(distributionType, additionalBinaryDataProperties)
+        internal Ray(DistributionType distributionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? port, string address, bool? isIncludeDashboard, int? dashboardPort, string headNodeAdditionalArgs, string workerNodeAdditionalArgs) : base(distributionType, additionalBinaryDataProperties)
         {
             Port = port;
             Address = address;
-            IncludeDashboard = includeDashboard;
+            IsIncludeDashboard = isIncludeDashboard;
             DashboardPort = dashboardPort;
             HeadNodeAdditionalArgs = headNodeAdditionalArgs;
             WorkerNodeAdditionalArgs = workerNodeAdditionalArgs;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Provide this argument to start the Ray dashboard GUI. </summary>
         [WirePath("includeDashboard")]
-        public bool? IncludeDashboard { get; set; }
+        public bool? IsIncludeDashboard { get; set; }
 
         /// <summary> The port to bind the dashboard server to. </summary>
         [WirePath("dashboardPort")]

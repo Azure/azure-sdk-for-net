@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistConfig"/>. </summary>
-        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="isBlocking"> If isBlocking would occur. </param>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiBlocklistConfig(bool? blocking, string blocklistName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiBlocklistConfig(bool? isBlocking, string blocklistName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Blocking = blocking;
+            IsBlocking = isBlocking;
             BlocklistName = blocklistName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> If blocking would occur. </summary>
+        /// <summary> If isBlocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? Blocking { get; set; }
+        public bool? IsBlocking { get; set; }
 
         /// <summary> Name of ContentFilter. </summary>
         [WirePath("blocklistName")]
