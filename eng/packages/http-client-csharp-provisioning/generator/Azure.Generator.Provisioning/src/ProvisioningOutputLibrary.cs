@@ -153,6 +153,10 @@ namespace Azure.Generator.Provisioning
                 if (model is not null)
                 {
                     providers.Add(model);
+                    // CollectReachableTypes excludes models already backed by ArmProviderSchema.Resources,
+                    // so this does not duplicate the pre-created resource providers added above.
+                    // CreateModel can still return a resource provider here for discriminator-derived
+                    // models whose base chain is a resource, and those providers must also be kept.
                     if (model is ProvisioningResourceProvider resource)
                     {
                         ProvisioningGenerator.Instance.AddTypeToKeep(resource);
