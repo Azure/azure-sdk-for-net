@@ -131,7 +131,7 @@ namespace Azure.Generator.Provisioning
             foreach (var resource in Resources)
             {
                 providers.Add(resource);
-                ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+                ProvisioningGenerator.Instance.AddTypeToKeep(resource);
             }
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
@@ -155,7 +155,7 @@ namespace Azure.Generator.Provisioning
                     providers.Add(model);
                     if (model is ProvisioningResourceProvider resource)
                     {
-                        ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
+                        ProvisioningGenerator.Instance.AddTypeToKeep(resource);
                     }
                 }
             }
