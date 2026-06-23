@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -21,14 +22,16 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
+        private readonly InputEnumType _inputEnum;
         private readonly EnumProvider _baseEnumProvider;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
+            _inputEnum = inputEnum;
             _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
-        protected override string BuildName() => _baseEnumProvider.Name;
+        protected override string BuildName() => _inputEnum.Name.ToIdentifierName();
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
@@ -55,7 +58,7 @@ namespace Azure.Generator.Provisioning.Providers
 
                 // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
                 IEnumerable<AttributeStatement>? attributes = baseField.Attributes;
-                if (serializedValue != null && serializedValue != memberName && baseField.Attributes.Count == 0)
+                if (serializedValue != null && serializedValue != memberName)
                 {
                     attributes =
                     [
