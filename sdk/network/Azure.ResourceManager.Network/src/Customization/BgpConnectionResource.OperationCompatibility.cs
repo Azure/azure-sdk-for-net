@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Network
     public partial class BgpConnectionResource
     {
         /// <summary> Invokes the GetAdvertisedRoutesVirtualHubBgpConnectionAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionAdvertisedRoutesAsync` instead.", false)]
         public virtual Task<ArmOperation<PeerRouteList>> GetAdvertisedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetAdvertisedRoutesVirtualHubBgpConnection compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionAdvertisedRoutes` instead.", false)]
         public virtual ArmOperation<PeerRouteList> GetAdvertisedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetLearnedRoutesVirtualHubBgpConnectionAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionLearnedRoutesAsync` instead.", false)]
         public virtual Task<ArmOperation<PeerRouteList>> GetLearnedRoutesVirtualHubBgpConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetLearnedRoutesVirtualHubBgpConnection compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionLearnedRoutes` instead.", false)]
         public virtual ArmOperation<PeerRouteList> GetLearnedRoutesVirtualHubBgpConnection(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetVirtualHubBgpConnectionAdvertisedRoutesAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<IDictionary<string, IList<PeerRoute>>>> GetVirtualHubBgpConnectionAdvertisedRoutesAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         // These methods preserve the generated obsolete PeerRouteList return type while keeping obsolete references localized.
         // TODO: Remove this SDK-side workaround after https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed.
         /// <summary> Invokes the GetAdvertisedRoutesAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionAdvertisedRoutesAsync` instead.", false)]
         public virtual async Task<ArmOperation<IDictionary<string, IList<PeerRouteList>>>> GetAdvertisedRoutesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionResource.GetAdvertisedRoutes");
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Invokes the GetAdvertisedRoutes compatibility operation. </summary>
 
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionAdvertisedRoutes` instead.", false)]
         public virtual ArmOperation<IDictionary<string, IList<PeerRouteList>>> GetAdvertisedRoutes(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionResource.GetAdvertisedRoutes");
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Invokes the GetLearnedRoutesAsync compatibility operation. </summary>
 
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionLearnedRoutesAsync` instead.", false)]
         public virtual async Task<ArmOperation<IDictionary<string, IList<PeerRouteList>>>> GetLearnedRoutesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionResource.GetLearnedRoutes");
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         }
         /// <summary> Invokes the GetLearnedRoutes compatibility operation. </summary>
 
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `GetVirtualHubBgpConnectionLearnedRoutes` instead.", false)]
         public virtual ArmOperation<IDictionary<string, IList<PeerRouteList>>> GetLearnedRoutes(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _virtualHubBgpConnectionsClientDiagnostics.CreateScope("BgpConnectionResource.GetLearnedRoutes");

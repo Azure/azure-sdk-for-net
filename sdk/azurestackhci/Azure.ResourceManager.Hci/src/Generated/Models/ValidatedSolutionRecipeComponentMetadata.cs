@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="extensionType"> Represents the type of extension. </param>
         /// <param name="publisher"> Represents the publisher of the extension. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether automatic upgrades of the extension are enabled. </param>
-        /// <param name="lcmUpdate"> Indicates whether the LCM (Lifecycle Management) update of the extension is enabled. </param>
+        /// <param name="isLcmUpdate"> Indicates whether the LCM (Lifecycle Management) update of the extension is enabled. </param>
         /// <param name="catalog"> Specifies the catalog to which the extension belongs. </param>
         /// <param name="ring"> Specifies the ring to which the extension belongs, internally used by component. </param>
         /// <param name="releaseTrain"> Specifies the release train to which given component belongs. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="expectedHash"> Specifies the expected hash of the extension. </param>
         /// <param name="previewSource"> Specifies the preview source of the extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidatedSolutionRecipeComponentMetadata(string extensionType, string publisher, bool? enableAutomaticUpgrade, bool? lcmUpdate, string catalog, string ring, string releaseTrain, string link, string name, string expectedHash, string previewSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidatedSolutionRecipeComponentMetadata(string extensionType, string publisher, bool? enableAutomaticUpgrade, bool? isLcmUpdate, string catalog, string ring, string releaseTrain, string link, string name, string expectedHash, string previewSource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExtensionType = extensionType;
             Publisher = publisher;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            LcmUpdate = lcmUpdate;
+            IsLcmUpdate = isLcmUpdate;
             Catalog = catalog;
             Ring = ring;
             ReleaseTrain = releaseTrain;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Indicates whether the LCM (Lifecycle Management) update of the extension is enabled. </summary>
         [WirePath("lcmUpdate")]
-        public bool? LcmUpdate { get; }
+        public bool? IsLcmUpdate { get; }
 
         /// <summary> Specifies the catalog to which the extension belongs. </summary>
         [WirePath("catalog")]

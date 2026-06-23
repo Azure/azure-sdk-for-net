@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    /// <summary>
+    /// The nested object which contains the information and credential which can be used to connect with related store or compute resource.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="CosmosDBLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AmazonS3CompatibleLinkedService"/>, <see cref="OracleCloudStorageLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PostgreSqlV2LinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="MongoDBLinkedService"/>, <see cref="MongoDBAtlasLinkedService"/>, <see cref="MongoDBV2LinkedService"/>, <see cref="CosmosDBMongoDBApiLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="ZendeskLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="AmazonMwsLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleBigQueryV2LinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZohoLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SnowflakeV2LinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="LakeHouseLinkedService"/>, <see cref="SalesforceV2LinkedService"/>, <see cref="SalesforceServiceCloudV2LinkedService"/>, <see cref="WarehouseLinkedService"/>, and <see cref="ServiceNowV2LinkedService"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownLinkedService))]
-    public partial class DataFactoryLinkedServiceProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceProperties>
+    public abstract partial class DataFactoryLinkedServiceProperties : IJsonModel<DataFactoryLinkedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryLinkedServiceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryLinkedServiceProperties IPersistableModel<DataFactoryLinkedServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryLinkedServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryLinkedServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(LinkedServiceVersion))
@@ -66,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Annotations)
+                foreach (BinaryData item in Annotations)
                 {
                     if (item == null)
                     {
@@ -74,9 +117,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,9 +131,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -98,185 +141,280 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        DataFactoryLinkedServiceProperties IJsonModel<DataFactoryLinkedServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryLinkedServiceProperties IJsonModel<DataFactoryLinkedServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryLinkedServiceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
         }
 
-        internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonMWS": return AmazonMwsLinkedService.DeserializeAmazonMwsLinkedService(element, options);
-                    case "AmazonRdsForOracle": return AmazonRdsForOracleLinkedService.DeserializeAmazonRdsForOracleLinkedService(element, options);
-                    case "AmazonRdsForSqlServer": return AmazonRdsForSqlServerLinkedService.DeserializeAmazonRdsForSqlServerLinkedService(element, options);
-                    case "AmazonRedshift": return AmazonRedshiftLinkedService.DeserializeAmazonRedshiftLinkedService(element, options);
-                    case "AmazonS3": return AmazonS3LinkedService.DeserializeAmazonS3LinkedService(element, options);
-                    case "AmazonS3Compatible": return AmazonS3CompatibleLinkedService.DeserializeAmazonS3CompatibleLinkedService(element, options);
-                    case "AppFigures": return AppFiguresLinkedService.DeserializeAppFiguresLinkedService(element, options);
-                    case "Asana": return AsanaLinkedService.DeserializeAsanaLinkedService(element, options);
-                    case "AzureBatch": return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element, options);
-                    case "AzureBlobFS": return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element, options);
-                    case "AzureBlobStorage": return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element, options);
-                    case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element, options);
-                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element, options);
-                    case "AzureDataExplorer": return AzureDataExplorerLinkedService.DeserializeAzureDataExplorerLinkedService(element, options);
-                    case "AzureDataLakeAnalytics": return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element, options);
-                    case "AzureDataLakeStore": return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element, options);
-                    case "AzureFileStorage": return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element, options);
-                    case "AzureFunction": return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element, options);
-                    case "AzureKeyVault": return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element, options);
-                    case "AzureMariaDB": return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element, options);
-                    case "AzureML": return AzureMLLinkedService.DeserializeAzureMLLinkedService(element, options);
-                    case "AzureMLService": return AzureMLServiceLinkedService.DeserializeAzureMLServiceLinkedService(element, options);
-                    case "AzureMySql": return AzureMySqlLinkedService.DeserializeAzureMySqlLinkedService(element, options);
-                    case "AzurePostgreSql": return AzurePostgreSqlLinkedService.DeserializeAzurePostgreSqlLinkedService(element, options);
-                    case "AzureSearch": return AzureSearchLinkedService.DeserializeAzureSearchLinkedService(element, options);
-                    case "AzureSqlDatabase": return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element, options);
-                    case "AzureSqlDW": return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element, options);
-                    case "AzureSqlMI": return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element, options);
-                    case "AzureStorage": return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element, options);
-                    case "AzureSynapseArtifacts": return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element, options);
-                    case "AzureTableStorage": return AzureTableStorageLinkedService.DeserializeAzureTableStorageLinkedService(element, options);
-                    case "Cassandra": return CassandraLinkedService.DeserializeCassandraLinkedService(element, options);
-                    case "CommonDataServiceForApps": return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element, options);
-                    case "Concur": return ConcurLinkedService.DeserializeConcurLinkedService(element, options);
-                    case "CosmosDb": return CosmosDBLinkedService.DeserializeCosmosDBLinkedService(element, options);
-                    case "CosmosDbMongoDbApi": return CosmosDBMongoDBApiLinkedService.DeserializeCosmosDBMongoDBApiLinkedService(element, options);
-                    case "Couchbase": return CouchbaseLinkedService.DeserializeCouchbaseLinkedService(element, options);
-                    case "CustomDataSource": return CustomDataSourceLinkedService.DeserializeCustomDataSourceLinkedService(element, options);
-                    case "Dataworld": return DataworldLinkedService.DeserializeDataworldLinkedService(element, options);
-                    case "Db2": return Db2LinkedService.DeserializeDb2LinkedService(element, options);
-                    case "Drill": return DrillLinkedService.DeserializeDrillLinkedService(element, options);
-                    case "Dynamics": return DynamicsLinkedService.DeserializeDynamicsLinkedService(element, options);
-                    case "DynamicsAX": return DynamicsAXLinkedService.DeserializeDynamicsAXLinkedService(element, options);
-                    case "DynamicsCrm": return DynamicsCrmLinkedService.DeserializeDynamicsCrmLinkedService(element, options);
-                    case "Eloqua": return EloquaLinkedService.DeserializeEloquaLinkedService(element, options);
-                    case "FileServer": return FileServerLinkedService.DeserializeFileServerLinkedService(element, options);
-                    case "FtpServer": return FtpServerLinkedService.DeserializeFtpServerLinkedService(element, options);
-                    case "GoogleAdWords": return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element, options);
-                    case "GoogleBigQuery": return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element, options);
-                    case "GoogleBigQueryV2": return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element, options);
-                    case "GoogleCloudStorage": return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element, options);
-                    case "GoogleSheets": return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element, options);
-                    case "Greenplum": return GreenplumLinkedService.DeserializeGreenplumLinkedService(element, options);
-                    case "HBase": return HBaseLinkedService.DeserializeHBaseLinkedService(element, options);
-                    case "Hdfs": return HdfsLinkedService.DeserializeHdfsLinkedService(element, options);
-                    case "HDInsight": return HDInsightLinkedService.DeserializeHDInsightLinkedService(element, options);
-                    case "HDInsightOnDemand": return HDInsightOnDemandLinkedService.DeserializeHDInsightOnDemandLinkedService(element, options);
-                    case "Hive": return HiveLinkedService.DeserializeHiveLinkedService(element, options);
-                    case "HttpServer": return HttpLinkedService.DeserializeHttpLinkedService(element, options);
-                    case "Hubspot": return HubspotLinkedService.DeserializeHubspotLinkedService(element, options);
-                    case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element, options);
-                    case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element, options);
-                    case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element, options);
-                    case "Lakehouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
-                    case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element, options);
-                    case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element, options);
-                    case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element, options);
-                    case "MicrosoftAccess": return MicrosoftAccessLinkedService.DeserializeMicrosoftAccessLinkedService(element, options);
-                    case "MongoDb": return MongoDBLinkedService.DeserializeMongoDBLinkedService(element, options);
-                    case "MongoDbAtlas": return MongoDBAtlasLinkedService.DeserializeMongoDBAtlasLinkedService(element, options);
-                    case "MongoDbV2": return MongoDBV2LinkedService.DeserializeMongoDBV2LinkedService(element, options);
-                    case "MySql": return MySqlLinkedService.DeserializeMySqlLinkedService(element, options);
-                    case "Netezza": return NetezzaLinkedService.DeserializeNetezzaLinkedService(element, options);
-                    case "OData": return ODataLinkedService.DeserializeODataLinkedService(element, options);
-                    case "Odbc": return OdbcLinkedService.DeserializeOdbcLinkedService(element, options);
-                    case "Office365": return Office365LinkedService.DeserializeOffice365LinkedService(element, options);
-                    case "Oracle": return OracleLinkedService.DeserializeOracleLinkedService(element, options);
-                    case "OracleCloudStorage": return OracleCloudStorageLinkedService.DeserializeOracleCloudStorageLinkedService(element, options);
-                    case "OracleServiceCloud": return OracleServiceCloudLinkedService.DeserializeOracleServiceCloudLinkedService(element, options);
-                    case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element, options);
-                    case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element, options);
-                    case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element, options);
-                    case "PostgreSqlV2": return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element, options);
-                    case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element, options);
-                    case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element, options);
-                    case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
-                    case "Responsys": return ResponsysLinkedService.DeserializeResponsysLinkedService(element, options);
-                    case "RestService": return RestServiceLinkedService.DeserializeRestServiceLinkedService(element, options);
-                    case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element, options);
-                    case "SalesforceMarketingCloud": return SalesforceMarketingCloudLinkedService.DeserializeSalesforceMarketingCloudLinkedService(element, options);
-                    case "SalesforceServiceCloud": return SalesforceServiceCloudLinkedService.DeserializeSalesforceServiceCloudLinkedService(element, options);
-                    case "SalesforceServiceCloudV2": return SalesforceServiceCloudV2LinkedService.DeserializeSalesforceServiceCloudV2LinkedService(element, options);
-                    case "SalesforceV2": return SalesforceV2LinkedService.DeserializeSalesforceV2LinkedService(element, options);
-                    case "SapBW": return SapBWLinkedService.DeserializeSapBWLinkedService(element, options);
-                    case "SapCloudForCustomer": return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element, options);
-                    case "SapEcc": return SapEccLinkedService.DeserializeSapEccLinkedService(element, options);
-                    case "SapHana": return SapHanaLinkedService.DeserializeSapHanaLinkedService(element, options);
-                    case "SapOdp": return SapOdpLinkedService.DeserializeSapOdpLinkedService(element, options);
-                    case "SapOpenHub": return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element, options);
-                    case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element, options);
-                    case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element, options);
-                    case "ServiceNowV2": return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
-                    case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element, options);
-                    case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element, options);
-                    case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element, options);
-                    case "Smartsheet": return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element, options);
-                    case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element, options);
-                    case "SnowflakeV2": return SnowflakeV2LinkedService.DeserializeSnowflakeV2LinkedService(element, options);
-                    case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element, options);
-                    case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element, options);
-                    case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element, options);
-                    case "Sybase": return SybaseLinkedService.DeserializeSybaseLinkedService(element, options);
-                    case "TeamDesk": return TeamDeskLinkedService.DeserializeTeamDeskLinkedService(element, options);
-                    case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element, options);
-                    case "Twilio": return TwilioLinkedService.DeserializeTwilioLinkedService(element, options);
-                    case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element, options);
-                    case "Warehouse": return WarehouseLinkedService.DeserializeWarehouseLinkedService(element, options);
-                    case "Web": return WebLinkedService.DeserializeWebLinkedService(element, options);
-                    case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element, options);
-                    case "Zendesk": return ZendeskLinkedService.DeserializeZendeskLinkedService(element, options);
-                    case "Zoho": return ZohoLinkedService.DeserializeZohoLinkedService(element, options);
+                    case "AzureStorage":
+                        return AzureStorageLinkedService.DeserializeAzureStorageLinkedService(element, options);
+                    case "AzureBlobStorage":
+                        return AzureBlobStorageLinkedService.DeserializeAzureBlobStorageLinkedService(element, options);
+                    case "AzureTableStorage":
+                        return AzureTableStorageLinkedService.DeserializeAzureTableStorageLinkedService(element, options);
+                    case "AzureSqlDW":
+                        return AzureSqlDWLinkedService.DeserializeAzureSqlDWLinkedService(element, options);
+                    case "SqlServer":
+                        return SqlServerLinkedService.DeserializeSqlServerLinkedService(element, options);
+                    case "AmazonRdsForSqlServer":
+                        return AmazonRdsForSqlServerLinkedService.DeserializeAmazonRdsForSqlServerLinkedService(element, options);
+                    case "AzureSqlDatabase":
+                        return AzureSqlDatabaseLinkedService.DeserializeAzureSqlDatabaseLinkedService(element, options);
+                    case "AzureSqlMI":
+                        return AzureSqlMILinkedService.DeserializeAzureSqlMILinkedService(element, options);
+                    case "AzureBatch":
+                        return AzureBatchLinkedService.DeserializeAzureBatchLinkedService(element, options);
+                    case "AzureKeyVault":
+                        return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element, options);
+                    case "CosmosDb":
+                        return CosmosDBLinkedService.DeserializeCosmosDBLinkedService(element, options);
+                    case "Dynamics":
+                        return DynamicsLinkedService.DeserializeDynamicsLinkedService(element, options);
+                    case "DynamicsCrm":
+                        return DynamicsCrmLinkedService.DeserializeDynamicsCrmLinkedService(element, options);
+                    case "CommonDataServiceForApps":
+                        return CommonDataServiceForAppsLinkedService.DeserializeCommonDataServiceForAppsLinkedService(element, options);
+                    case "HDInsight":
+                        return HDInsightLinkedService.DeserializeHDInsightLinkedService(element, options);
+                    case "FileServer":
+                        return FileServerLinkedService.DeserializeFileServerLinkedService(element, options);
+                    case "AzureFileStorage":
+                        return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element, options);
+                    case "AmazonS3Compatible":
+                        return AmazonS3CompatibleLinkedService.DeserializeAmazonS3CompatibleLinkedService(element, options);
+                    case "OracleCloudStorage":
+                        return OracleCloudStorageLinkedService.DeserializeOracleCloudStorageLinkedService(element, options);
+                    case "GoogleCloudStorage":
+                        return GoogleCloudStorageLinkedService.DeserializeGoogleCloudStorageLinkedService(element, options);
+                    case "Oracle":
+                        return OracleLinkedService.DeserializeOracleLinkedService(element, options);
+                    case "AmazonRdsForOracle":
+                        return AmazonRdsForOracleLinkedService.DeserializeAmazonRdsForOracleLinkedService(element, options);
+                    case "AzureMySql":
+                        return AzureMySqlLinkedService.DeserializeAzureMySqlLinkedService(element, options);
+                    case "MySql":
+                        return MySqlLinkedService.DeserializeMySqlLinkedService(element, options);
+                    case "PostgreSql":
+                        return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element, options);
+                    case "PostgreSqlV2":
+                        return PostgreSqlV2LinkedService.DeserializePostgreSqlV2LinkedService(element, options);
+                    case "Sybase":
+                        return SybaseLinkedService.DeserializeSybaseLinkedService(element, options);
+                    case "Db2":
+                        return Db2LinkedService.DeserializeDb2LinkedService(element, options);
+                    case "Teradata":
+                        return TeradataLinkedService.DeserializeTeradataLinkedService(element, options);
+                    case "AzureML":
+                        return AzureMLLinkedService.DeserializeAzureMLLinkedService(element, options);
+                    case "AzureMLService":
+                        return AzureMLServiceLinkedService.DeserializeAzureMLServiceLinkedService(element, options);
+                    case "Odbc":
+                        return OdbcLinkedService.DeserializeOdbcLinkedService(element, options);
+                    case "Informix":
+                        return InformixLinkedService.DeserializeInformixLinkedService(element, options);
+                    case "MicrosoftAccess":
+                        return MicrosoftAccessLinkedService.DeserializeMicrosoftAccessLinkedService(element, options);
+                    case "Hdfs":
+                        return HdfsLinkedService.DeserializeHdfsLinkedService(element, options);
+                    case "OData":
+                        return ODataLinkedService.DeserializeODataLinkedService(element, options);
+                    case "Web":
+                        return WebLinkedService.DeserializeWebLinkedService(element, options);
+                    case "Cassandra":
+                        return CassandraLinkedService.DeserializeCassandraLinkedService(element, options);
+                    case "MongoDb":
+                        return MongoDBLinkedService.DeserializeMongoDBLinkedService(element, options);
+                    case "MongoDbAtlas":
+                        return MongoDBAtlasLinkedService.DeserializeMongoDBAtlasLinkedService(element, options);
+                    case "MongoDbV2":
+                        return MongoDBV2LinkedService.DeserializeMongoDBV2LinkedService(element, options);
+                    case "CosmosDbMongoDbApi":
+                        return CosmosDBMongoDBApiLinkedService.DeserializeCosmosDBMongoDBApiLinkedService(element, options);
+                    case "AzureDataLakeStore":
+                        return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element, options);
+                    case "AzureBlobFS":
+                        return AzureBlobFSLinkedService.DeserializeAzureBlobFSLinkedService(element, options);
+                    case "Office365":
+                        return Office365LinkedService.DeserializeOffice365LinkedService(element, options);
+                    case "Salesforce":
+                        return SalesforceLinkedService.DeserializeSalesforceLinkedService(element, options);
+                    case "SalesforceServiceCloud":
+                        return SalesforceServiceCloudLinkedService.DeserializeSalesforceServiceCloudLinkedService(element, options);
+                    case "SapCloudForCustomer":
+                        return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element, options);
+                    case "SapEcc":
+                        return SapEccLinkedService.DeserializeSapEccLinkedService(element, options);
+                    case "SapOpenHub":
+                        return SapOpenHubLinkedService.DeserializeSapOpenHubLinkedService(element, options);
+                    case "SapOdp":
+                        return SapOdpLinkedService.DeserializeSapOdpLinkedService(element, options);
+                    case "RestService":
+                        return RestServiceLinkedService.DeserializeRestServiceLinkedService(element, options);
+                    case "TeamDesk":
+                        return TeamDeskLinkedService.DeserializeTeamDeskLinkedService(element, options);
+                    case "Quickbase":
+                        return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element, options);
+                    case "Smartsheet":
+                        return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element, options);
+                    case "Zendesk":
+                        return ZendeskLinkedService.DeserializeZendeskLinkedService(element, options);
+                    case "Dataworld":
+                        return DataworldLinkedService.DeserializeDataworldLinkedService(element, options);
+                    case "AppFigures":
+                        return AppFiguresLinkedService.DeserializeAppFiguresLinkedService(element, options);
+                    case "Asana":
+                        return AsanaLinkedService.DeserializeAsanaLinkedService(element, options);
+                    case "Twilio":
+                        return TwilioLinkedService.DeserializeTwilioLinkedService(element, options);
+                    case "GoogleSheets":
+                        return GoogleSheetsLinkedService.DeserializeGoogleSheetsLinkedService(element, options);
+                    case "AmazonS3":
+                        return AmazonS3LinkedService.DeserializeAmazonS3LinkedService(element, options);
+                    case "AmazonRedshift":
+                        return AmazonRedshiftLinkedService.DeserializeAmazonRedshiftLinkedService(element, options);
+                    case "CustomDataSource":
+                        return CustomDataSourceLinkedService.DeserializeCustomDataSourceLinkedService(element, options);
+                    case "AzureSearch":
+                        return AzureSearchLinkedService.DeserializeAzureSearchLinkedService(element, options);
+                    case "HttpServer":
+                        return HttpLinkedService.DeserializeHttpLinkedService(element, options);
+                    case "FtpServer":
+                        return FtpServerLinkedService.DeserializeFtpServerLinkedService(element, options);
+                    case "Sftp":
+                        return SftpServerLinkedService.DeserializeSftpServerLinkedService(element, options);
+                    case "SapBW":
+                        return SapBWLinkedService.DeserializeSapBWLinkedService(element, options);
+                    case "SapHana":
+                        return SapHanaLinkedService.DeserializeSapHanaLinkedService(element, options);
+                    case "AmazonMWS":
+                        return AmazonMwsLinkedService.DeserializeAmazonMwsLinkedService(element, options);
+                    case "AzurePostgreSql":
+                        return AzurePostgreSqlLinkedService.DeserializeAzurePostgreSqlLinkedService(element, options);
+                    case "Concur":
+                        return ConcurLinkedService.DeserializeConcurLinkedService(element, options);
+                    case "Couchbase":
+                        return CouchbaseLinkedService.DeserializeCouchbaseLinkedService(element, options);
+                    case "Drill":
+                        return DrillLinkedService.DeserializeDrillLinkedService(element, options);
+                    case "Eloqua":
+                        return EloquaLinkedService.DeserializeEloquaLinkedService(element, options);
+                    case "GoogleBigQuery":
+                        return GoogleBigQueryLinkedService.DeserializeGoogleBigQueryLinkedService(element, options);
+                    case "GoogleBigQueryV2":
+                        return GoogleBigQueryV2LinkedService.DeserializeGoogleBigQueryV2LinkedService(element, options);
+                    case "Greenplum":
+                        return GreenplumLinkedService.DeserializeGreenplumLinkedService(element, options);
+                    case "HBase":
+                        return HBaseLinkedService.DeserializeHBaseLinkedService(element, options);
+                    case "Hive":
+                        return HiveLinkedService.DeserializeHiveLinkedService(element, options);
+                    case "Hubspot":
+                        return HubspotLinkedService.DeserializeHubspotLinkedService(element, options);
+                    case "Impala":
+                        return ImpalaLinkedService.DeserializeImpalaLinkedService(element, options);
+                    case "Jira":
+                        return JiraLinkedService.DeserializeJiraLinkedService(element, options);
+                    case "Magento":
+                        return MagentoLinkedService.DeserializeMagentoLinkedService(element, options);
+                    case "MariaDB":
+                        return MariaDBLinkedService.DeserializeMariaDBLinkedService(element, options);
+                    case "AzureMariaDB":
+                        return AzureMariaDBLinkedService.DeserializeAzureMariaDBLinkedService(element, options);
+                    case "Marketo":
+                        return MarketoLinkedService.DeserializeMarketoLinkedService(element, options);
+                    case "Paypal":
+                        return PaypalLinkedService.DeserializePaypalLinkedService(element, options);
+                    case "Phoenix":
+                        return PhoenixLinkedService.DeserializePhoenixLinkedService(element, options);
+                    case "Presto":
+                        return PrestoLinkedService.DeserializePrestoLinkedService(element, options);
+                    case "QuickBooks":
+                        return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element, options);
+                    case "ServiceNow":
+                        return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element, options);
+                    case "Shopify":
+                        return ShopifyLinkedService.DeserializeShopifyLinkedService(element, options);
+                    case "Spark":
+                        return SparkLinkedService.DeserializeSparkLinkedService(element, options);
+                    case "Square":
+                        return SquareLinkedService.DeserializeSquareLinkedService(element, options);
+                    case "Xero":
+                        return XeroLinkedService.DeserializeXeroLinkedService(element, options);
+                    case "Zoho":
+                        return ZohoLinkedService.DeserializeZohoLinkedService(element, options);
+                    case "Vertica":
+                        return VerticaLinkedService.DeserializeVerticaLinkedService(element, options);
+                    case "Netezza":
+                        return NetezzaLinkedService.DeserializeNetezzaLinkedService(element, options);
+                    case "SalesforceMarketingCloud":
+                        return SalesforceMarketingCloudLinkedService.DeserializeSalesforceMarketingCloudLinkedService(element, options);
+                    case "HDInsightOnDemand":
+                        return HDInsightOnDemandLinkedService.DeserializeHDInsightOnDemandLinkedService(element, options);
+                    case "AzureDataLakeAnalytics":
+                        return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element, options);
+                    case "AzureDatabricks":
+                        return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element, options);
+                    case "AzureDatabricksDeltaLake":
+                        return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element, options);
+                    case "Responsys":
+                        return ResponsysLinkedService.DeserializeResponsysLinkedService(element, options);
+                    case "DynamicsAX":
+                        return DynamicsAXLinkedService.DeserializeDynamicsAXLinkedService(element, options);
+                    case "OracleServiceCloud":
+                        return OracleServiceCloudLinkedService.DeserializeOracleServiceCloudLinkedService(element, options);
+                    case "GoogleAdWords":
+                        return GoogleAdWordsLinkedService.DeserializeGoogleAdWordsLinkedService(element, options);
+                    case "SapTable":
+                        return SapTableLinkedService.DeserializeSapTableLinkedService(element, options);
+                    case "AzureDataExplorer":
+                        return AzureDataExplorerLinkedService.DeserializeAzureDataExplorerLinkedService(element, options);
+                    case "AzureFunction":
+                        return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element, options);
+                    case "Snowflake":
+                        return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element, options);
+                    case "SnowflakeV2":
+                        return SnowflakeV2LinkedService.DeserializeSnowflakeV2LinkedService(element, options);
+                    case "SharePointOnlineList":
+                        return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element, options);
+                    case "AzureSynapseArtifacts":
+                        return AzureSynapseArtifactsLinkedService.DeserializeAzureSynapseArtifactsLinkedService(element, options);
+                    case "Lakehouse":
+                        return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element, options);
+                    case "SalesforceV2":
+                        return SalesforceV2LinkedService.DeserializeSalesforceV2LinkedService(element, options);
+                    case "SalesforceServiceCloudV2":
+                        return SalesforceServiceCloudV2LinkedService.DeserializeSalesforceServiceCloudV2LinkedService(element, options);
+                    case "Warehouse":
+                        return WarehouseLinkedService.DeserializeWarehouseLinkedService(element, options);
+                    case "ServiceNowV2":
+                        return ServiceNowV2LinkedService.DeserializeServiceNowV2LinkedService(element, options);
                 }
             }
             return UnknownLinkedService.DeserializeUnknownLinkedService(element, options);
         }
-
-        BinaryData IPersistableModel<DataFactoryLinkedServiceProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryLinkedServiceProperties IPersistableModel<DataFactoryLinkedServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryLinkedServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
