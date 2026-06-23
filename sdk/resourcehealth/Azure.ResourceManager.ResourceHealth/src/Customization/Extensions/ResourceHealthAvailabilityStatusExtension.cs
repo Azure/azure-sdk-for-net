@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth
     public static partial class ResourceHealthExtensions
     {
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
