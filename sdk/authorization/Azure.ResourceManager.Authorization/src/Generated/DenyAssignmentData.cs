@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
-        internal DenyAssignmentData()
+        public DenyAssignmentData()
         {
             Permissions = new ChangeTrackingList<DenyAssignmentPermission>();
             Principals = new ChangeTrackingList<RoleManagementPrincipal>();
@@ -72,8 +72,15 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
         /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
+        /// <param name="denyAssignmentEffect"> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </param>
+        /// <param name="condition"> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IList<RoleManagementPrincipal> principals, IList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, DenyAssignmentEffect? denyAssignmentEffect, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string createdBy, string updatedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DenyAssignmentName = denyAssignmentName;
             Description = description;
@@ -83,32 +90,60 @@ namespace Azure.ResourceManager.Authorization
             Principals = principals;
             ExcludePrincipals = excludePrincipals;
             IsSystemProtected = isSystemProtected;
+            DenyAssignmentEffect = denyAssignmentEffect;
+            Condition = condition;
+            ConditionVersion = conditionVersion;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            CreatedBy = createdBy;
+            UpdatedBy = updatedBy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name of the deny assignment. </summary>
         [WirePath("properties.denyAssignmentName")]
-        public string DenyAssignmentName { get; }
+        public string DenyAssignmentName { get; set; }
         /// <summary> The description of the deny assignment. </summary>
         [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> An array of permissions that are denied by the deny assignment. </summary>
         [WirePath("properties.permissions")]
-        public IReadOnlyList<DenyAssignmentPermission> Permissions { get; }
+        public IList<DenyAssignmentPermission> Permissions { get; }
         /// <summary> The deny assignment scope. </summary>
         [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
         [WirePath("properties.doNotApplyToChildScopes")]
-        public bool? IsAppliedToChildScopes { get; }
+        public bool? IsAppliedToChildScopes { get; set; }
         /// <summary> Array of principals to which the deny assignment applies. </summary>
         [WirePath("properties.principals")]
-        public IReadOnlyList<RoleManagementPrincipal> Principals { get; }
+        public IList<RoleManagementPrincipal> Principals { get; }
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
         [WirePath("properties.excludePrincipals")]
-        public IReadOnlyList<RoleManagementPrincipal> ExcludePrincipals { get; }
+        public IList<RoleManagementPrincipal> ExcludePrincipals { get; }
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
         [WirePath("properties.isSystemProtected")]
-        public bool? IsSystemProtected { get; }
+        public bool? IsSystemProtected { get; set; }
+        /// <summary> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </summary>
+        [WirePath("properties.denyAssignmentEffect")]
+        public DenyAssignmentEffect? DenyAssignmentEffect { get; set; }
+        /// <summary> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        [WirePath("properties.condition")]
+        public string Condition { get; set; }
+        /// <summary> Version of the condition. </summary>
+        [WirePath("properties.conditionVersion")]
+        public string ConditionVersion { get; set; }
+        /// <summary> Time it was created. </summary>
+        [WirePath("properties.createdOn")]
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Time it was updated. </summary>
+        [WirePath("properties.updatedOn")]
+        public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> Id of the user who created the assignment. </summary>
+        [WirePath("properties.createdBy")]
+        public string CreatedBy { get; }
+        /// <summary> Id of the user who updated the assignment. </summary>
+        [WirePath("properties.updatedBy")]
+        public string UpdatedBy { get; }
     }
 }

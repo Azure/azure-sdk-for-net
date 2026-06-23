@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPrincipal"/>. </summary>
-        internal RoleManagementPrincipal()
+        public RoleManagementPrincipal()
         {
         }
 
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The id of the principal made changes. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The name of the principal made changes. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
         /// <summary> Type of the principal. </summary>
         [WirePath("type")]
-        public RoleManagementPrincipalType? PrincipalType { get; }
+        public RoleManagementPrincipalType? PrincipalType { get; set; }
         /// <summary> Email of principal. </summary>
         [WirePath("email")]
-        public string Email { get; }
+        public string Email { get; set; }
     }
 }

@@ -42,6 +42,108 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary>
+        /// Create or update a deny assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="data"> Parameters for the deny assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DenyAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string denyAssignmentId, DenyAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = await _denyAssignmentRestClient.CreateOrUpdateAsync(Id, denyAssignmentId, data, cancellationToken).ConfigureAwait(false);
+                var uri = _denyAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, denyAssignmentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<DenyAssignmentResource>(Response.FromValue(new DenyAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a deny assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DenyAssignments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="data"> Parameters for the deny assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DenyAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string denyAssignmentId, DenyAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                var response = _denyAssignmentRestClient.CreateOrUpdate(Id, denyAssignmentId, data, cancellationToken);
+                var uri = _denyAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, denyAssignmentId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<DenyAssignmentResource>(Response.FromValue(new DenyAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the specified deny assignment.
         /// <list type="bullet">
         /// <item>
@@ -54,7 +156,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -99,7 +201,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +246,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +277,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,7 +308,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -249,7 +351,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -292,7 +394,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +439,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

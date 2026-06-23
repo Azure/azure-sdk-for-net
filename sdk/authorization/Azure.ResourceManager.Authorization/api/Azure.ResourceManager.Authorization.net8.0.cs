@@ -158,10 +158,14 @@ namespace Azure.ResourceManager.Authorization
     {
         public AuthorizationRoleDefinitionData() { }
         public System.Collections.Generic.IList<string> AssignableScopes { get { throw null; } }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> Permissions { get { throw null; } }
         public string RoleName { get { throw null; } set { } }
         public Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? RoleType { get { throw null; } set { } }
+        public string UpdatedBy { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -197,6 +201,8 @@ namespace Azure.ResourceManager.Authorization
     public partial class DenyAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.DenyAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.DenyAssignmentResource>, System.Collections.IEnumerable
     {
         protected DenyAssignmentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.DenyAssignmentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string denyAssignmentId, Azure.ResourceManager.Authorization.DenyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.DenyAssignmentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string denyAssignmentId, Azure.ResourceManager.Authorization.DenyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string denyAssignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string denyAssignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.DenyAssignmentResource> Get(string denyAssignmentId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -211,15 +217,22 @@ namespace Azure.ResourceManager.Authorization
     }
     public partial class DenyAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.DenyAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.DenyAssignmentData>
     {
-        internal DenyAssignmentData() { }
-        public string DenyAssignmentName { get { throw null; } }
-        public string Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> ExcludePrincipals { get { throw null; } }
-        public bool? IsAppliedToChildScopes { get { throw null; } }
-        public bool? IsSystemProtected { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> Permissions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> Principals { get { throw null; } }
+        public DenyAssignmentData() { }
+        public string Condition { get { throw null; } set { } }
+        public string ConditionVersion { get { throw null; } set { } }
+        public string CreatedBy { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect? DenyAssignmentEffect { get { throw null; } set { } }
+        public string DenyAssignmentName { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> ExcludePrincipals { get { throw null; } }
+        public bool? IsAppliedToChildScopes { get { throw null; } set { } }
+        public bool? IsSystemProtected { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> Permissions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> Principals { get { throw null; } }
         public string Scope { get { throw null; } }
+        public string UpdatedBy { get { throw null; } }
+        public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Authorization.DenyAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -234,6 +247,8 @@ namespace Azure.ResourceManager.Authorization
         public virtual Azure.ResourceManager.Authorization.DenyAssignmentData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string scope, string denyAssignmentId) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.DenyAssignmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.DenyAssignmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Authorization.DenyAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -241,6 +256,8 @@ namespace Azure.ResourceManager.Authorization
         Azure.ResourceManager.Authorization.DenyAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.DenyAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.DenyAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Authorization.DenyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Authorization.DenyAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Authorization.DenyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RoleAssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Authorization.RoleAssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.RoleAssignmentResource>, System.Collections.IEnumerable
     {
@@ -880,9 +897,10 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.AuthorizationProviderOperationInfo AuthorizationProviderOperationInfo(string name = null, string displayName = null, string description = null, string origin = null, System.BinaryData properties = null, bool? isDataAction = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataData AuthorizationProviderOperationsMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AuthorizationProviderResourceType> resourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AuthorizationProviderOperationInfo> operations = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.AuthorizationProviderResourceType AuthorizationProviderResourceType(string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.AuthorizationProviderOperationInfo> operations = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string roleName = null, string description = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> permissions = null, System.Collections.Generic.IEnumerable<string> assignableScopes = null) { throw null; }
-        public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string denyAssignmentName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> permissions = null, string scope = null, bool? isAppliedToChildScopes = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> principals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludePrincipals = null, bool? isSystemProtected = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission DenyAssignmentPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<string> dataActions = null, System.Collections.Generic.IEnumerable<string> notDataActions = null, string condition = null, string conditionVersion = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string roleName, string description, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> permissions, System.Collections.Generic.IEnumerable<string> assignableScopes) { throw null; }
+        public static Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string roleName = null, string description = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> permissions = null, System.Collections.Generic.IEnumerable<string> assignableScopes = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null) { throw null; }
+        public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string denyAssignmentName, string description, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> principals, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected) { throw null; }
+        public static Azure.ResourceManager.Authorization.DenyAssignmentData DenyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string denyAssignmentName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission> permissions = null, string scope = null, bool? isAppliedToChildScopes = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> principals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal> excludePrincipals = null, bool? isSystemProtected = default(bool?), Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect? denyAssignmentEffect = default(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect?), string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.EligibleChildResource EligibleChildResource(string id = null, string name = null, string resourceType = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties PolicyAssignmentProperties(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier policyId = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier roleDefinitionId = null, string roleDefinitionDisplayName = null, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType? roleType = default(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType?), Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?)) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentCreateOrUpdateContent RoleAssignmentCreateOrUpdateContent(string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, System.Guid principalId = default(System.Guid), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string description = null, string condition = null, string conditionVersion = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string createdBy = null, string updatedBy = null, Azure.Core.ResourceIdentifier delegatedManagedIdentityResourceId = null) { throw null; }
@@ -897,7 +915,6 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentData RoleManagementPolicyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, Azure.Core.ResourceIdentifier roleDefinitionId = null, Azure.Core.ResourceIdentifier policyId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> effectiveRules = null, Azure.ResourceManager.Authorization.Models.PolicyAssignmentProperties policyAssignmentProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.RoleManagementPolicyData RoleManagementPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string scope = null, string displayName = null, string description = null, bool? isOrganizationDefault = default(bool?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal lastModifiedBy = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> rules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRule> effectiveRules = null, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyProperties policyProperties = null) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyProperties RoleManagementPolicyProperties(Azure.Core.ResourceIdentifier scopeId = null, string scopeDisplayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType? scopeType = default(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType?)) { throw null; }
-        public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?), string email = null) { throw null; }
     }
     public partial class AuthorizationClassicAdministrator : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator>
     {
@@ -956,15 +973,31 @@ namespace Azure.ResourceManager.Authorization.Models
         public static bool operator !=(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType left, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DenyAssignmentEffect : System.IEquatable<Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DenyAssignmentEffect(string value) { throw null; }
+        public static Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect Audit { get { throw null; } }
+        public static Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect Enforced { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect left, Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect left, Azure.ResourceManager.Authorization.Models.DenyAssignmentEffect right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DenyAssignmentPermission : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>
     {
-        internal DenyAssignmentPermission() { }
-        public System.Collections.Generic.IReadOnlyList<string> Actions { get { throw null; } }
-        public string Condition { get { throw null; } }
-        public string ConditionVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DataActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotActions { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NotDataActions { get { throw null; } }
+        public DenyAssignmentPermission() { }
+        public System.Collections.Generic.IList<string> Actions { get { throw null; } }
+        public string Condition { get { throw null; } set { } }
+        public string ConditionVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DataActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> NotActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> NotDataActions { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.DenyAssignmentPermission>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1335,11 +1368,11 @@ namespace Azure.ResourceManager.Authorization.Models
     }
     public partial class RoleManagementPrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal>
     {
-        internal RoleManagementPrincipal() { }
-        public string DisplayName { get { throw null; } }
-        public string Email { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } }
+        public RoleManagementPrincipal() { }
+        public string DisplayName { get { throw null; } set { } }
+        public string Email { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? PrincipalType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Authorization.Models.RoleManagementPrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -49,8 +50,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
         /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
+        /// <param name="denyAssignmentEffect"> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </param>
+        /// <param name="condition"> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string denyAssignmentName = null, string description = null, IEnumerable<DenyAssignmentPermission> permissions = null, string scope = null, bool? isAppliedToChildScopes = null, IEnumerable<RoleManagementPrincipal> principals = null, IEnumerable<RoleManagementPrincipal> excludePrincipals = null, bool? isSystemProtected = null)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string denyAssignmentName = null, string description = null, IEnumerable<DenyAssignmentPermission> permissions = null, string scope = null, bool? isAppliedToChildScopes = null, IEnumerable<RoleManagementPrincipal> principals = null, IEnumerable<RoleManagementPrincipal> excludePrincipals = null, bool? isSystemProtected = null, DenyAssignmentEffect? denyAssignmentEffect = null, string condition = null, string conditionVersion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string createdBy = null, string updatedBy = null)
         {
             permissions ??= new List<DenyAssignmentPermission>();
             principals ??= new List<RoleManagementPrincipal>();
@@ -69,43 +77,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 principals?.ToList(),
                 excludePrincipals?.ToList(),
                 isSystemProtected,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DenyAssignmentPermission"/>. </summary>
-        /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
-        /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
-        /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
-        /// <param name="notDataActions"> Data actions to exclude from that the deny assignment does not grant access. </param>
-        /// <param name="condition"> The conditions on the Deny assignment permission. This limits the resources it applies to. </param>
-        /// <param name="conditionVersion"> Version of the condition. </param>
-        /// <returns> A new <see cref="Models.DenyAssignmentPermission"/> instance for mocking. </returns>
-        public static DenyAssignmentPermission DenyAssignmentPermission(IEnumerable<string> actions = null, IEnumerable<string> notActions = null, IEnumerable<string> dataActions = null, IEnumerable<string> notDataActions = null, string condition = null, string conditionVersion = null)
-        {
-            actions ??= new List<string>();
-            notActions ??= new List<string>();
-            dataActions ??= new List<string>();
-            notDataActions ??= new List<string>();
-
-            return new DenyAssignmentPermission(
-                actions?.ToList(),
-                notActions?.ToList(),
-                dataActions?.ToList(),
-                notDataActions?.ToList(),
+                denyAssignmentEffect,
                 condition,
                 conditionVersion,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementPrincipal"/>. </summary>
-        /// <param name="id"> The id of the principal made changes. </param>
-        /// <param name="displayName"> The name of the principal made changes. </param>
-        /// <param name="principalType"> Type of the principal. </param>
-        /// <param name="email"> Email of principal. </param>
-        /// <returns> A new <see cref="Models.RoleManagementPrincipal"/> instance for mocking. </returns>
-        public static RoleManagementPrincipal RoleManagementPrincipal(string id = null, string displayName = null, RoleManagementPrincipalType? principalType = null, string email = null)
-        {
-            return new RoleManagementPrincipal(id, displayName, principalType, email, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationProviderOperationsMetadataData"/>. </summary>
@@ -247,8 +226,12 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <param name="createdOn"> Time it was created. </param>
+        /// <param name="updatedOn"> Time it was updated. </param>
+        /// <param name="createdBy"> Id of the user who created the assignment. </param>
+        /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationRoleDefinitionData"/> instance for mocking. </returns>
-        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, string description = null, AuthorizationRoleType? roleType = null, IEnumerable<RoleDefinitionPermission> permissions = null, IEnumerable<string> assignableScopes = null)
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, string description = null, AuthorizationRoleType? roleType = null, IEnumerable<RoleDefinitionPermission> permissions = null, IEnumerable<string> assignableScopes = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string createdBy = null, string updatedBy = null)
         {
             permissions ??= new List<RoleDefinitionPermission>();
             assignableScopes ??= new List<string>();
@@ -263,6 +246,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 roleType,
                 permissions?.ToList(),
                 assignableScopes?.ToList(),
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
                 serializedAdditionalRawData: null);
         }
 
@@ -721,6 +708,43 @@ namespace Azure.ResourceManager.Authorization.Models
                 scopeDisplayName,
                 scopeType,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Authorization.DenyAssignmentData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
+        /// <param name="description"> The description of the deny assignment. </param>
+        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
+        /// <param name="scope"> The deny assignment scope. </param>
+        /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
+        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
+        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
+        /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Authorization.DenyAssignmentData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IEnumerable<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IEnumerable<RoleManagementPrincipal> principals, IEnumerable<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected)
+        {
+            return DenyAssignmentData(id: id, name: name, resourceType: resourceType, systemData: systemData, denyAssignmentName: denyAssignmentName, description: description, permissions: permissions, scope: scope, isAppliedToChildScopes: isAppliedToChildScopes, principals: principals, excludePrincipals: excludePrincipals, isSystemProtected: isSystemProtected, denyAssignmentEffect: default, condition: default, conditionVersion: default, createdOn: default, updatedOn: default, createdBy: default, updatedBy: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="roleName"> The role name. </param>
+        /// <param name="description"> The role definition description. </param>
+        /// <param name="roleType"> The role type. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="assignableScopes"> Role definition assignable scopes. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IEnumerable<RoleDefinitionPermission> permissions, IEnumerable<string> assignableScopes)
+        {
+            return AuthorizationRoleDefinitionData(id: id, name: name, resourceType: resourceType, systemData: systemData, roleName: roleName, description: description, roleType: roleType, permissions: permissions, assignableScopes: assignableScopes, createdOn: default, updatedOn: default, createdBy: default, updatedBy: default);
         }
     }
 }
