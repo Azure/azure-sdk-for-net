@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryHttpFileSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryHttpFileSource"/>. </summary>
-        public DataFactoryHttpFileSource()
+        public DataFactoryHttpFileSource() : base("HttpSource")
         {
-            CopySourceType = "HttpSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryHttpFileSource"/>. </summary>
@@ -26,12 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="httpRequestTimeout"> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         internal DataFactoryHttpFileSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> httpRequestTimeout) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             HttpRequestTimeout = httpRequestTimeout;
-            CopySourceType = copySourceType ?? "HttpSource";
         }
 
         /// <summary> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. The default value is equivalent to System.Net.HttpWebRequest.Timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>

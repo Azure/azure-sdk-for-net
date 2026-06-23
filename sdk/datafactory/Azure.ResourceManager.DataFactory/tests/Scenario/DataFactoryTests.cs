@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task DataFactory_Create_Exists_Get_List_Delete()
         {
             // Get the resource group

@@ -7,16 +7,57 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeNodeMonitoringData : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeNodeMonitoringData>
+    /// <summary> Monitoring data for integration runtime node. </summary>
+    public partial class IntegrationRuntimeNodeMonitoringData : IJsonModel<IntegrationRuntimeNodeMonitoringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeNodeMonitoringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeNodeMonitoringData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIntegrationRuntimeNodeMonitoringData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeNodeMonitoringData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IntegrationRuntimeNodeMonitoringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IntegrationRuntimeNodeMonitoringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
@@ -78,9 +118,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -88,22 +128,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        IntegrationRuntimeNodeMonitoringData IJsonModel<IntegrationRuntimeNodeMonitoringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeNodeMonitoringData IJsonModel<IntegrationRuntimeNodeMonitoringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeNodeMonitoringData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIntegrationRuntimeNodeMonitoringData(document.RootElement, options);
         }
 
-        internal static IntegrationRuntimeNodeMonitoringData DeserializeIntegrationRuntimeNodeMonitoringData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IntegrationRuntimeNodeMonitoringData DeserializeIntegrationRuntimeNodeMonitoringData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,81 +161,79 @@ namespace Azure.ResourceManager.DataFactory.Models
             int? maxConcurrentJobs = default;
             float? sentBytes = default;
             float? receivedBytes = default;
-            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nodeName"u8))
+                if (prop.NameEquals("nodeName"u8))
                 {
-                    nodeName = property.Value.GetString();
+                    nodeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("availableMemoryInMB"u8))
+                if (prop.NameEquals("availableMemoryInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableMemoryInMB = property.Value.GetInt32();
+                    availableMemoryInMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuUtilization"u8))
+                if (prop.NameEquals("cpuUtilization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuUtilization = property.Value.GetInt32();
+                    cpuUtilization = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsLimit"u8))
+                if (prop.NameEquals("concurrentJobsLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    concurrentJobsLimit = property.Value.GetInt32();
+                    concurrentJobsLimit = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("concurrentJobsRunning"u8))
+                if (prop.NameEquals("concurrentJobsRunning"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    concurrentJobsRunning = property.Value.GetInt32();
+                    concurrentJobsRunning = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentJobs"u8))
+                if (prop.NameEquals("maxConcurrentJobs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxConcurrentJobs = property.Value.GetInt32();
+                    maxConcurrentJobs = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sentBytes"u8))
+                if (prop.NameEquals("sentBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sentBytes = property.Value.GetSingle();
+                    sentBytes = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("receivedBytes"u8))
+                if (prop.NameEquals("receivedBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    receivedBytes = property.Value.GetSingle();
+                    receivedBytes = prop.Value.GetSingle();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeNodeMonitoringData(
                 nodeName,
                 availableMemoryInMB,
@@ -200,38 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 maxConcurrentJobs,
                 sentBytes,
                 receivedBytes,
-                additionalProperties);
+                new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
-
-        BinaryData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IntegrationRuntimeNodeMonitoringData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeNodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIntegrationRuntimeNodeMonitoringData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeNodeMonitoringData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IntegrationRuntimeNodeMonitoringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
