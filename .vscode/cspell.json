@@ -232,7 +232,6 @@
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "invokable",
-        "opid",
         "signin",
         "wadl"
       ]
