@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(MonitorScaleCapacity)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("minimum"u8);
-            writer.WriteNumberValue(Minimum);
+            WriteMinimum(writer, options);
             writer.WritePropertyName("maximum"u8);
-            writer.WriteNumberValue(Maximum);
+            WriteMaximum(writer, options);
             writer.WritePropertyName("default"u8);
-            writer.WriteNumberValue(Default);
+            WriteDefault(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("minimum"u8))
                 {
-                    minimum = prop.Value.GetInt32();
+                    ReadMinimum(prop, ref minimum);
                     continue;
                 }
                 if (prop.NameEquals("maximum"u8))
                 {
-                    maximum = prop.Value.GetInt32();
+                    ReadMaximum(prop, ref maximum);
                     continue;
                 }
                 if (prop.NameEquals("default"u8))
                 {
-                    @default = prop.Value.GetInt32();
+                    ReadDefault(prop, ref @default);
                     continue;
                 }
                 if (options.Format != "W")
