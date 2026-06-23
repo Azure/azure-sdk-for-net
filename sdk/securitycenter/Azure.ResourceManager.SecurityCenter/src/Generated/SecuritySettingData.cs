@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> the kind of the settings string. </summary>
-        public SettingKind Kind { get; set; }
+        internal SettingKind Kind { get; set; }
     }
 }

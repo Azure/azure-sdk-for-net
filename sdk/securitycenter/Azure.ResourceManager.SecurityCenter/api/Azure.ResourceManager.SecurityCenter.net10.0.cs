@@ -3381,7 +3381,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         public SecuritySettingData() { }
         public SecuritySettingData(Azure.ResourceManager.SecurityCenter.Models.SettingKind kind) { }
-        public Azure.ResourceManager.SecurityCenter.Models.SettingKind Kind { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsNotNull(setting);
             Assert.IsNotNull(setting.Data.Id);
             Assert.AreEqual(settingName, setting.Data.Name);
-            Assert.AreEqual("DataExportSettings", setting.Data.Kind.ToString());
             Assert.AreEqual("Microsoft.Security/settings", setting.Data.ResourceType.ToString());
         }
     }
