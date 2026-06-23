@@ -858,36 +858,21 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="ScanResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScanResultResource"/> object. </returns>
-        public virtual ScanResultResource GetScanResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
+        public virtual SqlVulnerabilityAssessmentScanResultResource GetSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier id)
         {
-            ScanResultResource.ValidateResourceId(id);
-            return new ScanResultResource(Client, id);
+            SqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
+            return new SqlVulnerabilityAssessmentScanResultResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="ScanResultCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="SqlVulnerabilityAssessmentScanResultCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="ScanResultResource"/> objects. </returns>
-        public virtual ScanResultCollection GetScanResults(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentScanResultResource"/> objects. </returns>
+        public virtual SqlVulnerabilityAssessmentScanResultCollection GetSqlVulnerabilityAssessmentScanResults(ResourceIdentifier scope)
         {
-            return new ScanResultCollection(Client, scope);
-        }
-
-        /// <summary> Gets the scan results of a single rule in a scan record. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="scanResultId"></param>
-        /// <param name="databaseName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ScanResultResource> GetScanResult(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
-
-            return GetScanResults(scope).Get(scanResultId, databaseName, cancellationToken);
+            return new SqlVulnerabilityAssessmentScanResultCollection(Client, scope);
         }
 
         /// <summary> Gets the scan results of a single rule in a scan record. </summary>
@@ -898,11 +883,26 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScanResultResource>> GetScanResultAsync(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        public virtual Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
 
-            return await GetScanResults(scope).GetAsync(scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
+            return GetSqlVulnerabilityAssessmentScanResults(scope).Get(scanResultId, databaseName, cancellationToken);
+        }
+
+        /// <summary> Gets the scan results of a single rule in a scan record. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scanResultId"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scanResultId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scanResultId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scanResultId, nameof(scanResultId));
+
+            return await GetSqlVulnerabilityAssessmentScanResults(scope).GetAsync(scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="StandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>

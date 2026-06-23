@@ -29,10 +29,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [CodeGenSuppress("RuleResultsProperties", typeof(IEnumerable<IList<string>>), typeof(bool?))]
     [CodeGenSuppress("RuleResultsInput", typeof(bool?), typeof(IEnumerable<IList<string>>))]
     [CodeGenSuppress("RulesResultsInput", typeof(bool?), typeof(IDictionary<string, IList<IList<string>>>))]
-    [CodeGenSuppress("ScanResultProperties", typeof(string), typeof(SqlVulnerabilityAssessmentScanResultRuleStatus?), typeof(bool?), typeof(IEnumerable<IList<string>>), typeof(Remediation), typeof(BaselineAdjustedResult), typeof(VaRule))]
+    [CodeGenSuppress("SqlVulnerabilityAssessmentScanResultProperties", typeof(string), typeof(SqlVulnerabilityAssessmentScanResultRuleStatus?), typeof(bool?), typeof(IEnumerable<IList<string>>), typeof(SqlVulnerabilityAssessmentRemediation), typeof(BaselineAdjustedResult), typeof(VulnerabilityAssessmentRule))]
     [CodeGenSuppress("BaselineAdjustedResult", typeof(SqlVulnerabilityAssessmentBaseline), typeof(SqlVulnerabilityAssessmentScanResultRuleStatus?), typeof(IEnumerable<IList<string>>), typeof(IEnumerable<IList<string>>))]
     [CodeGenSuppress("SqlVulnerabilityAssessmentBaseline", typeof(IEnumerable<IList<string>>))]
-    [CodeGenSuppress("QueryCheck", typeof(string), typeof(IEnumerable<IList<string>>), typeof(IEnumerable<string>))]
     public static partial class ArmSecurityCenterModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.DefenderCspmGcpOffering"/>. </summary>
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new RulesResultsInput(isLatestScan, ToStringListRowDictionary(results), new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ScanResultProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentScanResultProperties"/>. </summary>
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="status"> The rule result status. </param>
         /// <param name="isTrimmed"> Indicates whether the results specified here are trimmed. </param>
@@ -137,10 +136,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="remediation"> Remediation details. </param>
         /// <param name="baselineAdjustedResult"> The rule result adjusted with baseline. </param>
         /// <param name="ruleMetadata"> vulnerability assessment rule metadata details. </param>
-        /// <returns> A new <see cref="Models.ScanResultProperties"/> instance for mocking. </returns>
-        public static ScanResultProperties ScanResultProperties(string ruleId = default, SqlVulnerabilityAssessmentScanResultRuleStatus? status = default, bool? isTrimmed = default, IEnumerable<IEnumerable<string>> queryResults = default, Remediation remediation = default, BaselineAdjustedResult baselineAdjustedResult = default, VaRule ruleMetadata = default)
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResultProperties"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResultProperties SqlVulnerabilityAssessmentScanResultProperties(string ruleId = default, SqlVulnerabilityAssessmentScanResultRuleStatus? status = default, bool? isTrimmed = default, IEnumerable<IEnumerable<string>> queryResults = default, SqlVulnerabilityAssessmentRemediation remediation = default, BaselineAdjustedResult baselineAdjustedResult = default, VulnerabilityAssessmentRule ruleMetadata = default)
         {
-            return new ScanResultProperties(
+            return new SqlVulnerabilityAssessmentScanResultProperties(
                 ruleId,
                 status,
                 isTrimmed,
@@ -175,14 +174,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentBaseline(ToStringListRows(expectedResults), new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QueryCheck"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VulnerabilityAssessmentRuleQueryCheck"/>. </summary>
         /// <param name="query"> The rule query. </param>
         /// <param name="expectedResult"> Expected result. </param>
         /// <param name="columnNames"> Column names of expected result. </param>
-        /// <returns> A new <see cref="Models.QueryCheck"/> instance for mocking. </returns>
-        public static QueryCheck QueryCheck(string query = default, IEnumerable<IEnumerable<string>> expectedResult = default, IEnumerable<string> columnNames = default)
+        /// <returns> A new <see cref="Models.VulnerabilityAssessmentRuleQueryCheck"/> instance for mocking. </returns>
+        public static VulnerabilityAssessmentRuleQueryCheck VulnerabilityAssessmentRuleQueryCheck(string query = default, IEnumerable<IEnumerable<string>> expectedResult = default, IEnumerable<string> columnNames = default)
         {
-            return new QueryCheck(
+            return new VulnerabilityAssessmentRuleQueryCheck(
                 query,
                 ToStringListRows(expectedResult),
                 columnNames is null ? new ChangeTrackingList<string>() : columnNames.ToList(),

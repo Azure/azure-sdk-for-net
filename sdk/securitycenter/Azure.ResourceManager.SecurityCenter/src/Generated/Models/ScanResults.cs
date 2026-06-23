@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="ScanResults"/>. </summary>
         internal ScanResults()
         {
-            Value = new ChangeTrackingList<ScanResultData>();
+            Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanResultData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScanResults"/>. </summary>
         /// <param name="value"> List of vulnerability assessment scan results. </param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScanResults(IList<ScanResultData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScanResults(IList<SqlVulnerabilityAssessmentScanResultData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> List of vulnerability assessment scan results. </summary>
-        public IList<ScanResultData> Value { get; }
+        public IList<SqlVulnerabilityAssessmentScanResultData> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

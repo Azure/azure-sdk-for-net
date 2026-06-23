@@ -2350,12 +2350,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="regions"> list of regions to scan. </param>
         /// <param name="accountName"> The AWS account name. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        /// <returns> A new <see cref="Models.AwsEnvironmentInfo"/> instance for mocking. </returns>
-        public static AwsEnvironmentInfo AwsEnvironmentInfo(AwsOrganizationalInfo organizationalData = default, IEnumerable<string> regions = default, string accountName = default, long? scanInterval = default)
+        /// <returns> A new <see cref="Models.AwsEnvironment"/> instance for mocking. </returns>
+        public static AwsEnvironment AwsEnvironment(AwsOrganizationalInfo organizationalData = default, IEnumerable<string> regions = default, string accountName = default, long? scanInterval = default)
         {
             regions ??= new ChangeTrackingList<string>();
 
-            return new AwsEnvironmentInfo(
+            return new AwsEnvironment(
                 default,
                 default,
                 organizationalData,
@@ -2391,10 +2391,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="organizationalData"> The Gcp project's organizational data. </param>
         /// <param name="projectDetails"> The Gcp project's details. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        /// <returns> A new <see cref="Models.GcpProjectEnvironmentInfo"/> instance for mocking. </returns>
-        public static GcpProjectEnvironmentInfo GcpProjectEnvironmentInfo(GcpOrganizationalInfo organizationalData = default, GcpProjectDetails projectDetails = default, long? scanInterval = default)
+        /// <returns> A new <see cref="Models.GcpProjectEnvironment"/> instance for mocking. </returns>
+        public static GcpProjectEnvironment GcpProjectEnvironment(GcpOrganizationalInfo organizationalData = default, GcpProjectDetails projectDetails = default, long? scanInterval = default)
         {
-            return new GcpProjectEnvironmentInfo(default, default, organizationalData, projectDetails, scanInterval);
+            return new GcpProjectEnvironment(default, default, organizationalData, projectDetails, scanInterval);
         }
 
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
@@ -2440,16 +2440,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName, default);
         }
 
-        /// <returns> A new <see cref="Models.GithubScopeEnvironmentInfo"/> instance for mocking. </returns>
-        public static GithubScopeEnvironmentInfo GithubScopeEnvironmentInfo()
+        /// <returns> A new <see cref="Models.GithubScopeEnvironment"/> instance for mocking. </returns>
+        public static GithubScopeEnvironment GithubScopeEnvironment()
         {
-            return new GithubScopeEnvironmentInfo(default, default);
+            return new GithubScopeEnvironment(default, default);
         }
 
-        /// <returns> A new <see cref="Models.AzureDevOpsScopeEnvironmentInfo"/> instance for mocking. </returns>
-        public static AzureDevOpsScopeEnvironmentInfo AzureDevOpsScopeEnvironmentInfo()
+        /// <returns> A new <see cref="Models.AzureDevOpsScopeEnvironment"/> instance for mocking. </returns>
+        public static AzureDevOpsScopeEnvironment AzureDevOpsScopeEnvironment()
         {
-            return new AzureDevOpsScopeEnvironmentInfo(default, default);
+            return new AzureDevOpsScopeEnvironment(default, default);
         }
 
         /// <returns> A new <see cref="Models.GitlabScopeEnvironmentInfo"/> instance for mocking. </returns>
@@ -3483,54 +3483,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
-        /// <returns> A new <see cref="SecurityCenter.ScanResultData"/> instance for mocking. </returns>
-        public static ScanResultData ScanResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScanResultProperties properties = default)
+        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanResultData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResultData SqlVulnerabilityAssessmentScanResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanResultProperties properties = default)
         {
-            return new ScanResultData(
+            return new SqlVulnerabilityAssessmentScanResultData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                default);
-        }
-
-        /// <param name="description"> Remediation description. </param>
-        /// <param name="scripts"> Remediation script. </param>
-        /// <param name="isAutomated"> Is remediation automated. </param>
-        /// <param name="portalLink"> Optional link to remediate in Azure Portal. </param>
-        /// <returns> A new <see cref="Models.Remediation"/> instance for mocking. </returns>
-        public static Remediation Remediation(string description = default, IEnumerable<string> scripts = default, bool? isAutomated = default, string portalLink = default)
-        {
-            scripts ??= new ChangeTrackingList<string>();
-
-            return new Remediation(description, (scripts ?? new ChangeTrackingList<string>()).ToList(), isAutomated, portalLink, default);
-        }
-
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="severity"> The rule severity. </param>
-        /// <param name="category"> The rule category. </param>
-        /// <param name="ruleType"> The rule type. </param>
-        /// <param name="title"> The rule title. </param>
-        /// <param name="description"> The rule description. </param>
-        /// <param name="rationale"> The rule rationale. </param>
-        /// <param name="queryCheck"> The rule query details. </param>
-        /// <param name="benchmarkReferences"> The benchmark references. </param>
-        /// <returns> A new <see cref="Models.VaRule"/> instance for mocking. </returns>
-        public static VaRule VaRule(string ruleId = default, RuleSeverity? severity = default, string category = default, VulnerabilityAssessmentRuleType? ruleType = default, string title = default, string description = default, string rationale = default, QueryCheck queryCheck = default, IEnumerable<BenchmarkReference> benchmarkReferences = default)
-        {
-            benchmarkReferences ??= new ChangeTrackingList<BenchmarkReference>();
-
-            return new VaRule(
-                ruleId,
-                severity,
-                category,
-                ruleType,
-                title,
-                description,
-                rationale,
-                queryCheck,
-                (benchmarkReferences ?? new ChangeTrackingList<BenchmarkReference>()).ToList(),
                 default);
         }
 

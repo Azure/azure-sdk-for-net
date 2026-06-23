@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security connector environment data.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironmentInfo"/>, <see cref="GcpProjectEnvironmentInfo"/>, <see cref="GithubScopeEnvironmentInfo"/>, <see cref="AzureDevOpsScopeEnvironmentInfo"/>, <see cref="GitlabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitlabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityConnectorEnvironment))]
     public abstract partial class SecurityConnectorEnvironment : IJsonModel<SecurityConnectorEnvironment>
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 switch (discriminator.GetString())
                 {
                     case "AwsAccount":
-                        return AwsEnvironmentInfo.DeserializeAwsEnvironmentInfo(element, options);
+                        return AwsEnvironment.DeserializeAwsEnvironment(element, options);
                     case "GcpProject":
-                        return GcpProjectEnvironmentInfo.DeserializeGcpProjectEnvironmentInfo(element, options);
+                        return GcpProjectEnvironment.DeserializeGcpProjectEnvironment(element, options);
                     case "GithubScope":
-                        return GithubScopeEnvironmentInfo.DeserializeGithubScopeEnvironmentInfo(element, options);
+                        return GithubScopeEnvironment.DeserializeGithubScopeEnvironment(element, options);
                     case "AzureDevOpsScope":
-                        return AzureDevOpsScopeEnvironmentInfo.DeserializeAzureDevOpsScopeEnvironmentInfo(element, options);
+                        return AzureDevOpsScopeEnvironment.DeserializeAzureDevOpsScopeEnvironment(element, options);
                     case "GitlabScope":
                         return GitlabScopeEnvironmentInfo.DeserializeGitlabScopeEnvironmentInfo(element, options);
                     case "DockerHubOrganization":

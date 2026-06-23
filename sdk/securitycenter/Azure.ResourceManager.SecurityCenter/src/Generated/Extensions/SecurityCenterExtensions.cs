@@ -1503,46 +1503,46 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScanResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SqlVulnerabilityAssessmentScanResultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetScanResultResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScanResultResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ScanResultResource"/> object. </returns>
-        public static ScanResultResource GetScanResultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SqlVulnerabilityAssessmentScanResultResource"/> object. </returns>
+        public static SqlVulnerabilityAssessmentScanResultResource GetSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetScanResultResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResultResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="ScanResultCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="SqlVulnerabilityAssessmentScanResultCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetScanResults(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScanResults(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="ScanResultResource"/> objects. </returns>
-        public static ScanResultCollection GetScanResults(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="SqlVulnerabilityAssessmentScanResultResource"/> objects. </returns>
+        public static SqlVulnerabilityAssessmentScanResultCollection GetSqlVulnerabilityAssessmentScanResults(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetScanResults(scope);
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResults(scope);
         }
 
         /// <summary>
         /// Gets the scan results of a single rule in a scan record.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetScanResult(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScanResult(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1552,18 +1552,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScanResultResource> GetScanResult(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        public static Response<SqlVulnerabilityAssessmentScanResultResource> GetSqlVulnerabilityAssessmentScanResult(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetScanResult(scope, scanResultId, databaseName, cancellationToken);
+            return GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResult(scope, scanResultId, databaseName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the scan results of a single rule in a scan record.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetScanResultAsync(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSqlVulnerabilityAssessmentScanResultAsync(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -1573,11 +1573,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScanResultResource>> GetScanResultAsync(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<SqlVulnerabilityAssessmentScanResultResource>> GetSqlVulnerabilityAssessmentScanResultAsync(this ArmClient client, ResourceIdentifier scope, string scanResultId, string databaseName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableSecurityCenterArmClient(client).GetScanResultAsync(scope, scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanResultAsync(scope, scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

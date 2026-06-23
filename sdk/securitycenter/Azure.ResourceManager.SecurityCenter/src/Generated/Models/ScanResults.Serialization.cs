@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ScanResultData item in Value)
+                foreach (SqlVulnerabilityAssessmentScanResultData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<ScanResultData> value = default;
+            IList<SqlVulnerabilityAssessmentScanResultData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<ScanResultData> array = new List<ScanResultData>();
+                    List<SqlVulnerabilityAssessmentScanResultData> array = new List<SqlVulnerabilityAssessmentScanResultData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScanResultData.DeserializeScanResultData(item, options));
+                        array.Add(SqlVulnerabilityAssessmentScanResultData.DeserializeSqlVulnerabilityAssessmentScanResultData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScanResults(value ?? new ChangeTrackingList<ScanResultData>(), nextLink, additionalBinaryDataProperties);
+            return new ScanResults(value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentScanResultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

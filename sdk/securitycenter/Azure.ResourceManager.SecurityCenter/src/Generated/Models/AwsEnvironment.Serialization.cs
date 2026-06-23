@@ -14,119 +14,54 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AWS connector environment data. </summary>
-    public partial class AwsEnvironmentInfo : SecurityConnectorEnvironment, IJsonModel<AwsEnvironmentInfo>
+    public partial class AwsEnvironment : SecurityConnectorEnvironment, IJsonModel<AwsEnvironment>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAwsEnvironmentInfo(document.RootElement, options);
+                        return DeserializeAwsEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsEnvironmentInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AwsEnvironmentInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AwsEnvironmentInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AwsEnvironmentInfo IPersistableModel<AwsEnvironmentInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (AwsEnvironmentInfo)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AwsEnvironmentInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AwsEnvironmentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AwsEnvironmentInfo)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(OrganizationalData))
-            {
-                writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData, options);
-            }
-            if (Optional.IsCollectionDefined(Regions))
-            {
-                writer.WritePropertyName("regions"u8);
-                writer.WriteStartArray();
-                foreach (string item in Regions)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(AccountName))
-            {
-                writer.WritePropertyName("accountName"u8);
-                writer.WriteStringValue(AccountName);
-            }
-            if (Optional.IsDefined(ScanInterval))
-            {
-                writer.WritePropertyName("scanInterval"u8);
-                writer.WriteNumberValue(ScanInterval.Value);
-            }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AwsEnvironmentInfo IJsonModel<AwsEnvironmentInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AwsEnvironmentInfo)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsEnvironmentInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAwsEnvironmentInfo(document.RootElement, options);
+            return DeserializeAwsEnvironment(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AwsEnvironmentInfo DeserializeAwsEnvironmentInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AwsEnvironmentInfo(
+            return new AwsEnvironment(
                 environmentType,
                 additionalBinaryDataProperties,
                 organizationalData,

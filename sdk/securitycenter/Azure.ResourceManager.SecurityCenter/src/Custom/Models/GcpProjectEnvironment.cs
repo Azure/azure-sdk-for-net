@@ -5,64 +5,64 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // The current TypeSpec shape renamed this GA model to GcpProjectEnvironmentInfo. Keep this hidden compatibility type and delegate wire operations to the generated replacement.
-    /// <summary>
-    /// Provides a compatibility shim for the GcpProjectEnvironment class.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class GcpProjectEnvironment : SecurityConnectorEnvironment, IJsonModel<GcpProjectEnvironment>, IPersistableModel<GcpProjectEnvironment>
+    public partial class GcpProjectEnvironment : IPersistableModel<GcpProjectEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GcpProjectEnvironment"/> type for compatibility with the previous public API surface.
-        /// </summary>
-        public GcpProjectEnvironment() { }
-
-        private GcpProjectEnvironment(GcpProjectEnvironmentInfo info) : this()
+        /// <summary> Initializes a new instance of <see cref="GcpProjectEnvironment"/>. </summary>
+        public GcpProjectEnvironment() : base(EnvironmentType.GcpProject, new ChangeTrackingDictionary<string, BinaryData>())
         {
-            OrganizationalData = info.OrganizationalData;
-            ProjectDetails = info.ProjectDetails;
-            ScanInterval = info.ScanInterval;
         }
 
-        private GcpProjectEnvironmentInfo ToGenerated()
-        {
-            return new GcpProjectEnvironmentInfo(EnvironmentType.GcpProject, new Dictionary<string, BinaryData>(), OrganizationalData, ProjectDetails, ScanInterval);
-        }
-        /// <summary>
-        /// Gets or sets the OrganizationalData value preserved from the previous public API surface.
-        /// </summary>
+        /// <summary> Gets or sets the GCP project's organizational data. </summary>
         public GcpOrganizationalInfo OrganizationalData { get; set; }
-        /// <summary>
-        /// Gets or sets the ProjectDetails value preserved from the previous public API surface.
-        /// </summary>
+
+        /// <summary> Gets or sets the GCP project's details. </summary>
         public GcpProjectDetails ProjectDetails { get; set; }
-        /// <summary>
-        /// Gets or sets the ScanInterval value preserved from the previous public API surface.
-        /// </summary>
+
+        /// <summary> Gets or sets the scan interval in hours. </summary>
         public long? ScanInterval { get; set; }
-        /// <summary>
-        /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
-        /// </summary>
-        /// <param name="writer">The value preserved for API compatibility.</param>
-        /// <param name="options">The value preserved for API compatibility.</param>
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            using JsonDocument document = JsonDocument.Parse(((IPersistableModel<GcpProjectEnvironmentInfo>)ToGenerated()).Write(options), ModelSerializationExtensions.JsonDocumentOptions);
-            foreach (JsonProperty property in document.RootElement.EnumerateObject())
+            base.JsonModelWriteCore(writer, options);
+            WriteModel(writer, "organizationalData", OrganizationalData, options);
+            WriteModel(writer, "projectDetails", ProjectDetails, options);
+            if (Optional.IsDefined(ScanInterval))
             {
-                property.WriteTo(writer);
+                writer.WritePropertyName("scanInterval"u8);
+                writer.WriteNumberValue(ScanInterval.Value);
             }
         }
-        GcpProjectEnvironment IJsonModel<GcpProjectEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new GcpProjectEnvironment(((IJsonModel<GcpProjectEnvironmentInfo>)new GcpProjectEnvironmentInfo()).Create(ref reader, options));
-        void IJsonModel<GcpProjectEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GcpProjectEnvironmentInfo>)ToGenerated()).Write(writer, options);
-        GcpProjectEnvironment IPersistableModel<GcpProjectEnvironment>.Create(System.BinaryData data, ModelReaderWriterOptions options) => new GcpProjectEnvironment(((IPersistableModel<GcpProjectEnvironmentInfo>)new GcpProjectEnvironmentInfo()).Create(data, options));
-        string IPersistableModel<GcpProjectEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GcpProjectEnvironmentInfo>)new GcpProjectEnvironmentInfo()).GetFormatFromOptions(options);
-        System.BinaryData IPersistableModel<GcpProjectEnvironment>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<GcpProjectEnvironmentInfo>)ToGenerated()).Write(options);
+
+        void IJsonModel<GcpProjectEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        GcpProjectEnvironment IJsonModel<GcpProjectEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GcpProjectEnvironment)JsonModelCreateCore(ref reader, options);
+        BinaryData IPersistableModel<GcpProjectEnvironment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        GcpProjectEnvironment IPersistableModel<GcpProjectEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options) => (GcpProjectEnvironment)PersistableModelCreateCore(data, options);
+        string IPersistableModel<GcpProjectEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private static void WriteModel<T>(Utf8JsonWriter writer, string propertyName, T value, ModelReaderWriterOptions options)
+        {
+            if (value is null)
+            {
+                return;
+            }
+
+            writer.WritePropertyName(propertyName);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(value, options, AzureResourceManagerSecurityCenterContext.Default), ModelSerializationExtensions.JsonDocumentOptions);
+            document.RootElement.WriteTo(writer);
+        }
     }
 }
