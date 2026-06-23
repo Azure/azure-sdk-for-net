@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineReimageParameters represents the body of the request to reimage a bare metal machine. </summary>
-    public partial class BareMetalMachineReimageParameters
+    public partial class BareMetalMachineReimageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReimageParameters"/>. </summary>
-        public BareMetalMachineReimageParameters()
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReimageContent"/>. </summary>
+        public BareMetalMachineReimageContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReimageParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineReimageContent"/>. </summary>
         /// <param name="safeguardMode"> The safeguard mode to use for the reimage action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. If not specified, the default is All. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineReimageParameters(BareMetalMachineReimageSafeguardMode? safeguardMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineReimageContent(BareMetalMachineReimageSafeguardMode? safeguardMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SafeguardMode = safeguardMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
