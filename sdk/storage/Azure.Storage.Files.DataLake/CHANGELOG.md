@@ -1,7 +1,5 @@
 # Release History
 
-<<<<<<< HEAD
-=======
 ## 12.28.0-beta.1 (Unreleased)
 
 ### Features Added
@@ -13,7 +11,6 @@
 
 ### Other Changes
 
->>>>>>> b2d010db21c (Fixed SasBuilder.DeepCopy to Preserve all Properties (#59974))
 ## 12.27.0 (2026-06-04)
 
 ### Features Added
