@@ -34,8 +34,6 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PipelineRuns _pipelineRunsRestClient;
         private readonly ClientDiagnostics _exposureControlClientDiagnostics;
         private readonly ExposureControl _exposureControlRestClient;
-        private readonly ClientDiagnostics _triggersClientDiagnostics;
-        private readonly Triggers _triggersRestClient;
         private readonly DataFactoryData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
@@ -68,8 +66,6 @@ namespace Azure.ResourceManager.DataFactory
             _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _exposureControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
         }
 
@@ -1885,6 +1881,92 @@ namespace Azure.ResourceManager.DataFactory
                 "DataFactoryResource.GetTriggerRuns");
         }
 
+        /// <summary>
+        /// Query triggers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/querytriggers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_TriggersQueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the triggers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryTriggerResource> GetTriggersAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new FactoriesGetTriggersAsyncCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                TriggerFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetTriggers"), data => new DataFactoryTriggerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Query triggers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/querytriggers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_TriggersQueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the triggers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryTriggerResource> GetTriggers(TriggerFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new FactoriesGetTriggersCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                TriggerFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetTriggers"), data => new DataFactoryTriggerResource(Client, data));
+        }
+
         /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
@@ -2159,41 +2241,6 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        /// <summary> Gets a collection of DataFactoryTriggers in the <see cref="DataFactoryResource"/>. </summary>
-        /// <returns> An object representing collection of DataFactoryTriggers and their operations over a DataFactoryTriggerResource. </returns>
-        public virtual DataFactoryTriggerCollection GetDataFactoryTriggers()
-        {
-            return GetCachedClient(client => new DataFactoryTriggerCollection(client, Id));
-        }
-
-        /// <summary> Gets a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataFactoryTriggerResource>> GetDataFactoryTriggerAsync(string triggerName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-
-            return await GetDataFactoryTriggers().GetAsync(triggerName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a trigger. </summary>
-        /// <param name="triggerName"> The trigger name. </param>
-        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataFactoryTriggerResource> GetDataFactoryTrigger(string triggerName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
-
-            return GetDataFactoryTriggers().Get(triggerName, ifNoneMatch, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DataFactoryIntegrationRuntimes in the <see cref="DataFactoryResource"/>. </summary>
         /// <returns> An object representing collection of DataFactoryIntegrationRuntimes and their operations over a DataFactoryIntegrationRuntimeResource. </returns>
         public virtual DataFactoryIntegrationRuntimeCollection GetDataFactoryIntegrationRuntimes()
@@ -2332,6 +2379,41 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNullOrEmpty(pipelineName, nameof(pipelineName));
 
             return GetDataFactoryPipelines().Get(pipelineName, ifNoneMatch, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataFactoryTriggers in the <see cref="DataFactoryResource"/>. </summary>
+        /// <returns> An object representing collection of DataFactoryTriggers and their operations over a DataFactoryTriggerResource. </returns>
+        public virtual DataFactoryTriggerCollection GetDataFactoryTriggers()
+        {
+            return GetCachedClient(client => new DataFactoryTriggerCollection(client, Id));
+        }
+
+        /// <summary> Gets a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataFactoryTriggerResource>> GetDataFactoryTriggerAsync(string triggerName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            return await GetDataFactoryTriggers().GetAsync(triggerName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a trigger. </summary>
+        /// <param name="triggerName"> The trigger name. </param>
+        /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataFactoryTriggerResource> GetDataFactoryTrigger(string triggerName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            return GetDataFactoryTriggers().Get(triggerName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataFactoryDataFlows in the <see cref="DataFactoryResource"/>. </summary>

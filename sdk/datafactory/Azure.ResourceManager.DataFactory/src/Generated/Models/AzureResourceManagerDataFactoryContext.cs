@@ -341,6 +341,7 @@ namespace Azure.ResourceManager.DataFactory
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerData))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerListResult))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerProperties))]
+    [ModelReaderWriterBuildable(typeof(DataFactoryTriggerQueryResult))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerReference))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerResource))]
     [ModelReaderWriterBuildable(typeof(DataFactoryTriggerRun))]

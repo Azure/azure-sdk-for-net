@@ -57,24 +57,6 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataFactoryTriggerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataFactoryArmClient.GetDataFactoryTriggerResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
-        public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDataFactoryArmClient(client).GetDataFactoryTriggerResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DataFactoryIntegrationRuntimeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -144,6 +126,24 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryPipelineResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DataFactoryTriggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableDataFactoryArmClient.GetDataFactoryTriggerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
+        public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableDataFactoryArmClient(client).GetDataFactoryTriggerResource(id);
         }
 
         /// <summary>

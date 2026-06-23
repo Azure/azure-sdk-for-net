@@ -4,21 +4,16 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
     // This partial restores pre-MPG DataFactoryResource API surface:
-    //   1. Back-compat string ifNoneMatch overloads ([EditorBrowsable(Never)]) that delegate to the
-    //      ETag-based generated methods.
-    //   2. GetTriggers/GetTriggersAsync (see the comment on those members). The remaining query
-    //      operations are generated directly as Pageable<T> via @@Legacy.markAsPageable in client.tsp.
+    //   Back-compat string ifNoneMatch overloads ([EditorBrowsable(Never)]) that delegate to the
+    //   ETag-based generated methods.
     public partial class DataFactoryResource
     {
         /// <summary> Gets a factory. </summary>
@@ -291,119 +286,6 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Response<DataFactoryManagedIdentityCredentialResource> GetDataFactoryManagedIdentityCredential(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return GetDataFactoryManagedIdentityCredentials().Get(credentialName, ifNoneMatch, cancellationToken);
-        }
-
-        // Kept custom rather than @@Legacy.markAsPageable: GA returns Pageable<DataFactoryTriggerResource>
-        // (the resource wrapper), whereas markAsPageable pages over the TriggerResource data items and
-        // would yield Pageable<DataFactoryTriggerData>. This convenience method wraps each data item into
-        // its DataFactoryTriggerResource to preserve the previously shipped API surface.
-        /// <summary> Query triggers in the factory by criteria. </summary>
-        [ForwardsClientCalls(true)]
-        public virtual Pageable<DataFactoryTriggerResource> GetTriggers(TriggerFilterContent content, CancellationToken cancellationToken = default)
-        {
-            var response = GetTriggersInternal(content, cancellationToken);
-            var items = new System.Collections.Generic.List<DataFactoryTriggerResource>();
-            foreach (var data in response.Value.Value)
-            {
-                items.Add(new DataFactoryTriggerResource(Client, data));
-            }
-            return new SinglePagePageable<DataFactoryTriggerResource>(items, response.GetRawResponse());
-        }
-
-        /// <summary> Query triggers in the factory by criteria. </summary>
-        [ForwardsClientCalls(true)]
-        public virtual AsyncPageable<DataFactoryTriggerResource> GetTriggersAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
-        {
-            return new InternalTriggersAsyncPageable(this, content, cancellationToken);
-        }
-
-        private sealed class InternalTriggersAsyncPageable : AsyncPageable<DataFactoryTriggerResource>
-        {
-            private readonly DataFactoryResource _parent;
-            private readonly TriggerFilterContent _content;
-            private readonly CancellationToken _cancellationToken;
-            public InternalTriggersAsyncPageable(DataFactoryResource parent, TriggerFilterContent content, CancellationToken cancellationToken)
-            {
-                _parent = parent; _content = content; _cancellationToken = cancellationToken;
-            }
-            [ForwardsClientCalls]
-            public override async System.Collections.Generic.IAsyncEnumerable<Page<DataFactoryTriggerResource>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                var response = await _parent.GetTriggersInternalAsync(_content, _cancellationToken).ConfigureAwait(false);
-                var items = new System.Collections.Generic.List<DataFactoryTriggerResource>();
-                foreach (var data in response.Value.Value)
-                {
-                    items.Add(new DataFactoryTriggerResource(_parent.Client, data));
-                }
-                yield return Page<DataFactoryTriggerResource>.FromValues(items, null, response.GetRawResponse());
-            }
-        }
-
-        internal sealed class DataFactoryTriggerQueryResult
-        {
-            public IReadOnlyList<DataFactoryTriggerData> Value { get; set; }
-            public string ContinuationToken { get; set; }
-        }
-
-        private static RequestContext BuildContext(CancellationToken cancellationToken)
-        {
-            return new RequestContext { CancellationToken = cancellationToken };
-        }
-
-        private static List<T> ReadArray<T>(JsonElement parent, string propName, Func<JsonElement, T> reader)
-        {
-            var list = new List<T>();
-            if (parent.TryGetProperty(propName, out var arr) && arr.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in arr.EnumerateArray())
-                {
-                    list.Add(reader(item));
-                }
-            }
-            return list;
-        }
-
-        private static string ReadString(JsonElement parent, string propName)
-        {
-            if (parent.TryGetProperty(propName, out var s) && s.ValueKind == JsonValueKind.String)
-            {
-                return s.GetString();
-            }
-            return null;
-        }
-
-        private static T ParseAndDeserialize<T>(Response response, Func<JsonElement, T> deserializer)
-        {
-            using JsonDocument doc = JsonDocument.Parse(response.Content.ToMemory());
-            return deserializer(doc.RootElement);
-        }
-
-        internal Response<DataFactoryTriggerQueryResult> GetTriggersInternal(TriggerFilterContent content, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = BuildContext(cancellationToken);
-            using HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
-            Response response = Pipeline.ProcessMessage(message, context);
-            if (response.Status >= 400) throw new RequestFailedException(response);
-            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerQueryResult
-            {
-                Value = ReadArray(e, "value", el => DataFactoryTriggerData.DeserializeDataFactoryTriggerData(el, ModelSerializationExtensions.WireOptions)),
-                ContinuationToken = ReadString(e, "continuationToken"),
-            });
-            return Response.FromValue(result, response);
-        }
-
-        internal async Task<Response<DataFactoryTriggerQueryResult>> GetTriggersInternalAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = BuildContext(cancellationToken);
-            using HttpMessage message = _triggersRestClient.CreateGetTriggersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TriggerFilterContent.ToRequestContent(content), context);
-            Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            if (response.Status >= 400) throw new RequestFailedException(response);
-            var result = ParseAndDeserialize(response, e => new DataFactoryTriggerQueryResult
-            {
-                Value = ReadArray(e, "value", el => DataFactoryTriggerData.DeserializeDataFactoryTriggerData(el, ModelSerializationExtensions.WireOptions)),
-                ContinuationToken = ReadString(e, "continuationToken"),
-            });
-            return Response.FromValue(result, response);
         }
     }
 }

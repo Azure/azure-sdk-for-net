@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory
@@ -29,11 +28,6 @@ namespace Azure.ResourceManager.DataFactory
     //    old call sites source-compatible.
     public static partial class DataFactoryExtensions
     {
-        private static MockableDataFactoryArmClient GetMockableDataFactoryArmClientForManagedIdentityCredential(ArmClient client)
-        {
-            return GetMockableDataFactoryArmClient(client);
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="DataFactoryManagedIdentityCredentialResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataFactoryManagedIdentityCredentialResource.CreateResourceIdentifier"/> to create a <see cref="ResourceIdentifier"/> from its components.
@@ -47,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataFactoryArmClientForManagedIdentityCredential(client).GetDataFactoryManagedIdentityCredentialResource(id);
+            return GetMockableDataFactoryArmClient(client).GetDataFactoryManagedIdentityCredentialResource(id);
         }
 
         /// <summary> Back-compat overload of GetDataFactory taking <paramref name="ifNoneMatch"/> as a string. </summary>

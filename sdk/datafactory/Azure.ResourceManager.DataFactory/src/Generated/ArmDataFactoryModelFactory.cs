@@ -348,297 +348,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <param name="triggerRunId"> Trigger run id. </param>
-        /// <param name="triggerName"> Trigger name. </param>
-        /// <param name="triggerType"> Trigger type. </param>
-        /// <param name="triggerRunTimestamp"> Trigger run start time. </param>
-        /// <param name="status"> Trigger run status. </param>
-        /// <param name="message"> Trigger error message. </param>
-        /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
-        /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
-        /// <param name="runDimension"> Run dimension for which trigger was fired. </param>
-        /// <param name="dependencyStatus"> Status of the upstream pipelines. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.DataFactoryTriggerRun"/> instance for mocking. </returns>
-        public static DataFactoryTriggerRun DataFactoryTriggerRun(string triggerRunId = default, string triggerName = default, string triggerType = default, DateTimeOffset? triggerRunTimestamp = default, DataFactoryTriggerRunStatus? status = default, string message = default, IReadOnlyDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> triggeredPipelines = default, IReadOnlyDictionary<string, string> runDimension = default, IReadOnlyDictionary<string, BinaryData> dependencyStatus = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-            triggeredPipelines ??= new ChangeTrackingDictionary<string, string>();
-            runDimension ??= new ChangeTrackingDictionary<string, string>();
-            dependencyStatus ??= new ChangeTrackingDictionary<string, BinaryData>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryTriggerRun(
-                triggerRunId,
-                triggerName,
-                triggerType,
-                triggerRunTimestamp,
-                status,
-                message,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
-                runDimension ?? new ChangeTrackingDictionary<string, string>(),
-                dependencyStatus ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Core resource properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResource"/> instance for mocking. </returns>
-        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateLinkResourceProperties properties = default, ETag? eTag = default)
-        {
-            return new DataFactoryPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                default);
-        }
-
-        /// <param name="groupId"> GroupId of a private link resource. </param>
-        /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
-        /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
-        /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static DataFactoryPrivateLinkResourceProperties DataFactoryPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new DataFactoryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="factoryResourceId"> The factory resource id. </param>
-        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
-        /// <returns> A new <see cref="Models.FactoryRepoContent"/> instance for mocking. </returns>
-        public static FactoryRepoContent FactoryRepoContent(ResourceIdentifier factoryResourceId = default, FactoryRepoConfiguration repoConfiguration = default)
-        {
-            return new FactoryRepoContent(factoryResourceId, repoConfiguration, default);
-        }
-
-        /// <param name="category"> The category of outbound network dependency. </param>
-        /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> instance for mocking. </returns>
-        public static IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(string category = default, IEnumerable<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints = default)
-        {
-            endpoints ??= new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
-
-            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, (endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>()).ToList(), default);
-        }
-
-        /// <param name="domainName"> The domain name of endpoint. </param>
-        /// <param name="endpointDetails"> The details of endpoint. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
-        public static IntegrationRuntimeOutboundNetworkDependenciesEndpoint IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName = default, IEnumerable<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = default)
-        {
-            endpointDetails ??= new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
-
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, (endpointDetails ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>()).ToList(), default);
-        }
-
-        /// <param name="port"> The port of endpoint. </param>
-        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> instance for mocking. </returns>
-        public static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port = default)
-        {
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port, default);
-        }
-
-        /// <param name="metadataPath"> Metadata path. </param>
-        /// <returns> A new <see cref="Models.GetSsisObjectMetadataContent"/> instance for mocking. </returns>
-        public static GetSsisObjectMetadataContent GetSsisObjectMetadataContent(string metadataPath = default)
-        {
-            return new GetSsisObjectMetadataContent(metadataPath, default);
-        }
-
-        /// <param name="metadataType"> Type of metadata. </param>
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <returns> A new <see cref="Models.SsisObjectMetadata"/> instance for mocking. </returns>
-        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = default, long? id = default, string name = default, string description = default)
-        {
-            return new UnknownSsisObjectMetadata(default, id, name, description, default);
-        }
-
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <returns> A new <see cref="Models.SsisFolder"/> instance for mocking. </returns>
-        public static SsisFolder SsisFolder(long? id = default, string name = default, string description = default)
-        {
-            return new SsisFolder(default, id, name, description, default);
-        }
-
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <param name="folderId"> Folder id which contains project. </param>
-        /// <param name="version"> Project version. </param>
-        /// <param name="environmentRefs"> Environment reference in project. </param>
-        /// <param name="parameters"> Parameters in project. </param>
-        /// <returns> A new <see cref="Models.SsisProject"/> instance for mocking. </returns>
-        public static SsisProject SsisProject(long? id = default, string name = default, string description = default, long? folderId = default, long? version = default, IEnumerable<SsisEnvironmentReference> environmentRefs = default, IEnumerable<SsisParameterInfo> parameters = default)
-        {
-            environmentRefs ??= new ChangeTrackingList<SsisEnvironmentReference>();
-            parameters ??= new ChangeTrackingList<SsisParameterInfo>();
-
-            return new SsisProject(
-                default,
-                id,
-                name,
-                description,
-                default,
-                folderId,
-                version,
-                (environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>()).ToList(),
-                (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
-        }
-
-        /// <param name="id"> Environment reference id. </param>
-        /// <param name="environmentFolderName"> Environment folder name. </param>
-        /// <param name="environmentName"> Environment name. </param>
-        /// <param name="referenceType"> Reference type. </param>
-        /// <returns> A new <see cref="Models.SsisEnvironmentReference"/> instance for mocking. </returns>
-        public static SsisEnvironmentReference SsisEnvironmentReference(long? id = default, string environmentFolderName = default, string environmentName = default, string referenceType = default)
-        {
-            return new SsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, default);
-        }
-
-        /// <param name="id"> Parameter id. </param>
-        /// <param name="name"> Parameter name. </param>
-        /// <param name="description"> Parameter description. </param>
-        /// <param name="dataType"> Parameter type. </param>
-        /// <param name="isRequired"> Whether parameter is required. </param>
-        /// <param name="isSensitive"> Whether parameter is sensitive. </param>
-        /// <param name="designDefaultValue"> Design default value of parameter. </param>
-        /// <param name="defaultValue"> Default value of parameter. </param>
-        /// <param name="sensitiveDefaultValue"> Default sensitive value of parameter. </param>
-        /// <param name="valueType"> Parameter value type. </param>
-        /// <param name="hasValueSet"> Parameter value set. </param>
-        /// <param name="variable"> Parameter reference variable. </param>
-        /// <returns> A new <see cref="Models.SsisParameterInfo"/> instance for mocking. </returns>
-        public static SsisParameterInfo SsisParameterInfo(long? id = default, string name = default, string description = default, string dataType = default, bool? isRequired = default, bool? isSensitive = default, string designDefaultValue = default, string defaultValue = default, string sensitiveDefaultValue = default, string valueType = default, bool? hasValueSet = default, string variable = default)
-        {
-            return new SsisParameterInfo(
-                id,
-                name,
-                description,
-                dataType,
-                isRequired,
-                isSensitive,
-                designDefaultValue,
-                defaultValue,
-                sensitiveDefaultValue,
-                valueType,
-                hasValueSet,
-                variable,
-                default);
-        }
-
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <param name="folderId"> Folder id which contains package. </param>
-        /// <param name="projectVersion"> Project version which contains package. </param>
-        /// <param name="projectId"> Project id which contains package. </param>
-        /// <param name="parameters"> Parameters in package. </param>
-        /// <returns> A new <see cref="Models.SsisPackage"/> instance for mocking. </returns>
-        public static SsisPackage SsisPackage(long? id = default, string name = default, string description = default, long? folderId = default, long? projectVersion = default, long? projectId = default, IEnumerable<SsisParameterInfo> parameters = default)
-        {
-            parameters ??= new ChangeTrackingList<SsisParameterInfo>();
-
-            return new SsisPackage(
-                default,
-                id,
-                name,
-                description,
-                default,
-                folderId,
-                projectVersion,
-                projectId,
-                (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
-        }
-
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
-        /// <param name="folderId"> Folder id which contains environment. </param>
-        /// <param name="variables"> Variable in environment. </param>
-        /// <returns> A new <see cref="Models.SsisEnvironment"/> instance for mocking. </returns>
-        public static SsisEnvironment SsisEnvironment(long? id = default, string name = default, string description = default, long? folderId = default, IEnumerable<SsisVariable> variables = default)
-        {
-            variables ??= new ChangeTrackingList<SsisVariable>();
-
-            return new SsisEnvironment(
-                default,
-                id,
-                name,
-                description,
-                default,
-                folderId,
-                (variables ?? new ChangeTrackingList<SsisVariable>()).ToList());
-        }
-
-        /// <param name="id"> Variable id. </param>
-        /// <param name="name"> Variable name. </param>
-        /// <param name="description"> Variable description. </param>
-        /// <param name="dataType"> Variable type. </param>
-        /// <param name="isSensitive"> Whether variable is sensitive. </param>
-        /// <param name="value"> Variable value. </param>
-        /// <param name="sensitiveValue"> Variable sensitive value. </param>
-        /// <returns> A new <see cref="Models.SsisVariable"/> instance for mocking. </returns>
-        public static SsisVariable SsisVariable(long? id = default, string name = default, string description = default, string dataType = default, bool? isSensitive = default, string value = default, string sensitiveValue = default)
-        {
-            return new SsisVariable(
-                id,
-                name,
-                description,
-                dataType,
-                isSensitive,
-                value,
-                sensitiveValue,
-                default);
-        }
-
-        /// <param name="featureName"> The feature name. </param>
-        /// <param name="featureType"> The feature type. </param>
-        /// <returns> A new <see cref="Models.ExposureControlContent"/> instance for mocking. </returns>
-        public static ExposureControlContent ExposureControlContent(string featureName = default, string featureType = default)
-        {
-            return new ExposureControlContent(featureName, featureType, default);
-        }
-
-        /// <param name="featureName"> The feature name. </param>
-        /// <param name="value"> The feature value. </param>
-        /// <returns> A new <see cref="Models.ExposureControlResult"/> instance for mocking. </returns>
-        public static ExposureControlResult ExposureControlResult(string featureName = default, string value = default)
-        {
-            return new ExposureControlResult(featureName, value, default);
-        }
-
-        /// <param name="exposureControlRequests"> List of exposure control features. </param>
-        /// <returns> A new <see cref="Models.ExposureControlBatchContent"/> instance for mocking. </returns>
-        public static ExposureControlBatchContent ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests = default)
-        {
-            exposureControlRequests ??= new ChangeTrackingList<ExposureControlContent>();
-
-            return new ExposureControlBatchContent((exposureControlRequests ?? new ChangeTrackingList<ExposureControlContent>()).ToList(), default);
-        }
-
-        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
-        /// <returns> A new <see cref="Models.ExposureControlBatchResult"/> instance for mocking. </returns>
-        public static ExposureControlBatchResult ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults = default)
-        {
-            exposureControlResults ??= new ChangeTrackingList<ExposureControlResult>();
-
-            return new ExposureControlBatchResult((exposureControlResults ?? new ChangeTrackingList<ExposureControlResult>()).ToList(), default);
-        }
-
         /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
         /// <param name="parentTriggerName"> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </param>
         /// <returns> A new <see cref="Models.TriggerFilterContent"/> instance for mocking. </returns>
@@ -1015,12 +724,295 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <param name="triggerRunId"> Trigger run id. </param>
         /// <param name="triggerName"> Trigger name. </param>
-        /// <param name="status"> Event Subscription Status. </param>
-        /// <returns> A new <see cref="Models.DataFactoryTriggerSubscriptionOperationResult"/> instance for mocking. </returns>
-        public static DataFactoryTriggerSubscriptionOperationResult DataFactoryTriggerSubscriptionOperationResult(string triggerName = default, EventSubscriptionStatus? status = default)
+        /// <param name="triggerType"> Trigger type. </param>
+        /// <param name="triggerRunTimestamp"> Trigger run start time. </param>
+        /// <param name="status"> Trigger run status. </param>
+        /// <param name="message"> Trigger error message. </param>
+        /// <param name="properties"> List of property name and value related to trigger run. Name, value pair depends on type of trigger. </param>
+        /// <param name="triggeredPipelines"> List of pipeline name and run Id triggered by the trigger run. </param>
+        /// <param name="runDimension"> Run dimension for which trigger was fired. </param>
+        /// <param name="dependencyStatus"> Status of the upstream pipelines. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.DataFactoryTriggerRun"/> instance for mocking. </returns>
+        public static DataFactoryTriggerRun DataFactoryTriggerRun(string triggerRunId = default, string triggerName = default, string triggerType = default, DateTimeOffset? triggerRunTimestamp = default, DataFactoryTriggerRunStatus? status = default, string message = default, IReadOnlyDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> triggeredPipelines = default, IReadOnlyDictionary<string, string> runDimension = default, IReadOnlyDictionary<string, BinaryData> dependencyStatus = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            return new DataFactoryTriggerSubscriptionOperationResult(triggerName, status, default);
+            properties ??= new ChangeTrackingDictionary<string, string>();
+            triggeredPipelines ??= new ChangeTrackingDictionary<string, string>();
+            runDimension ??= new ChangeTrackingDictionary<string, string>();
+            dependencyStatus ??= new ChangeTrackingDictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new DataFactoryTriggerRun(
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                triggeredPipelines ?? new ChangeTrackingDictionary<string, string>(),
+                runDimension ?? new ChangeTrackingDictionary<string, string>(),
+                dependencyStatus ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Core resource properties. </param>
+        /// <param name="eTag"> Etag identifies change in the resource. </param>
+        /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResource"/> instance for mocking. </returns>
+        public static DataFactoryPrivateLinkResource DataFactoryPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateLinkResourceProperties properties = default, ETag? eTag = default)
+        {
+            return new DataFactoryPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <param name="groupId"> GroupId of a private link resource. </param>
+        /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
+        /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
+        /// <returns> A new <see cref="Models.DataFactoryPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static DataFactoryPrivateLinkResourceProperties DataFactoryPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new DataFactoryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="factoryResourceId"> The factory resource id. </param>
+        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
+        /// <returns> A new <see cref="Models.FactoryRepoContent"/> instance for mocking. </returns>
+        public static FactoryRepoContent FactoryRepoContent(ResourceIdentifier factoryResourceId = default, FactoryRepoConfiguration repoConfiguration = default)
+        {
+            return new FactoryRepoContent(factoryResourceId, repoConfiguration, default);
+        }
+
+        /// <param name="category"> The category of outbound network dependency. </param>
+        /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> instance for mocking. </returns>
+        public static IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(string category = default, IEnumerable<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints = default)
+        {
+            endpoints ??= new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
+
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, (endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>()).ToList(), default);
+        }
+
+        /// <param name="domainName"> The domain name of endpoint. </param>
+        /// <param name="endpointDetails"> The details of endpoint. </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
+        public static IntegrationRuntimeOutboundNetworkDependenciesEndpoint IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName = default, IEnumerable<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = default)
+        {
+            endpointDetails ??= new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
+
+            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, (endpointDetails ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>()).ToList(), default);
+        }
+
+        /// <param name="port"> The port of endpoint. </param>
+        /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> instance for mocking. </returns>
+        public static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port = default)
+        {
+            return new IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port, default);
+        }
+
+        /// <param name="metadataPath"> Metadata path. </param>
+        /// <returns> A new <see cref="Models.GetSsisObjectMetadataContent"/> instance for mocking. </returns>
+        public static GetSsisObjectMetadataContent GetSsisObjectMetadataContent(string metadataPath = default)
+        {
+            return new GetSsisObjectMetadataContent(metadataPath, default);
+        }
+
+        /// <param name="metadataType"> Type of metadata. </param>
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <returns> A new <see cref="Models.SsisObjectMetadata"/> instance for mocking. </returns>
+        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = default, long? id = default, string name = default, string description = default)
+        {
+            return new UnknownSsisObjectMetadata(default, id, name, description, default);
+        }
+
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <returns> A new <see cref="Models.SsisFolder"/> instance for mocking. </returns>
+        public static SsisFolder SsisFolder(long? id = default, string name = default, string description = default)
+        {
+            return new SsisFolder(default, id, name, description, default);
+        }
+
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <param name="folderId"> Folder id which contains project. </param>
+        /// <param name="version"> Project version. </param>
+        /// <param name="environmentRefs"> Environment reference in project. </param>
+        /// <param name="parameters"> Parameters in project. </param>
+        /// <returns> A new <see cref="Models.SsisProject"/> instance for mocking. </returns>
+        public static SsisProject SsisProject(long? id = default, string name = default, string description = default, long? folderId = default, long? version = default, IEnumerable<SsisEnvironmentReference> environmentRefs = default, IEnumerable<SsisParameterInfo> parameters = default)
+        {
+            environmentRefs ??= new ChangeTrackingList<SsisEnvironmentReference>();
+            parameters ??= new ChangeTrackingList<SsisParameterInfo>();
+
+            return new SsisProject(
+                default,
+                id,
+                name,
+                description,
+                default,
+                folderId,
+                version,
+                (environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>()).ToList(),
+                (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
+        }
+
+        /// <param name="id"> Environment reference id. </param>
+        /// <param name="environmentFolderName"> Environment folder name. </param>
+        /// <param name="environmentName"> Environment name. </param>
+        /// <param name="referenceType"> Reference type. </param>
+        /// <returns> A new <see cref="Models.SsisEnvironmentReference"/> instance for mocking. </returns>
+        public static SsisEnvironmentReference SsisEnvironmentReference(long? id = default, string environmentFolderName = default, string environmentName = default, string referenceType = default)
+        {
+            return new SsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, default);
+        }
+
+        /// <param name="id"> Parameter id. </param>
+        /// <param name="name"> Parameter name. </param>
+        /// <param name="description"> Parameter description. </param>
+        /// <param name="dataType"> Parameter type. </param>
+        /// <param name="isRequired"> Whether parameter is required. </param>
+        /// <param name="isSensitive"> Whether parameter is sensitive. </param>
+        /// <param name="designDefaultValue"> Design default value of parameter. </param>
+        /// <param name="defaultValue"> Default value of parameter. </param>
+        /// <param name="sensitiveDefaultValue"> Default sensitive value of parameter. </param>
+        /// <param name="valueType"> Parameter value type. </param>
+        /// <param name="hasValueSet"> Parameter value set. </param>
+        /// <param name="variable"> Parameter reference variable. </param>
+        /// <returns> A new <see cref="Models.SsisParameterInfo"/> instance for mocking. </returns>
+        public static SsisParameterInfo SsisParameterInfo(long? id = default, string name = default, string description = default, string dataType = default, bool? isRequired = default, bool? isSensitive = default, string designDefaultValue = default, string defaultValue = default, string sensitiveDefaultValue = default, string valueType = default, bool? hasValueSet = default, string variable = default)
+        {
+            return new SsisParameterInfo(
+                id,
+                name,
+                description,
+                dataType,
+                isRequired,
+                isSensitive,
+                designDefaultValue,
+                defaultValue,
+                sensitiveDefaultValue,
+                valueType,
+                hasValueSet,
+                variable,
+                default);
+        }
+
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <param name="folderId"> Folder id which contains package. </param>
+        /// <param name="projectVersion"> Project version which contains package. </param>
+        /// <param name="projectId"> Project id which contains package. </param>
+        /// <param name="parameters"> Parameters in package. </param>
+        /// <returns> A new <see cref="Models.SsisPackage"/> instance for mocking. </returns>
+        public static SsisPackage SsisPackage(long? id = default, string name = default, string description = default, long? folderId = default, long? projectVersion = default, long? projectId = default, IEnumerable<SsisParameterInfo> parameters = default)
+        {
+            parameters ??= new ChangeTrackingList<SsisParameterInfo>();
+
+            return new SsisPackage(
+                default,
+                id,
+                name,
+                description,
+                default,
+                folderId,
+                projectVersion,
+                projectId,
+                (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
+        }
+
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
+        /// <param name="folderId"> Folder id which contains environment. </param>
+        /// <param name="variables"> Variable in environment. </param>
+        /// <returns> A new <see cref="Models.SsisEnvironment"/> instance for mocking. </returns>
+        public static SsisEnvironment SsisEnvironment(long? id = default, string name = default, string description = default, long? folderId = default, IEnumerable<SsisVariable> variables = default)
+        {
+            variables ??= new ChangeTrackingList<SsisVariable>();
+
+            return new SsisEnvironment(
+                default,
+                id,
+                name,
+                description,
+                default,
+                folderId,
+                (variables ?? new ChangeTrackingList<SsisVariable>()).ToList());
+        }
+
+        /// <param name="id"> Variable id. </param>
+        /// <param name="name"> Variable name. </param>
+        /// <param name="description"> Variable description. </param>
+        /// <param name="dataType"> Variable type. </param>
+        /// <param name="isSensitive"> Whether variable is sensitive. </param>
+        /// <param name="value"> Variable value. </param>
+        /// <param name="sensitiveValue"> Variable sensitive value. </param>
+        /// <returns> A new <see cref="Models.SsisVariable"/> instance for mocking. </returns>
+        public static SsisVariable SsisVariable(long? id = default, string name = default, string description = default, string dataType = default, bool? isSensitive = default, string value = default, string sensitiveValue = default)
+        {
+            return new SsisVariable(
+                id,
+                name,
+                description,
+                dataType,
+                isSensitive,
+                value,
+                sensitiveValue,
+                default);
+        }
+
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="featureType"> The feature type. </param>
+        /// <returns> A new <see cref="Models.ExposureControlContent"/> instance for mocking. </returns>
+        public static ExposureControlContent ExposureControlContent(string featureName = default, string featureType = default)
+        {
+            return new ExposureControlContent(featureName, featureType, default);
+        }
+
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="value"> The feature value. </param>
+        /// <returns> A new <see cref="Models.ExposureControlResult"/> instance for mocking. </returns>
+        public static ExposureControlResult ExposureControlResult(string featureName = default, string value = default)
+        {
+            return new ExposureControlResult(featureName, value, default);
+        }
+
+        /// <param name="exposureControlRequests"> List of exposure control features. </param>
+        /// <returns> A new <see cref="Models.ExposureControlBatchContent"/> instance for mocking. </returns>
+        public static ExposureControlBatchContent ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests = default)
+        {
+            exposureControlRequests ??= new ChangeTrackingList<ExposureControlContent>();
+
+            return new ExposureControlBatchContent((exposureControlRequests ?? new ChangeTrackingList<ExposureControlContent>()).ToList(), default);
+        }
+
+        /// <param name="exposureControlResults"> List of exposure control feature values. </param>
+        /// <returns> A new <see cref="Models.ExposureControlBatchResult"/> instance for mocking. </returns>
+        public static ExposureControlBatchResult ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults = default)
+        {
+            exposureControlResults ??= new ChangeTrackingList<ExposureControlResult>();
+
+            return new ExposureControlBatchResult((exposureControlResults ?? new ChangeTrackingList<ExposureControlResult>()).ToList(), default);
         }
 
         /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
@@ -13496,6 +13488,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PipelineCreateRunResult PipelineCreateRunResult(Guid runId = default)
         {
             return new PipelineCreateRunResult(runId, default);
+        }
+
+        /// <param name="triggerName"> Trigger name. </param>
+        /// <param name="status"> Event Subscription Status. </param>
+        /// <returns> A new <see cref="Models.DataFactoryTriggerSubscriptionOperationResult"/> instance for mocking. </returns>
+        public static DataFactoryTriggerSubscriptionOperationResult DataFactoryTriggerSubscriptionOperationResult(string triggerName = default, EventSubscriptionStatus? status = default)
+        {
+            return new DataFactoryTriggerSubscriptionOperationResult(triggerName, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
