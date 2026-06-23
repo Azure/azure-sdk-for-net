@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ResourceHealth
     // generated resource/data results back to the old ResourceHealthAvailabilityStatus model.
     public static partial class ResourceHealthExtensions
     {
+        // Workaound for https://github.com/Azure/azure-sdk-for-net/issues/60100
+        // TODO: Remove this method once the issue is fixed and the generator emits the correct method signature.
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

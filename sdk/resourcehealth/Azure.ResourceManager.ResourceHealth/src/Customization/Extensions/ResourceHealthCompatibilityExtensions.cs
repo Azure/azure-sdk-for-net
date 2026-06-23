@@ -10,6 +10,8 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    // Workaound for https://github.com/Azure/azure-sdk-for-net/issues/60100
+    // TODO: Remove this method once the issue is fixed and the generator emits the correct method signature.
     // This file preserves GA extension APIs that are not emitted in the same shape by the current generator.
     // The methods forward to mockable compatibility implementations, which wrap generated resources/data
     // or custom pageable results back into the public types used by the GA surface.
