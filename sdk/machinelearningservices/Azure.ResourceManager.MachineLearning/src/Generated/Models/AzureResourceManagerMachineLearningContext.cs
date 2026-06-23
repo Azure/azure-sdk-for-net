@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(EnvironmentVariable))]
     [ModelReaderWriterBuildable(typeof(EnvironmentVersionResourceArmPaginatedResult))]
     [ModelReaderWriterBuildable(typeof(MachineLearningError))]
-    [ModelReaderWriterBuildable(typeof(ExternalFQDNResponse))]
+    [ModelReaderWriterBuildable(typeof(ExternalFqdnResult))]
     [ModelReaderWriterBuildable(typeof(FeatureAttributionDriftMonitoringSignal))]
     [ModelReaderWriterBuildable(typeof(FeatureAttributionMetricThreshold))]
     [ModelReaderWriterBuildable(typeof(FeatureImportanceSettings))]

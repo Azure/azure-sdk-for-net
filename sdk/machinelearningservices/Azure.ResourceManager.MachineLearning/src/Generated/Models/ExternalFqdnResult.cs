@@ -11,22 +11,22 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ExternalFQDNResponse. </summary>
-    public partial class ExternalFQDNResponse
+    /// <summary> The ExternalFqdnResult. </summary>
+    public partial class ExternalFqdnResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExternalFQDNResponse"/>. </summary>
-        internal ExternalFQDNResponse()
+        /// <summary> Initializes a new instance of <see cref="ExternalFqdnResult"/>. </summary>
+        internal ExternalFqdnResult()
         {
             Value = new ChangeTrackingList<FqdnEndpointsPropertyBag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalFQDNResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalFqdnResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalFQDNResponse(IList<FqdnEndpointsPropertyBag> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalFqdnResult(IList<FqdnEndpointsPropertyBag> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

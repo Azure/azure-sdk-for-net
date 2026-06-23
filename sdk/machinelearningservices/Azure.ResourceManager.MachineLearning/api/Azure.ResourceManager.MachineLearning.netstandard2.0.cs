@@ -5826,19 +5826,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.EnvironmentVariableType left, Azure.ResourceManager.MachineLearning.Models.EnvironmentVariableType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExternalFQDNResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>
+    public partial class ExternalFqdnResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>
     {
-        internal ExternalFQDNResponse() { }
+        internal ExternalFqdnResult() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearning.Models.FqdnEndpointsPropertyBag> Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFQDNResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ExternalFqdnResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FeatureAttributionDriftMonitoringSignal : Azure.ResourceManager.MachineLearning.Models.MonitoringSignalBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.FeatureAttributionDriftMonitoringSignal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.FeatureAttributionDriftMonitoringSignal>
     {
