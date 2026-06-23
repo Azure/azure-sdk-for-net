@@ -107,7 +107,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Delete Container.
         /// </summary>
-        public static BlobOperationName DeleteContainer { get; } = new BlobOperationName("ContainerDeleted");
+        public static BlobOperationName DeleteContainer { get; } = new BlobOperationName("DeleteContainer");
 
         /// <summary>
         /// Restore Container.
