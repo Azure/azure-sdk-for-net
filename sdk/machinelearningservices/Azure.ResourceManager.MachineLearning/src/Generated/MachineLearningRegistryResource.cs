@@ -421,13 +421,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BlobReferenceSasResult>> GetBlobReferenceSASAsync(string name, string version, BlobReferenceSasContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobReferenceSasResult>> GetBlobReferenceSasRegistryDataReferenceAsync(string name, string version, BlobReferenceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _registryDataReferencesClientDiagnostics.CreateScope("MachineLearningRegistryResource.GetBlobReferenceSAS");
+            using DiagnosticScope scope = _registryDataReferencesClientDiagnostics.CreateScope("MachineLearningRegistryResource.GetBlobReferenceSasRegistryDataReference");
             scope.Start();
             try
             {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
+                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BlobReferenceSasResult> response = Response.FromValue(BlobReferenceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,13 +478,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BlobReferenceSasResult> GetBlobReferenceSAS(string name, string version, BlobReferenceSasContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BlobReferenceSasResult> GetBlobReferenceSasRegistryDataReference(string name, string version, BlobReferenceSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _registryDataReferencesClientDiagnostics.CreateScope("MachineLearningRegistryResource.GetBlobReferenceSAS");
+            using DiagnosticScope scope = _registryDataReferencesClientDiagnostics.CreateScope("MachineLearningRegistryResource.GetBlobReferenceSasRegistryDataReference");
             scope.Start();
             try
             {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSASRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
+                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BlobReferenceSasResult> response = Response.FromValue(BlobReferenceSasResult.FromResponse(result), result);
                 if (response.Value == null)

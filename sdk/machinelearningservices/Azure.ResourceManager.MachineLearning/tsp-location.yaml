@@ -1,5 +1,5 @@
 directory: specification/machinelearningservices/MachineLearningServices.Management
-commit: 4a5c0cba91f4feb031058ed1bf7f426eda7bc5f7
+commit: 8a13dfdef7f00b06c7f280654f2001825aefbef8
 repo: live1206/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

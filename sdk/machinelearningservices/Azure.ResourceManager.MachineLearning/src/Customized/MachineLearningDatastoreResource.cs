@@ -27,6 +27,4 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Response<MachineLearningDatastoreSecrets> GetSecrets(CancellationToken cancellationToken)
             => GetSecrets(default(SecretExpiry), cancellationToken);
     }
-
-    // Customized: preserve the old verbose registry data reference SAS method name.
 }
