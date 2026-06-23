@@ -10,7 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: this resource has no PATCH body model, so generated tag helpers cannot build a fallback patch request.
+    // Customized: this resource has a bodyless PATCH operation. The generator currently falls back to
+    // full-resource PUT tag helpers in that case, but this resource does not have a tag-specific update
+    // contract, so suppress those generated helpers rather than updating tags through the full PUT path.
     [CodeGenSuppress("AddTagAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("AddTag", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("SetTagsAsync", typeof(IDictionary<string, string>), typeof(CancellationToken))]
