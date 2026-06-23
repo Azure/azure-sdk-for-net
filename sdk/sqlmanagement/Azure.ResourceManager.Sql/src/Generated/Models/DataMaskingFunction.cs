@@ -5,22 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.Sql;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The masking function that is used for the data masking rule. </summary>
-    public enum DataMaskingFunction
+    public readonly partial struct DataMaskingFunction : IEquatable<DataMaskingFunction>
     {
+        private readonly string _value;
         /// <summary> Default. </summary>
-        Default,
+        private const string DefaultValue = "Default";
         /// <summary> CCN. </summary>
-        Ccn,
+        private const string CcnValue = "CCN";
         /// <summary> Email. </summary>
-        Email,
+        private const string EmailValue = "Email";
         /// <summary> Number. </summary>
-        Number,
+        private const string NumberValue = "Number";
         /// <summary> SSN. </summary>
-        Ssn,
+        private const string SsnValue = "SSN";
         /// <summary> Text. </summary>
-        Text
+        private const string TextValue = "Text";
+
+        /// <summary> Initializes a new instance of <see cref="DataMaskingFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataMaskingFunction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Default. </summary>
+        public static DataMaskingFunction Default { get; } = new DataMaskingFunction(DefaultValue);
+
+        /// <summary> CCN. </summary>
+        public static DataMaskingFunction Ccn { get; } = new DataMaskingFunction(CcnValue);
+
+        /// <summary> Email. </summary>
+        public static DataMaskingFunction Email { get; } = new DataMaskingFunction(EmailValue);
+
+        /// <summary> Number. </summary>
+        public static DataMaskingFunction Number { get; } = new DataMaskingFunction(NumberValue);
+
+        /// <summary> SSN. </summary>
+        public static DataMaskingFunction Ssn { get; } = new DataMaskingFunction(SsnValue);
+
+        /// <summary> Text. </summary>
+        public static DataMaskingFunction Text { get; } = new DataMaskingFunction(TextValue);
+
+        /// <summary> Determines if two <see cref="DataMaskingFunction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DataMaskingFunction left, DataMaskingFunction right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DataMaskingFunction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DataMaskingFunction left, DataMaskingFunction right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="DataMaskingFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMaskingFunction(string value) => new DataMaskingFunction(value);
+
+        /// <summary> Converts a string to a <see cref="DataMaskingFunction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMaskingFunction?(string value) => value == null ? null : new DataMaskingFunction(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is DataMaskingFunction other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(DataMaskingFunction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

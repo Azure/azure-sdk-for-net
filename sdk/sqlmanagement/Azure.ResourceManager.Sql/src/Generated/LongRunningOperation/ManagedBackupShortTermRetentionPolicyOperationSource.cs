@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedBackupShortTermRetentionPolicyResource>
+    /// <summary></summary>
+    internal partial class ManagedBackupShortTermRetentionPolicyOperationSource : IOperationSource<ManagedBackupShortTermRetentionPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedBackupShortTermRetentionPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedBackupShortTermRetentionPolicyResource IOperationSource<ManagedBackupShortTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedBackupShortTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedBackupShortTermRetentionPolicyData data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedBackupShortTermRetentionPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedBackupShortTermRetentionPolicyResource> IOperationSource<ManagedBackupShortTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedBackupShortTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new ManagedBackupShortTermRetentionPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedBackupShortTermRetentionPolicyData data = ManagedBackupShortTermRetentionPolicyData.DeserializeManagedBackupShortTermRetentionPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedBackupShortTermRetentionPolicyResource(_client, data);
         }
     }
 }

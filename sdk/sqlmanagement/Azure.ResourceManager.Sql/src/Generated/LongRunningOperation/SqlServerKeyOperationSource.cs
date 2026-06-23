@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerKeyOperationSource : IOperationSource<SqlServerKeyResource>
+    /// <summary></summary>
+    internal partial class SqlServerKeyOperationSource : IOperationSource<SqlServerKeyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlServerKeyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlServerKeyResource IOperationSource<SqlServerKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlServerKeyData data = SqlServerKeyData.DeserializeSqlServerKeyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerKeyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlServerKeyResource> IOperationSource<SqlServerKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlServerKeyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlServerKeyData data = SqlServerKeyData.DeserializeSqlServerKeyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlServerKeyResource(_client, data);
         }
     }
 }

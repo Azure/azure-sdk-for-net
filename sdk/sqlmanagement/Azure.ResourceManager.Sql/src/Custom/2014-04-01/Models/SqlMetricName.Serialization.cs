@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlMetricName : IUtf8JsonSerializable, IJsonModel<SqlMetricName>

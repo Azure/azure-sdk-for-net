@@ -13,115 +13,174 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlDistributedAvailabilityGroup data model.
-    /// Distributed availability group between box and Sql Managed Instance.
-    /// </summary>
+    /// <summary> Distributed availability group between box and Sql Managed Instance. </summary>
     public partial class SqlDistributedAvailabilityGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlDistributedAvailabilityGroupData"/>. </summary>
         public SqlDistributedAvailabilityGroupData()
         {
-            Databases = new ChangeTrackingList<DistributedAvailabilityGroupDatabase>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDistributedAvailabilityGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="distributedAvailabilityGroupName"> Name of the distributed availability group. </param>
-        /// <param name="distributedAvailabilityGroupId"> ID of the distributed availability group. </param>
-        /// <param name="replicationMode"> Replication mode of the link. </param>
-        /// <param name="partnerLinkRole"> SQL server side link role. </param>
-        /// <param name="partnerAvailabilityGroupName"> SQL server side availability group name. </param>
-        /// <param name="partnerEndpoint"> SQL server side endpoint - IP or DNS resolvable name. </param>
-        /// <param name="instanceLinkRole"> Managed instance side link role. </param>
-        /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
-        /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
-        /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
-        /// <param name="databases"> Databases in the distributed availability group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, IList<DistributedAvailabilityGroupDatabase> databases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DistributedAvailabilityGroupProperties properties) : base(id, name, resourceType, systemData)
         {
-            DistributedAvailabilityGroupName = distributedAvailabilityGroupName;
-            DistributedAvailabilityGroupId = distributedAvailabilityGroupId;
-            ReplicationMode = replicationMode;
-            PartnerLinkRole = partnerLinkRole;
-            PartnerAvailabilityGroupName = partnerAvailabilityGroupName;
-            PartnerEndpoint = partnerEndpoint;
-            InstanceLinkRole = instanceLinkRole;
-            InstanceAvailabilityGroupName = instanceAvailabilityGroupName;
-            FailoverMode = failoverMode;
-            SeedingMode = seedingMode;
-            Databases = databases;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DistributedAvailabilityGroupProperties Properties { get; set; }
 
         /// <summary> Name of the distributed availability group. </summary>
         [WirePath("properties.distributedAvailabilityGroupName")]
-        public string DistributedAvailabilityGroupName { get; }
+        public string DistributedAvailabilityGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DistributedAvailabilityGroupName;
+            }
+        }
+
         /// <summary> ID of the distributed availability group. </summary>
         [WirePath("properties.distributedAvailabilityGroupId")]
-        public Guid? DistributedAvailabilityGroupId { get; }
+        public Guid? DistributedAvailabilityGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DistributedAvailabilityGroupId;
+            }
+        }
+
         /// <summary> Replication mode of the link. </summary>
         [WirePath("properties.replicationMode")]
-        public SqlReplicationModeType? ReplicationMode { get; set; }
-        /// <summary> SQL server side link role. </summary>
-        [WirePath("properties.partnerLinkRole")]
-        public SqlServerSideLinkRole? PartnerLinkRole { get; }
+        public SqlReplicationModeType? ReplicationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.ReplicationMode = value;
+            }
+        }
+
         /// <summary> SQL server side availability group name. </summary>
         [WirePath("properties.partnerAvailabilityGroupName")]
-        public string PartnerAvailabilityGroupName { get; set; }
+        public string PartnerAvailabilityGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerAvailabilityGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.PartnerAvailabilityGroupName = value;
+            }
+        }
+
         /// <summary> SQL server side endpoint - IP or DNS resolvable name. </summary>
         [WirePath("properties.partnerEndpoint")]
-        public string PartnerEndpoint { get; set; }
-        /// <summary> Managed instance side link role. </summary>
-        [WirePath("properties.instanceLinkRole")]
-        public SqlServerSideLinkRole? InstanceLinkRole { get; set; }
+        public string PartnerEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.PartnerEndpoint = value;
+            }
+        }
+
         /// <summary> Managed instance side availability group name. </summary>
         [WirePath("properties.instanceAvailabilityGroupName")]
-        public string InstanceAvailabilityGroupName { get; set; }
+        public string InstanceAvailabilityGroupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceAvailabilityGroupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.InstanceAvailabilityGroupName = value;
+            }
+        }
+
         /// <summary> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </summary>
         [WirePath("properties.failoverMode")]
-        public SqlServerFailoverModeType? FailoverMode { get; set; }
+        public SqlServerFailoverModeType? FailoverMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailoverMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.FailoverMode = value;
+            }
+        }
+
         /// <summary> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </summary>
         [WirePath("properties.seedingMode")]
-        public SeedingModeType? SeedingMode { get; set; }
+        public SeedingModeType? SeedingMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SeedingMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.SeedingMode = value;
+            }
+        }
+
         /// <summary> Databases in the distributed availability group. </summary>
         [WirePath("properties.databases")]
-        public IList<DistributedAvailabilityGroupDatabase> Databases { get; }
+        public IList<DistributedAvailabilityGroupDatabase> Databases
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                return Properties.Databases;
+            }
+        }
     }
 }

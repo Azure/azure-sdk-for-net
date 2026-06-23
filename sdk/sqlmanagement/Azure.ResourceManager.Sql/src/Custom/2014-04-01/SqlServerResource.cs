@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>

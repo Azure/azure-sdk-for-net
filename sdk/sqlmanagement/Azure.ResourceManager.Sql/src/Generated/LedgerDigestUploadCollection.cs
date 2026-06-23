@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,71 +26,82 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class LedgerDigestUploadCollection : ArmCollection, IEnumerable<LedgerDigestUploadResource>, IAsyncEnumerable<LedgerDigestUploadResource>
     {
-        private readonly ClientDiagnostics _ledgerDigestUploadClientDiagnostics;
-        private readonly LedgerDigestUploadsRestOperations _ledgerDigestUploadRestClient;
+        private readonly ClientDiagnostics _ledgerDigestUploadsClientDiagnostics;
+        private readonly LedgerDigestUploads _ledgerDigestUploadsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="LedgerDigestUploadCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of LedgerDigestUploadCollection for mocking. </summary>
         protected LedgerDigestUploadCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="LedgerDigestUploadCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LedgerDigestUploadCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LedgerDigestUploadCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ledgerDigestUploadClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LedgerDigestUploadResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(LedgerDigestUploadResource.ResourceType, out string ledgerDigestUploadApiVersion);
-            _ledgerDigestUploadRestClient = new LedgerDigestUploadsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ledgerDigestUploadApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _ledgerDigestUploadsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", LedgerDigestUploadResource.ResourceType.Namespace, Diagnostics);
+            _ledgerDigestUploadsRestClient = new LedgerDigestUploads(_ledgerDigestUploadsClientDiagnostics, Pipeline, Endpoint, ledgerDigestUploadApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlDatabaseResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Enables upload ledger digests to an Azure Storage account or an Azure Confidential Ledger instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
-        /// <param name="data"> The <see cref="LedgerDigestUploadData"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LedgerDigestUploadResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ledgerDigestUploadRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<LedgerDigestUploadResource>(new LedgerDigestUploadOperationSource(Client), _ledgerDigestUploadClientDiagnostics, Pipeline, _ledgerDigestUploadRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), LedgerDigestUploadData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<LedgerDigestUploadResource> operation = new SqlArmOperation<LedgerDigestUploadResource>(
+                    new LedgerDigestUploadOperationSource(Client),
+                    _ledgerDigestUploadsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,40 +115,49 @@ namespace Azure.ResourceManager.Sql
         /// Enables upload ledger digests to an Azure Storage account or an Azure Confidential Ledger instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
-        /// <param name="data"> The <see cref="LedgerDigestUploadData"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LedgerDigestUploadResource> CreateOrUpdate(WaitUntil waitUntil, LedgerDigestUploadsName ledgerDigestUploads, LedgerDigestUploadData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ledgerDigestUploadRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, data, cancellationToken);
-                var operation = new SqlArmOperation<LedgerDigestUploadResource>(new LedgerDigestUploadOperationSource(Client), _ledgerDigestUploadClientDiagnostics, Pipeline, _ledgerDigestUploadRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), LedgerDigestUploadData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<LedgerDigestUploadResource> operation = new SqlArmOperation<LedgerDigestUploadResource>(
+                    new LedgerDigestUploadOperationSource(Client),
+                    _ledgerDigestUploadsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,34 +171,38 @@ namespace Azure.ResourceManager.Sql
         /// Gets the current ledger digest upload configuration for a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LedgerDigestUploadResource>> GetAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Get");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ledgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LedgerDigestUploadData> response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,34 +216,38 @@ namespace Azure.ResourceManager.Sql
         /// Gets the current ledger digest upload configuration for a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LedgerDigestUploadResource> Get(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Get");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Get");
             scope.Start();
             try
             {
-                var response = _ledgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LedgerDigestUploadData> response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,50 +261,51 @@ namespace Azure.ResourceManager.Sql
         /// Gets all ledger digest upload settings on a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LedgerDigestUploadResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LedgerDigestUploadResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LedgerDigestUploadResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ledgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ledgerDigestUploadRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LedgerDigestUploadResource(Client, LedgerDigestUploadData.DeserializeLedgerDigestUploadData(e)), _ledgerDigestUploadClientDiagnostics, Pipeline, "LedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseAsyncCollectionResultOfT(
+                _ledgerDigestUploadsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "LedgerDigestUploadCollection.GetAll"), data => new LedgerDigestUploadResource(Client, data));
         }
 
         /// <summary>
         /// Gets all ledger digest upload settings on a database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_ListByDatabase</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_ListByDatabase. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,41 +313,64 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LedgerDigestUploadResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LedgerDigestUploadResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ledgerDigestUploadRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ledgerDigestUploadRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LedgerDigestUploadResource(Client, LedgerDigestUploadData.DeserializeLedgerDigestUploadData(e)), _ledgerDigestUploadClientDiagnostics, Pipeline, "LedgerDigestUploadCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseCollectionResultOfT(
+                _ledgerDigestUploadsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "LedgerDigestUploadCollection.GetAll"), data => new LedgerDigestUploadResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Exists");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _ledgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<LedgerDigestUploadData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LedgerDigestUploadData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,32 +384,46 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Exists");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.Exists");
             scope.Start();
             try
             {
-                var response = _ledgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<LedgerDigestUploadData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LedgerDigestUploadData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -370,34 +437,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<LedgerDigestUploadResource>> GetIfExistsAsync(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _ledgerDigestUploadRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<LedgerDigestUploadData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LedgerDigestUploadData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<LedgerDigestUploadResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,34 +494,50 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/ledgerDigestUploads/{ledgerDigestUploads}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LedgerDigestUploads_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LedgerDigestUploadsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LedgerDigestUploadResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ledgerDigestUploads"> The <see cref="LedgerDigestUploadsName"/> to use. </param>
+        /// <param name="ledgerDigestUploads"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<LedgerDigestUploadResource> GetIfExists(LedgerDigestUploadsName ledgerDigestUploads, CancellationToken cancellationToken = default)
         {
-            using var scope = _ledgerDigestUploadClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
+            using DiagnosticScope scope = _ledgerDigestUploadsClientDiagnostics.CreateScope("LedgerDigestUploadCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _ledgerDigestUploadRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ledgerDigestUploadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ledgerDigestUploads.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<LedgerDigestUploadData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(LedgerDigestUploadData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((LedgerDigestUploadData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<LedgerDigestUploadResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new LedgerDigestUploadResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -458,6 +557,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LedgerDigestUploadResource> IAsyncEnumerable<LedgerDigestUploadResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SyncGroupOperationSource : IOperationSource<SyncGroupResource>
+    /// <summary></summary>
+    internal partial class SyncGroupOperationSource : IOperationSource<SyncGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SyncGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SyncGroupResource IOperationSource<SyncGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SyncGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SyncGroupData data = SyncGroupData.DeserializeSyncGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SyncGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SyncGroupResource> IOperationSource<SyncGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SyncGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SyncGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SyncGroupData data = SyncGroupData.DeserializeSyncGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SyncGroupResource(_client, data);
         }
     }
 }

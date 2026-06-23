@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabaseRestoreDetailBackupSetProperties : IUtf8JsonSerializable, IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>
+    /// <summary> The managed database's restore details backup set properties. </summary>
+    public partial class ManagedDatabaseRestoreDetailBackupSetProperties : IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedDatabaseRestoreDetailBackupSetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedDatabaseRestoreDetailBackupSetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDatabaseRestoreDetailBackupSetProperties IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -50,30 +89,30 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("numberOfStripes"u8);
                 writer.WriteNumberValue(NumberOfStripes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupSizeInMB))
+            if (options.Format != "W" && Optional.IsDefined(BackupSizeMB))
             {
                 writer.WritePropertyName("backupSizeMB"u8);
-                writer.WriteNumberValue(BackupSizeInMB.Value);
+                writer.WriteNumberValue(BackupSizeMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreStartedOn))
+            if (options.Format != "W" && Optional.IsDefined(RestoreStartedTimestampUtc))
             {
                 writer.WritePropertyName("restoreStartedTimestampUtc"u8);
-                writer.WriteStringValue(RestoreStartedOn.Value, "O");
+                writer.WriteStringValue(RestoreStartedTimestampUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreFinishedOn))
+            if (options.Format != "W" && Optional.IsDefined(RestoreFinishedTimestampUtc))
             {
                 writer.WritePropertyName("restoreFinishedTimestampUtc"u8);
-                writer.WriteStringValue(RestoreFinishedOn.Value, "O");
+                writer.WriteStringValue(RestoreFinishedTimestampUtc.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +121,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        ManagedDatabaseRestoreDetailBackupSetProperties IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDatabaseRestoreDetailBackupSetProperties IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedDatabaseRestoreDetailBackupSetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedDatabaseRestoreDetailBackupSetProperties(document.RootElement, options);
         }
 
-        internal static ManagedDatabaseRestoreDetailBackupSetProperties DeserializeManagedDatabaseRestoreDetailBackupSetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedDatabaseRestoreDetailBackupSetProperties DeserializeManagedDatabaseRestoreDetailBackupSetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,62 +152,60 @@ namespace Azure.ResourceManager.Sql.Models
             int? backupSizeMB = default;
             DateTimeOffset? restoreStartedTimestampUtc = default;
             DateTimeOffset? restoreFinishedTimestampUtc = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstStripeName"u8))
+                if (prop.NameEquals("firstStripeName"u8))
                 {
-                    firstStripeName = property.Value.GetString();
+                    firstStripeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("numberOfStripes"u8))
+                if (prop.NameEquals("numberOfStripes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberOfStripes = property.Value.GetInt32();
+                    numberOfStripes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("backupSizeMB"u8))
+                if (prop.NameEquals("backupSizeMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupSizeMB = property.Value.GetInt32();
+                    backupSizeMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("restoreStartedTimestampUtc"u8))
+                if (prop.NameEquals("restoreStartedTimestampUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restoreStartedTimestampUtc = property.Value.GetDateTimeOffset("O");
+                    restoreStartedTimestampUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("restoreFinishedTimestampUtc"u8))
+                if (prop.NameEquals("restoreFinishedTimestampUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restoreFinishedTimestampUtc = property.Value.GetDateTimeOffset("O");
+                    restoreFinishedTimestampUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedDatabaseRestoreDetailBackupSetProperties(
                 status,
                 firstStripeName,
@@ -171,163 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
                 backupSizeMB,
                 restoreStartedTimestampUtc,
                 restoreFinishedTimestampUtc,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstStripeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  firstStripeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FirstStripeName))
-                {
-                    builder.Append("  firstStripeName: ");
-                    if (FirstStripeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FirstStripeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FirstStripeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfStripes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  numberOfStripes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NumberOfStripes))
-                {
-                    builder.Append("  numberOfStripes: ");
-                    builder.AppendLine($"{NumberOfStripes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupSizeInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backupSizeMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackupSizeInMB))
-                {
-                    builder.Append("  backupSizeMB: ");
-                    builder.AppendLine($"{BackupSizeInMB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreStartedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreStartedTimestampUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreStartedOn))
-                {
-                    builder.Append("  restoreStartedTimestampUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RestoreStartedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreFinishedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreFinishedTimestampUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreFinishedOn))
-                {
-                    builder.Append("  restoreFinishedTimestampUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RestoreFinishedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedDatabaseRestoreDetailBackupSetProperties IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedDatabaseRestoreDetailBackupSetProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

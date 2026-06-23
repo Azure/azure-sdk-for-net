@@ -13,189 +13,288 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the RecommendedAction data model.
-    /// Database, Server or Elastic Pool Recommended Action.
-    /// </summary>
+    /// <summary> Database, Server or Elastic Pool Recommended Action. </summary>
     public partial class RecommendedActionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendedActionData"/>. </summary>
         public RecommendedActionData()
         {
-            EstimatedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
-            ObservedImpact = new ChangeTrackingList<RecommendedActionImpactRecord>();
-            TimeSeries = new ChangeTrackingList<RecommendedActionMetricInfo>();
-            LinkedObjects = new ChangeTrackingList<string>();
-            ActionDetails = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendedActionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="recommendationReason"> Gets the reason for recommending this action. e.g., DuplicateIndex. </param>
-        /// <param name="validSince"> Gets the time since when this recommended action is valid. </param>
-        /// <param name="lastRefresh"> Gets time when this recommended action was last refreshed. </param>
-        /// <param name="state"> Gets the info of the current state the recommended action is in. </param>
-        /// <param name="isExecutableAction"> Gets if this recommended action is actionable by user. </param>
-        /// <param name="isRevertableAction"> Gets if changes applied by this recommended action can be reverted by user. </param>
-        /// <param name="isArchivedAction"> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </param>
-        /// <param name="executeActionStartOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
-        /// <param name="executeActionDuration"> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </param>
-        /// <param name="revertActionStartOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
-        /// <param name="revertActionDuration"> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </param>
-        /// <param name="executeActionInitiatedBy"> Gets if approval for applying this recommended action was given by user/system. </param>
-        /// <param name="executeActionInitiatedOn"> Gets the time when this recommended action was approved for execution. </param>
-        /// <param name="revertActionInitiatedBy"> Gets if approval for reverting this recommended action was given by user/system. </param>
-        /// <param name="revertActionInitiatedOn"> Gets the time when this recommended action was approved for revert. </param>
-        /// <param name="score"> Gets the impact of this recommended action. Possible values are 1 - Low impact, 2 - Medium Impact and 3 - High Impact. </param>
-        /// <param name="implementationDetails"> Gets the implementation details of this recommended action for user to apply it manually. </param>
-        /// <param name="errorDetails"> Gets the error details if and why this recommended action is put to error state. </param>
-        /// <param name="estimatedImpact"> Gets the estimated impact info for this recommended action e.g., Estimated CPU gain, Estimated Disk Space change. </param>
-        /// <param name="observedImpact"> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </param>
-        /// <param name="timeSeries"> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </param>
-        /// <param name="linkedObjects"> Gets the linked objects, if any. </param>
-        /// <param name="actionDetails"> Gets additional details specific to this recommended action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IReadOnlyList<RecommendedActionImpactRecord> estimatedImpact, IReadOnlyList<RecommendedActionImpactRecord> observedImpact, IReadOnlyList<RecommendedActionMetricInfo> timeSeries, IReadOnlyList<string> linkedObjects, IReadOnlyDictionary<string, string> actionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecommendedActionProperties properties, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Kind = kind;
             Location = location;
-            RecommendationReason = recommendationReason;
-            ValidSince = validSince;
-            LastRefresh = lastRefresh;
-            State = state;
-            IsExecutableAction = isExecutableAction;
-            IsRevertableAction = isRevertableAction;
-            IsArchivedAction = isArchivedAction;
-            ExecuteActionStartOn = executeActionStartOn;
-            ExecuteActionDuration = executeActionDuration;
-            RevertActionStartOn = revertActionStartOn;
-            RevertActionDuration = revertActionDuration;
-            ExecuteActionInitiatedBy = executeActionInitiatedBy;
-            ExecuteActionInitiatedOn = executeActionInitiatedOn;
-            RevertActionInitiatedBy = revertActionInitiatedBy;
-            RevertActionInitiatedOn = revertActionInitiatedOn;
-            Score = score;
-            ImplementationDetails = implementationDetails;
-            ErrorDetails = errorDetails;
-            EstimatedImpact = estimatedImpact;
-            ObservedImpact = observedImpact;
-            TimeSeries = timeSeries;
-            LinkedObjects = linkedObjects;
-            ActionDetails = actionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal RecommendedActionProperties Properties { get; set; }
 
         /// <summary> Resource kind. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Gets the reason for recommending this action. e.g., DuplicateIndex. </summary>
         [WirePath("properties.recommendationReason")]
-        public string RecommendationReason { get; }
+        public string RecommendationReason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationReason;
+            }
+        }
+
         /// <summary> Gets the time since when this recommended action is valid. </summary>
         [WirePath("properties.validSince")]
-        public DateTimeOffset? ValidSince { get; }
+        public DateTimeOffset? ValidSince
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidSince;
+            }
+        }
+
         /// <summary> Gets time when this recommended action was last refreshed. </summary>
         [WirePath("properties.lastRefresh")]
-        public DateTimeOffset? LastRefresh { get; }
+        public DateTimeOffset? LastRefresh
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastRefresh;
+            }
+        }
+
         /// <summary> Gets the info of the current state the recommended action is in. </summary>
         [WirePath("properties.state")]
-        public RecommendedActionStateInfo State { get; set; }
+        public RecommendedActionStateInfo State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedActionProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Gets if this recommended action is actionable by user. </summary>
         [WirePath("properties.isExecutableAction")]
-        public bool? IsExecutableAction { get; }
+        public bool? IsExecutableAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExecutableAction;
+            }
+        }
+
         /// <summary> Gets if changes applied by this recommended action can be reverted by user. </summary>
         [WirePath("properties.isRevertableAction")]
-        public bool? IsRevertableAction { get; }
+        public bool? IsRevertableAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRevertableAction;
+            }
+        }
+
         /// <summary> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </summary>
         [WirePath("properties.isArchivedAction")]
-        public bool? IsArchivedAction { get; }
+        public bool? IsArchivedAction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsArchivedAction;
+            }
+        }
+
         /// <summary> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </summary>
         [WirePath("properties.executeActionStartTime")]
-        public DateTimeOffset? ExecuteActionStartOn { get; }
+        public DateTimeOffset? ExecuteActionStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecuteActionStartOn;
+            }
+        }
+
         /// <summary> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </summary>
         [WirePath("properties.executeActionDuration")]
-        public TimeSpan? ExecuteActionDuration { get; }
+        public TimeSpan? ExecuteActionDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecuteActionDuration;
+            }
+        }
+
         /// <summary> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </summary>
         [WirePath("properties.revertActionStartTime")]
-        public DateTimeOffset? RevertActionStartOn { get; }
+        public DateTimeOffset? RevertActionStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RevertActionStartOn;
+            }
+        }
+
         /// <summary> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </summary>
         [WirePath("properties.revertActionDuration")]
-        public TimeSpan? RevertActionDuration { get; }
+        public TimeSpan? RevertActionDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RevertActionDuration;
+            }
+        }
+
         /// <summary> Gets if approval for applying this recommended action was given by user/system. </summary>
         [WirePath("properties.executeActionInitiatedBy")]
-        public RecommendedActionInitiatedBy? ExecuteActionInitiatedBy { get; }
+        public RecommendedActionInitiatedBy? ExecuteActionInitiatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecuteActionInitiatedBy;
+            }
+        }
+
         /// <summary> Gets the time when this recommended action was approved for execution. </summary>
         [WirePath("properties.executeActionInitiatedTime")]
-        public DateTimeOffset? ExecuteActionInitiatedOn { get; }
+        public DateTimeOffset? ExecuteActionInitiatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecuteActionInitiatedOn;
+            }
+        }
+
         /// <summary> Gets if approval for reverting this recommended action was given by user/system. </summary>
         [WirePath("properties.revertActionInitiatedBy")]
-        public RecommendedActionInitiatedBy? RevertActionInitiatedBy { get; }
+        public RecommendedActionInitiatedBy? RevertActionInitiatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RevertActionInitiatedBy;
+            }
+        }
+
         /// <summary> Gets the time when this recommended action was approved for revert. </summary>
         [WirePath("properties.revertActionInitiatedTime")]
-        public DateTimeOffset? RevertActionInitiatedOn { get; }
+        public DateTimeOffset? RevertActionInitiatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RevertActionInitiatedOn;
+            }
+        }
+
         /// <summary> Gets the impact of this recommended action. Possible values are 1 - Low impact, 2 - Medium Impact and 3 - High Impact. </summary>
         [WirePath("properties.score")]
-        public int? Score { get; }
+        public int? Score
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Score;
+            }
+        }
+
         /// <summary> Gets the implementation details of this recommended action for user to apply it manually. </summary>
         [WirePath("properties.implementationDetails")]
-        public RecommendedActionImplementationInfo ImplementationDetails { get; }
+        public RecommendedActionImplementationInfo ImplementationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImplementationDetails;
+            }
+        }
+
         /// <summary> Gets the error details if and why this recommended action is put to error state. </summary>
         [WirePath("properties.errorDetails")]
-        public RecommendedActionErrorInfo ErrorDetails { get; }
+        public RecommendedActionErrorInfo ErrorDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorDetails;
+            }
+        }
+
         /// <summary> Gets the estimated impact info for this recommended action e.g., Estimated CPU gain, Estimated Disk Space change. </summary>
         [WirePath("properties.estimatedImpact")]
-        public IReadOnlyList<RecommendedActionImpactRecord> EstimatedImpact { get; }
+        public IReadOnlyList<RecommendedActionImpactRecord> EstimatedImpact
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedActionProperties();
+                }
+                return Properties.EstimatedImpact;
+            }
+        }
+
         /// <summary> Gets the observed/actual impact info for this recommended action e.g., Actual CPU gain, Actual Disk Space change. </summary>
         [WirePath("properties.observedImpact")]
-        public IReadOnlyList<RecommendedActionImpactRecord> ObservedImpact { get; }
+        public IReadOnlyList<RecommendedActionImpactRecord> ObservedImpact
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedActionProperties();
+                }
+                return Properties.ObservedImpact;
+            }
+        }
+
         /// <summary> Gets the time series info of metrics for this recommended action e.g., CPU consumption time series. </summary>
         [WirePath("properties.timeSeries")]
-        public IReadOnlyList<RecommendedActionMetricInfo> TimeSeries { get; }
+        public IReadOnlyList<RecommendedActionMetricInfo> TimeSeries
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedActionProperties();
+                }
+                return Properties.TimeSeries;
+            }
+        }
+
         /// <summary> Gets the linked objects, if any. </summary>
         [WirePath("properties.linkedObjects")]
-        public IReadOnlyList<string> LinkedObjects { get; }
-        /// <summary> Gets additional details specific to this recommended action. </summary>
-        [WirePath("properties.details")]
-        public IReadOnlyDictionary<string, string> ActionDetails { get; }
+        public IReadOnlyList<string> LinkedObjects
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedActionProperties();
+                }
+                return Properties.LinkedObjects;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct AuthMetadataLookupMode : IEquatable<AuthMetadataLookupMode>
     {
         private readonly string _value;
+        /// <summary> AzureAD. </summary>
+        private const string AzureADValue = "AzureAD";
+        /// <summary> Paired. </summary>
+        private const string PairedValue = "Paired";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="AuthMetadataLookupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthMetadataLookupMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AadValue = "AzureAD";
-        private const string PairedValue = "Paired";
-        private const string WindowsValue = "Windows";
-
         /// <summary> AzureAD. </summary>
-        public static AuthMetadataLookupMode Aad { get; } = new AuthMetadataLookupMode(AadValue);
+        public static AuthMetadataLookupMode AzureAD { get; } = new AuthMetadataLookupMode(AzureADValue);
+
         /// <summary> Paired. </summary>
         public static AuthMetadataLookupMode Paired { get; } = new AuthMetadataLookupMode(PairedValue);
+
         /// <summary> Windows. </summary>
         public static AuthMetadataLookupMode Windows { get; } = new AuthMetadataLookupMode(WindowsValue);
+
         /// <summary> Determines if two <see cref="AuthMetadataLookupMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthMetadataLookupMode left, AuthMetadataLookupMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthMetadataLookupMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthMetadataLookupMode left, AuthMetadataLookupMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthMetadataLookupMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthMetadataLookupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthMetadataLookupMode(string value) => new AuthMetadataLookupMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthMetadataLookupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthMetadataLookupMode?(string value) => value == null ? null : new AuthMetadataLookupMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthMetadataLookupMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthMetadataLookupMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

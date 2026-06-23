@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     public partial class RecommendedActionData
@@ -58,16 +59,16 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return ActionDetails.ToDictionary(
+                return Properties?.Details?.ToDictionary(
                     kvp => kvp.Key,
-                    kvp => kvp.Value.ToString() ?? string.Empty
-                );
+                    kvp => kvp.Value ?? string.Empty
+                ) ?? new Dictionary<string, string>();
             }
         }
 
         private IReadOnlyDictionary<string, BinaryData> ConvertActionDetailsToBinaryData()
         {
-            var dictionary = ActionDetails
+            var dictionary = (Properties?.Details ?? new Dictionary<string, string>())
                 .ToArray()
                 .ToDictionary(kvp => kvp.Key, kvp => BinaryData.FromString(kvp.Value));
             return new ReadOnlyDictionary<string, BinaryData>(dictionary);

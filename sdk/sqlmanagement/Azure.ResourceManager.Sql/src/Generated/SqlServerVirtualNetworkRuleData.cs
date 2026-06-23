@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerVirtualNetworkRule data model.
-    /// A virtual network rule.
-    /// </summary>
+    /// <summary> A virtual network rule. </summary>
     public partial class SqlServerVirtualNetworkRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleData"/>. </summary>
         public SqlServerVirtualNetworkRuleData()
@@ -57,30 +25,66 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerVirtualNetworkRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualNetworkSubnetId"> The ARM resource id of the virtual network subnet. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
-        /// <param name="state"> Virtual Network Rule State. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, SqlServerVirtualNetworkRuleState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal SqlServerVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            VirtualNetworkSubnetId = virtualNetworkSubnetId;
-            IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
-            State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal VirtualNetworkRuleProperties Properties { get; set; }
 
         /// <summary> The ARM resource id of the virtual network subnet. </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
-        public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
+        public ResourceIdentifier VirtualNetworkSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkRuleProperties();
+                }
+                Properties.VirtualNetworkSubnetId = value;
+            }
+        }
+
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
         [WirePath("properties.ignoreMissingVnetServiceEndpoint")]
-        public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
+        public bool? IgnoreMissingVnetServiceEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IgnoreMissingVnetServiceEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkRuleProperties();
+                }
+                Properties.IgnoreMissingVnetServiceEndpoint = value;
+            }
+        }
+
         /// <summary> Virtual Network Rule State. </summary>
         [WirePath("properties.state")]
-        public SqlServerVirtualNetworkRuleState? State { get; }
+        public SqlServerVirtualNetworkRuleState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
     }
 }

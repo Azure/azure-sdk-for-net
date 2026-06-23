@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlDistributedAvailabilityGroupOperationSource : IOperationSource<SqlDistributedAvailabilityGroupResource>
+    /// <summary></summary>
+    internal partial class SqlDistributedAvailabilityGroupOperationSource : IOperationSource<SqlDistributedAvailabilityGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlDistributedAvailabilityGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlDistributedAvailabilityGroupResource IOperationSource<SqlDistributedAvailabilityGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlDistributedAvailabilityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlDistributedAvailabilityGroupData data = SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlDistributedAvailabilityGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlDistributedAvailabilityGroupResource> IOperationSource<SqlDistributedAvailabilityGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlDistributedAvailabilityGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlDistributedAvailabilityGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlDistributedAvailabilityGroupData data = SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlDistributedAvailabilityGroupResource(_client, data);
         }
     }
 }

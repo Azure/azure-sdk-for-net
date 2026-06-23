@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -24,65 +25,75 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobVersionCollection : ArmCollection, IEnumerable<SqlServerJobVersionResource>, IAsyncEnumerable<SqlServerJobVersionResource>
     {
-        private readonly ClientDiagnostics _sqlServerJobVersionJobVersionsClientDiagnostics;
-        private readonly JobVersionsRestOperations _sqlServerJobVersionJobVersionsRestClient;
+        private readonly ClientDiagnostics _jobVersionsClientDiagnostics;
+        private readonly JobVersions _jobVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerJobVersionCollection for mocking. </summary>
         protected SqlServerJobVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerJobVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerJobVersionJobVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerJobVersionResource.ResourceType, out string sqlServerJobVersionJobVersionsApiVersion);
-            _sqlServerJobVersionJobVersionsRestClient = new JobVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobVersionJobVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlServerJobVersionResource.ResourceType, out string sqlServerJobVersionApiVersion);
+            _jobVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobVersionResource.ResourceType.Namespace, Diagnostics);
+            _jobVersionsRestClient = new JobVersions(_jobVersionsClientDiagnostics, Pipeline, Endpoint, sqlServerJobVersionApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerJobResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerJobResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerJobResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a job version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlServerJobVersionResource>> GetAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SqlServerJobVersionResource>> GetAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobVersionJobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerJobVersionData> response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -96,34 +107,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a job version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlServerJobVersionResource> Get(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SqlServerJobVersionResource> Get(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerJobVersionData> response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -137,50 +156,52 @@ namespace Azure.ResourceManager.Sql
         /// Gets all versions of a job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_ListByJob</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_ListByJob. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerJobVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlServerJobVersionData, SqlServerJobVersionResource>(new JobVersionsGetByJobAsyncCollectionResultOfT(
+                _jobVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SqlServerJobVersionCollection.GetAll"), data => new SqlServerJobVersionResource(Client, data));
         }
 
         /// <summary>
         /// Gets all versions of a job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_ListByJob</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_ListByJob. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,41 +209,69 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerJobVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlServerJobVersionData, SqlServerJobVersionResource>(new JobVersionsGetByJobCollectionResultOfT(
+                _jobVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SqlServerJobVersionCollection.GetAll"), data => new SqlServerJobVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobVersionJobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerJobVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,32 +285,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerJobVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,34 +342,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<SqlServerJobVersionResource>> GetIfExistsAsync(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SqlServerJobVersionResource>> GetIfExistsAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobVersionJobVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerJobVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerJobVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,34 +403,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/versions/{jobVersion}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<SqlServerJobVersionResource> GetIfExists(int jobVersion, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SqlServerJobVersionResource> GetIfExists(string jobVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobVersionJobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
+            using DiagnosticScope scope = _jobVersionsClientDiagnostics.CreateScope("SqlServerJobVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlServerJobVersionJobVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobVersion, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerJobVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerJobVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerJobVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerJobVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,6 +470,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlServerJobVersionResource> IAsyncEnumerable<SqlServerJobVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerVirtualNetworkRuleOperationSource : IOperationSource<SqlServerVirtualNetworkRuleResource>
+    /// <summary></summary>
+    internal partial class SqlServerVirtualNetworkRuleOperationSource : IOperationSource<SqlServerVirtualNetworkRuleResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlServerVirtualNetworkRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlServerVirtualNetworkRuleResource IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlServerVirtualNetworkRuleData data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerVirtualNetworkRuleResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlServerVirtualNetworkRuleResource> IOperationSource<SqlServerVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlServerVirtualNetworkRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlServerVirtualNetworkRuleData data = SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlServerVirtualNetworkRuleResource(_client, data);
         }
     }
 }

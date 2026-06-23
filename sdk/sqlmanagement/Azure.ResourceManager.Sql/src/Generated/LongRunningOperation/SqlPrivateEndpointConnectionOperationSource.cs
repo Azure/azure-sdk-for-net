@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlPrivateEndpointConnectionOperationSource : IOperationSource<SqlPrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class SqlPrivateEndpointConnectionOperationSource : IOperationSource<SqlPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlPrivateEndpointConnectionResource IOperationSource<SqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlPrivateEndpointConnectionData data = SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlPrivateEndpointConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlPrivateEndpointConnectionResource> IOperationSource<SqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlPrivateEndpointConnectionData data = SqlPrivateEndpointConnectionData.DeserializeSqlPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

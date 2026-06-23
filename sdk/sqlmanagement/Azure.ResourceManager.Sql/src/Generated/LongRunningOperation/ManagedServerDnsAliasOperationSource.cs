@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedServerDnsAliasOperationSource : IOperationSource<ManagedServerDnsAliasResource>
+    /// <summary></summary>
+    internal partial class ManagedServerDnsAliasOperationSource : IOperationSource<ManagedServerDnsAliasResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedServerDnsAliasOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedServerDnsAliasResource IOperationSource<ManagedServerDnsAliasResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedServerDnsAliasData data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedServerDnsAliasResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedServerDnsAliasResource> IOperationSource<ManagedServerDnsAliasResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedServerDnsAliasData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new ManagedServerDnsAliasResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedServerDnsAliasData data = ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedServerDnsAliasResource(_client, data);
         }
     }
 }

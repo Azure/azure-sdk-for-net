@@ -15,6 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>

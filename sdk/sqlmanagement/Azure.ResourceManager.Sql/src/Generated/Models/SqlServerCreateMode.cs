@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlServerCreateMode : IEquatable<SqlServerCreateMode>
     {
         private readonly string _value;
+        /// <summary> Normal. </summary>
+        private const string NormalValue = "Normal";
+        /// <summary> Restore. </summary>
+        private const string RestoreValue = "Restore";
 
         /// <summary> Initializes a new instance of <see cref="SqlServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlServerCreateMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NormalValue = "Normal";
-        private const string RestoreValue = "Restore";
+            _value = value;
+        }
 
         /// <summary> Normal. </summary>
         public static SqlServerCreateMode Normal { get; } = new SqlServerCreateMode(NormalValue);
+
         /// <summary> Restore. </summary>
         public static SqlServerCreateMode Restore { get; } = new SqlServerCreateMode(RestoreValue);
+
         /// <summary> Determines if two <see cref="SqlServerCreateMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServerCreateMode left, SqlServerCreateMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServerCreateMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServerCreateMode left, SqlServerCreateMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerCreateMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServerCreateMode(string value) => new SqlServerCreateMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServerCreateMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServerCreateMode?(string value) => value == null ? null : new SqlServerCreateMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServerCreateMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServerCreateMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

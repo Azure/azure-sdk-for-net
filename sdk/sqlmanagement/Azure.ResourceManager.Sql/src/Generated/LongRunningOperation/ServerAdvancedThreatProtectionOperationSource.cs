@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ServerAdvancedThreatProtectionOperationSource : IOperationSource<ServerAdvancedThreatProtectionResource>
+    /// <summary></summary>
+    internal partial class ServerAdvancedThreatProtectionOperationSource : IOperationSource<ServerAdvancedThreatProtectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ServerAdvancedThreatProtectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ServerAdvancedThreatProtectionResource IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ServerAdvancedThreatProtectionData data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ServerAdvancedThreatProtectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ServerAdvancedThreatProtectionResource> IOperationSource<ServerAdvancedThreatProtectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ServerAdvancedThreatProtectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new ServerAdvancedThreatProtectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ServerAdvancedThreatProtectionData data = ServerAdvancedThreatProtectionData.DeserializeServerAdvancedThreatProtectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ServerAdvancedThreatProtectionResource(_client, data);
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class WorkloadClassifierResource : IJsonModel<WorkloadClassifierData>
     {
-        private static WorkloadClassifierData s_dataDeserializationInstance;
-        private static WorkloadClassifierData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkloadClassifierData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkloadClassifierData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkloadClassifierData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadClassifierData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)Data).Write(writer, options);
 
-        WorkloadClassifierData IJsonModel<WorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadClassifierData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadClassifierData IJsonModel<WorkloadClassifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkloadClassifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadClassifierData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkloadClassifierData IPersistableModel<WorkloadClassifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadClassifierData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<WorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadClassifierData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadClassifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

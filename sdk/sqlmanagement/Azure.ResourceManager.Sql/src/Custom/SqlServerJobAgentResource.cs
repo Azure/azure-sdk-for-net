@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerJobAgentResource
@@ -35,16 +36,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
-
-            return GetJobExecutionsByAgentAsync(options, cancellationToken);
+            return new AsyncPageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionResource>(
+                GetByAgentAsync(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken),
+                data => new SqlServerJobExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -71,16 +65,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
-            options.CreateTimeMin = createTimeMin;
-            options.CreateTimeMax = createTimeMax;
-            options.EndTimeMin = endTimeMin;
-            options.EndTimeMax = endTimeMax;
-            options.IsActive = isActive;
-            options.Skip = skip;
-            options.Top = top;
-
-            return GetJobExecutionsByAgent(options, cancellationToken);
+            return new PageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionResource>(
+                GetByAgent(createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken),
+                data => new SqlServerJobExecutionResource(Client, data));
         }
     }
 }

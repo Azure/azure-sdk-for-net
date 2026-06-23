@@ -7,50 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The SqlNetworkSecurityPerimeterProvisioningIssueProperties. </summary>
     public partial class SqlNetworkSecurityPerimeterProvisioningIssueProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
-        public SqlNetworkSecurityPerimeterProvisioningIssueProperties()
-        {
-            SuggestedResourceIds = new ChangeTrackingList<string>();
-            SuggestedAccessRules = new ChangeTrackingList<string>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"></param>
@@ -58,30 +23,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="description"></param>
         /// <param name="suggestedResourceIds"></param>
         /// <param name="suggestedAccessRules"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlNetworkSecurityPerimeterProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlNetworkSecurityPerimeterProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
             Description = description;
             SuggestedResourceIds = suggestedResourceIds;
             SuggestedAccessRules = suggestedAccessRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the issue type. </summary>
-        [WirePath("issueType")]
-        public string IssueType { get; set; }
-        /// <summary> Gets or sets the severity. </summary>
-        [WirePath("severity")]
-        public string Severity { get; set; }
-        /// <summary> Gets or sets the description. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
-        /// <summary> Gets the suggested resource ids. </summary>
+        /// <summary> Gets the SuggestedResourceIds. </summary>
         [WirePath("suggestedResourceIds")]
         public IList<string> SuggestedResourceIds { get; }
-        /// <summary> Gets the suggested access rules. </summary>
+
+        /// <summary> Gets the SuggestedAccessRules. </summary>
         [WirePath("suggestedAccessRules")]
         public IList<string> SuggestedAccessRules { get; }
     }

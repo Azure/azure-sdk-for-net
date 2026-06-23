@@ -13,124 +13,147 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerJobExecution data model.
-    /// An execution of a job
-    /// </summary>
+    /// <summary> An execution of a job. </summary>
     public partial class SqlServerJobExecutionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
-        public SqlServerJobExecutionData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobExecutionProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="jobVersion"> The job version number. </param>
-        /// <param name="stepName"> The job step name. </param>
-        /// <param name="stepId"> The job step id. </param>
-        /// <param name="jobExecutionId"> The unique identifier of the job execution. </param>
-        /// <param name="lifecycle"> The detailed state of the job execution. </param>
-        /// <param name="provisioningState"> The ARM provisioning state of the job execution. </param>
-        /// <param name="createOn"> The time that the job execution was created. </param>
-        /// <param name="startOn"> The time that the job execution started. </param>
-        /// <param name="endOn"> The time that the job execution completed. </param>
-        /// <param name="currentAttempts"> Number of times the job execution has been attempted. </param>
-        /// <param name="currentAttemptStartOn"> Start time of the current attempt. </param>
-        /// <param name="lastMessage"> The last status or error message. </param>
-        /// <param name="target"> The target that this execution is executed on. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            JobVersion = jobVersion;
-            StepName = stepName;
-            StepId = stepId;
-            JobExecutionId = jobExecutionId;
-            Lifecycle = lifecycle;
-            ProvisioningState = provisioningState;
-            CreateOn = createOn;
-            StartOn = startOn;
-            EndOn = endOn;
-            CurrentAttempts = currentAttempts;
-            CurrentAttemptStartOn = currentAttemptStartOn;
-            LastMessage = lastMessage;
-            Target = target;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal JobExecutionProperties Properties { get; }
 
         /// <summary> The job version number. </summary>
         [WirePath("properties.jobVersion")]
-        public int? JobVersion { get; }
+        public int? JobVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobVersion;
+            }
+        }
+
         /// <summary> The job step name. </summary>
         [WirePath("properties.stepName")]
-        public string StepName { get; }
+        public string StepName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StepName;
+            }
+        }
+
         /// <summary> The job step id. </summary>
         [WirePath("properties.stepId")]
-        public int? StepId { get; }
+        public int? StepId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StepId;
+            }
+        }
+
         /// <summary> The unique identifier of the job execution. </summary>
         [WirePath("properties.jobExecutionId")]
-        public Guid? JobExecutionId { get; }
+        public Guid? JobExecutionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobExecutionId;
+            }
+        }
+
         /// <summary> The detailed state of the job execution. </summary>
         [WirePath("properties.lifecycle")]
-        public JobExecutionLifecycle? Lifecycle { get; }
+        public JobExecutionLifecycle? Lifecycle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Lifecycle;
+            }
+        }
+
         /// <summary> The ARM provisioning state of the job execution. </summary>
         [WirePath("properties.provisioningState")]
-        public JobExecutionProvisioningState? ProvisioningState { get; }
+        public JobExecutionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The time that the job execution was created. </summary>
         [WirePath("properties.createTime")]
-        public DateTimeOffset? CreateOn { get; }
+        public DateTimeOffset? CreateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateOn;
+            }
+        }
+
         /// <summary> The time that the job execution started. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> The time that the job execution completed. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> Number of times the job execution has been attempted. </summary>
-        [WirePath("properties.currentAttempts")]
-        public int? CurrentAttempts { get; set; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
         /// <summary> Start time of the current attempt. </summary>
         [WirePath("properties.currentAttemptStartTime")]
-        public DateTimeOffset? CurrentAttemptStartOn { get; }
+        public DateTimeOffset? CurrentAttemptStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentAttemptStartOn;
+            }
+        }
+
         /// <summary> The last status or error message. </summary>
         [WirePath("properties.lastMessage")]
-        public string LastMessage { get; }
+        public string LastMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastMessage;
+            }
+        }
+
         /// <summary> The target that this execution is executed on. </summary>
         [WirePath("properties.target")]
-        public JobExecutionTarget Target { get; }
+        public JobExecutionTarget Target
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Target;
+            }
+        }
     }
 }

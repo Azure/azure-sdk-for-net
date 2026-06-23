@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class LedgerDigestUploadOperationSource : IOperationSource<LedgerDigestUploadResource>
+    /// <summary></summary>
+    internal partial class LedgerDigestUploadOperationSource : IOperationSource<LedgerDigestUploadResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal LedgerDigestUploadOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         LedgerDigestUploadResource IOperationSource<LedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            LedgerDigestUploadData data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new LedgerDigestUploadResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<LedgerDigestUploadResource> IOperationSource<LedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new LedgerDigestUploadResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            LedgerDigestUploadData data = LedgerDigestUploadData.DeserializeLedgerDigestUploadData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new LedgerDigestUploadResource(_client, data);
         }
     }
 }

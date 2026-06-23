@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlNetworkSecurityPerimeterConfigurationOperationSource : IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>
+    /// <summary></summary>
+    internal partial class SqlNetworkSecurityPerimeterConfigurationOperationSource : IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlNetworkSecurityPerimeterConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlNetworkSecurityPerimeterConfigurationResource IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlNetworkSecurityPerimeterConfigurationData data = SqlNetworkSecurityPerimeterConfigurationData.DeserializeSqlNetworkSecurityPerimeterConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlNetworkSecurityPerimeterConfigurationResource> IOperationSource<SqlNetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlNetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlNetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlNetworkSecurityPerimeterConfigurationData data = SqlNetworkSecurityPerimeterConfigurationData.DeserializeSqlNetworkSecurityPerimeterConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
     }
 }

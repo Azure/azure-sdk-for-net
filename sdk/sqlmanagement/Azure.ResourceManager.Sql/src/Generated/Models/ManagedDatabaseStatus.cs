@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ManagedDatabaseStatus : IEquatable<ManagedDatabaseStatus>
     {
         private readonly string _value;
+        /// <summary> Online. </summary>
+        private const string OnlineValue = "Online";
+        /// <summary> Offline. </summary>
+        private const string OfflineValue = "Offline";
+        /// <summary> Shutdown. </summary>
+        private const string ShutdownValue = "Shutdown";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Inaccessible. </summary>
+        private const string InaccessibleValue = "Inaccessible";
+        /// <summary> Restoring. </summary>
+        private const string RestoringValue = "Restoring";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> DbMoving. </summary>
+        private const string DbMovingValue = "DbMoving";
+        /// <summary> DbCopying. </summary>
+        private const string DbCopyingValue = "DbCopying";
 
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedDatabaseStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnlineValue = "Online";
-        private const string OfflineValue = "Offline";
-        private const string ShutdownValue = "Shutdown";
-        private const string CreatingValue = "Creating";
-        private const string InaccessibleValue = "Inaccessible";
-        private const string RestoringValue = "Restoring";
-        private const string UpdatingValue = "Updating";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string StartingValue = "Starting";
-        private const string DBMovingValue = "DbMoving";
-        private const string DBCopyingValue = "DbCopying";
+            _value = value;
+        }
 
         /// <summary> Online. </summary>
         public static ManagedDatabaseStatus Online { get; } = new ManagedDatabaseStatus(OnlineValue);
+
         /// <summary> Offline. </summary>
         public static ManagedDatabaseStatus Offline { get; } = new ManagedDatabaseStatus(OfflineValue);
+
         /// <summary> Shutdown. </summary>
         public static ManagedDatabaseStatus Shutdown { get; } = new ManagedDatabaseStatus(ShutdownValue);
+
         /// <summary> Creating. </summary>
         public static ManagedDatabaseStatus Creating { get; } = new ManagedDatabaseStatus(CreatingValue);
+
         /// <summary> Inaccessible. </summary>
         public static ManagedDatabaseStatus Inaccessible { get; } = new ManagedDatabaseStatus(InaccessibleValue);
+
         /// <summary> Restoring. </summary>
         public static ManagedDatabaseStatus Restoring { get; } = new ManagedDatabaseStatus(RestoringValue);
+
         /// <summary> Updating. </summary>
         public static ManagedDatabaseStatus Updating { get; } = new ManagedDatabaseStatus(UpdatingValue);
+
         /// <summary> Stopping. </summary>
         public static ManagedDatabaseStatus Stopping { get; } = new ManagedDatabaseStatus(StoppingValue);
+
         /// <summary> Stopped. </summary>
         public static ManagedDatabaseStatus Stopped { get; } = new ManagedDatabaseStatus(StoppedValue);
+
         /// <summary> Starting. </summary>
         public static ManagedDatabaseStatus Starting { get; } = new ManagedDatabaseStatus(StartingValue);
+
         /// <summary> DbMoving. </summary>
-        public static ManagedDatabaseStatus DBMoving { get; } = new ManagedDatabaseStatus(DBMovingValue);
+        public static ManagedDatabaseStatus DbMoving { get; } = new ManagedDatabaseStatus(DbMovingValue);
+
         /// <summary> DbCopying. </summary>
-        public static ManagedDatabaseStatus DBCopying { get; } = new ManagedDatabaseStatus(DBCopyingValue);
+        public static ManagedDatabaseStatus DbCopying { get; } = new ManagedDatabaseStatus(DbCopyingValue);
+
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedDatabaseStatus left, ManagedDatabaseStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedDatabaseStatus left, ManagedDatabaseStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedDatabaseStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedDatabaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedDatabaseStatus(string value) => new ManagedDatabaseStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedDatabaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedDatabaseStatus?(string value) => value == null ? null : new ManagedDatabaseStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedDatabaseStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedDatabaseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
