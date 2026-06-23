@@ -33,7 +33,6 @@ namespace Azure.Security.KeyVault.Certificates
     public class CertificateClient
     {
         internal const string CertificatesPath = "/certificates/";
-        internal const string DeletedCertificatesPath = "/deletedcertificates/";
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-certificates";
         private const string OTelCertificateNameKey = "az.keyvault.certificate.name";
         private const string OTelCertificateVersionKey = "az.keyvault.certificate.version";

@@ -69,6 +69,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [TestCase(CertificateClientOptions.ServiceVersion.V7_6,                "7.6")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2025_07_01,         "2025-07-01")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview, "2026-03-01-preview")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V2026_05_01_Preview, "2026-05-01-preview")]
         public void GetVersionString_MatchesWireString(CertificateClientOptions.ServiceVersion version, string expected)
         {
             var options = new CertificateClientOptions(version);
