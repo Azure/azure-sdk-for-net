@@ -57,6 +57,7 @@ import {
   getMinLength,
   getMaxLength
 } from "@typespec/compiler";
+import { isCustomAzureResource } from "@azure-tools/typespec-azure-resource-manager";
 import { resolveArmResources } from "./resolve-arm-resources-converter.js";
 import { AzureMgmtEmitterOptions } from "./options.js";
 import { getAllSdkClients, traverseClient } from "./sdk-client-utils.js";
@@ -101,7 +102,7 @@ export function buildArmProviderSchema(
   );
 
   // Step 1: candidate resource models.
-  const resourceModels = getAllResourceModels(codeModel);
+  const resourceModels = getAllResourceModels(sdkContext, codeModel);
   const resourceModelMap = new Map<string, InputModelType>(
     resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
   );
@@ -752,7 +753,10 @@ export function getAllClients(codeModel: CodeModel): InputClient[] {
  * @param model - The model to check for @customAzureResource decorator
  * @returns true if the model or any ancestor has @customAzureResource decorator
  */
-function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
+function hasCustomAzureResourceInHierarchy(
+  sdkContext: CSharpEmitterContext,
+  model: InputModelType
+): boolean {
   let current: InputModelType | undefined = model;
   while (current) {
     if (current.decorators?.some((d) => d.name === customAzureResource)) {
@@ -760,7 +764,11 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
     }
     current = current.baseModel;
   }
-  return false;
+
+  const rawModel = sdkContext.sdkPackage.models.find(
+    (m) => m.crossLanguageDefinitionId === model.crossLanguageDefinitionId
+  )?.__raw as Model | undefined;
+  return rawModel ? isCustomAzureResource(sdkContext.program, rawModel) : false;
 }
 
 /**
@@ -779,7 +787,10 @@ function hasCustomAzureResourceInHierarchy(model: InputModelType): boolean {
  * @param codeModel - The code model containing all models
  * @returns Array of resource models
  */
-function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
+function getAllResourceModels(
+  sdkContext: CSharpEmitterContext,
+  codeModel: CodeModel
+): InputModelType[] {
   const resourceModels: InputModelType[] = [];
 
   for (const model of codeModel.models) {
@@ -794,7 +805,7 @@ function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
     }
     // 2. Custom Azure resources: Models inheriting from a @customAzureResource base model
     //    Used by legacy services like TrafficManager that don't use standard ARM templates
-    else if (hasCustomAzureResourceInHierarchy(model)) {
+    else if (hasCustomAzureResourceInHierarchy(sdkContext, model)) {
       resourceModels.push(model);
     }
   }

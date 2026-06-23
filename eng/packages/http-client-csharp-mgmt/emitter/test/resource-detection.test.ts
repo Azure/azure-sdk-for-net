@@ -2920,6 +2920,86 @@ interface TrafficEndpoints {
     );
   });
 
+  it("custom Azure resource inheritance survives alternateType on base model", async () => {
+    const program = await typeSpecCompile(
+      `
+using Azure.ResourceManager.Legacy;
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+@Azure.ResourceManager.Legacy.customAzureResource(#{ isAzureResource: true })
+model Resource {
+  @visibility(Lifecycle.Read)
+  id?: string;
+
+  @visibility(Lifecycle.Read)
+  name?: string;
+
+  @visibility(Lifecycle.Read)
+  type?: string;
+}
+
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+model FrontDoor extends Resource {
+  properties?: FrontDoorProperties;
+}
+
+model FrontDoorProperties {
+  friendlyName?: string;
+}
+
+@@alternateType(
+  Resource,
+  Azure.ResourceManager.Foundations.TrackedResource,
+  "csharp"
+);
+
+alias FrontDoorOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...SubscriptionIdParameter;
+    ...ResourceGroupParameter;
+    ...Azure.ResourceManager.Legacy.Provider<FrontDoor>;
+  },
+  {
+    @path
+    @segment("frontDoors")
+    frontDoorName: string;
+  },
+  ErrorResponse,
+  "FrontDoor"
+>;
+
+@armResourceOperations
+interface FrontDoors {
+  get is FrontDoorOps.Read<FrontDoor>;
+  createOrUpdate is FrontDoorOps.CreateOrUpdateSync<FrontDoor>;
+  delete is FrontDoorOps.DeleteSync<FrontDoor>;
+  list is FrontDoorOps.List<FrontDoor>;
+}
+`,
+      runner
+    );
+
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    const frontDoorResource = armProviderSchema.resources.find(
+      (r) =>
+        r.metadata.resourceType === "Microsoft.ContosoProviderHub/frontDoors"
+    );
+
+    ok(frontDoorResource, "FrontDoor resource should be detected");
+    strictEqual(
+      frontDoorResource.resourceModelId,
+      "Microsoft.ContosoProviderHub.FrontDoor"
+    );
+    strictEqual(frontDoorResource.metadata.methods.length, 4);
+  });
+
   it("builtInResourceOperation - NspConfiguration pattern", async () => {
     const program = await typeSpecCompile(
       `
