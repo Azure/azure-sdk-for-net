@@ -4,16 +4,6 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.2.0 (2026-05-26)
-
-### Features Added
-
 - Upgraded the Managed Network Fabric management plane API version to `2025-07-15`.
 - Added support for newly introduced service capabilities and operation result models from the `2025-07-15` API.
 
@@ -29,7 +19,18 @@
 
 ### Other Changes
 
+- Migrated the library to the TypeSpec management-plane generator.
 - Added compatibility customizations and regenerated code/api listings to mitigate breaking changes introduced by the API version upgrade.
+
+## 1.2.0 (2026-05-26)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.1.3 (2026-04-27)
 

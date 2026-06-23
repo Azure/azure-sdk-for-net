@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceVmSkuCapacity(long? minimum, long? maximum, long? @default, ResourceSkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceVmSkuCapacity(long? minimum, long? maximum, long? @default, ContainerServiceSkuCapacityScaleType? scaleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The scale type applicable to the sku. </summary>
         [WirePath("scaleType")]
-        public ResourceSkuCapacityScaleType? ScaleType { get; }
+        public ContainerServiceSkuCapacityScaleType? ScaleType { get; }
     }
 }

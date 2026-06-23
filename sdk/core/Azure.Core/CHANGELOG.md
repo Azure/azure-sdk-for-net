@@ -1,16 +1,31 @@
 # Release History
 
-## 1.59.0-beta.1 (Unreleased)
+## 1.60.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
+- Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
+
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.59.0 (2026-06-09)
+
+### Features Added
+
+- Added experimental (`AZID0004`) mTLS Proof-of-Possession token binding support for managed identity scenarios, including dynamic host capability detection via MSAL and transport certificate rotation APIs on `BearerTokenAuthenticationPolicy`.
 
 ### Bugs Fixed
 
 - Fixed `BearerTokenAuthenticationPolicy` so that the `Authorization` header is no longer re-attached to a request that has been redirected to a different host. Previously, `RedirectPolicy` would strip the `Authorization` header before following a redirect, but the per-retry `BearerTokenAuthenticationPolicy` would re-add the cached bearer token to the redirected request — including when the redirect target was a different host. The policy now detects when the request URI authority has changed since it last authorized the message, defensively strips any `Authorization` header, and skips both re-authorization and the `WWW-Authenticate` (CAE) `401` handler so that no bearer token is sent to — or fetched in response to a challenge from — the redirect target. Same-host redirects, normal (non-redirected) requests, and CAE handling against the original host are unchanged. Callers who explicitly enabled auto-redirect (via `HttpPipelineTransportOptions.IsClientRedirectEnabled = true` or `RedirectPolicy.SetAllowAutoRedirect(message, true)`) and depended on the bearer token being re-attached on cross-host redirects should construct a separate client targeting the redirect-target host with a credential bound to that host's resource.
 
 ### Other Changes
+
+- Updated `Microsoft.Identity.Client` dependency to `4.84.2`.
 
 ## 1.58.0 (2026-06-04)
 

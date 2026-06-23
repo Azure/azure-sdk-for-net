@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FirewallPolicyIntrusionDetectionStateType : IEquatable<FirewallPolicyIntrusionDetectionStateType>
     {
         private readonly string _value;
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
+        /// <summary> Alert. </summary>
+        private const string AlertValue = "Alert";
+        /// <summary> Deny. </summary>
+        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyIntrusionDetectionStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffValue = "Off";
-        private const string AlertValue = "Alert";
-        private const string DenyValue = "Deny";
+            _value = value;
+        }
 
         /// <summary> Off. </summary>
         public static FirewallPolicyIntrusionDetectionStateType Off { get; } = new FirewallPolicyIntrusionDetectionStateType(OffValue);
+
         /// <summary> Alert. </summary>
         public static FirewallPolicyIntrusionDetectionStateType Alert { get; } = new FirewallPolicyIntrusionDetectionStateType(AlertValue);
+
         /// <summary> Deny. </summary>
         public static FirewallPolicyIntrusionDetectionStateType Deny { get; } = new FirewallPolicyIntrusionDetectionStateType(DenyValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyIntrusionDetectionStateType left, FirewallPolicyIntrusionDetectionStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyIntrusionDetectionStateType left, FirewallPolicyIntrusionDetectionStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyIntrusionDetectionStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyIntrusionDetectionStateType(string value) => new FirewallPolicyIntrusionDetectionStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyIntrusionDetectionStateType?(string value) => value == null ? null : new FirewallPolicyIntrusionDetectionStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyIntrusionDetectionStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyIntrusionDetectionStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 return null;
             }
-            HciVmInstanceHardwareProfileUpdate hardwareProfile = default;
+            HciVmInstanceHardwareProfilePatch hardwareProfile = default;
             StorageProfileUpdate storageProfile = default;
             NetworkProfileUpdate networkProfile = default;
             HciVmOSProfile osProfile = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    hardwareProfile = HciVmInstanceHardwareProfileUpdate.DeserializeHciVmInstanceHardwareProfileUpdate(prop.Value, options);
+                    hardwareProfile = HciVmInstanceHardwareProfilePatch.DeserializeHciVmInstanceHardwareProfilePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("storageProfile"u8))

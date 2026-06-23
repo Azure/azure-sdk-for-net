@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A Class representing a HybridComputeExtensionValue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeExtensionValueResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeExtensionValueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetHybridComputeExtensionValue method.
+    /// A class representing a HybridComputeExtensionValue along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeExtensionValueResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetHybridComputeExtensionValues method.
     /// </summary>
     public partial class HybridComputeExtensionValueResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HybridComputeExtensionValueResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="publisher"> The publisher. </param>
-        /// <param name="extensionType"> The extensionType. </param>
-        /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hybridComputeExtensionValueExtensionMetadataClientDiagnostics;
-        private readonly ExtensionMetadataRestOperations _hybridComputeExtensionValueExtensionMetadataRestClient;
+        private readonly ClientDiagnostics _extensionMetadataClientDiagnostics;
+        private readonly ExtensionMetadata _extensionMetadataRestClient;
         private readonly HybridComputeExtensionValueData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeExtensionValueResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HybridComputeExtensionValueResource for mocking. </summary>
         protected HybridComputeExtensionValueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeExtensionValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeExtensionValueResource(ArmClient client, HybridComputeExtensionValueData data) : this(client, data.Id)
@@ -56,71 +44,94 @@ namespace Azure.ResourceManager.HybridCompute
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeExtensionValueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputeExtensionValueResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputeExtensionValueExtensionMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hybridComputeExtensionValueExtensionMetadataApiVersion);
-            _hybridComputeExtensionValueExtensionMetadataRestClient = new ExtensionMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeExtensionValueExtensionMetadataApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hybridComputeExtensionValueApiVersion);
+            _extensionMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            _extensionMetadataRestClient = new ExtensionMetadata(_extensionMetadataClientDiagnostics, Pipeline, Endpoint, hybridComputeExtensionValueApiVersion ?? "2025-09-16-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HybridComputeExtensionValueData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publisher"> The publisher. </param>
+        /// <param name="extensionType"> The extensionType. </param>
+        /// <param name="version"> The version. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtensionMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExtensionValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeExtensionValueResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HybridComputeExtensionValueResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueResource.Get");
+            using DiagnosticScope scope = _extensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueResource.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputeExtensionValueExtensionMetadataRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeExtensionValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HybridCompute/locations/{location}/publishers/{publisher}/extensionTypes/{extensionType}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExtensionMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExtensionValues_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeExtensionValueResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeExtensionValueResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridComputeExtensionValueResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeExtensionValueExtensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueResource.Get");
+            using DiagnosticScope scope = _extensionMetadataClientDiagnostics.CreateScope("HybridComputeExtensionValueResource.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputeExtensionValueExtensionMetadataRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeExtensionValueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

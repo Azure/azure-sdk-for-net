@@ -4,18 +4,16 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
-[CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetSessionFilesAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetSessionFilesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionFilesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetSessionFilesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentSessionFiles
 {
     /// <summary>
@@ -45,7 +43,7 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
         using BinaryContent content = BinaryContent.Create(new BinaryData(File.ReadAllBytes(localPath)));
-        ClientResult result = await UploadSessionFileAsync(agentName, sessionId, sessionStoragePath, content, default, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await UploadSessionFileAsync(agentName, sessionId, sessionStoragePath, content, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
     }
 
@@ -76,7 +74,7 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
 
         using BinaryContent content = BinaryContent.Create(new BinaryData(File.ReadAllBytes(localPath)));
-        ClientResult result = UploadSessionFile(agentName, sessionId, sessionStoragePath, content, default, userIsolationKey, cancellationToken.ToRequestOptions());
+        ClientResult result = UploadSessionFile(agentName, sessionId, sessionStoragePath, content, userIsolationKey, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
     }
 
@@ -118,7 +116,6 @@ public partial class AgentSessionFiles
                 => CreateGetSessionFilesRequest(
                     agentName: localCollectionOptions.Filters[0],
                     agentSessionId: localCollectionOptions.Filters[1],
-                    foundryFeatures: default,
                     path: string.Equals(localCollectionOptions.Filters[2], "<unset>") ? null : localCollectionOptions.Filters[2],
                     userIsolationKey: localCollectionOptions.Filters.Count > 3 ? localCollectionOptions.Filters[3] : null,
                     limit: localCollectionOptions.Limit,
@@ -169,7 +166,6 @@ public partial class AgentSessionFiles
                 => CreateGetSessionFilesRequest(
                     agentName: localCollectionOptions.Filters[0],
                     agentSessionId: localCollectionOptions.Filters[1],
-                    foundryFeatures: default,
                     path: string.Equals(localCollectionOptions.Filters[2], "<unset>") ? null : localCollectionOptions.Filters[2],
                     userIsolationKey: localCollectionOptions.Filters.Count > 3 ? localCollectionOptions.Filters[3] : null,
                     limit: localCollectionOptions.Limit,
@@ -199,7 +195,7 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
-        ClientResult result = await DownloadSessionFileAsync(agentName, sessionId, sessionStoragePath, default, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        ClientResult result = await DownloadSessionFileAsync(agentName, sessionId, sessionStoragePath, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
         return result.GetRawResponse().Content;
     }
@@ -221,7 +217,7 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
 
-        ClientResult result = DownloadSessionFile(agentName, sessionId, sessionStoragePath, userIsolationKey, default, cancellationToken.ToRequestOptions());
+        ClientResult result = DownloadSessionFile(agentName, sessionId, sessionStoragePath, userIsolationKey, cancellationToken.ToRequestOptions());
         File.WriteAllBytes(localPath, result.GetRawResponse().Content.ToArray());
         return result.GetRawResponse().Content;
     }
@@ -245,7 +241,7 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        return DeleteSessionFile(agentName, sessionId, path, default, recursive, userIsolationKey, cancellationToken.ToRequestOptions());
+        return DeleteSessionFile(agentName, sessionId, path, recursive, userIsolationKey, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -267,6 +263,6 @@ public partial class AgentSessionFiles
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        return await DeleteSessionFileAsync(agentName, sessionId, path, default, recursive, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return await DeleteSessionFileAsync(agentName, sessionId, path, recursive, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 }

@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.16.0-beta.1</Version>
+    <Version>1.16.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.15.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Network</PackageId>
@@ -9,6 +9,9 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <!-- CA1708 cannot be suppress through #pragma. So we suppress it here. -->
     <NoWarn>$(NoWarn);CA1708</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed. -->
+    <Compile Remove="Generated\LongRunningOperation\IDictionaryOfStringIListOfPeerRouteListOperationSource.cs" />
+  </ItemGroup>
 </Project>

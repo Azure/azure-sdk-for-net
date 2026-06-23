@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text.Json;
 
@@ -20,26 +21,37 @@ namespace Azure.Communication
         // no-op when they are absent.
         private const string TeamsExtensionUserKindValue = "teamsExtensionUser";
 
-#pragma warning disable IL2070, IL2075, IL2080 // The reflection probes below intentionally tolerate the linker stripping these members; we fall back to NotSupportedException at runtime.
-        private static readonly PropertyInfo? s_teamsExtensionUserProperty =
-            typeof(CommunicationIdentifierModel).GetProperty("TeamsExtensionUser");
-        private static readonly Type? s_teamsExtensionUserModelType = s_teamsExtensionUserProperty?.PropertyType;
-        private static readonly PropertyInfo? s_teamsExtensionUserIdProperty =
-            s_teamsExtensionUserModelType?.GetProperty("UserId");
-        private static readonly PropertyInfo? s_teamsExtensionTenantIdProperty =
-            s_teamsExtensionUserModelType?.GetProperty("TenantId");
-        private static readonly PropertyInfo? s_teamsExtensionResourceIdProperty =
-            s_teamsExtensionUserModelType?.GetProperty("ResourceId");
-        private static readonly PropertyInfo? s_teamsExtensionCloudProperty =
-            s_teamsExtensionUserModelType?.GetProperty("Cloud");
-        private static readonly ConstructorInfo? s_teamsExtensionUserCtor =
-            s_teamsExtensionUserModelType?.GetConstructor(new[] { typeof(string), typeof(string), typeof(string) });
+        private static readonly PropertyInfo? s_teamsExtensionUserProperty;
+        private static readonly Type? s_teamsExtensionUserModelType;
+        private static readonly PropertyInfo? s_teamsExtensionUserIdProperty;
+        private static readonly PropertyInfo? s_teamsExtensionTenantIdProperty;
+        private static readonly PropertyInfo? s_teamsExtensionResourceIdProperty;
+        private static readonly PropertyInfo? s_teamsExtensionCloudProperty;
+        private static readonly ConstructorInfo? s_teamsExtensionUserCtor;
 
-        private static readonly PropertyInfo? s_phoneIsAnonymousProperty =
-            typeof(PhoneNumberIdentifierModel).GetProperty("IsAnonymous");
-        private static readonly PropertyInfo? s_phoneAssertedIdProperty =
-            typeof(PhoneNumberIdentifierModel).GetProperty("AssertedId");
-#pragma warning restore IL2070, IL2075, IL2080
+        private static readonly PropertyInfo? s_phoneIsAnonymousProperty;
+        private static readonly PropertyInfo? s_phoneAssertedIdProperty;
+
+        // The reflection probes below intentionally tolerate the linker stripping these members;
+        // we fall back to NotSupportedException at runtime when a member is absent. UnconditionalSuppressMessage
+        // is required (instead of #pragma warning disable) because trim/AOT analyzer warnings are emitted from
+        // assembly metadata during publish and are not affected by source-level pragma suppressions.
+        [UnconditionalSuppressMessage("Trimming", "IL2070", Justification = "Reflection probes gracefully no-op when members are absent; see DeserializeTeamsExtensionUser / SerializeTeamsExtensionUser.")]
+        [UnconditionalSuppressMessage("Trimming", "IL2075", Justification = "Reflection probes gracefully no-op when members are absent; see DeserializeTeamsExtensionUser / SerializeTeamsExtensionUser.")]
+        [UnconditionalSuppressMessage("Trimming", "IL2080", Justification = "Reflection probes gracefully no-op when members are absent; see DeserializeTeamsExtensionUser / SerializeTeamsExtensionUser.")]
+        static CommunicationIdentifierSerializer()
+        {
+            s_teamsExtensionUserProperty = typeof(CommunicationIdentifierModel).GetProperty("TeamsExtensionUser");
+            s_teamsExtensionUserModelType = s_teamsExtensionUserProperty?.PropertyType;
+            s_teamsExtensionUserIdProperty = s_teamsExtensionUserModelType?.GetProperty("UserId");
+            s_teamsExtensionTenantIdProperty = s_teamsExtensionUserModelType?.GetProperty("TenantId");
+            s_teamsExtensionResourceIdProperty = s_teamsExtensionUserModelType?.GetProperty("ResourceId");
+            s_teamsExtensionCloudProperty = s_teamsExtensionUserModelType?.GetProperty("Cloud");
+            s_teamsExtensionUserCtor = s_teamsExtensionUserModelType?.GetConstructor(new[] { typeof(string), typeof(string), typeof(string) });
+
+            s_phoneIsAnonymousProperty = typeof(PhoneNumberIdentifierModel).GetProperty("IsAnonymous");
+            s_phoneAssertedIdProperty = typeof(PhoneNumberIdentifierModel).GetProperty("AssertedId");
+        }
 
         public static CommunicationIdentifier Deserialize(CommunicationIdentifierModel identifier)
         {

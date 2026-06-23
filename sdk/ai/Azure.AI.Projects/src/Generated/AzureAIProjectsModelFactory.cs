@@ -597,6 +597,28 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
+        /// Input configuration for the evaluation taxonomy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentTaxonomyInput"/>.
+        /// </summary>
+        /// <param name="type"> Input type of the evaluation taxonomy. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomyInput"/> instance for mocking. </returns>
+        public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
+        {
+            return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
+        /// <param name="target"> Target configuration for the agent. </param>
+        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
+        /// <returns> A new <see cref="Evaluation.AgentTaxonomyInput"/> instance for mocking. </returns>
+        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
+        {
+            riskCategories ??= new ChangeTrackingList<RiskCategory>();
+
+            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
+        }
+
+        /// <summary>
         /// Base class for targets with discriminator support.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureAIModelTarget"/> and <see cref="Evaluation.AzureAIAgentTarget"/>.
         /// </summary>
@@ -1205,6 +1227,43 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A sample from the analysis.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationResultSample"/>.
+        /// </summary>
+        /// <param name="id"> The unique identifier for the analysis sample. </param>
+        /// <param name="type"> Sample type. </param>
+        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
+        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
+        /// <returns> A new <see cref="Evaluation.InsightSample"/> instance for mocking. </returns>
+        public static InsightSample InsightSample(string id = default, string @type = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default)
+        {
+            features ??= new ChangeTrackingDictionary<string, BinaryData>();
+            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new UnknownInsightSample(id, new SampleType(@type), features, correlationInfo, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A sample from the evaluation result. </summary>
+        /// <param name="id"> The unique identifier for the analysis sample. </param>
+        /// <param name="features"> Features to help with additional filtering of data in UX. </param>
+        /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
+        /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationResultSample"/> instance for mocking. </returns>
+        public static EvaluationResultSample EvaluationResultSample(string id = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default, EvalResult evaluationResult = default)
+        {
+            features ??= new ChangeTrackingDictionary<string, BinaryData>();
+            correlationInfo ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new EvaluationResultSample(
+                id,
+                SampleType.EvaluationResultSample,
+                features,
+                correlationInfo,
+                additionalBinaryDataProperties: null,
+                evaluationResult);
+        }
+
         /// <summary> Result of the evaluation. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
@@ -1267,6 +1326,110 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
+        /// Base model for Trigger of the schedule.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.RecurrenceTrigger"/>, and <see cref="Evaluation.OneTimeTrigger"/>.
+        /// </summary>
+        /// <param name="type"> Type of the trigger. </param>
+        /// <returns> A new <see cref="Evaluation.ScheduleTrigger"/> instance for mocking. </returns>
+        public static ScheduleTrigger ScheduleTrigger(string @type = default)
+        {
+            return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cron based trigger. </summary>
+        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
+        /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
+        /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
+        /// <returns> A new <see cref="Evaluation.CronTrigger"/> instance for mocking. </returns>
+        public static CronTrigger CronTrigger(string expression = default, string timeZone = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default)
+        {
+            return new CronTrigger(
+                TriggerType.Cron,
+                additionalBinaryDataProperties: null,
+                expression,
+                timeZone,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Recurrence based trigger. </summary>
+        /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the recurrence schedule. Defaults to `UTC`. </param>
+        /// <param name="interval"> Interval for the recurrence schedule. </param>
+        /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceTrigger"/> instance for mocking. </returns>
+        public static RecurrenceTrigger RecurrenceTrigger(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeZone = default, int interval = default, RecurrenceSchedule schedule = default)
+        {
+            return new RecurrenceTrigger(
+                TriggerType.Recurrence,
+                additionalBinaryDataProperties: null,
+                startTime,
+                endTime,
+                timeZone,
+                interval,
+                schedule);
+        }
+
+        /// <summary>
+        /// Recurrence schedule model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.WeeklyRecurrenceSchedule"/>, and <see cref="Evaluation.MonthlyRecurrenceSchedule"/>.
+        /// </summary>
+        /// <param name="type"> Recurrence type for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceSchedule"/> instance for mocking. </returns>
+        public static RecurrenceSchedule RecurrenceSchedule(string @type = default)
+        {
+            return new UnknownRecurrenceSchedule(new RecurrenceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Hourly recurrence schedule. </summary>
+        /// <returns> A new <see cref="Evaluation.HourlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static HourlyRecurrenceSchedule HourlyRecurrenceSchedule()
+        {
+            return new HourlyRecurrenceSchedule(RecurrenceType.Hourly, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Daily recurrence schedule. </summary>
+        /// <param name="hours"> Hours for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.DailyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static DailyRecurrenceSchedule DailyRecurrenceSchedule(IEnumerable<int> hours = default)
+        {
+            hours ??= new ChangeTrackingList<int>();
+
+            return new DailyRecurrenceSchedule(RecurrenceType.Daily, additionalBinaryDataProperties: null, hours.ToList());
+        }
+
+        /// <summary> Weekly recurrence schedule. </summary>
+        /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
+        {
+            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
+
+            return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
+        }
+
+        /// <summary> Monthly recurrence schedule. </summary>
+        /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.MonthlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth = default)
+        {
+            daysOfMonth ??= new ChangeTrackingList<int>();
+
+            return new MonthlyRecurrenceSchedule(RecurrenceType.Monthly, additionalBinaryDataProperties: null, daysOfMonth.ToList());
+        }
+
+        /// <summary> One-time trigger. </summary>
+        /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
+        /// <returns> A new <see cref="Evaluation.OneTimeTrigger"/> instance for mocking. </returns>
+        public static OneTimeTrigger OneTimeTrigger(DateTimeOffset triggerAt = default, string timeZone = default)
+        {
+            return new OneTimeTrigger(TriggerType.OneTime, additionalBinaryDataProperties: null, triggerAt, timeZone);
+        }
+
+        /// <summary>
         /// Schedule task model.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationScheduleTask"/> and <see cref="Evaluation.InsightScheduleTask"/>.
         /// </summary>
@@ -1323,6 +1486,27 @@ namespace Azure.AI.Projects
                 error,
                 properties,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base definition for memory store configurations.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.MemoryStoreDefaultDefinition"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of the memory store. </param>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefinition MemoryStoreDefinition(string kind = default)
+        {
+            return new UnknownMemoryStoreDefinition(new MemoryStoreKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Default memory store implementation. </summary>
+        /// <param name="chatModel"> The name or identifier of the chat completion model deployment used for memory processing. </param>
+        /// <param name="embeddingModel"> The name or identifier of the embedding model deployment used for memory processing. </param>
+        /// <param name="options"> Default memory store options. </param>
+        /// <returns> A new <see cref="Memory.MemoryStoreDefaultDefinition"/> instance for mocking. </returns>
+        public static MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = default, string embeddingModel = default, MemoryStoreDefaultOptions options = default)
+        {
+            return new MemoryStoreDefaultDefinition(MemoryStoreKind.Default, additionalBinaryDataProperties: null, chatModel, embeddingModel, options);
         }
 
         /// <summary> Default memory store configurations. </summary>
@@ -1697,7 +1881,7 @@ namespace Azure.AI.Projects
 
         /// <summary> A single routine run returned from the run history API. </summary>
         /// <param name="id"> The unique run identifier for the routine attempt. </param>
-        /// <param name="status"> The run status. </param>
+        /// <param name="statusInternal"> The run status. </param>
         /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
         /// <param name="triggerType"> The trigger type that produced the routine attempt. </param>
         /// <param name="triggerName"> The configured trigger name that produced the routine attempt. </param>
@@ -1719,11 +1903,11 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
-        public static RoutineRun RoutineRun(string id = default, string status = default, RoutineRunPhase? phase = default, RoutineTriggerType? triggerType = default, string triggerName = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerType? triggerType = default, string triggerName = default, RoutineAttemptSource? attemptSource = default, RoutineActionType? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             return new RoutineRun(
                 id,
-                status,
+                statusInternal,
                 phase,
                 triggerType,
                 triggerName,

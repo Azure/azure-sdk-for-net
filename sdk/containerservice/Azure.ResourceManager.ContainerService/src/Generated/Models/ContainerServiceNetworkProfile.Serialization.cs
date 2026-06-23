@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile, options);
             }
+            if (Optional.IsDefined(BastionProfile))
+            {
+                writer.WritePropertyName("bastionProfile"u8);
+                writer.WriteObjectValue(BastionProfile, options);
+            }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
@@ -248,6 +253,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOutboundType? outboundType = default;
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
+            ManagedClusterBastionProfile bastionProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
@@ -352,6 +358,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     loadBalancerProfile = ManagedClusterLoadBalancerProfile.DeserializeManagedClusterLoadBalancerProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("bastionProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bastionProfile = ManagedClusterBastionProfile.DeserializeManagedClusterBastionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("natGatewayProfile"u8))
@@ -464,6 +479,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 outboundType,
                 loadBalancerSku,
                 loadBalancerProfile,
+                bastionProfile,
                 natGatewayProfile,
                 staticEgressGatewayProfile,
                 podCidrs ?? new ChangeTrackingList<string>(),

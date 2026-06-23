@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeLicenseState : IEquatable<HybridComputeLicenseState>
     {
         private readonly string _value;
+        /// <summary> Activated. </summary>
+        private const string ActivatedValue = "Activated";
+        /// <summary> Deactivated. </summary>
+        private const string DeactivatedValue = "Deactivated";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeLicenseState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActivatedValue = "Activated";
-        private const string DeactivatedValue = "Deactivated";
+            _value = value;
+        }
 
         /// <summary> Activated. </summary>
         public static HybridComputeLicenseState Activated { get; } = new HybridComputeLicenseState(ActivatedValue);
+
         /// <summary> Deactivated. </summary>
         public static HybridComputeLicenseState Deactivated { get; } = new HybridComputeLicenseState(DeactivatedValue);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeLicenseState left, HybridComputeLicenseState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeLicenseState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeLicenseState left, HybridComputeLicenseState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeLicenseState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeLicenseState(string value) => new HybridComputeLicenseState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeLicenseState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeLicenseState?(string value) => value == null ? null : new HybridComputeLicenseState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeLicenseState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeLicenseState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

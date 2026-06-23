@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The ExternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricExternalNetworkPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
         public NetworkFabricExternalNetworkPatch()
@@ -52,43 +23,151 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkPatch"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
-        /// <param name="peeringOption"> Peering option list. </param>
-        /// <param name="optionBProperties"> option B properties object. </param>
-        /// <param name="optionAProperties"> option A properties object. </param>
-        /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricExternalNetworkPatch(string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption? peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPatchOptionAProperties optionAProperties, ExternalNetworkStaticRoutePatchConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> External Network Patch properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricExternalNetworkPatch(ExternalNetworkPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
-            ImportRoutePolicy = importRoutePolicy;
-            ExportRoutePolicy = exportRoutePolicy;
-            PeeringOption = peeringOption;
-            OptionBProperties = optionBProperties;
-            OptionAProperties = optionAProperties;
-            StaticRouteConfiguration = staticRouteConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> External Network Patch properties. </summary>
+        internal ExternalNetworkPatchProperties Properties { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </summary>
-        public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
+        public ResourceIdentifier NetworkToNetworkInterconnectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkToNetworkInterconnectId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.NetworkToNetworkInterconnectId = value;
+            }
+        }
+
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
-        public ImportRoutePolicy ImportRoutePolicy { get; set; }
+        public ImportRoutePolicyPatch ImportRoutePolicySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportRoutePolicySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.ImportRoutePolicySettings = value;
+            }
+        }
+
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
-        public ExportRoutePolicy ExportRoutePolicy { get; set; }
+        public ExportRoutePolicyPatch ExportRoutePolicySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportRoutePolicySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.ExportRoutePolicySettings = value;
+            }
+        }
+
         /// <summary> Peering option list. </summary>
-        public PeeringOption? PeeringOption { get; set; }
+        public PeeringOption? PeeringOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.PeeringOption = value;
+            }
+        }
+
         /// <summary> option B properties object. </summary>
-        public L3OptionBProperties OptionBProperties { get; set; }
+        public L3OptionBPatchProperties OptionBSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OptionBSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.OptionBSettings = value;
+            }
+        }
+
         /// <summary> option A properties object. </summary>
-        public ExternalNetworkPatchOptionAProperties OptionAProperties { get; set; }
+        public ExternalNetworkPatchOptionAProperties OptionAProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OptionAProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.OptionAProperties = value;
+            }
+        }
+
         /// <summary> Static Route Configuration. </summary>
-        public ExternalNetworkStaticRoutePatchConfiguration StaticRouteConfiguration { get; set; }
+        public ExternalNetworkStaticRoutePatchConfiguration StaticRouteConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StaticRouteConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExternalNetworkPatchProperties();
+                }
+                Properties.StaticRouteConfiguration = value;
+            }
+        }
     }
 }
