@@ -11,17 +11,19 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns;
+using Azure.ResourceManager.Resources.Models;
 using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     [CodeGenSuppressAttribute("PrivateDnsRecordData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PrivateDnsRecordSetProperties), typeof(ETag?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(bool?), typeof(PrivateDnsResolutionPolicy?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?), typeof(string), typeof(ETag?))]
+    [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(WritableSubResource), typeof(bool?), typeof(PrivateDnsResolutionPolicy?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?), typeof(ETag?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(ResourceIdentifier), typeof(bool?), typeof(PrivateDnsResolutionPolicy?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(ResourceIdentifier), typeof(bool?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?))]
     public static partial class ArmPrivateDnsModelFactory
     {
-        // TypeSpec uses a SubResource wrapper for serialization; preserve the shipped factory overload that takes the virtual network ID directly.
+        // TypeSpec uses a WritableSubResource wrapper for serialization; preserve the shipped factory overload that takes the virtual network ID directly.
         /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 virtualNetworkId is null && registrationEnabled is null && privateDnsResolutionPolicy is null && virtualNetworkLinkState is null && privateDnsProvisioningState is null ? default : new VirtualNetworkLinkProperties(
-                    virtualNetworkId is null ? default : new SubResource(virtualNetworkId.ToString(), default),
+                    virtualNetworkId is null ? default : new WritableSubResource { Id = virtualNetworkId },
                     registrationEnabled,
                     privateDnsResolutionPolicy,
                     virtualNetworkLinkState,
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
-        // TypeSpec uses a SubResource wrapper for serialization; preserve the shipped factory overload that takes the virtual network ID directly.
+        // TypeSpec uses a WritableSubResource wrapper for serialization; preserve the shipped factory overload that takes the virtual network ID directly.
         /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 virtualNetworkId is null && registrationEnabled is null && virtualNetworkLinkState is null && privateDnsProvisioningState is null ? default : new VirtualNetworkLinkProperties(
-                    virtualNetworkId is null ? default : new SubResource(virtualNetworkId.ToString(), default),
+                    virtualNetworkId is null ? default : new WritableSubResource { Id = virtualNetworkId },
                     registrationEnabled,
                     default,
                     virtualNetworkLinkState,
