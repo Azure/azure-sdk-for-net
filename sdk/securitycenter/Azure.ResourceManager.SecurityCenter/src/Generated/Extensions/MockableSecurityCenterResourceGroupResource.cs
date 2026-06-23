@@ -324,11 +324,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetJitNetworkAccessPolicies(ascLocation).Get(jitNetworkAccessPolicyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Standards in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Standards and their operations over a StandardResource. </returns>
-        public virtual StandardCollection GetStandards()
+        /// <summary> Gets a collection of SecurityCenterStandards in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityCenterStandards and their operations over a SecurityCenterStandardResource. </returns>
+        public virtual SecurityCenterStandardCollection GetSecurityCenterStandards()
         {
-            return GetCachedClient(client => new StandardCollection(client, Id));
+            return GetCachedClient(client => new SecurityCenterStandardCollection(client, Id));
         }
 
         /// <summary>
@@ -353,11 +353,11 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StandardResource>> GetStandardAsync(string standardId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterStandardResource>> GetSecurityCenterStandardAsync(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            return await GetStandards().GetAsync(standardId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityCenterStandards().GetAsync(standardId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -382,47 +382,18 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StandardResource> GetStandard(string standardId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterStandardResource> GetSecurityCenterStandard(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            return GetStandards().Get(standardId, cancellationToken);
+            return GetSecurityCenterStandards().Get(standardId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Assignments in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Assignments and their operations over a AssignmentResource. </returns>
-        public virtual AssignmentCollection GetAssignments()
+        /// <summary> Gets a collection of SecurityCenterAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityCenterAssignments and their operations over a SecurityCenterAssignmentResource. </returns>
+        public virtual SecurityCenterAssignmentCollection GetSecurityCenterAssignments()
         {
-            return GetCachedClient(client => new AssignmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a specific standard assignment for the requested scope by resourceId
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assignments_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2021-08-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assignmentId"> The security assignment key - unique key for the standard assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AssignmentResource>> GetAssignmentAsync(string assignmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-
-            return await GetAssignments().GetAsync(assignmentId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new SecurityCenterAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -447,11 +418,40 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssignmentResource> GetAssignment(string assignmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> GetSecurityCenterAssignmentAsync(string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            return GetAssignments().Get(assignmentId, cancellationToken);
+            return await GetSecurityCenterAssignments().GetAsync(assignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific standard assignment for the requested scope by resourceId
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Assignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assignmentId"> The security assignment key - unique key for the standard assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityCenterAssignmentResource> GetSecurityCenterAssignment(string assignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
+
+            return GetSecurityCenterAssignments().Get(assignmentId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>. </summary>

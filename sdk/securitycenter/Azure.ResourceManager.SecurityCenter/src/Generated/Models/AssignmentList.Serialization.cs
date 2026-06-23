@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AssignmentData item in Value)
+                foreach (SecurityCenterAssignmentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<AssignmentData> value = default;
+            IReadOnlyList<SecurityCenterAssignmentData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AssignmentData> array = new List<AssignmentData>();
+                    List<SecurityCenterAssignmentData> array = new List<SecurityCenterAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentData.DeserializeAssignmentData(item, options));
+                        array.Add(SecurityCenterAssignmentData.DeserializeSecurityCenterAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AssignmentList(value ?? new ChangeTrackingList<AssignmentData>(), nextLink, additionalBinaryDataProperties);
+            return new AssignmentList(value ?? new ChangeTrackingList<SecurityCenterAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

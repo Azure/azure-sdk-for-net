@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StandardResource"/> and their operations.
-    /// Each <see cref="StandardResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="StandardCollection"/> instance call the GetStandards method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="SecurityCenterStandardResource"/> and their operations.
+    /// Each <see cref="SecurityCenterStandardResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityCenterStandardCollection"/> instance call the GetSecurityCenterStandards method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class StandardCollection : ArmCollection, IEnumerable<StandardResource>, IAsyncEnumerable<StandardResource>
+    public partial class SecurityCenterStandardCollection : ArmCollection, IEnumerable<SecurityCenterStandardResource>, IAsyncEnumerable<SecurityCenterStandardResource>
     {
         private readonly ClientDiagnostics _standardsClientDiagnostics;
         private readonly Standards _standardsRestClient;
 
-        /// <summary> Initializes a new instance of StandardCollection for mocking. </summary>
-        protected StandardCollection()
+        /// <summary> Initializes a new instance of SecurityCenterStandardCollection for mocking. </summary>
+        protected SecurityCenterStandardCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandardCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterStandardCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StandardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityCenterStandardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StandardResource.ResourceType, out string standardApiVersion);
-            _standardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", StandardResource.ResourceType.Namespace, Diagnostics);
-            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Endpoint, standardApiVersion ?? "2021-08-01-preview");
+            TryGetApiVersion(SecurityCenterStandardResource.ResourceType, out string securityCenterStandardApiVersion);
+            _standardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterStandardResource.ResourceType.Namespace, Diagnostics);
+            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Endpoint, securityCenterStandardApiVersion ?? "2021-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<StandardResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string standardId, StandardData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityCenterStandardResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string standardId, SecurityCenterStandardData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, StandardData.ToRequestContent(data), context);
+                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, SecurityCenterStandardData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterStandardData> response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<StandardResource> operation = new SecurityCenterArmOperation<StandardResource>(Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterStandardResource> operation = new SecurityCenterArmOperation<SecurityCenterStandardResource>(Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<StandardResource> CreateOrUpdate(WaitUntil waitUntil, string standardId, StandardData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityCenterStandardResource> CreateOrUpdate(WaitUntil waitUntil, string standardId, SecurityCenterStandardData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, StandardData.ToRequestContent(data), context);
+                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, SecurityCenterStandardData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterStandardData> response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<StandardResource> operation = new SecurityCenterArmOperation<StandardResource>(Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterStandardResource> operation = new SecurityCenterArmOperation<SecurityCenterStandardResource>(Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StandardResource>> GetAsync(string standardId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterStandardResource>> GetAsync(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.Get");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.Get");
             scope.Start();
             try
             {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterStandardData> response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StandardResource> Get(string standardId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterStandardResource> Get(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.Get");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.Get");
             scope.Start();
             try
             {
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterStandardData> response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,14 +281,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StandardResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterStandardResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandardData, StandardResource>(new StandardsGetAllAsyncCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandardCollection.GetAll"), data => new StandardResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetAllAsyncCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -309,14 +309,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StandardResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterStandardResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandardData, StandardResource>(new StandardsGetAllCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandardCollection.GetAll"), data => new StandardResource(Client, data));
+            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetAllCollectionResultOfT(_standardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterStandardCollection.GetAll"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.Exists");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.Exists");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StandardData> response = default;
+                Response<SecurityCenterStandardData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StandardData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StandardData)null, result);
+                        response = Response.FromValue((SecurityCenterStandardData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.Exists");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.Exists");
             scope.Start();
             try
             {
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StandardData> response = default;
+                Response<SecurityCenterStandardData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StandardData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StandardData)null, result);
+                        response = Response.FromValue((SecurityCenterStandardData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -454,11 +454,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<StandardResource>> GetIfExistsAsync(string standardId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityCenterStandardResource>> GetIfExistsAsync(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.GetIfExists");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -469,23 +469,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StandardData> response = default;
+                Response<SecurityCenterStandardData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StandardData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StandardData)null, result);
+                        response = Response.FromValue((SecurityCenterStandardData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StandardResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterStandardResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -515,11 +515,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="standardId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standardId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<StandardResource> GetIfExists(string standardId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityCenterStandardResource> GetIfExists(string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standardId, nameof(standardId));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardCollection.GetIfExists");
+            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("SecurityCenterStandardCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -530,23 +530,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standardId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StandardData> response = default;
+                Response<SecurityCenterStandardData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StandardData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterStandardData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StandardData)null, result);
+                        response = Response.FromValue((SecurityCenterStandardData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<StandardResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterStandardResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterStandardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        IEnumerator<StandardResource> IEnumerable<StandardResource>.GetEnumerator()
+        IEnumerator<SecurityCenterStandardResource> IEnumerable<SecurityCenterStandardResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<StandardResource> IAsyncEnumerable<StandardResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityCenterStandardResource> IAsyncEnumerable<SecurityCenterStandardResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

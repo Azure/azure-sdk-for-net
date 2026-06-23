@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a PrivateLinkGroupResource along with the instance operations that can be performed on it.
+    /// A class representing a PrivateLinkGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkResource"/> using the GetPrivateLinkGroupResources method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkResource"/> using the GetPrivateLinkGroups method.
     /// </summary>
     public partial class PrivateLinkGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly PrivateLinkGroupResourceData _data;
+        private readonly PrivateLinkGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/privateLinks/privateLinkResources";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="PrivateLinkGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkGroupResource(ArmClient client, PrivateLinkGroupResourceData data) : this(client, data.Id)
+        internal PrivateLinkGroupResource(ArmClient client, PrivateLinkGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateLinkGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateLinkGroupResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkGroupApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkGroupResourceApiVersion ?? "2026-01-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, privateLinkGroupApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PrivateLinkGroupResourceData Data
+        public virtual PrivateLinkGroupData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PrivateLinkGroupResourceData> response = Response.FromValue(PrivateLinkGroupResourceData.FromResponse(result), result);
+                Response<PrivateLinkGroupData> response = Response.FromValue(PrivateLinkGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PrivateLinkGroupResourceData> response = Response.FromValue(PrivateLinkGroupResourceData.FromResponse(result), result);
+                Response<PrivateLinkGroupData> response = Response.FromValue(PrivateLinkGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

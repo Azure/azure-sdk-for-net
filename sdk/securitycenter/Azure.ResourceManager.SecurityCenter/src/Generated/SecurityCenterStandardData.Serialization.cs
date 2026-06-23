@@ -18,68 +18,68 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Security Standard on a resource. </summary>
-    public partial class StandardData : ResourceData, IJsonModel<StandardData>
+    public partial class SecurityCenterStandardData : ResourceData, IJsonModel<SecurityCenterStandardData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandardData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterStandardData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStandardData(document.RootElement, options);
+                        return DeserializeSecurityCenterStandardData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandardData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterStandardData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandardData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterStandardData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StandardData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterStandardData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StandardData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityCenterStandardData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StandardData IPersistableModel<StandardData>.Create(BinaryData data, ModelReaderWriterOptions options) => (StandardData)PersistableModelCreateCore(data, options);
+        SecurityCenterStandardData IPersistableModel<SecurityCenterStandardData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityCenterStandardData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityCenterStandardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="standardData"> The <see cref="StandardData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(StandardData standardData)
+        /// <param name="securityCenterStandardData"> The <see cref="SecurityCenterStandardData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SecurityCenterStandardData securityCenterStandardData)
         {
-            if (standardData == null)
+            if (securityCenterStandardData == null)
             {
                 return null;
             }
-            return RequestContent.Create(standardData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(securityCenterStandardData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StandardData"/> from. </param>
-        internal static StandardData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SecurityCenterStandardData"/> from. </param>
+        internal static SecurityCenterStandardData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeStandardData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSecurityCenterStandardData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StandardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityCenterStandardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandardData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterStandardData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandardData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterStandardData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -151,24 +151,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StandardData IJsonModel<StandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StandardData)JsonModelCreateCore(ref reader, options);
+        SecurityCenterStandardData IJsonModel<SecurityCenterStandardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityCenterStandardData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandardData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterStandardData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandardData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterStandardData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStandardData(document.RootElement, options);
+            return DeserializeSecurityCenterStandardData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StandardData DeserializeStandardData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityCenterStandardData DeserializeSecurityCenterStandardData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SystemData systemData = default;
             StandardProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation? location = default;
             string kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -250,7 +250,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        location = null;
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -272,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StandardData(
+            return new SecurityCenterStandardData(
                 id,
                 name,
                 resourceType,

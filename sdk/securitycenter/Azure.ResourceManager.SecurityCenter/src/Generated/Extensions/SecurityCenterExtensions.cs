@@ -1581,39 +1581,39 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StandardResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SecurityCenterStandardResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetStandardResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityCenterStandardResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StandardResource"/> object. </returns>
-        public static StandardResource GetStandardResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCenterStandardResource"/> object. </returns>
+        public static SecurityCenterStandardResource GetSecurityCenterStandardResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetStandardResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetSecurityCenterStandardResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SecurityCenterAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetAssignmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityCenterAssignmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
-        public static AssignmentResource GetAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCenterAssignmentResource"/> object. </returns>
+        public static SecurityCenterAssignmentResource GetSecurityCenterAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetAssignmentResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetSecurityCenterAssignmentResource(id);
         }
 
         /// <summary>
@@ -2583,27 +2583,27 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Gets a collection of Standards in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of SecurityCenterStandards in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetStandards()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterStandards()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Standards and their operations over a StandardResource. </returns>
-        public static StandardCollection GetStandards(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SecurityCenterStandards and their operations over a SecurityCenterStandardResource. </returns>
+        public static SecurityCenterStandardCollection GetSecurityCenterStandards(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetStandards();
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterStandards();
         }
 
         /// <summary>
         /// Get a specific security standard for the requested scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetStandardAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterStandardAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2611,18 +2611,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<StandardResource>> GetStandardAsync(this ResourceGroupResource resourceGroupResource, string standardId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityCenterStandardResource>> GetSecurityCenterStandardAsync(this ResourceGroupResource resourceGroupResource, string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetStandardAsync(standardId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterStandardAsync(standardId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a specific security standard for the requested scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetStandard(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterStandard(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2630,35 +2630,35 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<StandardResource> GetStandard(this ResourceGroupResource resourceGroupResource, string standardId, CancellationToken cancellationToken = default)
+        public static Response<SecurityCenterStandardResource> GetSecurityCenterStandard(this ResourceGroupResource resourceGroupResource, string standardId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetStandard(standardId, cancellationToken);
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterStandard(standardId, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of Assignments in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of SecurityCenterAssignments in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetAssignments()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAssignments()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Assignments and their operations over a AssignmentResource. </returns>
-        public static AssignmentCollection GetAssignments(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of SecurityCenterAssignments and their operations over a SecurityCenterAssignmentResource. </returns>
+        public static SecurityCenterAssignmentCollection GetSecurityCenterAssignments(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAssignments();
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterAssignments();
         }
 
         /// <summary>
         /// Get a specific standard assignment for the requested scope by resourceId
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetAssignmentAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAssignmentAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2666,18 +2666,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AssignmentResource>> GetAssignmentAsync(this ResourceGroupResource resourceGroupResource, string assignmentId, CancellationToken cancellationToken = default)
+        public static async Task<Response<SecurityCenterAssignmentResource>> GetSecurityCenterAssignmentAsync(this ResourceGroupResource resourceGroupResource, string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAssignmentAsync(assignmentId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterAssignmentAsync(assignmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a specific standard assignment for the requested scope by resourceId
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetAssignment(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterResourceGroupResource.GetSecurityCenterAssignment(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2685,11 +2685,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AssignmentResource> GetAssignment(this ResourceGroupResource resourceGroupResource, string assignmentId, CancellationToken cancellationToken = default)
+        public static Response<SecurityCenterAssignmentResource> GetSecurityCenterAssignment(this ResourceGroupResource resourceGroupResource, string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAssignment(assignmentId, cancellationToken);
+            return GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecurityCenterAssignment(assignmentId, cancellationToken);
         }
 
         /// <summary>
@@ -3800,72 +3800,72 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a list of all relevant security standards over a subscription level scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetStandardsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandardsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StandardResource> GetStandardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityCenterStandardResource> GetSecurityCenterStandardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetStandardsAsync(cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterStandardsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all relevant security standards over a subscription level scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetStandards(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StandardResource> GetStandards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityCenterStandardResource> GetSecurityCenterStandards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetStandards(cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterStandards(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all relevant standardAssignments over a subscription level scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAssignmentsAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignmentsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AssignmentResource> GetAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityCenterAssignmentResource> GetSecurityCenterAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAssignmentsAsync(cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterAssignmentsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all relevant standardAssignments over a subscription level scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAssignments(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AssignmentResource> GetAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityCenterAssignmentResource> GetSecurityCenterAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAssignments(cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterAssignments(cancellationToken);
         }
 
         /// <summary>

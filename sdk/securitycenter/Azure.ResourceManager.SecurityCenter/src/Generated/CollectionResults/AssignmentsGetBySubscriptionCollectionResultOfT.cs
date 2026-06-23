@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class AssignmentsGetBySubscriptionCollectionResultOfT : Pageable<AssignmentData>
+    internal partial class AssignmentsGetBySubscriptionCollectionResultOfT : Pageable<SecurityCenterAssignmentData>
     {
         private readonly Assignments _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AssignmentsGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SecurityCenterAssignmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 AssignmentList result = AssignmentList.FromResponse(response);
-                yield return Page<AssignmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SecurityCenterAssignmentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

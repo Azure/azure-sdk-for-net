@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a Standard along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StandardResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetStandards method.
+    /// A class representing a SecurityCenterAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityCenterAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityCenterAssignments method.
     /// </summary>
-    public partial class StandardResource : ArmResource
+    public partial class SecurityCenterAssignmentResource : ArmResource
     {
-        private readonly ClientDiagnostics _standardsClientDiagnostics;
-        private readonly Standards _standardsRestClient;
-        private readonly StandardData _data;
+        private readonly ClientDiagnostics _assignmentsClientDiagnostics;
+        private readonly Assignments _assignmentsRestClient;
+        private readonly SecurityCenterAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/standards";
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assignments";
 
-        /// <summary> Initializes a new instance of StandardResource for mocking. </summary>
-        protected StandardResource()
+        /// <summary> Initializes a new instance of SecurityCenterAssignmentResource for mocking. </summary>
+        protected SecurityCenterAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandardResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StandardResource(ArmClient client, StandardData data) : this(client, data.Id)
+        internal SecurityCenterAssignmentResource(ArmClient client, SecurityCenterAssignmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandardResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal StandardResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityCenterAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string standardApiVersion);
-            _standardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _standardsRestClient = new Standards(_standardsClientDiagnostics, Pipeline, Endpoint, standardApiVersion ?? "2021-08-01-preview");
+            TryGetApiVersion(ResourceType, out string securityCenterAssignmentApiVersion);
+            _assignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _assignmentsRestClient = new Assignments(_assignmentsClientDiagnostics, Pipeline, Endpoint, securityCenterAssignmentApiVersion ?? "2021-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StandardData Data
+        public virtual SecurityCenterAssignmentData Data
         {
             get
             {
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="standardId"> The standardId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string standardId)
+        /// <param name="assignmentId"> The assignmentId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string assignmentId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get a specific security standard for the requested scope
+        /// Get a specific standard assignment for the requested scope by resourceId
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_Get. </description>
+        /// <description> Assignments_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StandardResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Get");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -141,15 +141,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get a specific security standard for the requested scope
+        /// Get a specific standard assignment for the requested scope by resourceId
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_Get. </description>
+        /// <description> Assignments_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StandardResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Get");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Delete a security standard on a scope.
+        /// Delete a standard assignment over a given scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_Delete. </description>
+        /// <description> Assignments_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Delete");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _assignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -240,15 +240,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Delete a security standard on a scope.
+        /// Delete a standard assignment over a given scope
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_Delete. </description>
+        /// <description> Assignments_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Delete");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Delete");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _assignmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -291,15 +291,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update a Standard.
+        /// Update a SecurityCenterAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_CreateOrUpdate. </description>
+        /// <description> Assignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -307,19 +307,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Custom security standard over a pre-defined scope. </param>
+        /// <param name="data"> Custom standard assignment over a pre-defined scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StandardResource>> UpdateAsync(WaitUntil waitUntil, StandardData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityCenterAssignmentResource>> UpdateAsync(WaitUntil waitUntil, SecurityCenterAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Update");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Update");
             scope.Start();
             try
             {
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StandardData.ToRequestContent(data), context);
+                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityCenterAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<StandardResource> operation = new SecurityCenterArmOperation<StandardResource>(Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterAssignmentResource> operation = new SecurityCenterArmOperation<SecurityCenterAssignmentResource>(Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update a Standard.
+        /// Update a SecurityCenterAssignment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/standards/{standardId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/assignments/{assignmentId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Standards_CreateOrUpdate. </description>
+        /// <description> Assignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -363,19 +363,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="StandardResource"/>. </description>
+        /// <description> <see cref="SecurityCenterAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Custom security standard over a pre-defined scope. </param>
+        /// <param name="data"> Custom standard assignment over a pre-defined scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StandardResource> Update(WaitUntil waitUntil, StandardData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityCenterAssignmentResource> Update(WaitUntil waitUntil, SecurityCenterAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.Update");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.Update");
             scope.Start();
             try
             {
@@ -383,12 +383,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standardsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StandardData.ToRequestContent(data), context);
+                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecurityCenterAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<StandardResource> operation = new SecurityCenterArmOperation<StandardResource>(Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterAssignmentResource> operation = new SecurityCenterArmOperation<SecurityCenterAssignmentResource>(Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -407,12 +407,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<StandardResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.AddTag");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.AddTag");
             scope.Start();
             try
             {
@@ -425,16 +425,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SecurityCenterAssignmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<StandardResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SecurityCenterAssignmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -450,12 +450,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<StandardResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAssignmentResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.AddTag");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.AddTag");
             scope.Start();
             try
             {
@@ -468,16 +468,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SecurityCenterAssignmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<StandardResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SecurityCenterAssignmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -492,11 +492,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<StandardResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.SetTags");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.SetTags");
             scope.Start();
             try
             {
@@ -510,16 +510,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SecurityCenterAssignmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<StandardResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SecurityCenterAssignmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<StandardResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAssignmentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.SetTags");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.SetTags");
             scope.Start();
             try
             {
@@ -552,16 +552,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SecurityCenterAssignmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<StandardResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SecurityCenterAssignmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,11 +576,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<StandardResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.RemoveTag");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -593,16 +593,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    SecurityCenterAssignmentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<StandardResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<SecurityCenterAssignmentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<StandardResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAssignmentResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _standardsClientDiagnostics.CreateScope("StandardResource.RemoveTag");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -634,16 +634,16 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _standardsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<StandardData> response = Response.FromValue(StandardData.FromResponse(result), result);
-                    return Response.FromValue(new StandardResource(Client, response.Value), response.GetRawResponse());
+                    Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
+                    return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    StandardData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    SecurityCenterAssignmentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<StandardResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<SecurityCenterAssignmentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

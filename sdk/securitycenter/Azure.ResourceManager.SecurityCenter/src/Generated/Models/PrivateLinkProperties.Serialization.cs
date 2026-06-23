@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("privateLinkResources"u8);
                 writer.WriteStartArray();
-                foreach (PrivateLinkGroupResourceData item in PrivateLinkResources)
+                foreach (PrivateLinkGroupData item in PrivateLinkResources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             SecurityCenterProvisioningState? provisioningState = default;
             IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default;
-            IReadOnlyList<PrivateLinkGroupResourceData> privateLinkResources = default;
+            IReadOnlyList<PrivateLinkGroupData> privateLinkResources = default;
             SecurityCenterPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkGroupResourceData> array = new List<PrivateLinkGroupResourceData>();
+                    List<PrivateLinkGroupData> array = new List<PrivateLinkGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkGroupResourceData.DeserializePrivateLinkGroupResourceData(item, options));
+                        array.Add(PrivateLinkGroupData.DeserializePrivateLinkGroupData(item, options));
                     }
                     privateLinkResources = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkProperties(provisioningState, privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>(), privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupResourceData>(), publicNetworkAccess, additionalBinaryDataProperties);
+            return new PrivateLinkProperties(provisioningState, privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>(), privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>(), publicNetworkAccess, additionalBinaryDataProperties);
         }
     }
 }

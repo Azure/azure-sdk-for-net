@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </summary>
-        public IReadOnlyList<PrivateLinkGroupResourceData> PrivateLinkResources
+        public IReadOnlyList<PrivateLinkGroupData> PrivateLinkResources
         {
             get
             {

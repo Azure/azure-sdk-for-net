@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         public SecurityInformationTypeInfo() { }
         /// <summary>
-        /// Gets or sets the Custom value preserved from the previous public API surface.
+        /// Gets or sets whether the information type is custom.
         /// </summary>
-        public bool? Custom { get; set; }
+        public bool? IsCustom { get; set; }
         /// <summary>
         /// Gets or sets the Description value preserved from the previous public API surface.
         /// </summary>
@@ -55,11 +55,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        SecurityInformationTypeInfo IJsonModel<SecurityInformationTypeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        void IJsonModel<SecurityInformationTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        SecurityInformationTypeInfo IPersistableModel<SecurityInformationTypeInfo>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        string IPersistableModel<SecurityInformationTypeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            if (IsCustom.HasValue)
+            {
+                writer.WritePropertyName("custom"u8);
+                writer.WriteBooleanValue(IsCustom.Value);
+            }
+            if (Description is not null)
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (DisplayName is not null)
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (IsEnabled.HasValue)
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (Order.HasValue)
+            {
+                writer.WritePropertyName("order"u8);
+                writer.WriteNumberValue(Order.Value);
+            }
+            if (RecommendedLabelId.HasValue)
+            {
+                writer.WritePropertyName("recommendedLabelId"u8);
+                writer.WriteStringValue(RecommendedLabelId.Value);
+            }
+        }
+
+        SecurityInformationTypeInfo IJsonModel<SecurityInformationTypeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new SecurityInformationTypeInfo();
+
+        void IJsonModel<SecurityInformationTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        SecurityInformationTypeInfo IPersistableModel<SecurityInformationTypeInfo>.Create(System.BinaryData data, ModelReaderWriterOptions options) => new SecurityInformationTypeInfo();
+        string IPersistableModel<SecurityInformationTypeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        System.BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
     }
 }

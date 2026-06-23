@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public PrivateLinkProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>();
-            PrivateLinkResources = new ChangeTrackingList<PrivateLinkGroupResourceData>();
+            PrivateLinkResources = new ChangeTrackingList<PrivateLinkGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="privateLinkResources"> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkProperties(SecurityCenterProvisioningState? provisioningState, IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<PrivateLinkGroupResourceData> privateLinkResources, SecurityCenterPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkProperties(SecurityCenterProvisioningState? provisioningState, IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<PrivateLinkGroupData> privateLinkResources, SecurityCenterPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>();
 
         /// <summary> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </summary>
-        public IReadOnlyList<PrivateLinkGroupResourceData> PrivateLinkResources { get; } = new ChangeTrackingList<PrivateLinkGroupResourceData>();
+        public IReadOnlyList<PrivateLinkGroupData> PrivateLinkResources { get; } = new ChangeTrackingList<PrivateLinkGroupData>();
 
         /// <summary> This determines if traffic is allowed over public network. By default it is disabled. </summary>
         public SecurityCenterPublicNetworkAccess? PublicNetworkAccess { get; set; }

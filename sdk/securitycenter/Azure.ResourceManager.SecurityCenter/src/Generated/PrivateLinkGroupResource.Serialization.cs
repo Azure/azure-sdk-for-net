@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    public partial class PrivateLinkGroupResource : IJsonModel<PrivateLinkGroupResourceData>
+    public partial class PrivateLinkGroupResource : IJsonModel<PrivateLinkGroupData>
     {
-        private static IJsonModel<PrivateLinkGroupResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<PrivateLinkGroupData> s_dataDeserializationInstance;
 
-        private static IJsonModel<PrivateLinkGroupResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PrivateLinkGroupResourceData();
+        private static IJsonModel<PrivateLinkGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PrivateLinkGroupData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkGroupResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkGroupResourceData>)Data).Write(writer, options);
+        void IJsonModel<PrivateLinkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkGroupData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupResourceData IJsonModel<PrivateLinkGroupResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        PrivateLinkGroupData IJsonModel<PrivateLinkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkGroupResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateLinkGroupResourceData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<PrivateLinkGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateLinkGroupData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupResourceData IPersistableModel<PrivateLinkGroupResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkGroupResourceData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        PrivateLinkGroupData IPersistableModel<PrivateLinkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkGroupData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkGroupResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<PrivateLinkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -905,22 +905,22 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetSqlVulnerabilityAssessmentScanResults(scope).GetAsync(scanResultId, databaseName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="StandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SecurityCenterStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StandardResource"/> object. </returns>
-        public virtual StandardResource GetStandardResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCenterStandardResource"/> object. </returns>
+        public virtual SecurityCenterStandardResource GetSecurityCenterStandardResource(ResourceIdentifier id)
         {
-            StandardResource.ValidateResourceId(id);
-            return new StandardResource(Client, id);
+            SecurityCenterStandardResource.ValidateResourceId(id);
+            return new SecurityCenterStandardResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SecurityCenterAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
-        public virtual AssignmentResource GetAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityCenterAssignmentResource"/> object. </returns>
+        public virtual SecurityCenterAssignmentResource GetSecurityCenterAssignmentResource(ResourceIdentifier id)
         {
-            AssignmentResource.ValidateResourceId(id);
-            return new AssignmentResource(Client, id);
+            SecurityCenterAssignmentResource.ValidateResourceId(id);
+            return new SecurityCenterAssignmentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ResourceGroupSecurityTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>

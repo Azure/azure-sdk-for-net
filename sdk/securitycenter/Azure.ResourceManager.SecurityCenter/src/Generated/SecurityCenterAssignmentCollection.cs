@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AssignmentResource"/> and their operations.
-    /// Each <see cref="AssignmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AssignmentCollection"/> instance call the GetAssignments method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="SecurityCenterAssignmentResource"/> and their operations.
+    /// Each <see cref="SecurityCenterAssignmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityCenterAssignmentCollection"/> instance call the GetSecurityCenterAssignments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AssignmentCollection : ArmCollection, IEnumerable<AssignmentResource>, IAsyncEnumerable<AssignmentResource>
+    public partial class SecurityCenterAssignmentCollection : ArmCollection, IEnumerable<SecurityCenterAssignmentResource>, IAsyncEnumerable<SecurityCenterAssignmentResource>
     {
         private readonly ClientDiagnostics _assignmentsClientDiagnostics;
         private readonly Assignments _assignmentsRestClient;
 
-        /// <summary> Initializes a new instance of AssignmentCollection for mocking. </summary>
-        protected AssignmentCollection()
+        /// <summary> Initializes a new instance of SecurityCenterAssignmentCollection for mocking. </summary>
+        protected SecurityCenterAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityCenterAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AssignmentResource.ResourceType, out string assignmentApiVersion);
-            _assignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", AssignmentResource.ResourceType.Namespace, Diagnostics);
-            _assignmentsRestClient = new Assignments(_assignmentsClientDiagnostics, Pipeline, Endpoint, assignmentApiVersion ?? "2021-08-01-preview");
+            TryGetApiVersion(SecurityCenterAssignmentResource.ResourceType, out string securityCenterAssignmentApiVersion);
+            _assignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _assignmentsRestClient = new Assignments(_assignmentsClientDiagnostics, Pipeline, Endpoint, securityCenterAssignmentApiVersion ?? "2021-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assignmentId, AssignmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityCenterAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assignmentId, SecurityCenterAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, AssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, SecurityCenterAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AssignmentData> response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<AssignmentResource> operation = new SecurityCenterArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterAssignmentResource> operation = new SecurityCenterArmOperation<SecurityCenterAssignmentResource>(Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string assignmentId, AssignmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityCenterAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string assignmentId, SecurityCenterAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, AssignmentData.ToRequestContent(data), context);
+                HttpMessage message = _assignmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, SecurityCenterAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AssignmentData> response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SecurityCenterArmOperation<AssignmentResource> operation = new SecurityCenterArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SecurityCenterArmOperation<SecurityCenterAssignmentResource> operation = new SecurityCenterArmOperation<SecurityCenterAssignmentResource>(Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssignmentResource>> GetAsync(string assignmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityCenterAssignmentResource>> GetAsync(string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.Get");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AssignmentData> response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssignmentResource> Get(string assignmentId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityCenterAssignmentResource> Get(string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.Get");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.Get");
             scope.Start();
             try
             {
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AssignmentData> response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                Response<SecurityCenterAssignmentData> response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,14 +281,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AssignmentData, AssignmentResource>(new AssignmentsGetAllAsyncCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AssignmentCollection.GetAll"), data => new AssignmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetAllAsyncCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -309,14 +309,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssignmentResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AssignmentData, AssignmentResource>(new AssignmentsGetAllCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AssignmentCollection.GetAll"), data => new AssignmentResource(Client, data));
+            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetAllCollectionResultOfT(_assignmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecurityCenterAssignmentCollection.GetAll"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.Exists");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AssignmentData> response = default;
+                Response<SecurityCenterAssignmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AssignmentData)null, result);
+                        response = Response.FromValue((SecurityCenterAssignmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.Exists");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.Exists");
             scope.Start();
             try
             {
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AssignmentData> response = default;
+                Response<SecurityCenterAssignmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AssignmentData)null, result);
+                        response = Response.FromValue((SecurityCenterAssignmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -454,11 +454,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AssignmentResource>> GetIfExistsAsync(string assignmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityCenterAssignmentResource>> GetIfExistsAsync(string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -469,23 +469,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AssignmentData> response = default;
+                Response<SecurityCenterAssignmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AssignmentData)null, result);
+                        response = Response.FromValue((SecurityCenterAssignmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -515,11 +515,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AssignmentResource> GetIfExists(string assignmentId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityCenterAssignmentResource> GetIfExists(string assignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("AssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _assignmentsClientDiagnostics.CreateScope("SecurityCenterAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -530,23 +530,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _assignmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, assignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AssignmentData> response = default;
+                Response<SecurityCenterAssignmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AssignmentData.FromResponse(result), result);
+                        response = Response.FromValue(SecurityCenterAssignmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AssignmentData)null, result);
+                        response = Response.FromValue((SecurityCenterAssignmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AssignmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<SecurityCenterAssignmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssignmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        IEnumerator<AssignmentResource> IEnumerable<AssignmentResource>.GetEnumerator()
+        IEnumerator<SecurityCenterAssignmentResource> IEnumerable<SecurityCenterAssignmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AssignmentResource> IAsyncEnumerable<AssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityCenterAssignmentResource> IAsyncEnumerable<SecurityCenterAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -1556,10 +1556,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="SecurityCenter.PrivateLinkGroupResourceData"/> instance for mocking. </returns>
-        public static PrivateLinkGroupResourceData PrivateLinkGroupResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <returns> A new <see cref="SecurityCenter.PrivateLinkGroupData"/> instance for mocking. </returns>
+        public static PrivateLinkGroupData PrivateLinkGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
-            return new PrivateLinkGroupResourceData(
+            return new PrivateLinkGroupData(
                 id,
                 name,
                 resourceType,
@@ -3517,12 +3517,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.StandardData"/> instance for mocking. </returns>
-        public static StandardData StandardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string standardType = default, string description = default, string category = default, IEnumerable<StandardComponentProperties> components = default, IEnumerable<StandardSupportedClouds> supportedClouds = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterStandardData"/> instance for mocking. </returns>
+        public static SecurityCenterStandardData SecurityCenterStandardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string standardType = default, string description = default, string category = default, IEnumerable<StandardComponentProperties> components = default, IEnumerable<StandardSupportedClouds> supportedClouds = default, IDictionary<string, string> tags = default, AzureLocation? location = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StandardData(
+            return new SecurityCenterStandardData(
                 id,
                 name,
                 resourceType,
@@ -3566,12 +3566,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.AssignmentData"/> instance for mocking. </returns>
-        public static AssignmentData AssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string scope = default, string effect = default, DateTimeOffset? expiresOn = default, BinaryData metadata = default, string assignedStandardId = default, string assignedComponentKey = default, string additionalDataExemptionCategory = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterAssignmentData"/> instance for mocking. </returns>
+        public static SecurityCenterAssignmentData SecurityCenterAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, string scope = default, string effect = default, DateTimeOffset? expiresOn = default, BinaryData metadata = default, string assignedStandardId = default, string assignedComponentKey = default, string additionalDataExemptionCategory = default, IDictionary<string, string> tags = default, AzureLocation? location = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AssignmentData(
+            return new SecurityCenterAssignmentData(
                 id,
                 name,
                 resourceType,
@@ -4353,7 +4353,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="privateLinkResources"> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is disabled. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityCenterPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SecurityCenterPrivateLinkResourceData SecurityCenterPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecurityCenterProvisioningState? provisioningState = default, IEnumerable<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<PrivateLinkGroupResourceData> privateLinkResources = default, SecurityCenterPublicNetworkAccess? publicNetworkAccess = default)
+        public static SecurityCenterPrivateLinkResourceData SecurityCenterPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecurityCenterProvisioningState? provisioningState = default, IEnumerable<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<PrivateLinkGroupData> privateLinkResources = default, SecurityCenterPublicNetworkAccess? publicNetworkAccess = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4364,7 +4364,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null && privateLinkResources is null ? default : new PrivateLinkProperties(default, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupResourceData>()).ToList(), default, default),
+                privateEndpointConnections is null && privateLinkResources is null ? default : new PrivateLinkProperties(default, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), default, default),
                 default);
         }
 

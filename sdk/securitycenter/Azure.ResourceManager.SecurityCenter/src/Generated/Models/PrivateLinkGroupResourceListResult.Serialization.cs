@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (PrivateLinkGroupResourceData item in Value)
+            foreach (PrivateLinkGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<PrivateLinkGroupResourceData> value = default;
+            IList<PrivateLinkGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<PrivateLinkGroupResourceData> array = new List<PrivateLinkGroupResourceData>();
+                    List<PrivateLinkGroupData> array = new List<PrivateLinkGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkGroupResourceData.DeserializePrivateLinkGroupResourceData(item, options));
+                        array.Add(PrivateLinkGroupData.DeserializePrivateLinkGroupData(item, options));
                     }
                     value = array;
                     continue;

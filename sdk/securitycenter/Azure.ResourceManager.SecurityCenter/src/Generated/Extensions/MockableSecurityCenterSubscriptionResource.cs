@@ -1116,14 +1116,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StandardResource> GetStandardsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterStandardResource> GetSecurityCenterStandardsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandardData, StandardResource>(new StandardsGetBySubscriptionAsyncCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetStandards"), data => new StandardResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetBySubscriptionAsyncCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -1144,14 +1144,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandardResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StandardResource> GetStandards(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterStandardResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterStandardResource> GetSecurityCenterStandards(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandardData, StandardResource>(new StandardsGetBySubscriptionCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetStandards"), data => new StandardResource(Client, data));
+            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetBySubscriptionCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -1172,14 +1172,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AssignmentResource> GetAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAssignmentResource> GetSecurityCenterAssignmentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AssignmentData, AssignmentResource>(new AssignmentsGetBySubscriptionAsyncCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAssignments"), data => new AssignmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetBySubscriptionAsyncCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -1200,14 +1200,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AssignmentResource> GetAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAssignmentResource> GetSecurityCenterAssignments(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AssignmentData, AssignmentResource>(new AssignmentsGetBySubscriptionCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAssignments"), data => new AssignmentResource(Client, data));
+            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetBySubscriptionCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>

@@ -15,18 +15,18 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Security Assignment on a resource group over a given scope. </summary>
-    public partial class AssignmentData : ResourceData
+    public partial class SecurityCenterAssignmentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
-        public AssignmentData()
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAssignmentData"/>. </summary>
+        public SecurityCenterAssignmentData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAssignmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssignmentProperties properties, IDictionary<string, string> tags, string location, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityCenterAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AssignmentProperties properties, IDictionary<string, string> tags, AzureLocation? location, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }

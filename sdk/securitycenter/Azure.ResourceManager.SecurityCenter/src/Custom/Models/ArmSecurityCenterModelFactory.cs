@@ -48,6 +48,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityCenter.IngestionSettingData"/>. </summary>
+        public static IngestionSettingData IngestionSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BinaryData properties = default)
+        {
+            return new IngestionSettingData(id, name, resourceType, systemData, properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IngestionConnectionString"/>. </summary>
+        public static IngestionConnectionString IngestionConnectionString(AzureLocation? location = default, string value = default)
+        {
+            return new IngestionConnectionString(location, value);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IngestionSettingToken"/>. </summary>
+        public static IngestionSettingToken IngestionSettingToken(string token = default)
+        {
+            return new IngestionSettingToken(token);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DefenderForContainersAwsOffering"/>. </summary>
         public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = default, string kubernetesServiceCloudRoleArn = default, string kubernetesDataCollectionCloudRoleArn = default, string cloudRoleArn = default, string kinesisToS3CloudRoleArn = default, string containerVulnerabilityAssessmentCloudRoleArn = default, string containerVulnerabilityAssessmentTaskCloudRoleArn = default, bool? enableAuditLogsAutoProvisioning = default, bool? enableDefenderAgentAutoProvisioning = default, long? kubeAuditRetentionTime = default, string dataCollectionExternalId = default)
         {

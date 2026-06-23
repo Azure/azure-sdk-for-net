@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class PrivateLinkResourcesGetAllCollectionResultOfT : Pageable<PrivateLinkGroupResourceData>
+    internal partial class PrivateLinkResourcesGetAllCollectionResultOfT : Pageable<PrivateLinkGroupData>
     {
         private readonly PrivateLinkResources _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinkResourcesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PrivateLinkGroupResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<PrivateLinkGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 PrivateLinkGroupResourceListResult result = PrivateLinkGroupResourceListResult.FromResponse(response);
-                yield return Page<PrivateLinkGroupResourceData>.FromValues((IReadOnlyList<PrivateLinkGroupResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<PrivateLinkGroupData>.FromValues((IReadOnlyList<PrivateLinkGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
