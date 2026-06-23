@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Create Container.
         /// </summary>
-        public static BlobOperationName CreateContainer { get; } = new BlobOperationName("ContainerCreated");
+        public static BlobOperationName CreateContainer { get; } = new BlobOperationName("CreateContainer");
 
         /// <summary>
         /// Delete Container.
