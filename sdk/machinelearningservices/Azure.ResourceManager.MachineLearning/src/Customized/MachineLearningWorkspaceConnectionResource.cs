@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -38,13 +39,38 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<MachineLearningWorkspaceConnectionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningWorkspaceConnectionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
-            // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
-            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the generated API restores a safe full-resource PUT overload.
-            throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is UpdateAsync(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
+
+            // Customized: preserve the shipped resource-instance WorkspaceConnections_Create method shape.
+            // The generator emits the full-resource PUT only on the collection, so this shim reuses the
+            // generated PUT RestOperation instead of sending the PATCH-shaped generated Update request.
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -67,10 +93,35 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual ArmOperation<MachineLearningWorkspaceConnectionResource> Update(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
-            // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
-            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the generated API restores a safe full-resource PUT overload.
-            throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is Update(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
+
+            // Customized: preserve the shipped resource-instance WorkspaceConnections_Create method shape.
+            // The generator emits the full-resource PUT only on the collection, so this shim reuses the
+            // generated PUT RestOperation instead of sending the PATCH-shaped generated Update request.
+            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningWorkspaceConnectionData> response = Response.FromValue(MachineLearningWorkspaceConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionResource>(Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
