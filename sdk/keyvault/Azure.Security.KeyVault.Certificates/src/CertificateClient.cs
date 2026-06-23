@@ -1057,7 +1057,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata.</returns>
-        [ForwardsClientCalls]
         public virtual Pageable<CertificateProperties> GetPropertiesOfCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
             // Use the protocol pageable (Pageable<BinaryData>) so we deserialize each
@@ -1065,7 +1064,8 @@ namespace Azure.Security.KeyVault.Certificates
             // guaranteeing identical wire-shape parsing to prior releases.
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             Pageable<BinaryData> source = _generated.GetCertificates(maxresults: null, includePending: includePending, context: ctx);
-            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()));
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVault.Keys.KeyClient.GetPropertiesOfCertificates");
         }
 
         /// <summary>
@@ -1075,12 +1075,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata.</returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             AsyncPageable<BinaryData> source = _generated.GetCertificatesAsync(maxresults: null, includePending: includePending, context: ctx);
-            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()));
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificates");
         }
 
         /// <summary>
@@ -1092,14 +1092,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        [ForwardsClientCalls]
         public virtual Pageable<CertificateProperties> GetPropertiesOfCertificateVersions(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             Pageable<BinaryData> source = _generated.GetCertificateVersions(certificateName, maxresults: null, context: ctx);
-            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()));
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions");
         }
 
         /// <summary>
@@ -1111,14 +1111,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificateVersionsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             AsyncPageable<BinaryData> source = _generated.GetCertificateVersionsAsync(certificateName, maxresults: null, context: ctx);
-            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()));
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new CertificateProperties()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetPropertiesOfCertificateVersions");
         }
 
         /// <summary>
@@ -1127,12 +1127,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates.</returns>
-        [ForwardsClientCalls]
         public virtual Pageable<DeletedCertificate> GetDeletedCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             Pageable<BinaryData> source = _generated.GetDeletedCertificates(maxresults: null, includePending: includePending, context: ctx);
-            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()));
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates");
         }
 
         /// <summary>
@@ -1141,12 +1141,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates.</returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             AsyncPageable<BinaryData> source = _generated.GetDeletedCertificatesAsync(maxresults: null, includePending: includePending, context: ctx);
-            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()));
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new DeletedCertificate()),
+                "Azure.Security.KeyVaultCertificates.CertificateClient.GetDeletedCertificates");
         }
 
         #endregion
@@ -1491,12 +1491,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
-        [ForwardsClientCalls]
         public virtual Pageable<IssuerProperties> GetPropertiesOfIssuers(CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             Pageable<BinaryData> source = _generated.GetCertificateIssuers(maxresults: null, context: ctx);
-            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()));
+            return MapPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()),
+                $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}");
         }
 
         /// <summary>
@@ -1505,12 +1505,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<IssuerProperties> GetPropertiesOfIssuersAsync(CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
             AsyncPageable<BinaryData> source = _generated.GetCertificateIssuersAsync(maxresults: null, context: ctx);
-            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()));
+            return MapAsyncPageable(source, b => CertificateMapper.DeserializeItem(b, () => new IssuerProperties()),
+                $"{nameof(CertificateClient)}.{nameof(GetPropertiesOfIssuers)}");
         }
 
         #endregion
@@ -1866,28 +1866,47 @@ namespace Azure.Security.KeyVault.Certificates
             CertificateClientOptions.ServiceVersion.V7_6                => "7.6",
             CertificateClientOptions.ServiceVersion.V2025_07_01         => "2025-07-01",
             CertificateClientOptions.ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
-            CertificateClientOptions.ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,
                 "Unknown CertificateClientOptions.ServiceVersion. Add a mapping in CertificateClient.MapApiVersion."),
         };
 
-        private static Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map)
-            => new MappedPageable<TIn, TOut>(source, map);
+        // Wrap each PAGE FETCH in a CertificateClient.<op>-named DiagnosticScope
+        // (matching the exact legacy scope name strings, which were sometimes
+        // namespace-qualified and historically inconsistent between sync/async -
+        // preserved verbatim so customers filtering OpenTelemetry / DiagnosticListener
+        // see the same names as on 4.10.0-beta.1). The try/finally per-page-fetch
+        // pattern avoids scope leaks on partial enumeration (`break` after first page).
+        private Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
 
-        private static AsyncPageable<TOut> MapAsyncPageable<TIn, TOut>(AsyncPageable<TIn> source, Func<TIn, TOut> map)
-            => new MappedAsyncPageable<TIn, TOut>(source, map);
+        private AsyncPageable<TOut> MapAsyncPageable<TIn, TOut>(AsyncPageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedAsyncPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
 
         private sealed class MappedPageable<TIn, TOut> : Pageable<TOut>
         {
             private readonly Pageable<TIn> _source;
             private readonly Func<TIn, TOut> _map;
-            public MappedPageable(Pageable<TIn> source, Func<TIn, TOut> map) { _source = source; _map = map; }
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedPageable(Pageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
             public override IEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                foreach (Page<TIn> page in _source.AsPages(continuationToken, pageSizeHint))
+                using IEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetEnumerator();
+                while (true)
                 {
+                    Page<TIn> page;
+                    DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                    scope.Start();
+                    try
+                    {
+                        if (!e.MoveNext()) { scope.Dispose(); yield break; }
+                        page = e.Current;
+                    }
+                    catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                    scope.Dispose();
                     var values = new List<TOut>(page.Values.Count);
                     foreach (TIn v in page.Values) values.Add(_map(v));
                     yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
@@ -1899,14 +1918,35 @@ namespace Azure.Security.KeyVault.Certificates
         {
             private readonly AsyncPageable<TIn> _source;
             private readonly Func<TIn, TOut> _map;
-            public MappedAsyncPageable(AsyncPageable<TIn> source, Func<TIn, TOut> map) { _source = source; _map = map; }
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedAsyncPageable(AsyncPageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                await foreach (Page<TIn> page in _source.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                System.Collections.Generic.IAsyncEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetAsyncEnumerator();
+                try
                 {
-                    var values = new List<TOut>(page.Values.Count);
-                    foreach (TIn v in page.Values) values.Add(_map(v));
-                    yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    while (true)
+                    {
+                        Page<TIn> page;
+                        DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                        scope.Start();
+                        try
+                        {
+                            if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
+                            page = e.Current;
+                        }
+                        catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                        scope.Dispose();
+                        var values = new List<TOut>(page.Values.Count);
+                        foreach (TIn v in page.Values) values.Add(_map(v));
+                        yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+                finally
+                {
+                    await e.DisposeAsync().ConfigureAwait(false);
                 }
             }
         }
