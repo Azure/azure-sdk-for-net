@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceData"/>. </summary>
-        internal KustoPrivateLinkResourceData()
+        public KustoPrivateLinkResourceData()
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Resource properties. </summary>
-        internal KustoPrivateLinkResourceProperties Properties { get; }
+        internal KustoPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> The private link resource group id. </summary>
         public string GroupId
@@ -54,7 +54,11 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredMembers;
+                if (Properties is null)
+                {
+                    Properties = new KustoPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
             }
         }
 
@@ -63,7 +67,11 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredZoneNames;
+                if (Properties is null)
+                {
+                    Properties = new KustoPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
             }
         }
     }

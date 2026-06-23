@@ -608,16 +608,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 default);
         }
 
-        /// <param name="value"> The list of Kusto database principals. </param>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <returns> A new <see cref="Models.DatabasePrincipalListResult"/> instance for mocking. </returns>
-        public static DatabasePrincipalListResult DatabasePrincipalListResult(IEnumerable<KustoDatabasePrincipal> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<KustoDatabasePrincipal>();
-
-            return new DatabasePrincipalListResult((value ?? new ChangeTrackingList<KustoDatabasePrincipal>()).ToList(), nextLink, default);
-        }
-
         /// <param name="role"> Database principal role. </param>
         /// <param name="name"> Database principal name. </param>
         /// <param name="principalType"> Database principal type. </param>

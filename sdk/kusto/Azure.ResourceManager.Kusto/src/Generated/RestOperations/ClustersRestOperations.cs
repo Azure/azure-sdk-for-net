@@ -755,14 +755,14 @@ namespace Azure.ResourceManager.Kusto
             return message;
         }
 
-        internal HttpMessage CreateCheckKustoClusterNameAvailabilityRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckKustoClusterNameAvailabilityRequest(string subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Kusto/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {

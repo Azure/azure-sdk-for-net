@@ -18,11 +18,6 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A list of the service's callout policy objects. </summary>
     public partial class CalloutPoliciesList : IJsonModel<CalloutPoliciesList>
     {
-        /// <summary> Initializes a new instance of <see cref="CalloutPoliciesList"/> for deserialization. </summary>
-        internal CalloutPoliciesList()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CalloutPoliciesList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

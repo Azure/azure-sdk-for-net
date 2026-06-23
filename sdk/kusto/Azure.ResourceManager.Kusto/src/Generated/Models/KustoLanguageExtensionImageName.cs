@@ -43,12 +43,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
 
-        /// <summary> Python3_6_5. </summary>
-        public static KustoLanguageExtensionImageName Python365 { get; } = new KustoLanguageExtensionImageName(Python365Value);
-
-        /// <summary> Python3_10_8. </summary>
-        public static KustoLanguageExtensionImageName Python3108 { get; } = new KustoLanguageExtensionImageName(Python3108Value);
-
         /// <summary> Python3_10_8_DL. </summary>
         public static KustoLanguageExtensionImageName Python3108DL { get; } = new KustoLanguageExtensionImageName(Python3108DLValue);
 

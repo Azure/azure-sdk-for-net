@@ -15,7 +15,7 @@ using Azure.ResourceManager.Kusto;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The list Kusto database principals operation response. </summary>
-    public partial class DatabasePrincipalListResult : IJsonModel<DatabasePrincipalListResult>
+    internal partial class DatabasePrincipalListResult : IJsonModel<DatabasePrincipalListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

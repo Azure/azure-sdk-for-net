@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary></summary>
-    public partial class KustoDatabaseResource : IJsonModel<KustoDatabaseData>
+    public partial class KustoDatabaseResource : ArmResource, IJsonModel<KustoDatabaseData>
     {
         private static IJsonModel<KustoDatabaseData> s_dataDeserializationInstance;
 

@@ -446,32 +446,24 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        public virtual async Task<Response<DatabasePrincipalListResult>> AddPrincipalsAsync(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoDatabasePrincipal> AddPrincipalsAsync(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
-            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseResource.AddPrincipals");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabasePrincipalList.ToRequestContent(databasePrincipalsToAdd), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabasePrincipalListResult> response = Response.FromValue(DatabasePrincipalListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DatabasesAddPrincipalsAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                DatabasePrincipalList.ToRequestContent(databasePrincipalsToAdd),
+                context,
+                "KustoDatabaseResource.AddPrincipals");
         }
 
         /// <summary>
@@ -498,32 +490,24 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToAdd"> List of database principals to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToAdd"/> is null. </exception>
-        public virtual Response<DatabasePrincipalListResult> AddPrincipals(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoDatabasePrincipal> AddPrincipals(DatabasePrincipalList databasePrincipalsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToAdd, nameof(databasePrincipalsToAdd));
 
-            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseResource.AddPrincipals");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databasesRestClient.CreateAddPrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabasePrincipalList.ToRequestContent(databasePrincipalsToAdd), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabasePrincipalListResult> response = Response.FromValue(DatabasePrincipalListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DatabasesAddPrincipalsCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                DatabasePrincipalList.ToRequestContent(databasePrincipalsToAdd),
+                context,
+                "KustoDatabaseResource.AddPrincipals");
         }
 
         /// <summary>
@@ -1058,32 +1042,24 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        public virtual async Task<Response<DatabasePrincipalListResult>> RemovePrincipalsAsync(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoDatabasePrincipal> RemovePrincipalsAsync(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
-            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseResource.RemovePrincipals");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabasePrincipalList.ToRequestContent(databasePrincipalsToRemove), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabasePrincipalListResult> response = Response.FromValue(DatabasePrincipalListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DatabasesRemovePrincipalsAsyncCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                DatabasePrincipalList.ToRequestContent(databasePrincipalsToRemove),
+                context,
+                "KustoDatabaseResource.RemovePrincipals");
         }
 
         /// <summary>
@@ -1110,32 +1086,24 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="databasePrincipalsToRemove"> List of database principals to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databasePrincipalsToRemove"/> is null. </exception>
-        public virtual Response<DatabasePrincipalListResult> RemovePrincipals(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoDatabasePrincipal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoDatabasePrincipal> RemovePrincipals(DatabasePrincipalList databasePrincipalsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(databasePrincipalsToRemove, nameof(databasePrincipalsToRemove));
 
-            using DiagnosticScope scope = _databasesClientDiagnostics.CreateScope("KustoDatabaseResource.RemovePrincipals");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _databasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DatabasePrincipalList.ToRequestContent(databasePrincipalsToRemove), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabasePrincipalListResult> response = Response.FromValue(DatabasePrincipalListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new DatabasesRemovePrincipalsCollectionResultOfT(
+                _databasesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                DatabasePrincipalList.ToRequestContent(databasePrincipalsToRemove),
+                context,
+                "KustoDatabaseResource.RemovePrincipals");
         }
 
         /// <summary>

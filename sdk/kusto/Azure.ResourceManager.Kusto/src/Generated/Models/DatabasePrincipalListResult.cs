@@ -12,7 +12,7 @@ using Azure.ResourceManager.Kusto;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The list Kusto database principals operation response. </summary>
-    public partial class DatabasePrincipalListResult
+    internal partial class DatabasePrincipalListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

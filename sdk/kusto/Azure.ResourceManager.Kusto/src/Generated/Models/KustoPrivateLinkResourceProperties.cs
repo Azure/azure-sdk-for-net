@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoPrivateLinkResourceProperties"/>. </summary>
-        internal KustoPrivateLinkResourceProperties()
+        public KustoPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
