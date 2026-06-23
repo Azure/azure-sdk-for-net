@@ -215,11 +215,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         // result is functionally identical for every existing caller. This
         // test pins that mapping so a future refactor cannot silently change
         // the wire api-version a caller experiences.
-        [TestCase(SecretClientOptions.ServiceVersion.V7_0,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_1,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_2,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_3,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_4,        "7.5")]
+        // Pins the wire api-version that goes on every request for each
+        // SecretClientOptions.ServiceVersion enum value. The mapping must
+        // match the legacy hand-written SecretClientOptions.GetVersionString()
+        // exactly so existing customers see byte-identical wire requests.
+        [TestCase(SecretClientOptions.ServiceVersion.V7_0,        "7.0")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_1,        "7.1")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_2,        "7.2")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_3,        "7.3")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_4,        "7.4")]
         [TestCase(SecretClientOptions.ServiceVersion.V7_5,        "7.5")]
         [TestCase(SecretClientOptions.ServiceVersion.V7_6,        "7.6")]
         [TestCase(SecretClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]

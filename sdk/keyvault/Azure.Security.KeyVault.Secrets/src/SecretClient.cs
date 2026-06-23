@@ -805,11 +805,11 @@ namespace Azure.Security.KeyVault.Secrets
         // probe the wire api-version header.
         private static string MapApiVersion(SecretClientOptions.ServiceVersion version) => version switch
         {
-            SecretClientOptions.ServiceVersion.V7_0 => "7.5",
-            SecretClientOptions.ServiceVersion.V7_1 => "7.5",
-            SecretClientOptions.ServiceVersion.V7_2 => "7.5",
-            SecretClientOptions.ServiceVersion.V7_3 => "7.5",
-            SecretClientOptions.ServiceVersion.V7_4 => "7.5",
+            SecretClientOptions.ServiceVersion.V7_0 => "7.0",
+            SecretClientOptions.ServiceVersion.V7_1 => "7.1",
+            SecretClientOptions.ServiceVersion.V7_2 => "7.2",
+            SecretClientOptions.ServiceVersion.V7_3 => "7.3",
+            SecretClientOptions.ServiceVersion.V7_4 => "7.4",
             SecretClientOptions.ServiceVersion.V7_5        => "7.5",
             SecretClientOptions.ServiceVersion.V7_6        => "7.6",
             SecretClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
