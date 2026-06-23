@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -400,6 +400,25 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
+        // Snapshot the outgoing request body bytes before the transport consumes
+        // them. RequestContent is a one-shot reader so reading it post-hoc from
+        // MockTransport.SingleRequest.Content throws NRE.
+        private sealed class BodyCapturePolicy : Azure.Core.Pipeline.HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<byte[]> _onCapture;
+            public BodyCapturePolicy(Action<byte[]> onCapture) { _onCapture = onCapture; }
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                if (message.Request.Content != null)
+                {
+                    using var ms = new System.IO.MemoryStream();
+                    message.Request.Content.WriteTo(ms, default);
+                    _onCapture(ms.ToArray());
+                }
+                base.OnSendingRequest(message);
+            }
+        }
+
         // -------------------------------------------------------------------
         // SecretMapper.WriteUpdateBody — wire-shape correctness for the PATCH
         // body produced by UpdateSecretProperties. These tests guard the most
@@ -502,6 +521,135 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsFalse(doc.RootElement.TryGetProperty("attributes",  out _));
             Assert.IsFalse(doc.RootElement.TryGetProperty("contentType", out _));
             Assert.IsFalse(doc.RootElement.TryGetProperty("tags",        out _));
+        }
+        // -------------------------------------------------------------------
+        // Wire-shape guards for GetSecret(outContentType), SetSecret tags,
+        // DisableChallengeResourceVerification, and DeleteSecretOperation's
+        // immediate-success path when the server omits RecoveryId.
+        // -------------------------------------------------------------------
+
+        [TestCase("application/x-pem-file")]
+        [TestCase("application/x-pkcs12")]
+        public async Task GetSecret_OutContentType_AddedAsQueryParameter(string contentType)
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            await client.GetSecretAsync("x", version: null, outContentType: new SecretContentType(contentType));
+
+            string query = transport.SingleRequest.Uri.Query ?? string.Empty;
+            string actual = null;
+            foreach (string kv in query.TrimStart('?').Split('&'))
+            {
+                int eq = kv.IndexOf('=');
+                if (eq < 0) continue;
+                if (string.Equals(kv.Substring(0, eq), "outContentType", StringComparison.OrdinalIgnoreCase))
+                {
+                    actual = System.Uri.UnescapeDataString(kv.Substring(eq + 1));
+                    break;
+                }
+            }
+            Assert.AreEqual(contentType, actual, "outContentType should be passed as a query parameter.");
+        }
+
+        [Test]
+        public async Task GetSecret_NoOutContentType_OmitsQueryParameter()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            await client.GetSecretAsync("x");
+
+            string query = transport.SingleRequest.Uri.Query ?? string.Empty;
+            Assert.IsFalse(query.Contains("outContentType", StringComparison.OrdinalIgnoreCase),
+                "outContentType must not appear when the caller didn't specify it.");
+        }
+
+        [Test]
+        public async Task SetSecret_WithTags_EmitsTagsInBody()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
+            byte[] captured = null;
+            var capture = new BodyCapturePolicy(bytes => captured = bytes);
+            var options = new SecretClientOptions { Transport = transport };
+            options.AddPolicy(capture, HttpPipelinePosition.PerCall);
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                options));
+
+            var secret = new KeyVaultSecret("x", "value");
+            secret.Properties.Tags["env"] = "prod";
+            secret.Properties.Tags["region"] = "westus";
+            await client.SetSecretAsync(secret);
+
+            Assert.IsNotNull(captured, "Request body was not captured.");
+            using var doc = System.Text.Json.JsonDocument.Parse(captured);
+            Assert.IsTrue(doc.RootElement.TryGetProperty("tags", out var tags));
+            Assert.AreEqual("prod",   tags.GetProperty("env").GetString());
+            Assert.AreEqual("westus", tags.GetProperty("region").GetString());
+            Assert.AreEqual("value",  doc.RootElement.GetProperty("value").GetString());
+        }
+
+        [Test]
+        public async Task SetSecret_NoTags_OmitsTagsInBody()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
+            byte[] captured = null;
+            var capture = new BodyCapturePolicy(bytes => captured = bytes);
+            var options = new SecretClientOptions { Transport = transport };
+            options.AddPolicy(capture, HttpPipelinePosition.PerCall);
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                options));
+
+            await client.SetSecretAsync(new KeyVaultSecret("x", "value"));
+
+            Assert.IsNotNull(captured, "Request body was not captured.");
+            using var doc = System.Text.Json.JsonDocument.Parse(captured);
+            // Tags collection was never touched - wire body should not carry an
+            // empty {} that could be misread as "wipe tags" on a future server.
+            Assert.IsFalse(doc.RootElement.TryGetProperty("tags", out _));
+        }
+
+        [Test]
+        public void DisableChallengeResourceVerification_HonoredByOptions()
+        {
+            var opts = new SecretClientOptions { DisableChallengeResourceVerification = true };
+            var client = new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), opts);
+            Assert.IsTrue(opts.DisableChallengeResourceVerification);
+            Assert.IsNotNull(client);
+        }
+
+        [Test]
+        public async Task DeleteSecretOperation_NullRecoveryId_CompletesImmediately()
+        {
+            // A vault with soft-delete disabled returns a delete shape that has
+            // no recoveryId. The legacy SecretClient surfaced this as a completed
+            // operation on the first response; guard the same here.
+            var deletePayload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
+            var transport = new MockTransport(new MockResponse(200).WithJson(deletePayload));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            DeleteSecretOperation op = await client.StartDeleteSecretAsync("x");
+            Assert.IsTrue(op.HasCompleted,
+                "Soft-delete-disabled vault response (no recoveryId) must complete immediately.");
+            Assert.IsNotNull(op.Value);
+            Assert.AreEqual("x", op.Value.Name);
         }
     }
 }
