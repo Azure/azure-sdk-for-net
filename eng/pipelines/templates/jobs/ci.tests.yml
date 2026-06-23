@@ -75,6 +75,8 @@ jobs:
           sbomEnabled: false
 
     steps:
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+      
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
