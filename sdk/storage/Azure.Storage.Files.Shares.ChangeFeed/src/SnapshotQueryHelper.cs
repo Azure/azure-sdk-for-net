@@ -53,7 +53,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             CancellationToken cancellationToken)
         {
             string path = SnapshotTimestampToPath(snapshotTimestamp);
-
             BlobClient blobClient = containerClient.GetBlobClient(path);
             BlobDownloadStreamingResult result;
 
@@ -76,6 +75,56 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     ex);
             }
 
+            return await ParseSnapshotMetadataAsync(result, path, async, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Downloads and parses a snapshot <c>meta.json</c> blob from the change feed container,
+        /// returning <c>null</c> if the metadata blob does not exist instead of throwing.
+        /// </summary>
+        /// <param name="containerClient">The blob container client for the change feed container.</param>
+        /// <param name="snapshotTimestamp">The ISO 8601 timestamp identifying the snapshot to read.</param>
+        /// <param name="async">Whether to execute the download asynchronously.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>
+        /// A <see cref="SnapshotMetadata"/> instance parsed from the JSON content, or
+        /// <c>null</c> when the snapshot meta blob is not found.
+        /// </returns>
+        internal static async Task<SnapshotMetadata> TryReadSnapshotMetadataAsync(
+            BlobContainerClient containerClient,
+            string snapshotTimestamp,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            string path = SnapshotTimestampToPath(snapshotTimestamp);
+            BlobClient blobClient = containerClient.GetBlobClient(path);
+            BlobDownloadStreamingResult result;
+
+            try
+            {
+                if (async)
+                {
+                    result = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    result = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
+            {
+                return null;
+            }
+
+            return await ParseSnapshotMetadataAsync(result, path, async, cancellationToken).ConfigureAwait(false);
+        }
+
+        private static async Task<SnapshotMetadata> ParseSnapshotMetadataAsync(
+            BlobDownloadStreamingResult result,
+            string path,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             JsonDocument json = null;
             try
             {

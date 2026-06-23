@@ -19,6 +19,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public virtual Azure.AsyncPageable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(string beginSnapshot, string endSnapshot) { throw null; }
         public virtual System.DateTimeOffset? GetLastConsumable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.DateTimeOffset?> GetLastConsumableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus GetSnapshotStatus(string snapshotTimestamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus> GetSnapshotStatusAsync(string snapshotTimestamp, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ShareChangeFeedClientOptions
     {
@@ -115,5 +117,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public enum ShareChangeFeedSnapshotStatus
+    {
+        NotFound = 0,
+        Pending = 1,
+        Finalized = 2,
     }
 }

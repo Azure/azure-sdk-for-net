@@ -282,5 +282,155 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     IsAsync,
                     CancellationToken.None));
         }
+
+        /// <summary>
+        /// Verifies that <see cref="SnapshotQueryHelper.TryReadSnapshotMetadataAsync"/> returns
+        /// a populated <see cref="SnapshotMetadata"/> when the snapshot meta blob exists.
+        /// </summary>
+        [Test]
+        public async Task TryReadSnapshotMetadataAsync_HappyPath_ReturnsMetadata()
+        {
+            string snapshotTimestamp = "2024-01-15T08:00:00.000Z";
+            string json = @"{
+                ""version"": 0,
+                ""snapshotTimestamp"": ""2024-01-15T08:00:00.000Z"",
+                ""cvId"": 100,
+                ""minLogWindowForNextSnapshot"": ""2024-01-15T08:00:00.000Z"",
+                ""maxLogWindowForCurrentSnapshot"": ""2024-01-15T09:00:00.000Z"",
+                ""status"": ""Finalized""
+            }";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupSnapshotMetaResponse(containerClient, snapshotTimestamp, json);
+
+            SnapshotMetadata metadata = await SnapshotQueryHelper.TryReadSnapshotMetadataAsync(
+                containerClient.Object,
+                snapshotTimestamp,
+                IsAsync,
+                CancellationToken.None);
+
+            Assert.IsNotNull(metadata);
+            Assert.AreEqual(100, metadata.CvId);
+            Assert.AreEqual("Finalized", metadata.Status);
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="SnapshotQueryHelper.TryReadSnapshotMetadataAsync"/> still
+        /// surfaces a populated <see cref="SnapshotMetadata"/> when the snapshot exists but
+        /// has not yet been finalized; status interpretation is the caller's responsibility.
+        /// </summary>
+        [Test]
+        public async Task TryReadSnapshotMetadataAsync_UnfinalizedStatus_ReturnsMetadata()
+        {
+            string snapshotTimestamp = "2024-02-20T10:15:00.000Z";
+            string json = @"{
+                ""snapshotTimestamp"": ""2024-02-20T10:15:00.000Z"",
+                ""cvId"": 7,
+                ""minLogWindowForNextSnapshot"": ""2024-02-20T10:15:00.000Z"",
+                ""maxLogWindowForCurrentSnapshot"": ""2024-02-20T10:30:00.000Z"",
+                ""status"": ""Pending""
+            }";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupSnapshotMetaResponse(containerClient, snapshotTimestamp, json);
+
+            SnapshotMetadata metadata = await SnapshotQueryHelper.TryReadSnapshotMetadataAsync(
+                containerClient.Object,
+                snapshotTimestamp,
+                IsAsync,
+                CancellationToken.None);
+
+            Assert.IsNotNull(metadata);
+            Assert.AreEqual("Pending", metadata.Status);
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="SnapshotQueryHelper.TryReadSnapshotMetadataAsync"/> returns
+        /// <c>null</c> (instead of throwing) when the snapshot meta blob is not found.
+        /// </summary>
+        [Test]
+        public async Task TryReadSnapshotMetadataAsync_BlobNotFound_ReturnsNull()
+        {
+            string snapshotTimestamp = "2024-03-01T12:00:00.000Z";
+            string expectedPath = "idx/snapshot/2024/03/01/12/00/00/meta.json";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            containerClient.Setup(c => c.GetBlobClient(expectedPath)).Returns(blobClient.Object);
+
+            RequestFailedException blobNotFound = new RequestFailedException(
+                status: 404,
+                message: "The specified blob does not exist.",
+                errorCode: BlobErrorCode.BlobNotFound.ToString(),
+                innerException: null);
+
+            if (IsAsync)
+            {
+                blobClient.Setup(b => b.DownloadStreamingAsync(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .ThrowsAsync(blobNotFound);
+            }
+            else
+            {
+                blobClient.Setup(b => b.DownloadStreaming(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Throws(blobNotFound);
+            }
+
+            SnapshotMetadata metadata = await SnapshotQueryHelper.TryReadSnapshotMetadataAsync(
+                containerClient.Object,
+                snapshotTimestamp,
+                IsAsync,
+                CancellationToken.None);
+
+            Assert.IsNull(metadata);
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="SnapshotQueryHelper.TryReadSnapshotMetadataAsync"/> surfaces
+        /// non-not-found service errors to the caller rather than swallowing them.
+        /// </summary>
+        [Test]
+        public void TryReadSnapshotMetadataAsync_OtherServiceError_Propagates()
+        {
+            string snapshotTimestamp = "2024-04-01T00:00:00.000Z";
+            string expectedPath = "idx/snapshot/2024/04/01/00/00/00/meta.json";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>(MockBehavior.Strict);
+            containerClient.Setup(c => c.GetBlobClient(expectedPath)).Returns(blobClient.Object);
+
+            RequestFailedException authFailure = new RequestFailedException(
+                status: 403,
+                message: "Server failed to authenticate the request.",
+                errorCode: BlobErrorCode.AuthenticationFailed.ToString(),
+                innerException: null);
+
+            if (IsAsync)
+            {
+                blobClient.Setup(b => b.DownloadStreamingAsync(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .ThrowsAsync(authFailure);
+            }
+            else
+            {
+                blobClient.Setup(b => b.DownloadStreaming(
+                    It.IsAny<BlobDownloadOptions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Throws(authFailure);
+            }
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await SnapshotQueryHelper.TryReadSnapshotMetadataAsync(
+                    containerClient.Object,
+                    snapshotTimestamp,
+                    IsAsync,
+                    CancellationToken.None));
+
+            Assert.AreEqual(BlobErrorCode.AuthenticationFailed.ToString(), ex.ErrorCode);
+        }
     }
 }
