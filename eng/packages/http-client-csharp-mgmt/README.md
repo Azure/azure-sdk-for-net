@@ -2,10 +2,6 @@
 
 TypeSpec library for emitting Azure management libraries for C#.
 
-## Documentation
-
-- [Custom code attributes](docs/custom-code-attributes.md)
-
 ## Install
 
 ```bash
