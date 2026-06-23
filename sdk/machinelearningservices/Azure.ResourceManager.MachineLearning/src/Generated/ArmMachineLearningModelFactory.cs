@@ -2320,18 +2320,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="secrets"> [Required] Service principal secrets. </param>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
         /// <param name="thumbprint"> [Required] Thumbprint of the certificate used for authentication. </param>
-        /// <returns> A new <see cref="Models.CertificateDatastoreCredentials"/> instance for mocking. </returns>
-        public static CertificateDatastoreCredentials CertificateDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningCertificateDatastoreSecrets secrets = default, Guid tenantId = default, string thumbprint = default)
+        /// <returns> A new <see cref="Models.MachineLearningCertificateDatastoreCredentials"/> instance for mocking. </returns>
+        public static MachineLearningCertificateDatastoreCredentials MachineLearningCertificateDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningCertificateDatastoreSecrets secrets = default, Guid tenantId = default, string thumbprint = default)
         {
-            return new CertificateDatastoreCredentials(
+            return new MachineLearningCertificateDatastoreCredentials(
                 default,
                 default,
                 authorityUri,
-                clientId,
                 resourceUri,
-                secrets,
                 tenantId,
-                thumbprint);
+                clientId,
+                thumbprint,
+                secrets);
         }
 
         /// <returns> A new <see cref="Models.MachineLearningNoneDatastoreCredentials"/> instance for mocking. </returns>
@@ -2352,17 +2352,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceUri"> Resource the service principal has access to. </param>
         /// <param name="secrets"> [Required] Service principal secrets. </param>
         /// <param name="tenantId"> [Required] ID of the tenant to which the service principal belongs. </param>
-        /// <returns> A new <see cref="Models.ServicePrincipalDatastoreCredentials"/> instance for mocking. </returns>
-        public static ServicePrincipalDatastoreCredentials ServicePrincipalDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningServicePrincipalDatastoreSecrets secrets = default, Guid tenantId = default)
+        /// <returns> A new <see cref="Models.MachineLearningServicePrincipalDatastoreCredentials"/> instance for mocking. </returns>
+        public static MachineLearningServicePrincipalDatastoreCredentials MachineLearningServicePrincipalDatastoreCredentials(Uri authorityUri = default, Guid clientId = default, Uri resourceUri = default, MachineLearningServicePrincipalDatastoreSecrets secrets = default, Guid tenantId = default)
         {
-            return new ServicePrincipalDatastoreCredentials(
+            return new MachineLearningServicePrincipalDatastoreCredentials(
                 default,
                 default,
                 authorityUri,
-                clientId,
                 resourceUri,
-                secrets,
-                tenantId);
+                tenantId,
+                clientId,
+                secrets);
         }
 
         /// <param name="description"> The asset description text. </param>
@@ -6650,8 +6650,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="samplingAlgorithm"> [Required] The hyperparameter sampling algorithm. </param>
         /// <param name="searchSpace"> [Required] A dictionary containing each parameter and its distribution. The dictionary key is the name of the parameter. </param>
         /// <param name="trial"> [Required] Trial component definition. </param>
-        /// <returns> A new <see cref="Models.SweepJob"/> instance for mocking. </returns>
-        public static SweepJob SweepJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, ResourceIdentifier componentId = default, ResourceIdentifier computeId = default, string displayName = default, string experimentName = default, MachineLearningIdentityConfiguration identity = default, bool? isArchived = default, NotificationSetting notificationSetting = default, string parentJobName = default, IDictionary<string, MachineLearningJobService> services = default, MachineLearningJobStatus? status = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, IDictionary<string, MachineLearningJobInput> inputs = default, MachineLearningSweepJobLimits limits = default, Objective objective = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default, SamplingAlgorithm samplingAlgorithm = default, BinaryData searchSpace = default, MachineLearningTrialComponent trial = default)
+        /// <returns> A new <see cref="Models.MachineLearningSweepJob"/> instance for mocking. </returns>
+        public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, ResourceIdentifier componentId = default, ResourceIdentifier computeId = default, string displayName = default, string experimentName = default, MachineLearningIdentityConfiguration identity = default, bool? isArchived = default, NotificationSetting notificationSetting = default, string parentJobName = default, IDictionary<string, MachineLearningJobService> services = default, MachineLearningJobStatus? status = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, IDictionary<string, MachineLearningJobInput> inputs = default, MachineLearningSweepJobLimits limits = default, MachineLearningObjective objective = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default, SamplingAlgorithm samplingAlgorithm = default, BinaryData searchSpace = default, MachineLearningTrialComponent trial = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -6659,39 +6659,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             inputs ??= new ChangeTrackingDictionary<string, MachineLearningJobInput>();
             outputs ??= new ChangeTrackingDictionary<string, MachineLearningJobOutput>();
 
-            return new SweepJob(
+            return new MachineLearningSweepJob(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                componentId,
-                computeId,
+                default,
                 displayName,
-                experimentName,
-                identity,
-                isArchived,
-                default,
-                notificationSetting,
-                parentJobName,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
-                earlyTermination,
-                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
-                limits,
-                objective,
-                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
-                samplingAlgorithm,
+                experimentName,
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                computeId,
+                isArchived,
+                identity,
+                componentId,
+                notificationSetting,
                 searchSpace,
-                trial);
+                samplingAlgorithm,
+                limits,
+                earlyTermination,
+                objective,
+                trial,
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                queueJobTier is null ? default : new JobQueueSettings(queueJobTier, default));
         }
 
         /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
         /// <param name="primaryMetric"> [Required] Name of the metric to optimize. </param>
-        /// <returns> A new <see cref="Models.Objective"/> instance for mocking. </returns>
-        public static Objective Objective(MachineLearningGoal goal = default, string primaryMetric = default)
+        /// <returns> A new <see cref="Models.MachineLearningObjective"/> instance for mocking. </returns>
+        public static MachineLearningObjective MachineLearningObjective(MachineLearningGoal goal = default, string primaryMetric = default)
         {
-            return new Objective(goal, primaryMetric, default);
+            return new MachineLearningObjective(primaryMetric, goal, default);
         }
 
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>

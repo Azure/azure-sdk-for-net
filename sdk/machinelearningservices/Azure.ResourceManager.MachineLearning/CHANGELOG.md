@@ -8,6 +8,10 @@
 
 ### Breaking Changes
 
+- Some model constructors have updated parameter order to match TypeSpec-based generation while preserving compatibility overloads where possible.
+- Several generic model names are now emitted with MachineLearning-specific names to avoid collisions with other SDK namespaces.
+- This beta moves the library to the 2025-12 service API version and TypeSpec-based generation, which may change generated API surface shape from the previous AutoRest-based beta.
+
 ### Bugs Fixed
 
 ### Other Changes

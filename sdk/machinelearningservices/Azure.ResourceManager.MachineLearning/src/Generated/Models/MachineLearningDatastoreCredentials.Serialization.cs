@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for datastore credentials.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="CertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/>, and <see cref="ServicePrincipalDatastoreCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/>, and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDatastoreCredentials))]
     public abstract partial class MachineLearningDatastoreCredentials : IJsonModel<MachineLearningDatastoreCredentials>
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AccountKey":
                         return MachineLearningAccountKeyDatastoreCredentials.DeserializeMachineLearningAccountKeyDatastoreCredentials(element, options);
                     case "Certificate":
-                        return CertificateDatastoreCredentials.DeserializeCertificateDatastoreCredentials(element, options);
+                        return MachineLearningCertificateDatastoreCredentials.DeserializeMachineLearningCertificateDatastoreCredentials(element, options);
                     case "None":
                         return MachineLearningNoneDatastoreCredentials.DeserializeMachineLearningNoneDatastoreCredentials(element, options);
                     case "Sas":
                         return MachineLearningSasDatastoreCredentials.DeserializeMachineLearningSasDatastoreCredentials(element, options);
                     case "ServicePrincipal":
-                        return ServicePrincipalDatastoreCredentials.DeserializeServicePrincipalDatastoreCredentials(element, options);
+                        return MachineLearningServicePrincipalDatastoreCredentials.DeserializeMachineLearningServicePrincipalDatastoreCredentials(element, options);
                 }
             }
             return UnknownDatastoreCredentials.DeserializeUnknownDatastoreCredentials(element, options);

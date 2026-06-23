@@ -46,6 +46,8 @@ namespace Azure.ResourceManager.MachineLearning
             // Customized: preserve the shipped resource-instance WorkspaceConnections_Create method shape.
             // The generator emits the full-resource PUT only on the collection, so this shim reuses the
             // generated PUT RestOperation instead of sending the PATCH-shaped generated Update request.
+            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the
+            // generator supports resource-instance PUT-based update overloads.
             using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
             try

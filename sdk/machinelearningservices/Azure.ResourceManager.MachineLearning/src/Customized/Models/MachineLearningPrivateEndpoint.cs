@@ -6,10 +6,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The Private Endpoint resource. </summary>
+    [CodeGenType("PrivateEndpoint")]
     public partial class MachineLearningPrivateEndpoint
     {
         /// <summary>

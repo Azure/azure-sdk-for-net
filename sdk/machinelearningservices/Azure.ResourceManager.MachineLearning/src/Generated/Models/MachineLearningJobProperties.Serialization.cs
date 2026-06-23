@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Spark":
                         return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep":
-                        return SweepJob.DeserializeSweepJob(element, options);
+                        return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);
                 }
             }
             return UnknownMachineLearningJobProperties.DeserializeUnknownMachineLearningJobProperties(element, options);
