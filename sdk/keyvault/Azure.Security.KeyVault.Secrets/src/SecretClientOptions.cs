@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_07_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2026_05_01_Preview;
 
         /// <summary>
         /// The versions of Azure Key Vault supported by this client library.
@@ -65,6 +65,11 @@ namespace Azure.Security.KeyVault.Secrets
             /// The Key Vault API version 2025-07-01.
             /// </summary>
             V2025_07_01 = 7,
+
+            /// <summary>
+            /// The Key Vault API version 2026-05-01-preview.
+            /// </summary>
+            V2026_05_01_Preview = 8,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

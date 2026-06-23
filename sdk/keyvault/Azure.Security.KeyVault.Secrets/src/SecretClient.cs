@@ -801,6 +801,7 @@ namespace Azure.Security.KeyVault.Secrets
             SecretClientOptions.ServiceVersion.V7_5        => "7.5",
             SecretClientOptions.ServiceVersion.V7_6        => "7.6",
             SecretClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
+            SecretClientOptions.ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,

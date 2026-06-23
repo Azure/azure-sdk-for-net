@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added `SecretClientOptions.ServiceVersion.V2026_05_01_Preview` to opt into Key Vault API version `2026-05-01-preview`. This is the version the TypeSpec spec is generated against and the new default selected when no `ServiceVersion` is specified. Existing enum values continue to work; pinning is unchanged for existing callers.
+- Added `AzureSecurityKeyVaultSecretsContext` (the package's `ModelReaderWriterContext`) for AOT-friendly model serialization. Customers can pass `AzureSecurityKeyVaultSecretsContext.Default` to `ModelReaderWriter` overloads that accept a context.
+
 ### Breaking Changes
 
 - The OpenTelemetry / `DiagnosticListener` activity names for the three paged operations have changed.
