@@ -67,3 +67,30 @@ if ($kvClient) {
         exit 1
     }
 }
+
+# --- Patch 2: hide the emitter-injected MRW Context from the public API ---
+#
+# Keeping this Context internal preserves the pre-PR public surface exactly
+# (the legacy hand-written SecretClient package never exposed an MRW
+# `ModelReaderWriterContext`). Customers in the same assembly can still
+# reference the class for source-generator AOT scenarios; it just disappears
+# from `api/*.cs`. Spec-side `@@access(KeyVault, Access.internal, "csharp")`
+# does not cover this type because it lives outside the spec namespace.
+$ctxFile = Get-ChildItem -Path $GeneratedRoot -Recurse -Filter 'AzureSecurityKeyVaultSecretsContext.cs' -File `
+    | Select-Object -First 1
+
+if ($ctxFile) {
+    $text     = [System.IO.File]::ReadAllText($ctxFile.FullName)
+    $original = $text
+    $text = $text -replace '(?m)^(\s*)public(\s+partial\s+class\s+AzureSecurityKeyVaultSecretsContext\b)', '$1internal$2'
+    if ($text -ne $original) {
+        [System.IO.File]::WriteAllText($ctxFile.FullName, $text)
+        Write-Host '  patched: AzureSecurityKeyVaultSecretsContext.cs (public -> internal)'
+    }
+    elseif ($text -notmatch '(?m)^\s*internal\s+partial\s+class\s+AzureSecurityKeyVaultSecretsContext\b') {
+        Write-Error "FATAL: AzureSecurityKeyVaultSecretsContext is neither public nor internal in " +
+                    "$($ctxFile.FullName). The emitter may have changed the class shape. Update this script."
+        exit 1
+    }
+}
+

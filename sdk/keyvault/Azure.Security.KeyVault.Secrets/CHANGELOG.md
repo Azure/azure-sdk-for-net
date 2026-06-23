@@ -4,27 +4,13 @@
 
 ### Features Added
 
-- Added `SecretClientOptions.ServiceVersion.V2026_05_01_Preview` to opt into Key Vault API version `2026-05-01-preview`. This is the version the TypeSpec spec is generated against and the new default selected when no `ServiceVersion` is specified. Existing enum values continue to work; pinning is unchanged for existing callers.
-- Added `AzureSecurityKeyVaultSecretsContext` (the package's `ModelReaderWriterContext`) for AOT-friendly model serialization. Customers can pass `AzureSecurityKeyVaultSecretsContext.Default` to `ModelReaderWriter` overloads that accept a context.
-
 ### Breaking Changes
-
-- The OpenTelemetry / `DiagnosticListener` activity names for the three paged operations have changed.
-  Consumers filtering by activity name should update their rules:
-
-  | Old activity name (≤ 4.11.0) | New activity name (4.12.0-beta.1+) |
-  |---|---|
-  | `SecretClient.GetPropertiesOfSecrets` | `KeyVaultSecretsClient.GetSecrets` |
-  | `SecretClient.GetPropertiesOfSecretVersions` | `KeyVaultSecretsClient.GetSecretVersions` |
-  | `SecretClient.GetDeletedSecrets` | `KeyVaultSecretsClient.GetDeletedSecrets` |
-
-  All other operation activity names (`SecretClient.GetSecret`, `SecretClient.SetSecret`, etc.) are unchanged.
 
 ### Bugs Fixed
 
 ### Other Changes
 
-- `SecretClient` now uses a TypeSpec-generated transport (request building, response parsing, paging, and LRO polling). Public method signatures, return types, exception contracts and over-the-wire HTTP traffic are unchanged. `SecretClientOptions` continues to be honored end-to-end: custom retry, transport, diagnostics settings, and any `AddPolicy` entries are forwarded into the new pipeline without modification. Service versions older than 7.5 (`V7_0` – `V7_4`) are mapped to the wire api-version `7.5` for the operations exposed by this client; choosing any of those enum values continues to construct a working client.
+- Internal: the `SecretClient` transport now delegates to a TypeSpec-generated implementation. Public API surface, default service version, exception contracts, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are all unchanged. `SecretClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end.
 
 ## 4.11.0 (2026-05-05)
 

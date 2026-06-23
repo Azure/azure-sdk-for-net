@@ -208,11 +208,13 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return MapAsyncPageable(_generated.GetSecretVersionsAsync(name, maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToSecretProperties);
+            return MapAsyncPageable(
+                _generated.GetSecretVersionsAsync(name, maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToSecretProperties,
+                $"{nameof(SecretClient)}.{nameof(GetPropertiesOfSecretVersions)}");
         }
 
         /// <summary>
@@ -233,11 +235,13 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual Pageable<SecretProperties> GetPropertiesOfSecretVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            return MapPageable(_generated.GetSecretVersions(name, maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToSecretProperties);
+            return MapPageable(
+                _generated.GetSecretVersions(name, maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToSecretProperties,
+                $"{nameof(SecretClient)}.{nameof(GetPropertiesOfSecretVersions)}");
         }
 
         /// <summary>
@@ -251,9 +255,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<SecretProperties> GetPropertiesOfSecretsAsync(CancellationToken cancellationToken = default)
-            => MapAsyncPageable(_generated.GetSecretsAsync(maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToSecretProperties);
+            => MapAsyncPageable(
+                _generated.GetSecretsAsync(maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToSecretProperties,
+                $"{nameof(SecretClient)}.{nameof(GetPropertiesOfSecrets)}");
 
         /// <summary>
         /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret(string, string, SecretContentType?, CancellationToken)"/>.
@@ -266,9 +272,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual Pageable<SecretProperties> GetPropertiesOfSecrets(CancellationToken cancellationToken = default)
-            => MapPageable(_generated.GetSecrets(maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToSecretProperties);
+            => MapPageable(
+                _generated.GetSecrets(maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToSecretProperties,
+                $"{nameof(SecretClient)}.{nameof(GetPropertiesOfSecrets)}");
 
         /// <summary>
         /// Updates the attributes associated with a specified secret.
@@ -555,9 +563,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual AsyncPageable<DeletedSecret> GetDeletedSecretsAsync(CancellationToken cancellationToken = default)
-            => MapAsyncPageable(_generated.GetDeletedSecretsAsync(maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToDeletedSecret);
+            => MapAsyncPageable(
+                _generated.GetDeletedSecretsAsync(maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToDeletedSecret,
+                $"{nameof(SecretClient)}.{nameof(GetDeletedSecrets)}");
 
         /// <summary>
         /// Lists deleted secrets for the specified vault.
@@ -569,9 +579,11 @@ namespace Azure.Security.KeyVault.Secrets
         /// </remarks>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        [ForwardsClientCalls]
         public virtual Pageable<DeletedSecret> GetDeletedSecrets(CancellationToken cancellationToken = default)
-            => MapPageable(_generated.GetDeletedSecrets(maxresults: default, cancellationToken: cancellationToken), SecretMapper.ToDeletedSecret);
+            => MapPageable(
+                _generated.GetDeletedSecrets(maxresults: default, cancellationToken: cancellationToken),
+                SecretMapper.ToDeletedSecret,
+                $"{nameof(SecretClient)}.{nameof(GetDeletedSecrets)}");
 
         /// <summary>
         /// Recovers the deleted secret to the latest version.
@@ -801,7 +813,6 @@ namespace Azure.Security.KeyVault.Secrets
             SecretClientOptions.ServiceVersion.V7_5        => "7.5",
             SecretClientOptions.ServiceVersion.V7_6        => "7.6",
             SecretClientOptions.ServiceVersion.V2025_07_01 => "2025-07-01",
-            SecretClientOptions.ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
             _ => throw new ArgumentOutOfRangeException(
                 nameof(version),
                 version,
@@ -822,28 +833,41 @@ namespace Azure.Security.KeyVault.Secrets
             return SecretMapper.ToKeyVaultSecret(bundle).Properties;
         }
 
-        // Forwarders to the generated client; ForwardsClientCalls signals to the
-        // diagnostic-scope validator that the inner client emits the canonical
-        // span name (KeyVaultSecretsClient.<op>). We intentionally do NOT wrap
-        // these in an outer SecretClient.<op> scope: that would either nest
-        // span names (confusing) or leak scopes when callers partially enumerate
-        // an AsyncPageable. Matches the convention used by other re-wired
-        // Azure SDK clients.
-        private static Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map)
-            => new MappedPageable<TIn, TOut>(source, map);
+        // Forwarders to the generated client. We wrap each PAGE FETCH in a
+        // SecretClient.<op>-named DiagnosticScope so distributed-tracing span
+        // names match the legacy hand-written client exactly. The scope opens
+        // and closes around each page-boundary call only; partial enumeration
+        // ("break" after the first page) cannot leak a scope because the
+        // try/finally is entirely inside the loop body.
+        private Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
 
-        private static AsyncPageable<TOut> MapAsyncPageable<TIn, TOut>(AsyncPageable<TIn> source, Func<TIn, TOut> map)
-            => new MappedAsyncPageable<TIn, TOut>(source, map);
+        private AsyncPageable<TOut> MapAsyncPageable<TIn, TOut>(AsyncPageable<TIn> source, Func<TIn, TOut> map, string scopeName)
+            => new MappedAsyncPageable<TIn, TOut>(source, map, _diagnostics, scopeName);
 
         private sealed class MappedPageable<TIn, TOut> : Pageable<TOut>
         {
             private readonly Pageable<TIn> _source;
             private readonly Func<TIn, TOut> _map;
-            public MappedPageable(Pageable<TIn> source, Func<TIn, TOut> map) { _source = source; _map = map; }
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedPageable(Pageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
             public override System.Collections.Generic.IEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                foreach (Page<TIn> page in _source.AsPages(continuationToken, pageSizeHint))
+                using System.Collections.Generic.IEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetEnumerator();
+                while (true)
                 {
+                    Page<TIn> page;
+                    DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                    scope.Start();
+                    try
+                    {
+                        if (!e.MoveNext()) { scope.Dispose(); yield break; }
+                        page = e.Current;
+                    }
+                    catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                    scope.Dispose();
                     var values = new System.Collections.Generic.List<TOut>(page.Values.Count);
                     foreach (TIn v in page.Values) values.Add(_map(v));
                     yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
@@ -855,14 +879,35 @@ namespace Azure.Security.KeyVault.Secrets
         {
             private readonly AsyncPageable<TIn> _source;
             private readonly Func<TIn, TOut> _map;
-            public MappedAsyncPageable(AsyncPageable<TIn> source, Func<TIn, TOut> map) { _source = source; _map = map; }
+            private readonly ClientDiagnostics _diagnostics;
+            private readonly string _scopeName;
+            public MappedAsyncPageable(AsyncPageable<TIn> source, Func<TIn, TOut> map, ClientDiagnostics diagnostics, string scopeName)
+            { _source = source; _map = map; _diagnostics = diagnostics; _scopeName = scopeName; }
             public override async System.Collections.Generic.IAsyncEnumerable<Page<TOut>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                await foreach (Page<TIn> page in _source.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                System.Collections.Generic.IAsyncEnumerator<Page<TIn>> e = _source.AsPages(continuationToken, pageSizeHint).GetAsyncEnumerator();
+                try
                 {
-                    var values = new System.Collections.Generic.List<TOut>(page.Values.Count);
-                    foreach (TIn v in page.Values) values.Add(_map(v));
-                    yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    while (true)
+                    {
+                        Page<TIn> page;
+                        DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
+                        scope.Start();
+                        try
+                        {
+                            if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
+                            page = e.Current;
+                        }
+                        catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
+                        scope.Dispose();
+                        var values = new System.Collections.Generic.List<TOut>(page.Values.Count);
+                        foreach (TIn v in page.Values) values.Add(_map(v));
+                        yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+                finally
+                {
+                    await e.DisposeAsync().ConfigureAwait(false);
                 }
             }
         }

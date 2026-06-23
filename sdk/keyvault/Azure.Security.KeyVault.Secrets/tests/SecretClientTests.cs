@@ -222,8 +222,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [TestCase(SecretClientOptions.ServiceVersion.V7_4,        "7.5")]
         [TestCase(SecretClientOptions.ServiceVersion.V7_5,        "7.5")]
         [TestCase(SecretClientOptions.ServiceVersion.V7_6,        "7.6")]
-        [TestCase(SecretClientOptions.ServiceVersion.V2025_07_01,         "2025-07-01")]
-        [TestCase(SecretClientOptions.ServiceVersion.V2026_05_01_Preview, "2026-05-01-preview")]
+        [TestCase(SecretClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
         public async Task ServiceVersion_SendsExpectedWireApiVersion(SecretClientOptions.ServiceVersion version, string expectedWireVersion)
         {
             var transport = new MockTransport(new MockResponse(200).WithJson(

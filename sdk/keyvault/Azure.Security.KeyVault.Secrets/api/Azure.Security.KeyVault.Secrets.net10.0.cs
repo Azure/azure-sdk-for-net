@@ -1,11 +1,5 @@
 namespace Azure.Security.KeyVault.Secrets
 {
-    public partial class AzureSecurityKeyVaultSecretsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureSecurityKeyVaultSecretsContext() { }
-        public static Azure.Security.KeyVault.Secrets.AzureSecurityKeyVaultSecretsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class DeletedSecret : Azure.Security.KeyVault.Secrets.KeyVaultSecret
     {
         internal DeletedSecret() : base (default(string), default(string)) { }
@@ -110,7 +104,7 @@ namespace Azure.Security.KeyVault.Secrets
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {
-        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V2026_05_01_Preview) { }
+        public SecretClientOptions(Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion version = Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion.V2025_07_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Secrets.SecretClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -123,7 +117,6 @@ namespace Azure.Security.KeyVault.Secrets
             V7_5 = 5,
             V7_6 = 6,
             V2025_07_01 = 7,
-            V2026_05_01_Preview = 8,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
