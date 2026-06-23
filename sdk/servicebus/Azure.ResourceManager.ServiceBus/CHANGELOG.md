@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Added support for the `2026-01-01` API version.
+- Added the `IpAddressType` property to the Service Bus namespace, allowing a namespace to be configured for `IPv4` only or `DualStack` (IPv4 and IPv6).
+
 ### Breaking Changes
+
+- Removed the `ClusterArmId` property from `ServiceBusNamespaceReplicaLocation`. This property had no effect for Service Bus namespaces.
 
 ### Bugs Fixed
 
