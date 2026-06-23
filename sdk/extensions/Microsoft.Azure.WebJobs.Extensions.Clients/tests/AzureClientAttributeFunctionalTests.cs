@@ -20,6 +20,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             // Ignore KeyVault client API Version when matching
             IgnoredQueryParameters.Add("api-version");
+
+            // PoP token binding adds this header unconditionally in the beta but existing
+            // recordings were captured without it. Exclude it from request matching so that
+            // playback tests pass against old recordings.
+            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         [RecordedTest]
