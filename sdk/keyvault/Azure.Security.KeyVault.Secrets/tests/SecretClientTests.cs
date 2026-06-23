@@ -632,6 +632,45 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNotNull(client);
         }
 
+        // Strengthened guard: prove the DisableChallengeResourceVerification flag
+        // actually reaches the ChallengeBasedAuthenticationPolicy on the pipeline.
+        // The flag toggles whether the auth policy validates that the
+        // WWW-Authenticate resource matches the requested vault URI; a regression
+        // (e.g. the SecretClient ctor dropping the flag when constructing the
+        // policy) would let mismatched resources flow undetected. Here we hit a
+        // vault, follow the 401 challenge, and observe that a second request is
+        // emitted with a bearer token even though the challenge resource
+        // (https://attacker.example) does NOT match the vault host.
+        [Test]
+        public async Task DisableChallengeResourceVerification_True_AllowsMismatchedChallengeResource()
+        {
+            var challenge = new MockResponse(401);
+            challenge.AddHeader("WWW-Authenticate",
+                "Bearer authorization=\"https://login.microsoftonline.com/common\", resource=\"https://attacker.example\"");
+            var success = new MockResponse(200).WithJson(
+                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}");
+
+            var transport = new MockTransport(challenge, success);
+            var opts = new SecretClientOptions
+            {
+                Transport = transport,
+                DisableChallengeResourceVerification = true,
+            };
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                opts));
+
+            await client.GetSecretAsync("x");
+
+            // Two requests sent (challenge + retry with bearer) means the policy
+            // accepted the mismatched challenge resource. With the flag off, the
+            // policy would throw before the retry.
+            Assert.AreEqual(2, transport.Requests.Count, "Expected challenge + authorized retry.");
+            Assert.IsTrue(transport.Requests[1].Headers.TryGetValue("Authorization", out string auth));
+            StringAssert.StartsWith("Bearer", auth);
+        }
+
         [Test]
         public async Task DeleteSecretOperation_NullRecoveryId_CompletesImmediately()
         {
@@ -654,10 +693,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public void BackupArgumentValidation()
         {
+            // Use only the async path - InstrumentClient wraps `Client` to
+            // require async invocation (matches the rest of this file's pattern,
+            // e.g. GetArgumentValidation above).
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.BackupSecretAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.BackupSecretAsync(string.Empty));
-            Assert.Throws<ArgumentNullException>(() => Client.BackupSecret(null));
-            Assert.Throws<ArgumentException>(() => Client.BackupSecret(string.Empty));
         }
 
         // -------------------------------------------------------------------
@@ -694,8 +734,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task DeleteSecretOperation_ServerError_Fails()
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1"",""recoveryId"":""https://example.vault.azure.net/deletedsecrets/x""}";
+            // Repeat the 500 response so retry-policy can drain its retries.
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),
+                new MockResponse(500),
+                new MockResponse(500),
+                new MockResponse(500),
+                new MockResponse(500),
                 new MockResponse(500));
 
             SecretClient client = InstrumentClient(new SecretClient(
@@ -736,8 +781,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task RecoverDeletedSecretOperation_ServerError_Fails()
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
+            // Repeat the 500 response so retry-policy can drain its retries.
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),
+                new MockResponse(500),
+                new MockResponse(500),
+                new MockResponse(500),
+                new MockResponse(500),
                 new MockResponse(500));
 
             SecretClient client = InstrumentClient(new SecretClient(
@@ -747,6 +797,65 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             RecoverDeletedSecretOperation op = await client.StartRecoverDeletedSecretAsync("x");
             Assert.ThrowsAsync<RequestFailedException>(() => op.UpdateStatusAsync().AsTask());
+        }
+        // Wire-shape end-to-end: UpdateSecretProperties must hit
+        // PATCH /secrets/{name}/{version}. Guards directly against the
+        // UpdateSecret arg-order emitter bug Patch 1 fixes. If the regex
+        // silently no-ops on a future emitter change, this test fails fast
+        // instead of waiting for a recording to drift.
+        [Test]
+        public async Task UpdateSecretProperties_PathHasNameThenVersion()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""id"":""https://example.vault.azure.net/secrets/x/abc123""}"));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            var props = new SecretProperties("x") { Version = "abc123" };
+            props.Enabled = true;
+            await client.UpdateSecretPropertiesAsync(props);
+
+            string path = transport.SingleRequest.Uri.Path;
+            Assert.AreEqual("/secrets/x/abc123", path,
+                "UpdateSecretProperties must build /secrets/{name}/{version}; the emitter arg-order bug would produce /secrets/abc123/x.");
+            Assert.AreEqual(RequestMethod.Patch, transport.SingleRequest.Method);
+        }
+
+        // RecoverDeletedSecretOperation.Id used to throw NullReferenceException
+        // when the server response omitted the "id" field, because
+        // _value.Id.AbsoluteUri was unconditional. Commit 03821dc made it
+        // null-conditional (?.AbsoluteUri ?? string.Empty). Pin that contract.
+        [Test]
+        public async Task RecoverDeletedSecretOperation_NullId_OperationIdIsEmpty()
+        {
+            // Response body intentionally omits "id".
+            var transport = new MockTransport(new MockResponse(200).WithJson(@"{""value"":""v""}"));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            RecoverDeletedSecretOperation op = await client.StartRecoverDeletedSecretAsync("x");
+            Assert.DoesNotThrow(() => { _ = op.Id; });
+            Assert.AreEqual(string.Empty, op.Id);
+        }
+
+        // Same null-id guard for DeleteSecretOperation. Both LRO classes do
+        // the same null-conditional pattern - pin it in both.
+        [Test]
+        public async Task DeleteSecretOperation_NullId_OperationIdIsEmpty()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(@"{""value"":""v""}"));
+            SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            DeleteSecretOperation op = await client.StartDeleteSecretAsync("x");
+            Assert.DoesNotThrow(() => { _ = op.Id; });
+            Assert.AreEqual(string.Empty, op.Id);
         }
     }
 }
