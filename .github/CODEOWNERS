@@ -513,7 +513,6 @@
 # PRLabel: %Tables
 /sdk/tables/    @jorgerangel-msft
 
-# AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables
 # ServiceOwners: @PaulCheng @sakash279 @sivethe @ThomasWeiss
 
