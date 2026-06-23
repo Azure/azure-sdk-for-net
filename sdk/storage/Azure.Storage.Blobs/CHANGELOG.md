@@ -1,15 +1,10 @@
 # Release History
 
-## 12.30.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 12.29.1 (2026-06-23)
 
 ### Bugs Fixed
 - Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
-
-### Other Changes
+- Fixed an issue where structured-message Uploads with checksum validation could fail with a `ArgumentOutOfRangeException` for empty content
 
 ## 12.29.0 (2026-06-04)
 
