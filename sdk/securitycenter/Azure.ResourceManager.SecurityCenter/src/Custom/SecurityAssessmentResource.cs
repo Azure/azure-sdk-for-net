@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Update a SecurityAssessment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual Task<ArmOperation<SecurityAssessmentResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
 
         /// <summary> Update a SecurityAssessment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual ArmOperation<SecurityAssessmentResource> Update(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SubscriptionSecurityApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => Update(waitUntil, data?.ToSecurityConnectorApplicationData(), cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the UpdateAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SubscriptionSecurityApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => UpdateAsync(waitUntil, data?.ToSecurityConnectorApplicationData(), cancellationToken);
     }
 }

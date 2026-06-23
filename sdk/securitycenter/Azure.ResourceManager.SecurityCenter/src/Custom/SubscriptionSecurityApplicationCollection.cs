@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SubscriptionSecurityApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => CreateOrUpdate(waitUntil, applicationId, data?.ToSecurityConnectorApplicationData(), cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the CreateOrUpdateAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SubscriptionSecurityApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => CreateOrUpdateAsync(waitUntil, applicationId, data?.ToSecurityConnectorApplicationData(), cancellationToken);
     }
 }

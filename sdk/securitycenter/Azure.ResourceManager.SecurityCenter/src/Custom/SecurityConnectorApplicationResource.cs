@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual SecurityApplicationData Data { get; } = new SecurityApplicationData();
+        public virtual SecurityApplicationData Data => _data is null ? null : new SecurityApplicationData(_data);
         /// <summary>
         /// Provides a compatibility shim for the Update operation preserved from the previous public API surface.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => Update(waitUntil, data?.ToSecurityConnectorApplicationData(), cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the UpdateAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => UpdateAsync(waitUntil, data?.ToSecurityConnectorApplicationData(), cancellationToken);
     }
 }

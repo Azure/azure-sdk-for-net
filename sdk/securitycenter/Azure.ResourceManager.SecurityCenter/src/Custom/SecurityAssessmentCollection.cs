@@ -16,13 +16,15 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         /// <summary> Create a security assessment on your resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual Task<ArmOperation<SecurityAssessmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentName, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
 
         /// <summary> Create a security assessment on your resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual ArmOperation<SecurityAssessmentResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentName, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service.");
+            => throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available.");
 
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Task<Response<SecurityAssessmentResource>> GetAsync(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)

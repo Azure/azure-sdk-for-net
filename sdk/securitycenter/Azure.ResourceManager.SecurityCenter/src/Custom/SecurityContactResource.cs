@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        [System.Obsolete("This API is no longer supported by the service. Use SecurityContactResource.CreateResourceIdentifier(ResourceIdentifier scope, SecurityContactName securityContactName) instead.")]
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityContactResource.CreateResourceIdentifier(ResourceIdentifier scope, SecurityContactName securityContactName) instead."); }
     }
 }

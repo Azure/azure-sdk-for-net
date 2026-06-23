@@ -34,6 +34,23 @@ namespace Azure.ResourceManager.SecurityCenter
                 ConditionSets.Add(conditionSet);
             }
         }
+
+        internal SecurityConnectorApplicationData ToSecurityConnectorApplicationData()
+        {
+            SecurityConnectorApplicationData data = new SecurityConnectorApplicationData
+            {
+                Description = Description,
+                DisplayName = DisplayName,
+                SourceResourceType = SourceResourceType
+            };
+            foreach (System.BinaryData conditionSet in ConditionSets)
+            {
+                data.ConditionSets.Add(conditionSet);
+            }
+
+            return data;
+        }
+
         /// <summary>
         /// Gets the ConditionSets value preserved from the previous public API surface.
         /// </summary>
