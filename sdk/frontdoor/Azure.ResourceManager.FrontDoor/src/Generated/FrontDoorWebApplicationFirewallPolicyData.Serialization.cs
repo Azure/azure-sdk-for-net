@@ -8,26 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> Defines web application firewall policy. </summary>
-    public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData, IJsonModel<FrontDoorWebApplicationFirewallPolicyData>
+    public partial class FrontDoorWebApplicationFirewallPolicyData : Resource, IJsonModel<FrontDoorWebApplicationFirewallPolicyData>
     {
-        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/> for deserialization. </summary>
-        internal FrontDoorWebApplicationFirewallPolicyData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -43,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -116,21 +109,6 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,7 +117,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -160,14 +138,13 @@ namespace Azure.ResourceManager.FrontDoor
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
+            string @type = default;
+            string location = default;
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             WebApplicationFirewallPolicyProperties properties = default;
             ETag? eTag = default;
             FrontDoorSku sku = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -186,20 +163,12 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -221,11 +190,6 @@ namespace Azure.ResourceManager.FrontDoor
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -263,14 +227,13 @@ namespace Azure.ResourceManager.FrontDoor
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 properties,
                 eTag,
-                sku,
-                additionalBinaryDataProperties);
+                sku);
         }
     }
 }

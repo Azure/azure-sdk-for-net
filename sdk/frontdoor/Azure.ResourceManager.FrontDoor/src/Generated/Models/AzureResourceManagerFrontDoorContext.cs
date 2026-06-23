@@ -8,7 +8,6 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -20,6 +19,7 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(BackendPoolProperties))]
     [ModelReaderWriterBuildable(typeof(BackendPoolsSettings))]
     [ModelReaderWriterBuildable(typeof(BackendPoolUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(BasicResource))]
     [ModelReaderWriterBuildable(typeof(CustomHttpsConfiguration))]
     [ModelReaderWriterBuildable(typeof(CustomRuleList))]
     [ModelReaderWriterBuildable(typeof(ExperimentList))]
@@ -99,6 +99,8 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(ProfileProperties))]
     [ModelReaderWriterBuildable(typeof(ProfileUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(RedirectConfiguration))]
+    [ModelReaderWriterBuildable(typeof(Resource))]
+    [ModelReaderWriterBuildable(typeof(ResourcewithSettableName))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(RoutingRuleData))]
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.FrontDoor
     [ModelReaderWriterBuildable(typeof(RulesEngineRule))]
     [ModelReaderWriterBuildable(typeof(RulesEngineUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TimeseriesProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownRouteConfiguration))]
     [ModelReaderWriterBuildable(typeof(WebApplicationCustomRule))]

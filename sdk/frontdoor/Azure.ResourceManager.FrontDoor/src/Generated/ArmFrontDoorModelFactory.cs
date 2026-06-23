@@ -20,12 +20,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFrontDoorModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="friendlyName"> A friendly name for the frontDoor. </param>
         /// <param name="routingRules"> Routing rules associated with this Front Door. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings associated with this Front Door instance. </param>
@@ -41,17 +40,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
         /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorData"/> instance for mocking. </returns>
-        public static FrontDoorData FrontDoorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
+        public static FrontDoorData FrontDoorData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
                     friendlyName,
                     (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
@@ -67,26 +66,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     cname,
                     frontdoorId,
                     (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
-                    extendedProperties ?? new ChangeTrackingDictionary<string, string>()),
-                default);
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>()));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorRulesEngineData"/> instance for mocking. </returns>
-        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RulesEngineRule> rules = default, FrontDoorResourceState? resourceState = default)
+        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(ResourceIdentifier id = default, string name = default, string @type = default, IEnumerable<RulesEngineRule> rules = default, FrontDoorResourceState? resourceState = default)
         {
-            return new FrontDoorRulesEngineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                rules is null && resourceState is null ? default : new RulesEngineProperties((rules ?? new ChangeTrackingList<RulesEngineRule>()).ToList(), default, resourceState),
-                default);
+            return new FrontDoorRulesEngineData(id, name, @type, default, rules is null && resourceState is null ? default : new RulesEngineProperties((rules ?? new ChangeTrackingList<RulesEngineRule>()).ToList(), default, resourceState));
         }
 
         /// <param name="name"> A name to refer to this specific rule. </param>
@@ -202,6 +193,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 (rulesEngineMatchValue ?? new ChangeTrackingList<string>()).ToList(),
                 (transforms ?? new ChangeTrackingList<RulesEngineMatchTransform>()).ToList(),
                 default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <returns> A new <see cref="Models.BasicResource"/> instance for mocking. </returns>
+        public static BasicResource BasicResource(ResourceIdentifier id = default, string name = default, string @type = default)
+        {
+            return new BasicResource(id, name, @type, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -371,6 +371,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new BackendPoolsSettings(enforceCertificateNameCheck, sendRecvTimeoutInSeconds, default);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new Resource(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <returns> A new <see cref="Models.FrontDoorValidateCustomDomainContent"/> instance for mocking. </returns>
         public static FrontDoorValidateCustomDomainContent FrontDoorValidateCustomDomainContent(string hostName = default)
@@ -387,12 +406,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> The description of the details or intents of the Experiment. </param>
         /// <param name="experimentEndpointA"> The endpoint A of an experiment. </param>
         /// <param name="experimentEndpointB"> The endpoint B of an experiment. </param>
@@ -401,17 +419,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="status"> The description of Experiment status from the server side. </param>
         /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorExperimentData"/> instance for mocking. </returns>
-        public static FrontDoorExperimentData FrontDoorExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, FrontDoorExperimentEndpointProperties experimentEndpointA = default, FrontDoorExperimentEndpointProperties experimentEndpointB = default, FrontDoorExperimentState? enabledState = default, NetworkExperimentResourceState? resourceState = default, string status = default, Uri scriptFileUri = default)
+        public static FrontDoorExperimentData FrontDoorExperimentData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string description = default, FrontDoorExperimentEndpointProperties experimentEndpointA = default, FrontDoorExperimentEndpointProperties experimentEndpointB = default, FrontDoorExperimentState? enabledState = default, NetworkExperimentResourceState? resourceState = default, string status = default, Uri scriptFileUri = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorExperimentData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 description is null && experimentEndpointA is null && experimentEndpointB is null && enabledState is null && resourceState is null && status is null && scriptFileUri is null ? default : new ExperimentProperties(
                     description,
                     experimentEndpointA,
@@ -420,8 +438,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     resourceState,
                     status,
                     scriptFileUri,
-                    default),
-                default);
+                    default));
         }
 
         /// <param name="name"> The name of the endpoint. </param>
@@ -443,12 +460,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorExperimentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description is null && enabledState is null ? default : new ExperimentUpdateProperties(description, enabledState, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="policySettings"> Describes settings for the policy. </param>
         /// <param name="frontendEndpointLinks"> Describes Frontend Endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="routingRuleLinks"> Describes Routing Rules associated with this Web Application Firewall policy. </param>
@@ -461,17 +477,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> Name of the pricing tier. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? eTag = default, FrontDoorSkuName? skuName = default)
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? eTag = default, FrontDoorSkuName? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 policySettings is null && rules is null && managedRuleSets is null && exceptions is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
                     new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
@@ -483,8 +499,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     resourceState,
                     default),
                 eTag,
-                skuName is null ? default : new FrontDoorSku(skuName, default),
-                default);
+                skuName is null ? default : new FrontDoorSku(skuName, default));
         }
 
         /// <param name="enabledState"> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </param>
@@ -719,29 +734,46 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorEndpointPurgeContent((contentPaths ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="resourceState"> Resource status. </param>
         /// <param name="enabledState"> The state of the Experiment. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
-        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, ETag? eTag = default)
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorNetworkExperimentProfileData(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default),
-                eTag,
+                eTag);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ResourcewithSettableName"/> instance for mocking. </returns>
+        public static ResourcewithSettableName ResourcewithSettableName(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourcewithSettableName(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -755,38 +787,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorNetworkExperimentProfilePatch(enabledState is null ? default : new ProfileUpdateProperties(enabledState, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> The description of the endpoint. </param>
         /// <param name="endpoint"> The endpoint that is preconfigured. </param>
         /// <param name="endpointType"> The type of endpoint. </param>
         /// <param name="backend"> The preconfigured endpoint backend. </param>
         /// <returns> A new <see cref="Models.PreconfiguredEndpoint"/> instance for mocking. </returns>
-        public static PreconfiguredEndpoint PreconfiguredEndpoint(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string endpoint = default, FrontDoorEndpointType? endpointType = default, string backend = default)
+        public static PreconfiguredEndpoint PreconfiguredEndpoint(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string description = default, string endpoint = default, FrontDoorEndpointType? endpointType = default, string backend = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new PreconfiguredEndpoint(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
-                description is null && endpoint is null && endpointType is null && backend is null ? default : new PreconfiguredEndpointProperties(description, endpoint, endpointType, backend, default),
-                default);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                description is null && endpoint is null && endpointType is null && backend is null ? default : new PreconfiguredEndpointProperties(description, endpoint, endpointType, backend, default));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="latencyScorecardId"> The unique identifier of the Latency Scorecard. </param>
         /// <param name="latencyScorecardName"> The name of the Latency Scorecard. </param>
         /// <param name="description"> The description of the Latency Scorecard. </param>
@@ -797,17 +826,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
         /// <returns> A new <see cref="Models.LatencyScorecard"/> instance for mocking. </returns>
-        public static LatencyScorecard LatencyScorecard(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
+        public static LatencyScorecard LatencyScorecard(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new LatencyScorecard(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startOn is null && endOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
                     latencyScorecardId,
                     latencyScorecardName,
@@ -818,8 +847,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     endOn,
                     country,
                     (latencyMetrics ?? new ChangeTrackingList<LatencyMetric>()).ToList(),
-                    default),
-                default);
+                    default));
         }
 
         /// <param name="name"> The name of the Latency Metric. </param>
@@ -849,12 +877,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
         /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
         /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
@@ -863,17 +890,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
         /// <returns> A new <see cref="Models.FrontDoorTimeSeriesInfo"/> instance for mocking. </returns>
-        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri endpoint = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
+        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, Uri endpoint = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FrontDoorTimeSeriesInfo(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 endpoint is null && startOn is null && endOn is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
                     endpoint,
                     startOn,
@@ -882,8 +909,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     timeSeriesType,
                     country,
                     (timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>()).ToList(),
-                    default),
-                default);
+                    default));
         }
 
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
@@ -894,37 +920,35 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorTimeSeriesDataPoint(dateTimeUtc, value, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
         /// <param name="ruleSetId"> Id of the managed rule set. </param>
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
         /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ManagedRuleSetDefinition(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                @type,
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 provisioningState is null && ruleSetId is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null ? default : new ManagedRuleSetDefinitionProperties(
                     provisioningState,
                     ruleSetId,
                     ruleSetType,
                     ruleSetVersion,
                     (ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>()).ToList(),
-                    default),
-                default);
+                    default));
         }
 
         /// <param name="ruleGroupName"> Name of the managed rule group. </param>
@@ -972,6 +996,298 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="friendlyName"> A friendly name for the frontDoor. </param>
+        /// <param name="routingRules"> Routing rules associated with this Front Door. </param>
+        /// <param name="loadBalancingSettings"> Load balancing settings associated with this Front Door instance. </param>
+        /// <param name="healthProbeSettings"> Health probe settings associated with this Front Door instance. </param>
+        /// <param name="backendPools"> Backend pools available to routing rules. </param>
+        /// <param name="frontendEndpoints"> Frontend endpoints available to routing rules. </param>
+        /// <param name="backendPoolsSettings"> Settings for all backendPools. </param>
+        /// <param name="enabledState"> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="resourceState"> Resource status of the Front Door. </param>
+        /// <param name="provisioningState"> Provisioning state of the Front Door. </param>
+        /// <param name="cname"> The host that each frontendEndpoint must CNAME to. </param>
+        /// <param name="frontdoorId"> The Id of the frontdoor. </param>
+        /// <param name="rulesEngines"> Rules Engine Configurations available to routing rules. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for frontdoor. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorData FrontDoorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string friendlyName = default, IEnumerable<RoutingRuleData> routingRules = default, IEnumerable<FrontDoorLoadBalancingSettingsData> loadBalancingSettings = default, IEnumerable<FrontDoorHealthProbeSettingsData> healthProbeSettings = default, IEnumerable<FrontDoorBackendPool> backendPools = default, IEnumerable<FrontendEndpointData> frontendEndpoints = default, BackendPoolsSettings backendPoolsSettings = default, FrontDoorEnabledState? enabledState = default, FrontDoorResourceState? resourceState = default, string provisioningState = default, string cname = default, string frontdoorId = default, IEnumerable<FrontDoorRulesEngineData> rulesEngines = default, IReadOnlyDictionary<string, string> extendedProperties = default)
+        {
+            return new FrontDoorData(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                friendlyName is null && routingRules is null && loadBalancingSettings is null && healthProbeSettings is null && backendPools is null && frontendEndpoints is null && backendPoolsSettings is null && enabledState is null && resourceState is null && provisioningState is null && cname is null && frontdoorId is null && rulesEngines is null && extendedProperties is null ? default : new FrontDoorProperties(
+                    friendlyName,
+                    (routingRules ?? new ChangeTrackingList<RoutingRuleData>()).ToList(),
+                    (loadBalancingSettings ?? new ChangeTrackingList<FrontDoorLoadBalancingSettingsData>()).ToList(),
+                    (healthProbeSettings ?? new ChangeTrackingList<FrontDoorHealthProbeSettingsData>()).ToList(),
+                    (backendPools ?? new ChangeTrackingList<FrontDoorBackendPool>()).ToList(),
+                    (frontendEndpoints ?? new ChangeTrackingList<FrontendEndpointData>()).ToList(),
+                    backendPoolsSettings,
+                    enabledState,
+                    default,
+                    resourceState,
+                    provisioningState,
+                    cname,
+                    frontdoorId,
+                    (rulesEngines ?? new ChangeTrackingList<FrontDoorRulesEngineData>()).ToList(),
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>()));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="rules"> A list of rules that define a particular Rules Engine Configuration. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorRulesEngineData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorRulesEngineData FrontDoorRulesEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<RulesEngineRule> rules = default, FrontDoorResourceState? resourceState = default)
+        {
+            return new FrontDoorRulesEngineData(id, name, default, default, rules is null && resourceState is null ? default : new RulesEngineProperties((rules ?? new ChangeTrackingList<RulesEngineRule>()).ToList(), default, resourceState));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> The description of the details or intents of the Experiment. </param>
+        /// <param name="experimentEndpointA"> The endpoint A of an experiment. </param>
+        /// <param name="experimentEndpointB"> The endpoint B of an experiment. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="status"> The description of Experiment status from the server side. </param>
+        /// <param name="scriptFileUri"> The uri to the Script used in the Experiment. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorExperimentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorExperimentData FrontDoorExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, FrontDoorExperimentEndpointProperties experimentEndpointA = default, FrontDoorExperimentEndpointProperties experimentEndpointB = default, FrontDoorExperimentState? enabledState = default, NetworkExperimentResourceState? resourceState = default, string status = default, Uri scriptFileUri = default)
+        {
+            return new FrontDoorExperimentData(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                description is null && experimentEndpointA is null && experimentEndpointB is null && enabledState is null && resourceState is null && status is null && scriptFileUri is null ? default : new ExperimentProperties(
+                    description,
+                    experimentEndpointA,
+                    experimentEndpointB,
+                    enabledState,
+                    resourceState,
+                    status,
+                    scriptFileUri,
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="policySettings"> Describes settings for the policy. </param>
+        /// <param name="frontendEndpointLinks"> Describes Frontend Endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="routingRuleLinks"> Describes Routing Rules associated with this Web Application Firewall policy. </param>
+        /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the policy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <param name="rules"> List of rules. </param>
+        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="exceptions"> List of exceptions. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorWebApplicationFirewallPolicyData FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FrontDoorWebApplicationFirewallPolicySettings policySettings = default, IEnumerable<SubResource> frontendEndpointLinks = default, IEnumerable<SubResource> routingRuleLinks = default, IEnumerable<SubResource> securityPolicyLinks = default, string provisioningState = default, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default, IEnumerable<WebApplicationCustomRule> rules = default, IEnumerable<ManagedRuleSet> managedRuleSets = default, IEnumerable<FrontDoorManagedRuleSetException> exceptions = default, ETag? eTag = default, FrontDoorSkuName? skuName = default)
+        {
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                policySettings is null && rules is null && managedRuleSets is null && exceptions is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), default), default),
+                    (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    provisioningState,
+                    resourceState,
+                    default),
+                eTag,
+                skuName is null ? default : new FrontDoorSku(skuName, default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkExperimentResourceState? resourceState = default, FrontDoorExperimentState? enabledState = default, ETag? eTag = default)
+        {
+            return new FrontDoorNetworkExperimentProfileData(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default),
+                eTag);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> The description of the endpoint. </param>
+        /// <param name="endpoint"> The endpoint that is preconfigured. </param>
+        /// <param name="endpointType"> The type of endpoint. </param>
+        /// <param name="backend"> The preconfigured endpoint backend. </param>
+        /// <returns> A new <see cref="Models.PreconfiguredEndpoint"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PreconfiguredEndpoint PreconfiguredEndpoint(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string endpoint = default, FrontDoorEndpointType? endpointType = default, string backend = default)
+        {
+            return new PreconfiguredEndpoint(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                description is null && endpoint is null && endpointType is null && backend is null ? default : new PreconfiguredEndpointProperties(description, endpoint, endpointType, backend, default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="latencyScorecardId"> The unique identifier of the Latency Scorecard. </param>
+        /// <param name="latencyScorecardName"> The name of the Latency Scorecard. </param>
+        /// <param name="description"> The description of the Latency Scorecard. </param>
+        /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
+        /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
+        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
+        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
+        /// <returns> A new <see cref="Models.LatencyScorecard"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LatencyScorecard LatencyScorecard(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
+        {
+            return new LatencyScorecard(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startOn is null && endOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
+                    latencyScorecardId,
+                    latencyScorecardName,
+                    description,
+                    scorecardEndpointA,
+                    scorecardEndpointB,
+                    startOn,
+                    endOn,
+                    country,
+                    (latencyMetrics ?? new ChangeTrackingList<LatencyMetric>()).ToList(),
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
+        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
+        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
+        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
+        /// <param name="timeSeriesType"> The type of Timeseries. </param>
+        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
+        /// <returns> A new <see cref="Models.FrontDoorTimeSeriesInfo"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri endpoint = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
+        {
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                endpoint is null && startOn is null && endOn is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
+                    endpoint,
+                    startOn,
+                    endOn,
+                    aggregationInterval,
+                    timeSeriesType,
+                    country,
+                    (timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>()).ToList(),
+                    default));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the managed rule set. </param>
+        /// <param name="ruleSetId"> Id of the managed rule set. </param>
+        /// <param name="ruleSetType"> Type of the managed rule set. </param>
+        /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
+        /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
+        {
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                default,
+                default,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                provisioningState is null && ruleSetId is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null ? default : new ManagedRuleSetDefinitionProperties(
+                    provisioningState,
+                    ruleSetId,
+                    ruleSetType,
+                    ruleSetVersion,
+                    (ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>()).ToList(),
+                    default));
+        }
+
         /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -996,10 +1312,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
                 name,
-                resourceType,
-                systemData,
+                default,
+                default,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                default,
                 policySettings is null && rules is null && managedRuleSets is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
                     new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
@@ -1011,8 +1327,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     resourceState,
                     default),
                 etag,
-                skuName is null ? default : new FrontDoorSku(skuName, default),
-                default);
+                skuName is null ? default : new FrontDoorSku(skuName, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
@@ -1050,13 +1365,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorNetworkExperimentProfileData(
                 id,
                 name,
-                resourceType,
-                systemData,
+                default,
+                default,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                default,
                 resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default),
-                etag,
-                default);
+                etag);
         }
     }
 }

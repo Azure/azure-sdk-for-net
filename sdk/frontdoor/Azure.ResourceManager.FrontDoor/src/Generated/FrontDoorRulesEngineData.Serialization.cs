@@ -8,21 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary> A rules engine configuration containing a list of rules that will run to modify the runtime behavior of the request and response. </summary>
-    public partial class FrontDoorRulesEngineData : ResourceData, IJsonModel<FrontDoorRulesEngineData>
+    public partial class FrontDoorRulesEngineData : BasicResource, IJsonModel<FrontDoorRulesEngineData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BasicResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -101,21 +99,6 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,7 +107,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BasicResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<FrontDoorRulesEngineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -145,10 +128,9 @@ namespace Azure.ResourceManager.FrontDoor
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
-            RulesEngineProperties properties = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            RulesEngineProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -167,20 +149,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerFrontDoorContext.Default);
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -197,13 +166,7 @@ namespace Azure.ResourceManager.FrontDoor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorRulesEngineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                additionalBinaryDataProperties);
+            return new FrontDoorRulesEngineData(id, name, @type, additionalBinaryDataProperties, properties);
         }
     }
 }
