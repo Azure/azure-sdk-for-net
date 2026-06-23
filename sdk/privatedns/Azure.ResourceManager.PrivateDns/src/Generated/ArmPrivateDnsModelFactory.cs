@@ -14,6 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -126,6 +127,41 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     numberOfVirtualNetworkLinksWithRegistration,
                     privateDnsProvisioningState,
                     internalId,
+                    default),
+                eTag,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="virtualNetworkId"> The reference of the virtual network. </param>
+        /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
+        /// <param name="privateDnsResolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
+        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="eTag"> The ETag of the virtual network link. </param>
+        /// <returns> A new <see cref="PrivateDns.VirtualNetworkLinkData"/> instance for mocking. </returns>
+        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WritableSubResource virtualNetworkId = default, bool? registrationEnabled = default, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = default, VirtualNetworkLinkState? virtualNetworkLinkState = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                virtualNetworkId is null && registrationEnabled is null && privateDnsResolutionPolicy is null && virtualNetworkLinkState is null && privateDnsProvisioningState is null ? default : new VirtualNetworkLinkProperties(
+                    virtualNetworkId,
+                    registrationEnabled,
+                    privateDnsResolutionPolicy,
+                    virtualNetworkLinkState,
+                    privateDnsProvisioningState,
                     default),
                 eTag,
                 default);

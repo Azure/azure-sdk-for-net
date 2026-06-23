@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.PrivateDns;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkLinkProperties(SubResource virtualNetworkId, bool? registrationEnabled, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkLinkProperties(WritableSubResource virtualNetworkId, bool? registrationEnabled, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkId = virtualNetworkId;
             RegistrationEnabled = registrationEnabled;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         /// <summary> The reference of the virtual network. </summary>
         [WirePath("virtualNetwork")]
-        internal SubResource VirtualNetworkId { get; set; }
+        public WritableSubResource VirtualNetworkId { get; set; }
 
         /// <summary> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </summary>
         [WirePath("registrationEnabled")]
@@ -58,23 +59,5 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <summary> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </summary>
         [WirePath("provisioningState")]
         public PrivateDnsProvisioningState? PrivateDnsProvisioningState { get; }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("virtualNetwork.id")]
-        public string VirtualNetworkIdId
-        {
-            get
-            {
-                return VirtualNetworkId is null ? default : VirtualNetworkId.Id;
-            }
-            set
-            {
-                if (VirtualNetworkId is null)
-                {
-                    VirtualNetworkId = new SubResource();
-                }
-                VirtualNetworkId.Id = value;
-            }
-        }
     }
 }

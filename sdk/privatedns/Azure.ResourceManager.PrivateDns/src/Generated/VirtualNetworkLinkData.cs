@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -50,6 +51,24 @@ namespace Azure.ResourceManager.PrivateDns
         /// <summary> The ETag of the virtual network link. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
+        /// <summary> The reference of the virtual network. </summary>
+        [WirePath("properties.virtualNetwork")]
+        public WritableSubResource VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkLinkProperties();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
 
         /// <summary> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </summary>
         [WirePath("properties.registrationEnabled")]

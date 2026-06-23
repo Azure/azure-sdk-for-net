@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.PrivateDns;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                writer.WriteObjectValue(VirtualNetworkId, options);
+                ((IJsonModel<WritableSubResource>)VirtualNetworkId).Write(writer, options);
             }
             if (Optional.IsDefined(RegistrationEnabled))
             {
@@ -141,7 +143,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            SubResource virtualNetworkId = default;
+            WritableSubResource virtualNetworkId = default;
             bool? registrationEnabled = default;
             PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = default;
             VirtualNetworkLinkState? virtualNetworkLinkState = default;
@@ -155,7 +157,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     {
                         continue;
                     }
-                    virtualNetworkId = SubResource.DeserializeSubResource(prop.Value, options);
+                    virtualNetworkId = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPrivateDnsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("registrationEnabled"u8))
