@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Providers
         private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
-        private protected readonly OperationContext _operationContext;
+        private readonly OperationContext _operationContext;
 
         /// <summary>
         /// Creates a new instance of the <see cref="MockableResourceProvider"/> class.
@@ -204,8 +204,8 @@ namespace Azure.Generator.Management.Providers
             {
                 foreach (var resourceMethod in resourceMethods)
                 {
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true));
-                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true, _operationContext));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false, _operationContext));
                 }
             }
 
@@ -300,7 +300,7 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext? operationContext = null, ParameterProvider? scopeParameter = null)
+        private protected MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync, OperationContext operationContext, ParameterProvider? scopeParameter = null)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
@@ -326,7 +326,7 @@ namespace Azure.Generator.Management.Providers
                 methodName = isAsync ? $"{baseName}Async" : baseName;
             }
 
-            return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext ?? _operationContext, isAsync, methodName, resource, scopeParameter);
+            return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }
 
         protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null, ResourceClientProvider? explicitResourceClient = null)
