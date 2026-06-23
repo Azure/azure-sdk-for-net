@@ -9,23 +9,26 @@
   specification/keyvault/data-plane/Certificates/client.tsp (Azure/azure-rest-api-specs).
 
   This script applies the residual emitter-bug workarounds that cannot yet
-  be expressed in the spec. Each is narrowly scoped and idempotent. They
-  exist because the recorded HTTP cassettes the playback suite depends on
-  were captured against the legacy hand-written KeyVaultPipeline, and the
-  generated request shapes diverge in six specific places:
+  be expressed in the spec. Each is narrowly scoped, idempotent, and tracked
+  against the upstream emitter:
 
-    1. UpdateCertificate (4-arg) call-site argument order.
-    2. Trailing-slash bug for /certificates/{name}/{version} when version is null.
-    3. /certificates/contacts URL missing trailing slash.
-    4. /certificates/issuers (LIST) URL missing trailing slash.
-    5. PurgeDeletedCertificate missing the Accept header.
-    6. Generated nullable `op_Implicit(string) -> CertificatePolicyAction?`
-       silently swallows nulls instead of throwing ArgumentNullException as the
-       handwritten partial's non-nullable operator did. Removing the generated
-       overload restores the legacy throw contract.
+    Patch 1: UpdateCertificate (4-arg) call-site arg order.
+             Tracking: Azure/azure-sdk-for-net#60160.
 
-  Each patch will be deleted as soon as the upstream
-  @azure-typespec/http-client-csharp emitter is fixed.
+    Patches 2-5: wire-shape bugs (trailing slash on
+                 /certificates/{name}/{version} when version is null;
+                 /certificates/contacts and /certificates/issuers LIST URLs
+                 missing trailing slash; PurgeDeletedCertificate missing
+                 Accept header).
+                 Tracking: Azure/azure-sdk-for-net#60162.
+
+    Patch 6: remove the nullable op_Implicit(string) -> CertificatePolicyAction?
+             that silently swallows null instead of throwing.
+             Tracking: Azure/azure-sdk-for-net#60163.
+
+  Once the upstream emitter fixes ship and we bump the library-local emitter
+  pin, the corresponding patches (and eventually this whole script) can be
+  deleted.
 #>
 [CmdletBinding()]
 param(
