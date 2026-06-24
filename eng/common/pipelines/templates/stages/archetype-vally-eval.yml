@@ -1,0 +1,155 @@
+# Reusable orchestrator for the Vally eval CI. Two stages (D8):
+#   Eval    - BuildMock + Detect run in parallel, then RunShard fans out one job per
+#             shard from the Detect matrix. An optional custom-MCP build job hook (D6)
+#             lets a consuming repo build a live MCP alongside the mock.
+#   Summary - depends on Eval; merges every shard's JUnit into one rollup.
+#
+# The consuming repo supplies a thin entrypoint (trigger + params + extends this).
+# No variable group is named here — secrets come from the DevOps-linked group by
+# variable name (D5).
+
+parameters:
+  - name: vallyRoot
+    type: string
+    default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: scriptDir
+    type: string
+    default: eng/common/scripts/eval
+  - name: skillEvalDir
+    type: string
+    default: eng/skill-eval
+  - name: evalRoot
+    # Repo-specific eval root. Defaults to the Vally project's evals.
+    type: string
+    default: $(Build.SourcesDirectory)/tools/azsdk-cli/Azure.Sdk.Tools.Vally
+  - name: commonEvalRoot
+    # Optional shared eval root (synced via eng/common). Empty = skip.
+    type: string
+    default: ''
+  - name: shardBy
+    type: string
+    default: file
+    values:
+      - file
+      - area
+  - name: mockArtifact
+    type: string
+    default: mcp-mock
+  - name: mockProject
+    type: string
+    default: tools/azsdk-cli/Azure.Sdk.Tools.Mock
+  - name: mockOutputPath
+    type: string
+    default: artifacts/mcp/mock
+  - name: threshold
+    type: string
+    default: '0.8'
+  - name: nodeVersion
+    type: string
+    default: 22.x
+  - name: githubTokenVariable
+    type: string
+    default: azuresdk-copilot-github-pat
+  - name: maxParallel
+    type: number
+    default: 10
+  - name: shardTimeoutInMinutes
+    # LLM-driven shards can hang; cap well under the default agent slot.
+    type: number
+    default: 20
+  - name: testRunTitle
+    type: string
+    default: 'Vally tool-scenario evals (mock vertical)'
+  - name: failOnFailedTests
+    type: boolean
+    default: false
+  # Custom MCP build hook (D6): a jobList a consuming repo can pass to build a live
+  # MCP server in the Eval stage. Empty by default — the mock vertical needs nothing.
+  - name: customMcpBuildJobs
+    type: jobList
+    default: []
+
+stages:
+  - stage: Eval
+    displayName: 'Build mock + run eval shards'
+    jobs:
+      - job: BuildMock
+        displayName: 'Build + publish mock DLL'
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
+        steps:
+          - template: /eng/common/pipelines/templates/steps/vally-build-mock.yml
+            parameters:
+              mockProject: ${{ parameters.mockProject }}
+              outputPath: ${{ parameters.mockOutputPath }}
+              artifactName: ${{ parameters.mockArtifact }}
+
+      - job: Detect
+        displayName: 'Glob eval files -> matrix'
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
+        steps:
+          - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
+            parameters:
+              evalRoot: ${{ parameters.evalRoot }}
+              commonEvalRoot: ${{ parameters.commonEvalRoot }}
+              shardBy: ${{ parameters.shardBy }}
+              scriptDir: ${{ parameters.scriptDir }}
+              outputVariableName: matrix
+              stepName: detect
+              nodeVersion: ${{ parameters.nodeVersion }}
+
+      # Optional consumer-supplied jobs (e.g. build a live MCP). No-op when empty.
+      - ${{ each job in parameters.customMcpBuildJobs }}:
+        - ${{ job }}
+
+      - job: RunShard
+        displayName: 'Eval'
+        dependsOn:
+          - BuildMock
+          - Detect
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
+        # continueOnError lets a single red shard finish without aborting the others —
+        # the pass/fail rollup happens in Summary.
+        continueOnError: true
+        timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+        strategy:
+          matrix: $[ dependencies.Detect.outputs['detect.matrix'] ]
+          maxParallel: ${{ parameters.maxParallel }}
+        steps:
+          - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              scriptDir: ${{ parameters.scriptDir }}
+              skillEvalDir: ${{ parameters.skillEvalDir }}
+              mockArtifact: ${{ parameters.mockArtifact }}
+              mockStagePath: ${{ parameters.mockOutputPath }}
+              threshold: ${{ parameters.threshold }}
+              nodeVersion: ${{ parameters.nodeVersion }}
+              githubTokenVariable: ${{ parameters.githubTokenVariable }}
+
+  - stage: Summary
+    displayName: 'Summarize results'
+    dependsOn: Eval
+    condition: always()
+    jobs:
+      - job: Summarize
+        displayName: 'Publish + gate rollup'
+        pool:
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
+          os: linux
+        steps:
+          - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
+            parameters:
+              scriptDir: ${{ parameters.scriptDir }}
+              nodeVersion: ${{ parameters.nodeVersion }}
+              testRunTitle: ${{ parameters.testRunTitle }}
+              failOnFailedTests: ${{ parameters.failOnFailedTests }}
