@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class AutomaticTuningServerModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AutomaticTuningServerMode value) => value switch
         {
-            AutomaticTuningServerMode.Unspecified => "Unspecified",
             AutomaticTuningServerMode.Custom => "Custom",
             AutomaticTuningServerMode.Auto => "Auto",
+            AutomaticTuningServerMode.Unspecified => "Unspecified",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AutomaticTuningServerMode ToAutomaticTuningServerMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return AutomaticTuningServerMode.Unspecified;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return AutomaticTuningServerMode.Custom;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Auto")) return AutomaticTuningServerMode.Auto;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom"))
+            {
+                return AutomaticTuningServerMode.Custom;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Auto"))
+            {
+                return AutomaticTuningServerMode.Auto;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified"))
+            {
+                return AutomaticTuningServerMode.Unspecified;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningServerMode value.");
         }
     }

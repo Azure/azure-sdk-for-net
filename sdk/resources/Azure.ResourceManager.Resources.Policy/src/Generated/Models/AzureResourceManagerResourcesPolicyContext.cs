@@ -81,13 +81,13 @@ namespace Azure.ResourceManager.Resources.Policy
     [ModelReaderWriterBuildable(typeof(PolicyVariableValueColumnValue))]
     [ModelReaderWriterBuildable(typeof(PolicyVariableValueProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(VariableData))]
     [ModelReaderWriterBuildable(typeof(VariableListResult))]
     [ModelReaderWriterBuildable(typeof(VariableResource))]
     [ModelReaderWriterBuildable(typeof(VariableValueData))]
     [ModelReaderWriterBuildable(typeof(VariableValueListResult))]
     [ModelReaderWriterBuildable(typeof(VariableValueResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourcesPolicyContext : ModelReaderWriterContext
     {
     }

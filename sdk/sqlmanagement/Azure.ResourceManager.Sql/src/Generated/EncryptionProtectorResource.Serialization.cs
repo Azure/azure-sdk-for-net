@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class EncryptionProtectorResource : IJsonModel<EncryptionProtectorData>
     {
-        private static EncryptionProtectorData s_dataDeserializationInstance;
-        private static EncryptionProtectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EncryptionProtectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EncryptionProtectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EncryptionProtectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)Data).Write(writer, options);
 
-        EncryptionProtectorData IJsonModel<EncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EncryptionProtectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EncryptionProtectorData IJsonModel<EncryptionProtectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EncryptionProtectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EncryptionProtectorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EncryptionProtectorData IPersistableModel<EncryptionProtectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EncryptionProtectorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<EncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EncryptionProtectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EncryptionProtectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

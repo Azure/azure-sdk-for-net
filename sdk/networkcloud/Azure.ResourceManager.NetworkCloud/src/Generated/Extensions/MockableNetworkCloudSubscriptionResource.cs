@@ -63,59 +63,59 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
 
         private ClientDiagnostics AccessBridgesClientDiagnostics => _accessBridgesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private AccessBridges AccessBridgesRestClient => _accessBridgesRestClient ??= new AccessBridges(AccessBridgesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics BareMetalMachinesClientDiagnostics => _bareMetalMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(BareMetalMachinesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private BareMetalMachines BareMetalMachinesRestClient => _bareMetalMachinesRestClient ??= new BareMetalMachines(BareMetalMachinesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics CloudServicesNetworksClientDiagnostics => _cloudServicesNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(CloudServicesNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private CloudServicesNetworks CloudServicesNetworksRestClient => _cloudServicesNetworksRestClient ??= new CloudServicesNetworks(CloudServicesNetworksClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics ClusterManagersClientDiagnostics => _clusterManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(ClusterManagersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private ClusterManagers ClusterManagersRestClient => _clusterManagersRestClient ??= new ClusterManagers(ClusterManagersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics KubernetesClustersClientDiagnostics => _kubernetesClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(KubernetesClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private KubernetesClusters KubernetesClustersRestClient => _kubernetesClustersRestClient ??= new KubernetesClusters(KubernetesClustersClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics KubernetesVersionsClientDiagnostics => _kubernetesVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private KubernetesVersions KubernetesVersionsRestClient => _kubernetesVersionsRestClient ??= new KubernetesVersions(KubernetesVersionsClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics L2NetworksClientDiagnostics => _l2NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(L2NetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private L2Networks L2NetworksRestClient => _l2NetworksRestClient ??= new L2Networks(L2NetworksClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics L3NetworksClientDiagnostics => _l3NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(L3NetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private L3Networks L3NetworksRestClient => _l3NetworksRestClient ??= new L3Networks(L3NetworksClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics RacksClientDiagnostics => _racksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Racks RacksRestClient => _racksRestClient ??= new Racks(RacksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Racks RacksRestClient => _racksRestClient ??= new Racks(RacksClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics StorageAppliancesClientDiagnostics => _storageAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(StorageAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private StorageAppliances StorageAppliancesRestClient => _storageAppliancesRestClient ??= new StorageAppliances(StorageAppliancesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics TrunkedNetworksClientDiagnostics => _trunkedNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(TrunkedNetworksClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private TrunkedNetworks TrunkedNetworksRestClient => _trunkedNetworksRestClient ??= new TrunkedNetworks(TrunkedNetworksClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics VirtualMachinesClientDiagnostics => _virtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private VirtualMachines VirtualMachinesRestClient => _virtualMachinesRestClient ??= new VirtualMachines(VirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics VolumesClientDiagnostics => _volumesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private Volumes VolumesRestClient => _volumesRestClient ??= new Volumes(VolumesClientDiagnostics, Pipeline, Endpoint, "2026-05-01-preview");
 
         /// <summary> Gets a collection of NetworkCloudRackSkus in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of NetworkCloudRackSkus and their operations over a NetworkCloudRackSkuResource. </returns>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
