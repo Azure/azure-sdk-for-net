@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ActivityType = "SetVariable";
         }
 
         /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
@@ -32,32 +32,70 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Set Variable activity properties. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="variableName"> Name of the variable whose value needs to be set. </param>
-        /// <param name="value"> Value to be set. Could be a static value or Expression. </param>
-        /// <param name="setSystemVariable"> If set to true, it sets the pipeline run return value. </param>
-        internal SetVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, string variableName, DataFactoryElement<BinaryData> value, bool? setSystemVariable) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal SetVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SetVariableActivityTypeProperties typeProperties, SecureInputOutputPolicy policy) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
+            TypeProperties = typeProperties;
             Policy = policy;
-            VariableName = variableName;
-            Value = value;
-            SetSystemVariable = setSystemVariable;
-            ActivityType = activityType ?? "SetVariable";
         }
 
-        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/> for deserialization. </summary>
-        internal SetVariableActivity()
-        {
-        }
+        /// <summary> Set Variable activity properties. </summary>
+        internal SetVariableActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Activity policy. </summary>
         public SecureInputOutputPolicy Policy { get; set; }
+
         /// <summary> Name of the variable whose value needs to be set. </summary>
-        public string VariableName { get; set; }
+        public string VariableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.VariableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SetVariableActivityTypeProperties();
+                }
+                TypeProperties.VariableName = value;
+            }
+        }
+
         /// <summary> Value to be set. Could be a static value or Expression. </summary>
-        public DataFactoryElement<BinaryData> Value { get; set; }
+        public DataFactoryElement<BinaryData> Value
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Value;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SetVariableActivityTypeProperties();
+                }
+                TypeProperties.Value = value;
+            }
+        }
+
         /// <summary> If set to true, it sets the pipeline run return value. </summary>
-        public bool? SetSystemVariable { get; set; }
+        public bool? SetSystemVariable
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SetSystemVariable;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SetVariableActivityTypeProperties();
+                }
+                TypeProperties.SetSystemVariable = value;
+            }
+        }
     }
 }

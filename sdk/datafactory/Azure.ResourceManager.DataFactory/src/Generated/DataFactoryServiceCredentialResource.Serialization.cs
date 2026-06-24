@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    /// <summary></summary>
     public partial class DataFactoryServiceCredentialResource : IJsonModel<DataFactoryServiceCredentialData>
     {
-        private static DataFactoryServiceCredentialData s_dataDeserializationInstance;
-        private static DataFactoryServiceCredentialData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataFactoryServiceCredentialData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataFactoryServiceCredentialData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataFactoryServiceCredentialData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryServiceCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)Data).Write(writer, options);
 
-        DataFactoryServiceCredentialData IJsonModel<DataFactoryServiceCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryServiceCredentialData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryServiceCredentialData IJsonModel<DataFactoryServiceCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataFactoryServiceCredentialData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryServiceCredentialData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataFactoryServiceCredentialData IPersistableModel<DataFactoryServiceCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryServiceCredentialData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryServiceCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryServiceCredentialData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryServiceCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

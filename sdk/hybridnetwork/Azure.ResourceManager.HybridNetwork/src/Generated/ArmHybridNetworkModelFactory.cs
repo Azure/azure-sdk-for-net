@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public static partial class ArmHybridNetworkModelFactory
     {
 
-        /// <summary> Configuration group schema resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,13 +36,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Configuration group schema properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>
@@ -51,20 +49,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/> instance for mocking. </returns>
         public static ConfigurationGroupSchemaPropertiesFormat ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState = default, VersionState? versionState = default, string description = default, string schemaDefinition = default)
         {
-            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, additionalBinaryDataProperties: null);
+            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, default);
         }
 
-        /// <summary> Tags object for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
         public static TagsObject TagsObject(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TagsObject(tags, additionalBinaryDataProperties: null);
+            return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> publisher resource. </summary>
+        /// <param name="versionState"> The configuration group schema state. </param>
+        /// <returns> A new <see cref="Models.ConfigurationGroupSchemaVersionUpdateState"/> instance for mocking. </returns>
+        public static ConfigurationGroupSchemaVersionUpdateState ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState = default)
+        {
+            return new ConfigurationGroupSchemaVersionUpdateState(versionState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -83,23 +86,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
-        /// <summary> publisher properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
         /// <param name="scope"> The publisher scope. </param>
         /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
         public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = default, PublisherScope? scope = default)
         {
-            return new PublisherPropertiesFormat(provisioningState, scope, additionalBinaryDataProperties: null);
+            return new PublisherPropertiesFormat(provisioningState, scope, default);
         }
 
-        /// <summary> Hybrid configuration group value resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -117,16 +118,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// Hybrid configuration group value properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConfigurationValueWithSecrets"/> and <see cref="Models.ConfigurationValueWithoutSecrets"/>.
-        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -144,11 +141,31 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                new ConfigurationGroupValueConfigurationType(configurationType),
-                additionalBinaryDataProperties: null);
+                default,
+                default);
         }
 
-        /// <summary> The ConfigurationValue with secrets. </summary>
+        /// <param name="idType"> The resource reference arm id type. </param>
+        /// <returns> A new <see cref="Models.DeploymentResourceIdReference"/> instance for mocking. </returns>
+        public static DeploymentResourceIdReference DeploymentResourceIdReference(string idType = default)
+        {
+            return new UnknownDeploymentResourceIdReference(default, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.SecretDeploymentResourceReference"/> instance for mocking. </returns>
+        public static SecretDeploymentResourceReference SecretDeploymentResourceReference(ResourceIdentifier id = default)
+        {
+            return new SecretDeploymentResourceReference(default, default, id);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.OpenDeploymentResourceReference"/> instance for mocking. </returns>
+        public static OpenDeploymentResourceReference OpenDeploymentResourceReference(ResourceIdentifier id = default)
+        {
+            return new OpenDeploymentResourceReference(default, default, id);
+        }
+
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -166,12 +183,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                ConfigurationGroupValueConfigurationType.Secret,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 secretConfigurationValue);
         }
 
-        /// <summary> The ConfigurationValue with no secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -189,12 +205,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                ConfigurationGroupValueConfigurationType.Open,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 configurationValue);
         }
 
-        /// <summary> Network function resource response. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -214,18 +229,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 eTag,
-                identity);
+                identity,
+                default);
         }
 
-        /// <summary>
-        /// Network function properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NetworkFunctionValueWithSecrets"/> and <see cref="Models.NetworkFunctionValueWithoutSecrets"/>.
-        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -254,12 +265,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                new NetworkFunctionConfigurationType(configurationType),
-                roleOverrideValues.ToList(),
-                additionalBinaryDataProperties: null);
+                default,
+                (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> NetworkFunction with secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -288,13 +298,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                NetworkFunctionConfigurationType.Secret,
-                roleOverrideValues.ToList(),
-                additionalBinaryDataProperties: null,
+                default,
+                (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 secretDeploymentValues);
         }
 
-        /// <summary> NetworkFunction with no secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -323,22 +332,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                NetworkFunctionConfigurationType.Open,
-                roleOverrideValues.ToList(),
-                additionalBinaryDataProperties: null,
+                default,
+                (roleOverrideValues ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 deploymentValues);
         }
 
-        /// <summary> Payload for execute request post call. </summary>
         /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
         /// <param name="requestMetadata"> The request metadata. </param>
         /// <returns> A new <see cref="Models.ExecuteRequestContent"/> instance for mocking. </returns>
         public static ExecuteRequestContent ExecuteRequestContent(string serviceEndpoint = default, RequestMetadata requestMetadata = default)
         {
-            return new ExecuteRequestContent(serviceEndpoint, requestMetadata, additionalBinaryDataProperties: null);
+            return new ExecuteRequestContent(serviceEndpoint, requestMetadata, default);
         }
 
-        /// <summary> Request metadata of execute request post call payload. </summary>
         /// <param name="relativePath"> The relative path of the request. </param>
         /// <param name="httpMethod"> The http method of the request. </param>
         /// <param name="serializedBody"> The serialized body of the request. </param>
@@ -346,10 +353,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.RequestMetadata"/> instance for mocking. </returns>
         public static RequestMetadata RequestMetadata(string relativePath = default, HttpMethod httpMethod = default, string serializedBody = default, string apiVersion = default)
         {
-            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, additionalBinaryDataProperties: null);
+            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, default);
         }
 
-        /// <summary> The component sub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -363,31 +369,28 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The component properties of the network function. </summary>
         /// <param name="provisioningState"> The provisioning state of the component resource. </param>
         /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
         /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
         /// <returns> A new <see cref="Models.ComponentProperties"/> instance for mocking. </returns>
         public static ComponentProperties ComponentProperties(ProvisioningState? provisioningState = default, string deploymentProfile = default, DeploymentStatusProperties deploymentStatus = default)
         {
-            return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus, additionalBinaryDataProperties: null);
+            return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus, default);
         }
 
-        /// <summary> The deployment status properties of the network function component. </summary>
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
         /// <returns> A new <see cref="Models.DeploymentStatusProperties"/> instance for mocking. </returns>
         public static DeploymentStatusProperties DeploymentStatusProperties(ComponentStatus? status = default, ComponentKubernetesResources resources = default, DateTimeOffset? nextExpectedUpdateOn = default)
         {
-            return new DeploymentStatusProperties(status, resources, nextExpectedUpdateOn, additionalBinaryDataProperties: null);
+            return new DeploymentStatusProperties(status, resources, nextExpectedUpdateOn, default);
         }
 
-        /// <summary> The resources of the network function component. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
@@ -403,15 +406,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             daemonSets ??= new ChangeTrackingList<KubernetesDaemonSet>();
 
             return new ComponentKubernetesResources(
-                deployments.ToList(),
-                pods.ToList(),
-                replicaSets.ToList(),
-                statefulSets.ToList(),
-                daemonSets.ToList(),
-                additionalBinaryDataProperties: null);
+                (deployments ?? new ChangeTrackingList<KubernetesDeployment>()).ToList(),
+                (pods ?? new ChangeTrackingList<KubernetesPod>()).ToList(),
+                (replicaSets ?? new ChangeTrackingList<KubernetesReplicaSet>()).ToList(),
+                (statefulSets ?? new ChangeTrackingList<KubernetesStatefulSet>()).ToList(),
+                (daemonSets ?? new ChangeTrackingList<KubernetesDaemonSet>()).ToList(),
+                default);
         }
 
-        /// <summary> Helm Deployment status properties. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -430,10 +432,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 upToDateNumberOfPods,
                 availableNumberOfPods,
                 createdOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Helm Pod status properties. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -453,11 +454,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 readyNumberOfContainers,
                 status,
                 createdOn,
-                events.ToList(),
-                additionalBinaryDataProperties: null);
+                (events ?? new ChangeTrackingList<PodEvent>()).ToList(),
+                default);
         }
 
-        /// <summary> Pod Event  properties. </summary>
         /// <param name="eventType"> The type of pod event. </param>
         /// <param name="reason"> Event reason. </param>
         /// <param name="message"> Event message. </param>
@@ -465,10 +465,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.PodEvent"/> instance for mocking. </returns>
         public static PodEvent PodEvent(PodEventType? eventType = default, string reason = default, string message = default, DateTimeOffset? lastSeenOn = default)
         {
-            return new PodEvent(eventType, reason, message, lastSeenOn, additionalBinaryDataProperties: null);
+            return new PodEvent(eventType, reason, message, lastSeenOn, default);
         }
 
-        /// <summary> Helm ReplicaSet status properties. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -485,10 +484,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 readyNumberOfPods,
                 currentNumberOfPods,
                 createdOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Helm StatefulSet status properties. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -503,10 +501,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 desiredNumberOfPods,
                 readyNumberOfPods,
                 createdOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Helm DaemonSet status properties. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -527,10 +524,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 upToDateNumberOfPods,
                 availableNumberOfPods,
                 createdOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Network function definition group resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -548,22 +544,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Network function definition group properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
         /// <param name="description"> The network function definition group description. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionGroupPropertiesFormat NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
         {
-            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, additionalBinaryDataProperties: null);
+            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, default);
         }
 
-        /// <summary> Network function definition version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -581,16 +575,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// Network function definition version properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> and <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>.
-        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -604,11 +594,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                new NetworkFunctionType(networkFunctionType),
-                additionalBinaryDataProperties: null);
+                default,
+                default);
         }
 
-        /// <summary> Containerized network function network function definition version properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -622,22 +611,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                NetworkFunctionType.ContainerizedNetworkFunction,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 networkFunctionTemplate);
         }
 
-        /// <summary> Azure Arc kubernetes network function template. </summary>
+        /// <param name="nfviType"> The network function type. </param>
+        /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionTemplate"/> instance for mocking. </returns>
+        public static ContainerizedNetworkFunctionTemplate ContainerizedNetworkFunctionTemplate(string nfviType = default)
+        {
+            return new UnknownContainerizedNetworkFunctionTemplate(default, default);
+        }
+
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureArcKubernetesNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureArcKubernetesNetworkFunctionTemplate AzureArcKubernetesNetworkFunctionTemplate(IEnumerable<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications = default)
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>();
 
-            return new AzureArcKubernetesNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType.AzureArcKubernetes, additionalBinaryDataProperties: null, networkFunctionApplications.ToList());
+            return new AzureArcKubernetesNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>()).ToList());
         }
 
-        /// <summary> Depends on profile definition. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureArcKubernetesNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureArcKubernetesNetworkFunctionApplication AzureArcKubernetesNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
+        {
+            return new UnknownAzureArcKubernetesNetworkFunctionApplication(name, dependsOnProfile, default, default);
+        }
+
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <returns> A new <see cref="Models.NetworkFunctionApplication"/> instance for mocking. </returns>
+        public static NetworkFunctionApplication NetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default)
+        {
+            return new NetworkFunctionApplication(name, dependsOnProfile, default);
+        }
+
         /// <param name="installDependsOn"> Application installation operation dependency. </param>
         /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
         /// <param name="updateDependsOn"> Application update operation dependency. </param>
@@ -648,10 +659,33 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             uninstallDependsOn ??= new ChangeTrackingList<string>();
             updateDependsOn ??= new ChangeTrackingList<string>();
 
-            return new DependsOnProfile(installDependsOn.ToList(), uninstallDependsOn.ToList(), updateDependsOn.ToList(), additionalBinaryDataProperties: null);
+            return new DependsOnProfile((installDependsOn ?? new ChangeTrackingList<string>()).ToList(), (uninstallDependsOn ?? new ChangeTrackingList<string>()).ToList(), (updateDependsOn ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Helm artifact profile. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactProfile"> Azure arc kubernetes artifact profile. </param>
+        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureArcKubernetesHelmApplication"/> instance for mocking. </returns>
+        public static AzureArcKubernetesHelmApplication AzureArcKubernetesHelmApplication(string name = default, DependsOnProfile dependsOnProfile = default, AzureArcKubernetesArtifactProfile artifactProfile = default, AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile = default)
+        {
+            return new AzureArcKubernetesHelmApplication(
+                name,
+                dependsOnProfile,
+                default,
+                default,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
+        }
+
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <param name="helmArtifactProfile"> Helm artifact profile. </param>
+        /// <returns> A new <see cref="Models.AzureArcKubernetesArtifactProfile"/> instance for mocking. </returns>
+        public static AzureArcKubernetesArtifactProfile AzureArcKubernetesArtifactProfile(ResourceIdentifier artifactStoreId = default, HelmArtifactProfile helmArtifactProfile = default)
+        {
+            return new AzureArcKubernetesArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, helmArtifactProfile);
+        }
+
         /// <param name="helmPackageName"> Helm package name. </param>
         /// <param name="helmPackageVersionRange"> Helm package version range. </param>
         /// <param name="registryValuesPaths"> The registry values path list. </param>
@@ -662,10 +696,81 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             registryValuesPaths ??= new ChangeTrackingList<string>();
             imagePullSecretsValuesPaths ??= new ChangeTrackingList<string>();
 
-            return new HelmArtifactProfile(helmPackageName, helmPackageVersionRange, registryValuesPaths.ToList(), imagePullSecretsValuesPaths.ToList(), additionalBinaryDataProperties: null);
+            return new HelmArtifactProfile(helmPackageName, helmPackageVersionRange, (registryValuesPaths ?? new ChangeTrackingList<string>()).ToList(), (imagePullSecretsValuesPaths ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Virtual network function network function definition version properties. </summary>
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.ArtifactProfile"/> instance for mocking. </returns>
+        public static ArtifactProfile ArtifactProfile(ResourceIdentifier artifactStoreId = default)
+        {
+            return new ArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.ReferencedResourceById"/> instance for mocking. </returns>
+        public static ReferencedResourceById ReferencedResourceById(ResourceIdentifier id = default)
+        {
+            return new ReferencedResourceById(id, default);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="helmMappingRuleProfile"> The helm mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureArcKubernetesDeployMappingRuleProfile"/> instance for mocking. </returns>
+        public static AzureArcKubernetesDeployMappingRuleProfile AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement = default, HelmMappingRuleProfile helmMappingRuleProfile = default)
+        {
+            return new AzureArcKubernetesDeployMappingRuleProfile(applicationEnablement, default, helmMappingRuleProfile);
+        }
+
+        /// <param name="releaseNamespace"> Helm release namespace. </param>
+        /// <param name="releaseName"> Helm release name. </param>
+        /// <param name="helmPackageVersion"> Helm package version. </param>
+        /// <param name="values"> Helm release values. </param>
+        /// <param name="options"> The helm deployment options. </param>
+        /// <returns> A new <see cref="Models.HelmMappingRuleProfile"/> instance for mocking. </returns>
+        public static HelmMappingRuleProfile HelmMappingRuleProfile(string releaseNamespace = default, string releaseName = default, string helmPackageVersion = default, string values = default, HelmMappingRuleProfileConfig options = default)
+        {
+            return new HelmMappingRuleProfile(
+                releaseNamespace,
+                releaseName,
+                helmPackageVersion,
+                values,
+                options,
+                default);
+        }
+
+        /// <param name="installOptions"> The helm deployment install options. </param>
+        /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
+        /// <returns> A new <see cref="Models.HelmMappingRuleProfileConfig"/> instance for mocking. </returns>
+        public static HelmMappingRuleProfileConfig HelmMappingRuleProfileConfig(HelmInstallConfig installOptions = default, HelmUpgradeConfig upgradeOptions = default)
+        {
+            return new HelmMappingRuleProfileConfig(installOptions, upgradeOptions, default);
+        }
+
+        /// <param name="atomic"> The helm deployment atomic options. </param>
+        /// <param name="wait"> The helm deployment wait options. </param>
+        /// <param name="timeout"> The helm deployment timeout options. </param>
+        /// <returns> A new <see cref="Models.HelmInstallConfig"/> instance for mocking. </returns>
+        public static HelmInstallConfig HelmInstallConfig(string atomic = default, string wait = default, string timeout = default)
+        {
+            return new HelmInstallConfig(atomic, wait, timeout, default);
+        }
+
+        /// <param name="atomic"> The helm deployment atomic options. </param>
+        /// <param name="wait"> The helm deployment wait options. </param>
+        /// <param name="timeout"> The helm deployment timeout options. </param>
+        /// <returns> A new <see cref="Models.HelmUpgradeConfig"/> instance for mocking. </returns>
+        public static HelmUpgradeConfig HelmUpgradeConfig(string atomic = default, string wait = default, string timeout = default)
+        {
+            return new HelmUpgradeConfig(atomic, wait, timeout, default);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <returns> A new <see cref="Models.MappingRuleProfile"/> instance for mocking. </returns>
+        public static MappingRuleProfile MappingRuleProfile(ApplicationEnablement? applicationEnablement = default)
+        {
+            return new MappingRuleProfile(applicationEnablement, default);
+        }
+
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -679,32 +784,213 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 deployParameters,
-                NetworkFunctionType.VirtualNetworkFunction,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 networkFunctionTemplate);
         }
 
-        /// <summary> Azure virtual network function template. </summary>
+        /// <param name="nfviType"> The network function type. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkFunctionTemplate"/> instance for mocking. </returns>
+        public static VirtualNetworkFunctionTemplate VirtualNetworkFunctionTemplate(string nfviType = default)
+        {
+            return new UnknownVirtualNetworkFunctionTemplate(default, default);
+        }
+
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureCoreNetworkFunctionTemplate AzureCoreNetworkFunctionTemplate(IEnumerable<AzureCoreNetworkFunctionApplication> networkFunctionApplications = default)
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureCoreNetworkFunctionApplication>();
 
-            return new AzureCoreNetworkFunctionTemplate(VirtualNetworkFunctionNfviType.AzureCore, additionalBinaryDataProperties: null, networkFunctionApplications.ToList());
+            return new AzureCoreNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureCoreNetworkFunctionApplication>()).ToList());
         }
 
-        /// <summary> Azure Operator Distributed Services network function template. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureCoreNetworkFunctionApplication AzureCoreNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
+        {
+            return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, default, default);
+        }
+
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactProfile"> Azure vhd image artifact profile. </param>
+        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionVhdApplication"/> instance for mocking. </returns>
+        public static AzureCoreNetworkFunctionVhdApplication AzureCoreNetworkFunctionVhdApplication(string name = default, DependsOnProfile dependsOnProfile = default, AzureCoreVhdImageArtifactProfile artifactProfile = default, AzureCoreVhdImageDeployMappingRuleProfile deployParametersMappingRuleProfile = default)
+        {
+            return new AzureCoreNetworkFunctionVhdApplication(
+                name,
+                dependsOnProfile,
+                default,
+                default,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
+        }
+
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <param name="vhdArtifactProfile"> Vhd artifact profile. </param>
+        /// <returns> A new <see cref="Models.AzureCoreVhdImageArtifactProfile"/> instance for mocking. </returns>
+        public static AzureCoreVhdImageArtifactProfile AzureCoreVhdImageArtifactProfile(ResourceIdentifier artifactStoreId = default, VhdImageArtifactProfile vhdArtifactProfile = default)
+        {
+            return new AzureCoreVhdImageArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, vhdArtifactProfile);
+        }
+
+        /// <param name="vhdName"> Vhd name. </param>
+        /// <param name="vhdVersion"> Vhd version. </param>
+        /// <returns> A new <see cref="Models.VhdImageArtifactProfile"/> instance for mocking. </returns>
+        public static VhdImageArtifactProfile VhdImageArtifactProfile(string vhdName = default, string vhdVersion = default)
+        {
+            return new VhdImageArtifactProfile(vhdName, vhdVersion, default);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="vhdImageMappingRuleUserConfiguration"> List of values. </param>
+        /// <returns> A new <see cref="Models.AzureCoreVhdImageDeployMappingRuleProfile"/> instance for mocking. </returns>
+        public static AzureCoreVhdImageDeployMappingRuleProfile AzureCoreVhdImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement = default, string vhdImageMappingRuleUserConfiguration = default)
+        {
+            return new AzureCoreVhdImageDeployMappingRuleProfile(applicationEnablement, default, vhdImageMappingRuleUserConfiguration is null ? default : new VhdImageMappingRuleProfile(vhdImageMappingRuleUserConfiguration, default));
+        }
+
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactProfile"> Azure template artifact profile. </param>
+        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionArmTemplateApplication"/> instance for mocking. </returns>
+        public static AzureCoreNetworkFunctionArmTemplateApplication AzureCoreNetworkFunctionArmTemplateApplication(string name = default, DependsOnProfile dependsOnProfile = default, AzureCoreArmTemplateArtifactProfile artifactProfile = default, AzureCoreArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile = default)
+        {
+            return new AzureCoreNetworkFunctionArmTemplateApplication(
+                name,
+                dependsOnProfile,
+                default,
+                default,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
+        }
+
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <param name="templateArtifactProfile"> Template artifact profile. </param>
+        /// <returns> A new <see cref="Models.AzureCoreArmTemplateArtifactProfile"/> instance for mocking. </returns>
+        public static AzureCoreArmTemplateArtifactProfile AzureCoreArmTemplateArtifactProfile(ResourceIdentifier artifactStoreId = default, ArmTemplateArtifactProfile templateArtifactProfile = default)
+        {
+            return new AzureCoreArmTemplateArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, templateArtifactProfile);
+        }
+
+        /// <param name="templateName"> Template name. </param>
+        /// <param name="templateVersion"> Template version. </param>
+        /// <returns> A new <see cref="Models.ArmTemplateArtifactProfile"/> instance for mocking. </returns>
+        public static ArmTemplateArtifactProfile ArmTemplateArtifactProfile(string templateName = default, string templateVersion = default)
+        {
+            return new ArmTemplateArtifactProfile(templateName, templateVersion, default);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="templateParameters"> List of template parameters. </param>
+        /// <returns> A new <see cref="Models.AzureCoreArmTemplateDeployMappingRuleProfile"/> instance for mocking. </returns>
+        public static AzureCoreArmTemplateDeployMappingRuleProfile AzureCoreArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement = default, string templateParameters = default)
+        {
+            return new AzureCoreArmTemplateDeployMappingRuleProfile(applicationEnablement, default, templateParameters is null ? default : new ArmTemplateMappingRuleProfile(templateParameters, default));
+        }
+
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureOperatorNexusNetworkFunctionTemplate AzureOperatorNexusNetworkFunctionTemplate(IEnumerable<AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications = default)
         {
             networkFunctionApplications ??= new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>();
 
-            return new AzureOperatorNexusNetworkFunctionTemplate(VirtualNetworkFunctionNfviType.AzureOperatorNexus, additionalBinaryDataProperties: null, networkFunctionApplications.ToList());
+            return new AzureOperatorNexusNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>()).ToList());
         }
 
-        /// <summary> network service design group resource. </summary>
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionApplication"/> instance for mocking. </returns>
+        public static AzureOperatorNexusNetworkFunctionApplication AzureOperatorNexusNetworkFunctionApplication(string name = default, DependsOnProfile dependsOnProfile = default, string artifactType = default)
+        {
+            return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, default, default);
+        }
+
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactProfile"> Azure Operator Distributed Services image artifact profile. </param>
+        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionImageApplication"/> instance for mocking. </returns>
+        public static AzureOperatorNexusNetworkFunctionImageApplication AzureOperatorNexusNetworkFunctionImageApplication(string name = default, DependsOnProfile dependsOnProfile = default, AzureOperatorNexusImageArtifactProfile artifactProfile = default, AzureOperatorNexusImageDeployMappingRuleProfile deployParametersMappingRuleProfile = default)
+        {
+            return new AzureOperatorNexusNetworkFunctionImageApplication(
+                name,
+                dependsOnProfile,
+                default,
+                default,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
+        }
+
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <param name="imageArtifactProfile"> Image artifact profile. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusImageArtifactProfile"/> instance for mocking. </returns>
+        public static AzureOperatorNexusImageArtifactProfile AzureOperatorNexusImageArtifactProfile(ResourceIdentifier artifactStoreId = default, ImageArtifactProfile imageArtifactProfile = default)
+        {
+            return new AzureOperatorNexusImageArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, imageArtifactProfile);
+        }
+
+        /// <param name="imageName"> Image name. </param>
+        /// <param name="imageVersion"> Image version. </param>
+        /// <returns> A new <see cref="Models.ImageArtifactProfile"/> instance for mocking. </returns>
+        public static ImageArtifactProfile ImageArtifactProfile(string imageName = default, string imageVersion = default)
+        {
+            return new ImageArtifactProfile(imageName, imageVersion, default);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="imageMappingRuleUserConfiguration"> List of values. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusImageDeployMappingRuleProfile"/> instance for mocking. </returns>
+        public static AzureOperatorNexusImageDeployMappingRuleProfile AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement = default, string imageMappingRuleUserConfiguration = default)
+        {
+            return new AzureOperatorNexusImageDeployMappingRuleProfile(applicationEnablement, default, imageMappingRuleUserConfiguration is null ? default : new ImageMappingRuleProfile(imageMappingRuleUserConfiguration, default));
+        }
+
+        /// <param name="name"> The name of the network function application. </param>
+        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="artifactProfile"> Azure Operator Distributed Services Template artifact profile. </param>
+        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> instance for mocking. </returns>
+        public static AzureOperatorNexusNetworkFunctionArmTemplateApplication AzureOperatorNexusNetworkFunctionArmTemplateApplication(string name = default, DependsOnProfile dependsOnProfile = default, AzureOperatorNexusArmTemplateArtifactProfile artifactProfile = default, AzureOperatorNexusArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile = default)
+        {
+            return new AzureOperatorNexusNetworkFunctionArmTemplateApplication(
+                name,
+                dependsOnProfile,
+                default,
+                default,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
+        }
+
+        /// <param name="artifactStoreId"> Resource ID. </param>
+        /// <param name="templateArtifactProfile"> Template artifact profile. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusArmTemplateArtifactProfile"/> instance for mocking. </returns>
+        public static AzureOperatorNexusArmTemplateArtifactProfile AzureOperatorNexusArmTemplateArtifactProfile(ResourceIdentifier artifactStoreId = default, ArmTemplateArtifactProfile templateArtifactProfile = default)
+        {
+            return new AzureOperatorNexusArmTemplateArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, templateArtifactProfile);
+        }
+
+        /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="templateParameters"> List of template parameters. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusArmTemplateDeployMappingRuleProfile"/> instance for mocking. </returns>
+        public static AzureOperatorNexusArmTemplateDeployMappingRuleProfile AzureOperatorNexusArmTemplateDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement = default, string templateParameters = default)
+        {
+            return new AzureOperatorNexusArmTemplateDeployMappingRuleProfile(applicationEnablement, default, templateParameters is null ? default : new ArmTemplateMappingRuleProfile(templateParameters, default));
+        }
+
+        /// <param name="versionState"> The network function definition version state. </param>
+        /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionUpdateState"/> instance for mocking. </returns>
+        public static NetworkFunctionDefinitionVersionUpdateState NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState = default)
+        {
+            return new NetworkFunctionDefinitionVersionUpdateState(versionState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -722,22 +1008,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> network service design group properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
         /// <param name="description"> The network service design group description. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkServiceDesignGroupPropertiesFormat NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
         {
-            return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description, additionalBinaryDataProperties: null);
+            return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description, default);
         }
 
-        /// <summary> network service design version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -755,13 +1039,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> network service design version properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>
@@ -779,13 +1062,72 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 provisioningState,
                 versionState,
                 description,
-                referencedConfigurationGroupSchemas,
-                nfvisFromSite,
-                resourceElementTemplates.ToList(),
-                additionalBinaryDataProperties: null);
+                referencedConfigurationGroupSchemas ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviSiteDetails>(),
+                (resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>()).ToList(),
+                default);
         }
 
-        /// <summary> Artifact store properties. </summary>
+        /// <param name="name"> The nfvi name. </param>
+        /// <param name="nfviDetailsType"> The nfvi type. </param>
+        /// <returns> A new <see cref="Models.NfviSiteDetails"/> instance for mocking. </returns>
+        public static NfviSiteDetails NfviSiteDetails(string name = default, string nfviDetailsType = default)
+        {
+            return new NfviSiteDetails(name, nfviDetailsType, default);
+        }
+
+        /// <param name="name"> Name of the resource element template. </param>
+        /// <param name="resourceElementType"> The resource element template type. </param>
+        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <returns> A new <see cref="Models.ResourceElementTemplate"/> instance for mocking. </returns>
+        public static ResourceElementTemplate ResourceElementTemplate(string name = default, string resourceElementType = default, DependsOnProfile dependsOnProfile = default)
+        {
+            return new UnknownResourceElementTemplate(name, default, dependsOnProfile, default);
+        }
+
+        /// <param name="name"> Name of the resource element template. </param>
+        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <param name="configuration"> The resource element template type. </param>
+        /// <returns> A new <see cref="Models.ArmResourceDefinitionResourceElementTemplateDetails"/> instance for mocking. </returns>
+        public static ArmResourceDefinitionResourceElementTemplateDetails ArmResourceDefinitionResourceElementTemplateDetails(string name = default, DependsOnProfile dependsOnProfile = default, ArmResourceDefinitionResourceElementTemplate configuration = default)
+        {
+            return new ArmResourceDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
+        }
+
+        /// <param name="templateType"> The template type. </param>
+        /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
+        /// <param name="artifactProfile"> Artifact profile properties. </param>
+        /// <returns> A new <see cref="Models.ArmResourceDefinitionResourceElementTemplate"/> instance for mocking. </returns>
+        public static ArmResourceDefinitionResourceElementTemplate ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType = default, string parameterValues = default, NsdArtifactProfile artifactProfile = default)
+        {
+            return new ArmResourceDefinitionResourceElementTemplate(templateType, parameterValues, artifactProfile, default);
+        }
+
+        /// <param name="artifactStoreReferenceId"> Resource ID. </param>
+        /// <param name="artifactName"> Artifact name. </param>
+        /// <param name="artifactVersion"> Artifact version. </param>
+        /// <returns> A new <see cref="Models.NsdArtifactProfile"/> instance for mocking. </returns>
+        public static NsdArtifactProfile NsdArtifactProfile(ResourceIdentifier artifactStoreReferenceId = default, string artifactName = default, string artifactVersion = default)
+        {
+            return new NsdArtifactProfile(artifactStoreReferenceId is null ? default : new ReferencedResourceById(artifactStoreReferenceId, default), artifactName, artifactVersion, default);
+        }
+
+        /// <param name="name"> Name of the resource element template. </param>
+        /// <param name="dependsOnProfile"> The depends on profile. </param>
+        /// <param name="configuration"> The resource element template type. </param>
+        /// <returns> A new <see cref="Models.NetworkFunctionDefinitionResourceElementTemplateDetails"/> instance for mocking. </returns>
+        public static NetworkFunctionDefinitionResourceElementTemplateDetails NetworkFunctionDefinitionResourceElementTemplateDetails(string name = default, DependsOnProfile dependsOnProfile = default, ArmResourceDefinitionResourceElementTemplate configuration = default)
+        {
+            return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
+        }
+
+        /// <param name="versionState"> The network service design version state. </param>
+        /// <returns> A new <see cref="Models.NetworkServiceDesignVersionUpdateState"/> instance for mocking. </returns>
+        public static NetworkServiceDesignVersionUpdateState NetworkServiceDesignVersionUpdateState(VersionState? versionState = default)
+        {
+            return new NetworkServiceDesignVersionUpdateState(versionState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -803,13 +1145,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Artifact store properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
         /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
@@ -826,30 +1167,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 replicationStrategy,
                 managedResourceGroupConfiguration,
                 storageResourceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> List of network fabric controller ids. </summary>
+        /// <param name="name"> The managed resource group name. </param>
+        /// <param name="location"> The managed resource group location. </param>
+        /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/> instance for mocking. </returns>
+        public static ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name = default, AzureLocation? location = default)
+        {
+            return new ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(name, location, default);
+        }
+
         /// <param name="networkFabricControllerIds"> list of network fabric controllers. </param>
         /// <returns> A new <see cref="Models.ArtifactStoreNetworkFabricControllerEndPoints"/> instance for mocking. </returns>
         public static ArtifactStoreNetworkFabricControllerEndPoints ArtifactStoreNetworkFabricControllerEndPoints(IEnumerable<ReferencedResourceById> networkFabricControllerIds = default)
         {
             networkFabricControllerIds ??= new ChangeTrackingList<ReferencedResourceById>();
 
-            return new ArtifactStoreNetworkFabricControllerEndPoints(networkFabricControllerIds.ToList(), additionalBinaryDataProperties: null);
+            return new ArtifactStoreNetworkFabricControllerEndPoints((networkFabricControllerIds ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
-        /// <summary> List of manual private endpoints. </summary>
         /// <param name="manualPrivateEndPointConnections"> list of private endpoints. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePrivateEndPointsFormat"/> instance for mocking. </returns>
         public static ArtifactStorePrivateEndPointsFormat ArtifactStorePrivateEndPointsFormat(IEnumerable<ReferencedResourceById> manualPrivateEndPointConnections = default)
         {
             manualPrivateEndPointConnections ??= new ChangeTrackingList<ReferencedResourceById>();
 
-            return new ArtifactStorePrivateEndPointsFormat(manualPrivateEndPointConnections.ToList(), additionalBinaryDataProperties: null);
+            return new ArtifactStorePrivateEndPointsFormat((manualPrivateEndPointConnections ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
-        /// <summary> The proxy artifact overview. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -857,10 +1203,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.ProxyArtifactListOverview"/> instance for mocking. </returns>
         public static ProxyArtifactListOverview ProxyArtifactListOverview(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
         {
-            return new ProxyArtifactListOverview(id, name, resourceType, systemData, additionalBinaryDataProperties: null);
+            return new ProxyArtifactListOverview(id, name, resourceType, systemData, default);
         }
 
-        /// <summary> The proxy artifact overview. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -874,21 +1219,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The ProxyArtifactOverviewPropertiesValue. </summary>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
         /// <param name="artifactState"> The artifact state. </param>
         /// <returns> A new <see cref="Models.ProxyArtifactOverviewPropertiesValue"/> instance for mocking. </returns>
         public static ProxyArtifactOverviewPropertiesValue ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType = default, string artifactVersion = default, ArtifactState? artifactState = default)
         {
-            return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState, additionalBinaryDataProperties: null);
+            return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState, default);
         }
 
-        /// <summary> Artifact manifest properties. </summary>
+        /// <param name="artifactState"> The artifact state. </param>
+        /// <returns> A new <see cref="Models.ArtifactChangeState"/> instance for mocking. </returns>
+        public static ArtifactChangeState ArtifactChangeState(ArtifactState? artifactState = default)
+        {
+            return new ArtifactChangeState(artifactState is null ? default : new ArtifactChangeStateProperties(artifactState, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -906,13 +1256,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Artifact manifest properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <param name="artifacts"> The artifacts list. </param>
@@ -921,10 +1270,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             artifacts ??= new ChangeTrackingList<ManifestArtifactFormat>();
 
-            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts.ToList(), additionalBinaryDataProperties: null);
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, (artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>()).ToList(), default);
         }
 
-        /// <summary> The azure container registry scoped token credential definition. </summary>
+        /// <param name="artifactName"> The artifact name. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <param name="artifactVersion"> The artifact version. </param>
+        /// <returns> A new <see cref="Models.ManifestArtifactFormat"/> instance for mocking. </returns>
+        public static ManifestArtifactFormat ManifestArtifactFormat(string artifactName = default, ArtifactType? artifactType = default, string artifactVersion = default)
+        {
+            return new ManifestArtifactFormat(artifactName, artifactType, artifactVersion, default);
+        }
+
+        /// <param name="credentialType"> The credential type. </param>
+        /// <returns> A new <see cref="Models.ArtifactAccessCredential"/> instance for mocking. </returns>
+        public static ArtifactAccessCredential ArtifactAccessCredential(string credentialType = default)
+        {
+            return new UnknownArtifactAccessCredential(default, default);
+        }
+
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
@@ -936,16 +1300,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             repositories ??= new ChangeTrackingList<string>();
 
             return new AzureContainerRegistryScopedTokenCredential(
-                CredentialType.AzureContainerRegistryScopedToken,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 username,
                 acrToken,
                 acrServerUri,
-                repositories.ToList(),
+                (repositories ?? new ChangeTrackingList<string>()).ToList(),
                 expiryOn);
         }
 
-        /// <summary> The azure storage account credential definition. </summary>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiryOn"> The UTC time when credential will expire. </param>
@@ -954,19 +1317,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
             containerCredentials ??= new ChangeTrackingList<AzureStorageAccountContainerCredential>();
 
-            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, additionalBinaryDataProperties: null, storageAccountId, containerCredentials.ToList(), expiryOn);
+            return new AzureStorageAccountCredential(default, default, storageAccountId, (containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>()).ToList(), expiryOn);
         }
 
-        /// <summary> The azure storage account container credential definition. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountContainerCredential"/> instance for mocking. </returns>
         public static AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = default, Uri containerSasUri = default)
         {
-            return new AzureStorageAccountContainerCredential(containerName, containerSasUri, additionalBinaryDataProperties: null);
+            return new AzureStorageAccountContainerCredential(containerName, containerSasUri, default);
         }
 
-        /// <summary> Site resource. </summary>
+        /// <param name="artifactManifestState"> The artifact manifest state. </param>
+        /// <returns> A new <see cref="Models.ArtifactManifestUpdateState"/> instance for mocking. </returns>
+        public static ArtifactManifestUpdateState ArtifactManifestUpdateState(ArtifactManifestState? artifactManifestState = default)
+        {
+            return new ArtifactManifestUpdateState(artifactManifestState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -984,13 +1352,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Site properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. <b>TODO</b>: Confirm if this is needed. </param>
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
@@ -1000,10 +1367,41 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             nfvis ??= new ChangeTrackingList<NfviDetails>();
             referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResourceById>();
 
-            return new SitePropertiesFormat(provisioningState, nfvis.ToList(), referencedSiteNetworkServices.ToList(), additionalBinaryDataProperties: null);
+            return new SitePropertiesFormat(provisioningState, (nfvis ?? new ChangeTrackingList<NfviDetails>()).ToList(), (referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
-        /// <summary> Site network service resource. </summary>
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="nfviType"> The NFVI type. </param>
+        /// <returns> A new <see cref="Models.NfviDetails"/> instance for mocking. </returns>
+        public static NfviDetails NfviDetails(string name = default, string nfviType = default)
+        {
+            return new UnknownNfviDetails(name, default, default);
+        }
+
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="location"> Location of the Azure core. </param>
+        /// <returns> A new <see cref="Models.AzureCoreNfviDetails"/> instance for mocking. </returns>
+        public static AzureCoreNfviDetails AzureCoreNfviDetails(string name = default, AzureLocation? location = default)
+        {
+            return new AzureCoreNfviDetails(name, default, default, location);
+        }
+
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="customLocationReferenceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.AzureArcK8SClusterNfviDetails"/> instance for mocking. </returns>
+        public static AzureArcK8SClusterNfviDetails AzureArcK8SClusterNfviDetails(string name = default, ResourceIdentifier customLocationReferenceId = default)
+        {
+            return new AzureArcK8SClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
+        }
+
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="customLocationReferenceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.AzureOperatorNexusClusterNfviDetails"/> instance for mocking. </returns>
+        public static AzureOperatorNexusClusterNfviDetails AzureOperatorNexusClusterNfviDetails(string name = default, ResourceIdentifier customLocationReferenceId = default)
+        {
+            return new AzureOperatorNexusClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1023,12 +1421,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                sku);
+                sku,
+                default);
         }
 
         /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
@@ -1052,26 +1450,33 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SiteNetworkServicePropertiesFormat(
                 provisioningState,
                 managedResourceGroupConfiguration,
-                siteReferenceId is null ? default : new ReferencedResourceById(siteReferenceId, null),
+                siteReferenceId is null ? default : new ReferencedResourceById(siteReferenceId, default),
                 publisherName,
                 publisherScope,
                 networkServiceDesignGroupName,
                 networkServiceDesignVersionName,
                 networkServiceDesignVersionOfferingLocation,
                 networkServiceDesignVersionResourceReference,
-                desiredStateConfigurationGroupValueReferencedResources,
+                desiredStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
                 lastStateNetworkServiceDesignVersionName,
-                lastStateConfigurationGroupValueReferencedResources,
-                additionalBinaryDataProperties: null);
+                lastStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
+                default);
         }
 
-        /// <summary> Sku, to be associated with a SiteNetworkService. </summary>
+        /// <param name="name"> Managed resource group name. </param>
+        /// <param name="location"> Managed resource group location. </param>
+        /// <returns> A new <see cref="Models.ManagedResourceGroupConfiguration"/> instance for mocking. </returns>
+        public static ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration(string name = default, AzureLocation? location = default)
+        {
+            return new ManagedResourceGroupConfiguration(name, location, default);
+        }
+
         /// <param name="name"> Name of this Sku. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
         public static HybridNetworkSku HybridNetworkSku(HybridNetworkSkuName name = default, HybridNetworkSkuTier? tier = default)
         {
-            return new HybridNetworkSku(name, tier, additionalBinaryDataProperties: null);
+            return new HybridNetworkSku(name, tier, default);
         }
 
         /// <param name="siteNetworkServiceReferenceId"> Resource ID. </param>
@@ -1079,7 +1484,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
         public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = default, CancelableLongRunningOperationType? longRunningOperation = default)
         {
-            return new CancelInformation(new ReferencedResourceById(siteNetworkServiceReferenceId, null), longRunningOperation, additionalBinaryDataProperties: null);
+            return new CancelInformation(siteNetworkServiceReferenceId is null ? default : new ReferencedResourceById(siteNetworkServiceReferenceId, default), longRunningOperation, default);
         }
     }
 }
