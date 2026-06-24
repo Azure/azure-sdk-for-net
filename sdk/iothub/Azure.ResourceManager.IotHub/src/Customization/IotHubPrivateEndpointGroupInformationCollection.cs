@@ -135,6 +135,7 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Checks whether a private link resource exists. </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
             NullableResponse<IotHubPrivateEndpointGroupInformationResource> response = await GetIfExistsAsync(groupId, cancellationToken).ConfigureAwait(false);
@@ -144,6 +145,7 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Checks whether a private link resource exists. </summary>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
             NullableResponse<IotHubPrivateEndpointGroupInformationResource> response = GetIfExists(groupId, cancellationToken);
