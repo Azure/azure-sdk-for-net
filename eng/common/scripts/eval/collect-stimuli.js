@@ -101,10 +101,14 @@ export function buildMatrix({
   const matrix = {};
 
   if (shardBy === "file") {
-    // One shard per file. Shard name = parent-folder + filename so tools/ and mock/
-    // legs of the same name cannot collide.
+    // One shard per file. Shard name = the file's full relative path (sans the
+    // .eval.yaml extension), sanitized. Deriving from the whole path — not just
+    // parent+leaf — guarantees global uniqueness across layouts where the immediate
+    // parent repeats: the Vally tree distinguishes by parent (tools/ vs mock/), but the
+    // skills tree puts every eval under `<skill>/evals/`, so `evals_trigger` would
+    // collide across all skills. The full path keeps each shard name unique and stable.
     for (const file of files) {
-      const shardName = `${file.parent}_${file.leaf}`.replace(SANITIZE, "_");
+      const shardName = file.relative.replace(/\.eval\.yaml$/i, "").replace(SANITIZE, "_");
       if (Object.prototype.hasOwnProperty.call(matrix, shardName)) {
         throw new Error(
           `Duplicate shard name '${shardName}' (from '${file.relative}'). Shard names must be unique.`

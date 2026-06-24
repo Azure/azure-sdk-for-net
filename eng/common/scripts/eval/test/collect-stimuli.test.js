@@ -67,13 +67,33 @@ describe("collect-stimuli (shardBy file, default)", () => {
     }
   });
 
-  it("produces filesystem-safe, parent-prefixed shard names", () => {
+  it("produces filesystem-safe shard names from the full relative path", () => {
     const matrix = buildMatrix({ roots: [root] });
     const keys = Object.keys(matrix);
-    assert.ok(keys.includes("tools_prompt_to_tool_github"));
-    assert.ok(keys.includes("mock_rename_client_property"));
+    assert.ok(keys.includes("evals_tools_prompt_to_tool_github"));
+    assert.ok(keys.includes("evals_workflow_scenarios_mock_rename_client_property"));
     for (const key of keys) {
       assert.match(key, /^[A-Za-z0-9_]+$/);
+    }
+  });
+
+  it("keeps shard names unique when the immediate parent folder repeats", () => {
+    // Two skills both at `<skill>/evals/trigger.eval.yaml` must not collide on a
+    // `evals_trigger` name — the full path disambiguates them.
+    const skillRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-skills-"));
+    writeFile(path.join(skillRoot, "sensei/evals/trigger.eval.yaml"), "x");
+    writeFile(path.join(skillRoot, "skill-authoring/evals/trigger.eval.yaml"), "x");
+    try {
+      const matrix = buildMatrix({
+        roots: [skillRoot],
+        patterns: ["*/evals/*.eval.yaml"],
+      });
+      const keys = Object.keys(matrix);
+      assert.equal(keys.length, 2);
+      assert.ok(keys.includes("sensei_evals_trigger"));
+      assert.ok(keys.includes("skill_authoring_evals_trigger"));
+    } finally {
+      fs.rmSync(skillRoot, { recursive: true, force: true });
     }
   });
 
@@ -203,7 +223,7 @@ describe("collect-stimuli (overlapping patterns)", () => {
       roots: [root],
       patterns: ["evals/tools/*.eval.yaml", "evals/tools/add-arm-resource.eval.yaml"],
     });
-    const matches = Object.keys(matrix).filter((k) => k === "tools_add_arm_resource");
+    const matches = Object.keys(matrix).filter((k) => k === "evals_tools_add_arm_resource");
     assert.equal(matches.length, 1);
   });
 
@@ -247,8 +267,8 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
     });
     const keys = Object.keys(matrix);
     assert.equal(keys.length, 2);
-    assert.ok(keys.includes("tools_repo_specific"));
-    assert.ok(keys.includes("tools_shared_scenario"));
+    assert.ok(keys.includes("evals_tools_repo_specific"));
+    assert.ok(keys.includes("evals_tools_shared_scenario"));
   });
 
   it("computes each file's relative path against its own root", () => {
@@ -257,7 +277,7 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
       patterns: ["evals/tools/*.eval.yaml"],
     });
     assert.equal(
-      matrix.tools_shared_scenario.evalArgs,
+      matrix.evals_tools_shared_scenario.evalArgs,
       "-e evals/tools/shared-scenario.eval.yaml"
     );
   });
