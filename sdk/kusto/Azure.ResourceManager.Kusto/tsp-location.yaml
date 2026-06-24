@@ -1,4 +1,4 @@
 directory: specification/azure-kusto/resource-manager/Microsoft.Kusto/Kusto
-commit: 72de74380cd133cbf078ff0e307e2502f14f6a9f
+commit: 59500f5686cf7996b3093d727190b0ffd20acfa1
 repo: cxznmhdcxz/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

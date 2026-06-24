@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of language extensions. </summary>
-        public IList<KustoLanguageExtension> Value { get; }
+        public IList<KustoLanguageExtension> Value { get; } = new ChangeTrackingList<KustoLanguageExtension>();
 
         /// <summary> The link to the next page of resources. </summary>
         public string NextLink { get; set; }

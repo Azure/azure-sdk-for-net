@@ -230,19 +230,6 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
-        /// <summary> List of the cluster's language extensions. </summary>
-        public IList<KustoLanguageExtension> LanguageExtensionsValue
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                return Properties.LanguageExtensionsValue;
-            }
-        }
-
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
         public bool? IsDoubleEncryptionEnabled
         {
@@ -442,6 +429,36 @@ namespace Azure.ResourceManager.Kusto
             get
             {
                 return Properties is null ? default : Properties.ZoneStatus;
+            }
+        }
+
+        /// <summary> The list of language extensions. </summary>
+        public IList<KustoLanguageExtension> Value
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                return Properties.Value;
+            }
+        }
+
+        /// <summary> The link to the next page of resources. </summary>
+        public string NextLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterProperties();
+                }
+                Properties.NextLink = value;
             }
         }
     }

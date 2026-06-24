@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public ClusterProperties()
         {
             TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
-            LanguageExtensionsValue = new ChangeTrackingList<KustoLanguageExtension>();
             AllowedIPRangeList = new ChangeTrackingList<string>();
             AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
             AllowedFqdnList = new ChangeTrackingList<string>();
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, IList<KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IList<KustoCalloutPolicy> calloutPolicies, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster, KustoClusterZoneStatus? zoneStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensionsValue, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IList<KustoCalloutPolicy> calloutPolicies, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster, KustoClusterZoneStatus? zoneStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ProvisioningState = provisioningState;
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public bool? IsPurgeEnabled { get; set; }
 
         /// <summary> List of the cluster's language extensions. </summary>
-        public IList<KustoLanguageExtension> LanguageExtensionsValue { get; } = new ChangeTrackingList<KustoLanguageExtension>();
+        internal KustoLanguageExtensionList LanguageExtensionsValue { get; set; }
 
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
         public bool? IsDoubleEncryptionEnabled { get; set; }
@@ -170,5 +169,35 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Indicates whether the cluster is zonal or non-zonal. </summary>
         public KustoClusterZoneStatus? ZoneStatus { get; }
+
+        /// <summary> The list of language extensions. </summary>
+        public IList<KustoLanguageExtension> Value
+        {
+            get
+            {
+                if (LanguageExtensionsValue is null)
+                {
+                    LanguageExtensionsValue = new KustoLanguageExtensionList();
+                }
+                return LanguageExtensionsValue.Value;
+            }
+        }
+
+        /// <summary> The link to the next page of resources. </summary>
+        public string NextLink
+        {
+            get
+            {
+                return LanguageExtensionsValue is null ? default : LanguageExtensionsValue.NextLink;
+            }
+            set
+            {
+                if (LanguageExtensionsValue is null)
+                {
+                    LanguageExtensionsValue = new KustoLanguageExtensionList();
+                }
+                LanguageExtensionsValue.NextLink = value;
+            }
+        }
     }
 }

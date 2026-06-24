@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -13,5 +14,8 @@ namespace Azure.ResourceManager.Kusto.Models
         // (matching KustoClusterData), but the previous AutoRest SDK exposed it as `Uri` on the patch model.
         /// <summary> The cluster URI. </summary>
         public Uri Uri => ClusterUri;
+
+        /// <summary> The list of language extensions. </summary>
+        public IList<KustoLanguageExtension> LanguageExtensionsValue => Value;
     }
 }

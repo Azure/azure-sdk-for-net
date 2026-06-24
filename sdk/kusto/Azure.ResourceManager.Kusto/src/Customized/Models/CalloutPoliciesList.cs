@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using Azure.ResourceManager.Kusto;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of <see cref="CalloutPoliciesList"/>. </summary>
         public CalloutPoliciesList()
         {
+            Value = new ChangeTrackingList<KustoCalloutPolicy>();
         }
     }
 }

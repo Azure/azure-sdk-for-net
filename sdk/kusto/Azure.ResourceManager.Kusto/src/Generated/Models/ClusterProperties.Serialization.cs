@@ -139,15 +139,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(LanguageExtensionsValue))
+            if (Optional.IsDefined(LanguageExtensionsValue))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteStartArray();
-                foreach (KustoLanguageExtension item in LanguageExtensionsValue)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(LanguageExtensionsValue, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -308,7 +303,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default;
             KustoKeyVaultProperties keyVaultProperties = default;
             bool? isPurgeEnabled = default;
-            IList<KustoLanguageExtension> languageExtensionsValue = default;
+            KustoLanguageExtensionList languageExtensionsValue = default;
             bool? isDoubleEncryptionEnabled = default;
             KustoClusterPublicNetworkAccess? publicNetworkAccess = default;
             IList<string> allowedIPRangeList = default;
@@ -441,12 +436,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    List<KustoLanguageExtension> array = new List<KustoLanguageExtension>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item, options));
-                    }
-                    languageExtensionsValue = array;
+                    languageExtensionsValue = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableDoubleEncryption"u8))
@@ -628,7 +618,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 virtualNetworkConfiguration,
                 keyVaultProperties,
                 isPurgeEnabled,
-                languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>(),
+                languageExtensionsValue,
                 isDoubleEncryptionEnabled,
                 publicNetworkAccess,
                 allowedIPRangeList ?? new ChangeTrackingList<string>(),
