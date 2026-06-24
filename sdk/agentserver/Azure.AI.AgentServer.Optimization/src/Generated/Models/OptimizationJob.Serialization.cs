@@ -99,8 +99,13 @@ namespace Azure.AI.AgentServer.Optimization
             }
             if (Optional.IsDefined(Inputs))
             {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
+                // V1Preview API expects inputs properties at root level (flat), not nested in "inputs".
+                // Serialize Inputs to JSON and inline its properties at the current level.
+                using var inputsDoc = JsonDocument.Parse(ModelReaderWriter.Write(Inputs, options, AzureAIAgentServerOptimizationContext.Default));
+                foreach (var prop in inputsDoc.RootElement.EnumerateObject())
+                {
+                    prop.WriteTo(writer);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {

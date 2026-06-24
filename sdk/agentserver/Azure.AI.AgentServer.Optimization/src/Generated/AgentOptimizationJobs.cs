@@ -117,7 +117,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OptimizationJob> Create(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual Response<OptimizationJob> Create(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
 
@@ -132,7 +132,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OptimizationJob>> CreateAsync(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OptimizationJob>> CreateAsync(OptimizationJob job, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
 
@@ -213,7 +213,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<OptimizationJob> Get(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -228,7 +228,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OptimizationJob>> GetAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -354,7 +354,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<OptimizationJob> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, PageOrder? order = default, string after = default, string before = default, JobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<OptimizationJob> GetAll(FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, int? limit = default, PageOrder? order = default, string after = default, string before = default, JobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
         {
             return new AgentOptimizationJobsGetAllCollectionResultOfT(
                 this,
@@ -393,7 +393,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<OptimizationJob> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, PageOrder? order = default, string after = default, string before = default, JobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OptimizationJob> GetAllAsync(FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, int? limit = default, PageOrder? order = default, string after = default, string before = default, JobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
         {
             return new AgentOptimizationJobsGetAllAsyncCollectionResultOfT(
                 this,
@@ -481,7 +481,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<OptimizationJob> Cancel(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -496,7 +496,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OptimizationJob>> CancelAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -577,7 +577,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -591,7 +591,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -725,7 +725,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, PageOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual Response<AgentsPagedResultOptimizationCandidate> GetCandidates(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, int? limit = default, PageOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -758,7 +758,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = default, int? limit = default, PageOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentsPagedResultOptimizationCandidate>> GetCandidatesAsync(string jobId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, int? limit = default, PageOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -844,7 +844,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OptimizationCandidate> GetCandidate(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<OptimizationCandidate> GetCandidate(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -861,7 +861,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<OptimizationCandidate>> GetCandidateAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OptimizationCandidate>> GetCandidateAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -948,7 +948,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<CandidateDeployConfig> GetCandidateConfig(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<CandidateDeployConfig> GetCandidateConfig(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -965,7 +965,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<CandidateDeployConfig>> GetCandidateConfigAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CandidateDeployConfig>> GetCandidateConfigAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -1052,7 +1052,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<CandidateResults> GetCandidateResults(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<CandidateResults> GetCandidateResults(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -1069,7 +1069,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<CandidateResults>> GetCandidateResultsAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CandidateResults>> GetCandidateResultsAsync(string jobId, string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
@@ -1151,7 +1151,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<CandidateDeployConfig> GetCandidateConfigFlat(string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual Response<CandidateDeployConfig> GetCandidateConfigFlat(string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
 
@@ -1166,7 +1166,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <exception cref="ArgumentNullException"> <paramref name="candidateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="candidateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<CandidateDeployConfig>> GetCandidateConfigFlatAsync(string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CandidateDeployConfig>> GetCandidateConfigFlatAsync(string candidateId, FoundryFeaturesOptInKeys? foundryFeatures = FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(candidateId, nameof(candidateId));
 
