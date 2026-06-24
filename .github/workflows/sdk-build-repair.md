@@ -29,6 +29,15 @@ description: "Auto-repair custom-code build failures on release-planner Auto SDK
 
 on:
   # Primary, fully-automatic path: the release pipeline labels an eligible Auto SDK PR.
+  # We use `pull_request` (not `pull_request_target`): under `pull_request`, fork PRs get
+  # NO secrets and a read-only token (and gh-aw blocks forks by default), while the strict
+  # eligibility gate below restricts same-repo runs to release-bot-generated `sdkauto/*`
+  # branches — so the code that ever executes (incl. ./eng/common/mcp/azure-sdk-mcp.ps1 and
+  # the package build) is always trusted, pipeline-generated content. `pull_request_target`
+  # was rejected because gh-aw flags it as "extremely insecure" with checkout (the classic
+  # pwn-request vector: full write perms + secrets while building untrusted PR code); for a
+  # build-repair agent that MUST build the PR's code, the real control is the eligibility
+  # gate, not the trigger event.
   pull_request:
     types: [labeled]
     names: [auto-sdk-build-fix]
@@ -42,10 +51,22 @@ on:
   roles: [admin, maintainer, write]
   bots: ["azure-sdk"]
 
-# Master kill-switch (fail-safe). The workflow stays dormant unless the repo Actions
-# variable SDK_BUILD_REPAIR_ENABLED is exactly 'true'. Flip it from the GitHub UI with
-# no code change to enable during MVP rollout, or back to halt every path instantly.
-if: ${{ vars.SDK_BUILD_REPAIR_ENABLED == 'true' }}
+# Master kill-switch (fail-safe) + PR-eligibility gate. The workflow stays dormant unless
+# the repo Actions variable SDK_BUILD_REPAIR_ENABLED is exactly 'true'. In addition, on the
+# automatic (pull_request) path the PR must be a genuine release-planner Auto SDK PR:
+# same-repo (no forks), opened by the `azure-sdk` release bot, targeting `main`, on an
+# `sdkauto/` branch. This gates *which PRs are eligible* (not just *who* can trigger), so a
+# stray label on an unrelated/untrusted PR cannot run the repair agent against its code. The
+# label name itself is filtered by `names:` under `on:` above. The manual /repair-build path
+# is additionally gated by `roles:` above and by the agent's own eligibility check — see
+# "Eligibility" in the prompt below.
+if: >-
+  ${{ vars.SDK_BUILD_REPAIR_ENABLED == 'true'
+      && (github.event_name != 'pull_request'
+          || (github.event.pull_request.head.repo.full_name == github.repository
+              && github.event.pull_request.base.ref == 'main'
+              && github.event.pull_request.user.login == 'azure-sdk'
+              && startsWith(github.event.pull_request.head.ref, 'sdkauto/'))) }}
 
 engine: copilot
 
@@ -129,8 +150,20 @@ azsdk tsp client customized-update \
 
 `--edit-scope CustomCode` is custom-code-only: the engine regenerates from the pinned `tsp-location.yaml` commit, patches only custom (non-generated) code, and surfaces anything that needs a spec change as out of scope (`SpecChangeRequired`) instead of applying it. **Omit `--tsp-project-path`** (only needed for `SpecInputs`/`All` scope). Read the returned structured result (build success/failure + error code) to decide the next step exactly as the skill describes.
 
+## Eligibility (verify before doing any work)
+
+This workflow only repairs genuine **release-planner Auto SDK PRs**. Before building anything, use the read-only GitHub tools to confirm **all** of the following about PR #${{ github.event.pull_request.number || github.event.issue.number }}:
+
+- it is in **this same repository** (the head branch is not from a fork),
+- it was **opened by the `azure-sdk` release bot**,
+- its **base branch is `main`**, and
+- its **head branch starts with `sdkauto/`**.
+
+The automatic (label) path is already gated on these by the workflow `if:`, but the manual `/repair-build` path is not — so **you must re-check them here**. If any condition fails, **stop immediately**: do not check out, build, or run the PR's code; post one `add-comment` explaining the PR is not an eligible Auto SDK PR, and end. This prevents running the repair agent against untrusted code.
+
 ## Operating constraints (non-negotiable)
 
+0. **Verify eligibility first** (see the Eligibility section above) and bail if it fails — before any checkout/build of PR code.
 1. **One engine only.** Drive `azsdk tsp client customized-update` with `--edit-scope CustomCode`. Do **not** hand-edit code, and do **not** use any other fix engine.
 2. **Never edit spec inputs.** Do not modify `client.tsp`, `tspconfig.yaml`, `main.tsp`, any TypeSpec source, or move the pinned commit in `tsp-location.yaml`. `--edit-scope CustomCode` enforces this.
 3. **Commit the regenerated `Generated/`** alongside the custom-code edits — the guard is reproducibility from unchanged inputs, not a frozen `Generated/`.
