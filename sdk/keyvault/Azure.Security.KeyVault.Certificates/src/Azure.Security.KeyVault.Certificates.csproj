@@ -23,16 +23,48 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <!--
+    Auto-generated TypeSpec output (see ..\tsp-location.yaml) lives under
+    .\Generated. The Internalize-Generated.ps1 step hides those types from the
+    public API surface — the customer-facing client is the hand-written
+    CertificateClient. This mirrors Java's `implementation.models` subpackage and
+    Python's `_generated` namespace conventions.
+
+    Inputs is intentionally scoped to .\Generated only (plus the script itself)
+    so incremental builds don't re-run the script when unrelated handwritten
+    .cs files change. The stamp file is touched on success so MSBuild can skip
+    the target when nothing relevant moved.
+  -->
+  <Target Name="InternalizeGeneratedCode"
+          BeforeTargets="CoreCompile"
+          Inputs="$(MSBuildThisFileDirectory)Generated\**\*.cs;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1"
+          Outputs="$(IntermediateOutputPath)InternalizeGeneratedCode.stamp">
+    <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1&quot;"
+          ConsoleToMSBuild="true"
+          IgnoreExitCode="false" />
+    <Touch Files="$(IntermediateOutputPath)InternalizeGeneratedCode.stamp" AlwaysCreate="true" />
+  </Target>
+
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)UnsupportedOSPlatformAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
   </ItemGroup>
+
+  <!--
+    Two generated wire-model files share names with hand-written public types
+    (PlatformManaged, CertificatePolicyAction) in src/. The Internalize script
+    keeps those generated files as `public partial` (see $mergeFileNames in
+    Internalize-Generated.ps1) so the C# compiler merges them with the
+    hand-written `public partial` declarations. Hand-written owns the
+    customer-facing API; generated contributes additive MRW JSON support and
+    a nullable string implicit cast.
+  -->
 
 </Project>

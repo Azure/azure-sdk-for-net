@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "KeyVaultCertificatesClient": {
+          "type": "object",
+          "description": "Configuration for KeyVaultCertificatesClient.",
+          "properties": {
+            "VaultBaseUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the VaultBaseUrl."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/keyVaultCertificatesClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "keyVaultCertificatesClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}
