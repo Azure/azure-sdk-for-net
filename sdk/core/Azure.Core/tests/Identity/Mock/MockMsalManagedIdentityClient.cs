@@ -81,7 +81,9 @@ namespace Azure.Core.Tests.Identity.Mock
             {
                 // Allows tests to simulate the MSAL source/capability probe (which throws when IMDS is
                 // unreachable). The factory may return a value or throw.
-                return new ValueTask<ManagedIdentityCapabilities>(GetManagedIdentityCapabilitiesFactory(context, cancellationToken));
+                ManagedIdentityCapabilities capabilities = GetManagedIdentityCapabilitiesFactory(context, cancellationToken);
+                _detectedSource = capabilities.Source;
+                return new ValueTask<ManagedIdentityCapabilities>(capabilities);
             }
 
             // Use the static method to avoid real network probing in tests.
