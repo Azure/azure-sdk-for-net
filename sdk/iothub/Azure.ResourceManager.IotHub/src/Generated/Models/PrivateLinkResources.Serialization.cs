@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The available private link resources for an IotHub. </summary>
     internal partial class PrivateLinkResources : IJsonModel<PrivateLinkResources>
     {
         /// <param name="data"> The data to parse. </param>
@@ -56,13 +54,6 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResources"/> from. </param>
-        internal static PrivateLinkResources FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePrivateLinkResources(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

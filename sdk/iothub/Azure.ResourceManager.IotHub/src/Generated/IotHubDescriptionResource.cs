@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.IotHub
     {
         private readonly ClientDiagnostics _iotHubResourceClientDiagnostics;
         private readonly IotHubResource _iotHubResourceRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
         private readonly IotHubDescriptionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.IotHub
             TryGetApiVersion(ResourceType, out string iotHubDescriptionApiVersion);
             _iotHubResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
             _iotHubResourceRestClient = new IotHubResource(_iotHubResourceClientDiagnostics, Pipeline, Endpoint, iotHubDescriptionApiVersion ?? "2026-03-01-preview");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, iotHubDescriptionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

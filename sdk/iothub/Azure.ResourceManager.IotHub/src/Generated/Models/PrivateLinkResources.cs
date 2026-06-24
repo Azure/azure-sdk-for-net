@@ -11,7 +11,6 @@ using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The available private link resources for an IotHub. </summary>
     internal partial class PrivateLinkResources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

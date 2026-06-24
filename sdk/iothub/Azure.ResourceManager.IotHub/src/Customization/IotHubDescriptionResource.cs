@@ -7,7 +7,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -22,10 +21,6 @@ namespace Azure.ResourceManager.IotHub
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotHubDescriptions method.
     /// </summary>
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetAll", typeof(CancellationToken))]
     public partial class IotHubDescriptionResource
     {
         // The lower-case "iotHubs" route segment is required to keep the generated swagger identical to

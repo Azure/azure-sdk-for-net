@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             if (Optional.IsCollectionDefined(RequiredDnsZoneNames))
             {
-                writer.WritePropertyName("requiredZoneNames"u8);
+                writer.WritePropertyName("RequiredDnsZoneNames"u8);
                 writer.WriteStartArray();
                 foreach (string item in RequiredDnsZoneNames)
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     requiredMembers = array;
                     continue;
                 }
-                if (prop.NameEquals("requiredZoneNames"u8))
+                if (prop.NameEquals("RequiredDnsZoneNames"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
