@@ -9,7 +9,9 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -255,24 +257,56 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                try
+                CancellationToken cancellationToken = context?.CancellationToken ?? default;
+                Response response = null;
+
+                // After a write the entry may not be immediately available: the service returns a 200
+                // "Loading" response while it is committed across nodes. Poll until it is ready, bounded
+                // by the client's configured retry count and delay (see _maxLoadingRetries / _loadingPollDelay).
+                for (int attempt = 0; ; attempt++)
                 {
-                    using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                    return await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                    Response failoverCurrent = await _failoverService.ExecuteOnFailoversAsync(
-                        _ledgerEndpoint,
-                        async (endpoint) =>
+                    try
+                    {
+                        using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
+                        response = await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
+                    }
+                    catch (Exception primaryException)
+                    {
+                        try
                         {
-                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                        },
-                        nameof(GetCurrentLedgerEntryAsync),
-                        collectionId,
-                        context?.CancellationToken ?? default).ConfigureAwait(false);
-                    return FormatLedgerEntry(failoverCurrent);
+                            Response failoverCurrent = await _failoverService.ExecuteOnFailoversAsync(
+                                _ledgerEndpoint,
+                                async (endpoint) =>
+                                {
+                                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                                },
+                                nameof(GetCurrentLedgerEntryAsync),
+                                collectionId,
+                                context?.CancellationToken ?? default).ConfigureAwait(false);
+                            return FormatLedgerEntry(failoverCurrent);
+                        }
+                        catch (Exception)
+                        {
+                            // Failover also failed; rethrow the original primary error
+                            ExceptionDispatchInfo.Capture(primaryException).Throw();
+                            throw; // unreachable
+                        }
+                    }
+
+                    if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
+                    {
+                        return response;
+                    }
+
+                    if (_loadingPollDelay > TimeSpan.Zero)
+                    {
+                        await Task.Delay(_loadingPollDelay, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
                 }
             }
             catch (Exception e)
@@ -308,24 +342,57 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                try
+                CancellationToken cancellationToken = context?.CancellationToken ?? default;
+                Response response = null;
+
+                // After a write the entry may not be immediately available: the service returns a 200
+                // "Loading" response while it is committed across nodes. Poll until it is ready, bounded
+                // by the client's configured retry count and delay (see _maxLoadingRetries / _loadingPollDelay).
+                for (int attempt = 0; ; attempt++)
                 {
-                    using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                    return _pipeline.ProcessMessage(primaryMessage, context);
-                }
-                catch (Exception)
-                {
-                    Response failoverCurrent = _failoverService.ExecuteOnFailovers(
-                        _ledgerEndpoint,
-                        (endpoint) =>
+                    try
+                    {
+                        using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
+                        response = _pipeline.ProcessMessage(primaryMessage, context);
+                    }
+                    catch (Exception primaryException)
+                    {
+                        try
                         {
-                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                            return _pipeline.ProcessMessage(message, context);
-                        },
-                        nameof(GetCurrentLedgerEntry),
-                        collectionId,
-                        context?.CancellationToken ?? default);
-                    return FormatLedgerEntry(failoverCurrent);
+                            Response failoverCurrent = _failoverService.ExecuteOnFailovers(
+                                _ledgerEndpoint,
+                                (endpoint) =>
+                                {
+                                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                                    return _pipeline.ProcessMessage(message, context);
+                                },
+                                nameof(GetCurrentLedgerEntry),
+                                collectionId,
+                                context?.CancellationToken ?? default);
+                            return FormatLedgerEntry(failoverCurrent);
+                        }
+                        catch (Exception)
+                        {
+                            // Failover also failed; rethrow the original primary error
+                            ExceptionDispatchInfo.Capture(primaryException).Throw();
+                            throw; // unreachable
+                        }
+                    }
+
+                    if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
+                    {
+                        return response;
+                    }
+
+                    if (_loadingPollDelay > TimeSpan.Zero)
+                    {
+                        cancellationToken.WaitHandle.WaitOne(_loadingPollDelay);
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
+                    else
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                    }
                 }
             }
             catch (Exception e)
@@ -501,6 +568,18 @@ namespace Azure.Security.ConfidentialLedger
                     using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
                     return await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
                 }
+                catch (RequestFailedException archivedException) when (_enableArchivedCollectionFallback && collectionId != null && IsArchivedCollectionNotFound(archivedException))
+                {
+                    // The collection's live entry has been archived (pruned) by the service. Fall back to the
+                    // latest entry available in the ledger history. Failover endpoints would return the same 404
+                    // because pruning is consistent across nodes, so we go straight to the historical query.
+                    Response archived = await TryGetArchivedCurrentEntryAsync(collectionId, context).ConfigureAwait(false);
+                    if (archived != null)
+                    {
+                        return archived;
+                    }
+                    throw;
+                }
                 catch (Exception)
                 {
                     return await _failoverService.ExecuteOnFailoversAsync(
@@ -547,6 +626,18 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
                     return _pipeline.ProcessMessage(primaryMessage, context);
+                }
+                catch (RequestFailedException archivedException) when (_enableArchivedCollectionFallback && collectionId != null && IsArchivedCollectionNotFound(archivedException))
+                {
+                    // The collection's live entry has been archived (pruned) by the service. Fall back to the
+                    // latest entry available in the ledger history. Failover endpoints would return the same 404
+                    // because pruning is consistent across nodes, so we go straight to the historical query.
+                    Response archived = TryGetArchivedCurrentEntry(collectionId, context);
+                    if (archived != null)
+                    {
+                        return archived;
+                    }
+                    throw;
                 }
                 catch (Exception)
                 {
@@ -2781,6 +2872,8 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     return currentResponse; // nothing to do
                 }
+
+                byte[] reshaped;
                 currentResponse.ContentStream.Position = 0;
                 using (var doc = System.Text.Json.JsonDocument.Parse(currentResponse.ContentStream))
                 {
@@ -2789,6 +2882,8 @@ namespace Azure.Security.ConfidentialLedger
                     var jsonWriterOptions = new System.Text.Json.JsonWriterOptions
                     {
                         Indented = true,
+                        // Match the escaping the service uses for entry contents so that characters
+                        // such as '+' or '<' are not re-encoded (e.g. to \u002B) in the reshaped body.
                         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
                     };
                     using (var writer = new System.Text.Json.Utf8JsonWriter(ms, jsonWriterOptions))
@@ -2803,51 +2898,18 @@ namespace Azure.Security.ConfidentialLedger
                         writer.WriteString("state", "Ready");
                         writer.WriteEndObject();
                     }
-                    ms.Position = 0;
-                    // Wrap in a synthetic Response that mimics the original status/headers but with new content.
-                    return new SyntheticResponse(currentResponse, ms.ToArray());
+                    reshaped = ms.ToArray();
                 }
+
+                // Reuse the original (200) response, swapping in the reshaped content. The Azure
+                // Response.ContentStream is settable, so no synthetic Response wrapper is needed.
+                currentResponse.ContentStream = new System.IO.MemoryStream(reshaped, writable: false);
+                return currentResponse;
             }
             catch (Exception)
             {
                 return currentResponse; // fall back to original
             }
-        }
-
-        private sealed class SyntheticResponse : Response
-        {
-            private readonly Response _inner;
-            private readonly byte[] _content;
-            private System.IO.MemoryStream _stream;
-
-            public SyntheticResponse(Response inner, byte[] content)
-            {
-                _inner = inner;
-                _content = content ?? Array.Empty<byte>();
-                _stream = new System.IO.MemoryStream(_content, writable: false);
-            }
-
-            public override int Status => _inner.Status;
-            public override string ReasonPhrase => _inner.ReasonPhrase;
-            public override Stream ContentStream
-            {
-                get => _stream;
-                set => _stream = value as System.IO.MemoryStream ?? new System.IO.MemoryStream();
-            }
-            public override string ClientRequestId
-            {
-                get => _inner.ClientRequestId;
-                set => _inner.ClientRequestId = value;
-            }
-            public override void Dispose()
-            {
-                _stream?.Dispose();
-                _inner?.Dispose();
-            }
-            protected override bool ContainsHeader(string name) => _inner.Headers.Contains(name);
-            protected override IEnumerable<HttpHeader> EnumerateHeaders() => _inner.Headers;
-            protected override bool TryGetHeader(string name, out string value) => _inner.Headers.TryGetValue(name, out value);
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _inner.Headers.TryGetValues(name, out values);
         }
     }
 }

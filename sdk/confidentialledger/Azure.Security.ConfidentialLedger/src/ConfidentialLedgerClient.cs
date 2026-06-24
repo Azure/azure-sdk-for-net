@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,6 +21,26 @@ namespace Azure.Security.ConfidentialLedger
     {
         internal const string Default_Certificate_Endpoint = "https://identity.confidential-ledger.core.azure.com";
         private readonly ConfidentialLedgerFailoverService _failoverService;
+
+        /// <summary>
+        /// When true, GetCurrentLedgerEntry falls back to a historical query for a collection's latest
+        /// entry when the live entry has been archived (pruned) by the service. Set from
+        /// <see cref="ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback"/>.
+        /// </summary>
+        private readonly bool _enableArchivedCollectionFallback;
+
+        /// <summary>
+        /// Maximum number of additional times <c>GetLedgerEntry</c> re-polls the service while the
+        /// entry is still in the "Loading" state. Driven by the client's configured
+        /// <see cref="Azure.Core.RetryOptions.MaxRetries"/> so callers control the upper bound.
+        /// </summary>
+        private readonly int _maxLoadingRetries;
+
+        /// <summary>
+        /// Delay between "Loading" re-polls in <c>GetLedgerEntry</c>. Driven by the client's configured
+        /// <see cref="Azure.Core.RetryOptions.Delay"/>.
+        /// </summary>
+        private readonly TimeSpan _loadingPollDelay;
 
         /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
         /// <param name="ledgerEndpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
@@ -82,7 +105,15 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
-            _failoverService = new ConfidentialLedgerFailoverService(_pipeline, ClientDiagnostics);
+            _failoverService = new ConfidentialLedgerFailoverService(
+                _pipeline,
+                ClientDiagnostics,
+                actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint));
+            _enableArchivedCollectionFallback = actualOptions.EnableArchivedCollectionFallback;
+            // Drive GetLedgerEntry "Loading" polling from the client's configured retry settings rather
+            // than hardcoded values, so callers control the upper bound and the delay between attempts.
+            _maxLoadingRetries = actualOptions.Retry.MaxRetries;
+            _loadingPollDelay = actualOptions.Retry.Delay;
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
@@ -364,5 +395,182 @@ namespace Azure.Security.ConfidentialLedger
         /// <returns> The response returned from the service. </returns>
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context)
             => PostLedgerEntryAsync(waitUntil, content, collectionId: collectionId, tags: null, context: context);
+
+        /// <summary>
+        /// Determines whether a <c>GetLedgerEntry</c> response represents the transient "Loading"
+        /// state (entry not yet committed) and the call should therefore be retried.
+        /// </summary>
+        /// <remarks>
+        /// The service returns a successful HTTP 200 response while the entry is being committed.
+        /// In that case the body has shape <c>{ "state": "Loading" }</c> and does not yet contain
+        /// the <c>"entry"</c> property. Once available the body has shape
+        /// <c>{ "state": "Ready", "entry": { ... } }</c>.
+        /// </remarks>
+        private static readonly byte[] s_loadingToken = System.Text.Encoding.UTF8.GetBytes("Loading");
+
+        private static bool IsLoadingResponse(Response response)
+        {
+            if (response == null || response.Status != (int)HttpStatusCode.OK)
+            {
+                return false;
+            }
+
+            BinaryData content = response.Content;
+            if (content == null)
+            {
+                return false;
+            }
+
+            ReadOnlySpan<byte> bytes = content.ToMemory().Span;
+            if (bytes.Length == 0)
+            {
+                return false;
+            }
+
+            // Fast pre-check: a Loading response must contain the literal "Loading" state token.
+            // Skip parsing (potentially large) bodies that cannot be a Loading response.
+            if (bytes.IndexOf(s_loadingToken) < 0)
+            {
+                return false;
+            }
+
+            try
+            {
+                using JsonDocument doc = JsonDocument.Parse(content);
+                if (doc.RootElement.ValueKind != JsonValueKind.Object)
+                {
+                    return false;
+                }
+
+                // Ready response always contains the "entry" property.
+                if (doc.RootElement.TryGetProperty("entry", out _))
+                {
+                    return false;
+                }
+
+                // Treat the response as loading only when the body explicitly indicates the
+                // "Loading" state, to avoid retrying on other successful-but-unexpected shapes.
+                return doc.RootElement.TryGetProperty("state", out var state) &&
+                    state.ValueKind == JsonValueKind.String &&
+                    string.Equals(state.GetString(), "Loading", StringComparison.Ordinal);
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether an exception/response indicates that a collection's current entry is no
+        /// longer available in the live store because it has been archived (pruned) by the service.
+        /// The service returns <c>404 Not Found</c> for the <c>GetCurrentLedgerEntry</c> endpoint when
+        /// the collection has been pruned.
+        /// </summary>
+        private static bool IsArchivedCollectionNotFound(RequestFailedException ex)
+            => ex != null && ex.Status == (int)HttpStatusCode.NotFound;
+
+        /// <summary>
+        /// Builds a synthetic <c>GetCurrentLedgerEntry</c>-shaped response from a single historical
+        /// ledger entry (as returned by <c>GetLedgerEntries</c>). The current-entry body shape is
+        /// <c>{ "collectionId": "...", "contents": "...", "transactionId": "..." }</c>. The returned
+        /// response always reports HTTP 200 since the entry was successfully retrieved from history.
+        /// </summary>
+        private static Response FormatArchivedCurrentEntry(BinaryData latestEntry, string collectionId)
+        {
+            using JsonDocument doc = JsonDocument.Parse(latestEntry);
+            JsonElement root = doc.RootElement;
+
+            using var ms = new System.IO.MemoryStream();
+            var writerOptions = new System.Text.Json.JsonWriterOptions
+            {
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            using (var writer = new System.Text.Json.Utf8JsonWriter(ms, writerOptions))
+            {
+                writer.WriteStartObject();
+                string col = root.TryGetProperty("collectionId", out var colEl) ? colEl.GetString() : collectionId;
+                if (col != null)
+                {
+                    writer.WriteString("collectionId", col);
+                }
+                if (root.TryGetProperty("contents", out var contents))
+                {
+                    writer.WriteString("contents", contents.GetString());
+                }
+                if (root.TryGetProperty("transactionId", out var tx))
+                {
+                    writer.WriteString("transactionId", tx.GetString());
+                }
+                writer.WriteEndObject();
+            }
+            return new ArchivedCurrentEntryResponse(ms.ToArray());
+        }
+
+        /// <summary>
+        /// Retrieves the latest historical entry for an archived (pruned) collection and returns it
+        /// shaped like a <c>GetCurrentLedgerEntry</c> response. Returns <c>null</c> when no historical
+        /// entry exists for the collection.
+        /// </summary>
+        private async Task<Response> TryGetArchivedCurrentEntryAsync(string collectionId, RequestContext context)
+        {
+            BinaryData latest = null;
+            await foreach (BinaryData entry in GetLedgerEntriesAsync(collectionId, fromTransactionId: null, toTransactionId: null, tag: null, context: context).ConfigureAwait(false))
+            {
+                // Entries are returned oldest-first; the last one is the latest committed entry.
+                latest = entry;
+            }
+
+            return latest == null ? null : FormatArchivedCurrentEntry(latest, collectionId);
+        }
+
+        /// <summary>
+        /// Synchronous counterpart of <see cref="TryGetArchivedCurrentEntryAsync"/>.
+        /// </summary>
+        private Response TryGetArchivedCurrentEntry(string collectionId, RequestContext context)
+        {
+            BinaryData latest = null;
+            foreach (BinaryData entry in GetLedgerEntries(collectionId, fromTransactionId: null, toTransactionId: null, tag: null, context: context))
+            {
+                latest = entry;
+            }
+
+            return latest == null ? null : FormatArchivedCurrentEntry(latest, collectionId);
+        }
+
+        /// <summary>
+        /// A minimal HTTP 200 response carrying a synthesized current-ledger-entry body, used when an
+        /// archived collection's latest entry is reconstructed from the ledger history.
+        /// </summary>
+        private sealed class ArchivedCurrentEntryResponse : Response
+        {
+            private System.IO.MemoryStream _stream;
+
+            public ArchivedCurrentEntryResponse(byte[] content)
+            {
+                _stream = new System.IO.MemoryStream(content ?? Array.Empty<byte>(), writable: false);
+            }
+
+            public override int Status => (int)HttpStatusCode.OK;
+            public override string ReasonPhrase => "OK";
+            public override Stream ContentStream
+            {
+                get => _stream;
+                set => _stream = value as System.IO.MemoryStream ?? new System.IO.MemoryStream();
+            }
+            public override string ClientRequestId { get; set; } = string.Empty;
+            public override void Dispose() => _stream?.Dispose();
+            protected override bool ContainsHeader(string name) => false;
+            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                value = null;
+                return false;
+            }
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                values = null;
+                return false;
+            }
+        }
     }
 }

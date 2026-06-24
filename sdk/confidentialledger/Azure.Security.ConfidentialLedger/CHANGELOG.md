@@ -4,6 +4,11 @@
 
 ### Features Added
 - Added support to route to failover ledgers for the `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync` methods.
+- The client now treats a `GetLedgerEntry`/`GetLedgerEntryAsync` response that is still in the `Loading` state as transient and automatically polls until the entry is committed, bounded by the client's configured retry settings (`ClientOptions.Retry.MaxRetries` attempts with `ClientOptions.Retry.Delay` between attempts). Callers no longer need to write a manual polling loop.
+- Added `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback`. When enabled, `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` transparently fall back to a historical query for a collection whose latest entry has been archived (pruned) by the service, returning the most recent committed entry instead of failing with `404 Not Found`. Defaults to `false` so callers must explicitly opt in.
+
+### Bugs Fixed
+- `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` (instead of failing) and tolerates up to 3 consecutive `404 NotFound` responses while a transaction is being replicated across nodes, preventing spurious `RequestFailedException`s during normal commit propagation.
 
 ## 1.4.1-beta.3 (Unreleased)
 

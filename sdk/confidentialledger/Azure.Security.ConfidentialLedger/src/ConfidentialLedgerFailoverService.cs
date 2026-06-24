@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -17,13 +16,19 @@ namespace Azure.Security.ConfidentialLedger
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
+        // The identity service used to discover failover ledgers. Honors a custom
+        // ConfidentialLedgerClientOptions.CertificateEndpoint when one is configured, falling back to
+        // the default identity service endpoint otherwise.
+        private readonly Uri _identityServiceEndpoint;
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        public ConfidentialLedgerFailoverService(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        public ConfidentialLedgerFailoverService(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri identityServiceEndpoint = null)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _clientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
+            _identityServiceEndpoint = identityServiceEndpoint ?? new Uri(ConfidentialLedgerClient.Default_Certificate_Endpoint);
         }
         // Overloads for failover-only execution with collectionId gating.
         public Task<T> ExecuteOnFailoversAsync<T>(
@@ -62,7 +67,7 @@ namespace Azure.Security.ConfidentialLedger
             {
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"{ConfidentialLedgerClient.Default_Certificate_Endpoint}/failover/{ledgerId}");
+                Uri failoverUrl = new Uri(_identityServiceEndpoint, $"/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = await _pipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
@@ -84,7 +89,7 @@ namespace Azure.Security.ConfidentialLedger
                 // retrieving sync metadata
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"{ConfidentialLedgerClient.Default_Certificate_Endpoint}/failover/{ledgerId}");
+                Uri failoverUrl = new Uri(_identityServiceEndpoint, $"/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = _pipeline.ProcessMessage(message, new RequestContext());
@@ -139,19 +144,13 @@ namespace Azure.Security.ConfidentialLedger
                                     break;
                             }
                         }
-                        catch (JsonException jex)
+                        catch (JsonException)
                         {
-#if DEBUG
-                            Debug.WriteLine($"[ConfidentialLedgerFailoverService] JSON parse issue for failoverLedger element: {jex.Message}");
-#endif
-                            _ = jex; // suppress unused warning in non-DEBUG builds
+                            // Ignore a malformed individual failover ledger element and continue.
                         }
-                        catch (InvalidOperationException ioex)
+                        catch (InvalidOperationException)
                         {
-#if DEBUG
-                            Debug.WriteLine($"[ConfidentialLedgerFailoverService] Invalid operation while parsing failoverLedger element: {ioex.Message}");
-#endif
-                            _ = ioex; // suppress unused warning in non-DEBUG builds
+                            // Ignore an unexpected JSON value-kind for an element and continue.
                         }
 
                         if (!string.IsNullOrEmpty(failoverLedgerId))
@@ -193,7 +192,10 @@ namespace Azure.Security.ConfidentialLedger
 
         private static bool IsRetriableFailure(RequestFailedException ex)
         {
-            return ex.Status == 429 || ex.Status >= 500;
+            // Move on to the next failover endpoint only for transient conditions. A 404 means the
+            // ledger/entry does not exist on that endpoint (its replicas would report the same), so it
+            // is not retried. 503/504 are already covered by the >= 500 check.
+            return ex != null && (ex.Status == 408 || ex.Status == 429 || ex.Status >= 500);
         }
 
         // Execute an operation only against discovered failover endpoints (skips primary). Used for specialized fallback flows.
@@ -207,7 +209,6 @@ namespace Azure.Security.ConfidentialLedger
             Exception last = null;
             foreach (var ep in endpoints)
             {
-                // attempt endpoint
                 try
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -215,7 +216,7 @@ namespace Azure.Security.ConfidentialLedger
                 }
                 catch (RequestFailedException ex) when (IsRetriableFailure(ex))
                 {
-                    // endpoint failed, continue
+                    // Transient failure on this endpoint; continue to the next failover endpoint.
                     last = ex;
                 }
                 catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
@@ -236,7 +237,6 @@ namespace Azure.Security.ConfidentialLedger
             Exception last = null;
             foreach (var ep in endpoints)
             {
-                // attempt endpoint
                 try
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -244,7 +244,7 @@ namespace Azure.Security.ConfidentialLedger
                 }
                 catch (RequestFailedException ex) when (IsRetriableFailure(ex))
                 {
-                    // endpoint failed
+                    // Transient failure on this endpoint; continue to the next failover endpoint.
                     last = ex;
                 }
                 catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
