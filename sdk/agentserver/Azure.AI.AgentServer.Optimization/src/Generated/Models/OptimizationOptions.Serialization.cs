@@ -133,6 +133,11 @@ namespace Azure.AI.AgentServer.Optimization
                 writer.WritePropertyName("reflection_model"u8);
                 writer.WriteStringValue(ReflectionModel);
             }
+            if (Optional.IsDefined(OptimizationModel))
+            {
+                writer.WritePropertyName("optimization_model"u8);
+                writer.WriteStringValue(OptimizationModel);
+            }
             if (Optional.IsDefined(TaskTimeoutSeconds))
             {
                 writer.WritePropertyName("task_timeout_seconds"u8);
@@ -196,6 +201,7 @@ namespace Azure.AI.AgentServer.Optimization
             OptimizationMode? mode = default;
             string evalModel = default;
             string reflectionModel = default;
+            string optimizationModel = default;
             TimeSpan? taskTimeoutSeconds = default;
             bool? keepVersions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -297,6 +303,11 @@ namespace Azure.AI.AgentServer.Optimization
                     reflectionModel = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("optimization_model"u8))
+                {
+                    optimizationModel = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("task_timeout_seconds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -320,7 +331,7 @@ namespace Azure.AI.AgentServer.Optimization
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptimizationOptions(
+            var result = new OptimizationOptions(
                 strategies ?? new ChangeTrackingList<OptimizationStrategy>(),
                 budget,
                 maxIterations,
@@ -335,6 +346,8 @@ namespace Azure.AI.AgentServer.Optimization
                 taskTimeoutSeconds,
                 keepVersions,
                 additionalBinaryDataProperties);
+            result.OptimizationModel = optimizationModel;
+            return result;
         }
     }
 }

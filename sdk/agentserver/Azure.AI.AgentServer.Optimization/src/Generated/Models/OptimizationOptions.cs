@@ -88,6 +88,9 @@ namespace Azure.AI.AgentServer.Optimization
         /// <summary> Optional model deployment for strategy reflection (instruction rewriting, skill generation). Falls back to `eval_model` if unset. </summary>
         public string ReflectionModel { get; set; }
 
+        /// <summary> Model deployment used for optimization (mutation generation). Required. </summary>
+        public string OptimizationModel { get; set; }
+
         /// <summary> Per-task timeout for agent execution. Default: 300 seconds (5 minutes). </summary>
         public TimeSpan? TaskTimeoutSeconds { get; set; }
 

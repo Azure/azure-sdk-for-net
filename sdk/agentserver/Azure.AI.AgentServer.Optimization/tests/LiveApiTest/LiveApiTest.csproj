@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsShippable>false</IsShippable>
+    <IsTestProject>false</IsTestProject>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.AI.AgentServer.Optimization.csproj" />
+    <ProjectReference Include="..\..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
+  </ItemGroup>
+</Project>
