@@ -21,14 +21,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesEmptyModelParam(additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A tool that can be used to generate a response. </summary>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="global::OpenAI.Responses.ResponseTool"/> instance for mocking. </returns>
-        public static ResponseTool ResponseTool(ResponseToolKind @type = default)
-        {
-            return new ResponseTool(@type);
-        }
-
         /// <summary> The LocalSkillParam. </summary>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
