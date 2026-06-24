@@ -4,6 +4,9 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Threading;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -13,6 +16,20 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterLocationResource
     {
+        private ClientDiagnostics _allowedConnectionsClientDiagnostics;
+        private AllowedConnections _allowedConnectionsRestClient;
+        private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
+        private DiscoveredSecuritySolutions _discoveredSecuritySolutionsRestClient;
+        private ClientDiagnostics _topologyClientDiagnostics;
+        private Topology _topologyRestClient;
+
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+        private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
         /// <summary>
         /// Provides a compatibility shim for the CreateResourceIdentifier operation preserved from the previous public API surface.
         /// </summary>
@@ -52,17 +69,45 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion() or SubscriptionResource.GetDiscoveredSecuritySolutions() instead.")]
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion() or SubscriptionResource.GetDiscoveredSecuritySolutions() instead."); }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityAsyncPageable<DiscoveredSecuritySolution>(
+                Pipeline,
+                DiscoveredSecuritySolutionsClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? DiscoveredSecuritySolutionsRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : DiscoveredSecuritySolutionsRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    DiscoveredSecuritySolutionList result = DiscoveredSecuritySolutionList.FromResponse(response);
+                    return ((System.Collections.Generic.IReadOnlyList<DiscoveredSecuritySolution>)result.Value, result.NextLink);
+                });
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetAllowedConnectionsByHomeRegionAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityAsyncPageable<SecurityCenterAllowedConnection>(
+                Pipeline,
+                AllowedConnectionsClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? AllowedConnectionsRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : AllowedConnectionsRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
+                    return (result.Value, result.NextLink);
+                });
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetAllSecuritySolutionsReferenceDataByHomeRegionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -76,9 +121,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetTopologiesByHomeRegion() or SubscriptionResource.GetTopologies() instead.")]
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetTopologiesByHomeRegion() or SubscriptionResource.GetTopologies() instead."); }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityAsyncPageable<SecurityTopologyResource>(
+                Pipeline,
+                TopologyClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetTopologiesByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? TopologyRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : TopologyRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    TopologyList result = TopologyList.FromResponse(response);
+                    return (result.Value, result.NextLink);
+                });
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetJitNetworkAccessPoliciesByRegion operation preserved from the previous public API surface.
         /// </summary>
@@ -92,17 +151,45 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion() or SubscriptionResource.GetDiscoveredSecuritySolutions() instead.")]
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion() or SubscriptionResource.GetDiscoveredSecuritySolutions() instead."); }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityPageable<DiscoveredSecuritySolution>(
+                Pipeline,
+                DiscoveredSecuritySolutionsClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetDiscoveredSecuritySolutionsByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? DiscoveredSecuritySolutionsRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : DiscoveredSecuritySolutionsRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    DiscoveredSecuritySolutionList result = DiscoveredSecuritySolutionList.FromResponse(response);
+                    return ((System.Collections.Generic.IReadOnlyList<DiscoveredSecuritySolution>)result.Value, result.NextLink);
+                });
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetAllowedConnectionsByHomeRegion operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterAllowedConnection> GetAllowedConnectionsByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityPageable<SecurityCenterAllowedConnection>(
+                Pipeline,
+                AllowedConnectionsClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetAllowedConnectionsByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? AllowedConnectionsRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : AllowedConnectionsRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
+                    return (result.Value, result.NextLink);
+                });
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetAllSecuritySolutionsReferenceDataByHomeRegion operation preserved from the previous public API surface.
         /// </summary>
@@ -116,9 +203,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetTopologiesByHomeRegion() or SubscriptionResource.GetTopologies() instead.")]
-        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetTopologiesByHomeRegion() or SubscriptionResource.GetTopologies() instead."); }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
+            return new SecurityCenterCompatibilityPageable<SecurityTopologyResource>(
+                Pipeline,
+                TopologyClientDiagnostics,
+                context,
+                "SecurityCenterLocationResource.GetTopologiesByHomeRegion",
+                (nextLink, requestContext) => nextLink is null
+                    ? TopologyRestClient.CreateGetByHomeRegionRequest(System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext)
+                    : TopologyRestClient.CreateNextGetByHomeRegionRequest(nextLink, System.Guid.Parse(Id.SubscriptionId), Id.Name, requestContext),
+                response =>
+                {
+                    TopologyList result = TopologyList.FromResponse(response);
+                    return (result.Value, result.NextLink);
+                });
+        }
     }
 }
 
