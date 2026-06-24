@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A tool for integrating memories into the agent. </summary>
     public partial class ResponsesMemorySearchPreviewTool : ResponseTool, IJsonModel<ResponsesMemorySearchPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/> for deserialization. </summary>
-        internal ResponsesMemorySearchPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

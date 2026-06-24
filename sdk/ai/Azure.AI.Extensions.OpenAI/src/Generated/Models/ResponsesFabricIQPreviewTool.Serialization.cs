@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A FabricIQ server-side tool. </summary>
     public partial class ResponsesFabricIQPreviewTool : ResponseTool, IJsonModel<ResponsesFabricIQPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesFabricIQPreviewTool"/> for deserialization. </summary>
-        internal ResponsesFabricIQPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
     public partial class ResponsesAzureFunctionTool : ResponseTool, IJsonModel<ResponsesAzureFunctionTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/> for deserialization. </summary>
-        internal ResponsesAzureFunctionTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

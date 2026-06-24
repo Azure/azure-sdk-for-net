@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
     public partial class ResponsesBrowserAutomationPreviewTool : ResponseTool, IJsonModel<ResponsesBrowserAutomationPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationPreviewTool"/> for deserialization. </summary>
-        internal ResponsesBrowserAutomationPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

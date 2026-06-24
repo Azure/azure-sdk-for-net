@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
     public partial class ResponsesMicrosoftFabricPreviewTool : ResponseTool, IJsonModel<ResponsesMicrosoftFabricPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/> for deserialization. </summary>
-        internal ResponsesMicrosoftFabricPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

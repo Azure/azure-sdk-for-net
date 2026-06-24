@@ -13,11 +13,6 @@ namespace OpenAI
 {
     internal partial class InternalFunctionTool : ResponseTool, IJsonModel<InternalFunctionTool>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalFunctionTool"/> for deserialization. </summary>
-        internal InternalFunctionTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

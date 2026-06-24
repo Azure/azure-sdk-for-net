@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class ResponsesOpenApiTool : ResponseTool, IJsonModel<ResponsesOpenApiTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/> for deserialization. </summary>
-        internal ResponsesOpenApiTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

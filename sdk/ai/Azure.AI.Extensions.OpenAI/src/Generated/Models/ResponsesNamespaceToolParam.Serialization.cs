@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Namespace. </summary>
     public partial class ResponsesNamespaceToolParam : ResponseTool, IJsonModel<ResponsesNamespaceToolParam>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesNamespaceToolParam"/> for deserialization. </summary>
-        internal ResponsesNamespaceToolParam()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

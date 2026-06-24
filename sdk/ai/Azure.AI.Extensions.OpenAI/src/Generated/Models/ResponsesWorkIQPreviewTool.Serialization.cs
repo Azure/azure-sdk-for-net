@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> A WorkIQ server-side tool. </summary>
     public partial class ResponsesWorkIQPreviewTool : ResponseTool, IJsonModel<ResponsesWorkIQPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/> for deserialization. </summary>
-        internal ResponsesWorkIQPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

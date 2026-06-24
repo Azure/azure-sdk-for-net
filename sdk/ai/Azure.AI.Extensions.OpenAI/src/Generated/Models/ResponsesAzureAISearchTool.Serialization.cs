@@ -13,11 +13,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
     public partial class ResponsesAzureAISearchTool : ResponseTool, IJsonModel<ResponsesAzureAISearchTool>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/> for deserialization. </summary>
-        internal ResponsesAzureAISearchTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
