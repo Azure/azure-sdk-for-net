@@ -61,14 +61,5 @@ namespace Azure.ResourceManager.IotHub.Mocking
             IotHubCertificateDescriptionResource.ValidateResourceId(id);
             return new IotHubCertificateDescriptionResource(Client, id);
         }
-
-        /// <summary> Gets an object representing a <see cref="IotHubPrivateEndpointGroupInformationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource"/> object. </returns>
-        public virtual IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(ResourceIdentifier id)
-        {
-            IotHubPrivateEndpointGroupInformationResource.ValidateResourceId(id);
-            return new IotHubPrivateEndpointGroupInformationResource(Client, id);
-        }
     }
 }

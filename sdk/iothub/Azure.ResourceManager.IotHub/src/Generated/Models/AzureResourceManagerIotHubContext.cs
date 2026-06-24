@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationData))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationProperties))]
-    [ModelReaderWriterBuildable(typeof(IotHubPrivateEndpointGroupInformationResource))]
     [ModelReaderWriterBuildable(typeof(IotHubPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(IotHubProperties))]
     [ModelReaderWriterBuildable(typeof(IotHubPropertiesDeviceStreams))]

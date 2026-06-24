@@ -7,6 +7,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -21,6 +22,10 @@ namespace Azure.ResourceManager.IotHub
     // several GA callers rely on older method names, collection entry points, and string-based If-Match
     // overloads. Keeping these members in custom partials lets the generated code remain regeneration-safe
     // while maintaining source and binary compatibility for existing customers.
+    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAllAsync", typeof(CancellationToken))]
+    [CodeGenSuppress("GetAll", typeof(CancellationToken))]
     public partial class IotHubDescriptionResource
     {
         // The lower-case "iotHubs" route segment is required to keep the generated swagger identical to

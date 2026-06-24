@@ -111,24 +111,6 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="IotHubPrivateEndpointGroupInformationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableIotHubArmClient.GetIotHubPrivateEndpointGroupInformationResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointGroupInformationResource"/> object. </returns>
-        public static IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableIotHubArmClient(client).GetIotHubPrivateEndpointGroupInformationResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of IotHubDescriptions in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
