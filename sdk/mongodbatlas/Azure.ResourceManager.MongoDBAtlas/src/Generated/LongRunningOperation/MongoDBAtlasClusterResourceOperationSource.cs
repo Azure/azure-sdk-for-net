@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary></summary>
-    internal partial class ClusterResourceOperationSource : IOperationSource<ClusterResource>
+    internal partial class MongoDBAtlasClusterResourceOperationSource : IOperationSource<MongoDBAtlasClusterResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ClusterResourceOperationSource(ArmClient client)
+        internal MongoDBAtlasClusterResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ClusterResource IOperationSource<ClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MongoDBAtlasClusterResource IOperationSource<MongoDBAtlasClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ClusterResource(_client, data);
+            MongoDBAtlasClusterData data = MongoDBAtlasClusterData.DeserializeMongoDBAtlasClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MongoDBAtlasClusterResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ClusterResource> IOperationSource<ClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MongoDBAtlasClusterResource> IOperationSource<MongoDBAtlasClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ClusterData data = ClusterData.DeserializeClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ClusterResource(_client, data);
+            MongoDBAtlasClusterData data = MongoDBAtlasClusterData.DeserializeMongoDBAtlasClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MongoDBAtlasClusterResource(_client, data);
         }
     }
 }

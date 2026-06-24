@@ -14,7 +14,7 @@ using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    internal partial class ProjectsGetAllCollectionResultOfT : Pageable<ProjectData>
+    internal partial class ProjectsGetAllCollectionResultOfT : Pageable<MongoDBAtlasProjectData>
     {
         private readonly Projects _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ProjectsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ProjectData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MongoDBAtlasProjectData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     yield break;
                 }
                 ProjectListResult result = ProjectListResult.FromResponse(response);
-                yield return Page<ProjectData>.FromValues((IReadOnlyList<ProjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MongoDBAtlasProjectData>.FromValues((IReadOnlyList<MongoDBAtlasProjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

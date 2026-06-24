@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Properties specific to a MongoDB Atlas Project. </summary>
-    public partial class ProjectProperties
+    public partial class MongoDBAtlasProjectProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectProperties"/>. </summary>
-        public ProjectProperties()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectProperties"/>. </summary>
+        public MongoDBAtlasProjectProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectProperties"/>. </summary>
         /// <param name="projectId"> Atlas project id. </param>
         /// <param name="projectName"> Atlas project name. </param>
         /// <param name="organizationId"> Atlas organization id. </param>
         /// <param name="clusterCount"> Number of clusters in the project. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectProperties(string projectId, string projectName, string organizationId, long? clusterCount, MongoDBAtlasResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasProjectProperties(string projectId, string projectName, string organizationId, long? clusterCount, MongoDBAtlasResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectId = projectId;
             ProjectName = projectName;

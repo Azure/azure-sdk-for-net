@@ -12,7 +12,7 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Cluster tier options for MongoDB Atlas. </summary>
-    public readonly partial struct ClusterTier : IEquatable<ClusterTier>
+    public readonly partial struct MongoDBAtlasClusterTier : IEquatable<MongoDBAtlasClusterTier>
     {
         private readonly string _value;
         /// <summary> Free tier cluster. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <summary> M30 tier cluster. </summary>
         private const string M30Value = "M30";
 
-        /// <summary> Initializes a new instance of <see cref="ClusterTier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasClusterTier"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ClusterTier(string value)
+        public MongoDBAtlasClusterTier(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <summary> Free tier cluster. </summary>
-        public static ClusterTier FREE { get; } = new ClusterTier(FREEValue);
+        public static MongoDBAtlasClusterTier FREE { get; } = new MongoDBAtlasClusterTier(FREEValue);
 
         /// <summary> Flex tier cluster. </summary>
-        public static ClusterTier FLEX { get; } = new ClusterTier(FLEXValue);
+        public static MongoDBAtlasClusterTier FLEX { get; } = new MongoDBAtlasClusterTier(FLEXValue);
 
         /// <summary> M10 tier cluster. </summary>
-        public static ClusterTier M10 { get; } = new ClusterTier(M10Value);
+        public static MongoDBAtlasClusterTier M10 { get; } = new MongoDBAtlasClusterTier(M10Value);
 
         /// <summary> M30 tier cluster. </summary>
-        public static ClusterTier M30 { get; } = new ClusterTier(M30Value);
+        public static MongoDBAtlasClusterTier M30 { get; } = new MongoDBAtlasClusterTier(M30Value);
 
-        /// <summary> Determines if two <see cref="ClusterTier"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MongoDBAtlasClusterTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ClusterTier left, ClusterTier right) => left.Equals(right);
+        public static bool operator ==(MongoDBAtlasClusterTier left, MongoDBAtlasClusterTier right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ClusterTier"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MongoDBAtlasClusterTier"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ClusterTier left, ClusterTier right) => !left.Equals(right);
+        public static bool operator !=(MongoDBAtlasClusterTier left, MongoDBAtlasClusterTier right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ClusterTier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MongoDBAtlasClusterTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterTier(string value) => new ClusterTier(value);
+        public static implicit operator MongoDBAtlasClusterTier(string value) => new MongoDBAtlasClusterTier(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterTier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MongoDBAtlasClusterTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterTier?(string value) => value == null ? null : new ClusterTier(value);
+        public static implicit operator MongoDBAtlasClusterTier?(string value) => value == null ? null : new MongoDBAtlasClusterTier(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ClusterTier other && Equals(other);
+        public override bool Equals(object obj) => obj is MongoDBAtlasClusterTier other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ClusterTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MongoDBAtlasClusterTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

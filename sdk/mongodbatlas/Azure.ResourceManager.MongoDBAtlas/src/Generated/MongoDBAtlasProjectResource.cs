@@ -18,40 +18,40 @@ using Azure.ResourceManager.MongoDBAtlas.Models;
 namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary>
-    /// A class representing a Project along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MongoDBAtlasOrganizationResource"/> using the GetProjects method.
+    /// A class representing a MongoDBAtlasProject along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MongoDBAtlasProjectResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MongoDBAtlasOrganizationResource"/> using the GetMongoDBAtlasProjects method.
     /// </summary>
-    public partial class ProjectResource : ArmResource
+    public partial class MongoDBAtlasProjectResource : ArmResource
     {
         private readonly ClientDiagnostics _projectsClientDiagnostics;
         private readonly Projects _projectsRestClient;
-        private readonly ProjectData _data;
+        private readonly MongoDBAtlasProjectData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MongoDB.Atlas/organizations/projects";
 
-        /// <summary> Initializes a new instance of ProjectResource for mocking. </summary>
-        protected ProjectResource()
+        /// <summary> Initializes a new instance of MongoDBAtlasProjectResource for mocking. </summary>
+        protected MongoDBAtlasProjectResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ProjectResource(ArmClient client, ProjectData data) : this(client, data.Id)
+        internal MongoDBAtlasProjectResource(ArmClient client, MongoDBAtlasProjectData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MongoDBAtlasProjectResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string projectApiVersion);
+            TryGetApiVersion(ResourceType, out string mongoDBAtlasProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, projectApiVersion ?? "2026-03-01-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasProjectApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ProjectData Data
+        public virtual MongoDBAtlasProjectData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProjectResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasProjectResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ProjectData> response = Response.FromValue(ProjectData.FromResponse(result), result);
+                Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBAtlasProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProjectResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasProjectResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Get");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ProjectData> response = Response.FromValue(ProjectData.FromResponse(result), result);
+                Response<MongoDBAtlasProjectData> response = Response.FromValue(MongoDBAtlasProjectData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MongoDBAtlasProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Delete");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Delete");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Delete");
             scope.Start();
             try
             {
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RegionsByTierResponse>> GetClusterTierRegionsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.GetClusterTierRegions");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.GetClusterTierRegions");
             scope.Start();
             try
             {
@@ -351,14 +351,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RegionsByTierResponse> GetClusterTierRegions(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.GetClusterTierRegions");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.GetClusterTierRegions");
             scope.Start();
             try
             {
@@ -399,14 +399,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TierLimitReachedResponse>> TierLimitReachedAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.TierLimitReached");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.TierLimitReached");
             scope.Start();
             try
             {
@@ -447,14 +447,14 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TierLimitReachedResponse> TierLimitReached(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.TierLimitReached");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.TierLimitReached");
             scope.Start();
             try
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         }
 
         /// <summary>
-        /// Update a Project.
+        /// Update a MongoDBAtlasProject.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,11 +503,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProjectResource>> UpdateAsync(WaitUntil waitUntil, ProjectData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MongoDBAtlasProjectResource>> UpdateAsync(WaitUntil waitUntil, MongoDBAtlasProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Update");
             scope.Start();
             try
             {
@@ -515,10 +515,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProjectData.ToRequestContent(data), context);
+                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoDBAtlasArmOperation<ProjectResource> operation = new MongoDBAtlasArmOperation<ProjectResource>(
-                    new ProjectResourceOperationSource(Client),
+                MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
+                    new MongoDBAtlasProjectResourceOperationSource(Client),
                     _projectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         }
 
         /// <summary>
-        /// Update a Project.
+        /// Update a MongoDBAtlasProject.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ProjectResource"/>. </description>
+        /// <description> <see cref="MongoDBAtlasProjectResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -562,11 +562,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ProjectResource> Update(WaitUntil waitUntil, ProjectData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MongoDBAtlasProjectResource> Update(WaitUntil waitUntil, MongoDBAtlasProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("ProjectResource.Update");
+            using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.Update");
             scope.Start();
             try
             {
@@ -574,10 +574,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ProjectData.ToRequestContent(data), context);
+                HttpMessage message = _projectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoDBAtlasProjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MongoDBAtlasArmOperation<ProjectResource> operation = new MongoDBAtlasArmOperation<ProjectResource>(
-                    new ProjectResourceOperationSource(Client),
+                MongoDBAtlasArmOperation<MongoDBAtlasProjectResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasProjectResource>(
+                    new MongoDBAtlasProjectResourceOperationSource(Client),
                     _projectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -596,11 +596,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
             }
         }
 
-        /// <summary> Gets a collection of Clusters in the <see cref="ProjectResource"/>. </summary>
-        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
-        public virtual ClusterCollection GetClusters()
+        /// <summary> Gets a collection of MongoDBAtlasClusters in the <see cref="MongoDBAtlasProjectResource"/>. </summary>
+        /// <returns> An object representing collection of MongoDBAtlasClusters and their operations over a MongoDBAtlasClusterResource. </returns>
+        public virtual MongoDBAtlasClusterCollection GetMongoDBAtlasClusters()
         {
-            return GetCachedClient(client => new ClusterCollection(client, Id));
+            return GetCachedClient(client => new MongoDBAtlasClusterCollection(client, Id));
         }
 
         /// <summary> Get a Cluster. </summary>
@@ -609,11 +609,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasClusterResource>> GetMongoDBAtlasClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMongoDBAtlasClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Cluster. </summary>
@@ -622,11 +622,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasClusterResource> GetMongoDBAtlasCluster(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetClusters().Get(clusterName, cancellationToken);
+            return GetMongoDBAtlasClusters().Get(clusterName, cancellationToken);
         }
     }
 }

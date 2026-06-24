@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary></summary>
-    internal partial class ProjectResourceOperationSource : IOperationSource<ProjectResource>
+    internal partial class MongoDBAtlasProjectResourceOperationSource : IOperationSource<MongoDBAtlasProjectResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ProjectResourceOperationSource(ArmClient client)
+        internal MongoDBAtlasProjectResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ProjectResource IOperationSource<ProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MongoDBAtlasProjectResource IOperationSource<MongoDBAtlasProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProjectData data = ProjectData.DeserializeProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProjectResource(_client, data);
+            MongoDBAtlasProjectData data = MongoDBAtlasProjectData.DeserializeMongoDBAtlasProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MongoDBAtlasProjectResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ProjectResource> IOperationSource<ProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MongoDBAtlasProjectResource> IOperationSource<MongoDBAtlasProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProjectData data = ProjectData.DeserializeProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProjectResource(_client, data);
+            MongoDBAtlasProjectData data = MongoDBAtlasProjectData.DeserializeMongoDBAtlasProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MongoDBAtlasProjectResource(_client, data);
         }
     }
 }

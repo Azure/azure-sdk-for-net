@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 return null;
             }
-            ClusterTier tier = default;
+            MongoDBAtlasClusterTier tier = default;
             IList<string> regions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tier"u8))
                 {
-                    tier = new ClusterTier(prop.Value.GetString());
+                    tier = new MongoDBAtlasClusterTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regions"u8))

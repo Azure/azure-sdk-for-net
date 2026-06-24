@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="maximum"> Maximum allowed value. </param>
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
-        internal ProjectLimitStatus(ClusterTier @type, int maximum, int current, bool isReached)
+        internal ProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached)
         {
             Type = @type;
             Maximum = maximum;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectLimitStatus(ClusterTier @type, int maximum, int current, bool isReached, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Maximum = maximum;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <summary> Type of the limit. </summary>
-        public ClusterTier Type { get; }
+        public MongoDBAtlasClusterTier Type { get; }
 
         /// <summary> Maximum allowed value. </summary>
         public int Maximum { get; }
