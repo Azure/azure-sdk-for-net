@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -123,9 +124,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegistryPrivateEndpoint"/>. </summary>
+        [Obsolete("This overload is no longer used by the generator. Use the generated RegistryPrivateEndpoint overload.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegistryPrivateEndpoint RegistryPrivateEndpoint(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
         {
             return new RegistryPrivateEndpoint(id, additionalBinaryDataProperties: null, subnetArmId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointBase"/>. </summary>
+        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = default)
+        {
+            return new PrivateEndpointBase(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>

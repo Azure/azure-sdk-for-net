@@ -14,6 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     // the workspace private endpoint shape with SubnetArmId as well.
     public partial class MachineLearningPrivateEndpoint
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
+        public MachineLearningPrivateEndpoint()
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
         /// <param name="id"> e.g. /subscriptions/{networkSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
@@ -24,6 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SubnetArmId = subnetArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The resource identifier of the private endpoint. </summary>
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The subnetId that the private endpoint is connected to. </summary>
         public ResourceIdentifier SubnetArmId { get; set; }

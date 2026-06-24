@@ -13,20 +13,20 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The private endpoint resource. </summary>
-    public partial class MachineLearningPrivateEndpoint
+    public partial class PrivateEndpointBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
-        public MachineLearningPrivateEndpoint()
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
+        public PrivateEndpointBase()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
         /// <param name="id"> The resource identifier of the private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointBase(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
         public virtual Pageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Response<MachineLearningExternalFQDNResult> response = GetOutboundNetworkDependenciesEndpointsResponse(cancellationToken);
+            Response<MachineLearningExternalFqdnResult> response = GetOutboundNetworkDependenciesEndpointsResponse(cancellationToken);
             return Pageable<MachineLearningFqdnEndpoints>.FromPages(new[]
             {
                 Page<MachineLearningFqdnEndpoints>.FromValues(ToFqdnEndpoints(response.Value), null, response.GetRawResponse())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning
         [ForwardsClientCalls]
         public virtual ArmOperation<Models.ManagedNetworkProvisionStatus> ProvisionManagedNetworkManagedNetworkProvision(WaitUntil waitUntil, Models.ManagedNetworkProvisionContent content, CancellationToken cancellationToken = default) => ProvisionManagedNetwork(waitUntil, content, cancellationToken);
 
-        private async Task<Response<MachineLearningExternalFQDNResult>> GetOutboundNetworkDependenciesEndpointsResponseAsync(CancellationToken cancellationToken)
+        private async Task<Response<MachineLearningExternalFqdnResult>> GetOutboundNetworkDependenciesEndpointsResponseAsync(CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints");
             scope.Start();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _workspacesRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue(MachineLearningExternalFQDNResult.FromResponse(result), result);
+                return Response.FromValue(MachineLearningExternalFqdnResult.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        private Response<MachineLearningExternalFQDNResult> GetOutboundNetworkDependenciesEndpointsResponse(CancellationToken cancellationToken)
+        private Response<MachineLearningExternalFqdnResult> GetOutboundNetworkDependenciesEndpointsResponse(CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints");
             scope.Start();
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _workspacesRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue(MachineLearningExternalFQDNResult.FromResponse(result), result);
+                return Response.FromValue(MachineLearningExternalFqdnResult.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        private static IReadOnlyList<MachineLearningFqdnEndpoints> ToFqdnEndpoints(MachineLearningExternalFQDNResult response)
+        private static IReadOnlyList<MachineLearningFqdnEndpoints> ToFqdnEndpoints(MachineLearningExternalFqdnResult response)
         {
             List<MachineLearningFqdnEndpoints> endpoints = new List<MachineLearningFqdnEndpoints>();
             if (response?.Value is null)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
 
             public override async IAsyncEnumerable<Page<MachineLearningFqdnEndpoints>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                Response<MachineLearningExternalFQDNResult> response = await _workspace.GetOutboundNetworkDependenciesEndpointsResponseAsync(CancellationToken).ConfigureAwait(false);
+                Response<MachineLearningExternalFqdnResult> response = await _workspace.GetOutboundNetworkDependenciesEndpointsResponseAsync(CancellationToken).ConfigureAwait(false);
                 yield return Page<MachineLearningFqdnEndpoints>.FromValues(ToFqdnEndpoints(response.Value), null, response.GetRawResponse());
             }
         }

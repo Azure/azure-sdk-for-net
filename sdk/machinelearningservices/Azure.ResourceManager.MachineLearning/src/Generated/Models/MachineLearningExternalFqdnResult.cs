@@ -11,22 +11,22 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningExternalFQDNResult. </summary>
-    public partial class MachineLearningExternalFQDNResult
+    /// <summary> The MachineLearningExternalFqdnResult. </summary>
+    public partial class MachineLearningExternalFqdnResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFQDNResult"/>. </summary>
-        internal MachineLearningExternalFQDNResult()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFqdnResult"/>. </summary>
+        internal MachineLearningExternalFqdnResult()
         {
             Value = new ChangeTrackingList<MachineLearningFqdnEndpointGroup>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFQDNResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFqdnResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningExternalFQDNResult(IList<MachineLearningFqdnEndpointGroup> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningExternalFqdnResult(IList<MachineLearningFqdnEndpointGroup> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

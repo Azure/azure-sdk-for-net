@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The PE network resource that is linked to this PE connection. </summary>
-    public partial class RegistryPrivateEndpoint : MachineLearningPrivateEndpoint
+    public partial class RegistryPrivateEndpoint : PrivateEndpointBase
     {
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpoint"/>. </summary>
         public RegistryPrivateEndpoint()
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpoint"/>. </summary>
+        /// <param name="id"> The resource identifier of the private endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
+        internal RegistryPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier subnetArmId) : base(id, additionalBinaryDataProperties)
+        {
+            SubnetArmId = subnetArmId;
+        }
+
+        /// <summary> The subnetId that the private endpoint is connected to. </summary>
+        [WirePath("subnetArmId")]
+        public ResourceIdentifier SubnetArmId { get; set; }
     }
 }
