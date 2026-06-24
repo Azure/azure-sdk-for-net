@@ -28,6 +28,6 @@ namespace Azure.Communication.Identity.Models
         /// <param name="user"> Identifier of the identity. </param>
         /// <returns>A new <see cref="Azure.Communication.Identity.Models.CommunicationUserDetail"/> instance for mocking.</returns>
         public static CommunicationUserDetail CommunicationUserDetail(string customId, DateTimeOffset? lastTokenIssuedAt, CommunicationUserIdentifier user)
-            => new CommunicationUserDetail(customId, lastTokenIssuedAt, user?.Id);
+            => new CommunicationUserDetail(customId, lastTokenIssuedAt, user.Id);
     }
 }
