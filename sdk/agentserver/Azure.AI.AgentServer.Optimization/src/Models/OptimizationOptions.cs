@@ -23,7 +23,7 @@ namespace Azure.AI.AgentServer.Optimization;
 /// their own type; the loader does not freeze instances after handing them out.
 /// </para>
 /// </remarks>
-public class OptimizationOptions
+public partial class OptimizationOptions
 {
     /// <summary>Environment variable name for inline JSON config (Priority 2).</summary>
     public const string EnvironmentVariableConfig = "OPTIMIZATION_CONFIG";

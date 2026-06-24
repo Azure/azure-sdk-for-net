@@ -17,7 +17,7 @@ COPY publish/ .
 # Optimization configuration tree (baseline + any candidate folders).
 # Loaded at runtime by OptimizationConfigLoader; OPTIMIZATION_CANDIDATE_ID
 # controls which folder layers on top of baseline. For remote resolution,
-# also set OPTIMIZATION_JOB_ID and OPTIMIZATION_RESOLVE_ENDPOINT.
+# also set OPTIMIZATION_RESOLVE_ENDPOINT.
 COPY .agent_configs/ ./.agent_configs/
 
 # Default Foundry hosted-agent listen port. Override with AGENT_HOST_PORT if needed.
