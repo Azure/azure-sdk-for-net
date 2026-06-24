@@ -3,9 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0618
-#pragma warning disable CS1591
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +13,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     // Generated webhook create/update content now stores these values inside WebhookCreateOrUpdateProperties.
     // Keep the GA model factory overload that accepts the flattened webhook fields.
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAutomationModelFactory
     {
         /// <param name="name"> Gets or sets the name of the webhook. </param>
@@ -69,6 +67,14 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         // DscCompilationJob was removed from the TypeSpec input; these GA compatibility factory overloads are intentionally unsupported.
+    /// <summary> Initializes a new instance of <see cref="Models.DscCompilationJobCreateOrUpdateContent"/>. </summary>
+    /// <param name="name"> Gets or sets name of the resource. </param>
+    /// <param name="location"> Gets or sets the location of the resource. </param>
+    /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+    /// <param name="configurationName"> Gets or sets the configuration. </param>
+    /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+    /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
+    /// <returns> A new <see cref="Models.DscCompilationJobCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
         public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, AzureLocation? location = default, IDictionary<string, string> tags = null, string configurationName = null, IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = default)
@@ -76,6 +82,26 @@ namespace Azure.ResourceManager.Automation.Models
             throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
         }
 
+        /// <summary> Initializes a new instance of <see cref="Automation.DscCompilationJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The resource system data. </param>
+        /// <param name="configurationName"> Gets or sets the configuration. </param>
+        /// <param name="startedBy"> Gets the compilation job started by. </param>
+        /// <param name="jobId"> Gets the id of the job. </param>
+        /// <param name="createdOn"> Gets the creation time of the job. </param>
+        /// <param name="provisioningState"> The current provisioning state of the job. </param>
+        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        /// <param name="status"> Gets or sets the status of the job. </param>
+        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
+        /// <param name="startOn"> Gets the start time of the job. </param>
+        /// <param name="endOn"> Gets the end time of the job. </param>
+        /// <param name="exception"> Gets the exception of the job. </param>
+        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
+        /// <param name="lastStatusModifiedOn"> Gets the last status modified time. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <returns> A new <see cref="Automation.DscCompilationJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
         public static DscCompilationJobData DscCompilationJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, string configurationName = null, string startedBy = null, Guid? jobId = default, DateTimeOffset? createdOn = default, JobProvisioningState? provisioningState = default, string runOn = null, AutomationJobStatus? status = default, string statusDetails = null, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = null, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = null)

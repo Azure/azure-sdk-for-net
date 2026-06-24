@@ -7,13 +7,23 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-#pragma warning disable CS0618
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary> A class to add extension methods to Azure.ResourceManager.Automation. </summary>
     public static partial class AutomationExtensions
     {
+        /// <summary>
+        /// Gets an object representing a <see cref="DscCompilationJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscCompilationJobResource.CreateResourceIdentifier" /> to create a <see cref="DscCompilationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="Mocking.MockableAutomationArmClient.GetDscCompilationJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscCompilationJobResource"/> object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
         public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
@@ -22,6 +32,3 @@ namespace Azure.ResourceManager.Automation
         }
     }
 }
-
-#pragma warning restore CS0618
-#pragma warning restore CS1591
