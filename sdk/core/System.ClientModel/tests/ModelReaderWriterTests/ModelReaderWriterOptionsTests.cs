@@ -1047,6 +1047,79 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         #endregion
 
+        #region WS3 Medium-severity regression tests
+
+        [Test]
+        public void AddProxy_NullProxy_ThrowsArgumentNullException()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((IPersistableModel<SimpleModel>)null!));
+            Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((IJsonModel<SimpleModel>)null!));
+            Assert.Throws<ArgumentNullException>(() => options.AddProxy<SimpleModel>((ConditionalModelProxy<SimpleModel>)null!));
+        }
+
+        [Test]
+        public void ResolveProxy_NullModel_ThrowsArgumentNullException()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            Assert.Throws<ArgumentNullException>(() => options.ResolveProxy<SimpleModel>((IPersistableModel<SimpleModel>)null!));
+            Assert.Throws<ArgumentNullException>(() => options.ResolveProxy<SimpleModel>((IJsonModel<SimpleModel>)null!));
+        }
+
+        [Test]
+        public void AddProxy_OnDefaultJsonOptions_ThrowsInvalidOperationException()
+        {
+            var proxy = new ChainProxy(handleRead: true);
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriterOptions.Json.AddProxy<SimpleModel>(proxy));
+        }
+
+        [Test]
+        public void AddProxy_OnDefaultXmlOptions_ThrowsInvalidOperationException()
+        {
+            var proxy = new ChainProxy(handleRead: true);
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriterOptions.Xml.AddProxy<SimpleModel>(proxy));
+        }
+
+        [Test]
+        public void ResolveProxy_NonGeneric_SkipsConditionalProxyWithoutJsonModel()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            // First proxy handles (CanHandle=true) but its model is persistable-only (not IJsonModel),
+            // so the JSON write path must skip it instead of throwing.
+            var persistableOnly = new PersistableOnlyConditionalProxy();
+            var jsonProxy = new ChainProxy(handleRead: true);
+            options.AddProxy<SimpleModel>(persistableOnly);
+            options.AddProxy<SimpleModel>(jsonProxy);
+
+            var model = new SimpleModel();
+            var resolved = options.ResolveProxy((IJsonModel<object>)(object)model);
+
+            Assert.AreSame(jsonProxy.Model, resolved,
+                "Non-generic ResolveProxy should skip the persistable-only conditional proxy and return the JSON proxy's model.");
+        }
+
+        /// <summary>
+        /// A model implementation that only supports the persistable (non-JSON) path.
+        /// </summary>
+        private class PersistableOnlyModel : IPersistableModel<SimpleModel>
+        {
+            SimpleModel IPersistableModel<SimpleModel>.Create(BinaryData data, ModelReaderWriterOptions options) => new SimpleModel();
+            string IPersistableModel<SimpleModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            BinaryData IPersistableModel<SimpleModel>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
+        }
+
+        /// <summary>
+        /// A conditional proxy whose held model does not implement IJsonModel.
+        /// </summary>
+        private class PersistableOnlyConditionalProxy : ConditionalModelProxy<SimpleModel>
+        {
+            public PersistableOnlyConditionalProxy() : base(new PersistableOnlyModel()) { }
+
+            public override bool CanHandle(SimpleModel model) => true;
+        }
+
+        #endregion
+
         /// <summary>
         /// A proxy that can be configured to accept or decline write via CanHandle(model).
         /// Used to test the write-path chain-of-responsibility where first proxy declines.

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -12,18 +13,19 @@ namespace System.ClientModel.Primitives;
 public class ModelReaderWriterOptions
 {
     private Dictionary<Type, List<object>>? _proxies;
+    private bool _isFrozen;
 
     private static ModelReaderWriterOptions? s_jsonOptions;
     /// <summary>
     /// Default options for writing models into JSON format.
     /// </summary>
-    public static ModelReaderWriterOptions Json => s_jsonOptions ??= new ModelReaderWriterOptions("J");
+    public static ModelReaderWriterOptions Json => s_jsonOptions ??= new ModelReaderWriterOptions("J") { _isFrozen = true };
 
     private static ModelReaderWriterOptions? s_xmlOptions;
     /// <summary>
     /// Default options for writing models into XML format.
     /// </summary>
-    public static ModelReaderWriterOptions Xml => s_xmlOptions ??= new ModelReaderWriterOptions("X");
+    public static ModelReaderWriterOptions Xml => s_xmlOptions ??= new ModelReaderWriterOptions("X") { _isFrozen = true };
 
     /// <summary>
     /// Initializes a new instance of <see cref="ModelReaderWriterOptions"/>.
@@ -50,6 +52,16 @@ public class ModelReaderWriterOptions
     /// </summary>
     public string Format { get; }
 
+    private void AssertNotFrozen()
+    {
+        if (_isFrozen)
+        {
+            throw new InvalidOperationException(
+                "Proxies cannot be added to the default ModelReaderWriterOptions.Json or ModelReaderWriterOptions.Xml instances. " +
+                "Create a new ModelReaderWriterOptions instance to register proxies.");
+        }
+    }
+
     /// <summary>
     /// Registers an <see cref="IPersistableModel{T}"/> as a proxy for the specified type.
     /// Proxies are consulted in the order they were registered.
@@ -58,6 +70,8 @@ public class ModelReaderWriterOptions
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IPersistableModel<T> proxy)
     {
+        Argument.AssertNotNull(proxy, nameof(proxy));
+        AssertNotFrozen();
         _proxies ??= [];
         if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
         {
@@ -75,6 +89,8 @@ public class ModelReaderWriterOptions
     /// <param name="proxy">The proxy implementation.</param>
     public void AddProxy<T>(IJsonModel<T> proxy)
     {
+        Argument.AssertNotNull(proxy, nameof(proxy));
+        AssertNotFrozen();
         _proxies ??= [];
         if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
         {
@@ -94,6 +110,8 @@ public class ModelReaderWriterOptions
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)
         where T : class
     {
+        Argument.AssertNotNull(proxy, nameof(proxy));
+        AssertNotFrozen();
         _proxies ??= [];
         if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
         {
@@ -119,6 +137,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     public IPersistableModel<T> ResolveProxy<T>(IPersistableModel<T> model)
     {
+        Argument.AssertNotNull(model, nameof(model));
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
         {
             ProxiedModel = null;
@@ -155,6 +174,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     public IJsonModel<T> ResolveProxy<T>(IJsonModel<T> model)
     {
+        Argument.AssertNotNull(model, nameof(model));
         if (_proxies is null || !_proxies.TryGetValue(model.GetType(), out List<object>? list) || list.Count == 0)
         {
             ProxiedModel = null;
@@ -387,12 +407,12 @@ public class ModelReaderWriterOptions
         {
             if (entry is IConditionalProxy conditional)
             {
-                if (conditional.CanHandleModel(model))
+                // Skip conditional proxies whose held model can't satisfy the JSON write
+                // path so we fall through instead of throwing mid-serialization.
+                if (conditional.CanHandleModel(model) && conditional.GetModel() is IJsonModel<object> jsonModel)
                 {
                     ProxiedModel = model;
-                    if (conditional.GetModel() is IJsonModel<object> jsonModel)
-                        return jsonModel;
-                    return conditional.AsJsonModelOfObject();
+                    return jsonModel;
                 }
             }
             else if (entry is IJsonModel<object> directProxy)
