@@ -231,7 +231,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InternalFunctionToolParam))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenTool))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
-    [ModelReaderWriterBuildable(typeof(InternalInputImageContentParamAutoParam))]
     [ModelReaderWriterBuildable(typeof(InternalLocalShellExecAction))]
     [ModelReaderWriterBuildable(typeof(InternalLogProb))]
     [ModelReaderWriterBuildable(typeof(InternalMCPListToolsTool))]
