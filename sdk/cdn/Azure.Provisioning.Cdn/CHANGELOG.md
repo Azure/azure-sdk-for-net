@@ -1,19 +1,11 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.0-beta.3 (2026-06-25)
 
 ### Other Changes
 
-- Started migration to the new TypeSpec-based provisioning generator
-  (`@azure-typespec/http-client-csharp-provisioning`). Scaffolding only in this
-  PR — regeneration is currently blocked on
-  [microsoft/typespec#10485](https://github.com/microsoft/typespec/issues/10485).
+- Migrated to the new TypeSpec-based provisioning generator
+  (`@azure-typespec/http-client-csharp-provisioning`).
 
 ## 1.0.0-beta.2 (2026-04-30)
 
