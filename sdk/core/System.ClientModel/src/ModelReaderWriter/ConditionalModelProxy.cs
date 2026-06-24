@@ -10,8 +10,9 @@ namespace System.ClientModel.Primitives;
 /// <see cref="CanHandle(T)"/>, <see cref="CanHandle(ReadOnlyMemory{byte})"/>, and
 /// <see cref="CanHandle(ref Utf8JsonReader)"/> checks.
 /// </summary>
-/// <typeparam name="T">The model type this proxy handles.</typeparam>
+/// <typeparam name="T">The model type this proxy handles. Must be a reference type.</typeparam>
 public abstract class ConditionalModelProxy<T> : IConditionalProxy
+    where T : class
 {
     /// <summary>
     /// Gets the model implementation used for reading and writing when this proxy handles the request.

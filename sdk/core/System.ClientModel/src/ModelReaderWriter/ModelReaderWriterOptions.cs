@@ -92,6 +92,7 @@ public class ModelReaderWriterOptions
     /// </summary>
     /// <param name="proxy">The conditional proxy.</param>
     public void AddProxy<T>(ConditionalModelProxy<T> proxy)
+        where T : class
     {
         _proxies ??= [];
         if (!_proxies.TryGetValue(typeof(T), out List<object>? list))
@@ -348,7 +349,9 @@ public class ModelReaderWriterOptions
             if (entry is IConditionalProxy conditional)
             {
                 Utf8JsonReader checkReader = snapshot;
-                if (conditional.CanHandleReader(ref checkReader))
+                // Skip conditional proxies whose held model can't handle the reader path so we
+                // fall through to the next proxy (or the model) instead of throwing mid-read.
+                if (conditional.CanHandleReader(ref checkReader) && conditional.HasJsonModel)
                 {
                     ProxiedModel = model;
                     object? result = conditional.CreateFromReader(ref reader, this);
