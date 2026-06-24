@@ -4,6 +4,9 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -20,9 +23,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.")]
-        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetSecurityConnectorGovernanceRules().Get(ruleId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityConnectorGovernanceRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -30,9 +32,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead."); }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetSecurityConnectorGovernanceRules().GetAsync(ruleId, cancellationToken);
     }
 }
 
@@ -53,8 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Provides a compatibility shim for the GetSecurityConnectorGovernanceRules operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.")]
-        public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules() { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) or ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead."); }
+        public virtual Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules()
+            => new SecurityConnectorGovernanceRuleCollection(Client, Id);
     }
 }

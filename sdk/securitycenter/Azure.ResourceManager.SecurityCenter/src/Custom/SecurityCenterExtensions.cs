@@ -4,8 +4,10 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
@@ -30,6 +32,62 @@ namespace Azure.ResourceManager.SecurityCenter
     [CodeGenSuppress("GetTopologies", typeof(SubscriptionResource), typeof(CancellationToken))]
     public static partial class SecurityCenterExtensions
     {
+        private sealed class SubscriptionAlertsPageable : Pageable<SecurityAlertData>
+        {
+            private readonly SubscriptionResource _subscriptionResource;
+            private readonly CancellationToken _cancellationToken;
+
+            public SubscriptionAlertsPageable(SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            {
+                _subscriptionResource = subscriptionResource;
+                _cancellationToken = cancellationToken;
+            }
+
+            public override IEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAll(_cancellationToken))
+                {
+                    foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAll(_cancellationToken).AsPages(continuationToken, pageSizeHint))
+                    {
+                        List<SecurityAlertData> values = new List<SecurityAlertData>();
+                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
+                        {
+                            values.Add(alert.Data);
+                        }
+                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+            }
+        }
+
+        private sealed class SubscriptionAlertsAsyncPageable : AsyncPageable<SecurityAlertData>
+        {
+            private readonly SubscriptionResource _subscriptionResource;
+            private readonly CancellationToken _cancellationToken;
+
+            public SubscriptionAlertsAsyncPageable(SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            {
+                _subscriptionResource = subscriptionResource;
+                _cancellationToken = cancellationToken;
+            }
+
+            public override async IAsyncEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                await foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAllAsync(_cancellationToken).ConfigureAwait(false))
+                {
+                    await foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAllAsync(_cancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                    {
+                        List<SecurityAlertData> values = new List<SecurityAlertData>();
+                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
+                        {
+                            values.Add(alert.Data);
+                        }
+                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+            }
+        }
+
         private static Response<Models.DiscoveredSecuritySolution> ToLegacyResponse(Response<DiscoveredSecuritySolutionResource> response)
             => Response.FromValue(new Models.DiscoveredSecuritySolution(response.Value.Data), response.GetRawResponse());
 
@@ -136,20 +194,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() instead.")]
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup() instead.");
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesByResourceGroup(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetJitNetworkAccessPoliciesAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="resourceGroupResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead.")]
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroupAsync() instead.");
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesByResourceGroupAsync(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecureScoreControlsAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -167,10 +221,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="client">The value preserved for API compatibility.</param>
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.")]
         public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
-            => throw new NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.");
+            => new SecurityConnectorGovernanceRuleResource(client, client.GetGovernanceRuleResource(id));
     }
 }
 
@@ -219,8 +271,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.Get(AzureLocation ascLocation, string externalSecuritySolutionsName) or SubscriptionResource.GetExternalSecuritySolutions() instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.Get(AzureLocation ascLocation, string externalSecuritySolutionsName) or SubscriptionResource.GetExternalSecuritySolutions() instead."); }
+        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutions() and filter by name instead.")]
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution> GetExternalSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutions() and filter by name instead.");
         /// <summary>
         /// Provides a compatibility shim for the GetExternalSecuritySolutionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -231,8 +284,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetAsync(AzureLocation ascLocation, string externalSecuritySolutionsName) or SubscriptionResource.GetExternalSecuritySolutionsAsync() instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetAsync(AzureLocation ascLocation, string externalSecuritySolutionsName) or SubscriptionResource.GetExternalSecuritySolutionsAsync() instead."); }
+        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutionsAsync() and filter by name instead.")]
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string externalSecuritySolutionsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetExternalSecuritySolutionsAsync() and filter by name instead.");
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCenterPricing operation preserved from the previous public API surface.
         /// </summary>
@@ -241,9 +295,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricing(ResourceIdentifier scope, string pricingName) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource> GetSecurityCenterPricing(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricing(ResourceIdentifier scope, string pricingName) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource> GetSecurityCenterPricing(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricing(pricingName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCenterPricingAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -252,9 +305,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricingAsync(ResourceIdentifier scope, string pricingName) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricingAsync(ResourceIdentifier scope, string pricingName) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricingAsync(pricingName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityContact operation preserved from the previous public API surface.
         /// </summary>
@@ -263,9 +315,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityContacts().Get(securityContactName) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource> GetSecurityContact(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityContacts().Get(securityContactName) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource> GetSecurityContact(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecurityContacts().Get(securityContactName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityContactAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -274,9 +325,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityContacts().GetAsync(securityContactName) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource>> GetSecurityContactAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityContacts().GetAsync(securityContactName) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource>> GetSecurityContactAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecurityContacts().GetAsync(securityContactName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySolution operation preserved from the previous public API surface.
         /// </summary>
@@ -309,9 +359,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentResource> GetServerVulnerabilityAssessment(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessment(resourceNamespace, resourceType, resourceName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetServerVulnerabilityAssessmentAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -322,9 +371,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentResource>> GetServerVulnerabilityAssessmentAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessmentAsync(resourceNamespace, resourceType, resourceName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetServerVulnerabilityAssessments operation preserved from the previous public API surface.
         /// </summary>
@@ -334,9 +382,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceName">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead.")]
-        public static Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetServerVulnerabilityAssessment(ResourceIdentifier scope) instead."); }
+        public static Azure.ResourceManager.SecurityCenter.ServerVulnerabilityAssessmentCollection GetServerVulnerabilityAssessments(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceNamespace, string resourceType, string resourceName)
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetServerVulnerabilityAssessments(resourceNamespace, resourceType, resourceName);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentBaselineRule operation preserved from the previous public API surface.
         /// </summary>
@@ -347,9 +394,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, cancellationToken: cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentBaselineRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -360,9 +406,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentBaselineRules(ResourceIdentifier scope) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => client.GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, cancellationToken: cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentScan operation preserved from the previous public API surface.
         /// </summary>
@@ -373,9 +418,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => client.GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, cancellationToken: cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentScanAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -386,9 +430,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSqlVulnerabilityAssessmentScans(ResourceIdentifier scope) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => client.GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, cancellationToken: cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRule operation preserved from the previous public API surface.
         /// </summary>
@@ -397,9 +440,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -408,9 +450,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetTopology operation preserved from the previous public API surface.
         /// </summary>
@@ -472,18 +513,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetSubscriptionSecurityAlerts().GetAllAsync() instead.")]
-        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetSubscriptionSecurityAlerts().GetAllAsync() instead."); }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => new SubscriptionAlertsAsyncPageable(subscriptionResource, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetAlertsByResourceGroupAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="resourceGroupResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetResourceGroupSecurityAlerts(AzureLocation ascLocation).GetAllAsync() instead.")]
-        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetResourceGroupSecurityAlerts(AzureLocation ascLocation).GetAllAsync() instead."); }
+        public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroupAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetMdeOnboardings operation preserved from the previous public API surface.
         /// </summary>
@@ -507,18 +546,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetSubscriptionSecurityAlerts().GetAll() instead.")]
-        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.GetSubscriptionSecurityAlerts().GetAll() instead."); }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => new SubscriptionAlertsPageable(subscriptionResource, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetAlertsByResourceGroup operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="resourceGroupResource">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ResourceGroupResource.GetResourceGroupSecurityAlerts(AzureLocation ascLocation).GetAll() instead.")]
-        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ResourceGroupResource.GetResourceGroupSecurityAlerts(AzureLocation ascLocation).GetAll() instead."); }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsByResourceGroup(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecureScoreControls operation preserved from the previous public API surface.
         /// </summary>
@@ -533,26 +570,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricings(ResourceIdentifier scope) instead.")]
-        public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingCollection GetSecurityCenterPricings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetSecurityCenterPricings(ResourceIdentifier scope) instead."); }
+        public static Azure.ResourceManager.SecurityCenter.SecurityCenterPricingCollection GetSecurityCenterPricings(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource)
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterPricings();
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRules operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="subscriptionResource">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead.")]
-        public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRules(ResourceIdentifier scope) instead."); }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource)
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRules();
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRuleResource operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="client">The value preserved for API compatibility.</param>
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead.")]
-        public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. Use ArmClient.GetGovernanceRuleResource(ResourceIdentifier id) instead."); }
+        public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id)
+            => new SubscriptionGovernanceRuleResource(client, client.GetGovernanceRuleResource(id));
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityAssessment operation preserved from the previous public API surface.
         /// </summary>
@@ -603,9 +637,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityCenterLocations().Get(ascLocation) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource> GetSecurityCenterLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityCenterLocations().Get(ascLocation) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource> GetSecurityCenterLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecurityCenterLocations().Get(ascLocation, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySetting operation preserved from the previous public API surface.
         /// </summary>
@@ -614,9 +647,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySettings().Get(settingName) instead.")]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource> GetSecuritySetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySettings().Get(settingName) instead."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource> GetSecuritySetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecuritySettings().Get(settingName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetMdeOnboardingAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -643,9 +675,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySettingAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -654,9 +685,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySettings().GetAsync(settingName) instead.")]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource>> GetSecuritySettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SubscriptionResource.GetSecuritySettings().GetAsync(settingName) instead."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource>> GetSecuritySettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => subscriptionResource.GetSecuritySettings().GetAsync(settingName, cancellationToken);
     }
 }
 

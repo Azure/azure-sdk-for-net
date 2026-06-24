@@ -3,11 +3,8 @@
 
 #nullable disable
 
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Generated code only emits operations whose resource scope and request path still exist in TypeSpec; this previous GA method used an old operation path, scope, or overload that no longer maps to a generated request. Keep a hidden ApiCompat shim and fail the unsupported operation explicitly.
     /// <summary>
     /// Provides a compatibility shim for the SecurityContactResource class.
     /// </summary>
@@ -20,8 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="securityContactName">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityContactResource.CreateResourceIdentifier(ResourceIdentifier scope, SecurityContactName securityContactName) instead.")]
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityContactResource.CreateResourceIdentifier(ResourceIdentifier scope, SecurityContactName securityContactName) instead."); }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string securityContactName)
+            => CreateResourceIdentifier(subscriptionId, new Azure.ResourceManager.SecurityCenter.Models.SecurityContactName(securityContactName));
     }
 }

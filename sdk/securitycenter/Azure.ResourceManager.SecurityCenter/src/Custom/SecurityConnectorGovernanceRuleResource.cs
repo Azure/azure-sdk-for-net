@@ -30,44 +30,57 @@ namespace Azure.ResourceManager.SecurityCenter
         protected SecurityConnectorGovernanceRuleResource()
         {
         }
+        internal SecurityConnectorGovernanceRuleResource(ArmClient client, GovernanceRuleResource source) : base(client, source.Id)
+        {
+            HasData = source.HasData;
+            if (source.HasData)
+            {
+                Data = source.Data;
+            }
+        }
+
+        private GovernanceRuleResource Current => Client.GetGovernanceRuleResource(Id);
+
         /// <summary>
         /// Gets the HasData value preserved from the previous public API surface.
         /// </summary>
-        public virtual bool HasData { get; } = true;
+        public virtual bool HasData { get; }
         /// <summary>
         /// Provides a compatibility shim for the Delete operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="waitUntil">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Delete instead.")]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Delete instead.");
+            => Current.Delete(waitUntil, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the DeleteAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="waitUntil">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.DeleteAsync instead.")]
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.DeleteAsync instead.");
+            => Current.DeleteAsync(waitUntil, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the Get operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Get instead.")]
         public virtual Response<SecurityConnectorGovernanceRuleResource> Get(CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Get instead.");
+        {
+            Response<GovernanceRuleResource> response = Current.Get(cancellationToken);
+            return Response.FromValue(new SecurityConnectorGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
+        }
         /// <summary>
         /// Provides a compatibility shim for the GetAsync operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.GetAsync instead.")]
-        public virtual Task<Response<SecurityConnectorGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
-            => throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.GetAsync instead.");
+        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            Response<GovernanceRuleResource> response = await Current.GetAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new SecurityConnectorGovernanceRuleResource(Client, response.Value), response.GetRawResponse());
+        }
     }
 }
 
@@ -93,9 +106,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ruleId">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.CreateResourceIdentifier(string scope, string ruleId) instead.")]
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName, string ruleId) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.CreateResourceIdentifier(string scope, string ruleId) instead."); }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName, string ruleId)
+            => GovernanceRuleResource.CreateResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}", ruleId);
         /// <summary>
         /// Provides a compatibility shim for the GetRuleExecutionStatus operation preserved from the previous public API surface.
         /// </summary>
@@ -138,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
-        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get; } = new Azure.ResourceManager.SecurityCenter.GovernanceRuleData();
+        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get; }
         /// <summary>
         /// Provides a compatibility shim for the ExecuteRule operation preserved from the previous public API surface.
         /// </summary>
@@ -146,9 +158,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="executeGovernanceRuleParams">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead.")]
-        public virtual Azure.ResourceManager.ArmOperation ExecuteRule(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Execute instead."); }
+        public virtual Azure.ResourceManager.ArmOperation ExecuteRule(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => Current.Execute(waitUntil, executeGovernanceRuleParams, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the Update operation preserved from the previous public API surface.
         /// </summary>
@@ -156,9 +167,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.Update instead.")]
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.Update instead."); }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            ArmOperation<GovernanceRuleResource> operation = Current.Update(waitUntil, data, cancellationToken);
+            return new SecurityCenterArmOperation<SecurityConnectorGovernanceRuleResource>(Response.FromValue(new SecurityConnectorGovernanceRuleResource(Client, operation.Value), operation.GetRawResponse()));
+        }
         /// <summary>
         /// Provides a compatibility shim for the UpdateAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -166,9 +179,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="data">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.UpdateAsync instead.")]
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.UpdateAsync instead."); }
+        public virtual async System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityCenter.SecurityConnectorGovernanceRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.GovernanceRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            ArmOperation<GovernanceRuleResource> operation = await Current.UpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new SecurityCenterArmOperation<SecurityConnectorGovernanceRuleResource>(Response.FromValue(new SecurityConnectorGovernanceRuleResource(Client, operation.Value), operation.GetRawResponse()));
+        }
         /// <summary>
         /// Provides a compatibility shim for the ExecuteRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -176,8 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="executeGovernanceRuleParams">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use GovernanceRuleResource.ExecuteAsync instead.")]
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteRuleAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service. Use GovernanceRuleResource.ExecuteAsync instead."); }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ExecuteRuleAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityCenter.Models.ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => Current.ExecuteAsync(waitUntil, executeGovernanceRuleParams, cancellationToken);
     }
 }

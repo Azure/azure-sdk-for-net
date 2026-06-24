@@ -23,6 +23,22 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics MdeOnboardingsClientDiagnostics => _mdeOnboardingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private MdeOnboardings MdeOnboardingsRestClient => _mdeOnboardingsRestClient ??= new MdeOnboardings(MdeOnboardingsClientDiagnostics, Pipeline, Endpoint, "2021-10-01-preview");
 
+        /// <summary> Gets security center pricings for this subscription. </summary>
+        public virtual SecurityCenterPricingCollection GetSecurityCenterPricings()
+            => Client.GetSecurityCenterPricings(Id);
+
+        /// <summary> Gets a security center pricing for this subscription. </summary>
+        public virtual Response<SecurityCenterPricingResource> GetSecurityCenterPricing(string pricingName, CancellationToken cancellationToken = default)
+            => Client.GetSecurityCenterPricing(Id, pricingName, cancellationToken);
+
+        /// <summary> Gets a security center pricing for this subscription. </summary>
+        public virtual Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(string pricingName, CancellationToken cancellationToken = default)
+            => Client.GetSecurityCenterPricingAsync(Id, pricingName, cancellationToken);
+
+        /// <summary> Gets subscription governance rules for this subscription. </summary>
+        public virtual SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules()
+            => new SubscriptionGovernanceRuleCollection(Client, Id);
+
         /// <summary> Gets the configuration or data needed to onboard machines to MDE. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<MdeOnboarding> GetMdeOnboardingsAsync(CancellationToken cancellationToken = default)

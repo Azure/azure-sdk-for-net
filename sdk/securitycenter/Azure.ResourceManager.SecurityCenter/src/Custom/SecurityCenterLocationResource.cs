@@ -67,9 +67,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ascLocation">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [System.Obsolete("This API is no longer supported by the service. Use SecurityCenterLocationResource.CreateResourceIdentifier(string subscriptionId, string ascLocation) instead.")]
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation ascLocation) { throw new System.NotSupportedException("This API is no longer supported by the service. Use SecurityCenterLocationResource.CreateResourceIdentifier(string subscriptionId, string ascLocation) instead."); }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation ascLocation)
+            => CreateResourceIdentifier(subscriptionId, ascLocation.ToString());
     }
 }
 
