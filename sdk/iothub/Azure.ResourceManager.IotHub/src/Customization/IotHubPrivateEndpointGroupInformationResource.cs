@@ -17,13 +17,13 @@ using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a IotHubPrivateEndpointGroupInformation along with the instance operations that can be performed on it.
-    /// </summary>
     // Customization justification:
     // GroupIdInformation is intentionally kept as a plain TypeSpec model for swagger compatibility. This
     // resource wrapper restores the previous C# child-resource API surface over the generated ResourceData
     // model without changing generated code.
+    /// <summary>
+    /// A class representing a IotHubPrivateEndpointGroupInformation along with the instance operations that can be performed on it.
+    /// </summary>
     public partial class IotHubPrivateEndpointGroupInformationResource : ArmResource, IJsonModel<IotHubPrivateEndpointGroupInformationData>
     {
         private static IJsonModel<IotHubPrivateEndpointGroupInformationData> s_dataDeserializationInstance;

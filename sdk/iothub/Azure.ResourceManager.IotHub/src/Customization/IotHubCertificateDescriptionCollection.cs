@@ -8,16 +8,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="IotHubCertificateDescriptionResource"/> and their operations.
-    /// Each <see cref="IotHubCertificateDescriptionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
-    /// To get a <see cref="IotHubCertificateDescriptionCollection"/> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource"/>.
-    /// </summary>
     // Customization justification:
     // Certificate create/update also exposed If-Match as string in the previous GA surface. The TypeSpec
     // generated method correctly models the header as ETag, but keeping this adapter avoids a source
     // break for existing callers and keeps the compatibility behavior scoped to method overloads rather
     // than changing the generated model or REST operation.
+    /// <summary>
+    /// A class representing a collection of <see cref="IotHubCertificateDescriptionResource"/> and their operations.
+    /// Each <see cref="IotHubCertificateDescriptionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get a <see cref="IotHubCertificateDescriptionCollection"/> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource"/>.
+    /// </summary>
     public partial class IotHubCertificateDescriptionCollection
     {
         /// <summary>

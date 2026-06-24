@@ -9,16 +9,16 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a IotHubCertificateDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubCertificateDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubCertificateDescriptions method.
-    /// </summary>
     // Customization justification:
     // Certificate update on the resource type needs the same string If-Match compatibility as collection
     // create/update. The overload is intentionally implemented by converting to ETag and forwarding to the
     // generated method, which means future generator changes to polling, diagnostics, or request creation
     // are still picked up automatically.
+    /// <summary>
+    /// A class representing a IotHubCertificateDescription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubCertificateDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubCertificateDescriptions method.
+    /// </summary>
     public partial class IotHubCertificateDescriptionResource
     {
         /// <summary>

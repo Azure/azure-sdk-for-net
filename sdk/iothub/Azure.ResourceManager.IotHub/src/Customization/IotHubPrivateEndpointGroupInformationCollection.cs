@@ -16,15 +16,15 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="IotHubPrivateEndpointGroupInformationResource"/> and their operations.
-    /// Each <see cref="IotHubPrivateEndpointGroupInformationResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
-    /// </summary>
     // Customization justification:
     // GroupIdInformation stays a plain TypeSpec model to preserve swagger. The C# generator therefore
     // emits data-returning operations on the parent resource instead of ARM child resource wrappers. This
     // custom collection restores the previous GA child-resource API surface while using the generated REST
     // client and data model.
+    /// <summary>
+    /// A class representing a collection of <see cref="IotHubPrivateEndpointGroupInformationResource"/> and their operations.
+    /// Each <see cref="IotHubPrivateEndpointGroupInformationResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
+    /// </summary>
     public partial class IotHubPrivateEndpointGroupInformationCollection : ArmCollection, IEnumerable<IotHubPrivateEndpointGroupInformationResource>, IAsyncEnumerable<IotHubPrivateEndpointGroupInformationResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;

@@ -9,17 +9,17 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="IotHubDescriptionResource"/> and their operations.
-    /// Each <see cref="IotHubDescriptionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="IotHubDescriptionCollection"/> instance call the GetIotHubDescriptions method from an instance of <see cref="ResourceGroupResource"/>.
-    /// </summary>
     // Customization justification:
     // The generated ARM method uses Azure.Core.ETag for If-Match, which is the preferred Azure SDK type.
     // The previous GA IoT Hub package exposed the same header as string on hub create/update, so removing
     // the string overload would force existing callers to change source. This overload is a thin adapter:
     // it converts string to nullable ETag and delegates to generated code so request construction,
     // diagnostics, and long-running-operation handling stay centralized.
+    /// <summary>
+    /// A class representing a collection of <see cref="IotHubDescriptionResource"/> and their operations.
+    /// Each <see cref="IotHubDescriptionResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="IotHubDescriptionCollection"/> instance call the GetIotHubDescriptions method from an instance of <see cref="ResourceGroupResource"/>.
+    /// </summary>
     public partial class IotHubDescriptionCollection
     {
         /// <summary>

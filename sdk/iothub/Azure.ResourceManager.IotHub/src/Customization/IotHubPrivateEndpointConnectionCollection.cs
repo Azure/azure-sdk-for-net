@@ -13,6 +13,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotHub
 {
+    // Customization justification:
+    // The swagger-compatible route casing makes the generated collection require resourceName on every
+    // operation. The previous GA collection was already scoped to a single IoT Hub resource, so callers
+    // only supplied the private endpoint connection name. These overloads preserve that parent-scoped
+    // collection experience by deriving the IoT Hub name from Id.Name and delegating to the generated
+    // REST client/child resource operations.
     /// <summary>
     /// A class representing a collection of <see cref="IotHubPrivateEndpointConnectionResource"/> and their operations.
     /// Each <see cref="IotHubPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
@@ -20,12 +26,6 @@ namespace Azure.ResourceManager.IotHub
     /// </summary>
     public partial class IotHubPrivateEndpointConnectionCollection
     {
-        // Customization justification:
-        // The swagger-compatible route casing makes the generated collection require resourceName on every
-        // operation. The previous GA collection was already scoped to a single IoT Hub resource, so callers
-        // only supplied the private endpoint connection name. These overloads preserve that parent-scoped
-        // collection experience by deriving the IoT Hub name from Id.Name and delegating to the generated
-        // REST client/child resource operations.
         /// <summary>
         /// Update the state of the specified private endpoint connection associated with the IotHub.
         /// <list type="bullet">

@@ -11,21 +11,17 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.IotHub
 {
-    /// <summary>
-    /// A class representing a IotHubDescription along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotHubDescriptions method.
-    /// </summary>
     // Customization justification:
     // These shims intentionally preserve public API shapes from the pre-TypeSpec IoT Hub management
     // package. The TypeSpec-generated ARM surface is more strictly aligned with the resource model, but
     // several GA callers rely on older method names, collection entry points, and string-based If-Match
     // overloads. Keeping these members in custom partials lets the generated code remain regeneration-safe
     // while maintaining source and binary compatibility for existing customers.
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAllAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetAll", typeof(CancellationToken))]
+    /// <summary>
+    /// A class representing a IotHubDescription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubDescriptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIotHubDescriptions method.
+    /// </summary>
     public partial class IotHubDescriptionResource
     {
         // The lower-case "iotHubs" route segment is required to keep the generated swagger identical to
