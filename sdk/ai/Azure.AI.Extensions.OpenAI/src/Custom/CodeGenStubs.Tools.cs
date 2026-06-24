@@ -61,8 +61,8 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("OpenApiProjectConnectionAuthDetails")] public partial class ResponsesOpenApiProjectConnectionAuthDetails { }
 [CodeGenType("OpenApiProjectConnectionSecurityScheme")] public partial class ResponsesOpenApiProjectConnectionSecurityScheme { }
 [CodeGenType("OpenApiTool")] public partial class ResponsesOpenApiTool { }
+[CodeGenType("ReminderPreviewTool")] public partial class ResponsesReminderPreviewTool { }
 [CodeGenType("Tool")] public abstract partial class ResponsesTool { }
-[CodeGenType("ToolboxSearchPreviewTool")] public partial class ResponsesToolboxSearchPreviewTool { }
 [CodeGenType("SharepointGroundingToolParameters")] public partial class ResponsesSharepointGroundingToolParameters { }
 [CodeGenType("SharepointPreviewTool")] public partial class ResponsesSharepointPreviewTool { }
 [CodeGenType("SkillReferenceParam")] public partial class ResponsesSkillReferenceParam { }

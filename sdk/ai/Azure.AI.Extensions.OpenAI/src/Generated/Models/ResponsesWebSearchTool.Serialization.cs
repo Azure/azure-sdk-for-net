@@ -86,27 +86,6 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             if (Optional.IsDefined(CustomSearchConfiguration))
             {
                 writer.WritePropertyName("custom_search_configuration"u8);
@@ -144,9 +123,6 @@ namespace Azure.AI.Extensions.OpenAI
             WebSearchToolFilters filters = default;
             ResponsesWebSearchApproximateLocation userLocation = default;
             ResponsesWebSearchToolSearchContextSize? searchContextSize = default;
-            string name = default;
-            string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             ResponsesWebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,30 +160,6 @@ namespace Azure.AI.Extensions.OpenAI
                     searchContextSize = prop.Value.GetString().ToResponsesWebSearchToolSearchContextSize();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (prop.NameEquals("custom_search_configuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -228,9 +180,6 @@ namespace Azure.AI.Extensions.OpenAI
                 filters,
                 userLocation,
                 searchContextSize,
-                name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 customSearchConfiguration);
         }
     }
