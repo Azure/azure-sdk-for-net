@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -10,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -17,12 +19,22 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
     // TODO: Remove this visitor once MTG fully supports inheritable system model replacements.
     // See https://github.com/microsoft/typespec/issues/10787.
+    private static readonly FieldInfo s_modelBaseModelProviderField = GetRequiredField(typeof(ModelProvider), "_baseModelProvider");
+    private static readonly FieldInfo s_modelBaseTypeProviderField = GetRequiredField(typeof(ModelProvider), "_baseTypeProvider");
+    private static readonly FieldInfo s_typeBaseTypeField = GetRequiredField(typeof(TypeProvider), "_baseType");
+    private static readonly FieldInfo s_typeTypeField = GetRequiredField(typeof(TypeProvider), "_type");
+
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
     {
         if (type is SystemObjectModelProvider systemType)
         {
             UpdateNamespace(systemType);
             EnsureFrameworkTypeRegistered(systemType);
+        }
+
+        if (type is not null and not SystemObjectModelProvider)
+        {
+            UpdateCustomCodeSystemBase(type);
         }
 
         if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
@@ -38,6 +50,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             UpdateNamespace(systemType);
             EnsureFrameworkTypeRegistered(systemType);
+        }
+
+        if (type is ModelProvider model2 && model2 is not SystemObjectModelProvider)
+        {
+            UpdateCustomCodeSystemBase(model2);
         }
 
         if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
@@ -72,6 +89,27 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private HashSet<ModelProvider> _regularUpdated = new();
 
+    private static FieldInfo GetRequiredField(Type type, string name)
+        => type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException($"Unable to find required field {type.FullName}.{name}.");
+
+    private static void UpdateCustomCodeSystemBase(ModelProvider model)
+    {
+        if (!ManagementModelProvider.TryGetCustomSystemBaseModelProvider(model.CustomCodeView?.BaseType, out var customBaseModelProvider)
+            || customBaseModelProvider is null
+            || ReferenceEquals(model.BaseModelProvider, customBaseModelProvider))
+        {
+            return;
+        }
+
+        s_modelBaseModelProviderField.SetValue(model, customBaseModelProvider);
+        s_modelBaseTypeProviderField.SetValue(model, customBaseModelProvider);
+        s_typeBaseTypeField.SetValue(model, customBaseModelProvider.Type);
+        // MTG captures the base type inside TypeProvider.Type, so force Type to rebuild with
+        // the custom base before TypeProviderWriter emits the partial declaration.
+        s_typeTypeField.SetValue(model, null);
+    }
+
     private void UpdateRegularModelInheritance(ModelProvider model)
     {
         if (_regularUpdated.Contains(model))
@@ -104,6 +142,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         // Reset cached constructors, serialization, and model factories so they do not keep
         // references to inherited ARM properties removed from the model surface.
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
+        UpdateCustomCodeSystemBase(model);
 
         _regularUpdated.Add(model);
     }
@@ -114,6 +153,17 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         ModelProvider? currentModel = baseModel;
         while (currentModel != null)
         {
+            if (currentModel is SystemObjectModelProvider { SystemType.IsFrameworkType: true } systemModel)
+            {
+                foreach (var property in systemModel.SystemType.FrameworkType.GetProperties())
+                {
+                    if (property.GetMethod is not null && property.GetMethod.IsPublic && !property.GetMethod.IsStatic)
+                    {
+                        basePropertyNames.Add(property.Name);
+                    }
+                }
+            }
+
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
