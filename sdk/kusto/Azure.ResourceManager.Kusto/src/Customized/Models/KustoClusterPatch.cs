@@ -8,10 +8,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
+    // these renaming properties are from flattened `Properties`.
+    // in GA code, under this class and its `Properties` class, they are named differently.
     public partial class KustoClusterPatch
     {
-        // ClusterProperties.uri is shared by Cluster and ClusterUpdate; @@clientName renamed it to ClusterUri
-        // (matching KustoClusterData), but the previous AutoRest SDK exposed it as `Uri` on the patch model.
         /// <summary> The cluster URI. </summary>
         public Uri Uri => ClusterUri;
 

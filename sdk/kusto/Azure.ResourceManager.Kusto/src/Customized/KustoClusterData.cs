@@ -10,6 +10,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
+    // these renaming properties are from flattened `Properties`.
+    // in GA code, under this class and its `Properties` class, they are named differently.
     /// <summary> Class representing a Kusto cluster. </summary>
     public partial class KustoClusterData : TrackedResourceData
     {
