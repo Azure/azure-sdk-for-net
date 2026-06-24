@@ -57,10 +57,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 .SetValue(mockInputLibrary.Object, new ArmProviderSchema([], []));
 
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var managementInstance = typeof(ManagementClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             var provisioningInstance = typeof(ProvisioningGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             codeModelInstance!.SetValue(null, mockGenerator.Object);
-            managementInstance!.SetValue(null, mockGenerator.Object);
             provisioningInstance!.SetValue(null, mockGenerator.Object);
 
             var factory = mockGenerator.Object.TypeFactory;
