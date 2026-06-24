@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                FunctionAppStackCollection result = FunctionAppStackCollection.FromResponse(response);
+                FunctionAppStackListResult result = FunctionAppStackListResult.FromResponse(response);
                 yield return Page<FunctionAppStack>.FromValues((IReadOnlyList<FunctionAppStack>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

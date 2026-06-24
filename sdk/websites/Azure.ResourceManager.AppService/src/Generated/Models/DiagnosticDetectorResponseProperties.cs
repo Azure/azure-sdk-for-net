@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
             AbnormalTimePeriods = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Data = new ChangeTrackingList<IList<NameValuePair>>();
+            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponseProperties"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="data"> Additional Data that detector wants to send. </param>
         /// <param name="responseMetaData"> Meta Data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDetectorResponseProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<NameValuePair>> data, ResponseMetaData responseMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticDetectorResponseProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Additional Data that detector wants to send. </summary>
         [WirePath("data")]
-        public IList<IList<NameValuePair>> Data { get; } = new ChangeTrackingList<IList<NameValuePair>>();
+        public IList<IList<AppServiceNameValuePair>> Data { get; } = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
 
         /// <summary> Meta Data. </summary>
         [WirePath("responseMetaData")]
-        internal ResponseMetaData ResponseMetaData { get; }
+        internal DetectorMetadata ResponseMetaData { get; }
 
         /// <summary> Source of the Data. </summary>
         [WirePath("responseMetaData.dataSource")]
-        public DataSource DataSource
+        public DetectorDataSource DataSource
         {
             get
             {

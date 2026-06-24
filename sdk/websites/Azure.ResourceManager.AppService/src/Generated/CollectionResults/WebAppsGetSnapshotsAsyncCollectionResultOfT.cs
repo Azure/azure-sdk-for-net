@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetSnapshotsAsyncCollectionResultOfT : AsyncPageable<Snapshot>
+    internal partial class WebAppsGetSnapshotsAsyncCollectionResultOfT : AsyncPageable<AppSnapshot>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetSnapshotsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Snapshot>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppSnapshot>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                SnapshotCollection result = SnapshotCollection.FromResponse(response);
-                yield return Page<Snapshot>.FromValues((IReadOnlyList<Snapshot>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppSnapshotListResult result = AppSnapshotListResult.FromResponse(response);
+                yield return Page<AppSnapshot>.FromValues((IReadOnlyList<AppSnapshot>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

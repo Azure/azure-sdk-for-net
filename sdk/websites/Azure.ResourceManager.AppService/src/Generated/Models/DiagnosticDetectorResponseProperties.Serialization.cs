@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
-                foreach (IList<NameValuePair> item in Data)
+                foreach (IList<AppServiceNameValuePair> item in Data)
                 {
                     if (item == null)
                     {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (NameValuePair item0 in item)
+                    foreach (AppServiceNameValuePair item0 in item)
                     {
                         writer.WriteObjectValue(item0, options);
                     }
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.AppService.Models
             DetectorDefinition detectorDefinition = default;
             IList<DiagnosticMetricSet> metrics = default;
             IList<DetectorAbnormalTimePeriod> abnormalTimePeriods = default;
-            IList<IList<NameValuePair>> data = default;
-            ResponseMetaData responseMetaData = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            DetectorMetadata responseMetaData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                    List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            List<NameValuePair> array0 = new List<NameValuePair>();
+                            List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(NameValuePair.DeserializeNameValuePair(item0, options));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    responseMetaData = ResponseMetaData.DeserializeResponseMetaData(prop.Value, options);
+                    responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppService.Models
                 detectorDefinition,
                 metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
                 abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
-                data ?? new ChangeTrackingList<IList<NameValuePair>>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
                 responseMetaData,
                 additionalBinaryDataProperties);
         }

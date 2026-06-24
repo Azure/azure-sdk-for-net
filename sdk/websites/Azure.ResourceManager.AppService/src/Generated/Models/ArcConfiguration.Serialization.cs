@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Models.ArtifactStorageType? artifactsStorageType = default;
+            ArtifactStorageType? artifactsStorageType = default;
             string artifactStorageClassName = default;
             string artifactStorageMountPath = default;
             string artifactStorageNodeName = default;

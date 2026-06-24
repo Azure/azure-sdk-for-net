@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
-                foreach (VolumeMount item in VolumeMounts)
+                foreach (SiteContainerVolumeMount item in VolumeMounts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
-                foreach (EnvironmentVariable item in EnvironmentVariables)
+                foreach (WebAppEnvironmentVariable item in EnvironmentVariables)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.AppService.Models
             string targetPort = default;
             bool isMain = default;
             string startUpCommand = default;
-            AuthType? authType = default;
+            SiteContainerAuthType? authType = default;
             string userName = default;
             string passwordSecret = default;
             string userManagedIdentityClientId = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
-            IList<VolumeMount> volumeMounts = default;
+            IList<SiteContainerVolumeMount> volumeMounts = default;
             bool? inheritAppSettingsAndConnectionStrings = default;
-            IList<EnvironmentVariable> environmentVariables = default;
+            IList<WebAppEnvironmentVariable> environmentVariables = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    authType = prop.Value.GetString().ToAuthType();
+                    authType = prop.Value.GetString().ToSiteContainerAuthType();
                     continue;
                 }
                 if (prop.NameEquals("userName"u8))
@@ -274,10 +274,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<VolumeMount> array = new List<VolumeMount>();
+                    List<SiteContainerVolumeMount> array = new List<SiteContainerVolumeMount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VolumeMount.DeserializeVolumeMount(item, options));
+                        array.Add(SiteContainerVolumeMount.DeserializeSiteContainerVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    List<WebAppEnvironmentVariable> array = new List<WebAppEnvironmentVariable>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                        array.Add(WebAppEnvironmentVariable.DeserializeWebAppEnvironmentVariable(item, options));
                     }
                     environmentVariables = array;
                     continue;
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.AppService.Models
                 userManagedIdentityClientId,
                 createdOn,
                 lastModifiedOn,
-                volumeMounts ?? new ChangeTrackingList<VolumeMount>(),
+                volumeMounts ?? new ChangeTrackingList<SiteContainerVolumeMount>(),
                 inheritAppSettingsAndConnectionStrings,
-                environmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
+                environmentVariables ?? new ChangeTrackingList<WebAppEnvironmentVariable>(),
                 additionalBinaryDataProperties);
         }
     }

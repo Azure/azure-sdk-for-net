@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
-        /// <param name="storageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobProperties(TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, string publicNetworkAccess, bool? storageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggeredWebJobProperties(TriggeredJobRun latestRun, string historyUri, string schedulerLogsUri, string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService.Models
             ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUsingSdk = isUsingSdk;
             PublicNetworkAccess = publicNetworkAccess;
-            StorageAccountRequired = storageAccountRequired;
+            IsStorageAccountRequired = isStorageAccountRequired;
             Settings = settings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Using SDK?. </summary>
         [WirePath("using_sdk")]
-        public bool? UsingSdk { get; }
+        public bool? IsUsingSdk { get; }
 
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
         [WirePath("publicNetworkAccess")]
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("storageAccountRequired")]
-        public bool? StorageAccountRequired { get; }
+        public bool? IsStorageAccountRequired { get; }
 
         /// <summary>
         /// Job settings.

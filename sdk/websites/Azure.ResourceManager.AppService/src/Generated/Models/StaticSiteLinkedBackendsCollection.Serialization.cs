@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteLinkedBackendsCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="StaticSiteLinkedBackendsCollection"/> from. </param>
-        internal static StaticSiteLinkedBackendsCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StaticSiteLinkedBackendsCollection"/> from. </param>
+        internal static StaticSiteLinkedBackendsCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStaticSiteLinkedBackendsCollection(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (StaticSiteLinkedBackendARMResourceData item in Value)
+            foreach (StaticSiteLinkedBackendData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<StaticSiteLinkedBackendARMResourceData> value = default;
+            IList<StaticSiteLinkedBackendData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<StaticSiteLinkedBackendARMResourceData> array = new List<StaticSiteLinkedBackendARMResourceData>();
+                    List<StaticSiteLinkedBackendData> array = new List<StaticSiteLinkedBackendData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteLinkedBackendARMResourceData.DeserializeStaticSiteLinkedBackendARMResourceData(item, options));
+                        array.Add(StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(item, options));
                     }
                     value = array;
                     continue;

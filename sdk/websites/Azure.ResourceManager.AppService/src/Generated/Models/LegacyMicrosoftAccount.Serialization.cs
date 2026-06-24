@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(LegacyMicrosoftAccount)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             ClientRegistration registration = default;
             LoginScopes login = default;
             AllowedAudiencesValidation validation = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("registration"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LegacyMicrosoftAccount(enabled, registration, login, validation, additionalBinaryDataProperties);
+            return new LegacyMicrosoftAccount(isEnabled, registration, login, validation, additionalBinaryDataProperties);
         }
     }
 }

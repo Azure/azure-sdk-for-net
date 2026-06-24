@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="customHostNameDnsRecordType"> Custom DNS record type. </param>
         /// <param name="hostNameType"> Hostname type. </param>
         /// <param name="sslState"> SSL type. </param>
-        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameBindingProperties(string siteName, string domainId, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType, SslState? sslState, string thumbprint, string virtualIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostNameBindingProperties(string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SiteName = siteName;
             DomainId = domainId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             CustomHostNameDnsRecordType = customHostNameDnsRecordType;
             HostNameType = hostNameType;
             SslState = sslState;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Azure resource type. </summary>
         [WirePath("azureResourceType")]
-        public AzureResourceType? AzureResourceType { get; set; }
+        public AppServiceResourceType? AzureResourceType { get; set; }
 
         /// <summary> Custom DNS record type. </summary>
         [WirePath("customHostNameDnsRecordType")]
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Hostname type. </summary>
         [WirePath("hostNameType")]
-        public HostNameType? HostNameType { get; set; }
+        public AppServiceHostNameType? HostNameType { get; set; }
 
         /// <summary> SSL type. </summary>
         [WirePath("sslState")]
-        public SslState? SslState { get; set; }
+        public HostNameBindingSslState? SslState { get; set; }
 
         /// <summary> SSL certificate thumbprint. </summary>
         [WirePath("thumbprint")]
-        public string Thumbprint { get; set; }
+        public string ThumbprintString { get; set; }
 
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         [WirePath("virtualIP")]

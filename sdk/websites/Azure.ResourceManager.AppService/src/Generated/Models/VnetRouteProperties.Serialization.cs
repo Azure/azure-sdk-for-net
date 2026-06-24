@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string startAddress = default;
             string endAddress = default;
-            RouteType? routeType = default;
+            AppServiceVirtualNetworkRouteType? routeType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    routeType = new RouteType(prop.Value.GetString());
+                    routeType = new AppServiceVirtualNetworkRouteType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

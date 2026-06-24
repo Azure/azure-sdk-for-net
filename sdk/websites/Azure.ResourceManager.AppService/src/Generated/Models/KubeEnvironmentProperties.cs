@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
-        /// <param name="internalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
+        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
         /// <param name="staticIp"> Static IP of the KubeEnvironment. </param>
         /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceID"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentProperties(KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? internalLoadBalancerEnabled, string defaultDomain, string staticIp, string environmentType, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, string aksResourceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeEnvironmentProperties(KubeEnvironmentProvisioningState? provisioningState, string deploymentErrors, bool? isInternalLoadBalancerEnabled, string defaultDomain, string staticIp, string environmentType, ArcConfiguration arcConfiguration, AppLogsConfiguration appLogsConfiguration, ContainerAppsConfiguration containerAppsConfiguration, string aksResourceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
-            InternalLoadBalancerEnabled = internalLoadBalancerEnabled;
+            IsInternalLoadBalancerEnabled = isInternalLoadBalancerEnabled;
             DefaultDomain = defaultDomain;
             StaticIp = staticIp;
             EnvironmentType = environmentType;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
         [WirePath("internalLoadBalancerEnabled")]
-        public bool? InternalLoadBalancerEnabled { get; set; }
+        public bool? IsInternalLoadBalancerEnabled { get; set; }
 
         /// <summary> Default Domain Name for the cluster. </summary>
         [WirePath("defaultDomain")]

@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Using SDK?. </summary>
         [WirePath("properties.using_sdk")]
-        public bool? UsingSdk
+        public bool? IsUsingSdk
         {
             get
             {
-                return Properties is null ? default : Properties.UsingSdk;
+                return Properties is null ? default : Properties.IsUsingSdk;
             }
         }
 
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("properties.storageAccountRequired")]
-        public bool? StorageAccountRequired
+        public bool? IsStorageAccountRequired
         {
             get
             {
-                return Properties is null ? default : Properties.StorageAccountRequired;
+                return Properties is null ? default : Properties.IsStorageAccountRequired;
             }
         }
 

@@ -17,7 +17,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class MicrosoftWebWebAppsGetNetworkTracesSlotV2CollectionResultOfT : Pageable<NetworkTrace>
+    internal partial class MicrosoftWebWebAppsGetNetworkTracesSlotV2CollectionResultOfT : Pageable<WebAppNetworkTrace>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftWebWebAppsGetNetworkTracesSlotV2CollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NetworkTrace>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WebAppNetworkTrace>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<NetworkTrace> result = ParseArrayFromResponse(response);
-            yield return Page<NetworkTrace>.FromValues(result, null, response);
+            IReadOnlyList<WebAppNetworkTrace> result = ParseArrayFromResponse(response);
+            yield return Page<WebAppNetworkTrace>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<NetworkTrace> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<WebAppNetworkTrace> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<NetworkTrace> result = new List<NetworkTrace>();
+            List<WebAppNetworkTrace> result = new List<WebAppNetworkTrace>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<NetworkTrace>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<WebAppNetworkTrace>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
             }
             return result;
         }

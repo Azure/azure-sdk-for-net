@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the reference to workflow. </summary>
         [WirePath("properties.workflow")]
-        public ResourceReference Workflow
+        public WorkflowResourceReference Workflow
         {
             get
             {

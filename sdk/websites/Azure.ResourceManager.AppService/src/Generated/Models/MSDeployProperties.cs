@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        /// <param name="appOffline">
+        /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
-        internal MSDeployProperties(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MSDeployCore> addOnPackages) : base(packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, appOffline, additionalBinaryDataProperties)
+        internal MSDeployProperties(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MSDeployCore> addOnPackages) : base(packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, isAppOffline, additionalBinaryDataProperties)
         {
             AddOnPackages = addOnPackages;
         }

@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(CloneCustomHostNames))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Guid? correlationId = default;
-            bool? overwrite = default;
+            bool? canOverwrite = default;
             bool? cloneCustomHostNames = default;
             bool? cloneSourceControl = default;
             ResourceIdentifier sourceWebAppId = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    overwrite = prop.Value.GetBoolean();
+                    canOverwrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("cloneCustomHostNames"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new CloningInfo(
                 correlationId,
-                overwrite,
+                canOverwrite,
                 cloneCustomHostNames,
                 cloneSourceControl,
                 sourceWebAppId,

@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="externalInboundIpAddresses"></param>
         /// <param name="internalInboundIpAddresses"></param>
         /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="ftpEnabled"> Property to enable and disable FTP on ASEV3. </param>
-        /// <param name="remoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
+        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
+        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
         /// <param name="inboundIpAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections, bool? ftpEnabled, bool? remoteDebugEnabled, string inboundIpAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AseV3NetworkingConfigurationProperties(IReadOnlyList<string> windowsOutboundIpAddresses, IReadOnlyList<string> linuxOutboundIpAddresses, IReadOnlyList<string> externalInboundIpAddresses, IReadOnlyList<string> internalInboundIpAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIpAddressOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WindowsOutboundIpAddresses = windowsOutboundIpAddresses;
             LinuxOutboundIpAddresses = linuxOutboundIpAddresses;
             ExternalInboundIpAddresses = externalInboundIpAddresses;
             InternalInboundIpAddresses = internalInboundIpAddresses;
             AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
-            FtpEnabled = ftpEnabled;
-            RemoteDebugEnabled = remoteDebugEnabled;
+            IsFtpEnabled = isFtpEnabled;
+            IsRemoteDebugEnabled = isRemoteDebugEnabled;
             InboundIpAddressOverride = inboundIpAddressOverride;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Property to enable and disable FTP on ASEV3. </summary>
         [WirePath("ftpEnabled")]
-        public bool? FtpEnabled { get; set; }
+        public bool? IsFtpEnabled { get; set; }
 
         /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
         [WirePath("remoteDebugEnabled")]
-        public bool? RemoteDebugEnabled { get; set; }
+        public bool? IsRemoteDebugEnabled { get; set; }
 
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
         [WirePath("inboundIpAddressOverride")]

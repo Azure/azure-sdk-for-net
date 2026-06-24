@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<Models.WorkflowResourceReference>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             WorkflowSkuName name = default;
-            Models.WorkflowResourceReference plan = default;
+            WorkflowResourceReference plan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = Models.WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
+                    plan = WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

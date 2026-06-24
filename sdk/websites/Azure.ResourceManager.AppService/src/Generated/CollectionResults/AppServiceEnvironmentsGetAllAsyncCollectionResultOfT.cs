@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class AppServiceEnvironmentsGetAllAsyncCollectionResultOfT : AsyncPageable<AppServiceEnvironmentResourceData>
+    internal partial class AppServiceEnvironmentsGetAllAsyncCollectionResultOfT : AsyncPageable<AppServiceEnvironmentData>
     {
         private readonly AppServiceEnvironments _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AppServiceEnvironmentsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AppServiceEnvironmentResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceEnvironmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                Models.AppServiceEnvironmentCollection result = Models.AppServiceEnvironmentCollection.FromResponse(response);
-                yield return Page<AppServiceEnvironmentResourceData>.FromValues((IReadOnlyList<AppServiceEnvironmentResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServiceEnvironmentListResult result = AppServiceEnvironmentListResult.FromResponse(response);
+                yield return Page<AppServiceEnvironmentData>.FromValues((IReadOnlyList<AppServiceEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

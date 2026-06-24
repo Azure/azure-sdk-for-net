@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetStaticSiteUsersAsyncCollectionResultOfT : AsyncPageable<StaticSiteUserARMResource>
+    internal partial class StaticSitesGetStaticSiteUsersAsyncCollectionResultOfT : AsyncPageable<StaticSiteUser>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetStaticSiteUsersAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StaticSiteUserARMResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<StaticSiteUser>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                StaticSiteUserCollection result = StaticSiteUserCollection.FromResponse(response);
-                yield return Page<StaticSiteUserARMResource>.FromValues((IReadOnlyList<StaticSiteUserARMResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                StaticSiteUserListResult result = StaticSiteUserListResult.FromResponse(response);
+                yield return Page<StaticSiteUser>.FromValues((IReadOnlyList<StaticSiteUser>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

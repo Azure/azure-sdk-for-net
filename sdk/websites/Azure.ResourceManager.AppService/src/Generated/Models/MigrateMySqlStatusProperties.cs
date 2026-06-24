@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="MigrateMySqlStatusProperties"/>. </summary>
         /// <param name="migrationOperationStatus"> Status of the migration task. </param>
         /// <param name="operationId"> Operation ID for the migration task. </param>
-        /// <param name="localMySqlEnabled"> True if the web app has in app MySql enabled. </param>
+        /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateMySqlStatusProperties(OperationStatus? migrationOperationStatus, string operationId, bool? localMySqlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateMySqlStatusProperties(AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;
-            LocalMySqlEnabled = localMySqlEnabled;
+            IsLocalMySqlEnabled = isLocalMySqlEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Status of the migration task. </summary>
         [WirePath("migrationOperationStatus")]
-        public OperationStatus? MigrationOperationStatus { get; }
+        public AppServiceOperationStatus? MigrationOperationStatus { get; }
 
         /// <summary> Operation ID for the migration task. </summary>
         [WirePath("operationId")]
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> True if the web app has in app MySql enabled. </summary>
         [WirePath("localMySqlEnabled")]
-        public bool? LocalMySqlEnabled { get; }
+        public bool? IsLocalMySqlEnabled { get; }
     }
 }

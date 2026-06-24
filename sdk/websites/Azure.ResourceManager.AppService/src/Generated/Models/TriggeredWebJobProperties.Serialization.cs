@@ -114,20 +114,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(UsingSdk))
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
-                writer.WriteBooleanValue(UsingSdk.Value);
+                writer.WriteBooleanValue(IsUsingSdk.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(StorageAccountRequired))
+            if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
-                writer.WriteBooleanValue(StorageAccountRequired.Value);
+                writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -202,9 +202,9 @@ namespace Azure.ResourceManager.AppService.Models
             string extraInfoUri = default;
             WebJobType? webJobType = default;
             string error = default;
-            bool? usingSdk = default;
+            bool? isUsingSdk = default;
             string publicNetworkAccess = default;
-            bool? storageAccountRequired = default;
+            bool? isStorageAccountRequired = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    usingSdk = prop.Value.GetBoolean();
+                    isUsingSdk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    storageAccountRequired = prop.Value.GetBoolean();
+                    isStorageAccountRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.AppService.Models
                 extraInfoUri,
                 webJobType,
                 error,
-                usingSdk,
+                isUsingSdk,
                 publicNetworkAccess,
-                storageAccountRequired,
+                isStorageAccountRequired,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);
         }

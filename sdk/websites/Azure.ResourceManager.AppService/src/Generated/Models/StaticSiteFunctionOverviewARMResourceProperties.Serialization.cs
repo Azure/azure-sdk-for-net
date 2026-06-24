@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string functionName = default;
-            TriggerTypes? triggerType = default;
+            FunctionTriggerType? triggerType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    triggerType = new TriggerTypes(prop.Value.GetString());
+                    triggerType = new FunctionTriggerType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

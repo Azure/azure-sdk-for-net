@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isGitHubAction"u8);
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
-            if (Optional.IsDefined(DeploymentRollbackEnabled))
+            if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
                 writer.WritePropertyName("deploymentRollbackEnabled"u8);
-                writer.WriteBooleanValue(DeploymentRollbackEnabled.Value);
+                writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
             if (Optional.IsDefined(IsMercurial))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
             string branch = default;
             bool? isManualIntegration = default;
             bool? isGitHubAction = default;
-            bool? deploymentRollbackEnabled = default;
+            bool? isDeploymentRollbackEnabled = default;
             bool? isMercurial = default;
             GitHubActionConfiguration gitHubActionConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    deploymentRollbackEnabled = prop.Value.GetBoolean();
+                    isDeploymentRollbackEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isMercurial"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
                 branch,
                 isManualIntegration,
                 isGitHubAction,
-                deploymentRollbackEnabled,
+                isDeploymentRollbackEnabled,
                 isMercurial,
                 gitHubActionConfiguration,
                 additionalBinaryDataProperties);

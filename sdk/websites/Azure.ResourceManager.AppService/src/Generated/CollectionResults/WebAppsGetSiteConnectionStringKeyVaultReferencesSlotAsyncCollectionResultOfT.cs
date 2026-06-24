@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetSiteConnectionStringKeyVaultReferencesSlotAsyncCollectionResultOfT : AsyncPageable<ApiKVReferenceData>
+    internal partial class WebAppsGetSiteConnectionStringKeyVaultReferencesSlotAsyncCollectionResultOfT : AsyncPageable<ApiKeyVaultReferenceData>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetSiteConnectionStringKeyVaultReferencesSlotAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApiKVReferenceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ApiKeyVaultReferenceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ApiKVReferenceCollection result = ApiKVReferenceCollection.FromResponse(response);
-                yield return Page<ApiKVReferenceData>.FromValues((IReadOnlyList<ApiKVReferenceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServiceApiKeyVaultReferenceList result = AppServiceApiKeyVaultReferenceList.FromResponse(response);
+                yield return Page<ApiKeyVaultReferenceData>.FromValues((IReadOnlyList<ApiKeyVaultReferenceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

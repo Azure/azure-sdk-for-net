@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIP"> Virtual IP address. </param>
         /// <param name="internalHttpPort"> Internal HTTP port. </param>
         /// <param name="internalHttpsPort"> Internal HTTPS port. </param>
-        /// <param name="inUse"> Is virtual IP mapping in use. </param>
+        /// <param name="isInUse"> Is virtual IP mapping in use. </param>
         /// <param name="serviceName"> name of the service that virtual IP is assigned to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? inUse, string serviceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? isInUse, string serviceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualIP = virtualIP;
             InternalHttpPort = internalHttpPort;
             InternalHttpsPort = internalHttpsPort;
-            InUse = inUse;
+            IsInUse = isInUse;
             ServiceName = serviceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Is virtual IP mapping in use. </summary>
         [WirePath("inUse")]
-        public bool? InUse { get; }
+        public bool? IsInUse { get; }
 
         /// <summary> name of the service that virtual IP is assigned to. </summary>
         [WirePath("serviceName")]

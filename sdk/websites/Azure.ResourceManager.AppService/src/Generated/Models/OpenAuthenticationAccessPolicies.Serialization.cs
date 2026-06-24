@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(OpenAuthenticationAccessPolicies)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Policies))
+            if (Optional.IsCollectionDefined(OpenAuthenticationPolicyList))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartObject();
-                foreach (var item in Policies)
+                foreach (var item in OpenAuthenticationPolicyList)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value, options);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IDictionary<string, OpenAuthenticationAccessPolicy> policies = default;
+            IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         dictionary.Add(prop0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(prop0.Value, options));
                     }
-                    policies = dictionary;
+                    openAuthenticationPolicyList = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OpenAuthenticationAccessPolicies(policies ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), additionalBinaryDataProperties);
+            return new OpenAuthenticationAccessPolicies(openAuthenticationPolicyList ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), additionalBinaryDataProperties);
         }
     }
 }

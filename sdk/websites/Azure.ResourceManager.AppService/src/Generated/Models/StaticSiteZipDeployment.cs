@@ -11,52 +11,118 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A static site zip deployment. </summary>
-    internal partial class StaticSiteZipDeployment
+    /// <summary> Static site zip deployment ARM resource. </summary>
+    public partial class StaticSiteZipDeployment : ProxyOnlyResource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeployment"/>. </summary>
         public StaticSiteZipDeployment()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteZipDeployment"/>. </summary>
-        /// <param name="appZipUri"> URL for the zipped app content. </param>
-        /// <param name="apiZipUri"> URL for the zipped api content. </param>
-        /// <param name="deploymentTitle"> A title to label the deployment. </param>
-        /// <param name="provider"> The provider submitting this deployment. </param>
-        /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="stackName"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteZipDeployment(Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> Core resource properties. </param>
+        internal StaticSiteZipDeployment(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StaticSiteZipDeploymentProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
-            AppZipUri = appZipUri;
-            ApiZipUri = apiZipUri;
-            DeploymentTitle = deploymentTitle;
-            Provider = provider;
-            FunctionLanguage = functionLanguage;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteZipDeploymentProperties Properties { get; set; }
+
         /// <summary> URL for the zipped app content. </summary>
-        [WirePath("appZipUrl")]
-        public Uri AppZipUri { get; set; }
+        [WirePath("properties.appZipUrl")]
+        public string AppZipUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppZipUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteZipDeploymentProperties();
+                }
+                Properties.AppZipUri = value;
+            }
+        }
 
         /// <summary> URL for the zipped api content. </summary>
-        [WirePath("apiZipUrl")]
-        public Uri ApiZipUri { get; set; }
+        [WirePath("properties.apiZipUrl")]
+        public string ApiZipUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiZipUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteZipDeploymentProperties();
+                }
+                Properties.ApiZipUri = value;
+            }
+        }
 
         /// <summary> A title to label the deployment. </summary>
-        [WirePath("deploymentTitle")]
-        public string DeploymentTitle { get; set; }
+        [WirePath("properties.deploymentTitle")]
+        public string DeploymentTitle
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentTitle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteZipDeploymentProperties();
+                }
+                Properties.DeploymentTitle = value;
+            }
+        }
 
         /// <summary> The provider submitting this deployment. </summary>
-        [WirePath("provider")]
-        public string Provider { get; set; }
+        [WirePath("properties.provider")]
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteZipDeploymentProperties();
+                }
+                Properties.Provider = value;
+            }
+        }
 
         /// <summary> The language of the api content, if it exists. </summary>
-        [WirePath("functionLanguage")]
-        public string FunctionLanguage { get; set; }
+        [WirePath("properties.functionLanguage")]
+        public string FunctionLanguage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FunctionLanguage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteZipDeploymentProperties();
+                }
+                Properties.FunctionLanguage = value;
+            }
+        }
     }
 }

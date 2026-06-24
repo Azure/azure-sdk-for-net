@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Thread list. </summary>
         [WirePath("properties.threads")]
-        public IList<ProcessThreadInfo> Threads
+        public IList<WebAppProcessThreadInfo> ProcessThreads
         {
             get
             {
-                return Properties is null ? default : Properties.Threads;
+                return Properties is null ? default : Properties.ProcessThreads;
             }
         }
 

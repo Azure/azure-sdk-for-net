@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="ProxyOnlyResource"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyOnlyResource(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyOnlyResource(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Name = name;
+            StackName = stackName;
             Kind = kind;
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource Name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string StackName { get; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]

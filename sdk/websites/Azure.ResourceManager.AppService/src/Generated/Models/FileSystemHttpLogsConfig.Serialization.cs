@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             int? retentionInMb = default;
             int? retentionInDays = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileSystemHttpLogsConfig(retentionInMb, retentionInDays, enabled, additionalBinaryDataProperties);
+            return new FileSystemHttpLogsConfig(retentionInMb, retentionInDays, isEnabled, additionalBinaryDataProperties);
         }
     }
 }

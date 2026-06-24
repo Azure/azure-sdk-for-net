@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowEnvelopeCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="WorkflowEnvelopeCollection"/> from. </param>
-        internal static WorkflowEnvelopeCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkflowEnvelopeCollection"/> from. </param>
+        internal static WorkflowEnvelopeCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWorkflowEnvelopeCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

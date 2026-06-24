@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string virtualNetworkName = default;
-            VnetInfo virtualNetworkConnection = default;
+            AppServiceVirtualNetworkProperties virtualNetworkConnection = default;
             IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections = default;
             IReadOnlyList<HybridConnectionData> hybridConnectionsV2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    virtualNetworkConnection = VnetInfo.DeserializeVnetInfo(prop.Value, options);
+                    virtualNetworkConnection = AppServiceVirtualNetworkProperties.DeserializeAppServiceVirtualNetworkProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("hybridConnections"u8))

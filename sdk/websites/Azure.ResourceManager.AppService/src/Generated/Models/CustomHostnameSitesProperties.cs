@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSitesProperties"/>. </summary>
         internal CustomHostnameSitesProperties()
         {
-            SiteResourceIds = new ChangeTrackingList<IdentifierData>();
+            SiteResourceIds = new ChangeTrackingList<AppServiceIdentifierData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSitesProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="region"></param>
         /// <param name="siteResourceIds"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomHostnameSitesProperties(string customHostname, string region, IList<IdentifierData> siteResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomHostnameSitesProperties(string customHostname, string region, IList<AppServiceIdentifierData> siteResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CustomHostname = customHostname;
             Region = region;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the SiteResourceIds. </summary>
         [WirePath("siteResourceIds")]
-        public IList<IdentifierData> SiteResourceIds { get; } = new ChangeTrackingList<IdentifierData>();
+        public IList<AppServiceIdentifierData> SiteResourceIds { get; } = new ChangeTrackingList<AppServiceIdentifierData>();
     }
 }

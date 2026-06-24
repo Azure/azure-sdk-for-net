@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponse"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> DiagnosticDetectorResponse resource specific properties. </param>
-        internal DiagnosticDetectorResponse(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiagnosticDetectorResponseProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal DiagnosticDetectorResponse(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiagnosticDetectorResponseProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Additional Data that detector wants to send. </summary>
         [WirePath("properties.data")]
-        public IList<IList<NameValuePair>> Data
+        public IList<IList<AppServiceNameValuePair>> Data
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Source of the Data. </summary>
         [WirePath("properties.responseMetaData.dataSource")]
-        public DataSource DataSource
+        public DetectorDataSource DataSource
         {
             get
             {

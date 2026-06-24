@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebClientGetAseRegionsAsyncCollectionResultOfT : AsyncPageable<AseRegion>
+    internal partial class WebClientGetAseRegionsAsyncCollectionResultOfT : AsyncPageable<AppServiceAseRegion>
     {
         private readonly WebClient _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebClientGetAseRegionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AseRegion>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceAseRegion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AseRegionCollection result = AseRegionCollection.FromResponse(response);
-                yield return Page<AseRegion>.FromValues((IReadOnlyList<AseRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AppServiceAseRegion>.FromValues((IReadOnlyList<AppServiceAseRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

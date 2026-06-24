@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VipMappings))
+            if (Optional.IsCollectionDefined(VirtualIPMappings))
             {
                 writer.WritePropertyName("vipMappings"u8);
                 writer.WriteStartArray();
-                foreach (VirtualIPMapping item in VipMappings)
+                foreach (VirtualIPMapping item in VirtualIPMappings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
             string serviceIpAddress = default;
             string internalIpAddress = default;
             IList<string> outboundIpAddresses = default;
-            IList<VirtualIPMapping> vipMappings = default;
+            IList<VirtualIPMapping> virtualIPMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         array.Add(VirtualIPMapping.DeserializeVirtualIPMapping(item, options));
                     }
-                    vipMappings = array;
+                    virtualIPMappings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddressResponseProperties(serviceIpAddress, internalIpAddress, outboundIpAddresses ?? new ChangeTrackingList<string>(), vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
+            return new AddressResponseProperties(serviceIpAddress, internalIpAddress, outboundIpAddresses ?? new ChangeTrackingList<string>(), virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
         }
     }
 }

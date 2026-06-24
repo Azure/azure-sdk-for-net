@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotRestoreRequestProperties"/>. </summary>
-        /// <param name="overwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        public SnapshotRestoreRequestProperties(bool overwrite)
+        /// <param name="canOverwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        public SnapshotRestoreRequestProperties(bool canOverwrite)
         {
-            Overwrite = overwrite;
+            CanOverwrite = canOverwrite;
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotRestoreRequestProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
         /// </param>
-        /// <param name="overwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="canOverwrite"> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="recoverConfiguration"> If true, site configuration, in addition to content, will be reverted. </param>
         /// <param name="ignoreConflictingHostNames">
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotRestoreRequestProperties(string snapshotTime, SnapshotRecoverySource recoverySource, bool overwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotRestoreRequestProperties(string snapshotTime, SnapshotRecoverySource recoverySource, bool canOverwrite, bool? recoverConfiguration, bool? ignoreConflictingHostNames, bool? useDRSecondary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SnapshotTime = snapshotTime;
             RecoverySource = recoverySource;
-            Overwrite = overwrite;
+            CanOverwrite = canOverwrite;
             RecoverConfiguration = recoverConfiguration;
             IgnoreConflictingHostNames = ignoreConflictingHostNames;
             UseDRSecondary = useDRSecondary;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("overwrite")]
-        public bool Overwrite { get; }
+        public bool CanOverwrite { get; }
 
         /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
         [WirePath("recoverConfiguration")]

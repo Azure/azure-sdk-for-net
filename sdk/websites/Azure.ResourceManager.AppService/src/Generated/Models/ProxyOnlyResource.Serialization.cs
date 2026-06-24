@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(StackName);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string id = default;
-            string name = default;
+            string stackName = default;
             string kind = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    stackName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProxyOnlyResource(id, name, kind, @type, additionalBinaryDataProperties);
+            return new ProxyOnlyResource(id, stackName, kind, @type, additionalBinaryDataProperties);
         }
     }
 }

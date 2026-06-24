@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Optional.IsDefined(BackupName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(BackupName);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Log))
             {
@@ -118,26 +118,26 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseBackupSetting item in Databases)
+                foreach (AppServiceDatabaseBackupSetting item in Databases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Scheduled))
+            if (options.Format != "W" && Optional.IsDefined(IsScheduled))
             {
                 writer.WritePropertyName("scheduled"u8);
-                writer.WriteBooleanValue(Scheduled.Value);
+                writer.WriteBooleanValue(IsScheduled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoreTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(LastRestoreOn))
             {
                 writer.WritePropertyName("lastRestoreTimeStamp"u8);
-                writer.WriteStringValue(LastRestoreTimeStamp.Value, "O");
+                writer.WriteStringValue(LastRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishedTimeStamp"u8);
-                writer.WriteStringValue(FinishedTimeStamp.Value, "O");
+                writer.WriteStringValue(FinishedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.AppService.Models
             int? backupId = default;
             string storageAccountUri = default;
             string blobName = default;
-            string name = default;
-            BackupItemStatus? status = default;
+            string backupName = default;
+            WebAppBackupStatus? status = default;
             long? sizeInBytes = default;
-            DateTimeOffset? created = default;
+            DateTimeOffset? createdOn = default;
             string log = default;
-            IReadOnlyList<DatabaseBackupSetting> databases = default;
-            bool? scheduled = default;
-            DateTimeOffset? lastRestoreTimeStamp = default;
-            DateTimeOffset? finishedTimeStamp = default;
+            IReadOnlyList<AppServiceDatabaseBackupSetting> databases = default;
+            bool? isScheduled = default;
+            DateTimeOffset? lastRestoreOn = default;
+            DateTimeOffset? finishedOn = default;
             string correlationId = default;
             long? websiteSizeInBytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    backupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToBackupItemStatus();
+                    status = prop.Value.GetString().ToWebAppBackupStatus();
                     continue;
                 }
                 if (prop.NameEquals("sizeInBytes"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("log"u8))
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                    List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item, options));
+                        array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                     }
                     databases = array;
                     continue;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scheduled = prop.Value.GetBoolean();
+                    isScheduled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastRestoreTimeStamp"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    lastRestoreTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    lastRestoreOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("finishedTimeStamp"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    finishedTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    finishedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("correlationId"u8))
@@ -328,15 +328,15 @@ namespace Azure.ResourceManager.AppService.Models
                 backupId,
                 storageAccountUri,
                 blobName,
-                name,
+                backupName,
                 status,
                 sizeInBytes,
-                created,
+                createdOn,
                 log,
-                databases ?? new ChangeTrackingList<DatabaseBackupSetting>(),
-                scheduled,
-                lastRestoreTimeStamp,
-                finishedTimeStamp,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                isScheduled,
+                lastRestoreOn,
+                finishedOn,
                 correlationId,
                 websiteSizeInBytes,
                 additionalBinaryDataProperties);

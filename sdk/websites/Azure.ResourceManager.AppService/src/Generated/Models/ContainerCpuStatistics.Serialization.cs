@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue<Models.ContainerThrottlingInfo>(ThrottlingData, options);
+                writer.WriteObjectValue(ThrottlingData, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
             ContainerCpuUsage cpuUsage = default;
             long? systemCpuUsage = default;
             int? onlineCpuCount = default;
-            Models.ContainerThrottlingInfo throttlingData = default;
+            ContainerThrottlingInfo throttlingData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    throttlingData = Models.ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(prop.Value, options);
+                    throttlingData = ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

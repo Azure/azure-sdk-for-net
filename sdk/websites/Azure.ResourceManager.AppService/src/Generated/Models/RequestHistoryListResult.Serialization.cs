@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RequestHistoryListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="RequestHistoryListResult"/> from. </param>
-        internal static RequestHistoryListResult FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RequestHistoryListResult"/> from. </param>
+        internal static RequestHistoryListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRequestHistoryListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RequestHistoryData item in Value)
+            foreach (WebAppRequestHistoryData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<RequestHistoryData> value = default;
+            IList<WebAppRequestHistoryData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RequestHistoryData> array = new List<RequestHistoryData>();
+                    List<WebAppRequestHistoryData> array = new List<WebAppRequestHistoryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RequestHistoryData.DeserializeRequestHistoryData(item, options));
+                        array.Add(WebAppRequestHistoryData.DeserializeWebAppRequestHistoryData(item, options));
                     }
                     value = array;
                     continue;

@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WorkflowRunActionRepetitionsRequestHistoriesGetAllAsyncCollectionResultOfT : AsyncPageable<RequestHistoryData>
+    internal partial class WorkflowRunActionRepetitionsRequestHistoriesGetAllAsyncCollectionResultOfT : AsyncPageable<WebAppRequestHistoryData>
     {
         private readonly WorkflowRunActionRepetitionsRequestHistories _client;
         private readonly Guid _subscriptionId;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkflowRunActionRepetitionsRequestHistoriesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RequestHistoryData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<WebAppRequestHistoryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 RequestHistoryListResult result = RequestHistoryListResult.FromResponse(response);
-                yield return Page<RequestHistoryData>.FromValues((IReadOnlyList<RequestHistoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<WebAppRequestHistoryData>.FromValues((IReadOnlyList<WebAppRequestHistoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

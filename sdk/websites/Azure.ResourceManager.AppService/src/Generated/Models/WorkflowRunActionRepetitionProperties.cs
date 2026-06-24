@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionProperties"/>. </summary>
         internal WorkflowRunActionRepetitionProperties()
         {
-            RepetitionIndexes = new ChangeTrackingList<RepetitionIndex>();
+            RepetitionIndexes = new ChangeTrackingList<WorkflowRunActionRepetitionIndex>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionProperties"/>. </summary>
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
-        internal WorkflowRunActionRepetitionProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount, IList<RepetitionIndex> repetitionIndexes) : base(startOn, endOn, correlation, status, code, error, additionalBinaryDataProperties, trackingId, inputs, inputsLink, outputs, outputsLink, trackedProperties, retryHistory, iterationCount)
+        internal WorkflowRunActionRepetitionProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes) : base(startOn, endOn, correlation, status, code, error, additionalBinaryDataProperties, trackingId, inputs, inputsLink, outputs, outputsLink, trackedProperties, retryHistory, iterationCount)
         {
             RepetitionIndexes = repetitionIndexes;
         }
 
         /// <summary> The repetition indexes. </summary>
         [WirePath("repetitionIndexes")]
-        public IList<RepetitionIndex> RepetitionIndexes { get; } = new ChangeTrackingList<RepetitionIndex>();
+        public IList<WorkflowRunActionRepetitionIndex> RepetitionIndexes { get; } = new ChangeTrackingList<WorkflowRunActionRepetitionIndex>();
     }
 }

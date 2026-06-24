@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerCallbackUri(string value, string @method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, Models.WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerCallbackUri(string value, string @method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Method = @method;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
         [WirePath("queries")]
-        public Models.WorkflowTriggerListCallbackUriQueries Queries { get; }
+        public WorkflowTriggerListCallbackUriQueries Queries { get; }
     }
 }

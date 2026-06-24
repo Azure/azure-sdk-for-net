@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            RunActionCorrelation correlation = default;
+            WebAppRunActionCorrelation correlation = default;
             WorkflowStatus? status = default;
             string code = default;
             BinaryData error = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    correlation = RunActionCorrelation.DeserializeRunActionCorrelation(prop.Value, options);
+                    correlation = WebAppRunActionCorrelation.DeserializeWebAppRunActionCorrelation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

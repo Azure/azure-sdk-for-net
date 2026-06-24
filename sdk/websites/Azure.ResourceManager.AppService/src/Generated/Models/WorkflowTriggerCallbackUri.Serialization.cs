@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowTriggerCallbackUri>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="WorkflowTriggerCallbackUri"/> from. </param>
-        internal static WorkflowTriggerCallbackUri FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkflowTriggerCallbackUri"/> from. </param>
+        internal static WorkflowTriggerCallbackUri FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWorkflowTriggerCallbackUri(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue<Models.WorkflowTriggerListCallbackUriQueries>(Queries, options);
+                writer.WriteObjectValue(Queries, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
             string basePath = default;
             string relativePath = default;
             IReadOnlyList<string> relativePathParameters = default;
-            Models.WorkflowTriggerListCallbackUriQueries queries = default;
+            WorkflowTriggerListCallbackUriQueries queries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    queries = Models.WorkflowTriggerListCallbackUriQueries.DeserializeWorkflowTriggerListCallbackUriQueries(prop.Value, options);
+                    queries = WorkflowTriggerListCallbackUriQueries.DeserializeWorkflowTriggerListCallbackUriQueries(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

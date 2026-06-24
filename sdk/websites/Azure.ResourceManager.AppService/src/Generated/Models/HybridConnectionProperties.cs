@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="HybridConnectionProperties"/>. </summary>
         /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
         /// <param name="relayName"> The name of the Service Bus relay. </param>
-        /// <param name="relayArmUri"> The ARM URI to the Service Bus relay. </param>
+        /// <param name="relayArmId"> The ARM URI to the Service Bus relay. </param>
         /// <param name="hostname"> The hostname of the endpoint. </param>
         /// <param name="port"> The port of the endpoint. </param>
         /// <param name="sendKeyName"> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </param>
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionProperties(string serviceBusNamespace, string relayName, string relayArmUri, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridConnectionProperties(string serviceBusNamespace, string relayName, string relayArmId, string hostname, int? port, string sendKeyName, string sendKeyValue, string serviceBusSuffix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceBusNamespace = serviceBusNamespace;
             RelayName = relayName;
-            RelayArmUri = relayArmUri;
+            RelayArmId = relayArmId;
             Hostname = hostname;
             Port = port;
             SendKeyName = sendKeyName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The ARM URI to the Service Bus relay. </summary>
         [WirePath("relayArmUri")]
-        public string RelayArmUri { get; set; }
+        public string RelayArmId { get; set; }
 
         /// <summary> The hostname of the endpoint. </summary>
         [WirePath("hostname")]

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStartArray();
-                foreach (DiagnosticData item in Dataset)
+                foreach (DiagnosticDataset item in Dataset)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             DetectorInfo metadata = default;
-            IList<DiagnosticData> dataset = default;
-            Status status = default;
+            IList<DiagnosticDataset> dataset = default;
+            AppServiceStatusInfo status = default;
             IList<DataProviderMetadata> dataProvidersMetadata = default;
             QueryUtterancesResults suggestedUtterances = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<DiagnosticData> array = new List<DiagnosticData>();
+                    List<DiagnosticDataset> array = new List<DiagnosticDataset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticData.DeserializeDiagnosticData(item, options));
+                        array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item, options));
                     }
                     dataset = array;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    status = Status.DeserializeStatus(prop.Value, options);
+                    status = AppServiceStatusInfo.DeserializeAppServiceStatusInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataProvidersMetadata"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new DetectorResponseProperties(
                 metadata,
-                dataset ?? new ChangeTrackingList<DiagnosticData>(),
+                dataset ?? new ChangeTrackingList<DiagnosticDataset>(),
                 status,
                 dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>(),
                 suggestedUtterances,

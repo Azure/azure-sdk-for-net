@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly ClientDiagnostics _certificatesClientDiagnostics;
         private readonly Certificates _certificatesRestClient;
-        private readonly CertificateData _data;
+        private readonly AppCertificateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/certificates";
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="CertificateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CertificateResource(ArmClient client, CertificateData data) : this(client, data.Id)
+        internal CertificateResource(ArmClient client, AppCertificateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CertificateData Data
+        public virtual AppCertificateData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual async Task<Response<CertificateResource>> UpdateAsync(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<CertificateResource>> UpdateAsync(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("CertificateResource.Update");
             scope.Start();
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
+                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppCertificatePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="certificateEnvelope"> Details of certificate, if it exists already. </param>
+        /// <param name="patch"> Details of certificate, if it exists already. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateEnvelope"/> is null. </exception>
-        public virtual Response<CertificateResource> Update(CertificatePatchResource certificateEnvelope, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<CertificateResource> Update(AppCertificatePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(certificateEnvelope, nameof(certificateEnvelope));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("CertificateResource.Update");
             scope.Start();
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
+                HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppCertificatePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PremierAddOnPatchResource resource specific properties. </summary>
-    public partial class PremierAddOnPatchResourceProperties
+    internal partial class PremierAddOnPatchResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

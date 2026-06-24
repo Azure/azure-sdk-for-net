@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("skipAppData"u8);
                 writer.WriteBooleanValue(SkipAppData.Value);
             }
-            if (Optional.IsDefined(AppOffline))
+            if (Optional.IsDefined(IsAppOffline))
             {
                 writer.WritePropertyName("appOffline"u8);
-                writer.WriteBooleanValue(AppOffline.Value);
+                writer.WriteBooleanValue(IsAppOffline.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
             Uri setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
             bool? skipAppData = default;
-            bool? appOffline = default;
+            bool? isAppOffline = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appOffline = prop.Value.GetBoolean();
+                    isAppOffline = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                 setParametersXmlFileUri,
                 setParameters ?? new ChangeTrackingDictionary<string, string>(),
                 skipAppData,
-                appOffline,
+                isAppOffline,
                 additionalBinaryDataProperties);
         }
     }

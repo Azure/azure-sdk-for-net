@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing a WorkflowRun along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkflowRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebAppResource"/> using the GetWorkflowRuns method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWorkflowRuns method.
     /// </summary>
     public partial class WorkflowRunResource : ArmResource
     {

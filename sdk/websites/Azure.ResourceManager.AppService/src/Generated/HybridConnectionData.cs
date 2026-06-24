@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The ARM URI to the Service Bus relay. </summary>
         [WirePath("properties.relayArmUri")]
-        public string RelayArmUri
+        public string RelayArmId
         {
             get
             {
-                return Properties is null ? default : Properties.RelayArmUri;
+                return Properties is null ? default : Properties.RelayArmId;
             }
             set
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new HybridConnectionProperties();
                 }
-                Properties.RelayArmUri = value;
+                Properties.RelayArmId = value;
             }
         }
 

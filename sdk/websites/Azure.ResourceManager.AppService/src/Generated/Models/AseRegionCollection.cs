@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="AseRegionCollection"/>. </summary>
         /// <param name="value"> The AseRegion items on this page. </param>
-        internal AseRegionCollection(IEnumerable<AseRegion> value)
+        internal AseRegionCollection(IEnumerable<AppServiceAseRegion> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> The AseRegion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AseRegionCollection(IList<AseRegion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AseRegionCollection(IList<AppServiceAseRegion> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The AseRegion items on this page. </summary>
         [WirePath("value")]
-        public IList<AseRegion> Value { get; }
+        public IList<AppServiceAseRegion> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frontEndServiceConfiguration"></param>
         /// <param name="kubeConfig"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcConfiguration(Models.ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets or sets the ArtifactsStorageType. </summary>
         [WirePath("artifactsStorageType")]
-        public Models.ArtifactStorageType? ArtifactsStorageType { get; set; }
+        public ArtifactStorageType? ArtifactsStorageType { get; set; }
 
         /// <summary> Gets or sets the ArtifactStorageClassName. </summary>
         [WirePath("artifactStorageClassName")]

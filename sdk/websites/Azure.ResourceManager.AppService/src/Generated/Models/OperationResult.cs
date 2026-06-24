@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         internal OperationResult()
         {
-            RetryHistory = new ChangeTrackingList<RetryHistory>();
+            RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
-        internal OperationResult(DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, int? iterationCount) : base(startOn, endOn, correlation, status, code, error, additionalBinaryDataProperties)
+        internal OperationResult(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount) : base(startOn, endOn, correlation, status, code, error, additionalBinaryDataProperties)
         {
             TrackingId = trackingId;
             Inputs = inputs;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("inputsLink")]
-        public ContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
 
         /// <summary>
         /// Gets the outputs.
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the link to outputs. </summary>
         [WirePath("outputsLink")]
-        public ContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
 
         /// <summary>
         /// Gets the tracked properties.
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the retry histories. </summary>
         [WirePath("retryHistory")]
-        public IList<RetryHistory> RetryHistory { get; } = new ChangeTrackingList<RetryHistory>();
+        public IList<WebAppRetryHistory> RetryHistory { get; } = new ChangeTrackingList<WebAppRetryHistory>();
 
         /// <summary> Gets the IterationCount. </summary>
         [WirePath("iterationCount")]

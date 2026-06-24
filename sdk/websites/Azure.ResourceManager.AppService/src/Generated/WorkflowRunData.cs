@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the reference to workflow version. </summary>
         [WirePath("properties.workflow")]
-        public ResourceReference Workflow
+        public WorkflowResourceReference Workflow
         {
             get
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the outputs. </summary>
         [WirePath("properties.outputs")]
-        public IReadOnlyDictionary<string, WorkflowOutputParameter> Outputs
+        public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs
         {
             get
             {

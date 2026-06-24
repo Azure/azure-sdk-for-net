@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
-            if (Optional.IsDefined(FtpEnabled))
+            if (Optional.IsDefined(IsFtpEnabled))
             {
                 writer.WritePropertyName("ftpEnabled"u8);
-                writer.WriteBooleanValue(FtpEnabled.Value);
+                writer.WriteBooleanValue(IsFtpEnabled.Value);
             }
-            if (Optional.IsDefined(RemoteDebugEnabled))
+            if (Optional.IsDefined(IsRemoteDebugEnabled))
             {
                 writer.WritePropertyName("remoteDebugEnabled"u8);
-                writer.WriteBooleanValue(RemoteDebugEnabled.Value);
+                writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
             }
             if (Optional.IsDefined(InboundIpAddressOverride))
             {
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<string> externalInboundIpAddresses = default;
             IReadOnlyList<string> internalInboundIpAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
-            bool? ftpEnabled = default;
-            bool? remoteDebugEnabled = default;
+            bool? isFtpEnabled = default;
+            bool? isRemoteDebugEnabled = default;
             string inboundIpAddressOverride = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ftpEnabled = prop.Value.GetBoolean();
+                    isFtpEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("remoteDebugEnabled"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    remoteDebugEnabled = prop.Value.GetBoolean();
+                    isRemoteDebugEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("inboundIpAddressOverride"u8))
@@ -334,8 +334,8 @@ namespace Azure.ResourceManager.AppService.Models
                 externalInboundIpAddresses ?? new ChangeTrackingList<string>(),
                 internalInboundIpAddresses ?? new ChangeTrackingList<string>(),
                 allowNewPrivateEndpointConnections,
-                ftpEnabled,
-                remoteDebugEnabled,
+                isFtpEnabled,
+                isRemoteDebugEnabled,
                 inboundIpAddressOverride,
                 additionalBinaryDataProperties);
         }

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<Models.AppServiceArmPlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<Models.AppServiceSkuDescription>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -206,9 +206,9 @@ namespace Azure.ResourceManager.AppService.Models
             string @type = default;
             AzureLocation? location = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Models.AppServiceArmPlan plan = default;
+            AppServiceArmPlan plan = default;
             RemotePrivateEndpointConnection properties = default;
-            Models.AppServiceSkuDescription sku = default;
+            AppServiceSkuDescription sku = default;
             string status = default;
             ResponseError error = default;
             ResourceManager.Models.ManagedServiceIdentity identity = default;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = Models.AppServiceArmPlan.DeserializeAppServiceArmPlan(prop.Value, options);
+                    plan = AppServiceArmPlan.DeserializeAppServiceArmPlan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sku = Models.AppServiceSkuDescription.DeserializeAppServiceSkuDescription(prop.Value, options);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

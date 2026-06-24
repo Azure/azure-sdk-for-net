@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(Thumbprint);
+                writer.WriteStringValue(ThumbprintString);
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualIP))
             {
@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.AppService.Models
             string siteName = default;
             string domainId = default;
             string azureResourceName = default;
-            AzureResourceType? azureResourceType = default;
+            AppServiceResourceType? azureResourceType = default;
             CustomHostNameDnsRecordType? customHostNameDnsRecordType = default;
-            HostNameType? hostNameType = default;
-            SslState? sslState = default;
-            string thumbprint = default;
+            AppServiceHostNameType? hostNameType = default;
+            HostNameBindingSslState? sslState = default;
+            string thumbprintString = default;
             string virtualIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureResourceType = prop.Value.GetString().ToAzureResourceType();
+                    azureResourceType = prop.Value.GetString().ToAppServiceResourceType();
                     continue;
                 }
                 if (prop.NameEquals("customHostNameDnsRecordType"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    hostNameType = prop.Value.GetString().ToHostNameType();
+                    hostNameType = prop.Value.GetString().ToAppServiceHostNameType();
                     continue;
                 }
                 if (prop.NameEquals("sslState"u8))
@@ -221,12 +221,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sslState = prop.Value.GetString().ToSslState();
+                    sslState = prop.Value.GetString().ToHostNameBindingSslState();
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    thumbprintString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("virtualIP"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                 customHostNameDnsRecordType,
                 hostNameType,
                 sslState,
-                thumbprint,
+                thumbprintString,
                 virtualIP,
                 additionalBinaryDataProperties);
         }

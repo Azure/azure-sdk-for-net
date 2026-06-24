@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> PremierAddOnOffer resource specific properties. </param>
-        internal PremierAddOnOffer(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PremierAddOnOfferProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal PremierAddOnOffer(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PremierAddOnOfferProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.promoCodeRequired")]
-        public bool? PromoCodeRequired
+        public bool? IsPromoCodeRequired
         {
             get
             {
-                return Properties is null ? default : Properties.PromoCodeRequired;
+                return Properties is null ? default : Properties.IsPromoCodeRequired;
             }
         }
 

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(SiteAuthSettingsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TokenStoreEnabled))
+            if (Optional.IsDefined(IsTokenStoreEnabled))
             {
                 writer.WritePropertyName("tokenStoreEnabled"u8);
-                writer.WriteBooleanValue(TokenStoreEnabled.Value);
+                writer.WriteBooleanValue(IsTokenStoreEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
-                writer.WriteStringValue(ClientSecretCertificateThumbprint);
+                writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
             if (Optional.IsDefined(Issuer))
             {
@@ -376,17 +376,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             string runtimeVersion = default;
             UnauthenticatedClientAction? unauthenticatedClientAction = default;
-            bool? tokenStoreEnabled = default;
+            bool? isTokenStoreEnabled = default;
             IList<string> allowedExternalRedirectUrls = default;
             BuiltInAuthenticationProvider? defaultProvider = default;
             double? tokenRefreshExtensionHours = default;
             string clientId = default;
             string clientSecret = default;
             string clientSecretSettingName = default;
-            string clientSecretCertificateThumbprint = default;
+            string clientSecretCertificateThumbprintString = default;
             string issuer = default;
             bool? validateIssuer = default;
             IList<string> allowedAudiences = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runtimeVersion"u8))
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    tokenStoreEnabled = prop.Value.GetBoolean();
+                    isTokenStoreEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allowedExternalRedirectUrls"u8))
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("clientSecretCertificateThumbprint"u8))
                 {
-                    clientSecretCertificateThumbprint = prop.Value.GetString();
+                    clientSecretCertificateThumbprintString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("issuer"u8))
@@ -749,17 +749,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new SiteAuthSettingsProperties(
-                enabled,
+                isEnabled,
                 runtimeVersion,
                 unauthenticatedClientAction,
-                tokenStoreEnabled,
+                isTokenStoreEnabled,
                 allowedExternalRedirectUrls ?? new ChangeTrackingList<string>(),
                 defaultProvider,
                 tokenRefreshExtensionHours,
                 clientId,
                 clientSecret,
                 clientSecretSettingName,
-                clientSecretCertificateThumbprint,
+                clientSecretCertificateThumbprintString,
                 issuer,
                 validateIssuer,
                 allowedAudiences ?? new ChangeTrackingList<string>(),

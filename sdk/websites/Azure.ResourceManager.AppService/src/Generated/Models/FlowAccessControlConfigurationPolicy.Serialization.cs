@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (IpAddressRange item in AllowedCallerIpAddresses)
+                foreach (WebAppIPAddressRange item in AllowedCallerIpAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue<OpenAuthenticationAccessPolicies>(OpenAuthenticationPolicies, options);
+                writer.WriteObjectValue(OpenAuthenticationPolicies, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<IpAddressRange> allowedCallerIpAddresses = default;
+            IList<WebAppIPAddressRange> allowedCallerIpAddresses = default;
             OpenAuthenticationAccessPolicies openAuthenticationPolicies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IpAddressRange> array = new List<IpAddressRange>();
+                    List<WebAppIPAddressRange> array = new List<WebAppIPAddressRange>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpAddressRange.DeserializeIpAddressRange(item, options));
+                        array.Add(WebAppIPAddressRange.DeserializeWebAppIPAddressRange(item, options));
                     }
                     allowedCallerIpAddresses = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FlowAccessControlConfigurationPolicy(allowedCallerIpAddresses ?? new ChangeTrackingList<IpAddressRange>(), openAuthenticationPolicies, additionalBinaryDataProperties);
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIpAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>(), openAuthenticationPolicies, additionalBinaryDataProperties);
         }
     }
 }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
-                foreach (RetryHistory item in RetryHistory)
+                foreach (WebAppRetryHistory item in RetryHistory)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -196,11 +196,11 @@ namespace Azure.ResourceManager.AppService.Models
             string code = default;
             BinaryData error = default;
             string trackingId = default;
-            RunActionCorrelation correlation = default;
-            ContentLink inputsLink = default;
-            ContentLink outputsLink = default;
+            WebAppRunActionCorrelation correlation = default;
+            WebAppContentLink inputsLink = default;
+            WebAppContentLink outputsLink = default;
             BinaryData trackedProperties = default;
-            IList<RetryHistory> retryHistory = default;
+            IList<WebAppRetryHistory> retryHistory = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    correlation = RunActionCorrelation.DeserializeRunActionCorrelation(prop.Value, options);
+                    correlation = WebAppRunActionCorrelation.DeserializeWebAppRunActionCorrelation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("inputsLink"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    inputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outputsLink"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    outputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trackedProperties"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<RetryHistory> array = new List<RetryHistory>();
+                    List<WebAppRetryHistory> array = new List<WebAppRetryHistory>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.RetryHistory.DeserializeRetryHistory(item, options));
+                        array.Add(WebAppRetryHistory.DeserializeWebAppRetryHistory(item, options));
                     }
                     retryHistory = array;
                     continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService.Models
                 inputsLink,
                 outputsLink,
                 trackedProperties,
-                retryHistory ?? new ChangeTrackingList<RetryHistory>(),
+                retryHistory ?? new ChangeTrackingList<WebAppRetryHistory>(),
                 additionalBinaryDataProperties);
         }
     }

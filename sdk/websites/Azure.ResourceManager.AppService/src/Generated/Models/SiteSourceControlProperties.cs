@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="branch"> Name of branch to use for deployment. </param>
         /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
         /// <param name="isGitHubAction"> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </param>
-        /// <param name="deploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteSourceControlProperties(string repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? deploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteSourceControlProperties(string repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RepoUri = repoUri;
             Branch = branch;
             IsManualIntegration = isManualIntegration;
             IsGitHubAction = isGitHubAction;
-            DeploymentRollbackEnabled = deploymentRollbackEnabled;
+            IsDeploymentRollbackEnabled = isDeploymentRollbackEnabled;
             IsMercurial = isMercurial;
             GitHubActionConfiguration = gitHubActionConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("deploymentRollbackEnabled")]
-        public bool? DeploymentRollbackEnabled { get; set; }
+        public bool? IsDeploymentRollbackEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
         [WirePath("isMercurial")]

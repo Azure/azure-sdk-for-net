@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebClientGetGeoRegionsCollectionResultOfT : Pageable<GeoRegion>
+    internal partial class WebClientGetGeoRegionsCollectionResultOfT : Pageable<AppServiceGeoRegion>
     {
         private readonly WebClient _client;
         private readonly Guid _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebClientGetGeoRegionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<GeoRegion>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AppServiceGeoRegion>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                GeoRegionCollection result = GeoRegionCollection.FromResponse(response);
-                yield return Page<GeoRegion>.FromValues((IReadOnlyList<GeoRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServiceGeoRegionListResult result = AppServiceGeoRegionListResult.FromResponse(response);
+                yield return Page<AppServiceGeoRegion>.FromValues((IReadOnlyList<AppServiceGeoRegion>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

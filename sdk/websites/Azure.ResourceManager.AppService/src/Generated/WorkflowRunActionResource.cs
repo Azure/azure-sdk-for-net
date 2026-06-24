@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkflowExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -253,8 +253,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

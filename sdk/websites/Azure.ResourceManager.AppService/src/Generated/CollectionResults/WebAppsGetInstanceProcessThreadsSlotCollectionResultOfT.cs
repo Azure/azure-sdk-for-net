@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetInstanceProcessThreadsSlotCollectionResultOfT : Pageable<ProcessThreadInfo>
+    internal partial class WebAppsGetInstanceProcessThreadsSlotCollectionResultOfT : Pageable<WebAppProcessThreadInfo>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetInstanceProcessThreadsSlotCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ProcessThreadInfo>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WebAppProcessThreadInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ProcessThreadInfoCollection result = ProcessThreadInfoCollection.FromResponse(response);
-                yield return Page<ProcessThreadInfo>.FromValues((IReadOnlyList<ProcessThreadInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
+                yield return Page<WebAppProcessThreadInfo>.FromValues((IReadOnlyList<WebAppProcessThreadInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

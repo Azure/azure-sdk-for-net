@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
-                foreach (Models.DetectorSupportTopic item in SupportTopicList)
+                foreach (DetectorSupportTopic item in SupportTopicList)
                 {
-                    writer.WriteObjectValue<Models.DetectorSupportTopic>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
             string description = default;
             string author = default;
             string category = default;
-            IReadOnlyList<Models.DetectorSupportTopic> supportTopicList = default;
+            IReadOnlyList<DetectorSupportTopic> supportTopicList = default;
             IReadOnlyList<string> analysisType = default;
             DetectorType? @type = default;
             float? score = default;
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DetectorSupportTopic> array = new List<Models.DetectorSupportTopic>();
+                    List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
+                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                 description,
                 author,
                 category,
-                supportTopicList ?? new ChangeTrackingList<Models.DetectorSupportTopic>(),
+                supportTopicList ?? new ChangeTrackingList<DetectorSupportTopic>(),
                 analysisType ?? new ChangeTrackingList<string>(),
                 @type,
                 score,

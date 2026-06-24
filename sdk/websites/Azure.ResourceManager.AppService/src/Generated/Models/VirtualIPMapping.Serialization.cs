@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("internalHttpsPort"u8);
                 writer.WriteNumberValue(InternalHttpsPort.Value);
             }
-            if (Optional.IsDefined(InUse))
+            if (Optional.IsDefined(IsInUse))
             {
                 writer.WritePropertyName("inUse"u8);
-                writer.WriteBooleanValue(InUse.Value);
+                writer.WriteBooleanValue(IsInUse.Value);
             }
             if (Optional.IsDefined(ServiceName))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             string virtualIP = default;
             int? internalHttpPort = default;
             int? internalHttpsPort = default;
-            bool? inUse = default;
+            bool? isInUse = default;
             string serviceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inUse = prop.Value.GetBoolean();
+                    isInUse = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceName"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                 virtualIP,
                 internalHttpPort,
                 internalHttpsPort,
-                inUse,
+                isInUse,
                 serviceName,
                 additionalBinaryDataProperties);
         }

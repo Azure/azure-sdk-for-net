@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowTriggerListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="WorkflowTriggerListResult"/> from. </param>
-        internal static WorkflowTriggerListResult FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkflowTriggerListResult"/> from. </param>
+        internal static WorkflowTriggerListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWorkflowTriggerListResult(document.RootElement, ModelSerializationExtensions.WireOptions);

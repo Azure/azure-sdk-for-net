@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(SiteConfigurationSnapshotInfoProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Time))
+            if (options.Format != "W" && Optional.IsDefined(SnapshotTakenOn))
             {
                 writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(Time.Value, "O");
+                writer.WriteStringValue(SnapshotTakenOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SnapshotId))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DateTimeOffset? time = default;
+            DateTimeOffset? snapshotTakenOn = default;
             int? snapshotId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    time = prop.Value.GetDateTimeOffset("O");
+                    snapshotTakenOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("snapshotId"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SiteConfigurationSnapshotInfoProperties(time, snapshotId, additionalBinaryDataProperties);
+            return new SiteConfigurationSnapshotInfoProperties(snapshotTakenOn, snapshotId, additionalBinaryDataProperties);
         }
     }
 }

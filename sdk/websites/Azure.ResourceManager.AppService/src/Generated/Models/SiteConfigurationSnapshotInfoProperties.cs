@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteConfigurationSnapshotInfoProperties"/>. </summary>
-        /// <param name="time"> The time the snapshot was taken. </param>
+        /// <param name="snapshotTakenOn"> The time the snapshot was taken. </param>
         /// <param name="snapshotId"> The id of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteConfigurationSnapshotInfoProperties(DateTimeOffset? time, int? snapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteConfigurationSnapshotInfoProperties(DateTimeOffset? snapshotTakenOn, int? snapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Time = time;
+            SnapshotTakenOn = snapshotTakenOn;
             SnapshotId = snapshotId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time the snapshot was taken. </summary>
         [WirePath("time")]
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? SnapshotTakenOn { get; }
 
         /// <summary> The id of the snapshot. </summary>
         [WirePath("snapshotId")]

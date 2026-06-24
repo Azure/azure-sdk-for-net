@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("siteResourceIds"u8);
                 writer.WriteStartArray();
-                foreach (IdentifierData item in SiteResourceIds)
+                foreach (AppServiceIdentifierData item in SiteResourceIds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string customHostname = default;
             string region = default;
-            IList<IdentifierData> siteResourceIds = default;
+            IList<AppServiceIdentifierData> siteResourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IdentifierData> array = new List<IdentifierData>();
+                    List<AppServiceIdentifierData> array = new List<AppServiceIdentifierData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IdentifierData.DeserializeIdentifierData(item, options));
+                        array.Add(AppServiceIdentifierData.DeserializeAppServiceIdentifierData(item, options));
                     }
                     siteResourceIds = array;
                     continue;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomHostnameSitesProperties(customHostname, region, siteResourceIds ?? new ChangeTrackingList<IdentifierData>(), additionalBinaryDataProperties);
+            return new CustomHostnameSitesProperties(customHostname, region, siteResourceIds ?? new ChangeTrackingList<AppServiceIdentifierData>(), additionalBinaryDataProperties);
         }
     }
 }

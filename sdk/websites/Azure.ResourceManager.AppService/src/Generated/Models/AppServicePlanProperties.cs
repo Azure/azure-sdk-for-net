@@ -33,29 +33,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
         /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
-        /// <param name="perSiteScaling">
+        /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
-        /// <param name="elasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
+        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpireOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpireOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
-        /// <param name="reserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
-        /// <param name="hyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="targetWorkerCount"> Scaling worker count. </param>
         /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
         /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
         /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
-        /// <param name="zoneRedundant">
+        /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        /// <param name="asyncScalingEnabled">
+        /// <param name="isAsyncScalingEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanProperties(string workerTierName, StatusOptions? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? perSiteScaling, bool? elasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? reserved, bool? isXenon, bool? hyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? zoneRedundant, bool? asyncScalingEnabled, DefaultIdentity planDefaultIdentity, bool? isCustomMode, IList<RegistryAdapter> registryAdapters, IList<InstallScript> installScripts, ServerFarmNetworkSettings network, IList<StorageMount> storageMounts, bool? rdpEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServicePlanProperties(string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpireOn, DateTimeOffset? freeOfferExpireOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, bool? isAsyncScalingEnabled, DefaultIdentity planDefaultIdentity, bool? isCustomMode, IList<RegistryAdapter> registryAdapters, IList<InstallScript> installScripts, ServerFarmNetworkSettings network, IList<StorageMount> storageMounts, bool? rdpEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkerTierName = workerTierName;
             Status = status;
@@ -79,23 +79,23 @@ namespace Azure.ResourceManager.AppService.Models
             MaximumNumberOfWorkers = maximumNumberOfWorkers;
             NumberOfWorkers = numberOfWorkers;
             GeoRegion = geoRegion;
-            PerSiteScaling = perSiteScaling;
-            ElasticScaleEnabled = elasticScaleEnabled;
+            IsPerSiteScaling = isPerSiteScaling;
+            IsElasticScaleEnabled = isElasticScaleEnabled;
             MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
-            SpotExpirationOn = spotExpirationOn;
-            FreeOfferExpirationOn = freeOfferExpirationOn;
+            SpotExpireOn = spotExpireOn;
+            FreeOfferExpireOn = freeOfferExpireOn;
             ResourceGroup = resourceGroup;
-            Reserved = reserved;
+            IsReserved = isReserved;
             IsXenon = isXenon;
-            HyperV = hyperV;
+            IsHyperV = isHyperV;
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
             KubeEnvironmentProfile = kubeEnvironmentProfile;
-            ZoneRedundant = zoneRedundant;
-            AsyncScalingEnabled = asyncScalingEnabled;
+            IsZoneRedundant = isZoneRedundant;
+            IsAsyncScalingEnabled = isAsyncScalingEnabled;
             PlanDefaultIdentity = planDefaultIdentity;
             IsCustomMode = isCustomMode;
             RegistryAdapters = registryAdapters;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App Service plan status. </summary>
         [WirePath("status")]
-        public StatusOptions? Status { get; }
+        public AppServicePlanStatus? Status { get; }
 
         /// <summary> App Service plan subscription. </summary>
         [WirePath("subscription")]
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
         [WirePath("perSiteScaling")]
-        public bool? PerSiteScaling { get; set; }
+        public bool? IsPerSiteScaling { get; set; }
 
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
         [WirePath("elasticScaleEnabled")]
-        public bool? ElasticScaleEnabled { get; set; }
+        public bool? IsElasticScaleEnabled { get; set; }
 
         /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
         [WirePath("maximumElasticWorkerCount")]
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         [WirePath("spotExpirationTime")]
-        public DateTimeOffset? SpotExpirationOn { get; set; }
+        public DateTimeOffset? SpotExpireOn { get; set; }
 
         /// <summary> The time when the server farm free offer expires. </summary>
         [WirePath("freeOfferExpirationTime")]
-        public DateTimeOffset? FreeOfferExpirationOn { get; set; }
+        public DateTimeOffset? FreeOfferExpireOn { get; set; }
 
         /// <summary> Resource group of the App Service plan. </summary>
         [WirePath("resourceGroup")]
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("reserved")]
-        public bool? Reserved { get; set; }
+        public bool? IsReserved { get; set; }
 
         /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("isXenon")]
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("hyperV")]
-        public bool? HyperV { get; set; }
+        public bool? IsHyperV { get; set; }
 
         /// <summary> Scaling worker count. </summary>
         [WirePath("targetWorkerCount")]
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
 
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </summary>
         [WirePath("asyncScalingEnabled")]
-        public bool? AsyncScalingEnabled { get; set; }
+        public bool? IsAsyncScalingEnabled { get; set; }
 
         /// <summary> Identity to use by platform for various features and integrations using managed identity. </summary>
         [WirePath("planDefaultIdentity")]

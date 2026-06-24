@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteAuthSettings"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> SiteAuthSettings resource specific properties. </param>
-        internal SiteAuthSettings(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SiteAuthSettingsProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal SiteAuthSettings(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SiteAuthSettingsProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.enabled")]
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new SiteAuthSettingsProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
         [WirePath("properties.tokenStoreEnabled")]
-        public bool? TokenStoreEnabled
+        public bool? IsTokenStoreEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.TokenStoreEnabled;
+                return Properties is null ? default : Properties.IsTokenStoreEnabled;
             }
             set
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new SiteAuthSettingsProperties();
                 }
-                Properties.TokenStoreEnabled = value;
+                Properties.IsTokenStoreEnabled = value;
             }
         }
 
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// a replacement for the Client Secret. It is also optional.
         /// </summary>
         [WirePath("properties.clientSecretCertificateThumbprint")]
-        public string ClientSecretCertificateThumbprint
+        public string ClientSecretCertificateThumbprintString
         {
             get
             {
-                return Properties is null ? default : Properties.ClientSecretCertificateThumbprint;
+                return Properties is null ? default : Properties.ClientSecretCertificateThumbprintString;
             }
             set
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new SiteAuthSettingsProperties();
                 }
-                Properties.ClientSecretCertificateThumbprint = value;
+                Properties.ClientSecretCertificateThumbprintString = value;
             }
         }
 

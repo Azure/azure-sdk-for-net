@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetPerfMonCountersCollectionResultOfT : Pageable<PerfMonResponse>
+    internal partial class WebAppsGetPerfMonCountersCollectionResultOfT : Pageable<PerfMonResponseInfo>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetPerfMonCountersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<PerfMonResponse>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<PerfMonResponseInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                PerfMonCounterCollection result = PerfMonCounterCollection.FromResponse(response);
-                yield return Page<PerfMonResponse>.FromValues((IReadOnlyList<PerfMonResponse>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                PerfMonCounterListResult result = PerfMonCounterListResult.FromResponse(response);
+                yield return Page<PerfMonResponseInfo>.FromValues((IReadOnlyList<PerfMonResponseInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

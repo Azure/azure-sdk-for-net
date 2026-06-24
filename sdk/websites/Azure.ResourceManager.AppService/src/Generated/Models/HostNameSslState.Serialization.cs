@@ -89,17 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Thumbprint);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteStringValue(ThumbprintString);
             }
             if (Optional.IsDefined(ToUpdate))
             {
@@ -154,11 +147,11 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            Models.HostNameBindingSslState? sslState = default;
+            HostNameBindingSslState? sslState = default;
             string virtualIP = default;
-            BinaryData thumbprint = default;
+            string thumbprintString = default;
             bool? toUpdate = default;
-            Models.AppServiceHostType? hostType = default;
+            AppServiceHostType? hostType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,11 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
+                    thumbprintString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("toUpdate"u8))
@@ -217,7 +206,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 sslState,
                 virtualIP,
-                thumbprint,
+                thumbprintString,
                 toUpdate,
                 hostType,
                 additionalBinaryDataProperties);

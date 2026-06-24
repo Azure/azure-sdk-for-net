@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
         [WirePath("properties.swiftSupported")]
-        public bool? SwiftSupported
+        public bool? IsSwiftSupported
         {
             get
             {
-                return Properties is null ? default : Properties.SwiftSupported;
+                return Properties is null ? default : Properties.IsSwiftSupported;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SwiftVirtualNetworkProperties();
                 }
-                Properties.SwiftSupported = value;
+                Properties.IsSwiftSupported = value;
             }
         }
     }

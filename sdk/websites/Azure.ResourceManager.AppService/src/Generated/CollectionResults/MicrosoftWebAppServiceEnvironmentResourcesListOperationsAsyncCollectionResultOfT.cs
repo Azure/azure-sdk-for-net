@@ -18,7 +18,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class MicrosoftWebAppServiceEnvironmentResourcesListOperationsAsyncCollectionResultOfT : AsyncPageable<Models.Operation>
+    internal partial class MicrosoftWebAppServiceEnvironmentResourcesListOperationsAsyncCollectionResultOfT : AsyncPageable<AppServiceOperation>
     {
         private readonly AppServiceEnvironments _client;
         private readonly Guid _subscriptionId;
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftWebAppServiceEnvironmentResourcesListOperationsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Models.Operation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceOperation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<Models.Operation> result = ParseArrayFromResponse(response);
-            yield return Page<Models.Operation>.FromValues(result, null, response);
+            IReadOnlyList<AppServiceOperation> result = ParseArrayFromResponse(response);
+            yield return Page<AppServiceOperation>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<Models.Operation> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<AppServiceOperation> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<Models.Operation> result = new List<Models.Operation>();
+            List<AppServiceOperation> result = new List<AppServiceOperation>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<Models.Operation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<AppServiceOperation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
             }
             return result;
         }

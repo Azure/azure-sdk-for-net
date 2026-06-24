@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateAccessProperties"/>. </summary>
-        /// <param name="enabled"> Whether private access is enabled or not. </param>
+        /// <param name="isEnabled"> Whether private access is enabled or not. </param>
         /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateAccessProperties(bool? enabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateAccessProperties(bool? isEnabled, IList<PrivateAccessVirtualNetwork> virtualNetworks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             VirtualNetworks = virtualNetworks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether private access is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
         [WirePath("virtualNetworks")]

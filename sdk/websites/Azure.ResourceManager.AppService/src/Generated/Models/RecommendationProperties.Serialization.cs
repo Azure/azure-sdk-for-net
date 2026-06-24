@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
             string displayName = default;
             string message = default;
             NotificationLevel? level = default;
-            Channels? channels = default;
+            RecommendationChannel? channels = default;
             IReadOnlyList<string> categoryTags = default;
             string actionName = default;
             int? enabled = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    channels = prop.Value.GetString().ToChannels();
+                    channels = prop.Value.GetString().ToRecommendationChannel();
                     continue;
                 }
                 if (prop.NameEquals("categoryTags"u8))

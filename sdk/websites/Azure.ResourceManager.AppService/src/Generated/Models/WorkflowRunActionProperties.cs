@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionProperties"/>. </summary>
         internal WorkflowRunActionProperties()
         {
-            RetryHistory = new ChangeTrackingList<RetryHistory>();
+            RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionProperties"/>. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, RunActionCorrelation correlation, ContentLink inputsLink, ContentLink outputsLink, BinaryData trackedProperties, IList<RetryHistory> retryHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunActionProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, WebAppRunActionCorrelation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -104,15 +104,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The correlation properties. </summary>
         [WirePath("correlation")]
-        public RunActionCorrelation Correlation { get; }
+        public WebAppRunActionCorrelation Correlation { get; }
 
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("inputsLink")]
-        public ContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
 
         /// <summary> Gets the link to outputs. </summary>
         [WirePath("outputsLink")]
-        public ContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
 
         /// <summary>
         /// Gets the tracked properties.
@@ -145,6 +145,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the retry histories. </summary>
         [WirePath("retryHistory")]
-        public IList<RetryHistory> RetryHistory { get; } = new ChangeTrackingList<RetryHistory>();
+        public IList<WebAppRetryHistory> RetryHistory { get; } = new ChangeTrackingList<WebAppRetryHistory>();
     }
 }

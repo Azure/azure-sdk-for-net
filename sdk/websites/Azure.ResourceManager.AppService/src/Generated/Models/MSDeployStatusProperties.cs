@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="startOn"> Start time of deploy operation. </param>
         /// <param name="endOn"> End time of deploy operation. </param>
-        /// <param name="complete"> Whether the deployment operation has completed. </param>
+        /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployStatusProperties(string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? complete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployStatusProperties(string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;
             StartOn = startOn;
             EndOn = endOn;
-            Complete = complete;
+            IsComplete = isComplete;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Whether the deployment operation has completed. </summary>
         [WirePath("complete")]
-        public bool? Complete { get; }
+        public bool? IsComplete { get; }
     }
 }

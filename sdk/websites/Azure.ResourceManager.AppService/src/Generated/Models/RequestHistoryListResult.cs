@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="RequestHistoryListResult"/>. </summary>
         /// <param name="value"> The RequestHistory items on this page. </param>
-        internal RequestHistoryListResult(IEnumerable<RequestHistoryData> value)
+        internal RequestHistoryListResult(IEnumerable<WebAppRequestHistoryData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> The RequestHistory items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestHistoryListResult(IList<RequestHistoryData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestHistoryListResult(IList<WebAppRequestHistoryData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The RequestHistory items on this page. </summary>
         [WirePath("value")]
-        public IList<RequestHistoryData> Value { get; }
+        public IList<WebAppRequestHistoryData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

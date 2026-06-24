@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                WebAppInstanceStatusCollection result = WebAppInstanceStatusCollection.FromResponse(response);
+                WebAppInstanceStatusListResult result = WebAppInstanceStatusListResult.FromResponse(response);
                 yield return Page<WebSiteInstanceStatusData>.FromValues((IReadOnlyList<WebSiteInstanceStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

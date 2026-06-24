@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="extraInfoUri"> Extra Info URL. </param>
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
-        /// <param name="usingSdk"> Using SDK?. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebJobProperties(string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? usingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebJobProperties(string runCommand, string uri, string extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RunCommand = runCommand;
             Uri = uri;
             ExtraInfoUri = extraInfoUri;
             WebJobType = webJobType;
             Error = error;
-            UsingSdk = usingSdk;
+            IsUsingSdk = isUsingSdk;
             Settings = settings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Using SDK?. </summary>
         [WirePath("using_sdk")]
-        public bool? UsingSdk { get; }
+        public bool? IsUsingSdk { get; }
 
         /// <summary>
         /// Job settings.

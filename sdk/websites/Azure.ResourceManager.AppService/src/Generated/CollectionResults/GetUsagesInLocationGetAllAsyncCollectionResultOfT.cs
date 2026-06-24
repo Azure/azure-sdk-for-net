@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                CsmUsageQuotaCollection result = CsmUsageQuotaCollection.FromResponse(response);
+                CsmUsageQuotaListResult result = CsmUsageQuotaListResult.FromResponse(response);
                 yield return Page<CsmUsageQuota>.FromValues((IReadOnlyList<CsmUsageQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

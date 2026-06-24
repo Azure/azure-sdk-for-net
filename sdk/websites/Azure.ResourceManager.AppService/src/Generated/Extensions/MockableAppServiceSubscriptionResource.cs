@@ -270,13 +270,13 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceEnvironmentResourceData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetAllAsyncCollectionResultOfT(AppServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironmentResources"), data => new AppServiceEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetAllAsyncCollectionResultOfT(AppServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -298,13 +298,13 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceEnvironmentResourceData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetAllCollectionResultOfT(AppServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironmentResources"), data => new AppServiceEnvironmentResource(Client, data));
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetAllCollectionResultOfT(AppServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetAppServiceEnvironments"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -325,14 +325,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteARMResource> GetStaticSiteARMResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteResource> GetStaticSitesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteARMResourceData, StaticSiteARMResource>(new StaticSitesGetAllAsyncCollectionResultOfT(StaticSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSiteARMResources"), data => new StaticSiteARMResource(Client, data));
+            return new AsyncPageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSitesGetAllAsyncCollectionResultOfT(StaticSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -353,14 +353,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StaticSiteARMResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteARMResource> GetStaticSiteARMResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StaticSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteResource> GetStaticSites(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteARMResourceData, StaticSiteARMResource>(new StaticSitesGetAllCollectionResultOfT(StaticSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSiteARMResources"), data => new StaticSiteARMResource(Client, data));
+            return new PageableWrapper<StaticSiteData, StaticSiteResource>(new StaticSitesGetAllCollectionResultOfT(StaticSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetStaticSites"), data => new StaticSiteResource(Client, data));
         }
 
         /// <summary>
@@ -381,14 +381,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAppResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppResource> GetWebAppsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebSiteResource> GetWebSitesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteData, WebAppResource>(new WebAppsGetAllAsyncCollectionResultOfT(WebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebApps"), data => new WebAppResource(Client, data));
+            return new AsyncPageableWrapper<WebSiteData, WebSiteResource>(new WebAppsGetAllAsyncCollectionResultOfT(WebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
         }
 
         /// <summary>
@@ -409,14 +409,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAppResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppResource> GetWebApps(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebSiteResource> GetWebSites(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteData, WebAppResource>(new WebAppsGetAllCollectionResultOfT(WebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebApps"), data => new WebAppResource(Client, data));
+            return new PageableWrapper<WebSiteData, WebSiteResource>(new WebAppsGetAllCollectionResultOfT(WebAppsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceSubscriptionResource.GetWebSites"), data => new WebSiteResource(Client, data));
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CertificateData, CertificateResource>(new CertificatesGetAllAsyncCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetAllAsyncCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CertificateData, CertificateResource>(new CertificatesGetAllCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetAllCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSubscriptionDeploymentLocations");
             scope.Start();
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateGetSubscriptionDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentLocations> response = Response.FromValue(DeploymentLocations.FromResponse(result), result);
+                Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSubscriptionDeploymentLocations");
             scope.Start();
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateGetSubscriptionDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentLocations> response = Response.FromValue(DeploymentLocations.FromResponse(result), result);
+                Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -759,8 +759,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AseRegion> GetAseRegionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -787,8 +787,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AseRegion> GetAseRegions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceAseRegion> GetAseRegions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -817,8 +817,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingMeter> GetBillingMetersAsync(string billingLocation = default, string osType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(string billingLocation = default, string osType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -853,8 +853,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingMeter> GetBillingMeters(string billingLocation = default, string osType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceBillingMeter> GetBillingMeters(string billingLocation = default, string osType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ResourceNameAvailability>> CheckNameAvailabilityAsync(ResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -901,9 +901,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceNameAvailability> response = Response.FromValue(ResourceNameAvailability.FromResponse(result), result);
+                Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ResourceNameAvailability> CheckNameAvailability(ResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceNameAvailabilityResult> CheckNameAvailability(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -949,9 +949,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceNameAvailability> response = Response.FromValue(ResourceNameAvailability.FromResponse(result), result);
+                Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1046,8 +1046,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="customModeWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support App Service Plans with &lt;code&gt;IsCustomMode&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = default, bool? linuxWorkersEnabled = default, bool? xenonWorkersEnabled = default, bool? linuxDynamicWorkersEnabled = default, bool? customModeWorkersEnabled = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = default, bool? linuxWorkersEnabled = default, bool? xenonWorkersEnabled = default, bool? linuxDynamicWorkersEnabled = default, bool? customModeWorkersEnabled = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1088,8 +1088,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="customModeWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support App Service Plans with &lt;code&gt;IsCustomMode&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GeoRegion"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GeoRegion> GetGeoRegions(AppServiceSkuName? sku = default, bool? linuxWorkersEnabled = default, bool? xenonWorkersEnabled = default, bool? linuxDynamicWorkersEnabled = default, bool? customModeWorkersEnabled = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceGeoRegion> GetGeoRegions(AppServiceSkuName? sku = default, bool? linuxWorkersEnabled = default, bool? xenonWorkersEnabled = default, bool? linuxDynamicWorkersEnabled = default, bool? customModeWorkersEnabled = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1127,8 +1127,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="nameIdentifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> A collection of <see cref="IdentifierData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceIdentifierData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceIdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetSiteIdentifiersAssignedToHostNameAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), NameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
+            return new WebClientGetSiteIdentifiersAssignedToHostNameAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
         }
 
         /// <summary>
@@ -1159,8 +1159,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="nameIdentifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> A collection of <see cref="IdentifierData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(NameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceIdentifierData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceIdentifierData> GetSiteIdentifiersAssignedToHostName(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetSiteIdentifiersAssignedToHostNameCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), NameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
+            return new WebClientGetSiteIdentifiersAssignedToHostNameCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
         }
 
         /// <summary>
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnlResourceNameAvailability>> RegionalCheckNameAvailabilityAsync(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> RegionalCheckNameAvailabilityAsync(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DnlResourceNameAvailability> response = Response.FromValue(DnlResourceNameAvailability.FromResponse(result), result);
+                Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnlResourceNameAvailability> RegionalCheckNameAvailability(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<DnlResourceNameAvailabilityResult> RegionalCheckNameAvailability(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DnlResourceNameAvailability> response = Response.FromValue(DnlResourceNameAvailability.FromResponse(result), result);
+                Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SkuInfos>> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceSkuResult>> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSkus");
             scope.Start();
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SkuInfos> response = Response.FromValue(SkuInfos.FromResponse(result), result);
+                Response<AppServiceSkuResult> response = Response.FromValue(AppServiceSkuResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SkuInfos> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceSkuResult> GetSkus(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSkus");
             scope.Start();
@@ -1403,7 +1403,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 };
                 HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SkuInfos> response = Response.FromValue(SkuInfos.FromResponse(result), result);
+                Response<AppServiceSkuResult> response = Response.FromValue(AppServiceSkuResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<VnetValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(VnetParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1449,9 +1449,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), VnetParameters.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VnetValidationFailureDetails> response = Response.FromValue(VnetValidationFailureDetails.FromResponse(result), result);
+                Response<VirtualNetworkValidationFailureDetails> response = Response.FromValue(VirtualNetworkValidationFailureDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<VnetValidationFailureDetails> VerifyHostingEnvironmentVnet(VnetParameters content, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1497,9 +1497,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), VnetParameters.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VnetValidationFailureDetails> response = Response.FromValue(VnetValidationFailureDetails.FromResponse(result), result);
+                Response<VirtualNetworkValidationFailureDetails> response = Response.FromValue(VirtualNetworkValidationFailureDetails.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1533,8 +1533,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Recommendation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Recommendation> GetAllAsync(bool? featured = default, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceRecommendation> GetAllAsync(bool? featured = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1569,8 +1569,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
         /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Recommendation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Recommendation> GetAll(bool? featured = default, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceRecommendation> GetAll(bool? featured = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

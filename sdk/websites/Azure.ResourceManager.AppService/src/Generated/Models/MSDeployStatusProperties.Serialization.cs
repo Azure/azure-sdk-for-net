@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Complete))
+            if (options.Format != "W" && Optional.IsDefined(IsComplete))
             {
                 writer.WritePropertyName("complete"u8);
-                writer.WriteBooleanValue(Complete.Value);
+                writer.WriteBooleanValue(IsComplete.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             MSDeployProvisioningState? provisioningState = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            bool? complete = default;
+            bool? isComplete = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    complete = prop.Value.GetBoolean();
+                    isComplete = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                 provisioningState,
                 startOn,
                 endOn,
-                complete,
+                isComplete,
                 additionalBinaryDataProperties);
         }
     }

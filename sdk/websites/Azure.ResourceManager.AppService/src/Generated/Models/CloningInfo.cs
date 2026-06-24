@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
         /// </param>
-        /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="sourceWebAppId">
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloningInfo(Guid? correlationId, bool? overwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CorrelationId = correlationId;
-            Overwrite = overwrite;
+            CanOverwrite = canOverwrite;
             CloneCustomHostNames = cloneCustomHostNames;
             CloneSourceControl = cloneSourceControl;
             SourceWebAppId = sourceWebAppId;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("overwrite")]
-        public bool? Overwrite { get; set; }
+        public bool? CanOverwrite { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("cloneCustomHostNames")]

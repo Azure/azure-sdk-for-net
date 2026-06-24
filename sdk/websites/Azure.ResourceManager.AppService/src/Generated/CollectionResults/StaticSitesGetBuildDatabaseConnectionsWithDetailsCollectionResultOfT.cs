@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetBuildDatabaseConnectionsWithDetailsCollectionResultOfT : Pageable<DatabaseConnectionData>
+    internal partial class StaticSitesGetBuildDatabaseConnectionsWithDetailsCollectionResultOfT : Pageable<StaticSiteDatabaseConnectionData>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetBuildDatabaseConnectionsWithDetailsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DatabaseConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StaticSiteDatabaseConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 DatabaseConnectionCollection result = DatabaseConnectionCollection.FromResponse(response);
-                yield return Page<DatabaseConnectionData>.FromValues((IReadOnlyList<DatabaseConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StaticSiteDatabaseConnectionData>.FromValues((IReadOnlyList<StaticSiteDatabaseConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

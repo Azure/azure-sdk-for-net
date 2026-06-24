@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            FunctionsDeploymentStorage storage = default;
+            FunctionAppStorage storage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    storage = FunctionsDeploymentStorage.DeserializeFunctionsDeploymentStorage(prop.Value, options);
+                    storage = FunctionAppStorage.DeserializeFunctionAppStorage(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

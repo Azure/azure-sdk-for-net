@@ -13,7 +13,7 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> StaticSiteUserProvidedFunctionApp resource specific properties. </summary>
+    /// <summary> StaticSiteUserProvidedFunctionAppARMResource resource specific properties. </summary>
     internal partial class StaticSiteUserProvidedFunctionAppProperties : IJsonModel<StaticSiteUserProvidedFunctionAppProperties>
     {
         /// <param name="data"> The data to parse. </param>

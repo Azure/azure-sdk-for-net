@@ -11,14 +11,14 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> StaticSiteUserProvidedFunctionApp resource specific properties. </summary>
+    /// <summary> StaticSiteUserProvidedFunctionAppARMResource resource specific properties. </summary>
     internal partial class StaticSiteUserProvidedFunctionAppProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionAppProperties"/>. </summary>
-        internal StaticSiteUserProvidedFunctionAppProperties()
+        public StaticSiteUserProvidedFunctionAppProperties()
         {
         }
 
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
         [WirePath("functionAppResourceId")]
-        public string FunctionAppResourceId { get; }
+        public string FunctionAppResourceId { get; set; }
 
         /// <summary> The region of the function app registered with the static site. </summary>
         [WirePath("functionAppRegion")]
-        public string FunctionAppRegion { get; }
+        public string FunctionAppRegion { get; set; }
 
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
         [WirePath("createdOn")]

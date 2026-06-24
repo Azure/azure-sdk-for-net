@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The integration account. </summary>
         [WirePath("properties.integrationAccount")]
-        public ResourceReference IntegrationAccount
+        public WorkflowResourceReference IntegrationAccount
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The parameters. </summary>
         [WirePath("properties.parameters")]
-        public IDictionary<string, WorkflowParameter> Parameters
+        public IDictionary<string, WorkflowContent> Parameters
         {
             get
             {

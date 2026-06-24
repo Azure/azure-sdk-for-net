@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSites"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> CustomHostnameSites resource specific properties. </param>
-        internal CustomHostnameSites(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomHostnameSitesProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal CustomHostnameSites(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomHostnameSitesProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the SiteResourceIds. </summary>
         [WirePath("properties.siteResourceIds")]
-        public IList<IdentifierData> SiteResourceIds
+        public IList<AppServiceIdentifierData> SiteResourceIds
         {
             get
             {

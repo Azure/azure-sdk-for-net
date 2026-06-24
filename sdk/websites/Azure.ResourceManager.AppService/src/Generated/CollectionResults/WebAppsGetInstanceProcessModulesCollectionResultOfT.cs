@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ProcessModuleInfoCollection result = ProcessModuleInfoCollection.FromResponse(response);
+                ProcessModuleInfoListResult result = ProcessModuleInfoListResult.FromResponse(response);
                 yield return Page<ProcessModuleInfoData>.FromValues((IReadOnlyList<ProcessModuleInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

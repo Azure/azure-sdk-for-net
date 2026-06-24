@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DetectorResponseProperties"/>. </summary>
         internal DetectorResponseProperties()
         {
-            Dataset = new ChangeTrackingList<DiagnosticData>();
+            Dataset = new ChangeTrackingList<DiagnosticDataset>();
             DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
         /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorResponseProperties(DetectorInfo metadata, IList<DiagnosticData> dataset, Status status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorResponseProperties(DetectorInfo metadata, IList<DiagnosticDataset> dataset, AppServiceStatusInfo status, IList<DataProviderMetadata> dataProvidersMetadata, QueryUtterancesResults suggestedUtterances, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Dataset = dataset;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Data Set. </summary>
         [WirePath("dataset")]
-        public IList<DiagnosticData> Dataset { get; } = new ChangeTrackingList<DiagnosticData>();
+        public IList<DiagnosticDataset> Dataset { get; } = new ChangeTrackingList<DiagnosticDataset>();
 
         /// <summary> Indicates status of the most severe insight. </summary>
         [WirePath("status")]
-        public Status Status { get; }
+        public AppServiceStatusInfo Status { get; }
 
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
         [WirePath("dataProvidersMetadata")]

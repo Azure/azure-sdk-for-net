@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("geoRegion"u8);
                 writer.WriteStringValue(GeoRegion);
             }
-            if (Optional.IsDefined(PerSiteScaling))
+            if (Optional.IsDefined(IsPerSiteScaling))
             {
                 writer.WritePropertyName("perSiteScaling"u8);
-                writer.WriteBooleanValue(PerSiteScaling.Value);
+                writer.WriteBooleanValue(IsPerSiteScaling.Value);
             }
-            if (Optional.IsDefined(ElasticScaleEnabled))
+            if (Optional.IsDefined(IsElasticScaleEnabled))
             {
                 writer.WritePropertyName("elasticScaleEnabled"u8);
-                writer.WriteBooleanValue(ElasticScaleEnabled.Value);
+                writer.WriteBooleanValue(IsElasticScaleEnabled.Value);
             }
             if (Optional.IsDefined(MaximumElasticWorkerCount))
             {
@@ -134,35 +134,35 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(SpotExpirationOn))
+            if (Optional.IsDefined(SpotExpireOn))
             {
                 writer.WritePropertyName("spotExpirationTime"u8);
-                writer.WriteStringValue(SpotExpirationOn.Value, "O");
+                writer.WriteStringValue(SpotExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(FreeOfferExpirationOn))
+            if (Optional.IsDefined(FreeOfferExpireOn))
             {
                 writer.WritePropertyName("freeOfferExpirationTime"u8);
-                writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
+                writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV"u8);
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (Optional.IsDefined(TargetWorkerCount))
             {
@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
                 writer.WriteObjectValue(KubeEnvironmentProfile, options);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(AsyncScalingEnabled))
+            if (Optional.IsDefined(IsAsyncScalingEnabled))
             {
                 writer.WritePropertyName("asyncScalingEnabled"u8);
-                writer.WriteBooleanValue(AsyncScalingEnabled.Value);
+                writer.WriteBooleanValue(IsAsyncScalingEnabled.Value);
             }
             if (Optional.IsDefined(PlanDefaultIdentity))
             {
@@ -287,29 +287,29 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string workerTierName = default;
-            StatusOptions? status = default;
+            AppServicePlanStatus? status = default;
             string subscription = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             int? maximumNumberOfWorkers = default;
             int? numberOfWorkers = default;
             string geoRegion = default;
-            bool? perSiteScaling = default;
-            bool? elasticScaleEnabled = default;
+            bool? isPerSiteScaling = default;
+            bool? isElasticScaleEnabled = default;
             int? maximumElasticWorkerCount = default;
             int? numberOfSites = default;
             bool? isSpot = default;
-            DateTimeOffset? spotExpirationOn = default;
-            DateTimeOffset? freeOfferExpirationOn = default;
+            DateTimeOffset? spotExpireOn = default;
+            DateTimeOffset? freeOfferExpireOn = default;
             string resourceGroup = default;
-            bool? reserved = default;
+            bool? isReserved = default;
             bool? isXenon = default;
-            bool? hyperV = default;
+            bool? isHyperV = default;
             int? targetWorkerCount = default;
             int? targetWorkerSizeId = default;
             ProvisioningState? provisioningState = default;
             KubeEnvironmentProfile kubeEnvironmentProfile = default;
-            bool? zoneRedundant = default;
-            bool? asyncScalingEnabled = default;
+            bool? isZoneRedundant = default;
+            bool? isAsyncScalingEnabled = default;
             DefaultIdentity planDefaultIdentity = default;
             bool? isCustomMode = default;
             IList<RegistryAdapter> registryAdapters = default;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToStatusOptions();
+                    status = prop.Value.GetString().ToAppServicePlanStatus();
                     continue;
                 }
                 if (prop.NameEquals("subscription"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    perSiteScaling = prop.Value.GetBoolean();
+                    isPerSiteScaling = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("elasticScaleEnabled"u8))
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    elasticScaleEnabled = prop.Value.GetBoolean();
+                    isElasticScaleEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("maximumElasticWorkerCount"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    spotExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    spotExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("freeOfferExpirationTime"u8))
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    freeOfferExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    freeOfferExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resourceGroup"u8))
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    reserved = prop.Value.GetBoolean();
+                    isReserved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isXenon"u8))
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    hyperV = prop.Value.GetBoolean();
+                    isHyperV = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("targetWorkerCount"u8))
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("asyncScalingEnabled"u8))
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    asyncScalingEnabled = prop.Value.GetBoolean();
+                    isAsyncScalingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("planDefaultIdentity"u8))
@@ -611,23 +611,23 @@ namespace Azure.ResourceManager.AppService.Models
                 maximumNumberOfWorkers,
                 numberOfWorkers,
                 geoRegion,
-                perSiteScaling,
-                elasticScaleEnabled,
+                isPerSiteScaling,
+                isElasticScaleEnabled,
                 maximumElasticWorkerCount,
                 numberOfSites,
                 isSpot,
-                spotExpirationOn,
-                freeOfferExpirationOn,
+                spotExpireOn,
+                freeOfferExpireOn,
                 resourceGroup,
-                reserved,
+                isReserved,
                 isXenon,
-                hyperV,
+                isHyperV,
                 targetWorkerCount,
                 targetWorkerSizeId,
                 provisioningState,
                 kubeEnvironmentProfile,
-                zoneRedundant,
-                asyncScalingEnabled,
+                isZoneRedundant,
+                isAsyncScalingEnabled,
                 planDefaultIdentity,
                 isCustomMode,
                 registryAdapters ?? new ChangeTrackingList<RegistryAdapter>(),

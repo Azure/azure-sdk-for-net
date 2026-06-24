@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="SwiftVirtualNetworkProperties"/>. </summary>
         /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="swiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
+        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SwiftVirtualNetworkProperties(string subnetResourceId, bool? swiftSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SwiftVirtualNetworkProperties(string subnetResourceId, bool? isSwiftSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetResourceId = subnetResourceId;
-            SwiftSupported = swiftSupported;
+            IsSwiftSupported = isSwiftSupported;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
         [WirePath("swiftSupported")]
-        public bool? SwiftSupported { get; set; }
+        public bool? IsSwiftSupported { get; set; }
     }
 }

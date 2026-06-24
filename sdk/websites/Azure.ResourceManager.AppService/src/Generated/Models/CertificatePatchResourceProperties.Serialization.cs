@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(Thumbprint);
+                writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && Optional.IsDefined(Valid))
+            if (options.Format != "W" && Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
-                writer.WriteBooleanValue(Valid.Value);
+                writer.WriteBooleanValue(IsValid.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(CerBlob))
             {
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.AppService.Models
             string issuer = default;
             DateTimeOffset? issueOn = default;
             DateTimeOffset? expireOn = default;
-            string thumbprint = default;
-            bool? valid = default;
+            string thumbprintString = default;
+            bool? isValid = default;
             BinaryData cerBlob = default;
             string publicKeyHash = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    thumbprintString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("valid"u8))
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    valid = prop.Value.GetBoolean();
+                    isValid = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("cerBlob"u8))
@@ -420,8 +420,8 @@ namespace Azure.ResourceManager.AppService.Models
                 issuer,
                 issueOn,
                 expireOn,
-                thumbprint,
-                valid,
+                thumbprintString,
+                isValid,
                 cerBlob,
                 publicKeyHash,
                 hostingEnvironmentProfile,

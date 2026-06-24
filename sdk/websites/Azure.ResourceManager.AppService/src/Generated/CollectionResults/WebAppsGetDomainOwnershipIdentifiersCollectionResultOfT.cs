@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetDomainOwnershipIdentifiersCollectionResultOfT : Pageable<IdentifierData>
+    internal partial class WebAppsGetDomainOwnershipIdentifiersCollectionResultOfT : Pageable<AppServiceIdentifierData>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetDomainOwnershipIdentifiersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<IdentifierData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AppServiceIdentifierData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                IdentifierCollection result = IdentifierCollection.FromResponse(response);
-                yield return Page<IdentifierData>.FromValues((IReadOnlyList<IdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
+                yield return Page<AppServiceIdentifierData>.FromValues((IReadOnlyList<AppServiceIdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

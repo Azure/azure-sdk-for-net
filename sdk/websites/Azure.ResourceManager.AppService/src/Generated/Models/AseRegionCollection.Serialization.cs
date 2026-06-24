@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AseRegionCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="AseRegionCollection"/> from. </param>
-        internal static AseRegionCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AseRegionCollection"/> from. </param>
+        internal static AseRegionCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAseRegionCollection(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AseRegion item in Value)
+            foreach (AppServiceAseRegion item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<AseRegion> value = default;
+            IList<AppServiceAseRegion> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AseRegion> array = new List<AseRegion>();
+                    List<AppServiceAseRegion> array = new List<AppServiceAseRegion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AseRegion.DeserializeAseRegion(item, options));
+                        array.Add(AppServiceAseRegion.DeserializeAppServiceAseRegion(item, options));
                     }
                     value = array;
                     continue;

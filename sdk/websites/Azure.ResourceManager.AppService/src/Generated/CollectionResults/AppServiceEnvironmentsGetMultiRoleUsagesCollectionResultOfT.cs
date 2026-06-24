@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                UsageCollection result = UsageCollection.FromResponse(response);
+                AppServiceUsageListResult result = AppServiceUsageListResult.FromResponse(response);
                 yield return Page<AppServiceUsage>.FromValues((IReadOnlyList<AppServiceUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

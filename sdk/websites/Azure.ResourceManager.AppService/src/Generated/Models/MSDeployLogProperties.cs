@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="MSDeployLogProperties"/>. </summary>
         internal MSDeployLogProperties()
         {
-            Entries = new ChangeTrackingList<MSDeployLogEntry>();
+            Entries = new ChangeTrackingList<WebAppMSDeployLogEntry>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MSDeployLogProperties"/>. </summary>
         /// <param name="entries"> List of log entry messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployLogProperties(IReadOnlyList<MSDeployLogEntry> entries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployLogProperties(IReadOnlyList<WebAppMSDeployLogEntry> entries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Entries = entries;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of log entry messages. </summary>
         [WirePath("entries")]
-        public IReadOnlyList<MSDeployLogEntry> Entries { get; } = new ChangeTrackingList<MSDeployLogEntry>();
+        public IReadOnlyList<WebAppMSDeployLogEntry> Entries { get; } = new ChangeTrackingList<WebAppMSDeployLogEntry>();
     }
 }

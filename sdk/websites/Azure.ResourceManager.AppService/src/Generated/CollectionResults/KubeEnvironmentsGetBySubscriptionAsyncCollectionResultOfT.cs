@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                Models.KubeEnvironmentCollection result = Models.KubeEnvironmentCollection.FromResponse(response);
+                KubeEnvironmentListResult result = KubeEnvironmentListResult.FromResponse(response);
                 yield return Page<KubeEnvironmentData>.FromValues((IReadOnlyList<KubeEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

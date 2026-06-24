@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationProperties(DateTimeOffset? createdOn, string recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendationProperties(DateTimeOffset? createdOn, string recommendationId, string resourceId, ResourceScopeType? resourceScope, string ruleName, string displayName, string message, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, string actionName, int? enabled, IList<string> states, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? nextNotificationOn, DateTimeOffset? notificationExpirationOn, DateTimeOffset? notifiedOn, double? score, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             RecommendationId = recommendationId;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of channels that this recommendation can apply. </summary>
         [WirePath("channels")]
-        public Channels? Channels { get; }
+        public RecommendationChannel? Channels { get; }
 
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
         [WirePath("categoryTags")]

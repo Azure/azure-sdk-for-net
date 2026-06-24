@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WorkflowExpressionRoot> GetExpressionTracesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WorkflowExpressionRoot"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkflowExpressionRoot> GetExpressionTraces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.AppService
                 "WorkflowRunActionRepetitionResource.GetExpressionTraces");
         }
 
-        /// <summary> Gets a collection of RequestHistories in the <see cref="WorkflowRunActionRepetitionResource"/>. </summary>
-        /// <returns> An object representing collection of RequestHistories and their operations over a RequestHistoryResource. </returns>
-        public virtual RequestHistoryCollection GetRequestHistories()
+        /// <summary> Gets a collection of WebAppRequestHistories in the <see cref="WorkflowRunActionRepetitionResource"/>. </summary>
+        /// <returns> An object representing collection of WebAppRequestHistories and their operations over a WebAppRequestHistoryResource. </returns>
+        public virtual WebAppRequestHistoryCollection GetWebAppRequestHistories()
         {
-            return GetCachedClient(client => new RequestHistoryCollection(client, Id));
+            return GetCachedClient(client => new WebAppRequestHistoryCollection(client, Id));
         }
 
         /// <summary> Gets a workflow run repetition request history. </summary>
@@ -288,11 +288,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RequestHistoryResource>> GetRequestHistoryAsync(string requestHistoryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppRequestHistoryResource>> GetWebAppRequestHistoryAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
-            return await GetRequestHistories().GetAsync(requestHistoryName, cancellationToken).ConfigureAwait(false);
+            return await GetWebAppRequestHistories().GetAsync(requestHistoryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a workflow run repetition request history. </summary>
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RequestHistoryResource> GetRequestHistory(string requestHistoryName, CancellationToken cancellationToken = default)
+        public virtual Response<WebAppRequestHistoryResource> GetWebAppRequestHistory(string requestHistoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
-            return GetRequestHistories().Get(requestHistoryName, cancellationToken);
+            return GetWebAppRequestHistories().Get(requestHistoryName, cancellationToken);
         }
     }
 }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(SignalAvailability))
+            if (Optional.IsDefined(IsSignalAvailable))
             {
                 writer.WritePropertyName("signalAvailability"u8);
-                writer.WriteBooleanValue(SignalAvailability.Value);
+                writer.WriteBooleanValue(IsSignalAvailable.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string category = default;
-            bool? signalAvailability = default;
+            bool? isSignalAvailable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    signalAvailability = prop.Value.GetBoolean();
+                    isSignalAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceHealthMetadataProperties(category, signalAvailability, additionalBinaryDataProperties);
+            return new ResourceHealthMetadataProperties(category, isSignalAvailable, additionalBinaryDataProperties);
         }
     }
 }

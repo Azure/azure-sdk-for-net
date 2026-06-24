@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing a WorkflowTrigger along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkflowTriggerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebAppResource"/> using the GetWorkflowTriggers method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWorkflowTriggers method.
     /// </summary>
     public partial class WorkflowTriggerResource : ArmResource
     {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebAppJsonSchema>> GetSchemaJsonAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _workflowTriggersRestClient.CreateGetSchemaJsonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JsonSchema> response = Response.FromValue(JsonSchema.FromResponse(result), result);
+                Response<WebAppJsonSchema> response = Response.FromValue(WebAppJsonSchema.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
+        public virtual Response<WebAppJsonSchema> GetSchemaJson(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workflowTriggersClientDiagnostics.CreateScope("WorkflowTriggerResource.GetSchemaJson");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _workflowTriggersRestClient.CreateGetSchemaJsonRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<JsonSchema> response = Response.FromValue(JsonSchema.FromResponse(result), result);
+                Response<WebAppJsonSchema> response = Response.FromValue(WebAppJsonSchema.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

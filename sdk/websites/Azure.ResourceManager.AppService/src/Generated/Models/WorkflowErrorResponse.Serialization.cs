@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(WorkflowErrorResponse)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(ErrorInfo))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                writer.WriteObjectValue(ErrorInfo, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            ErrorProperties error = default;
+            WebAppErrorProperties errorInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = ErrorProperties.DeserializeErrorProperties(prop.Value, options);
+                    errorInfo = WebAppErrorProperties.DeserializeWebAppErrorProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkflowErrorResponse(error, additionalBinaryDataProperties);
+            return new WorkflowErrorResponse(errorInfo, additionalBinaryDataProperties);
         }
     }
 }

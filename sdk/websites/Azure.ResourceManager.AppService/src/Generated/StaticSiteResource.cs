@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing a StaticSite along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StaticSiteResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildARMResource"/> using the GetStaticSites method.
+    /// Otherwise you can get one from its parent resource <see cref="StaticSiteBuildResource"/> using the GetStaticSites method.
     /// </summary>
     public partial class StaticSiteResource : ArmResource
     {
         private readonly ClientDiagnostics _staticSitesClientDiagnostics;
         private readonly StaticSites _staticSitesRestClient;
-        private readonly StaticSiteLinkedBackendARMResourceData _data;
+        private readonly StaticSiteLinkedBackendData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/staticSites/builds/linkedBackends";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="StaticSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StaticSiteResource(ArmClient client, StaticSiteLinkedBackendARMResourceData data) : this(client, data.Id)
+        internal StaticSiteResource(ArmClient client, StaticSiteLinkedBackendData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual StaticSiteLinkedBackendARMResourceData Data
+        public virtual StaticSiteLinkedBackendData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSiteLinkedBackendARMResourceData> response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSiteLinkedBackendARMResourceData> response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> ValidateBackendForBuildAsync(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ValidateBackendForBuildAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation ValidateBackendForBuild(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ValidateBackendForBuild(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateValidateBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_staticSitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<StaticSiteResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteResource>> UpdateAsync(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<StaticSiteResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteResource> Update(WaitUntil waitUntil, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),

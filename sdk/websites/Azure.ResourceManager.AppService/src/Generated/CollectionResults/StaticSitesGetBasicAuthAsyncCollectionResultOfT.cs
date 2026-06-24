@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetBasicAuthAsyncCollectionResultOfT : AsyncPageable<StaticSiteBasicAuthPropertiesARMResourceData>
+    internal partial class StaticSitesGetBasicAuthAsyncCollectionResultOfT : AsyncPageable<StaticSiteBasicAuthPropertiesData>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetBasicAuthAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StaticSiteBasicAuthPropertiesARMResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<StaticSiteBasicAuthPropertiesData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                StaticSiteBasicAuthPropertiesCollection result = StaticSiteBasicAuthPropertiesCollection.FromResponse(response);
-                yield return Page<StaticSiteBasicAuthPropertiesARMResourceData>.FromValues((IReadOnlyList<StaticSiteBasicAuthPropertiesARMResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                Models.StaticSiteBasicAuthPropertiesCollection result = Models.StaticSiteBasicAuthPropertiesCollection.FromResponse(response);
+                yield return Page<StaticSiteBasicAuthPropertiesData>.FromValues((IReadOnlyList<StaticSiteBasicAuthPropertiesData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

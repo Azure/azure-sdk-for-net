@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkflowRunResource"/> and their operations.
-    /// Each <see cref="WorkflowRunResource"/> in the collection will belong to the same instance of <see cref="WebAppResource"/>.
-    /// To get a <see cref="WorkflowRunCollection"/> instance call the GetWorkflowRuns method from an instance of <see cref="WebAppResource"/>.
+    /// Each <see cref="WorkflowRunResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WorkflowRunCollection"/> instance call the GetWorkflowRuns method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WorkflowRunCollection : ArmCollection, IEnumerable<WorkflowRunResource>, IAsyncEnumerable<WorkflowRunResource>
     {
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebAppResource.ResourceType)
+            if (id.ResourceType != WebSiteResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAppResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
             }
         }
 

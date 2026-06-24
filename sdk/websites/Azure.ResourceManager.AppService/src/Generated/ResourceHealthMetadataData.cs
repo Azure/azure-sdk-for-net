@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Is there a health signal for the resource. </summary>
         [WirePath("properties.signalAvailability")]
-        public bool? SignalAvailability
+        public bool? IsSignalAvailable
         {
             get
             {
-                return Properties is null ? default : Properties.SignalAvailability;
+                return Properties is null ? default : Properties.IsSignalAvailable;
             }
         }
     }

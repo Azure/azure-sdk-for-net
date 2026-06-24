@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettingsV2Properties(AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, Login login, HttpSettings httpSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteAuthSettingsV2Properties(AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
         [WirePath("identityProviders")]
-        public IdentityProviders IdentityProviders { get; set; }
+        public AppServiceIdentityProviders IdentityProviders { get; set; }
 
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
         [WirePath("login")]
-        public Login Login { get; set; }
+        public WebAppLoginInfo Login { get; set; }
 
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
         [WirePath("httpSettings")]
-        public HttpSettings HttpSettings { get; set; }
+        public AppServiceHttpSettings HttpSettings { get; set; }
     }
 }

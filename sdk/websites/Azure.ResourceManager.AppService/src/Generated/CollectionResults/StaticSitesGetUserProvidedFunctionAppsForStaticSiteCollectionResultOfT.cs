@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetUserProvidedFunctionAppsForStaticSiteCollectionResultOfT : Pageable<StaticSiteUserProvidedFunctionAppARMResourceData>
+    internal partial class StaticSitesGetUserProvidedFunctionAppsForStaticSiteCollectionResultOfT : Pageable<StaticSiteUserProvidedFunctionAppData>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetUserProvidedFunctionAppsForStaticSiteCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<StaticSiteUserProvidedFunctionAppARMResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StaticSiteUserProvidedFunctionAppData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                StaticSiteUserProvidedFunctionAppsCollection result = StaticSiteUserProvidedFunctionAppsCollection.FromResponse(response);
-                yield return Page<StaticSiteUserProvidedFunctionAppARMResourceData>.FromValues((IReadOnlyList<StaticSiteUserProvidedFunctionAppARMResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                StaticSiteUserProvidedFunctionAppsListResult result = StaticSiteUserProvidedFunctionAppsListResult.FromResponse(response);
+                yield return Page<StaticSiteUserProvidedFunctionAppData>.FromValues((IReadOnlyList<StaticSiteUserProvidedFunctionAppData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, AzureLocation? location, IReadOnlyDictionary<string, string> tags, Models.AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, Models.AppServiceSkuDescription sku, string status, ResponseError error, ResourceManager.Models.ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ResourceManager.Models.ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Azure resource manager plan. </summary>
         [WirePath("plan")]
-        public Models.AppServiceArmPlan Plan { get; }
+        public AppServiceArmPlan Plan { get; }
 
         /// <summary> Resource specific properties. </summary>
         [WirePath("properties")]
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> SKU description of the resource. </summary>
         [WirePath("sku")]
-        public Models.AppServiceSkuDescription Sku { get; }
+        public AppServiceSkuDescription Sku { get; }
 
         /// <summary> Azure-AsyncOperation Status info. </summary>
         [WirePath("status")]

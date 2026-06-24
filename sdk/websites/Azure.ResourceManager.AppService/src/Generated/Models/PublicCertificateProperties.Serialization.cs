@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("publicCertificateLocation"u8);
                 writer.WriteStringValue(PublicCertificateLocation.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(Thumbprint);
+                writer.WriteStringValue(ThumbprintString);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             BinaryData blob = default;
             PublicCertificateLocation? publicCertificateLocation = default;
-            string thumbprint = default;
+            string thumbprintString = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    thumbprintString = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PublicCertificateProperties(blob, publicCertificateLocation, thumbprint, additionalBinaryDataProperties);
+            return new PublicCertificateProperties(blob, publicCertificateLocation, thumbprintString, additionalBinaryDataProperties);
         }
     }
 }

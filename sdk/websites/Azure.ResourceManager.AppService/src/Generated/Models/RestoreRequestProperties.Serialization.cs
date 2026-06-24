@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(BlobName);
             }
             writer.WritePropertyName("overwrite"u8);
-            writer.WriteBooleanValue(Overwrite);
+            writer.WriteBooleanValue(CanOverwrite);
             if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseBackupSetting item in Databases)
+                foreach (AppServiceDatabaseBackupSetting item in Databases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -177,9 +177,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string storageAccountUri = default;
             string blobName = default;
-            bool overwrite = default;
+            bool canOverwrite = default;
             string siteName = default;
-            IList<DatabaseBackupSetting> databases = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             bool? ignoreConflictingHostNames = default;
             bool? ignoreDatabases = default;
             string appServicePlan = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("overwrite"u8))
                 {
-                    overwrite = prop.Value.GetBoolean();
+                    canOverwrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("siteName"u8))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                    List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item, options));
+                        array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                     }
                     databases = array;
                     continue;
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.AppService.Models
             return new RestoreRequestProperties(
                 storageAccountUri,
                 blobName,
-                overwrite,
+                canOverwrite,
                 siteName,
-                databases ?? new ChangeTrackingList<DatabaseBackupSetting>(),
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
                 ignoreConflictingHostNames,
                 ignoreDatabases,
                 appServicePlan,

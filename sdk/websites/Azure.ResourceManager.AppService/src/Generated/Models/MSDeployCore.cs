@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        /// <param name="appOffline">
+        /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
             SetParametersXmlFileUri = setParametersXmlFileUri;
             SetParameters = setParameters;
             SkipAppData = skipAppData;
-            AppOffline = appOffline;
+            IsAppOffline = isAppOffline;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -86,6 +86,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
         [WirePath("appOffline")]
-        public bool? AppOffline { get; set; }
+        public bool? IsAppOffline { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The Virtual Network summary view. </summary>
         [WirePath("properties.virtualNetworkConnection")]
-        public VnetInfo VirtualNetworkConnection
+        public AppServiceVirtualNetworkProperties VirtualNetworkConnection
         {
             get
             {

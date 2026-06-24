@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatabaseConnectionCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="DatabaseConnectionCollection"/> from. </param>
-        internal static DatabaseConnectionCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatabaseConnectionCollection"/> from. </param>
+        internal static DatabaseConnectionCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDatabaseConnectionCollection(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DatabaseConnectionData item in Value)
+            foreach (StaticSiteDatabaseConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<DatabaseConnectionData> value = default;
+            IList<StaticSiteDatabaseConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatabaseConnectionData> array = new List<DatabaseConnectionData>();
+                    List<StaticSiteDatabaseConnectionData> array = new List<StaticSiteDatabaseConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseConnectionData.DeserializeDatabaseConnectionData(item, options));
+                        array.Add(StaticSiteDatabaseConnectionData.DeserializeStaticSiteDatabaseConnectionData(item, options));
                     }
                     value = array;
                     continue;

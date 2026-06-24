@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
-                writer.WriteObjectValue<Models.AppServiceTableStorageApplicationLogsConfig>(AzureTableStorage, options);
+                writer.WriteObjectValue(AzureTableStorage, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue<Models.AppServiceBlobStorageApplicationLogsConfig>(AzureBlobStorage, options);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FileSystemApplicationLogsConfig fileSystem = default;
-            Models.AppServiceTableStorageApplicationLogsConfig azureTableStorage = default;
-            Models.AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = default;
+            AppServiceTableStorageApplicationLogsConfig azureTableStorage = default;
+            AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureTableStorage = Models.AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(prop.Value, options);
+                    azureTableStorage = AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlobStorage"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = Models.AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(prop.Value, options);
+                    azureBlobStorage = AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

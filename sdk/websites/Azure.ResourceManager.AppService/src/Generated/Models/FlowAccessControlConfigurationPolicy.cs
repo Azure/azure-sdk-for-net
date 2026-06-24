@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         public FlowAccessControlConfigurationPolicy()
         {
-            AllowedCallerIpAddresses = new ChangeTrackingList<IpAddressRange>();
+            AllowedCallerIpAddresses = new ChangeTrackingList<WebAppIPAddressRange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfigurationPolicy"/>. </summary>
         /// <param name="allowedCallerIpAddresses"> The allowed caller IP address ranges. </param>
         /// <param name="openAuthenticationPolicies"> The authentication policies for workflow. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlowAccessControlConfigurationPolicy(IList<IpAddressRange> allowedCallerIpAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlowAccessControlConfigurationPolicy(IList<WebAppIPAddressRange> allowedCallerIpAddresses, OpenAuthenticationAccessPolicies openAuthenticationPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedCallerIpAddresses = allowedCallerIpAddresses;
             OpenAuthenticationPolicies = openAuthenticationPolicies;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The allowed caller IP address ranges. </summary>
         [WirePath("allowedCallerIpAddresses")]
-        public IList<IpAddressRange> AllowedCallerIpAddresses { get; }
+        public IList<WebAppIPAddressRange> AllowedCallerIpAddresses { get; }
 
         /// <summary> The authentication policies for workflow. </summary>
         [WirePath("openAuthenticationPolicies")]
@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Open authentication policies. </summary>
         [WirePath("openAuthenticationPolicies.policies")]
-        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicies
+        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList
         {
             get
             {
-                if (this.OpenAuthenticationPolicies is null)
+                if (OpenAuthenticationPolicies is null)
                 {
                     OpenAuthenticationPolicies = new OpenAuthenticationAccessPolicies();
                 }
-                return OpenAuthenticationPolicies.Policies;
+                return OpenAuthenticationPolicies.OpenAuthenticationPolicyList;
             }
         }
     }

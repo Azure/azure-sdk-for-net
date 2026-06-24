@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesWrapper(IList<AppServicePrivateLinkResource> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkResourcesWrapper(IList<AppServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the Value. </summary>
         [WirePath("value")]
-        public IList<AppServicePrivateLinkResource> Value { get; }
+        public IList<AppServicePrivateLinkResourceData> Value { get; }
     }
 }

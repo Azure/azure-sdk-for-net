@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetStaticSitesByResourceGroupAsyncCollectionResultOfT : AsyncPageable<StaticSiteARMResourceData>
+    internal partial class StaticSitesGetStaticSitesByResourceGroupAsyncCollectionResultOfT : AsyncPageable<StaticSiteData>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetStaticSitesByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StaticSiteARMResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<StaticSiteData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                Models.StaticSiteCollection result = Models.StaticSiteCollection.FromResponse(response);
-                yield return Page<StaticSiteARMResourceData>.FromValues((IReadOnlyList<StaticSiteARMResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                StaticSiteListResult result = StaticSiteListResult.FromResponse(response);
+                yield return Page<StaticSiteData>.FromValues((IReadOnlyList<StaticSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

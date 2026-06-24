@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                DiagnosticDetectorCollection result = DiagnosticDetectorCollection.FromResponse(response);
+                DiagnosticDetectorListResult result = DiagnosticDetectorListResult.FromResponse(response);
                 yield return Page<DetectorDefinitionResourceData>.FromValues((IReadOnlyList<DetectorDefinitionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

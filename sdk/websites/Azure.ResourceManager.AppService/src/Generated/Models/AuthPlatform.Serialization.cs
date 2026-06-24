@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(AuthPlatform)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             string runtimeVersion = default;
             string configFilePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runtimeVersion"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthPlatform(enabled, runtimeVersion, configFilePath, additionalBinaryDataProperties);
+            return new AuthPlatform(isEnabled, runtimeVersion, configFilePath, additionalBinaryDataProperties);
         }
     }
 }

@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="RestoreRequestProperties"/>. </summary>
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
-        /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
+        /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountUri"/> is null. </exception>
-        public RestoreRequestProperties(string storageAccountUri, bool overwrite)
+        public RestoreRequestProperties(string storageAccountUri, bool canOverwrite)
         {
             Argument.AssertNotNull(storageAccountUri, nameof(storageAccountUri));
 
             StorageAccountUri = storageAccountUri;
-            Overwrite = overwrite;
-            Databases = new ChangeTrackingList<DatabaseBackupSetting>();
+            CanOverwrite = canOverwrite;
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestoreRequestProperties"/>. </summary>
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <param name="blobName"> Name of a blob which contains the backup. </param>
-        /// <param name="overwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
+        /// <param name="canOverwrite"> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </param>
         /// <param name="siteName"> Name of an app. </param>
         /// <param name="databases"> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </param>
         /// <param name="ignoreConflictingHostNames"> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </param>
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreRequestProperties(string storageAccountUri, string blobName, bool overwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreRequestProperties(string storageAccountUri, string blobName, bool canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
-            Overwrite = overwrite;
+            CanOverwrite = canOverwrite;
             SiteName = siteName;
             Databases = databases;
             IgnoreConflictingHostNames = ignoreConflictingHostNames;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>
         [WirePath("overwrite")]
-        public bool Overwrite { get; set; }
+        public bool CanOverwrite { get; set; }
 
         /// <summary> Name of an app. </summary>
         [WirePath("siteName")]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
         [WirePath("databases")]
-        public IList<DatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<DatabaseBackupSetting>();
+        public IList<AppServiceDatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
 
         /// <summary> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </summary>
         [WirePath("ignoreConflictingHostNames")]

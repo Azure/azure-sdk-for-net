@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionProperties"/>. </summary>
         internal WorkflowVersionProperties()
         {
-            Parameters = new ChangeTrackingDictionary<string, WorkflowParameter>();
+            Parameters = new ChangeTrackingDictionary<string, WorkflowContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowVersionProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowVersionProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowVersionProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The integration account. </summary>
         [WirePath("integrationAccount")]
-        public ResourceReference IntegrationAccount { get; }
+        public WorkflowResourceReference IntegrationAccount { get; }
 
         /// <summary>
         /// The definition.
@@ -126,6 +126,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The parameters. </summary>
         [WirePath("parameters")]
-        public IDictionary<string, WorkflowParameter> Parameters { get; } = new ChangeTrackingDictionary<string, WorkflowParameter>();
+        public IDictionary<string, WorkflowContent> Parameters { get; } = new ChangeTrackingDictionary<string, WorkflowContent>();
     }
 }

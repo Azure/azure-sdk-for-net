@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
-                foreach (IList<Models.AppServiceNameValuePair> item in MetaData)
+                foreach (IList<AppServiceNameValuePair> item in MetaData)
                 {
                     if (item == null)
                     {
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (Models.AppServiceNameValuePair item0 in item)
+                    foreach (AppServiceNameValuePair item0 in item)
                     {
-                        writer.WriteObjectValue<Models.AppServiceNameValuePair>(item0, options);
+                        writer.WriteObjectValue(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (Models.DiagnosticSolution item in Solutions)
+                foreach (DiagnosticSolution item in Solutions)
                 {
-                    writer.WriteObjectValue<Models.DiagnosticSolution>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.AppService.Models
             string message = default;
             string source = default;
             double? priority = default;
-            IList<IList<Models.AppServiceNameValuePair>> metaData = default;
-            IssueType? @type = default;
-            IList<Models.DiagnosticSolution> solutions = default;
+            IList<IList<AppServiceNameValuePair>> metaData = default;
+            DetectorIssueType? @type = default;
+            IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IList<Models.AppServiceNameValuePair>> array = new List<IList<Models.AppServiceNameValuePair>>();
+                    List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            List<Models.AppServiceNameValuePair> array0 = new List<Models.AppServiceNameValuePair>();
+                            List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(Models.AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToIssueType();
+                    @type = prop.Value.GetString().ToDetectorIssueType();
                     continue;
                 }
                 if (prop.NameEquals("solutions"u8))
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DiagnosticSolution> array = new List<Models.DiagnosticSolution>();
+                    List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
+                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.AppService.Models
                 message,
                 source,
                 priority,
-                metaData ?? new ChangeTrackingList<IList<Models.AppServiceNameValuePair>>(),
+                metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
                 @type,
-                solutions ?? new ChangeTrackingList<Models.DiagnosticSolution>(),
+                solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
                 additionalBinaryDataProperties);
         }
     }

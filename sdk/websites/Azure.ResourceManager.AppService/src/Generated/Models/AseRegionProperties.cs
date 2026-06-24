@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="AseRegionProperties"/>. </summary>
         /// <param name="displayName"> Display name for region. </param>
-        /// <param name="standard"> Is region standard. </param>
-        /// <param name="dedicatedHost"> Dedicated host enabled. </param>
-        /// <param name="zoneRedundant"> Zone redundant deployment enabled. </param>
+        /// <param name="isStandard"> Is region standard. </param>
+        /// <param name="isDedicatedHostEnabled"> Dedicated host enabled. </param>
+        /// <param name="isZoneRedundantEnabled"> Zone redundant deployment enabled. </param>
         /// <param name="availableSku"> Available Skus in region. </param>
         /// <param name="availableOS"> Available OSs in region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AseRegionProperties(string displayName, bool? standard, bool? dedicatedHost, bool? zoneRedundant, IList<string> availableSku, IList<string> availableOS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AseRegionProperties(string displayName, bool? isStandard, bool? isDedicatedHostEnabled, bool? isZoneRedundantEnabled, IList<string> availableSku, IList<string> availableOS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            Standard = standard;
-            DedicatedHost = dedicatedHost;
-            ZoneRedundant = zoneRedundant;
+            IsStandard = isStandard;
+            IsDedicatedHostEnabled = isDedicatedHostEnabled;
+            IsZoneRedundantEnabled = isZoneRedundantEnabled;
             AvailableSku = availableSku;
             AvailableOS = availableOS;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Is region standard. </summary>
         [WirePath("standard")]
-        public bool? Standard { get; }
+        public bool? IsStandard { get; }
 
         /// <summary> Dedicated host enabled. </summary>
         [WirePath("dedicatedHost")]
-        public bool? DedicatedHost { get; }
+        public bool? IsDedicatedHostEnabled { get; }
 
         /// <summary> Zone redundant deployment enabled. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundantEnabled { get; }
 
         /// <summary> Available Skus in region. </summary>
         [WirePath("availableSku")]

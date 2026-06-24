@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WebAppResource"/> and their operations.
-    /// Each <see cref="WebAppResource"/> in the collection will belong to the same instance of <see cref="WebAppResource"/>.
-    /// To get a <see cref="WebAppCollection"/> instance call the GetWebApps method from an instance of <see cref="WebAppResource"/>.
+    /// Each <see cref="WebAppResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
+    /// To get a <see cref="WebAppCollection"/> instance call the GetWebApps method from an instance of <see cref="WebSiteResource"/>.
     /// </summary>
     public partial class WebAppCollection : ArmCollection, IEnumerable<WebAppResource>, IAsyncEnumerable<WebAppResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebAppResource.ResourceType)
+            if (id.ResourceType != WebSiteResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAppResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
             }
         }
 

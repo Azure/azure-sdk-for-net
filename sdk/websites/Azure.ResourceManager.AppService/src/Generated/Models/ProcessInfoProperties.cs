@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal ProcessInfoProperties()
         {
             Children = new ChangeTrackingList<string>();
-            Threads = new ChangeTrackingList<ProcessThreadInfo>();
+            ProcessThreads = new ChangeTrackingList<WebAppProcessThreadInfo>();
             OpenFileHandles = new ChangeTrackingList<string>();
             Modules = new ChangeTrackingList<ProcessModuleInfoData>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
         /// <param name="parent"> Parent process. </param>
         /// <param name="children"> Child process list. </param>
-        /// <param name="threads"> Thread list. </param>
+        /// <param name="processThreads"> Thread list. </param>
         /// <param name="openFileHandles"> List of open files. </param>
         /// <param name="modules"> List of modules. </param>
         /// <param name="fileName"> File name of this process. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProcessInfoProperties(int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadInfo> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             IisProfileTimeoutInSeconds = iisProfileTimeoutInSeconds;
             Parent = parent;
             Children = children;
-            Threads = threads;
+            ProcessThreads = processThreads;
             OpenFileHandles = openFileHandles;
             Modules = modules;
             FileName = fileName;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Thread list. </summary>
         [WirePath("threads")]
-        public IList<ProcessThreadInfo> Threads { get; } = new ChangeTrackingList<ProcessThreadInfo>();
+        public IList<WebAppProcessThreadInfo> ProcessThreads { get; } = new ChangeTrackingList<WebAppProcessThreadInfo>();
 
         /// <summary> List of open files. </summary>
         [WirePath("open_file_handles")]

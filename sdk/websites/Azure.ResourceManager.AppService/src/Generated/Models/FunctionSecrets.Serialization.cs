@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FunctionSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="FunctionSecrets"/> from. </param>
-        internal static FunctionSecrets FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FunctionSecrets"/> from. </param>
+        internal static FunctionSecrets FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFunctionSecrets(document.RootElement, ModelSerializationExtensions.WireOptions);

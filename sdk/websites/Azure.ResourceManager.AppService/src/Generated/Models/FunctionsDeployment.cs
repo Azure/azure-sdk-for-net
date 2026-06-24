@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FunctionsDeployment"/>. </summary>
         /// <param name="storage"> Storage for deployed package used by the function app. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsDeployment(FunctionsDeploymentStorage storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionsDeployment(FunctionAppStorage storage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Storage = storage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Storage for deployed package used by the function app. </summary>
         [WirePath("storage")]
-        public FunctionsDeploymentStorage Storage { get; set; }
+        public FunctionAppStorage Storage { get; set; }
     }
 }

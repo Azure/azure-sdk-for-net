@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetDeploymentsAsyncCollectionResultOfT : AsyncPageable<DeploymentData>
+    internal partial class WebAppsGetDeploymentsAsyncCollectionResultOfT : AsyncPageable<WebAppDeploymentData>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetDeploymentsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<WebAppDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                DeploymentCollection result = DeploymentCollection.FromResponse(response);
-                yield return Page<DeploymentData>.FromValues((IReadOnlyList<DeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                WebAppDeploymentListResult result = WebAppDeploymentListResult.FromResponse(response);
+                yield return Page<WebAppDeploymentData>.FromValues((IReadOnlyList<WebAppDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

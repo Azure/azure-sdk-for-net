@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                DiagnosticCategoryCollection result = DiagnosticCategoryCollection.FromResponse(response);
+                DiagnosticCategoryListResult result = DiagnosticCategoryListResult.FromResponse(response);
                 yield return Page<DiagnosticCategoryData>.FromValues((IReadOnlyList<DiagnosticCategoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

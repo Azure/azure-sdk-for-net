@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("httpLogs"u8);
                 writer.WriteObjectValue(HttpLogs, options);
             }
-            if (Optional.IsDefined(FailedRequestsTracing))
+            if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
-                writer.WriteObjectValue(FailedRequestsTracing, options);
+                writer.WriteObjectValue(IsFailedRequestsTracing, options);
             }
-            if (Optional.IsDefined(DetailedErrorMessages))
+            if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
-                writer.WriteObjectValue(DetailedErrorMessages, options);
+                writer.WriteObjectValue(IsDetailedErrorMessages, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             ApplicationLogsConfig applicationLogs = default;
-            HttpLogsConfig httpLogs = default;
-            EnabledConfig failedRequestsTracing = default;
-            EnabledConfig detailedErrorMessages = default;
+            AppServiceHttpLogsConfig httpLogs = default;
+            WebAppEnabledConfig isFailedRequestsTracing = default;
+            WebAppEnabledConfig isDetailedErrorMessages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    httpLogs = HttpLogsConfig.DeserializeHttpLogsConfig(prop.Value, options);
+                    httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("failedRequestsTracing"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    failedRequestsTracing = EnabledConfig.DeserializeEnabledConfig(prop.Value, options);
+                    isFailedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("detailedErrorMessages"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detailedErrorMessages = EnabledConfig.DeserializeEnabledConfig(prop.Value, options);
+                    isDetailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SiteLogsConfigProperties(applicationLogs, httpLogs, failedRequestsTracing, detailedErrorMessages, additionalBinaryDataProperties);
+            return new SiteLogsConfigProperties(applicationLogs, httpLogs, isFailedRequestsTracing, isDetailedErrorMessages, additionalBinaryDataProperties);
         }
     }
 }

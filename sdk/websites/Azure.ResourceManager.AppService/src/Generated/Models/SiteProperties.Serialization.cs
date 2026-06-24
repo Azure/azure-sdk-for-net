@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("usageState"u8);
                 writer.WriteStringValue(UsageState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(SiteScopedCertificatesEnabled))
             {
@@ -144,25 +144,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(AppServicePlanId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
-                writer.WriteStringValue(ServerFarmId);
+                writer.WriteStringValue(AppServicePlanId);
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(HyperV))
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV"u8);
-                writer.WriteBooleanValue(HyperV.Value);
+                writer.WriteBooleanValue(IsHyperV.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedTimeUtc))
             {
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ScmSiteAlsoStopped))
+            if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
                 writer.WritePropertyName("scmSiteAlsoStopped"u8);
-                writer.WriteBooleanValue(ScmSiteAlsoStopped.Value);
+                writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetSwapSlot))
             {
@@ -239,25 +239,25 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
-            if (Optional.IsDefined(ClientAffinityEnabled))
+            if (Optional.IsDefined(IsClientAffinityEnabled))
             {
                 writer.WritePropertyName("clientAffinityEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAffinityPartitioningEnabled))
+            if (Optional.IsDefined(IsClientAffinityPartitioningEnabled))
             {
                 writer.WritePropertyName("clientAffinityPartitioningEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityPartitioningEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityPartitioningEnabled.Value);
             }
-            if (Optional.IsDefined(ClientAffinityProxyEnabled))
+            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
             {
                 writer.WritePropertyName("clientAffinityProxyEnabled"u8);
-                writer.WriteBooleanValue(ClientAffinityProxyEnabled.Value);
+                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
             }
-            if (Optional.IsDefined(ClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
-                writer.WriteBooleanValue(ClientCertEnabled.Value);
+                writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             if (Optional.IsDefined(ClientCertMode))
             {
@@ -274,20 +274,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("ipMode"u8);
                 writer.WriteStringValue(IpMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(EndToEndEncryptionEnabled))
+            if (Optional.IsDefined(IsEndToEndEncryptionEnabled))
             {
                 writer.WritePropertyName("endToEndEncryptionEnabled"u8);
-                writer.WriteBooleanValue(EndToEndEncryptionEnabled.Value);
+                writer.WriteBooleanValue(IsEndToEndEncryptionEnabled.Value);
             }
-            if (Optional.IsDefined(SshEnabled))
+            if (Optional.IsDefined(IsSshEnabled))
             {
                 writer.WritePropertyName("sshEnabled"u8);
-                writer.WriteBooleanValue(SshEnabled.Value);
+                writer.WriteBooleanValue(IsSshEnabled.Value);
             }
-            if (Optional.IsDefined(HostNamesDisabled))
+            if (Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled"u8);
-                writer.WriteBooleanValue(HostNamesDisabled.Value);
+                writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
             if (Optional.IsDefined(CustomDomainVerificationId))
             {
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("dailyMemoryTimeQuota"u8);
                 writer.WriteNumberValue(DailyMemoryTimeQuota.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SuspendedTill))
+            if (options.Format != "W" && Optional.IsDefined(SuspendOn))
             {
                 writer.WritePropertyName("suspendedTill"u8);
-                writer.WriteStringValue(SuspendedTill.Value, "O");
+                writer.WriteStringValue(SuspendOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MaxNumberOfWorkers))
             {
@@ -349,10 +349,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("slotSwapStatus"u8);
                 writer.WriteObjectValue(SlotSwapStatus, options);
             }
-            if (Optional.IsDefined(HttpsOnly))
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
-                writer.WriteBooleanValue(HttpsOnly.Value);
+                writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
             if (Optional.IsDefined(RedundancyMode))
             {
@@ -369,10 +369,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(StorageAccountRequired))
+            if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
-                writer.WriteBooleanValue(StorageAccountRequired.Value);
+                writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
             if (Optional.IsDefined(KeyVaultReferenceIdentity))
             {
@@ -449,56 +449,56 @@ namespace Azure.ResourceManager.AppService.Models
             string state = default;
             IReadOnlyList<string> hostNames = default;
             string repositorySiteName = default;
-            UsageState? usageState = default;
-            bool? enabled = default;
+            AppServiceUsageState? usageState = default;
+            bool? isEnabled = default;
             bool? siteScopedCertificatesEnabled = default;
             IReadOnlyList<string> enabledHostNames = default;
-            SiteAvailabilityState? availabilityState = default;
+            WebSiteAvailabilityState? availabilityState = default;
             IList<HostNameSslState> hostNameSslStates = default;
-            string serverFarmId = default;
-            bool? reserved = default;
+            string appServicePlanId = default;
+            bool? isReserved = default;
             bool? isXenon = default;
-            bool? hyperV = default;
+            bool? isHyperV = default;
             DateTimeOffset? lastModifiedTimeUtc = default;
             SiteDnsConfig dnsConfiguration = default;
             OutboundVnetRouting outboundVnetRouting = default;
             SiteConfig siteConfig = default;
             FunctionAppConfig functionAppConfig = default;
-            DaprConfig daprConfig = default;
+            AppDaprConfig daprConfig = default;
             AiIntegration aiIntegration = default;
             string workloadProfileName = default;
-            ResourceConfig resourceConfig = default;
+            FunctionAppResourceConfig resourceConfig = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
-            bool? scmSiteAlsoStopped = default;
+            bool? isScmSiteAlsoStopped = default;
             string targetSwapSlot = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
-            bool? clientAffinityEnabled = default;
-            bool? clientAffinityPartitioningEnabled = default;
-            bool? clientAffinityProxyEnabled = default;
-            bool? clientCertEnabled = default;
+            bool? isClientAffinityEnabled = default;
+            bool? isClientAffinityPartitioningEnabled = default;
+            bool? isClientAffinityProxyEnabled = default;
+            bool? isClientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
-            IPMode? ipMode = default;
-            bool? endToEndEncryptionEnabled = default;
-            bool? sshEnabled = default;
-            bool? hostNamesDisabled = default;
+            AppServiceIPMode? ipMode = default;
+            bool? isEndToEndEncryptionEnabled = default;
+            bool? isSshEnabled = default;
+            bool? isHostNameDisabled = default;
             string customDomainVerificationId = default;
             string outboundIpAddresses = default;
             string possibleOutboundIpAddresses = default;
             int? containerSize = default;
             int? dailyMemoryTimeQuota = default;
-            DateTimeOffset? suspendedTill = default;
+            DateTimeOffset? suspendOn = default;
             int? maxNumberOfWorkers = default;
             CloningInfo cloningInfo = default;
             string resourceGroup = default;
             bool? isDefaultContainer = default;
             string defaultHostName = default;
             SlotSwapStatus slotSwapStatus = default;
-            bool? httpsOnly = default;
+            bool? isHttpsOnly = default;
             RedundancyMode? redundancyMode = default;
             string inProgressOperationId = default;
             string publicNetworkAccess = default;
-            bool? storageAccountRequired = default;
+            bool? isStorageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
             AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default;
             string virtualNetworkSubnetId = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    usageState = prop.Value.GetString().ToUsageState();
+                    usageState = prop.Value.GetString().ToAppServiceUsageState();
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("siteScopedCertificatesEnabled"u8))
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    availabilityState = prop.Value.GetString().ToSiteAvailabilityState();
+                    availabilityState = prop.Value.GetString().ToWebSiteAvailabilityState();
                     continue;
                 }
                 if (prop.NameEquals("hostNameSslStates"u8))
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("serverFarmId"u8))
                 {
-                    serverFarmId = prop.Value.GetString();
+                    appServicePlanId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("reserved"u8))
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    reserved = prop.Value.GetBoolean();
+                    isReserved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isXenon"u8))
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    hyperV = prop.Value.GetBoolean();
+                    isHyperV = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTimeUtc"u8))
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    daprConfig = DaprConfig.DeserializeDaprConfig(prop.Value, options);
+                    daprConfig = AppDaprConfig.DeserializeAppDaprConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("aiIntegration"u8))
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    resourceConfig = ResourceConfig.DeserializeResourceConfig(prop.Value, options);
+                    resourceConfig = FunctionAppResourceConfig.DeserializeFunctionAppResourceConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trafficManagerHostNames"u8))
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scmSiteAlsoStopped = prop.Value.GetBoolean();
+                    isScmSiteAlsoStopped = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("targetSwapSlot"u8))
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    clientAffinityEnabled = prop.Value.GetBoolean();
+                    isClientAffinityEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clientAffinityPartitioningEnabled"u8))
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    clientAffinityPartitioningEnabled = prop.Value.GetBoolean();
+                    isClientAffinityPartitioningEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clientAffinityProxyEnabled"u8))
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    clientAffinityProxyEnabled = prop.Value.GetBoolean();
+                    isClientAffinityProxyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clientCertEnabled"u8))
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    clientCertEnabled = prop.Value.GetBoolean();
+                    isClientCertEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("clientCertMode"u8))
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ipMode = prop.Value.GetString().ToIPMode();
+                    ipMode = prop.Value.GetString().ToAppServiceIPMode();
                     continue;
                 }
                 if (prop.NameEquals("endToEndEncryptionEnabled"u8))
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endToEndEncryptionEnabled = prop.Value.GetBoolean();
+                    isEndToEndEncryptionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sshEnabled"u8))
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sshEnabled = prop.Value.GetBoolean();
+                    isSshEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hostNamesDisabled"u8))
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    hostNamesDisabled = prop.Value.GetBoolean();
+                    isHostNameDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("customDomainVerificationId"u8))
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    suspendedTill = prop.Value.GetDateTimeOffset("O");
+                    suspendOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maxNumberOfWorkers"u8))
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    httpsOnly = prop.Value.GetBoolean();
+                    isHttpsOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("redundancyMode"u8))
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    storageAccountRequired = prop.Value.GetBoolean();
+                    isStorageAccountRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keyVaultReferenceIdentity"u8))
@@ -1022,15 +1022,15 @@ namespace Azure.ResourceManager.AppService.Models
                 hostNames ?? new ChangeTrackingList<string>(),
                 repositorySiteName,
                 usageState,
-                enabled,
+                isEnabled,
                 siteScopedCertificatesEnabled,
                 enabledHostNames ?? new ChangeTrackingList<string>(),
                 availabilityState,
                 hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
-                serverFarmId,
-                reserved,
+                appServicePlanId,
+                isReserved,
                 isXenon,
-                hyperV,
+                isHyperV,
                 lastModifiedTimeUtc,
                 dnsConfiguration,
                 outboundVnetRouting,
@@ -1041,36 +1041,36 @@ namespace Azure.ResourceManager.AppService.Models
                 workloadProfileName,
                 resourceConfig,
                 trafficManagerHostNames ?? new ChangeTrackingList<string>(),
-                scmSiteAlsoStopped,
+                isScmSiteAlsoStopped,
                 targetSwapSlot,
                 hostingEnvironmentProfile,
-                clientAffinityEnabled,
-                clientAffinityPartitioningEnabled,
-                clientAffinityProxyEnabled,
-                clientCertEnabled,
+                isClientAffinityEnabled,
+                isClientAffinityPartitioningEnabled,
+                isClientAffinityProxyEnabled,
+                isClientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
                 ipMode,
-                endToEndEncryptionEnabled,
-                sshEnabled,
-                hostNamesDisabled,
+                isEndToEndEncryptionEnabled,
+                isSshEnabled,
+                isHostNameDisabled,
                 customDomainVerificationId,
                 outboundIpAddresses,
                 possibleOutboundIpAddresses,
                 containerSize,
                 dailyMemoryTimeQuota,
-                suspendedTill,
+                suspendOn,
                 maxNumberOfWorkers,
                 cloningInfo,
                 resourceGroup,
                 isDefaultContainer,
                 defaultHostName,
                 slotSwapStatus,
-                httpsOnly,
+                isHttpsOnly,
                 redundancyMode,
                 inProgressOperationId,
                 publicNetworkAccess,
-                storageAccountRequired,
+                isStorageAccountRequired,
                 keyVaultReferenceIdentity,
                 autoGeneratedDomainNameLabelScope,
                 virtualNetworkSubnetId,

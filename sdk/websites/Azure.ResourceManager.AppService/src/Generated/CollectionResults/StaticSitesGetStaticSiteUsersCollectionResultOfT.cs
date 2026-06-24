@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetStaticSiteUsersCollectionResultOfT : Pageable<StaticSiteUserARMResource>
+    internal partial class StaticSitesGetStaticSiteUsersCollectionResultOfT : Pageable<StaticSiteUser>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetStaticSiteUsersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<StaticSiteUserARMResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<StaticSiteUser>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                StaticSiteUserCollection result = StaticSiteUserCollection.FromResponse(response);
-                yield return Page<StaticSiteUserARMResource>.FromValues((IReadOnlyList<StaticSiteUserARMResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                StaticSiteUserListResult result = StaticSiteUserListResult.FromResponse(response);
+                yield return Page<StaticSiteUser>.FromValues((IReadOnlyList<StaticSiteUser>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

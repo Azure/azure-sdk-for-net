@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="onlineCpuCount"></param>
         /// <param name="throttlingData"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, Models.ContainerThrottlingInfo throttlingData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuUsage = cpuUsage;
             SystemCpuUsage = systemCpuUsage;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the ThrottlingData. </summary>
         [WirePath("throttlingData")]
-        public Models.ContainerThrottlingInfo ThrottlingData { get; }
+        public ContainerThrottlingInfo ThrottlingData { get; }
     }
 }

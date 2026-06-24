@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ProcessInfoCollection result = ProcessInfoCollection.FromResponse(response);
+                ProcessInfoListResult result = ProcessInfoListResult.FromResponse(response);
                 yield return Page<ProcessInfoData>.FromValues((IReadOnlyList<ProcessInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                PublicCertificateCollection result = PublicCertificateCollection.FromResponse(response);
+                PublicCertificateListResult result = PublicCertificateListResult.FromResponse(response);
                 yield return Page<PublicCertificateData>.FromValues((IReadOnlyList<PublicCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
         [WirePath("properties.internalLoadBalancerEnabled")]
-        public bool? InternalLoadBalancerEnabled
+        public bool? IsInternalLoadBalancerEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.InternalLoadBalancerEnabled;
+                return Properties is null ? default : Properties.IsInternalLoadBalancerEnabled;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new KubeEnvironmentProperties();
                 }
-                Properties.InternalLoadBalancerEnabled = value;
+                Properties.IsInternalLoadBalancerEnabled = value;
             }
         }
 

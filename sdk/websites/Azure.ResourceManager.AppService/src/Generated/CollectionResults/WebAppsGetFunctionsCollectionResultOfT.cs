@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                FunctionEnvelopeCollection result = FunctionEnvelopeCollection.FromResponse(response);
+                FunctionEnvelopeListResult result = FunctionEnvelopeListResult.FromResponse(response);
                 yield return Page<FunctionEnvelopeData>.FromValues((IReadOnlyList<FunctionEnvelopeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

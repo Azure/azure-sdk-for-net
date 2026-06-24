@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Optional.IsDefined(PromoCodeRequired))
+            if (Optional.IsDefined(IsPromoCodeRequired))
             {
                 writer.WritePropertyName("promoCodeRequired"u8);
-                writer.WriteBooleanValue(PromoCodeRequired.Value);
+                writer.WriteBooleanValue(IsPromoCodeRequired.Value);
             }
             if (Optional.IsDefined(Quota))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
             string sku = default;
             string product = default;
             string vendor = default;
-            bool? promoCodeRequired = default;
+            bool? isPromoCodeRequired = default;
             int? quota = default;
             AppServicePlanRestrictions? webHostingPlanRestrictions = default;
             string privacyPolicyUri = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    promoCodeRequired = prop.Value.GetBoolean();
+                    isPromoCodeRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("quota"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppService.Models
                 sku,
                 product,
                 vendor,
-                promoCodeRequired,
+                isPromoCodeRequired,
                 quota,
                 webHostingPlanRestrictions,
                 privacyPolicyUri,

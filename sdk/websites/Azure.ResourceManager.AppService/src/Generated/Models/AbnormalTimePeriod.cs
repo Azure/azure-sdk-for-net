@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal AbnormalTimePeriod()
         {
             Events = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Solutions = new ChangeTrackingList<Models.DiagnosticSolution>();
+            Solutions = new ChangeTrackingList<DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="events"> List of Possible Cause of downtime. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<Models.DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of proposed solutions. </summary>
         [WirePath("solutions")]
-        public IList<Models.DiagnosticSolution> Solutions { get; }
+        public IList<DiagnosticSolution> Solutions { get; }
     }
 }

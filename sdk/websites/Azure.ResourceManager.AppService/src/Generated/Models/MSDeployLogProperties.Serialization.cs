@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("entries"u8);
                 writer.WriteStartArray();
-                foreach (MSDeployLogEntry item in Entries)
+                foreach (WebAppMSDeployLogEntry item in Entries)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<MSDeployLogEntry> entries = default;
+            IReadOnlyList<WebAppMSDeployLogEntry> entries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<MSDeployLogEntry> array = new List<MSDeployLogEntry>();
+                    List<WebAppMSDeployLogEntry> array = new List<WebAppMSDeployLogEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MSDeployLogEntry.DeserializeMSDeployLogEntry(item, options));
+                        array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item, options));
                     }
                     entries = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MSDeployLogProperties(entries ?? new ChangeTrackingList<MSDeployLogEntry>(), additionalBinaryDataProperties);
+            return new MSDeployLogProperties(entries ?? new ChangeTrackingList<WebAppMSDeployLogEntry>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
             string description = default;
             string actionName = default;
             NotificationLevel? level = default;
-            Channels? channels = default;
+            RecommendationChannel? channels = default;
             IReadOnlyList<string> categoryTags = default;
             bool? isDynamic = default;
             string extensionName = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    channels = prop.Value.GetString().ToChannels();
+                    channels = prop.Value.GetString().ToRecommendationChannel();
                     continue;
                 }
                 if (prop.NameEquals("categoryTags"u8))

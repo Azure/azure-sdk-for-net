@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         internal DataProviderMetadata()
         {
-            PropertyBag = new ChangeTrackingList<Models.DataProviderKeyValuePair>();
+            PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProviderMetadata(string providerName, IReadOnlyList<Models.DataProviderKeyValuePair> propertyBag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Settings for the data provider. </summary>
         [WirePath("propertyBag")]
-        public IReadOnlyList<Models.DataProviderKeyValuePair> PropertyBag { get; }
+        public IReadOnlyList<DataProviderKeyValuePair> PropertyBag { get; }
     }
 }

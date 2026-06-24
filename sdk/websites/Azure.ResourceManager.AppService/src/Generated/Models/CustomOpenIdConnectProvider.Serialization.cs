@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(CustomOpenIdConnectProvider)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             OpenIdConnectRegistration registration = default;
             OpenIdConnectLogin login = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("registration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomOpenIdConnectProvider(enabled, registration, login, additionalBinaryDataProperties);
+            return new CustomOpenIdConnectProvider(isEnabled, registration, login, additionalBinaryDataProperties);
         }
     }
 }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WebAppsGetSiteBackupsSlotAsyncCollectionResultOfT : AsyncPageable<BackupItemData>
+    internal partial class WebAppsGetSiteBackupsSlotAsyncCollectionResultOfT : AsyncPageable<WebAppBackupData>
     {
         private readonly WebApps _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WebAppsGetSiteBackupsSlotAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BackupItemData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<WebAppBackupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                BackupItemCollection result = BackupItemCollection.FromResponse(response);
-                yield return Page<BackupItemData>.FromValues((IReadOnlyList<BackupItemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                WebAppBackupItemListResult result = WebAppBackupItemListResult.FromResponse(response);
+                yield return Page<WebAppBackupData>.FromValues((IReadOnlyList<WebAppBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetRouteProperties(string startAddress, string endAddress, RouteType? routeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VnetRouteProperties(string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartAddress = startAddress;
             EndAddress = endAddress;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </summary>
         [WirePath("routeType")]
-        public RouteType? RouteType { get; set; }
+        public AppServiceVirtualNetworkRouteType? RouteType { get; set; }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SiteCertificateResource"/> and their operations.
-    /// Each <see cref="SiteCertificateResource"/> in the collection will belong to the same instance of <see cref="WebAppResource"/>.
-    /// To get a <see cref="SiteCertificateCollection"/> instance call the GetSiteCertificates method from an instance of <see cref="WebAppResource"/>.
+    /// Each <see cref="SiteCertificateResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteCertificateCollection"/> instance call the GetSiteCertificates method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteCertificateCollection : ArmCollection, IEnumerable<SiteCertificateResource>, IAsyncEnumerable<SiteCertificateResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebAppResource.ResourceType)
+            if (id.ResourceType != WebSiteSlotResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAppResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SiteCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, CertificateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SiteCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteCertificatesRestClient.CreateCreateOrUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, CertificateData.ToRequestContent(data), context);
+                HttpMessage message = _siteCertificatesRestClient.CreateCreateOrUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, AppCertificateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<SiteCertificateResource> operation = new AppServiceArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SiteCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, CertificateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SiteCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _siteCertificatesRestClient.CreateCreateOrUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, CertificateData.ToRequestContent(data), context);
+                HttpMessage message = _siteCertificatesRestClient.CreateCreateOrUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, AppCertificateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<SiteCertificateResource> operation = new AppServiceArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CertificateData, SiteCertificateResource>(new SiteCertificatesGetSlotAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppCertificateData, SiteCertificateResource>(new SiteCertificatesGetSlotAsyncCollectionResultOfT(
                 _siteCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CertificateData, SiteCertificateResource>(new SiteCertificatesGetSlotCollectionResultOfT(
+            return new PageableWrapper<AppCertificateData, SiteCertificateResource>(new SiteCertificatesGetSlotCollectionResultOfT(
                 _siteCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -368,14 +368,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -425,14 +425,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -482,14 +482,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -543,14 +543,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, certificateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

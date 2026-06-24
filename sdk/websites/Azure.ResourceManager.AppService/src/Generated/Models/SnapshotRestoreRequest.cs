@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="SnapshotRestoreRequest"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> SnapshotRestoreRequest resource specific properties. </param>
-        internal SnapshotRestoreRequest(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotRestoreRequestProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal SnapshotRestoreRequest(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotRestoreRequestProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.overwrite")]
-        public bool? Overwrite
+        public bool? CanOverwrite
         {
             get
             {
-                return Properties is null ? default : Properties.Overwrite;
+                return Properties is null ? default : Properties.CanOverwrite;
             }
         }
 

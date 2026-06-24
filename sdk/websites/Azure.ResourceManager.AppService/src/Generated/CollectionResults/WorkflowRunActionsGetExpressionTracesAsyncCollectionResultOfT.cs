@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class WorkflowRunActionsGetExpressionTracesAsyncCollectionResultOfT : AsyncPageable<ExpressionRoot>
+    internal partial class WorkflowRunActionsGetExpressionTracesAsyncCollectionResultOfT : AsyncPageable<WorkflowExpressionRoot>
     {
         private readonly WorkflowRunActions _client;
         private readonly Guid _subscriptionId;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of WorkflowRunActionsGetExpressionTracesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ExpressionRoot>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<WorkflowExpressionRoot>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 ExpressionTraces result = ExpressionTraces.FromResponse(response);
-                yield return Page<ExpressionRoot>.FromValues((IReadOnlyList<ExpressionRoot>)result.Inputs, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<WorkflowExpressionRoot>.FromValues((IReadOnlyList<WorkflowExpressionRoot>)result.Inputs, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

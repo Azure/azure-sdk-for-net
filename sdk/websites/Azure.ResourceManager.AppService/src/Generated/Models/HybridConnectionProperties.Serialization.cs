@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (Optional.IsDefined(RelayArmUri))
+            if (Optional.IsDefined(RelayArmId))
             {
                 writer.WritePropertyName("relayArmUri"u8);
-                writer.WriteStringValue(RelayArmUri);
+                writer.WriteStringValue(RelayArmId);
             }
             if (Optional.IsDefined(Hostname))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string serviceBusNamespace = default;
             string relayName = default;
-            string relayArmUri = default;
+            string relayArmId = default;
             string hostname = default;
             int? port = default;
             string sendKeyName = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("relayArmUri"u8))
                 {
-                    relayArmUri = prop.Value.GetString();
+                    relayArmId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("hostname"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HybridConnectionProperties(
                 serviceBusNamespace,
                 relayName,
-                relayArmUri,
+                relayArmId,
                 hostname,
                 port,
                 sendKeyName,

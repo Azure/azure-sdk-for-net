@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PremierAddOnPatchResource resource specific properties. </summary>
-    public partial class PremierAddOnPatchResourceProperties : IJsonModel<PremierAddOnPatchResourceProperties>
+    internal partial class PremierAddOnPatchResourceProperties : IJsonModel<PremierAddOnPatchResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

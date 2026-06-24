@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.requestTracingEnabled")]
-        public bool? RequestTracingEnabled
+        public bool? IsRequestTracingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RequestTracingEnabled;
+                return Properties is null ? default : Properties.IsRequestTracingEnabled;
             }
             set
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.RequestTracingEnabled = value;
+                Properties.IsRequestTracingEnabled = value;
             }
         }
 
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.remoteDebuggingEnabled")]
-        public bool? RemoteDebuggingEnabled
+        public bool? IsRemoteDebuggingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RemoteDebuggingEnabled;
+                return Properties is null ? default : Properties.IsRemoteDebuggingEnabled;
             }
             set
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.RemoteDebuggingEnabled = value;
+                Properties.IsRemoteDebuggingEnabled = value;
             }
         }
 
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.httpLoggingEnabled")]
-        public bool? HttpLoggingEnabled
+        public bool? IsHttpLoggingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.HttpLoggingEnabled;
+                return Properties is null ? default : Properties.IsHttpLoggingEnabled;
             }
             set
             {
@@ -291,17 +291,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.HttpLoggingEnabled = value;
+                Properties.IsHttpLoggingEnabled = value;
             }
         }
 
         /// <summary> Flag to use Managed Identity Creds for ACR pull. </summary>
         [WirePath("properties.acrUseManagedIdentityCreds")]
-        public bool? AcrUseManagedIdentityCreds
+        public bool? UseManagedIdentityCreds
         {
             get
             {
-                return Properties is null ? default : Properties.AcrUseManagedIdentityCreds;
+                return Properties is null ? default : Properties.UseManagedIdentityCreds;
             }
             set
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.AcrUseManagedIdentityCreds = value;
+                Properties.UseManagedIdentityCreds = value;
             }
         }
 
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.detailedErrorLoggingEnabled")]
-        public bool? DetailedErrorLoggingEnabled
+        public bool? IsDetailedErrorLoggingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.DetailedErrorLoggingEnabled;
+                return Properties is null ? default : Properties.IsDetailedErrorLoggingEnabled;
             }
             set
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.DetailedErrorLoggingEnabled = value;
+                Properties.IsDetailedErrorLoggingEnabled = value;
             }
         }
 
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
         [WirePath("properties.appSettings")]
-        public IList<NameValuePair> AppSettings
+        public IList<AppServiceNameValuePair> AppSettings
         {
             get
             {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Application metadata. This property cannot be retrieved, since it may contain secrets. </summary>
         [WirePath("properties.metadata")]
-        public IList<NameValuePair> Metadata
+        public IList<AppServiceNameValuePair> Metadata
         {
             get
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Handler mappings. </summary>
         [WirePath("properties.handlerMappings")]
-        public IList<HandlerMapping> HandlerMappings
+        public IList<HttpRequestHandlerMapping> HandlerMappings
         {
             get
             {
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.webSocketsEnabled")]
-        public bool? WebSocketsEnabled
+        public bool? IsWebSocketsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.WebSocketsEnabled;
+                return Properties is null ? default : Properties.IsWebSocketsEnabled;
             }
             set
             {
@@ -519,17 +519,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.WebSocketsEnabled = value;
+                Properties.IsWebSocketsEnabled = value;
             }
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.alwaysOn")]
-        public bool? AlwaysOn
+        public bool? IsAlwaysOn
         {
             get
             {
-                return Properties is null ? default : Properties.AlwaysOn;
+                return Properties is null ? default : Properties.IsAlwaysOn;
             }
             set
             {
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.AlwaysOn = value;
+                Properties.IsAlwaysOn = value;
             }
         }
 
@@ -683,11 +683,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.autoHealEnabled")]
-        public bool? AutoHealEnabled
+        public bool? IsAutoHealEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoHealEnabled;
+                return Properties is null ? default : Properties.IsAutoHealEnabled;
             }
             set
             {
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.AutoHealEnabled = value;
+                Properties.IsAutoHealEnabled = value;
             }
         }
 
@@ -755,11 +755,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
         [WirePath("properties.vnetRouteAllEnabled")]
-        public bool? VnetRouteAllEnabled
+        public bool? IsVnetRouteAllEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.VnetRouteAllEnabled;
+                return Properties is null ? default : Properties.IsVnetRouteAllEnabled;
             }
             set
             {
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.VnetRouteAllEnabled = value;
+                Properties.IsVnetRouteAllEnabled = value;
             }
         }
 
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         [WirePath("properties.cors")]
-        public CorsSettings Cors
+        public AppServiceCorsSettings Cors
         {
             get
             {
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Push endpoint settings. </summary>
         [WirePath("properties.push")]
-        public PushSettings Push
+        public WebAppPushSettings Push
         {
             get
             {
@@ -845,11 +845,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.localMySqlEnabled")]
-        public bool? LocalMySqlEnabled
+        public bool? IsLocalMySqlEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.LocalMySqlEnabled;
+                return Properties is null ? default : Properties.IsLocalMySqlEnabled;
             }
             set
             {
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.LocalMySqlEnabled = value;
+                Properties.IsLocalMySqlEnabled = value;
             }
         }
 
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP security restrictions for main. </summary>
         [WirePath("properties.ipSecurityRestrictions")]
-        public IList<IpSecurityRestriction> IpSecurityRestrictions
+        public IList<AppServiceIpSecurityRestriction> IpSecurityRestrictions
         {
             get
             {
@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
         [WirePath("properties.ipSecurityRestrictionsDefaultAction")]
-        public DefaultAction? IpSecurityRestrictionsDefaultAction
+        public SiteDefaultAction? IpSecurityRestrictionsDefaultAction
         {
             get
             {
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP security restrictions for scm. </summary>
         [WirePath("properties.scmIpSecurityRestrictions")]
-        public IList<IpSecurityRestriction> ScmIpSecurityRestrictions
+        public IList<AppServiceIpSecurityRestriction> ScmIpSecurityRestrictions
         {
             get
             {
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Default action for scm access restriction if no rules are matched. </summary>
         [WirePath("properties.scmIpSecurityRestrictionsDefaultAction")]
-        public DefaultAction? ScmIpSecurityRestrictionsDefaultAction
+        public SiteDefaultAction? ScmIpSecurityRestrictionsDefaultAction
         {
             get
             {
@@ -981,11 +981,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP security restrictions for scm to use main. </summary>
         [WirePath("properties.scmIpSecurityRestrictionsUseMain")]
-        public bool? ScmIpSecurityRestrictionsUseMain
+        public bool? AllowIPSecurityRestrictionsForScmToUseMain
         {
             get
             {
-                return Properties is null ? default : Properties.ScmIpSecurityRestrictionsUseMain;
+                return Properties is null ? default : Properties.AllowIPSecurityRestrictionsForScmToUseMain;
             }
             set
             {
@@ -993,17 +993,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.ScmIpSecurityRestrictionsUseMain = value;
+                Properties.AllowIPSecurityRestrictionsForScmToUseMain = value;
             }
         }
 
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
         [WirePath("properties.http20Enabled")]
-        public bool? Http20Enabled
+        public bool? IsHttp20Enabled
         {
             get
             {
-                return Properties is null ? default : Properties.Http20Enabled;
+                return Properties is null ? default : Properties.IsHttp20Enabled;
             }
             set
             {
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.Http20Enabled = value;
+                Properties.IsHttp20Enabled = value;
             }
         }
 
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
         [WirePath("properties.minTlsVersion")]
-        public SupportedTlsVersions? MinTlsVersion
+        public AppServiceSupportedTlsVersion? MinTlsVersion
         {
             get
             {
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The minimum strength TLS cipher suite allowed for an application. </summary>
         [WirePath("properties.minTlsCipherSuite")]
-        public TlsCipherSuites? MinTlsCipherSuite
+        public AppServiceTlsCipherSuite? MinTlsCipherSuite
         {
             get
             {
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
         [WirePath("properties.scmMinTlsVersion")]
-        public SupportedTlsVersions? ScmMinTlsVersion
+        public AppServiceSupportedTlsVersion? ScmMinTlsVersion
         {
             get
             {
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> State of FTP / FTPS service. </summary>
         [WirePath("properties.ftpsState")]
-        public FtpsState? FtpsState
+        public AppServiceFtpsState? FtpsState
         {
             get
             {
@@ -1192,11 +1192,11 @@ namespace Azure.ResourceManager.AppService
         /// runtime to get scale status.
         /// </summary>
         [WirePath("properties.functionsRuntimeScaleMonitoringEnabled")]
-        public bool? FunctionsRuntimeScaleMonitoringEnabled
+        public bool? IsFunctionsRuntimeScaleMonitoringEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.FunctionsRuntimeScaleMonitoringEnabled;
+                return Properties is null ? default : Properties.IsFunctionsRuntimeScaleMonitoringEnabled;
             }
             set
             {
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.FunctionsRuntimeScaleMonitoringEnabled = value;
+                Properties.IsFunctionsRuntimeScaleMonitoringEnabled = value;
             }
         }
 
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> List of Azure Storage Accounts. </summary>
         [WirePath("properties.azureStorageAccounts")]
-        public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts
+        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts
         {
             get
             {
@@ -1295,11 +1295,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The URL of the API definition. </summary>
         [WirePath("properties.apiDefinition.url")]
-        public string ApiDefinitionUri
+        public string ApiDefinitionUriStringValue
         {
             get
             {
-                return Properties is null ? default : Properties.ApiDefinitionUri;
+                return Properties is null ? default : Properties.ApiDefinitionUriStringValue;
             }
             set
             {
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfig();
                 }
-                Properties.ApiDefinitionUri = value;
+                Properties.ApiDefinitionUriStringValue = value;
             }
         }
 

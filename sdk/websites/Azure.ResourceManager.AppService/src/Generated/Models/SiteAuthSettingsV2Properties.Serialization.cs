@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
             AuthPlatform platform = default;
             GlobalValidation globalValidation = default;
-            IdentityProviders identityProviders = default;
-            Login login = default;
-            HttpSettings httpSettings = default;
+            AppServiceIdentityProviders identityProviders = default;
+            WebAppLoginInfo login = default;
+            AppServiceHttpSettings httpSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identityProviders = IdentityProviders.DeserializeIdentityProviders(prop.Value, options);
+                    identityProviders = AppServiceIdentityProviders.DeserializeAppServiceIdentityProviders(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("login"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    login = Login.DeserializeLogin(prop.Value, options);
+                    login = WebAppLoginInfo.DeserializeWebAppLoginInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("httpSettings"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    httpSettings = HttpSettings.DeserializeHttpSettings(prop.Value, options);
+                    httpSettings = AppServiceHttpSettings.DeserializeAppServiceHttpSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

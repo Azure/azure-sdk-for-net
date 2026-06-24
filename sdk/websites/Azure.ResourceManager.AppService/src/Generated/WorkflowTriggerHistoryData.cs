@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the link to input parameters. </summary>
         [WirePath("properties.inputsLink")]
-        public ContentLink InputsLink
+        public WebAppContentLink InputsLink
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the link to output parameters. </summary>
         [WirePath("properties.outputsLink")]
-        public ContentLink OutputsLink
+        public WebAppContentLink OutputsLink
         {
             get
             {
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The value indicating whether trigger was fired. </summary>
         [WirePath("properties.fired")]
-        public bool? Fired
+        public bool? IsFired
         {
             get
             {
-                return Properties is null ? default : Properties.Fired;
+                return Properties is null ? default : Properties.IsFired;
             }
         }
 
         /// <summary> Gets the reference to workflow run. </summary>
         [WirePath("properties.run")]
-        public ResourceReference Run
+        public WorkflowResourceReference Run
         {
             get
             {

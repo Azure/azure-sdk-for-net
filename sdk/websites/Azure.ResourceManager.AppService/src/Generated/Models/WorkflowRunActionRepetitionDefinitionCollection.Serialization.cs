@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowRunActionRepetitionDefinitionCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="WorkflowRunActionRepetitionDefinitionCollection"/> from. </param>
-        internal static WorkflowRunActionRepetitionDefinitionCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkflowRunActionRepetitionDefinitionCollection"/> from. </param>
+        internal static WorkflowRunActionRepetitionDefinitionCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWorkflowRunActionRepetitionDefinitionCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

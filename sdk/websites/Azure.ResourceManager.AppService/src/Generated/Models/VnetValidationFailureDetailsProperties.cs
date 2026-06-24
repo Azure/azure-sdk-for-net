@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="VnetValidationFailureDetailsProperties"/>. </summary>
         internal VnetValidationFailureDetailsProperties()
         {
-            FailedTests = new ChangeTrackingList<VnetValidationTestFailure>();
-            Warnings = new ChangeTrackingList<VnetValidationTestFailure>();
+            FailedTests = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
+            Warnings = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VnetValidationFailureDetailsProperties"/>. </summary>
         /// <param name="message"> Text describing the validation outcome. </param>
-        /// <param name="failed"> A flag describing whether or not validation failed. </param>
+        /// <param name="isFailed"> A flag describing whether or not validation failed. </param>
         /// <param name="failedTests"> A list of tests that failed in the validation. </param>
         /// <param name="warnings"> A list of warnings generated during validation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetValidationFailureDetailsProperties(string message, bool? failed, IList<VnetValidationTestFailure> failedTests, IList<VnetValidationTestFailure> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VnetValidationFailureDetailsProperties(string message, bool? isFailed, IList<VirtualNetworkValidationTestFailure> failedTests, IList<VirtualNetworkValidationTestFailure> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
-            Failed = failed;
+            IsFailed = isFailed;
             FailedTests = failedTests;
             Warnings = warnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> A flag describing whether or not validation failed. </summary>
         [WirePath("failed")]
-        public bool? Failed { get; }
+        public bool? IsFailed { get; }
 
         /// <summary> A list of tests that failed in the validation. </summary>
         [WirePath("failedTests")]
-        public IList<VnetValidationTestFailure> FailedTests { get; } = new ChangeTrackingList<VnetValidationTestFailure>();
+        public IList<VirtualNetworkValidationTestFailure> FailedTests { get; } = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
 
         /// <summary> A list of warnings generated during validation. </summary>
         [WirePath("warnings")]
-        public IList<VnetValidationTestFailure> Warnings { get; } = new ChangeTrackingList<VnetValidationTestFailure>();
+        public IList<VirtualNetworkValidationTestFailure> Warnings { get; } = new ChangeTrackingList<VirtualNetworkValidationTestFailure>();
     }
 }

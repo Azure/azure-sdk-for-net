@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="recurrence"> Gets the workflow trigger recurrence. </param>
         /// <param name="workflow"> Gets the reference to workflow. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerProperties(WorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, WorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, WorkflowTriggerRecurrence recurrence, ResourceReference workflow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerProperties(WorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, WorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, WorkflowTriggerRecurrence recurrence, WorkflowResourceReference workflow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the reference to workflow. </summary>
         [WirePath("workflow")]
-        public ResourceReference Workflow { get; }
+        public WorkflowResourceReference Workflow { get; }
     }
 }

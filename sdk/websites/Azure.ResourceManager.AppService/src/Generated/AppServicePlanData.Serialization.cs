@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             AppServicePlanProperties properties = default;
-            SkuDescription sku = default;
+            AppServiceSkuDescription sku = default;
             ExtendedLocation extendedLocation = default;
             string kind = default;
             Models.ManagedServiceIdentity identity = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(prop.Value, options);
+                    sku = AppServiceSkuDescription.DeserializeAppServiceSkuDescription(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))

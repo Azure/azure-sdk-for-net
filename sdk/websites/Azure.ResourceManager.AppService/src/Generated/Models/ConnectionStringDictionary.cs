@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectionStringDictionary"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Connection strings. </param>
-        internal ConnectionStringDictionary(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ConnStringValueTypePair> properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal ConnectionStringDictionary(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, ConnStringValueTypePair> properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

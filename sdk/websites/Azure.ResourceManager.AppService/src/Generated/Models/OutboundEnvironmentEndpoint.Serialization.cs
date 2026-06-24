@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (Models.AppServiceEndpointDependency item in Endpoints)
+                foreach (AppServiceEndpointDependency item in Endpoints)
                 {
-                    writer.WriteObjectValue<Models.AppServiceEndpointDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string category = default;
-            IReadOnlyList<Models.AppServiceEndpointDependency> endpoints = default;
+            IReadOnlyList<AppServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.AppServiceEndpointDependency> array = new List<Models.AppServiceEndpointDependency>();
+                    List<AppServiceEndpointDependency> array = new List<AppServiceEndpointDependency>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item, options));
+                        array.Add(AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<Models.AppServiceEndpointDependency>(), additionalBinaryDataProperties);
+            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<AppServiceEndpointDependency>(), additionalBinaryDataProperties);
         }
     }
 }

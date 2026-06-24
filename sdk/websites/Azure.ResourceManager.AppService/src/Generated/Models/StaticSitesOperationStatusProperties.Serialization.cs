@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<WorkflowErrorResponse>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             string status = default;
             string startTime = default;
             string endTime = default;
-            StaticSite staticSiteProperties = default;
+            StaticSiteProperties staticSiteProperties = default;
             WorkflowErrorResponse error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    staticSiteProperties = StaticSite.DeserializeStaticSite(prop.Value, options);
+                    staticSiteProperties = StaticSiteProperties.DeserializeStaticSiteProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

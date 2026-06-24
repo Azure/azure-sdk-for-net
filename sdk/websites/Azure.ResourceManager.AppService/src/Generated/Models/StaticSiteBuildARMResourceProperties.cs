@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildARMResourceProperties"/>. </summary>
         internal StaticSiteBuildARMResourceProperties()
         {
-            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
-            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackend>();
-            DatabaseConnections = new ChangeTrackingList<DatabaseConnectionOverview>();
+            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            LinkedBackends = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
+            DatabaseConnections = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBuildARMResourceProperties"/>. </summary>
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="sourceBranch"> The source branch. </param>
         /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
         /// <param name="hostname"> The hostname for a static site build. </param>
-        /// <param name="createdTimeUtc"> When this build was created. </param>
+        /// <param name="createdOn"> When this build was created. </param>
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
         /// <param name="linkedBackends"> Backends linked to the static side build. </param>
         /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBuildARMResourceProperties(string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackend> linkedBackends, IReadOnlyList<DatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteBuildARMResourceProperties(string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends, IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
             PullRequestTitle = pullRequestTitle;
             Hostname = hostname;
-            CreatedTimeUtc = createdTimeUtc;
+            CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
             UserProvidedFunctionApps = userProvidedFunctionApps;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> When this build was created. </summary>
         [WirePath("createdTimeUtc")]
-        public DateTimeOffset? CreatedTimeUtc { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> When this build was updated. </summary>
         [WirePath("lastUpdatedOn")]
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The status of the static site build. </summary>
         [WirePath("status")]
-        public BuildStatus? Status { get; }
+        public StaticSiteBuildStatus? Status { get; }
 
         /// <summary> User provided function apps registered with the static site build. </summary>
         [WirePath("userProvidedFunctionApps")]
-        public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; } = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
+        public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; } = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
 
         /// <summary> Backends linked to the static side build. </summary>
         [WirePath("linkedBackends")]
-        public IReadOnlyList<StaticSiteLinkedBackend> LinkedBackends { get; } = new ChangeTrackingList<StaticSiteLinkedBackend>();
+        public IReadOnlyList<StaticSiteLinkedBackendInfo> LinkedBackends { get; } = new ChangeTrackingList<StaticSiteLinkedBackendInfo>();
 
         /// <summary> Database connections for the static site build. </summary>
         [WirePath("databaseConnections")]
-        public IReadOnlyList<DatabaseConnectionOverview> DatabaseConnections { get; } = new ChangeTrackingList<DatabaseConnectionOverview>();
+        public IReadOnlyList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get; } = new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>();
     }
 }

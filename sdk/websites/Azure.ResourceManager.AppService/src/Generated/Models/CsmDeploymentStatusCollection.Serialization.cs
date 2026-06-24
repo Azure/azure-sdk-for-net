@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CsmDeploymentStatusCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="CsmDeploymentStatusCollection"/> from. </param>
-        internal static CsmDeploymentStatusCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CsmDeploymentStatusCollection"/> from. </param>
+        internal static CsmDeploymentStatusCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCsmDeploymentStatusCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

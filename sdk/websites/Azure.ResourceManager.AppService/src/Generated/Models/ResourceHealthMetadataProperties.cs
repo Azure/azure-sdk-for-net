@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthMetadataProperties"/>. </summary>
         /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
-        /// <param name="signalAvailability"> Is there a health signal for the resource. </param>
+        /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthMetadataProperties(string category, bool? signalAvailability, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthMetadataProperties(string category, bool? isSignalAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
-            SignalAvailability = signalAvailability;
+            IsSignalAvailable = isSignalAvailable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Is there a health signal for the resource. </summary>
         [WirePath("signalAvailability")]
-        public bool? SignalAvailability { get; }
+        public bool? IsSignalAvailable { get; }
     }
 }

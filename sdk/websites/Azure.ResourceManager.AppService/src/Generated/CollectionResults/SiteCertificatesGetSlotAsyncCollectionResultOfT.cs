@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class SiteCertificatesGetSlotAsyncCollectionResultOfT : AsyncPageable<CertificateData>
+    internal partial class SiteCertificatesGetSlotAsyncCollectionResultOfT : AsyncPageable<AppCertificateData>
     {
         private readonly SiteCertificates _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SiteCertificatesGetSlotAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CertificateData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppCertificateData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                Models.CertificateCollection result = Models.CertificateCollection.FromResponse(response);
-                yield return Page<CertificateData>.FromValues((IReadOnlyList<CertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppCertificateListResult result = AppCertificateListResult.FromResponse(response);
+                yield return Page<AppCertificateData>.FromValues((IReadOnlyList<AppCertificateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

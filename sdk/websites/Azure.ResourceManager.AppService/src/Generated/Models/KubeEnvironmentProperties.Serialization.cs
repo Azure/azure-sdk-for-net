@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (Optional.IsDefined(InternalLoadBalancerEnabled))
+            if (Optional.IsDefined(IsInternalLoadBalancerEnabled))
             {
                 writer.WritePropertyName("internalLoadBalancerEnabled"u8);
-                writer.WriteBooleanValue(InternalLoadBalancerEnabled.Value);
+                writer.WriteBooleanValue(IsInternalLoadBalancerEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             KubeEnvironmentProvisioningState? provisioningState = default;
             string deploymentErrors = default;
-            bool? internalLoadBalancerEnabled = default;
+            bool? isInternalLoadBalancerEnabled = default;
             string defaultDomain = default;
             string staticIp = default;
             string environmentType = default;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    internalLoadBalancerEnabled = prop.Value.GetBoolean();
+                    isInternalLoadBalancerEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("defaultDomain"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentProperties(
                 provisioningState,
                 deploymentErrors,
-                internalLoadBalancerEnabled,
+                isInternalLoadBalancerEnabled,
                 defaultDomain,
                 staticIp,
                 environmentType,

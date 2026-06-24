@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
         internal DetectorInfo()
         {
-            SupportTopicList = new ChangeTrackingList<Models.DetectorSupportTopic>();
+            SupportTopicList = new ChangeTrackingList<DetectorSupportTopic>();
             AnalysisType = new ChangeTrackingList<string>();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="type"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<Models.DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? @type, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? @type, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
         [WirePath("supportTopicList")]
-        public IReadOnlyList<Models.DetectorSupportTopic> SupportTopicList { get; }
+        public IReadOnlyList<DetectorSupportTopic> SupportTopicList { get; }
 
         /// <summary> Analysis Types for which this detector should apply to. </summary>
         [WirePath("analysisType")]

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string id = default;
-            string name = default;
+            string stackName = default;
             string kind = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    stackName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new MigrateMySqlRequest(
                 id,
-                name,
+                stackName,
                 kind,
                 @type,
                 additionalBinaryDataProperties,

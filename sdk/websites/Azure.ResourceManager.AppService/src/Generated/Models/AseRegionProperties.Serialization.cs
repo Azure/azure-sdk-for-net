@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Standard))
+            if (options.Format != "W" && Optional.IsDefined(IsStandard))
             {
                 writer.WritePropertyName("standard"u8);
-                writer.WriteBooleanValue(Standard.Value);
+                writer.WriteBooleanValue(IsStandard.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DedicatedHost))
+            if (options.Format != "W" && Optional.IsDefined(IsDedicatedHostEnabled))
             {
                 writer.WritePropertyName("dedicatedHost"u8);
-                writer.WriteBooleanValue(DedicatedHost.Value);
+                writer.WriteBooleanValue(IsDedicatedHostEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundantEnabled))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundantEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AvailableSku))
             {
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string displayName = default;
-            bool? standard = default;
-            bool? dedicatedHost = default;
-            bool? zoneRedundant = default;
+            bool? isStandard = default;
+            bool? isDedicatedHostEnabled = default;
+            bool? isZoneRedundantEnabled = default;
             IList<string> availableSku = default;
             IList<string> availableOS = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    standard = prop.Value.GetBoolean();
+                    isStandard = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("dedicatedHost"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    dedicatedHost = prop.Value.GetBoolean();
+                    isDedicatedHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("zoneRedundant"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundantEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("availableSku"u8))
@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new AseRegionProperties(
                 displayName,
-                standard,
-                dedicatedHost,
-                zoneRedundant,
+                isStandard,
+                isDedicatedHostEnabled,
+                isZoneRedundantEnabled,
                 availableSku ?? new ChangeTrackingList<string>(),
                 availableOS ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

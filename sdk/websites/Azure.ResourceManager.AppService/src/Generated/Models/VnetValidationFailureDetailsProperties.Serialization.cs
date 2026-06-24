@@ -79,16 +79,16 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Failed))
+            if (Optional.IsDefined(IsFailed))
             {
                 writer.WritePropertyName("failed"u8);
-                writer.WriteBooleanValue(Failed.Value);
+                writer.WriteBooleanValue(IsFailed.Value);
             }
             if (Optional.IsCollectionDefined(FailedTests))
             {
                 writer.WritePropertyName("failedTests"u8);
                 writer.WriteStartArray();
-                foreach (VnetValidationTestFailure item in FailedTests)
+                foreach (VirtualNetworkValidationTestFailure item in FailedTests)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
-                foreach (VnetValidationTestFailure item in Warnings)
+                foreach (VirtualNetworkValidationTestFailure item in Warnings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string message = default;
-            bool? failed = default;
-            IList<VnetValidationTestFailure> failedTests = default;
-            IList<VnetValidationTestFailure> warnings = default;
+            bool? isFailed = default;
+            IList<VirtualNetworkValidationTestFailure> failedTests = default;
+            IList<VirtualNetworkValidationTestFailure> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    failed = prop.Value.GetBoolean();
+                    isFailed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("failedTests"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<VnetValidationTestFailure> array = new List<VnetValidationTestFailure>();
+                    List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VnetValidationTestFailure.DeserializeVnetValidationTestFailure(item, options));
+                        array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                     }
                     failedTests = array;
                     continue;
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<VnetValidationTestFailure> array = new List<VnetValidationTestFailure>();
+                    List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VnetValidationTestFailure.DeserializeVnetValidationTestFailure(item, options));
+                        array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                     }
                     warnings = array;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VnetValidationFailureDetailsProperties(message, failed, failedTests ?? new ChangeTrackingList<VnetValidationTestFailure>(), warnings ?? new ChangeTrackingList<VnetValidationTestFailure>(), additionalBinaryDataProperties);
+            return new VnetValidationFailureDetailsProperties(message, isFailed, failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(), warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(), additionalBinaryDataProperties);
         }
     }
 }

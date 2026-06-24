@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="VirtualApplication"/>. </summary>
         /// <param name="virtualPath"> Virtual path. </param>
         /// <param name="physicalPath"> Physical path. </param>
-        /// <param name="preloadEnabled"> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isPreloadEnabled"> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="virtualDirectories"> Virtual directories for virtual application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplication(string virtualPath, string physicalPath, bool? preloadEnabled, IList<VirtualDirectory> virtualDirectories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplication(string virtualPath, string physicalPath, bool? isPreloadEnabled, IList<VirtualDirectory> virtualDirectories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualPath = virtualPath;
             PhysicalPath = physicalPath;
-            PreloadEnabled = preloadEnabled;
+            IsPreloadEnabled = isPreloadEnabled;
             VirtualDirectories = virtualDirectories;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("preloadEnabled")]
-        public bool? PreloadEnabled { get; set; }
+        public bool? IsPreloadEnabled { get; set; }
 
         /// <summary> Virtual directories for virtual application. </summary>
         [WirePath("virtualDirectories")]

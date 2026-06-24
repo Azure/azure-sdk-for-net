@@ -74,30 +74,30 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(OutboundVnetRouting)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AllTraffic))
+            if (Optional.IsDefined(IsAllTrafficEnabled))
             {
                 writer.WritePropertyName("allTraffic"u8);
-                writer.WriteBooleanValue(AllTraffic.Value);
+                writer.WriteBooleanValue(IsAllTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ApplicationTraffic))
+            if (Optional.IsDefined(IsApplicationTrafficEnabled))
             {
                 writer.WritePropertyName("applicationTraffic"u8);
-                writer.WriteBooleanValue(ApplicationTraffic.Value);
+                writer.WriteBooleanValue(IsApplicationTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ContentShareTraffic))
+            if (Optional.IsDefined(IsContentShareTrafficEnabled))
             {
                 writer.WritePropertyName("contentShareTraffic"u8);
-                writer.WriteBooleanValue(ContentShareTraffic.Value);
+                writer.WriteBooleanValue(IsContentShareTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(ImagePullTraffic))
+            if (Optional.IsDefined(IsImagePullTrafficEnabled))
             {
                 writer.WritePropertyName("imagePullTraffic"u8);
-                writer.WriteBooleanValue(ImagePullTraffic.Value);
+                writer.WriteBooleanValue(IsImagePullTrafficEnabled.Value);
             }
-            if (Optional.IsDefined(BackupRestoreTraffic))
+            if (Optional.IsDefined(IsBackupRestoreTrafficEnabled))
             {
                 writer.WritePropertyName("backupRestoreTraffic"u8);
-                writer.WriteBooleanValue(BackupRestoreTraffic.Value);
+                writer.WriteBooleanValue(IsBackupRestoreTrafficEnabled.Value);
             }
             if (Optional.IsDefined(ManagedIdentityTraffic))
             {
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? allTraffic = default;
-            bool? applicationTraffic = default;
-            bool? contentShareTraffic = default;
-            bool? imagePullTraffic = default;
-            bool? backupRestoreTraffic = default;
+            bool? isAllTrafficEnabled = default;
+            bool? isApplicationTrafficEnabled = default;
+            bool? isContentShareTrafficEnabled = default;
+            bool? isImagePullTrafficEnabled = default;
+            bool? isBackupRestoreTrafficEnabled = default;
             bool? managedIdentityTraffic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allTraffic = prop.Value.GetBoolean();
+                    isAllTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("applicationTraffic"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    applicationTraffic = prop.Value.GetBoolean();
+                    isApplicationTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("contentShareTraffic"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    contentShareTraffic = prop.Value.GetBoolean();
+                    isContentShareTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("imagePullTraffic"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    imagePullTraffic = prop.Value.GetBoolean();
+                    isImagePullTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("backupRestoreTraffic"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    backupRestoreTraffic = prop.Value.GetBoolean();
+                    isBackupRestoreTrafficEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("managedIdentityTraffic"u8))
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new OutboundVnetRouting(
-                allTraffic,
-                applicationTraffic,
-                contentShareTraffic,
-                imagePullTraffic,
-                backupRestoreTraffic,
+                isAllTrafficEnabled,
+                isApplicationTrafficEnabled,
+                isContentShareTrafficEnabled,
+                isImagePullTrafficEnabled,
+                isBackupRestoreTrafficEnabled,
                 managedIdentityTraffic,
                 additionalBinaryDataProperties);
         }

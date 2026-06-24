@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
             }
-            if (Optional.IsDefined(SwiftSupported))
+            if (Optional.IsDefined(IsSwiftSupported))
             {
                 writer.WritePropertyName("swiftSupported"u8);
-                writer.WriteBooleanValue(SwiftSupported.Value);
+                writer.WriteBooleanValue(IsSwiftSupported.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string subnetResourceId = default;
-            bool? swiftSupported = default;
+            bool? isSwiftSupported = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    swiftSupported = prop.Value.GetBoolean();
+                    isSwiftSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SwiftVirtualNetworkProperties(subnetResourceId, swiftSupported, additionalBinaryDataProperties);
+            return new SwiftVirtualNetworkProperties(subnetResourceId, isSwiftSupported, additionalBinaryDataProperties);
         }
     }
 }

@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Property to enable and disable FTP on ASEV3. </summary>
         [WirePath("properties.ftpEnabled")]
-        public bool? FtpEnabled
+        public bool? IsFtpEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.FtpEnabled;
+                return Properties is null ? default : Properties.IsFtpEnabled;
             }
             set
             {
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                Properties.FtpEnabled = value;
+                Properties.IsFtpEnabled = value;
             }
         }
 
         /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
         [WirePath("properties.remoteDebugEnabled")]
-        public bool? RemoteDebugEnabled
+        public bool? IsRemoteDebugEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.RemoteDebugEnabled;
+                return Properties is null ? default : Properties.IsRemoteDebugEnabled;
             }
             set
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AseV3NetworkingConfigurationProperties();
                 }
-                Properties.RemoteDebugEnabled = value;
+                Properties.IsRemoteDebugEnabled = value;
             }
         }
 

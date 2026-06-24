@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="SiteLogsConfigProperties"/>. </summary>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
-        /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
-        /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
+        /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
+        /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteLogsConfigProperties(ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteLogsConfigProperties(ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
-            FailedRequestsTracing = failedRequestsTracing;
-            DetailedErrorMessages = detailedErrorMessages;
+            IsFailedRequestsTracing = isFailedRequestsTracing;
+            IsDetailedErrorMessages = isDetailedErrorMessages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> HTTP logs configuration. </summary>
         [WirePath("httpLogs")]
-        public HttpLogsConfig HttpLogs { get; set; }
+        public AppServiceHttpLogsConfig HttpLogs { get; set; }
 
         /// <summary> Failed requests tracing configuration. </summary>
         [WirePath("failedRequestsTracing")]
-        internal EnabledConfig FailedRequestsTracing { get; set; }
+        internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
 
         /// <summary> Detailed error messages configuration. </summary>
         [WirePath("detailedErrorMessages")]
-        internal EnabledConfig DetailedErrorMessages { get; set; }
+        internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         [WirePath("failedRequestsTracing.enabled")]
-        public bool? FailedRequestsTracingEnabled
+        public bool? IsFailedRequestsTracingEnabled
         {
             get
             {
-                return FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
+                return IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
             }
             set
             {
-                if (FailedRequestsTracing is null)
+                if (IsFailedRequestsTracing is null)
                 {
-                    FailedRequestsTracing = new EnabledConfig();
+                    IsFailedRequestsTracing = new WebAppEnabledConfig();
                 }
-                FailedRequestsTracing.Enabled = value;
+                IsFailedRequestsTracing.Enabled = value;
             }
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         [WirePath("detailedErrorMessages.enabled")]
-        public bool? DetailedErrorMessagesEnabled
+        public bool? IsDetailedErrorMessagesEnabled
         {
             get
             {
-                return DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
+                return IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
             }
             set
             {
-                if (DetailedErrorMessages is null)
+                if (IsDetailedErrorMessages is null)
                 {
-                    DetailedErrorMessages = new EnabledConfig();
+                    IsDetailedErrorMessages = new WebAppEnabledConfig();
                 }
-                DetailedErrorMessages.Enabled = value;
+                IsDetailedErrorMessages.Enabled = value;
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
         /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFeaturesProperties(string virtualNetworkName, VnetInfo virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFeaturesProperties(string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The Virtual Network summary view. </summary>
         [WirePath("virtualNetworkConnection")]
-        public VnetInfo VirtualNetworkConnection { get; }
+        public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
 
         /// <summary> The Hybrid Connections summary view. </summary>
         [WirePath("hybridConnections")]

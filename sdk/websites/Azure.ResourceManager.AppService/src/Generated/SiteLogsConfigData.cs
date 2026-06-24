@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> HTTP logs configuration. </summary>
         [WirePath("properties.httpLogs")]
-        public HttpLogsConfig HttpLogs
+        public AppServiceHttpLogsConfig HttpLogs
         {
             get
             {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         [WirePath("properties.failedRequestsTracing.enabled")]
-        public bool? FailedRequestsTracingEnabled
+        public bool? IsFailedRequestsTracingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.FailedRequestsTracingEnabled;
+                return Properties is null ? default : Properties.IsFailedRequestsTracingEnabled;
             }
             set
             {
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteLogsConfigProperties();
                 }
-                Properties.FailedRequestsTracingEnabled = value;
+                Properties.IsFailedRequestsTracingEnabled = value;
             }
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         [WirePath("properties.detailedErrorMessages.enabled")]
-        public bool? DetailedErrorMessagesEnabled
+        public bool? IsDetailedErrorMessagesEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.DetailedErrorMessagesEnabled;
+                return Properties is null ? default : Properties.IsDetailedErrorMessagesEnabled;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteLogsConfigProperties();
                 }
-                Properties.DetailedErrorMessagesEnabled = value;
+                Properties.IsDetailedErrorMessagesEnabled = value;
             }
         }
     }

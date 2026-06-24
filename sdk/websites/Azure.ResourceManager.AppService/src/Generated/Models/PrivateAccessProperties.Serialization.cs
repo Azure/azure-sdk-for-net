@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(PrivateAccessProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(VirtualNetworks))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isEnabled = default;
             IList<PrivateAccessVirtualNetwork> virtualNetworks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworks"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateAccessProperties(enabled, virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(), additionalBinaryDataProperties);
+            return new PrivateAccessProperties(isEnabled, virtualNetworks ?? new ChangeTrackingList<PrivateAccessVirtualNetwork>(), additionalBinaryDataProperties);
         }
     }
 }

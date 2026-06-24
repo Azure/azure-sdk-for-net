@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsProperties"/>. </summary>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
         /// </param>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
-        /// <param name="tokenStoreEnabled">
+        /// <param name="isTokenStoreEnabled">
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret of the relying party application. </param>
-        /// <param name="clientSecretCertificateThumbprint">
+        /// <param name="clientSecretCertificateThumbprintString">
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </param>
@@ -185,19 +185,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteAuthSettingsProperties(bool? enabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? tokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprint, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteAuthSettingsProperties(bool? isEnabled, string runtimeVersion, UnauthenticatedClientAction? unauthenticatedClientAction, bool? isTokenStoreEnabled, IList<string> allowedExternalRedirectUrls, BuiltInAuthenticationProvider? defaultProvider, double? tokenRefreshExtensionHours, string clientId, string clientSecret, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string issuer, bool? validateIssuer, IList<string> allowedAudiences, IList<string> additionalLoginParams, string aadClaimsAuthorization, string googleClientId, string googleClientSecret, string googleClientSecretSettingName, IList<string> googleOAuthScopes, string facebookAppId, string facebookAppSecret, string facebookAppSecretSettingName, IList<string> facebookOAuthScopes, string gitHubClientId, string gitHubClientSecret, string gitHubClientSecretSettingName, IList<string> gitHubOAuthScopes, string twitterConsumerKey, string twitterConsumerSecret, string twitterConsumerSecretSettingName, string microsoftAccountClientId, string microsoftAccountClientSecret, string microsoftAccountClientSecretSettingName, IList<string> microsoftAccountOAuthScopes, string isAuthFromFile, string authFilePath, string configVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             UnauthenticatedClientAction = unauthenticatedClientAction;
-            TokenStoreEnabled = tokenStoreEnabled;
+            IsTokenStoreEnabled = isTokenStoreEnabled;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             DefaultProvider = defaultProvider;
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             ClientId = clientId;
             ClientSecret = clientSecret;
             ClientSecretSettingName = clientSecretSettingName;
-            ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
+            ClientSecretCertificateThumbprintString = clientSecretCertificateThumbprintString;
             Issuer = issuer;
             ValidateIssuer = validateIssuer;
             AllowedAudiences = allowedAudiences;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
         [WirePath("tokenStoreEnabled")]
-        public bool? TokenStoreEnabled { get; set; }
+        public bool? IsTokenStoreEnabled { get; set; }
 
         /// <summary>
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// a replacement for the Client Secret. It is also optional.
         /// </summary>
         [WirePath("clientSecretCertificateThumbprint")]
-        public string ClientSecretCertificateThumbprint { get; set; }
+        public string ClientSecretCertificateThumbprintString { get; set; }
 
         /// <summary>
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.

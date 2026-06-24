@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.AppService.Models
 
             Image = image;
             IsMain = isMain;
-            VolumeMounts = new ChangeTrackingList<VolumeMount>();
-            EnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<SiteContainerVolumeMount>();
+            EnvironmentVariables = new ChangeTrackingList<WebAppEnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteContainerProperties"/>. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="environmentVariables"> List of environment variables. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerProperties(string image, string targetPort, bool isMain, string startUpCommand, AuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<VolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<EnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteContainerProperties(string image, string targetPort, bool isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<WebAppEnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
             TargetPort = targetPort;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Auth Type. </summary>
         [WirePath("authType")]
-        public AuthType? AuthType { get; set; }
+        public SiteContainerAuthType? AuthType { get; set; }
 
         /// <summary> User Name. </summary>
         [WirePath("userName")]
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of volume mounts. </summary>
         [WirePath("volumeMounts")]
-        public IList<VolumeMount> VolumeMounts { get; } = new ChangeTrackingList<VolumeMount>();
+        public IList<SiteContainerVolumeMount> VolumeMounts { get; } = new ChangeTrackingList<SiteContainerVolumeMount>();
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("inheritAppSettingsAndConnectionStrings")]
@@ -114,6 +114,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of environment variables. </summary>
         [WirePath("environmentVariables")]
-        public IList<EnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<EnvironmentVariable>();
+        public IList<WebAppEnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<WebAppEnvironmentVariable>();
     }
 }

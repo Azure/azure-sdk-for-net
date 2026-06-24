@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
             Uri setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
             bool? skipAppData = default;
-            bool? appOffline = default;
+            bool? isAppOffline = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<MSDeployCore> addOnPackages = default;
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appOffline = prop.Value.GetBoolean();
+                    isAppOffline = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("addOnPackages"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                 setParametersXmlFileUri,
                 setParameters ?? new ChangeTrackingDictionary<string, string>(),
                 skipAppData,
-                appOffline,
+                isAppOffline,
                 additionalBinaryDataProperties,
                 addOnPackages ?? new ChangeTrackingList<MSDeployCore>());
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionName"> The name for the function. </param>
         /// <param name="triggerType"> The trigger type of the function. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteFunctionOverviewARMResourceProperties(string functionName, TriggerTypes? triggerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteFunctionOverviewARMResourceProperties(string functionName, FunctionTriggerType? triggerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FunctionName = functionName;
             TriggerType = triggerType;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The trigger type of the function. </summary>
         [WirePath("triggerType")]
-        public TriggerTypes? TriggerType { get; }
+        public FunctionTriggerType? TriggerType { get; }
     }
 }

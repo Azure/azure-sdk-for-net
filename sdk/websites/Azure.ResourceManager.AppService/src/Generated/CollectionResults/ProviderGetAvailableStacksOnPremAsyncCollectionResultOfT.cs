@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ApplicationStackCollection result = ApplicationStackCollection.FromResponse(response);
+                ApplicationStackListResult result = ApplicationStackListResult.FromResponse(response);
                 yield return Page<ApplicationStackResource>.FromValues((IReadOnlyList<ApplicationStackResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                PremierAddOnOfferCollection result = PremierAddOnOfferCollection.FromResponse(response);
+                PremierAddOnOfferListResult result = PremierAddOnOfferListResult.FromResponse(response);
                 yield return Page<PremierAddOnOffer>.FromValues((IReadOnlyList<PremierAddOnOffer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                PrivateEndpointConnectionCollection result = PrivateEndpointConnectionCollection.FromResponse(response);
+                RemotePrivateEndpointConnectionListResult result = RemotePrivateEndpointConnectionListResult.FromResponse(response);
                 yield return Page<RemotePrivateEndpointConnectionARMResourceData>.FromValues((IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            LogLevel? level = default;
+            WebAppLogLevel? level = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    level = prop.Value.GetString().ToLogLevel();
+                    level = prop.Value.GetString().ToWebAppLogLevel();
                     continue;
                 }
                 if (options.Format != "W")

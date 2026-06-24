@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A static site zip deployment. </summary>
-    internal partial class StaticSiteZipDeployment : IJsonModel<StaticSiteZipDeployment>
+    /// <summary> Static site zip deployment ARM resource. </summary>
+    public partial class StaticSiteZipDeployment : ProxyOnlyResource, IJsonModel<StaticSiteZipDeployment>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticSiteZipDeployment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProxyOnlyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,10 +52,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteZipDeployment IPersistableModel<StaticSiteZipDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StaticSiteZipDeployment IPersistableModel<StaticSiteZipDeployment>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticSiteZipDeployment)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteZipDeployment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="staticSiteZipDeployment"> The <see cref="StaticSiteZipDeployment"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(StaticSiteZipDeployment staticSiteZipDeployment)
+        {
+            if (staticSiteZipDeployment == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(staticSiteZipDeployment, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -67,62 +78,28 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AppZipUri))
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("appZipUrl"u8);
-                writer.WriteStringValue(AppZipUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(ApiZipUri))
-            {
-                writer.WritePropertyName("apiZipUrl"u8);
-                writer.WriteStringValue(ApiZipUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(DeploymentTitle))
-            {
-                writer.WritePropertyName("deploymentTitle"u8);
-                writer.WriteStringValue(DeploymentTitle);
-            }
-            if (Optional.IsDefined(Provider))
-            {
-                writer.WritePropertyName("provider"u8);
-                writer.WriteStringValue(Provider);
-            }
-            if (Optional.IsDefined(FunctionLanguage))
-            {
-                writer.WritePropertyName("functionLanguage"u8);
-                writer.WriteStringValue(FunctionLanguage);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteZipDeployment IJsonModel<StaticSiteZipDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StaticSiteZipDeployment IJsonModel<StaticSiteZipDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticSiteZipDeployment)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticSiteZipDeployment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProxyOnlyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -141,45 +118,41 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri appZipUri = default;
-            Uri apiZipUri = default;
-            string deploymentTitle = default;
-            string provider = default;
-            string functionLanguage = default;
+            string id = default;
+            string stackName = default;
+            string kind = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StaticSiteZipDeploymentProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("appZipUrl"u8))
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    stackName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("apiZipUrl"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    apiZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("deploymentTitle"u8))
-                {
-                    deploymentTitle = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("provider"u8))
-                {
-                    provider = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("functionLanguage"u8))
-                {
-                    functionLanguage = prop.Value.GetString();
+                    properties = StaticSiteZipDeploymentProperties.DeserializeStaticSiteZipDeploymentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,12 +161,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new StaticSiteZipDeployment(
-                appZipUri,
-                apiZipUri,
-                deploymentTitle,
-                provider,
-                functionLanguage,
-                additionalBinaryDataProperties);
+                id,
+                stackName,
+                kind,
+                @type,
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

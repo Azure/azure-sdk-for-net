@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="hostNames"> Hostnames associated with the app. </param>
         /// <param name="repositorySiteName"> Name of the repository site. </param>
         /// <param name="usageState"> State indicating whether the app has exceeded its quota usage. Read-only. </param>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="siteScopedCertificatesEnabled"> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
-        /// <param name="reserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
-        /// <param name="hyperV"> Hyper-V sandbox. </param>
-        /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="isHyperV"> Hyper-V sandbox. </param>
+        /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="aiIntegration"> AI integration configuration for the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
-        /// <param name="scmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
         /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
-        /// <param name="clientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
-        /// <param name="clientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="clientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
         /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="hostNamesDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
+        /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
         /// <param name="possibleOutboundIpAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
         /// <param name="containerSize"> Size of the function container. </param>
         /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
-        /// <param name="suspendedTill"> App suspended till in case memory-time quota is exceeded. </param>
+        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
         /// This only applies to Functions container.
@@ -75,66 +75,66 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDefaultContainer"> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="defaultHostName"> Default hostname of the app. Read-only. </param>
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
-        /// <param name="httpsOnly">
+        /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
         /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
-        /// <param name="storageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SitePatchResourceProperties(string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, bool? siteScopedCertificatesEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, SiteConfig siteConfig, AiIntegration aiIntegration, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientAffinityProxyEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, string inProgressOperationId, string publicNetworkAccess, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SitePatchResourceProperties(string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, bool? siteScopedCertificatesEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteDnsConfig dnsConfiguration, SiteConfig siteConfig, AiIntegration aiIntegration, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientAffinityProxyEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, string inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             HostNames = hostNames;
             RepositorySiteName = repositorySiteName;
             UsageState = usageState;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SiteScopedCertificatesEnabled = siteScopedCertificatesEnabled;
             EnabledHostNames = enabledHostNames;
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
             ServerFarmId = serverFarmId;
-            Reserved = reserved;
+            IsReserved = isReserved;
             IsXenon = isXenon;
-            HyperV = hyperV;
-            LastModifiedTimeUtc = lastModifiedTimeUtc;
+            IsHyperV = isHyperV;
+            LastModifiedOn = lastModifiedOn;
             DnsConfiguration = dnsConfiguration;
             SiteConfig = siteConfig;
             AiIntegration = aiIntegration;
             TrafficManagerHostNames = trafficManagerHostNames;
-            ScmSiteAlsoStopped = scmSiteAlsoStopped;
+            IsScmSiteAlsoStopped = isScmSiteAlsoStopped;
             TargetSwapSlot = targetSwapSlot;
             HostingEnvironmentProfile = hostingEnvironmentProfile;
-            ClientAffinityEnabled = clientAffinityEnabled;
-            ClientAffinityProxyEnabled = clientAffinityProxyEnabled;
-            ClientCertEnabled = clientCertEnabled;
+            IsClientAffinityEnabled = isClientAffinityEnabled;
+            IsClientAffinityProxyEnabled = isClientAffinityProxyEnabled;
+            IsClientCertEnabled = isClientCertEnabled;
             ClientCertMode = clientCertMode;
             ClientCertExclusionPaths = clientCertExclusionPaths;
-            HostNamesDisabled = hostNamesDisabled;
+            IsHostNameDisabled = isHostNameDisabled;
             CustomDomainVerificationId = customDomainVerificationId;
             OutboundIpAddresses = outboundIpAddresses;
             PossibleOutboundIpAddresses = possibleOutboundIpAddresses;
             ContainerSize = containerSize;
             DailyMemoryTimeQuota = dailyMemoryTimeQuota;
-            SuspendedTill = suspendedTill;
+            SuspendOn = suspendOn;
             MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
             ResourceGroup = resourceGroup;
             IsDefaultContainer = isDefaultContainer;
             DefaultHostName = defaultHostName;
             SlotSwapStatus = slotSwapStatus;
-            HttpsOnly = httpsOnly;
+            IsHttpsOnly = isHttpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
             PublicNetworkAccess = publicNetworkAccess;
-            StorageAccountRequired = storageAccountRequired;
+            IsStorageAccountRequired = isStorageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> State indicating whether the app has exceeded its quota usage. Read-only. </summary>
         [WirePath("usageState")]
-        public UsageState? UsageState { get; }
+        public AppServiceUsageState? UsageState { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("siteScopedCertificatesEnabled")]
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Management information availability state for the app. </summary>
         [WirePath("availabilityState")]
-        public SiteAvailabilityState? AvailabilityState { get; }
+        public WebSiteAvailabilityState? AvailabilityState { get; }
 
         /// <summary> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </summary>
         [WirePath("hostNameSslStates")]
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("reserved")]
-        public bool? Reserved { get; set; }
+        public bool? IsReserved { get; set; }
 
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
         [WirePath("isXenon")]
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Hyper-V sandbox. </summary>
         [WirePath("hyperV")]
-        public bool? HyperV { get; set; }
+        public bool? IsHyperV { get; set; }
 
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
         [WirePath("lastModifiedTimeUtc")]
-        public DateTimeOffset? LastModifiedTimeUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Property to configure various DNS related settings for a site. </summary>
         [WirePath("dnsConfiguration")]
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("scmSiteAlsoStopped")]
-        public bool? ScmSiteAlsoStopped { get; set; }
+        public bool? IsScmSiteAlsoStopped { get; set; }
 
         /// <summary> Specifies which deployment slot this app will swap into. Read-only. </summary>
         [WirePath("targetSwapSlot")]
@@ -229,15 +229,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("clientAffinityEnabled")]
-        public bool? ClientAffinityEnabled { get; set; }
+        public bool? IsClientAffinityEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("clientAffinityProxyEnabled")]
-        public bool? ClientAffinityProxyEnabled { get; set; }
+        public bool? IsClientAffinityProxyEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("clientCertEnabled")]
-        public bool? ClientCertEnabled { get; set; }
+        public bool? IsClientCertEnabled { get; set; }
 
         /// <summary>
         /// This composes with ClientCertEnabled setting.
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </summary>
         [WirePath("hostNamesDisabled")]
-        public bool? HostNamesDisabled { get; set; }
+        public bool? IsHostNameDisabled { get; set; }
 
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         [WirePath("customDomainVerificationId")]
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App suspended till in case memory-time quota is exceeded. </summary>
         [WirePath("suspendedTill")]
-        public DateTimeOffset? SuspendedTill { get; }
+        public DateTimeOffset? SuspendOn { get; }
 
         /// <summary>
         /// Maximum number of workers.
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// http requests
         /// </summary>
         [WirePath("httpsOnly")]
-        public bool? HttpsOnly { get; set; }
+        public bool? IsHttpsOnly { get; set; }
 
         /// <summary> Site redundancy mode. </summary>
         [WirePath("redundancyMode")]
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("storageAccountRequired")]
-        public bool? StorageAccountRequired { get; set; }
+        public bool? IsStorageAccountRequired { get; set; }
 
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
         [WirePath("keyVaultReferenceIdentity")]

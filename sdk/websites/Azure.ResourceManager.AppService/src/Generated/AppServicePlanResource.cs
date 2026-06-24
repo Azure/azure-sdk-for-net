@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
     {
         private readonly ClientDiagnostics _appServicePlansClientDiagnostics;
         private readonly AppServicePlans _appServicePlansRestClient;
-        private readonly VnetGatewayData _data;
+        private readonly AppServiceVirtualNetworkGatewayData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/serverfarms/virtualNetworkConnections/gateways";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="AppServicePlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AppServicePlanResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
+        internal AppServicePlanResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VnetGatewayData Data
+        public virtual AppServiceVirtualNetworkGatewayData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AppServicePlanResource>> UpdateAsync(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppServicePlanResource>> UpdateAsync(WaitUntil waitUntil, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VnetGatewayData.ToRequestContent(data), context);
+                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Definition of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AppServicePlanResource> Update(WaitUntil waitUntil, VnetGatewayData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppServicePlanResource> Update(WaitUntil waitUntil, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VnetGatewayData.ToRequestContent(data), context);
+                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

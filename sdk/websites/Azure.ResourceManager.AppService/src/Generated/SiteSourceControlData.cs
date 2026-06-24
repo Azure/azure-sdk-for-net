@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.deploymentRollbackEnabled")]
-        public bool? DeploymentRollbackEnabled
+        public bool? IsDeploymentRollbackEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.DeploymentRollbackEnabled;
+                return Properties is null ? default : Properties.IsDeploymentRollbackEnabled;
             }
             set
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteSourceControlProperties();
                 }
-                Properties.DeploymentRollbackEnabled = value;
+                Properties.IsDeploymentRollbackEnabled = value;
             }
         }
 

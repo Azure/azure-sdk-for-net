@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HostingEnvironmentDiagnostics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="HostingEnvironmentDiagnostics"/> from. </param>
-        internal static HostingEnvironmentDiagnostics FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HostingEnvironmentDiagnostics"/> from. </param>
+        internal static HostingEnvironmentDiagnostics FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHostingEnvironmentDiagnostics(document.RootElement, ModelSerializationExtensions.WireOptions);

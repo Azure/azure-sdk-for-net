@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("backupName"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("storageAccountUrl"u8);
             writer.WriteStringValue(StorageAccountUri);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseBackupSetting item in Databases)
+                foreach (AppServiceDatabaseBackupSetting item in Databases)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string backupName = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             string storageAccountUri = default;
-            BackupSchedule backupSchedule = default;
-            IList<DatabaseBackupSetting> databases = default;
+            WebAppBackupSchedule backupSchedule = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountUrl"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    backupSchedule = BackupSchedule.DeserializeBackupSchedule(prop.Value, options);
+                    backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("databases"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                    List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item, options));
+                        array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                     }
                     databases = array;
                     continue;
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new BackupRequestProperties(
                 backupName,
-                enabled,
+                isEnabled,
                 storageAccountUri,
                 backupSchedule,
-                databases ?? new ChangeTrackingList<DatabaseBackupSetting>(),
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (Models.DiagnosticSolution item in Solutions)
+                foreach (DiagnosticSolution item in Solutions)
                 {
-                    writer.WriteObjectValue<Models.DiagnosticSolution>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             IList<DetectorAbnormalTimePeriod> events = default;
-            IList<Models.DiagnosticSolution> solutions = default;
+            IList<DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DiagnosticSolution> array = new List<Models.DiagnosticSolution>();
+                    List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
+                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<Models.DiagnosticSolution>(), additionalBinaryDataProperties);
+            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), additionalBinaryDataProperties);
         }
     }
 }

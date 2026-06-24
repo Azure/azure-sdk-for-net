@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
         [WirePath("properties.identityProviders")]
-        public IdentityProviders IdentityProviders
+        public AppServiceIdentityProviders IdentityProviders
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
         [WirePath("properties.login")]
-        public Login Login
+        public WebAppLoginInfo Login
         {
             get
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
         [WirePath("properties.httpSettings")]
-        public HttpSettings HttpSettings
+        public AppServiceHttpSettings HttpSettings
         {
             get
             {

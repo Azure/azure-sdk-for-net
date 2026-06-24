@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vaultName"></param>
         /// <param name="secretName"></param>
         /// <param name="secretVersion"></param>
-        /// <param name="identityType"> Managed service identity. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="details"></param>
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiKVReferenceProperties(string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, ApiKVReferencePropertiesSource? source, string activeVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiKVReferenceProperties(string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ApiKVReferencePropertiesSource? source, string activeVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reference = reference;
             Status = status;
             VaultName = vaultName;
             SecretName = secretName;
             SecretVersion = secretVersion;
-            IdentityType = identityType;
+            Identity = identity;
             Details = details;
             Source = source;
             ActiveVersion = activeVersion;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Managed service identity. </summary>
         [WirePath("identityType")]
-        public ManagedServiceIdentity IdentityType { get; }
+        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Gets the Details. </summary>
         [WirePath("details")]

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
         /// <param name="consoleUri"> Link to the console to web app instance. </param>
-        /// <param name="healthCheckUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
         /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
         /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteInstanceStatusProperties(SiteRuntimeState? state, string statusUri, string detectorUri, string consoleUri, string healthCheckUri, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSiteInstanceStatusProperties(SiteRuntimeState? state, string statusUri, string detectorUri, string consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusUri = statusUri;
             DetectorUri = detectorUri;
             ConsoleUri = consoleUri;
-            HealthCheckUri = healthCheckUri;
+            HealthCheckUrlString = healthCheckUrlString;
             Containers = containers;
             PhysicalZone = physicalZone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("healthCheckUrl")]
-        public string HealthCheckUri { get; }
+        public string HealthCheckUrlString { get; }
 
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
         [WirePath("containers")]

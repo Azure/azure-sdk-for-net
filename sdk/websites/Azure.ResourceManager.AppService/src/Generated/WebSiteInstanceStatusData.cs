@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Link to the console to web app instance. </summary>
         [WirePath("properties.healthCheckUrl")]
-        public string HealthCheckUri
+        public string HealthCheckUrlString
         {
             get
             {
-                return Properties is null ? default : Properties.HealthCheckUri;
+                return Properties is null ? default : Properties.HealthCheckUrlString;
             }
         }
 

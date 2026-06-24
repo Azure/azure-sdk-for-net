@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStartArray();
-                foreach (AnalysisData item in Payload)
+                foreach (AnalysisDetectorEvidences item in Payload)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             IList<AbnormalTimePeriod> abnormalTimePeriods = default;
-            IList<AnalysisData> payload = default;
+            IList<AnalysisDetectorEvidences> payload = default;
             IList<DetectorDefinition> nonCorrelatedDetectors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<AnalysisData> array = new List<AnalysisData>();
+                    List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisData.DeserializeAnalysisData(item, options));
+                        array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item, options));
                     }
                     payload = array;
                     continue;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService.Models
                 startOn,
                 endOn,
                 abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
-                payload ?? new ChangeTrackingList<AnalysisData>(),
+                payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
                 nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),
                 additionalBinaryDataProperties);
         }

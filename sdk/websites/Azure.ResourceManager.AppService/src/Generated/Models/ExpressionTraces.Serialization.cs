@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ExpressionTraces>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="ExpressionTraces"/> from. </param>
-        internal static ExpressionTraces FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpressionTraces"/> from. </param>
+        internal static ExpressionTraces FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeExpressionTraces(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
-                foreach (ExpressionRoot item in Inputs)
+                foreach (WorkflowExpressionRoot item in Inputs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             BinaryData value = default;
-            IList<ExpressionRoot> inputs = default;
+            IList<WorkflowExpressionRoot> inputs = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<ExpressionRoot> array = new List<ExpressionRoot>();
+                    List<WorkflowExpressionRoot> array = new List<WorkflowExpressionRoot>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExpressionRoot.DeserializeExpressionRoot(item, options));
+                        array.Add(WorkflowExpressionRoot.DeserializeWorkflowExpressionRoot(item, options));
                     }
                     inputs = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpressionTraces(value, inputs ?? new ChangeTrackingList<ExpressionRoot>(), nextLink, additionalBinaryDataProperties);
+            return new ExpressionTraces(value, inputs ?? new ChangeTrackingList<WorkflowExpressionRoot>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

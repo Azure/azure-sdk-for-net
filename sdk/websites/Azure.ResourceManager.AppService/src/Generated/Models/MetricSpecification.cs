@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -16,13 +15,5 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Gets the SupportsInstanceLevelAggregation. </summary>
-        [WirePath("supportsInstanceLevelAggregation")]
-        public bool? SupportsInstanceLevelAggregation { get; }
-
-        /// <summary> Gets the EnableRegionalMdmAccount. </summary>
-        [WirePath("enableRegionalMdmAccount")]
-        public bool? EnableRegionalMdmAccount { get; }
     }
 }

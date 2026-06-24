@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="scaleAndConcurrency"> Function app scale and concurrency settings. </param>
         /// <param name="siteUpdateStrategy"> Function app site update strategy configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppConfig(FunctionsDeployment deployment, Models.FunctionAppRuntime runtime, Models.FunctionAppScaleAndConcurrency scaleAndConcurrency, FunctionsSiteUpdateStrategy siteUpdateStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionAppConfig(FunctionsDeployment deployment, FunctionAppRuntime runtime, FunctionAppScaleAndConcurrency scaleAndConcurrency, FunctionsSiteUpdateStrategy siteUpdateStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deployment = deployment;
             Runtime = runtime;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Function app runtime settings. </summary>
         [WirePath("runtime")]
-        public Models.FunctionAppRuntime Runtime { get; set; }
+        public FunctionAppRuntime Runtime { get; set; }
 
         /// <summary> Function app scale and concurrency settings. </summary>
         [WirePath("scaleAndConcurrency")]
-        public Models.FunctionAppScaleAndConcurrency ScaleAndConcurrency { get; set; }
+        public FunctionAppScaleAndConcurrency ScaleAndConcurrency { get; set; }
 
         /// <summary> Function app site update strategy configuration. </summary>
         [WirePath("siteUpdateStrategy")]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Storage for deployed package used by the function app. </summary>
         [WirePath("deployment.storage")]
-        public FunctionsDeploymentStorage DeploymentStorage
+        public FunctionAppStorage DeploymentStorage
         {
             get
             {

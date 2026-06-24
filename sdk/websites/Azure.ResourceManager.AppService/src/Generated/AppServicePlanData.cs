@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServicePlanProperties properties, SkuDescription sku, ExtendedLocation extendedLocation, string kind, Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServicePlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppServicePlanProperties properties, AppServiceSkuDescription sku, ExtendedLocation extendedLocation, string kind, Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
         [WirePath("sku")]
-        public SkuDescription Sku { get; set; }
+        public AppServiceSkuDescription Sku { get; set; }
 
         /// <summary> Extended Location. </summary>
         [WirePath("extendedLocation")]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> App Service plan status. </summary>
         [WirePath("properties.status")]
-        public StatusOptions? Status
+        public AppServicePlanStatus? Status
         {
             get
             {
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
         [WirePath("properties.perSiteScaling")]
-        public bool? PerSiteScaling
+        public bool? IsPerSiteScaling
         {
             get
             {
-                return Properties is null ? default : Properties.PerSiteScaling;
+                return Properties is null ? default : Properties.IsPerSiteScaling;
             }
             set
             {
@@ -171,17 +171,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.PerSiteScaling = value;
+                Properties.IsPerSiteScaling = value;
             }
         }
 
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
         [WirePath("properties.elasticScaleEnabled")]
-        public bool? ElasticScaleEnabled
+        public bool? IsElasticScaleEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.ElasticScaleEnabled;
+                return Properties is null ? default : Properties.IsElasticScaleEnabled;
             }
             set
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.ElasticScaleEnabled = value;
+                Properties.IsElasticScaleEnabled = value;
             }
         }
 
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         [WirePath("properties.spotExpirationTime")]
-        public DateTimeOffset? SpotExpirationOn
+        public DateTimeOffset? SpotExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.SpotExpirationOn;
+                return Properties is null ? default : Properties.SpotExpireOn;
             }
             set
             {
@@ -253,17 +253,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.SpotExpirationOn = value;
+                Properties.SpotExpireOn = value;
             }
         }
 
         /// <summary> The time when the server farm free offer expires. </summary>
         [WirePath("properties.freeOfferExpirationTime")]
-        public DateTimeOffset? FreeOfferExpirationOn
+        public DateTimeOffset? FreeOfferExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.FreeOfferExpirationOn;
+                return Properties is null ? default : Properties.FreeOfferExpireOn;
             }
             set
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.FreeOfferExpirationOn = value;
+                Properties.FreeOfferExpireOn = value;
             }
         }
 
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.reserved")]
-        public bool? Reserved
+        public bool? IsReserved
         {
             get
             {
-                return Properties is null ? default : Properties.Reserved;
+                return Properties is null ? default : Properties.IsReserved;
             }
             set
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.Reserved = value;
+                Properties.IsReserved = value;
             }
         }
 
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
         [WirePath("properties.hyperV")]
-        public bool? HyperV
+        public bool? IsHyperV
         {
             get
             {
-                return Properties is null ? default : Properties.HyperV;
+                return Properties is null ? default : Properties.IsHyperV;
             }
             set
             {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.HyperV = value;
+                Properties.IsHyperV = value;
             }
         }
 
@@ -408,11 +408,11 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant
+        public bool? IsZoneRedundant
         {
             get
             {
-                return Properties is null ? default : Properties.ZoneRedundant;
+                return Properties is null ? default : Properties.IsZoneRedundant;
             }
             set
             {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.ZoneRedundant = value;
+                Properties.IsZoneRedundant = value;
             }
         }
 
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.AppService
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </summary>
         [WirePath("properties.asyncScalingEnabled")]
-        public bool? AsyncScalingEnabled
+        public bool? IsAsyncScalingEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AsyncScalingEnabled;
+                return Properties is null ? default : Properties.IsAsyncScalingEnabled;
             }
             set
             {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.AsyncScalingEnabled = value;
+                Properties.IsAsyncScalingEnabled = value;
             }
         }
 

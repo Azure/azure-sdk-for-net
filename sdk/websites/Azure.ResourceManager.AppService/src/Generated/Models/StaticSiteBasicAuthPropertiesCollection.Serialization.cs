@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of static site basic auth. </summary>
-    internal partial class StaticSiteBasicAuthPropertiesCollection : IJsonModel<StaticSiteBasicAuthPropertiesCollection>
+    public partial class StaticSiteBasicAuthPropertiesCollection : IJsonModel<StaticSiteBasicAuthPropertiesCollection>
     {
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertiesCollection"/> for deserialization. </summary>
         internal StaticSiteBasicAuthPropertiesCollection()
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteBasicAuthPropertiesCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="StaticSiteBasicAuthPropertiesCollection"/> from. </param>
-        internal static StaticSiteBasicAuthPropertiesCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StaticSiteBasicAuthPropertiesCollection"/> from. </param>
+        internal static StaticSiteBasicAuthPropertiesCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStaticSiteBasicAuthPropertiesCollection(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (StaticSiteBasicAuthPropertiesARMResourceData item in Value)
+            foreach (StaticSiteBasicAuthPropertiesData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<StaticSiteBasicAuthPropertiesARMResourceData> value = default;
+            IList<StaticSiteBasicAuthPropertiesData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<StaticSiteBasicAuthPropertiesARMResourceData> array = new List<StaticSiteBasicAuthPropertiesARMResourceData>();
+                    List<StaticSiteBasicAuthPropertiesData> array = new List<StaticSiteBasicAuthPropertiesData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteBasicAuthPropertiesARMResourceData.DeserializeStaticSiteBasicAuthPropertiesARMResourceData(item, options));
+                        array.Add(StaticSiteBasicAuthPropertiesData.DeserializeStaticSiteBasicAuthPropertiesData(item, options));
                     }
                     value = array;
                     continue;

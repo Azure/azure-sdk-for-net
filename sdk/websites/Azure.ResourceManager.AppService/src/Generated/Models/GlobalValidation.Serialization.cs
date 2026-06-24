@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(GlobalValidation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RequireAuthentication))
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
                 writer.WritePropertyName("requireAuthentication"u8);
-                writer.WriteBooleanValue(RequireAuthentication.Value);
+                writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            bool? requireAuthentication = default;
+            bool? isAuthenticationRequired = default;
             UnauthenticatedClientActionV2? unauthenticatedClientAction = default;
             string redirectToProvider = default;
             IList<string> excludedPaths = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requireAuthentication = prop.Value.GetBoolean();
+                    isAuthenticationRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("unauthenticatedClientAction"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GlobalValidation(requireAuthentication, unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new GlobalValidation(isAuthenticationRequired, unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Certificate Thumbprint. </summary>
         [WirePath("properties.thumbprint")]
-        public string Thumbprint
+        public string ThumbprintString
         {
             get
             {
-                return Properties is null ? default : Properties.Thumbprint;
+                return Properties is null ? default : Properties.ThumbprintString;
             }
         }
     }

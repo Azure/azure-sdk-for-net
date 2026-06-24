@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WorkflowRunProperties"/>. </summary>
         internal WorkflowRunProperties()
         {
-            Outputs = new ChangeTrackingDictionary<string, WorkflowOutputParameter>();
+            Outputs = new ChangeTrackingDictionary<string, WorkflowOutputContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunProperties(DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, ResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputParameter> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunProperties(DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, WorkflowResourceReference workflow, WorkflowRunTrigger trigger, IReadOnlyDictionary<string, WorkflowOutputContent> outputs, WorkflowRunTrigger response, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the reference to workflow version. </summary>
         [WirePath("workflow")]
-        public ResourceReference Workflow { get; }
+        public WorkflowResourceReference Workflow { get; }
 
         /// <summary> Gets the fired trigger. </summary>
         [WirePath("trigger")]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the outputs. </summary>
         [WirePath("outputs")]
-        public IReadOnlyDictionary<string, WorkflowOutputParameter> Outputs { get; } = new ChangeTrackingDictionary<string, WorkflowOutputParameter>();
+        public IReadOnlyDictionary<string, WorkflowOutputContent> Outputs { get; } = new ChangeTrackingDictionary<string, WorkflowOutputContent>();
 
         /// <summary> Gets the response of the flow run. </summary>
         [WirePath("response")]

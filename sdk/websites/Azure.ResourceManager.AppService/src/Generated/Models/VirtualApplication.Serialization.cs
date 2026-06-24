@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (Optional.IsDefined(PreloadEnabled))
+            if (Optional.IsDefined(IsPreloadEnabled))
             {
                 writer.WritePropertyName("preloadEnabled"u8);
-                writer.WriteBooleanValue(PreloadEnabled.Value);
+                writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
             if (Optional.IsCollectionDefined(VirtualDirectories))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string virtualPath = default;
             string physicalPath = default;
-            bool? preloadEnabled = default;
+            bool? isPreloadEnabled = default;
             IList<VirtualDirectory> virtualDirectories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    preloadEnabled = prop.Value.GetBoolean();
+                    isPreloadEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualDirectories"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualApplication(virtualPath, physicalPath, preloadEnabled, virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), additionalBinaryDataProperties);
+            return new VirtualApplication(virtualPath, physicalPath, isPreloadEnabled, virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), additionalBinaryDataProperties);
         }
     }
 }

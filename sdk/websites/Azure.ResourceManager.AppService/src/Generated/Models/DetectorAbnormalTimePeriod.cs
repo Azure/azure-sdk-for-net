@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
         internal DetectorAbnormalTimePeriod()
         {
-            MetaData = new ChangeTrackingList<IList<Models.AppServiceNameValuePair>>();
-            Solutions = new ChangeTrackingList<Models.DiagnosticSolution>();
+            MetaData = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Solutions = new ChangeTrackingList<DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="type"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<Models.AppServiceNameValuePair>> metaData, IssueType? @type, IList<Models.DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? @type, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Downtime metadata. </summary>
         [WirePath("metaData")]
-        public IList<IList<Models.AppServiceNameValuePair>> MetaData { get; }
+        public IList<IList<AppServiceNameValuePair>> MetaData { get; }
 
         /// <summary> Represents the type of the Detector. </summary>
         [WirePath("type")]
-        public IssueType? Type { get; }
+        public DetectorIssueType? Type { get; }
 
         /// <summary> List of proposed solutions. </summary>
         [WirePath("solutions")]
-        public IList<Models.DiagnosticSolution> Solutions { get; }
+        public IList<DiagnosticSolution> Solutions { get; }
     }
 }

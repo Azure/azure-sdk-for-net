@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue<Models.AppServiceAadAllowedPrincipals>(AllowedPrincipals, options);
+                writer.WriteObjectValue(AllowedPrincipals, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Models.AppServiceAadAllowedPrincipals allowedPrincipals = default;
+            AppServiceAadAllowedPrincipals allowedPrincipals = default;
             IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = Models.AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(prop.Value, options);
+                    allowedPrincipals = AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allowedApplications"u8))

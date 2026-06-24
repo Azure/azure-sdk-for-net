@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Active))
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
-                writer.WriteBooleanValue(Active.Value);
+                writer.WriteBooleanValue(IsActive.Value);
             }
             if (Optional.IsDefined(Details))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
             string authorEmail = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            bool? active = default;
+            bool? isActive = default;
             string details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    active = prop.Value.GetBoolean();
+                    isActive = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("details"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                 authorEmail,
                 startOn,
                 endOn,
-                active,
+                isActive,
                 details,
                 additionalBinaryDataProperties);
         }

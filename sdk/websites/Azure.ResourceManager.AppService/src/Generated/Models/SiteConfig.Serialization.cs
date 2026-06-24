@@ -129,35 +129,35 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("windowsFxVersion"u8);
                 writer.WriteStringValue(WindowsFxVersion);
             }
-            if (Optional.IsDefined(RequestTracingEnabled))
+            if (Optional.IsDefined(IsRequestTracingEnabled))
             {
                 writer.WritePropertyName("requestTracingEnabled"u8);
-                writer.WriteBooleanValue(RequestTracingEnabled.Value);
+                writer.WriteBooleanValue(IsRequestTracingEnabled.Value);
             }
             if (Optional.IsDefined(RequestTracingExpirationOn))
             {
                 writer.WritePropertyName("requestTracingExpirationTime"u8);
                 writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(RemoteDebuggingEnabled))
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 writer.WritePropertyName("remoteDebuggingEnabled"u8);
-                writer.WriteBooleanValue(RemoteDebuggingEnabled.Value);
+                writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
             }
             if (Optional.IsDefined(RemoteDebuggingVersion))
             {
                 writer.WritePropertyName("remoteDebuggingVersion"u8);
                 writer.WriteStringValue(RemoteDebuggingVersion);
             }
-            if (Optional.IsDefined(HttpLoggingEnabled))
+            if (Optional.IsDefined(IsHttpLoggingEnabled))
             {
                 writer.WritePropertyName("httpLoggingEnabled"u8);
-                writer.WriteBooleanValue(HttpLoggingEnabled.Value);
+                writer.WriteBooleanValue(IsHttpLoggingEnabled.Value);
             }
-            if (Optional.IsDefined(AcrUseManagedIdentityCreds))
+            if (Optional.IsDefined(UseManagedIdentityCreds))
             {
                 writer.WritePropertyName("acrUseManagedIdentityCreds"u8);
-                writer.WriteBooleanValue(AcrUseManagedIdentityCreds.Value);
+                writer.WriteBooleanValue(UseManagedIdentityCreds.Value);
             }
             if (Optional.IsDefined(AcrUserManagedIdentityID))
             {
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("logsDirectorySizeLimit"u8);
                 writer.WriteNumberValue(LogsDirectorySizeLimit.Value);
             }
-            if (Optional.IsDefined(DetailedErrorLoggingEnabled))
+            if (Optional.IsDefined(IsDetailedErrorLoggingEnabled))
             {
                 writer.WritePropertyName("detailedErrorLoggingEnabled"u8);
-                writer.WriteBooleanValue(DetailedErrorLoggingEnabled.Value);
+                writer.WriteBooleanValue(IsDetailedErrorLoggingEnabled.Value);
             }
             if (Optional.IsDefined(PublishingUsername))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("appSettings"u8);
                 writer.WriteStartArray();
-                foreach (NameValuePair item in AppSettings)
+                foreach (AppServiceNameValuePair item in AppSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
-                foreach (NameValuePair item in Metadata)
+                foreach (AppServiceNameValuePair item in Metadata)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("handlerMappings"u8);
                 writer.WriteStartArray();
-                foreach (HandlerMapping item in HandlerMappings)
+                foreach (HttpRequestHandlerMapping item in HandlerMappings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -239,15 +239,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("use32BitWorkerProcess"u8);
                 writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
             }
-            if (Optional.IsDefined(WebSocketsEnabled))
+            if (Optional.IsDefined(IsWebSocketsEnabled))
             {
                 writer.WritePropertyName("webSocketsEnabled"u8);
-                writer.WriteBooleanValue(WebSocketsEnabled.Value);
+                writer.WriteBooleanValue(IsWebSocketsEnabled.Value);
             }
-            if (Optional.IsDefined(AlwaysOn))
+            if (Optional.IsDefined(IsAlwaysOn))
             {
                 writer.WritePropertyName("alwaysOn"u8);
-                writer.WriteBooleanValue(AlwaysOn.Value);
+                writer.WriteBooleanValue(IsAlwaysOn.Value);
             }
             if (Optional.IsDefined(JavaVersion))
             {
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits, options);
             }
-            if (Optional.IsDefined(AutoHealEnabled))
+            if (Optional.IsDefined(IsAutoHealEnabled))
             {
                 writer.WritePropertyName("autoHealEnabled"u8);
-                writer.WriteBooleanValue(AutoHealEnabled.Value);
+                writer.WriteBooleanValue(IsAutoHealEnabled.Value);
             }
             if (Optional.IsDefined(AutoHealRules))
             {
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (Optional.IsDefined(VnetRouteAllEnabled))
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
             {
                 writer.WritePropertyName("vnetRouteAllEnabled"u8);
-                writer.WriteBooleanValue(VnetRouteAllEnabled.Value);
+                writer.WriteBooleanValue(IsVnetRouteAllEnabled.Value);
             }
             if (Optional.IsDefined(VnetPrivatePortsCount))
             {
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("autoSwapSlotName"u8);
                 writer.WriteStringValue(AutoSwapSlotName);
             }
-            if (Optional.IsDefined(LocalMySqlEnabled))
+            if (Optional.IsDefined(IsLocalMySqlEnabled))
             {
                 writer.WritePropertyName("localMySqlEnabled"u8);
-                writer.WriteBooleanValue(LocalMySqlEnabled.Value);
+                writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);
             }
             if (Optional.IsDefined(ManagedServiceIdentityId))
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();
-                foreach (IpSecurityRestriction item in IpSecurityRestrictions)
+                foreach (AppServiceIpSecurityRestriction item in IpSecurityRestrictions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("scmIpSecurityRestrictions"u8);
                 writer.WriteStartArray();
-                foreach (IpSecurityRestriction item in ScmIpSecurityRestrictions)
+                foreach (AppServiceIpSecurityRestriction item in ScmIpSecurityRestrictions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -404,15 +404,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("scmIpSecurityRestrictionsDefaultAction"u8);
                 writer.WriteStringValue(ScmIpSecurityRestrictionsDefaultAction.Value.ToString());
             }
-            if (Optional.IsDefined(ScmIpSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
                 writer.WritePropertyName("scmIpSecurityRestrictionsUseMain"u8);
-                writer.WriteBooleanValue(ScmIpSecurityRestrictionsUseMain.Value);
+                writer.WriteBooleanValue(AllowIPSecurityRestrictionsForScmToUseMain.Value);
             }
-            if (Optional.IsDefined(Http20Enabled))
+            if (Optional.IsDefined(IsHttp20Enabled))
             {
                 writer.WritePropertyName("http20Enabled"u8);
-                writer.WriteBooleanValue(Http20Enabled.Value);
+                writer.WriteBooleanValue(IsHttp20Enabled.Value);
             }
             if (Optional.IsDefined(Http20ProxyFlag))
             {
@@ -459,10 +459,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("healthCheckPath"u8);
                 writer.WriteStringValue(HealthCheckPath);
             }
-            if (Optional.IsDefined(FunctionsRuntimeScaleMonitoringEnabled))
+            if (Optional.IsDefined(IsFunctionsRuntimeScaleMonitoringEnabled))
             {
                 writer.WritePropertyName("functionsRuntimeScaleMonitoringEnabled"u8);
-                writer.WriteBooleanValue(FunctionsRuntimeScaleMonitoringEnabled.Value);
+                writer.WriteBooleanValue(IsFunctionsRuntimeScaleMonitoringEnabled.Value);
             }
             if (Optional.IsDefined(WebsiteTimeZone))
             {
@@ -541,26 +541,26 @@ namespace Azure.ResourceManager.AppService.Models
             string powerShellVersion = default;
             string linuxFxVersion = default;
             string windowsFxVersion = default;
-            bool? requestTracingEnabled = default;
+            bool? isRequestTracingEnabled = default;
             DateTimeOffset? requestTracingExpirationOn = default;
-            bool? remoteDebuggingEnabled = default;
+            bool? isRemoteDebuggingEnabled = default;
             string remoteDebuggingVersion = default;
-            bool? httpLoggingEnabled = default;
-            bool? acrUseManagedIdentityCreds = default;
+            bool? isHttpLoggingEnabled = default;
+            bool? useManagedIdentityCreds = default;
             string acrUserManagedIdentityID = default;
             int? logsDirectorySizeLimit = default;
-            bool? detailedErrorLoggingEnabled = default;
+            bool? isDetailedErrorLoggingEnabled = default;
             string publishingUsername = default;
-            IList<NameValuePair> appSettings = default;
-            IList<NameValuePair> metadata = default;
+            IList<AppServiceNameValuePair> appSettings = default;
+            IList<AppServiceNameValuePair> metadata = default;
             IList<ConnStringInfo> connectionStrings = default;
             SiteMachineKey machineKey = default;
-            IList<HandlerMapping> handlerMappings = default;
+            IList<HttpRequestHandlerMapping> handlerMappings = default;
             string documentRoot = default;
             ScmType? scmType = default;
             bool? use32BitWorkerProcess = default;
-            bool? webSocketsEnabled = default;
-            bool? alwaysOn = default;
+            bool? isWebSocketsEnabled = default;
+            bool? isAlwaysOn = default;
             string javaVersion = default;
             string javaContainer = default;
             string javaContainerVersion = default;
@@ -568,42 +568,42 @@ namespace Azure.ResourceManager.AppService.Models
             ManagedPipelineMode? managedPipelineMode = default;
             IList<VirtualApplication> virtualApplications = default;
             SiteLoadBalancing? loadBalancing = default;
-            Experiments experiments = default;
+            RoutingRuleExperiments experiments = default;
             SiteLimits limits = default;
-            bool? autoHealEnabled = default;
+            bool? isAutoHealEnabled = default;
             AutoHealRules autoHealRules = default;
             string tracingOptions = default;
             string vnetName = default;
-            bool? vnetRouteAllEnabled = default;
+            bool? isVnetRouteAllEnabled = default;
             int? vnetPrivatePortsCount = default;
-            CorsSettings cors = default;
-            PushSettings push = default;
-            ApiDefinitionInfo apiDefinition = default;
+            AppServiceCorsSettings cors = default;
+            WebAppPushSettings push = default;
+            AppServiceApiDefinitionInfo apiDefinition = default;
             ApiManagementConfig apiManagementConfig = default;
             string autoSwapSlotName = default;
-            bool? localMySqlEnabled = default;
+            bool? isLocalMySqlEnabled = default;
             int? managedServiceIdentityId = default;
             int? xManagedServiceIdentityId = default;
             string keyVaultReferenceIdentity = default;
-            IList<IpSecurityRestriction> ipSecurityRestrictions = default;
-            DefaultAction? ipSecurityRestrictionsDefaultAction = default;
-            IList<IpSecurityRestriction> scmIpSecurityRestrictions = default;
-            DefaultAction? scmIpSecurityRestrictionsDefaultAction = default;
-            bool? scmIpSecurityRestrictionsUseMain = default;
-            bool? http20Enabled = default;
+            IList<AppServiceIpSecurityRestriction> ipSecurityRestrictions = default;
+            SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default;
+            IList<AppServiceIpSecurityRestriction> scmIpSecurityRestrictions = default;
+            SiteDefaultAction? scmIpSecurityRestrictionsDefaultAction = default;
+            bool? allowIPSecurityRestrictionsForScmToUseMain = default;
+            bool? isHttp20Enabled = default;
             int? http20ProxyFlag = default;
-            SupportedTlsVersions? minTlsVersion = default;
-            TlsCipherSuites? minTlsCipherSuite = default;
-            SupportedTlsVersions? scmMinTlsVersion = default;
-            FtpsState? ftpsState = default;
+            AppServiceSupportedTlsVersion? minTlsVersion = default;
+            AppServiceTlsCipherSuite? minTlsCipherSuite = default;
+            AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
+            AppServiceFtpsState? ftpsState = default;
             int? preWarmedInstanceCount = default;
             int? functionAppScaleLimit = default;
             int? elasticWebAppScaleLimit = default;
             string healthCheckPath = default;
-            bool? functionsRuntimeScaleMonitoringEnabled = default;
+            bool? isFunctionsRuntimeScaleMonitoringEnabled = default;
             string websiteTimeZone = default;
             int? minimumElasticInstanceCount = default;
-            IDictionary<string, AzureStorageInfoValue> azureStorageAccounts = default;
+            IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default;
             string publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requestTracingEnabled = prop.Value.GetBoolean();
+                    isRequestTracingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("requestTracingExpirationTime"u8))
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    remoteDebuggingEnabled = prop.Value.GetBoolean();
+                    isRemoteDebuggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("remoteDebuggingVersion"u8))
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    httpLoggingEnabled = prop.Value.GetBoolean();
+                    isHttpLoggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("acrUseManagedIdentityCreds"u8))
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    acrUseManagedIdentityCreds = prop.Value.GetBoolean();
+                    useManagedIdentityCreds = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("acrUserManagedIdentityID"u8))
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detailedErrorLoggingEnabled = prop.Value.GetBoolean();
+                    isDetailedErrorLoggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publishingUsername"u8))
@@ -757,10 +757,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     appSettings = array;
                     continue;
@@ -771,10 +771,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     metadata = array;
                     continue;
@@ -808,10 +808,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<HandlerMapping> array = new List<HandlerMapping>();
+                    List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HandlerMapping.DeserializeHandlerMapping(item, options));
+                        array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item, options));
                     }
                     handlerMappings = array;
                     continue;
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    webSocketsEnabled = prop.Value.GetBoolean();
+                    isWebSocketsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("alwaysOn"u8))
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    alwaysOn = prop.Value.GetBoolean();
+                    isAlwaysOn = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("javaVersion"u8))
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    experiments = Experiments.DeserializeExperiments(prop.Value, options);
+                    experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("limits"u8))
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    autoHealEnabled = prop.Value.GetBoolean();
+                    isAutoHealEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("autoHealRules"u8))
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    vnetRouteAllEnabled = prop.Value.GetBoolean();
+                    isVnetRouteAllEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("vnetPrivatePortsCount"u8))
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    cors = CorsSettings.DeserializeCorsSettings(prop.Value, options);
+                    cors = AppServiceCorsSettings.DeserializeAppServiceCorsSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("push"u8))
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    push = PushSettings.DeserializePushSettings(prop.Value, options);
+                    push = WebAppPushSettings.DeserializeWebAppPushSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("apiDefinition"u8))
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    apiDefinition = ApiDefinitionInfo.DeserializeApiDefinitionInfo(prop.Value, options);
+                    apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("apiManagementConfig"u8))
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    localMySqlEnabled = prop.Value.GetBoolean();
+                    isLocalMySqlEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("managedServiceIdentityId"u8))
@@ -1052,10 +1052,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                    List<AppServiceIpSecurityRestriction> array = new List<AppServiceIpSecurityRestriction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item, options));
+                        array.Add(AppServiceIpSecurityRestriction.DeserializeAppServiceIpSecurityRestriction(item, options));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ipSecurityRestrictionsDefaultAction = new DefaultAction(prop.Value.GetString());
+                    ipSecurityRestrictionsDefaultAction = new SiteDefaultAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scmIpSecurityRestrictions"u8))
@@ -1075,10 +1075,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IpSecurityRestriction> array = new List<IpSecurityRestriction>();
+                    List<AppServiceIpSecurityRestriction> array = new List<AppServiceIpSecurityRestriction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpSecurityRestriction.DeserializeIpSecurityRestriction(item, options));
+                        array.Add(AppServiceIpSecurityRestriction.DeserializeAppServiceIpSecurityRestriction(item, options));
                     }
                     scmIpSecurityRestrictions = array;
                     continue;
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scmIpSecurityRestrictionsDefaultAction = new DefaultAction(prop.Value.GetString());
+                    scmIpSecurityRestrictionsDefaultAction = new SiteDefaultAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scmIpSecurityRestrictionsUseMain"u8))
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scmIpSecurityRestrictionsUseMain = prop.Value.GetBoolean();
+                    allowIPSecurityRestrictionsForScmToUseMain = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("http20Enabled"u8))
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    http20Enabled = prop.Value.GetBoolean();
+                    isHttp20Enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("http20ProxyFlag"u8))
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    minTlsVersion = new SupportedTlsVersions(prop.Value.GetString());
+                    minTlsVersion = new AppServiceSupportedTlsVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("minTlsCipherSuite"u8))
@@ -1134,7 +1134,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    minTlsCipherSuite = new TlsCipherSuites(prop.Value.GetString());
+                    minTlsCipherSuite = new AppServiceTlsCipherSuite(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scmMinTlsVersion"u8))
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scmMinTlsVersion = new SupportedTlsVersions(prop.Value.GetString());
+                    scmMinTlsVersion = new AppServiceSupportedTlsVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ftpsState"u8))
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    ftpsState = new FtpsState(prop.Value.GetString());
+                    ftpsState = new AppServiceFtpsState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("preWarmedInstanceCount"u8))
@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    functionsRuntimeScaleMonitoringEnabled = prop.Value.GetBoolean();
+                    isFunctionsRuntimeScaleMonitoringEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("websiteTimeZone"u8))
@@ -1216,10 +1216,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    Dictionary<string, AzureStorageInfoValue> dictionary = new Dictionary<string, AzureStorageInfoValue>();
+                    Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, AzureStorageInfoValue.DeserializeAzureStorageInfoValue(prop0.Value, options));
+                        dictionary.Add(prop0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(prop0.Value, options));
                     }
                     azureStorageAccounts = dictionary;
                     continue;
@@ -1244,26 +1244,26 @@ namespace Azure.ResourceManager.AppService.Models
                 powerShellVersion,
                 linuxFxVersion,
                 windowsFxVersion,
-                requestTracingEnabled,
+                isRequestTracingEnabled,
                 requestTracingExpirationOn,
-                remoteDebuggingEnabled,
+                isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
-                httpLoggingEnabled,
-                acrUseManagedIdentityCreds,
+                isHttpLoggingEnabled,
+                useManagedIdentityCreds,
                 acrUserManagedIdentityID,
                 logsDirectorySizeLimit,
-                detailedErrorLoggingEnabled,
+                isDetailedErrorLoggingEnabled,
                 publishingUsername,
-                appSettings ?? new ChangeTrackingList<NameValuePair>(),
-                metadata ?? new ChangeTrackingList<NameValuePair>(),
+                appSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(),
+                metadata ?? new ChangeTrackingList<AppServiceNameValuePair>(),
                 connectionStrings ?? new ChangeTrackingList<ConnStringInfo>(),
                 machineKey,
-                handlerMappings ?? new ChangeTrackingList<HandlerMapping>(),
+                handlerMappings ?? new ChangeTrackingList<HttpRequestHandlerMapping>(),
                 documentRoot,
                 scmType,
                 use32BitWorkerProcess,
-                webSocketsEnabled,
-                alwaysOn,
+                isWebSocketsEnabled,
+                isAlwaysOn,
                 javaVersion,
                 javaContainer,
                 javaContainerVersion,
@@ -1273,27 +1273,27 @@ namespace Azure.ResourceManager.AppService.Models
                 loadBalancing,
                 experiments,
                 limits,
-                autoHealEnabled,
+                isAutoHealEnabled,
                 autoHealRules,
                 tracingOptions,
                 vnetName,
-                vnetRouteAllEnabled,
+                isVnetRouteAllEnabled,
                 vnetPrivatePortsCount,
                 cors,
                 push,
                 apiDefinition,
                 apiManagementConfig,
                 autoSwapSlotName,
-                localMySqlEnabled,
+                isLocalMySqlEnabled,
                 managedServiceIdentityId,
                 xManagedServiceIdentityId,
                 keyVaultReferenceIdentity,
-                ipSecurityRestrictions ?? new ChangeTrackingList<IpSecurityRestriction>(),
+                ipSecurityRestrictions ?? new ChangeTrackingList<AppServiceIpSecurityRestriction>(),
                 ipSecurityRestrictionsDefaultAction,
-                scmIpSecurityRestrictions ?? new ChangeTrackingList<IpSecurityRestriction>(),
+                scmIpSecurityRestrictions ?? new ChangeTrackingList<AppServiceIpSecurityRestriction>(),
                 scmIpSecurityRestrictionsDefaultAction,
-                scmIpSecurityRestrictionsUseMain,
-                http20Enabled,
+                allowIPSecurityRestrictionsForScmToUseMain,
+                isHttp20Enabled,
                 http20ProxyFlag,
                 minTlsVersion,
                 minTlsCipherSuite,
@@ -1303,10 +1303,10 @@ namespace Azure.ResourceManager.AppService.Models
                 functionAppScaleLimit,
                 elasticWebAppScaleLimit,
                 healthCheckPath,
-                functionsRuntimeScaleMonitoringEnabled,
+                isFunctionsRuntimeScaleMonitoringEnabled,
                 websiteTimeZone,
                 minimumElasticInstanceCount,
-                azureStorageAccounts ?? new ChangeTrackingDictionary<string, AzureStorageInfoValue>(),
+                azureStorageAccounts ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(),
                 publicNetworkAccess,
                 additionalBinaryDataProperties);
         }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Status of the migration task. </summary>
         [WirePath("properties.migrationOperationStatus")]
-        public OperationStatus? MigrationOperationStatus
+        public AppServiceOperationStatus? MigrationOperationStatus
         {
             get
             {
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> True if the web app has in app MySql enabled. </summary>
         [WirePath("properties.localMySqlEnabled")]
-        public bool? LocalMySqlEnabled
+        public bool? IsLocalMySqlEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.LocalMySqlEnabled;
+                return Properties is null ? default : Properties.IsLocalMySqlEnabled;
             }
         }
     }

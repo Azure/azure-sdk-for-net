@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue<Models.FunctionAppRuntime>(Runtime, options);
+                writer.WriteObjectValue(Runtime, options);
             }
             if (Optional.IsDefined(ScaleAndConcurrency))
             {
                 writer.WritePropertyName("scaleAndConcurrency"u8);
-                writer.WriteObjectValue<Models.FunctionAppScaleAndConcurrency>(ScaleAndConcurrency, options);
+                writer.WriteObjectValue(ScaleAndConcurrency, options);
             }
             if (Optional.IsDefined(SiteUpdateStrategy))
             {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FunctionsDeployment deployment = default;
-            Models.FunctionAppRuntime runtime = default;
-            Models.FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
+            FunctionAppRuntime runtime = default;
+            FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
             FunctionsSiteUpdateStrategy siteUpdateStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    runtime = Models.FunctionAppRuntime.DeserializeFunctionAppRuntime(prop.Value, options);
+                    runtime = FunctionAppRuntime.DeserializeFunctionAppRuntime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleAndConcurrency"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scaleAndConcurrency = Models.FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(prop.Value, options);
+                    scaleAndConcurrency = FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("siteUpdateStrategy"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
         /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefaultAuthorizationPolicy(Models.AppServiceAadAllowedPrincipals allowedPrincipals, IList<string> allowedApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefaultAuthorizationPolicy(AppServiceAadAllowedPrincipals allowedPrincipals, IList<string> allowedApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedPrincipals = allowedPrincipals;
             AllowedApplications = allowedApplications;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
         [WirePath("allowedPrincipals")]
-        public Models.AppServiceAadAllowedPrincipals AllowedPrincipals { get; set; }
+        public AppServiceAadAllowedPrincipals AllowedPrincipals { get; set; }
 
         /// <summary> The configuration settings of the Azure Active Directory allowed applications. </summary>
         [WirePath("allowedApplications")]

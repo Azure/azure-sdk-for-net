@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class AppServiceEnvironmentsGetWorkerPoolSkusAsyncCollectionResultOfT : AsyncPageable<SkuInfo>
+    internal partial class AppServiceEnvironmentsGetWorkerPoolSkusAsyncCollectionResultOfT : AsyncPageable<AppServicePoolSkuInfo>
     {
         private readonly AppServiceEnvironments _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AppServiceEnvironmentsGetWorkerPoolSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SkuInfo>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServicePoolSkuInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                SkuInfoCollection result = SkuInfoCollection.FromResponse(response);
-                yield return Page<SkuInfo>.FromValues((IReadOnlyList<SkuInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServicePoolSkuInfoListResult result = AppServicePoolSkuInfoListResult.FromResponse(response);
+                yield return Page<AppServicePoolSkuInfo>.FromValues((IReadOnlyList<AppServicePoolSkuInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Whether private access is enabled or not. </summary>
         [WirePath("properties.enabled")]
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new PrivateAccessProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 

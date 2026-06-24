@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ApplicationInsights))
+            if (Optional.IsDefined(IsApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteBooleanValue(ApplicationInsights.Value);
+                writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
             string runtimeVersion = default;
             bool? isDefault = default;
             IList<StackMinorVersion> minorVersions = default;
-            bool? applicationInsights = default;
+            bool? isApplicationInsights = default;
             bool? isPreview = default;
             bool? isDeprecated = default;
             bool? isHidden = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    applicationInsights = prop.Value.GetBoolean();
+                    isApplicationInsights = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isPreview"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
                 runtimeVersion,
                 isDefault,
                 minorVersions ?? new ChangeTrackingList<StackMinorVersion>(),
-                applicationInsights,
+                isApplicationInsights,
                 isPreview,
                 isDeprecated,
                 isHidden,

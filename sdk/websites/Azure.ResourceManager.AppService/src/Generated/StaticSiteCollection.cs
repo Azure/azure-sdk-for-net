@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteResource"/> and their operations.
-    /// Each <see cref="StaticSiteResource"/> in the collection will belong to the same instance of <see cref="StaticSiteBuildARMResource"/>.
-    /// To get a <see cref="StaticSiteCollection"/> instance call the GetStaticSites method from an instance of <see cref="StaticSiteBuildARMResource"/>.
+    /// Each <see cref="StaticSiteResource"/> in the collection will belong to the same instance of <see cref="StaticSiteBuildResource"/>.
+    /// To get a <see cref="StaticSiteCollection"/> instance call the GetStaticSites method from an instance of <see cref="StaticSiteBuildResource"/>.
     /// </summary>
     public partial class StaticSiteCollection : ArmCollection, IEnumerable<StaticSiteResource>, IAsyncEnumerable<StaticSiteResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != StaticSiteBuildARMResource.ResourceType)
+            if (id.ResourceType != StaticSiteBuildResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildARMResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteBuildResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<StaticSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StaticSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<StaticSiteResource> CreateOrUpdate(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendARMResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StaticSiteResource> CreateOrUpdate(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSiteLinkedBackendARMResourceData> response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSiteLinkedBackendARMResourceData> response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteLinkedBackendARMResourceData, StaticSiteResource>(new StaticSitesGetLinkedBackendsForBuildAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteResource>(new StaticSitesGetLinkedBackendsForBuildAsyncCollectionResultOfT(
                 _staticSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteLinkedBackendARMResourceData, StaticSiteResource>(new StaticSitesGetLinkedBackendsForBuildCollectionResultOfT(
+            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteResource>(new StaticSitesGetLinkedBackendsForBuildCollectionResultOfT(
                 _staticSitesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StaticSiteLinkedBackendARMResourceData> response = default;
+                Response<StaticSiteLinkedBackendData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StaticSiteLinkedBackendARMResourceData> response = default;
+                Response<StaticSiteLinkedBackendData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -488,14 +488,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<StaticSiteLinkedBackendARMResourceData> response = default;
+                Response<StaticSiteLinkedBackendData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -549,14 +549,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _staticSitesRestClient.CreateGetLinkedBackendForBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<StaticSiteLinkedBackendARMResourceData> response = default;
+                Response<StaticSiteLinkedBackendData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteLinkedBackendARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteLinkedBackendARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

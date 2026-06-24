@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                StampCapacityCollection result = StampCapacityCollection.FromResponse(response);
+                StampCapacityListResult result = StampCapacityListResult.FromResponse(response);
                 yield return Page<StampCapacity>.FromValues((IReadOnlyList<StampCapacity>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

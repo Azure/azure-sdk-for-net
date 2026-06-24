@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class DiagnosticsGetSiteDetectorResponsesSlotAsyncCollectionResultOfT : AsyncPageable<DetectorResponseData>
+    internal partial class DiagnosticsGetSiteDetectorResponsesSlotAsyncCollectionResultOfT : AsyncPageable<AppServiceDetectorData>
     {
         private readonly Diagnostics _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DiagnosticsGetSiteDetectorResponsesSlotAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DetectorResponseData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceDetectorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                DetectorResponseCollection result = DetectorResponseCollection.FromResponse(response);
-                yield return Page<DetectorResponseData>.FromValues((IReadOnlyList<DetectorResponseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AppServiceDetectorListResult result = AppServiceDetectorListResult.FromResponse(response);
+                yield return Page<AppServiceDetectorData>.FromValues((IReadOnlyList<AppServiceDetectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

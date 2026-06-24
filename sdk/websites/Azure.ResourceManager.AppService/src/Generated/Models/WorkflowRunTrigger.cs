@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Gets the error. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunTrigger(string name, BinaryData inputs, Models.WebAppContentLink inputsLink, BinaryData outputs, Models.WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunTrigger(string name, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("inputsLink")]
-        public Models.WebAppContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
 
         /// <summary>
         /// Gets the outputs.
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the link to outputs. </summary>
         [WirePath("outputsLink")]
-        public Models.WebAppContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
 
         /// <summary> Gets the scheduled time. </summary>
         [WirePath("scheduledTime")]

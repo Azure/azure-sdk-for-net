@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(RemoteDebuggingSupported))
+            if (options.Format != "W" && Optional.IsDefined(IsRemoteDebuggingSupported))
             {
                 writer.WritePropertyName("remoteDebuggingSupported"u8);
-                writer.WriteBooleanValue(RemoteDebuggingSupported.Value);
+                writer.WriteBooleanValue(IsRemoteDebuggingSupported.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string runtimeVersion = default;
-            bool? remoteDebuggingSupported = default;
+            bool? isRemoteDebuggingSupported = default;
             AppInsightsWebAppStackSettings appInsightsSettings = default;
             GitHubActionWebAppStackSettings gitHubActionSettings = default;
             IReadOnlyDictionary<string, string> appSettingsDictionary = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    remoteDebuggingSupported = prop.Value.GetBoolean();
+                    isRemoteDebuggingSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("appInsightsSettings"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new FunctionAppRuntimeSettings(
                 runtimeVersion,
-                remoteDebuggingSupported,
+                isRemoteDebuggingSupported,
                 appInsightsSettings,
                 gitHubActionSettings,
                 appSettingsDictionary ?? new ChangeTrackingDictionary<string, string>(),

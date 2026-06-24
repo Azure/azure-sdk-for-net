@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
-                foreach (Models.DataProviderKeyValuePair item in PropertyBag)
+                foreach (DataProviderKeyValuePair item in PropertyBag)
                 {
-                    writer.WriteObjectValue<Models.DataProviderKeyValuePair>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string providerName = default;
-            IReadOnlyList<Models.DataProviderKeyValuePair> propertyBag = default;
+            IReadOnlyList<DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DataProviderKeyValuePair> array = new List<Models.DataProviderKeyValuePair>();
+                    List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
+                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<Models.DataProviderKeyValuePair>(), additionalBinaryDataProperties);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>(), additionalBinaryDataProperties);
         }
     }
 }

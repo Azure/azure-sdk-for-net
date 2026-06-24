@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         AppServiceEnvironmentResource IOperationSource<AppServiceEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkerPoolResourceData data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AppServiceWorkerPoolData data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AppServiceEnvironmentResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         async ValueTask<AppServiceEnvironmentResource> IOperationSource<AppServiceEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkerPoolResourceData data = WorkerPoolResourceData.DeserializeWorkerPoolResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            AppServiceWorkerPoolData data = AppServiceWorkerPoolData.DeserializeAppServiceWorkerPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new AppServiceEnvironmentResource(_client, data);
         }
     }

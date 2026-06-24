@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class StaticSitesGetLinkedBackendsAsyncCollectionResultOfT : AsyncPageable<StaticSiteLinkedBackendARMResourceData>
+    internal partial class StaticSitesGetLinkedBackendsAsyncCollectionResultOfT : AsyncPageable<StaticSiteLinkedBackendData>
     {
         private readonly StaticSites _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of StaticSitesGetLinkedBackendsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<StaticSiteLinkedBackendARMResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<StaticSiteLinkedBackendData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 StaticSiteLinkedBackendsCollection result = StaticSiteLinkedBackendsCollection.FromResponse(response);
-                yield return Page<StaticSiteLinkedBackendARMResourceData>.FromValues((IReadOnlyList<StaticSiteLinkedBackendARMResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<StaticSiteLinkedBackendData>.FromValues((IReadOnlyList<StaticSiteLinkedBackendData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

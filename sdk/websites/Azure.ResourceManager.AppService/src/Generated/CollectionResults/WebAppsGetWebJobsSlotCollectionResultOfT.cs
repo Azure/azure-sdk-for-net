@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                WebJobCollection result = WebJobCollection.FromResponse(response);
+                WebJobCListResult result = WebJobCListResult.FromResponse(response);
                 yield return Page<WebJobData>.FromValues((IReadOnlyList<WebJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

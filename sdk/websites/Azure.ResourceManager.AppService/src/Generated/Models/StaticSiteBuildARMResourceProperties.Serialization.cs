@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
-                writer.WriteStringValue(CreatedTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("userProvidedFunctionApps"u8);
                 writer.WriteStartArray();
-                foreach (StaticSiteUserProvidedFunctionApp item in UserProvidedFunctionApps)
+                foreach (StaticSiteUserProvidedFunctionAppData item in UserProvidedFunctionApps)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("linkedBackends"u8);
                 writer.WriteStartArray();
-                foreach (StaticSiteLinkedBackend item in LinkedBackends)
+                foreach (StaticSiteLinkedBackendInfo item in LinkedBackends)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("databaseConnections"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseConnectionOverview item in DatabaseConnections)
+                foreach (StaticSiteDatabaseConnectionOverview item in DatabaseConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.AppService.Models
             string sourceBranch = default;
             string pullRequestTitle = default;
             string hostname = default;
-            DateTimeOffset? createdTimeUtc = default;
+            DateTimeOffset? createdOn = default;
             DateTimeOffset? lastUpdatedOn = default;
-            BuildStatus? status = default;
-            IReadOnlyList<StaticSiteUserProvidedFunctionApp> userProvidedFunctionApps = default;
-            IReadOnlyList<StaticSiteLinkedBackend> linkedBackends = default;
-            IReadOnlyList<DatabaseConnectionOverview> databaseConnections = default;
+            StaticSiteBuildStatus? status = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteLinkedBackendInfo> linkedBackends = default;
+            IReadOnlyList<StaticSiteDatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    createdTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedOn"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    status = new BuildStatus(prop.Value.GetString());
+                    status = new StaticSiteBuildStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userProvidedFunctionApps"u8))
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<StaticSiteUserProvidedFunctionApp> array = new List<StaticSiteUserProvidedFunctionApp>();
+                    List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteUserProvidedFunctionApp.DeserializeStaticSiteUserProvidedFunctionApp(item, options));
+                        array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item, options));
                     }
                     userProvidedFunctionApps = array;
                     continue;
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<StaticSiteLinkedBackend> array = new List<StaticSiteLinkedBackend>();
+                    List<StaticSiteLinkedBackendInfo> array = new List<StaticSiteLinkedBackendInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteLinkedBackend.DeserializeStaticSiteLinkedBackend(item, options));
+                        array.Add(StaticSiteLinkedBackendInfo.DeserializeStaticSiteLinkedBackendInfo(item, options));
                     }
                     linkedBackends = array;
                     continue;
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<DatabaseConnectionOverview> array = new List<DatabaseConnectionOverview>();
+                    List<StaticSiteDatabaseConnectionOverview> array = new List<StaticSiteDatabaseConnectionOverview>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseConnectionOverview.DeserializeDatabaseConnectionOverview(item, options));
+                        array.Add(StaticSiteDatabaseConnectionOverview.DeserializeStaticSiteDatabaseConnectionOverview(item, options));
                     }
                     databaseConnections = array;
                     continue;
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.AppService.Models
                 sourceBranch,
                 pullRequestTitle,
                 hostname,
-                createdTimeUtc,
+                createdOn,
                 lastUpdatedOn,
                 status,
-                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>(),
-                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackend>(),
-                databaseConnections ?? new ChangeTrackingList<DatabaseConnectionOverview>(),
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackendInfo>(),
+                databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>(),
                 additionalBinaryDataProperties);
         }
     }

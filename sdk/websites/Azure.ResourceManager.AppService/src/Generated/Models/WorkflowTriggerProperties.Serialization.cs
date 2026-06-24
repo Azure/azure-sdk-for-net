@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? lastExecutionOn = default;
             DateTimeOffset? nextExecutionOn = default;
             WorkflowTriggerRecurrence recurrence = default;
-            ResourceReference workflow = default;
+            WorkflowResourceReference workflow = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    workflow = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    workflow = WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Using SDK?. </summary>
         [WirePath("properties.using_sdk")]
-        public bool? UsingSdk
+        public bool? IsUsingSdk
         {
             get
             {
-                return Properties is null ? default : Properties.UsingSdk;
+                return Properties is null ? default : Properties.IsUsingSdk;
             }
         }
 

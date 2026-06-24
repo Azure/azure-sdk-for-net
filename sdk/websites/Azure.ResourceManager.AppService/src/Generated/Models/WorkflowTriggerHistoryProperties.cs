@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="correlation"> The run correlation. </param>
         /// <param name="inputsLink"> Gets the link to input parameters. </param>
         /// <param name="outputsLink"> Gets the link to output parameters. </param>
-        /// <param name="fired"> The value indicating whether trigger was fired. </param>
+        /// <param name="isFired"> The value indicating whether trigger was fired. </param>
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, ContentLink inputsLink, ContentLink outputsLink, bool? fired, ResourceReference run, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? scheduledOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, Correlation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, bool? isFired, WorkflowResourceReference run, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
             Correlation = correlation;
             InputsLink = inputsLink;
             OutputsLink = outputsLink;
-            Fired = fired;
+            IsFired = isFired;
             Run = run;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -113,19 +113,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the link to input parameters. </summary>
         [WirePath("inputsLink")]
-        public ContentLink InputsLink { get; }
+        public WebAppContentLink InputsLink { get; }
 
         /// <summary> Gets the link to output parameters. </summary>
         [WirePath("outputsLink")]
-        public ContentLink OutputsLink { get; }
+        public WebAppContentLink OutputsLink { get; }
 
         /// <summary> The value indicating whether trigger was fired. </summary>
         [WirePath("fired")]
-        public bool? Fired { get; }
+        public bool? IsFired { get; }
 
         /// <summary> Gets the reference to workflow run. </summary>
         [WirePath("run")]
-        public ResourceReference Run { get; }
+        public WorkflowResourceReference Run { get; }
 
         /// <summary> The client tracking id. </summary>
         [WirePath("correlation.clientTrackingId")]

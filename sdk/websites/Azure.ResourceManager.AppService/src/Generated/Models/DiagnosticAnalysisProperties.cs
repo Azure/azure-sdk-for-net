@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal DiagnosticAnalysisProperties()
         {
             AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
-            Payload = new ChangeTrackingList<AnalysisData>();
+            Payload = new ChangeTrackingList<AnalysisDetectorEvidences>();
             NonCorrelatedDetectors = new ChangeTrackingList<DetectorDefinition>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="payload"> Data by each detector. </param>
         /// <param name="nonCorrelatedDetectors"> Data by each detector for detectors that did not corelate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticAnalysisProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisData> payload, IList<DetectorDefinition> nonCorrelatedDetectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticAnalysisProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisDetectorEvidences> payload, IList<DetectorDefinition> nonCorrelatedDetectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Data by each detector. </summary>
         [WirePath("payload")]
-        public IList<AnalysisData> Payload { get; } = new ChangeTrackingList<AnalysisData>();
+        public IList<AnalysisDetectorEvidences> Payload { get; } = new ChangeTrackingList<AnalysisDetectorEvidences>();
 
         /// <summary> Data by each detector for detectors that did not corelate. </summary>
         [WirePath("nonCorrelatedDetectors")]

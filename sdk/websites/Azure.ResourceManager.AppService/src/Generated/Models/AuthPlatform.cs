@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
-        /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// If the path is relative, base will the site's root directory.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthPlatform(bool? enabled, string runtimeVersion, string configFilePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             ConfigFilePath = configFilePath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary>
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.

@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         public OpenAuthenticationAccessPolicies()
         {
-            Policies = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
+            OpenAuthenticationPolicyList = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
-        /// <param name="policies"> Open authentication policies. </param>
+        /// <param name="openAuthenticationPolicyList"> Open authentication policies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Policies = policies;
+            OpenAuthenticationPolicyList = openAuthenticationPolicyList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Open authentication policies. </summary>
         [WirePath("policies")]
-        public IDictionary<string, OpenAuthenticationAccessPolicy> Policies { get; }
+        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get; }
     }
 }

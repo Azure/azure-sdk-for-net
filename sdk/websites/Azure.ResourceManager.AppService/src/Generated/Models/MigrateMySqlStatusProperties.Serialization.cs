@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalMySqlEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsLocalMySqlEnabled))
             {
                 writer.WritePropertyName("localMySqlEnabled"u8);
-                writer.WriteBooleanValue(LocalMySqlEnabled.Value);
+                writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            OperationStatus? migrationOperationStatus = default;
+            AppServiceOperationStatus? migrationOperationStatus = default;
             string operationId = default;
-            bool? localMySqlEnabled = default;
+            bool? isLocalMySqlEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    migrationOperationStatus = prop.Value.GetString().ToOperationStatus();
+                    migrationOperationStatus = prop.Value.GetString().ToAppServiceOperationStatus();
                     continue;
                 }
                 if (prop.NameEquals("operationId"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    localMySqlEnabled = prop.Value.GetBoolean();
+                    isLocalMySqlEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrateMySqlStatusProperties(migrationOperationStatus, operationId, localMySqlEnabled, additionalBinaryDataProperties);
+            return new MigrateMySqlStatusProperties(migrationOperationStatus, operationId, isLocalMySqlEnabled, additionalBinaryDataProperties);
         }
     }
 }

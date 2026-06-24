@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Whether the deployment operation has completed. </summary>
         [WirePath("properties.complete")]
-        public bool? Complete
+        public bool? IsComplete
         {
             get
             {
-                return Properties is null ? default : Properties.Complete;
+                return Properties is null ? default : Properties.IsComplete;
             }
         }
     }

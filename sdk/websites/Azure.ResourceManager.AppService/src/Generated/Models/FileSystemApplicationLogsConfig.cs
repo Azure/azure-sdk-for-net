@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="FileSystemApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemApplicationLogsConfig(LogLevel? level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSystemApplicationLogsConfig(WebAppLogLevel? level, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Level = level;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Log level. </summary>
         [WirePath("level")]
-        public LogLevel? Level { get; set; }
+        public WebAppLogLevel? Level { get; set; }
     }
 }

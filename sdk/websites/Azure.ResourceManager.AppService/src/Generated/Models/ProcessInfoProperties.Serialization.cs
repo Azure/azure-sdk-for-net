@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Threads))
+            if (Optional.IsCollectionDefined(ProcessThreads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
-                foreach (ProcessThreadInfo item in Threads)
+                foreach (WebAppProcessThreadInfo item in ProcessThreads)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService.Models
             double? iisProfileTimeoutInSeconds = default;
             string parent = default;
             IList<string> children = default;
-            IList<ProcessThreadInfo> threads = default;
+            IList<WebAppProcessThreadInfo> processThreads = default;
             IList<string> openFileHandles = default;
             IList<ProcessModuleInfoData> modules = default;
             string fileName = default;
@@ -459,12 +459,12 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
+                    List<WebAppProcessThreadInfo> array = new List<WebAppProcessThreadInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item, options));
+                        array.Add(WebAppProcessThreadInfo.DeserializeWebAppProcessThreadInfo(item, options));
                     }
-                    threads = array;
+                    processThreads = array;
                     continue;
                 }
                 if (prop.NameEquals("open_file_handles"u8))
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Models
                 iisProfileTimeoutInSeconds,
                 parent,
                 children ?? new ChangeTrackingList<string>(),
-                threads ?? new ChangeTrackingList<ProcessThreadInfo>(),
+                processThreads ?? new ChangeTrackingList<WebAppProcessThreadInfo>(),
                 openFileHandles ?? new ChangeTrackingList<string>(),
                 modules ?? new ChangeTrackingList<ProcessModuleInfoData>(),
                 fileName,

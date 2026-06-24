@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="PublicCertificateProperties"/>. </summary>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCertificateProperties(BinaryData blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCertificateProperties(BinaryData blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Certificate Thumbprint. </summary>
         [WirePath("thumbprint")]
-        public string Thumbprint { get; }
+        public string ThumbprintString { get; }
     }
 }

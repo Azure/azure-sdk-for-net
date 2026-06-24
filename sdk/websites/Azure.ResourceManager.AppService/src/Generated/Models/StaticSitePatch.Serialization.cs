@@ -14,12 +14,12 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
-    public partial class StaticSitePatch : IJsonModel<StaticSitePatch>
+    /// <summary> ARM resource for a static site when patching. </summary>
+    public partial class StaticSitePatch : ProxyOnlyResource, IJsonModel<StaticSitePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticSitePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProxyOnlyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSitePatch IPersistableModel<StaticSitePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StaticSitePatch IPersistableModel<StaticSitePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (StaticSitePatch)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSitePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -78,42 +78,28 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StaticSitePatch)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSitePatch IJsonModel<StaticSitePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StaticSitePatch IJsonModel<StaticSitePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StaticSitePatch)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StaticSitePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProxyOnlyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -132,17 +118,41 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DatabaseConnectionPatchRequestProperties properties = default;
+            string id = default;
+            string stackName = default;
+            string kind = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StaticSiteProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    stackName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = DatabaseConnectionPatchRequestProperties.DeserializeDatabaseConnectionPatchRequestProperties(prop.Value, options);
+                    properties = StaticSiteProperties.DeserializeStaticSiteProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +160,13 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StaticSitePatch(properties, additionalBinaryDataProperties);
+            return new StaticSitePatch(
+                id,
+                stackName,
+                kind,
+                @type,
+                additionalBinaryDataProperties,
+                properties);
         }
     }
 }

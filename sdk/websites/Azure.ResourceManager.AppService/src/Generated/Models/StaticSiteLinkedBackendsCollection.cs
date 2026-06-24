@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendsCollection"/>. </summary>
         /// <param name="value"> The StaticSiteLinkedBackendARMResource items on this page. </param>
-        internal StaticSiteLinkedBackendsCollection(IEnumerable<StaticSiteLinkedBackendARMResourceData> value)
+        internal StaticSiteLinkedBackendsCollection(IEnumerable<StaticSiteLinkedBackendData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> The StaticSiteLinkedBackendARMResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteLinkedBackendsCollection(IList<StaticSiteLinkedBackendARMResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteLinkedBackendsCollection(IList<StaticSiteLinkedBackendData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The StaticSiteLinkedBackendARMResource items on this page. </summary>
         [WirePath("value")]
-        public IList<StaticSiteLinkedBackendARMResourceData> Value { get; }
+        public IList<StaticSiteLinkedBackendData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

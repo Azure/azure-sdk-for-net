@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal GlobalCsmSkuDescription()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
-            Capabilities = new ChangeTrackingList<Models.AppServiceSkuCapability>();
+            Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="locations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, Models.AppServiceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<Models.AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, AppServiceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Min, max, and default scale values of the SKU. </summary>
         [WirePath("capacity")]
-        public Models.AppServiceSkuCapacity Capacity { get; }
+        public AppServiceSkuCapacity Capacity { get; }
 
         /// <summary> Locations of the SKU. </summary>
         [WirePath("locations")]
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
         [WirePath("capabilities")]
-        public IReadOnlyList<Models.AppServiceSkuCapability> Capabilities { get; }
+        public IReadOnlyList<AppServiceSkuCapability> Capabilities { get; }
     }
 }

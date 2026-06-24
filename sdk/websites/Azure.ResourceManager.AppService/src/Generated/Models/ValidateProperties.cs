@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
         /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateProperties(string serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, string containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironment appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateProperties(string serverFarmId, string skuName, bool? needLinuxWorkers, bool? isSpot, int? capacity, string hostingEnvironment, bool? isXenon, string containerRegistryBaseUri, string containerRegistryUsername, string containerRegistryPassword, string containerImageRepository, string containerImageTag, string containerImagePlatform, AppServiceEnvironmentProperties appServiceEnvironment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerFarmId = serverFarmId;
             SkuName = skuName;
@@ -111,6 +111,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> App Service Environment Properties. </summary>
         [WirePath("appServiceEnvironment")]
-        public AppServiceEnvironment AppServiceEnvironment { get; set; }
+        public AppServiceEnvironmentProperties AppServiceEnvironment { get; set; }
     }
 }

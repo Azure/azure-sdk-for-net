@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ResourceHealthMetadataCollection result = ResourceHealthMetadataCollection.FromResponse(response);
+                ResourceHealthMetadataListResult result = ResourceHealthMetadataListResult.FromResponse(response);
                 yield return Page<ResourceHealthMetadataData>.FromValues((IReadOnlyList<ResourceHealthMetadataData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

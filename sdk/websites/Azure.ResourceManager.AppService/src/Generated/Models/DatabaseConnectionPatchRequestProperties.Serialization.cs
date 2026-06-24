@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(DatabaseConnectionPatchRequestProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(DatabaseConnectionResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WriteStringValue(DatabaseConnectionResourceId);
             }
             if (Optional.IsDefined(ConnectionIdentity))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string resourceId = default;
+            string databaseConnectionResourceId = default;
             string connectionIdentity = default;
             string connectionString = default;
             string region = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    databaseConnectionResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("connectionIdentity"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseConnectionPatchRequestProperties(resourceId, connectionIdentity, connectionString, region, additionalBinaryDataProperties);
+            return new DatabaseConnectionPatchRequestProperties(databaseConnectionResourceId, connectionIdentity, connectionString, region, additionalBinaryDataProperties);
         }
     }
 }

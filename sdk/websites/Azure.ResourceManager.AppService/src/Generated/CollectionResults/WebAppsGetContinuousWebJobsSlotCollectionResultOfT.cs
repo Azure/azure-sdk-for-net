@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                ContinuousWebJobCollection result = ContinuousWebJobCollection.FromResponse(response);
+                ContinuousWebJobListResult result = ContinuousWebJobListResult.FromResponse(response);
                 yield return Page<ContinuousWebJobData>.FromValues((IReadOnlyList<ContinuousWebJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

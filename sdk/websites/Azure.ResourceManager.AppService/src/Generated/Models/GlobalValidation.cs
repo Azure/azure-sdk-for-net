@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalValidation"/>. </summary>
-        /// <param name="requireAuthentication"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isAuthenticationRequired"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
         /// The default authentication provider to use when multiple providers are configured.
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalValidation(bool? requireAuthentication, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GlobalValidation(bool? isAuthenticationRequired, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RequireAuthentication = requireAuthentication;
+            IsAuthenticationRequired = isAuthenticationRequired;
             UnauthenticatedClientAction = unauthenticatedClientAction;
             RedirectToProvider = redirectToProvider;
             ExcludedPaths = excludedPaths;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("requireAuthentication")]
-        public bool? RequireAuthentication { get; set; }
+        public bool? IsAuthenticationRequired { get; set; }
 
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
         [WirePath("unauthenticatedClientAction")]

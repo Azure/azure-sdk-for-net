@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("outputsLink"u8);
                 writer.WriteObjectValue(OutputsLink, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Fired))
+            if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
                 writer.WritePropertyName("fired"u8);
-                writer.WriteBooleanValue(Fired.Value);
+                writer.WriteBooleanValue(IsFired.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService.Models
             BinaryData error = default;
             string trackingId = default;
             Correlation correlation = default;
-            ContentLink inputsLink = default;
-            ContentLink outputsLink = default;
-            bool? fired = default;
-            ResourceReference run = default;
+            WebAppContentLink inputsLink = default;
+            WebAppContentLink outputsLink = default;
+            bool? isFired = default;
+            WorkflowResourceReference run = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    inputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outputsLink"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    outputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fired"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    fired = prop.Value.GetBoolean();
+                    isFired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("run"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    run = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    run = WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppService.Models
                 correlation,
                 inputsLink,
                 outputsLink,
-                fired,
+                isFired,
                 run,
                 additionalBinaryDataProperties);
         }

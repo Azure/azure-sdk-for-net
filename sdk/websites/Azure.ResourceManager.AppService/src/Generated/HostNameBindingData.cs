@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Azure resource type. </summary>
         [WirePath("properties.azureResourceType")]
-        public AzureResourceType? AzureResourceType
+        public AppServiceResourceType? AzureResourceType
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Hostname type. </summary>
         [WirePath("properties.hostNameType")]
-        public HostNameType? HostNameType
+        public AppServiceHostNameType? HostNameType
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> SSL type. </summary>
         [WirePath("properties.sslState")]
-        public SslState? SslState
+        public HostNameBindingSslState? SslState
         {
             get
             {
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> SSL certificate thumbprint. </summary>
         [WirePath("properties.thumbprint")]
-        public string Thumbprint
+        public string ThumbprintString
         {
             get
             {
-                return Properties is null ? default : Properties.Thumbprint;
+                return Properties is null ? default : Properties.ThumbprintString;
             }
             set
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new HostNameBindingProperties();
                 }
-                Properties.Thumbprint = value;
+                Properties.ThumbprintString = value;
             }
         }
 

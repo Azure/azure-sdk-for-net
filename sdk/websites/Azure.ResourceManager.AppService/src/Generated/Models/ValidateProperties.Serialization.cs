@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService.Models
             string containerImageRepository = default;
             string containerImageTag = default;
             string containerImagePlatform = default;
-            AppServiceEnvironment appServiceEnvironment = default;
+            AppServiceEnvironmentProperties appServiceEnvironment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    appServiceEnvironment = AppServiceEnvironment.DeserializeAppServiceEnvironment(prop.Value, options);
+                    appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

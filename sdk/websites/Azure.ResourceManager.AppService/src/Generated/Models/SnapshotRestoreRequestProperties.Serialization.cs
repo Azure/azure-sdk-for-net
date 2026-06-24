@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteObjectValue(RecoverySource, options);
             }
             writer.WritePropertyName("overwrite"u8);
-            writer.WriteBooleanValue(Overwrite);
+            writer.WriteBooleanValue(CanOverwrite);
             if (Optional.IsDefined(RecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string snapshotTime = default;
             SnapshotRecoverySource recoverySource = default;
-            bool overwrite = default;
+            bool canOverwrite = default;
             bool? recoverConfiguration = default;
             bool? ignoreConflictingHostNames = default;
             bool? useDRSecondary = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("overwrite"u8))
                 {
-                    overwrite = prop.Value.GetBoolean();
+                    canOverwrite = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("recoverConfiguration"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SnapshotRestoreRequestProperties(
                 snapshotTime,
                 recoverySource,
-                overwrite,
+                canOverwrite,
                 recoverConfiguration,
                 ignoreConflictingHostNames,
                 useDRSecondary,

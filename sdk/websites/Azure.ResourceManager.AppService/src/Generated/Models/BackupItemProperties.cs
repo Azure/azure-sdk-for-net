@@ -20,39 +20,39 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="BackupItemProperties"/>. </summary>
         internal BackupItemProperties()
         {
-            Databases = new ChangeTrackingList<DatabaseBackupSetting>();
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupItemProperties"/>. </summary>
         /// <param name="backupId"> Id of the backup. </param>
         /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
         /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
-        /// <param name="name"> Name of this backup. </param>
+        /// <param name="backupName"> Name of this backup. </param>
         /// <param name="status"> Backup status. </param>
         /// <param name="sizeInBytes"> Size of the backup in bytes. </param>
-        /// <param name="created"> Timestamp of the backup creation. </param>
+        /// <param name="createdOn"> Timestamp of the backup creation. </param>
         /// <param name="log"> Details regarding this backup. Might contain an error message. </param>
         /// <param name="databases"> List of databases included in the backup. </param>
-        /// <param name="scheduled"> True if this backup has been created due to a schedule being triggered. </param>
-        /// <param name="lastRestoreTimeStamp"> Timestamp of a last restore operation which used this backup. </param>
-        /// <param name="finishedTimeStamp"> Timestamp when this backup finished. </param>
+        /// <param name="isScheduled"> True if this backup has been created due to a schedule being triggered. </param>
+        /// <param name="lastRestoreOn"> Timestamp of a last restore operation which used this backup. </param>
+        /// <param name="finishedOn"> Timestamp when this backup finished. </param>
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupItemProperties(int? backupId, string storageAccountUri, string blobName, string name, BackupItemStatus? status, long? sizeInBytes, DateTimeOffset? created, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? scheduled, DateTimeOffset? lastRestoreTimeStamp, DateTimeOffset? finishedTimeStamp, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupItemProperties(int? backupId, string storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
-            Name = name;
+            BackupName = backupName;
             Status = status;
             SizeInBytes = sizeInBytes;
-            Created = created;
+            CreatedOn = createdOn;
             Log = log;
             Databases = databases;
-            Scheduled = scheduled;
-            LastRestoreTimeStamp = lastRestoreTimeStamp;
-            FinishedTimeStamp = finishedTimeStamp;
+            IsScheduled = isScheduled;
+            LastRestoreOn = lastRestoreOn;
+            FinishedOn = finishedOn;
             CorrelationId = correlationId;
             WebsiteSizeInBytes = websiteSizeInBytes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of this backup. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string BackupName { get; }
 
         /// <summary> Backup status. </summary>
         [WirePath("status")]
-        public BackupItemStatus? Status { get; }
+        public WebAppBackupStatus? Status { get; }
 
         /// <summary> Size of the backup in bytes. </summary>
         [WirePath("sizeInBytes")]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Timestamp of the backup creation. </summary>
         [WirePath("created")]
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Details regarding this backup. Might contain an error message. </summary>
         [WirePath("log")]
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of databases included in the backup. </summary>
         [WirePath("databases")]
-        public IReadOnlyList<DatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<DatabaseBackupSetting>();
+        public IReadOnlyList<AppServiceDatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
 
         /// <summary> True if this backup has been created due to a schedule being triggered. </summary>
         [WirePath("scheduled")]
-        public bool? Scheduled { get; }
+        public bool? IsScheduled { get; }
 
         /// <summary> Timestamp of a last restore operation which used this backup. </summary>
         [WirePath("lastRestoreTimeStamp")]
-        public DateTimeOffset? LastRestoreTimeStamp { get; }
+        public DateTimeOffset? LastRestoreOn { get; }
 
         /// <summary> Timestamp when this backup finished. </summary>
         [WirePath("finishedTimeStamp")]
-        public DateTimeOffset? FinishedTimeStamp { get; }
+        public DateTimeOffset? FinishedOn { get; }
 
         /// <summary> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </summary>
         [WirePath("correlationId")]

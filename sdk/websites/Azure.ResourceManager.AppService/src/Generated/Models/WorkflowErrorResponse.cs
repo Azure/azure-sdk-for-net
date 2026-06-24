@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowErrorResponse"/>. </summary>
-        /// <param name="error"> The error properties. </param>
+        /// <param name="errorInfo"> The error properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowErrorResponse(ErrorProperties error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowErrorResponse(WebAppErrorProperties errorInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Error = error;
+            ErrorInfo = errorInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The error properties. </summary>
         [WirePath("error")]
-        public ErrorProperties Error { get; }
+        public WebAppErrorProperties ErrorInfo { get; }
     }
 }

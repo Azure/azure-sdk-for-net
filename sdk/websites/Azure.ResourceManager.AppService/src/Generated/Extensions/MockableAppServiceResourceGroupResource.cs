@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ResourceHealthMetadata ResourceHealthMetadataRestClient => _resourceHealthMetadataRestClient ??= new ResourceHealthMetadata(ResourceHealthMetadataClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
 
-        /// <summary> Gets a collection of AppServiceEnvironmentResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
-        public virtual AppServiceEnvironmentResourceCollection GetAppServiceEnvironmentResources()
+        /// <summary> Gets a collection of AppServiceEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironmentResource. </returns>
+        public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
-            return GetCachedClient(client => new AppServiceEnvironmentResourceCollection(client, Id));
+            return this.GetCachedClient(client => new AppServiceEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetAppServiceEnvironmentResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAppServiceEnvironments().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,18 +104,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppServiceEnvironmentResource> GetAppServiceEnvironmentResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetAppServiceEnvironmentResources().Get(name, cancellationToken);
+            return GetAppServiceEnvironments().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of StaticSiteARMResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of StaticSiteARMResources and their operations over a StaticSiteARMResource. </returns>
-        public virtual StaticSiteARMResourceCollection GetStaticSiteARMResources()
+        /// <summary> Gets a collection of StaticSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StaticSites and their operations over a StaticSiteResource. </returns>
+        public virtual StaticSiteCollection GetStaticSites()
         {
-            return GetCachedClient(client => new StaticSiteARMResourceCollection(client, Id));
+            return this.GetCachedClient(client => new StaticSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteARMResource>> GetStaticSiteARMResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSiteResource>> GetStaticSiteAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetStaticSiteARMResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetStaticSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,47 +169,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<StaticSiteARMResource> GetStaticSiteARMResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSiteResource> GetStaticSite(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetStaticSiteARMResources().Get(name, cancellationToken);
+            return GetStaticSites().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of WebSites in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WebSites and their operations over a WebSiteResource. </returns>
+        public virtual WebSiteCollection GetWebSites()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Description for Gets the details of a web, mobile, or API app.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Sites_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Name of the app. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetWebApps().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new WebSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -234,11 +205,40 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteResource>> GetWebSiteAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetWebApps().Get(name, cancellationToken);
+            return await GetWebSites().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the details of a web, mobile, or API app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Sites_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the app. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebSiteResource> GetWebSite(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetWebSites().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of AppServicePlans in the <see cref="ResourceGroupResource"/>. </summary>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateResponse>> ValidateAsync(ValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceValidateResult>> ValidateAsync(AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -533,9 +533,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), ValidateRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ValidateResponse> response = Response.FromValue(ValidateResponse.FromResponse(result), result);
+                Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> Request with the resources to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateResponse> Validate(ValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceValidateResult> Validate(AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -581,9 +581,9 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), ValidateRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateValidateRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), AppServiceValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ValidateResponse> response = Response.FromValue(ValidateResponse.FromResponse(result), result);
+                Response<AppServiceValidateResult> response = Response.FromValue(AppServiceValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class MicrosoftWebVnetInfoResourcesListVnetsAsyncCollectionResultOfT : AsyncPageable<VnetInfoResourceData>
+    internal partial class MicrosoftWebVnetInfoResourcesListVnetsAsyncCollectionResultOfT : AsyncPageable<AppServiceVirtualNetworkData>
     {
         private readonly AppServicePlans _client;
         private readonly Guid _subscriptionId;
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftWebVnetInfoResourcesListVnetsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<VnetInfoResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceVirtualNetworkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<VnetInfoResourceData> result = ParseArrayFromResponse(response);
-            yield return Page<VnetInfoResourceData>.FromValues(result, null, response);
+            IReadOnlyList<AppServiceVirtualNetworkData> result = ParseArrayFromResponse(response);
+            yield return Page<AppServiceVirtualNetworkData>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<VnetInfoResourceData> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<AppServiceVirtualNetworkData> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<VnetInfoResourceData> result = new List<VnetInfoResourceData>();
+            List<AppServiceVirtualNetworkData> result = new List<AppServiceVirtualNetworkData>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VnetInfoResourceData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<AppServiceVirtualNetworkData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
             }
             return result;
         }

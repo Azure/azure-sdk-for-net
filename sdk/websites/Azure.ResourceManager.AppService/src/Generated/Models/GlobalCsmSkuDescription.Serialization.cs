@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<Models.AppServiceSkuCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (Models.AppServiceSkuCapability item in Capabilities)
+                foreach (AppServiceSkuCapability item in Capabilities)
                 {
-                    writer.WriteObjectValue<Models.AppServiceSkuCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.AppService.Models
             string tier = default;
             string size = default;
             string family = default;
-            Models.AppServiceSkuCapacity capacity = default;
+            AppServiceSkuCapacity capacity = default;
             IReadOnlyList<AzureLocation> locations = default;
-            IReadOnlyList<Models.AppServiceSkuCapability> capabilities = default;
+            IReadOnlyList<AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    capacity = Models.AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(prop.Value, options);
+                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("locations"u8))
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.AppServiceSkuCapability> array = new List<Models.AppServiceSkuCapability>();
+                    List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
+                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                 family,
                 capacity,
                 locations ?? new ChangeTrackingList<AzureLocation>(),
-                capabilities ?? new ChangeTrackingList<Models.AppServiceSkuCapability>(),
+                capabilities ?? new ChangeTrackingList<AppServiceSkuCapability>(),
                 additionalBinaryDataProperties);
         }
     }

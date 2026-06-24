@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="code"> The workflow scope repetition code. </param>
         /// <param name="error"> Anything. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationResultProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, RunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationResultProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The correlation properties. </summary>
         [WirePath("correlation")]
-        public RunActionCorrelation Correlation { get; }
+        public WebAppRunActionCorrelation Correlation { get; }
 
         /// <summary> The status of the workflow scope repetition. </summary>
         [WirePath("status")]

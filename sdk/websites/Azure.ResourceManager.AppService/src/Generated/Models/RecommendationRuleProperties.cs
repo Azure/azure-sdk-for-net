@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationRuleProperties(string recommendationName, string displayName, string message, string recommendationId, string description, string actionName, NotificationLevel? level, Channels? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecommendationRuleProperties(string recommendationName, string displayName, string message, string recommendationId, string description, string actionName, NotificationLevel? level, RecommendationChannel? channels, IReadOnlyList<string> categoryTags, bool? isDynamic, string extensionName, string bladeName, string forwardLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecommendationName = recommendationName;
             DisplayName = displayName;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> List of available channels that this rule applies. </summary>
         [WirePath("channels")]
-        public Channels? Channels { get; }
+        public RecommendationChannel? Channels { get; }
 
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
         [WirePath("categoryTags")]

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowSku(WorkflowSkuName name, Models.WorkflowResourceReference plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowSku(WorkflowSkuName name, WorkflowResourceReference plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Plan = plan;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The reference to plan. </summary>
         [WirePath("plan")]
-        public Models.WorkflowResourceReference Plan { get; }
+        public WorkflowResourceReference Plan { get; }
     }
 }

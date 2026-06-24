@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, CertificateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, CertificateData.ToRequestContent(data), context);
+                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppCertificateData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<CertificateResource> operation = new AppServiceArmOperation<CertificateResource>(Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CertificateResource> CreateOrUpdate(WaitUntil waitUntil, string name, CertificateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CertificateResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, CertificateData.ToRequestContent(data), context);
+                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppCertificateData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 AppServiceArmOperation<CertificateResource> operation = new AppServiceArmOperation<CertificateResource>(Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Response<AppCertificateData> response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CertificateData, CertificateResource>(new CertificatesGetByResourceGroupAsyncCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetByResourceGroupAsyncCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CertificateData, CertificateResource>(new CertificatesGetByResourceGroupCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetByResourceGroupCollectionResultOfT(_certificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CertificateCollection.GetAll"), data => new CertificateResource(Client, data));
         }
 
         /// <summary>
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -412,14 +412,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -469,14 +469,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.AppService
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CertificateData> response = default;
+                Response<AppCertificateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CertificateData.FromResponse(result), result);
+                        response = Response.FromValue(AppCertificateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CertificateData)null, result);
+                        response = Response.FromValue((AppCertificateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

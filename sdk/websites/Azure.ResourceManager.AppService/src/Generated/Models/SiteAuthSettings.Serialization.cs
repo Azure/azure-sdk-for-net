@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.AppService.Models
             return RequestContent.Create(siteAuthSettings, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="SiteAuthSettings"/> from. </param>
-        internal static SiteAuthSettings FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SiteAuthSettings"/> from. </param>
+        internal static SiteAuthSettings FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSiteAuthSettings(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string id = default;
-            string name = default;
+            string stackName = default;
             string kind = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    stackName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             return new SiteAuthSettings(
                 id,
-                name,
+                stackName,
                 kind,
                 @type,
                 additionalBinaryDataProperties,

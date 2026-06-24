@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        /// <param name="applicationInsights"> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isApplicationInsights"> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// Example: All Linux Function Apps, need Use32BitWorkerProcess to be set to 0
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? applicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StackMajorVersion(string displayVersion, string runtimeVersion, bool? isDefault, IList<StackMinorVersion> minorVersions, bool? isApplicationInsights, bool? isPreview, bool? isDeprecated, bool? isHidden, IDictionary<string, BinaryData> appSettingsDictionary, IDictionary<string, BinaryData> siteConfigPropertiesDictionary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
-            ApplicationInsights = applicationInsights;
+            IsApplicationInsights = isApplicationInsights;
             IsPreview = isPreview;
             IsDeprecated = isDeprecated;
             IsHidden = isHidden;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("applicationInsights")]
-        public bool? ApplicationInsights { get; }
+        public bool? IsApplicationInsights { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("isPreview")]

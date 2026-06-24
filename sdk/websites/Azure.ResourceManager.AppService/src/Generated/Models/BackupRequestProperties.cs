@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.AppService.Models
             Argument.AssertNotNull(storageAccountUri, nameof(storageAccountUri));
 
             StorageAccountUri = storageAccountUri;
-            Databases = new ChangeTrackingList<DatabaseBackupSetting>();
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupRequestProperties"/>. </summary>
         /// <param name="backupName"> Name of the backup. </param>
-        /// <param name="enabled"> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </param>
+        /// <param name="isEnabled"> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </param>
         /// <param name="storageAccountUri"> SAS URL to the container. </param>
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupRequestProperties(string backupName, bool? enabled, string storageAccountUri, BackupSchedule backupSchedule, IList<DatabaseBackupSetting> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupRequestProperties(string backupName, bool? isEnabled, string storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupName = backupName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             StorageAccountUri = storageAccountUri;
             BackupSchedule = backupSchedule;
             Databases = databases;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> SAS URL to the container. </summary>
         [WirePath("storageAccountUrl")]
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
         [WirePath("backupSchedule")]
-        public BackupSchedule BackupSchedule { get; set; }
+        public WebAppBackupSchedule BackupSchedule { get; set; }
 
         /// <summary> Databases included in the backup. </summary>
         [WirePath("databases")]
-        public IList<DatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<DatabaseBackupSetting>();
+        public IList<AppServiceDatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
     }
 }

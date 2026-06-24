@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("consoleUrl"u8);
                 writer.WriteStringValue(ConsoleUri);
             }
-            if (Optional.IsDefined(HealthCheckUri))
+            if (Optional.IsDefined(HealthCheckUrlString))
             {
                 writer.WritePropertyName("healthCheckUrl"u8);
-                writer.WriteStringValue(HealthCheckUri);
+                writer.WriteStringValue(HealthCheckUrlString);
             }
             if (Optional.IsCollectionDefined(Containers))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
             string statusUri = default;
             string detectorUri = default;
             string consoleUri = default;
-            string healthCheckUri = default;
+            string healthCheckUrlString = default;
             IDictionary<string, ContainerInfo> containers = default;
             string physicalZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("healthCheckUrl"u8))
                 {
-                    healthCheckUri = prop.Value.GetString();
+                    healthCheckUrlString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containers"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService.Models
                 statusUri,
                 detectorUri,
                 consoleUri,
-                healthCheckUri,
+                healthCheckUrlString,
                 containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
                 physicalZone,
                 additionalBinaryDataProperties);

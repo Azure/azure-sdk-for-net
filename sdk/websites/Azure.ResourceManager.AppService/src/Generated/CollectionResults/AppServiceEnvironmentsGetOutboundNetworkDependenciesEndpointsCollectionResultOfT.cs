@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                OutboundEnvironmentEndpointCollection result = OutboundEnvironmentEndpointCollection.FromResponse(response);
+                OutboundEnvironmentEndpointListResult result = OutboundEnvironmentEndpointListResult.FromResponse(response);
                 yield return Page<OutboundEnvironmentEndpoint>.FromValues((IReadOnlyList<OutboundEnvironmentEndpoint>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

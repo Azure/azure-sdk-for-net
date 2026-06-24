@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue<Models.WebAppContentLink>(InputsLink, options);
+                writer.WriteObjectValue(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue<Models.WebAppContentLink>(OutputsLink, options);
+                writer.WriteObjectValue(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string name = default;
             BinaryData inputs = default;
-            Models.WebAppContentLink inputsLink = default;
+            WebAppContentLink inputsLink = default;
             BinaryData outputs = default;
-            Models.WebAppContentLink outputsLink = default;
+            WebAppContentLink outputsLink = default;
             DateTimeOffset? scheduledOn = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    inputsLink = Models.WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
+                    inputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    outputsLink = Models.WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
+                    outputsLink = WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledTime"u8))

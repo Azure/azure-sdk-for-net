@@ -63,50 +63,21 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UserResource"/>. </description>
+        /// <description> <see cref="PublishingUserResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
-        public virtual UserResource GetUser()
+        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
+        public virtual PublishingUserResource GetPublishingUser()
         {
-            return new UserResource(Client, Id.AppendProviderResource("Microsoft.Web", "publishingUsers", "web"));
+            return new PublishingUserResource(Client, Id.AppendProviderResource("Microsoft.Web", "publishingUsers", "web"));
         }
 
-        /// <summary> Gets a collection of SourceControls in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of SourceControls and their operations over a SourceControlResource. </returns>
-        public virtual SourceControlCollection GetSourceControls()
+        /// <summary> Gets a collection of AppServiceSourceControls in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of AppServiceSourceControls and their operations over a AppServiceSourceControlResource. </returns>
+        public virtual AppServiceSourceControlCollection GetAppServiceSourceControls()
         {
-            return GetCachedClient(client => new SourceControlCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Description for Gets source control token
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SourceControls_GetSourceControl. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceControlType"> Type of source control. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
-
-            return await GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new AppServiceSourceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -131,11 +102,40 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SourceControlResource> GetSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
 
-            return GetSourceControls().Get(sourceControlType, cancellationToken);
+            return await GetAppServiceSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets source control token
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_GetSourceControl. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlType"> Type of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppServiceSourceControlResource> GetAppServiceSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
+
+            return GetAppServiceSourceControls().Get(sourceControlType, cancellationToken);
         }
 
         /// <summary>

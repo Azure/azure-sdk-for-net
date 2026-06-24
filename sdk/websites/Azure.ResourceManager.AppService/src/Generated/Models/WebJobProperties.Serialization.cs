@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(UsingSdk))
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
-                writer.WriteBooleanValue(UsingSdk.Value);
+                writer.WriteBooleanValue(IsUsingSdk.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
             string extraInfoUri = default;
             WebJobType? webJobType = default;
             string error = default;
-            bool? usingSdk = default;
+            bool? isUsingSdk = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    usingSdk = prop.Value.GetBoolean();
+                    isUsingSdk = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppService.Models
                 extraInfoUri,
                 webJobType,
                 error,
-                usingSdk,
+                isUsingSdk,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);
         }

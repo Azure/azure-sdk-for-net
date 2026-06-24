@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="KubeEnvironmentPatch"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
+        /// <param name="stackName"> Resource Name. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> KubeEnvironmentPatchResource resource specific properties. </param>
-        internal KubeEnvironmentPatch(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, KubeEnvironmentPatchResourceProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal KubeEnvironmentPatch(string id, string stackName, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, KubeEnvironmentPatchResourceProperties properties) : base(id, stackName, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
         [WirePath("properties.internalLoadBalancerEnabled")]
-        public bool? InternalLoadBalancerEnabled
+        public bool? IsInternalLoadBalancerEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.InternalLoadBalancerEnabled;
+                return Properties is null ? default : Properties.IsInternalLoadBalancerEnabled;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new KubeEnvironmentPatchResourceProperties();
                 }
-                Properties.InternalLoadBalancerEnabled = value;
+                Properties.IsInternalLoadBalancerEnabled = value;
             }
         }
 

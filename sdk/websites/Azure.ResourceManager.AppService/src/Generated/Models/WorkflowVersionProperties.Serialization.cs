@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.AppService.Models
             FlowEndpointsConfiguration endpointsConfiguration = default;
             FlowAccessControlConfiguration accessControl = default;
             WorkflowSku sku = default;
-            ResourceReference integrationAccount = default;
+            WorkflowResourceReference integrationAccount = default;
             BinaryData definition = default;
-            IDictionary<string, WorkflowParameter> parameters = default;
+            IDictionary<string, WorkflowContent> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    integrationAccount = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    integrationAccount = WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    Dictionary<string, WorkflowParameter> dictionary = new Dictionary<string, WorkflowParameter>();
+                    Dictionary<string, WorkflowContent> dictionary = new Dictionary<string, WorkflowContent>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, WorkflowParameter.DeserializeWorkflowParameter(prop0.Value, options));
+                        dictionary.Add(prop0.Name, WorkflowContent.DeserializeWorkflowContent(prop0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService.Models
                 sku,
                 integrationAccount,
                 definition,
-                parameters ?? new ChangeTrackingDictionary<string, WorkflowParameter>(),
+                parameters ?? new ChangeTrackingDictionary<string, WorkflowContent>(),
                 additionalBinaryDataProperties);
         }
     }

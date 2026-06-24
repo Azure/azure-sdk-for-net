@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class DiagnosticsGetSiteAnalysesSlotCollectionResultOfT : Pageable<AnalysisDefinitionData>
+    internal partial class DiagnosticsGetSiteAnalysesSlotCollectionResultOfT : Pageable<WebSiteAnalysisDefinitionData>
     {
         private readonly Diagnostics _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DiagnosticsGetSiteAnalysesSlotCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AnalysisDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WebSiteAnalysisDefinitionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                DiagnosticAnalysisCollection result = DiagnosticAnalysisCollection.FromResponse(response);
-                yield return Page<AnalysisDefinitionData>.FromValues((IReadOnlyList<AnalysisDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                WebSiteAnalysisDefinitionListResult result = WebSiteAnalysisDefinitionListResult.FromResponse(response);
+                yield return Page<WebSiteAnalysisDefinitionData>.FromValues((IReadOnlyList<WebSiteAnalysisDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityType"u8);
-                writer.WriteObjectValue(IdentityType, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Details))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
             string vaultName = default;
             string secretName = default;
             string secretVersion = default;
-            ManagedServiceIdentity identityType = default;
+            ManagedServiceIdentity identity = default;
             string details = default;
             ApiKVReferencePropertiesSource? source = default;
             string activeVersion = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    identityType = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("details"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService.Models
                 vaultName,
                 secretName,
                 secretVersion,
-                identityType,
+                identity,
                 details,
                 source,
                 activeVersion,

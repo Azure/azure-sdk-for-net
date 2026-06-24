@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                SiteExtensionInfoCollection result = SiteExtensionInfoCollection.FromResponse(response);
+                SiteExtensionInfoListResult result = SiteExtensionInfoListResult.FromResponse(response);
                 yield return Page<SiteExtensionInfoData>.FromValues((IReadOnlyList<SiteExtensionInfoData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

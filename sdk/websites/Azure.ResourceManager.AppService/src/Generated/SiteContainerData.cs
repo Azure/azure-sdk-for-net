@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Auth Type. </summary>
         [WirePath("properties.authType")]
-        public AuthType? AuthType
+        public SiteContainerAuthType? AuthType
         {
             get
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> List of volume mounts. </summary>
         [WirePath("properties.volumeMounts")]
-        public IList<VolumeMount> VolumeMounts
+        public IList<SiteContainerVolumeMount> VolumeMounts
         {
             get
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> List of environment variables. </summary>
         [WirePath("properties.environmentVariables")]
-        public IList<EnvironmentVariable> EnvironmentVariables
+        public IList<WebAppEnvironmentVariable> EnvironmentVariables
         {
             get
             {

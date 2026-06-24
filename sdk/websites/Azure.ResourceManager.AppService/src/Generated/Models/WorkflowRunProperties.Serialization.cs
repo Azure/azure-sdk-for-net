@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.AppService.Models
             BinaryData error = default;
             string correlationId = default;
             Correlation correlation = default;
-            ResourceReference workflow = default;
+            WorkflowResourceReference workflow = default;
             WorkflowRunTrigger trigger = default;
-            IReadOnlyDictionary<string, WorkflowOutputParameter> outputs = default;
+            IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default;
             WorkflowRunTrigger response = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    workflow = ResourceReference.DeserializeResourceReference(prop.Value, options);
+                    workflow = WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trigger"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    Dictionary<string, WorkflowOutputParameter> dictionary = new Dictionary<string, WorkflowOutputParameter>();
+                    Dictionary<string, WorkflowOutputContent> dictionary = new Dictionary<string, WorkflowOutputContent>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, WorkflowOutputParameter.DeserializeWorkflowOutputParameter(prop0.Value, options));
+                        dictionary.Add(prop0.Name, WorkflowOutputContent.DeserializeWorkflowOutputContent(prop0.Value, options));
                     }
                     outputs = dictionary;
                     continue;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                 correlation,
                 workflow,
                 trigger,
-                outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputParameter>(),
+                outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputContent>(),
                 response,
                 additionalBinaryDataProperties);
         }

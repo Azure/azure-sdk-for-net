@@ -17,7 +17,7 @@ using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal partial class MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT : Pageable<Capability>
+    internal partial class MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT : Pageable<AppServiceSkuCapability>
     {
         private readonly AppServicePlans _client;
         private readonly Guid _subscriptionId;
@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.AppService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<Capability>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AppServiceSkuCapability>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<Capability> result = ParseArrayFromResponse(response);
-            yield return Page<Capability>.FromValues(result, null, response);
+            IReadOnlyList<AppServiceSkuCapability> result = ParseArrayFromResponse(response);
+            yield return Page<AppServiceSkuCapability>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<Capability> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<AppServiceSkuCapability> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<Capability> result = new List<Capability>();
+            List<AppServiceSkuCapability> result = new List<AppServiceSkuCapability>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<Capability>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<AppServiceSkuCapability>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
             }
             return result;
         }

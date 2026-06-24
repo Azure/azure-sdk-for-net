@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> List of available channels that this rule applies. </summary>
         [WirePath("properties.channels")]
-        public Channels? Channels
+        public RecommendationChannel? Channels
         {
             get
             {

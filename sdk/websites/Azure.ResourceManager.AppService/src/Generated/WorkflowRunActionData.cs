@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The correlation properties. </summary>
         [WirePath("properties.correlation")]
-        public RunActionCorrelation Correlation
+        public WebAppRunActionCorrelation Correlation
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the link to inputs. </summary>
         [WirePath("properties.inputsLink")]
-        public ContentLink InputsLink
+        public WebAppContentLink InputsLink
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the link to outputs. </summary>
         [WirePath("properties.outputsLink")]
-        public ContentLink OutputsLink
+        public WebAppContentLink OutputsLink
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the retry histories. </summary>
         [WirePath("properties.retryHistory")]
-        public IList<RetryHistory> RetryHistory
+        public IList<WebAppRetryHistory> RetryHistory
         {
             get
             {

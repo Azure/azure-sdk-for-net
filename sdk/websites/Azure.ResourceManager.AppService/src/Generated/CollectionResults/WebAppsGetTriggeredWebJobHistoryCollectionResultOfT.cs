@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                TriggeredJobHistoryCollection result = TriggeredJobHistoryCollection.FromResponse(response);
+                TriggeredJobHistoryListResult result = TriggeredJobHistoryListResult.FromResponse(response);
                 yield return Page<TriggeredJobHistoryData>.FromValues((IReadOnlyList<TriggeredJobHistoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

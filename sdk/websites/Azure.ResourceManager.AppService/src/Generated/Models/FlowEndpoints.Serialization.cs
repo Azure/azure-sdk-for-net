@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (IpAddress item in OutgoingIpAddresses)
+                foreach (WebAppIPAddress item in OutgoingIpAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (IpAddress item in AccessEndpointIpAddresses)
+                foreach (WebAppIPAddress item in AccessEndpointIpAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<IpAddress> outgoingIpAddresses = default;
-            IList<IpAddress> accessEndpointIpAddresses = default;
+            IList<WebAppIPAddress> outgoingIpAddresses = default;
+            IList<WebAppIPAddress> accessEndpointIpAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IpAddress> array = new List<IpAddress>();
+                    List<WebAppIPAddress> array = new List<WebAppIPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpAddress.DeserializeIpAddress(item, options));
+                        array.Add(WebAppIPAddress.DeserializeWebAppIPAddress(item, options));
                     }
                     outgoingIpAddresses = array;
                     continue;
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IpAddress> array = new List<IpAddress>();
+                    List<WebAppIPAddress> array = new List<WebAppIPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpAddress.DeserializeIpAddress(item, options));
+                        array.Add(WebAppIPAddress.DeserializeWebAppIPAddress(item, options));
                     }
                     accessEndpointIpAddresses = array;
                     continue;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FlowEndpoints(outgoingIpAddresses ?? new ChangeTrackingList<IpAddress>(), accessEndpointIpAddresses ?? new ChangeTrackingList<IpAddress>(), additionalBinaryDataProperties);
+            return new FlowEndpoints(outgoingIpAddresses ?? new ChangeTrackingList<WebAppIPAddress>(), accessEndpointIpAddresses ?? new ChangeTrackingList<WebAppIPAddress>(), additionalBinaryDataProperties);
         }
     }
 }
