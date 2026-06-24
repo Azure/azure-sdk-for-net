@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the representation of topology. </summary>
     public partial class TopologyContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
         public TopologyContent()
@@ -56,44 +27,59 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
         /// <param name="targetVirtualNetwork"> The reference to the Virtual Network resource. </param>
         /// <param name="targetSubnet"> The reference to the Subnet resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyContent(string targetResourceGroupName, WritableSubResource targetVirtualNetwork, WritableSubResource targetSubnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TopologyContent(string targetResourceGroupName, NetworkSubResource targetVirtualNetwork, NetworkSubResource targetSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceGroupName = targetResourceGroupName;
             TargetVirtualNetwork = targetVirtualNetwork;
             TargetSubnet = targetSubnet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the target resource group to perform topology on. </summary>
         [WirePath("targetResourceGroupName")]
         public string TargetResourceGroupName { get; set; }
+
         /// <summary> The reference to the Virtual Network resource. </summary>
-        internal WritableSubResource TargetVirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        [WirePath("targetVirtualNetwork")]
+        internal NetworkSubResource TargetVirtualNetwork { get; set; }
+
+        /// <summary> The reference to the Subnet resource. </summary>
+        [WirePath("targetSubnet")]
+        internal NetworkSubResource TargetSubnet { get; set; }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("targetVirtualNetwork.id")]
         public ResourceIdentifier TargetVirtualNetworkId
         {
-            get => TargetVirtualNetwork is null ? default : TargetVirtualNetwork.Id;
+            get
+            {
+                return TargetVirtualNetwork is null ? default : TargetVirtualNetwork.Id;
+            }
             set
             {
                 if (TargetVirtualNetwork is null)
-                    TargetVirtualNetwork = new WritableSubResource();
+                {
+                    TargetVirtualNetwork = new NetworkSubResource();
+                }
                 TargetVirtualNetwork.Id = value;
             }
         }
 
-        /// <summary> The reference to the Subnet resource. </summary>
-        internal WritableSubResource TargetSubnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Resource ID. </summary>
         [WirePath("targetSubnet.id")]
         public ResourceIdentifier TargetSubnetId
         {
-            get => TargetSubnet is null ? default : TargetSubnet.Id;
+            get
+            {
+                return TargetSubnet is null ? default : TargetSubnet.Id;
+            }
             set
             {
                 if (TargetSubnet is null)
-                    TargetSubnet = new WritableSubResource();
+                {
+                    TargetSubnet = new NetworkSubResource();
+                }
                 TargetSubnet.Id = value;
             }
         }

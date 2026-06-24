@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated `Azure.ResourceManager.Dns` to TypeSpec-based code generation.
+
 ## 1.2.0-beta.4 (2026-06-09)
 
 ### Features Added

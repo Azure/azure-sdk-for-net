@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct InvoiceSectionStateReasonCode : IEquatable<InvoiceSectionStateReasonCode>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> PastDue. </summary>
+        private const string PastDueValue = "PastDue";
+        /// <summary> UnusualActivity. </summary>
+        private const string UnusualActivityValue = "UnusualActivity";
+        /// <summary> SpendingLimitReached. </summary>
+        private const string SpendingLimitReachedValue = "SpendingLimitReached";
+        /// <summary> SpendingLimitExpired. </summary>
+        private const string SpendingLimitExpiredValue = "SpendingLimitExpired";
 
         /// <summary> Initializes a new instance of <see cref="InvoiceSectionStateReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InvoiceSectionStateReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string PastDueValue = "PastDue";
-        private const string UnusualActivityValue = "UnusualActivity";
-        private const string SpendingLimitReachedValue = "SpendingLimitReached";
-        private const string SpendingLimitExpiredValue = "SpendingLimitExpired";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static InvoiceSectionStateReasonCode Other { get; } = new InvoiceSectionStateReasonCode(OtherValue);
+
         /// <summary> PastDue. </summary>
         public static InvoiceSectionStateReasonCode PastDue { get; } = new InvoiceSectionStateReasonCode(PastDueValue);
+
         /// <summary> UnusualActivity. </summary>
         public static InvoiceSectionStateReasonCode UnusualActivity { get; } = new InvoiceSectionStateReasonCode(UnusualActivityValue);
+
         /// <summary> SpendingLimitReached. </summary>
         public static InvoiceSectionStateReasonCode SpendingLimitReached { get; } = new InvoiceSectionStateReasonCode(SpendingLimitReachedValue);
+
         /// <summary> SpendingLimitExpired. </summary>
         public static InvoiceSectionStateReasonCode SpendingLimitExpired { get; } = new InvoiceSectionStateReasonCode(SpendingLimitExpiredValue);
+
         /// <summary> Determines if two <see cref="InvoiceSectionStateReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InvoiceSectionStateReasonCode left, InvoiceSectionStateReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InvoiceSectionStateReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InvoiceSectionStateReasonCode left, InvoiceSectionStateReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InvoiceSectionStateReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InvoiceSectionStateReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InvoiceSectionStateReasonCode(string value) => new InvoiceSectionStateReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InvoiceSectionStateReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InvoiceSectionStateReasonCode?(string value) => value == null ? null : new InvoiceSectionStateReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InvoiceSectionStateReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InvoiceSectionStateReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

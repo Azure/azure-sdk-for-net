@@ -100,7 +100,6 @@ Mode = FirewallPolicyIntrusionDetectionStateType.Deny,
 }},
                         BypassTrafficSettings = {new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
 {
-Name = "bypassRule1",
 Description = "Rule 1",
 Protocol = FirewallPolicyIntrusionDetectionProtocol.Tcp,
 SourceAddresses = {"1.2.3.4"},
@@ -112,7 +111,6 @@ DestinationPorts = {"*"},
                 TransportSecurityCertificateAuthority = new FirewallPolicyCertificateAuthority
                 {
                     KeyVaultSecretId = "https://kv/secret",
-                    Name = "clientcert",
                 },
                 SkuTier = FirewallPolicySkuTier.Premium,
                 Location = new AzureLocation("West US"),
@@ -121,7 +119,7 @@ DestinationPorts = {"*"},
 ["key1"] = "value1"
 },
             };
-            ArmOperation<FirewallPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallPolicyName, data);
+            ArmOperation<FirewallPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallPolicyName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

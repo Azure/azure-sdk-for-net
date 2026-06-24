@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitAuthorizationResource expressRouteCircuitAuthorization = client.GetExpressRouteCircuitAuthorizationResource(expressRouteCircuitAuthorizationResourceId);
 
             // invoke the operation
-            await expressRouteCircuitAuthorization.DeleteAsync(WaitUntil.Completed);
+            await expressRouteCircuitAuthorization.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ExpressRouteCircuitAuthorizationData data = new ExpressRouteCircuitAuthorizationData();
-            ArmOperation<ExpressRouteCircuitAuthorizationResource> lro = await expressRouteCircuitAuthorization.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRouteCircuitAuthorizationResource> lro = await expressRouteCircuitAuthorization.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitAuthorizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

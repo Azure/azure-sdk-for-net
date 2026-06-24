@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,11 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryIntegrationRuntimeDebugInfo : DataFactoryDebugInfo
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeDebugInfo"/>. </summary>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
-        /// </param>
+        /// <param name="properties"> Integration runtime properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFactoryIntegrationRuntimeDebugInfo(DataFactoryIntegrationRuntimeProperties properties)
         {
@@ -29,27 +26,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeDebugInfo"/>. </summary>
         /// <param name="name"> The resource name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
-        /// </param>
-        internal DataFactoryIntegrationRuntimeDebugInfo(string name, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryIntegrationRuntimeProperties properties) : base(name, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Integration runtime properties. </param>
+        internal DataFactoryIntegrationRuntimeDebugInfo(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryIntegrationRuntimeProperties properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeDebugInfo"/> for deserialization. </summary>
-        internal DataFactoryIntegrationRuntimeDebugInfo()
-        {
-        }
-
-        /// <summary>
-        /// Integration runtime properties.
-        /// Please note <see cref="DataFactoryIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
-        /// </summary>
+        /// <summary> Integration runtime properties. </summary>
         public DataFactoryIntegrationRuntimeProperties Properties { get; }
     }
 }

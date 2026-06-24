@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,187 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySslCipherSuite : IEquatable<ApplicationGatewaySslCipherSuite>
     {
         private readonly string _value;
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
+        private const string TLSECDHERSAWITHAES256CBCSHA384Value = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        private const string TLSECDHERSAWITHAES128CBCSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
+        private const string TLSECDHERSAWITHAES256CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
+        private const string TLSECDHERSAWITHAES128CBCSHAValue = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA";
+        /// <summary> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        private const string TLSDHERSAWITHAES256GCMSHA384Value = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384";
+        /// <summary> TLS_DHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        private const string TLSDHERSAWITHAES128GCMSHA256Value = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256";
+        /// <summary> TLS_DHE_RSA_WITH_AES_256_CBC_SHA. </summary>
+        private const string TLSDHERSAWITHAES256CBCSHAValue = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA";
+        /// <summary> TLS_DHE_RSA_WITH_AES_128_CBC_SHA. </summary>
+        private const string TLSDHERSAWITHAES128CBCSHAValue = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA";
+        /// <summary> TLS_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        private const string TLSRSAWITHAES256GCMSHA384Value = "TLS_RSA_WITH_AES_256_GCM_SHA384";
+        /// <summary> TLS_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        private const string TLSRSAWITHAES128GCMSHA256Value = "TLS_RSA_WITH_AES_128_GCM_SHA256";
+        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA256. </summary>
+        private const string TLSRSAWITHAES256CBCSHA256Value = "TLS_RSA_WITH_AES_256_CBC_SHA256";
+        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        private const string TLSRSAWITHAES128CBCSHA256Value = "TLS_RSA_WITH_AES_128_CBC_SHA256";
+        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA. </summary>
+        private const string TLSRSAWITHAES256CBCSHAValue = "TLS_RSA_WITH_AES_256_CBC_SHA";
+        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA. </summary>
+        private const string TLSRSAWITHAES128CBCSHAValue = "TLS_RSA_WITH_AES_128_CBC_SHA";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
+        private const string TLSECDHEECDSAWITHAES256GCMSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
+        private const string TLSECDHEECDSAWITHAES128GCMSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384. </summary>
+        private const string TLSECDHEECDSAWITHAES256CBCSHA384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
+        private const string TLSECDHEECDSAWITHAES128CBCSHA256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA. </summary>
+        private const string TLSECDHEECDSAWITHAES256CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA";
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA. </summary>
+        private const string TLSECDHEECDSAWITHAES128CBCSHAValue = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA";
+        /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256. </summary>
+        private const string TLSDHEDSSWITHAES256CBCSHA256Value = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256";
+        /// <summary> TLS_DHE_DSS_WITH_AES_128_CBC_SHA256. </summary>
+        private const string TLSDHEDSSWITHAES128CBCSHA256Value = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256";
+        /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA. </summary>
+        private const string TLSDHEDSSWITHAES256CBCSHAValue = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA";
+        /// <summary> TLS_DHE_DSS_WITH_AES_128_CBC_SHA. </summary>
+        private const string TLSDHEDSSWITHAES128CBCSHAValue = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA";
+        /// <summary> TLS_RSA_WITH_3DES_EDE_CBC_SHA. </summary>
+        private const string TLSRSAWITH3DESEDECBCSHAValue = "TLS_RSA_WITH_3DES_EDE_CBC_SHA";
+        /// <summary> TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA. </summary>
+        private const string TLSDHEDSSWITH3DESEDECBCSHAValue = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        private const string TLSECDHERSAWITHAES128GCMSHA256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        private const string TLSECDHERSAWITHAES256GCMSHA384Value = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySslCipherSuite(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TlsECDiffieHellmanRsaWithAes256CbcSha384Value = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384";
-        private const string TlsECDiffieHellmanRsaWithAes128CbcSha256Value = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256";
-        private const string TlsECDiffieHellmanRsaWithAes256CbcShaValue = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA";
-        private const string TlsECDiffieHellmanRsaWithAes128CbcShaValue = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA";
-        private const string TlsDHERsaWithAes256GcmSha384Value = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384";
-        private const string TlsDHERsaWithAes128GcmSha256Value = "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256";
-        private const string TlsDHERsaWithAes256CbcShaValue = "TLS_DHE_RSA_WITH_AES_256_CBC_SHA";
-        private const string TlsDHERsaWithAes128CbcShaValue = "TLS_DHE_RSA_WITH_AES_128_CBC_SHA";
-        private const string TlsRsaWithAes256GcmSha384Value = "TLS_RSA_WITH_AES_256_GCM_SHA384";
-        private const string TlsRsaWithAes128GcmSha256Value = "TLS_RSA_WITH_AES_128_GCM_SHA256";
-        private const string TlsRsaWithAes256CbcSha256Value = "TLS_RSA_WITH_AES_256_CBC_SHA256";
-        private const string TlsRsaWithAes128CbcSha256Value = "TLS_RSA_WITH_AES_128_CBC_SHA256";
-        private const string TlsRsaWithAes256CbcShaValue = "TLS_RSA_WITH_AES_256_CBC_SHA";
-        private const string TlsRsaWithAes128CbcShaValue = "TLS_RSA_WITH_AES_128_CBC_SHA";
-        private const string TlsECDiffieHellmanECDsaWithAes256GcmSha384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384";
-        private const string TlsECDiffieHellmanECDsaWithAes128GcmSha256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256";
-        private const string TlsECDiffieHellmanECDsaWithAes256CbcSha384Value = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384";
-        private const string TlsECDiffieHellmanECDsaWithAes128CbcSha256Value = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256";
-        private const string TlsECDiffieHellmanECDsaWithAes256CbcShaValue = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA";
-        private const string TlsECDiffieHellmanECDsaWithAes128CbcShaValue = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA";
-        private const string TlsDheDssWithAes256CbcSha256Value = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256";
-        private const string TlsDheDssWithAes128CbcSha256Value = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA256";
-        private const string TlsDheDssWithAes256CbcShaValue = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA";
-        private const string TlsDheDssWithAes128CbcShaValue = "TLS_DHE_DSS_WITH_AES_128_CBC_SHA";
-        private const string TlsRsaWith3DesEdeCbcShaValue = "TLS_RSA_WITH_3DES_EDE_CBC_SHA";
-        private const string TlsDheDssWith3DesEdeCbcShaValue = "TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA";
-        private const string TlsECDiffieHellmanRsaWithAes128GcmSha256Value = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256";
-        private const string TlsECDiffieHellmanRsaWithAes256GcmSha384Value = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384";
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHA384Value);
+
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHA256Value);
+
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256CBCSHAValue);
+
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128CBCSHAValue);
+
+        /// <summary> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHERSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSDHERSAWITHAES256GCMSHA384Value);
+
+        /// <summary> TLS_DHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHERSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSDHERSAWITHAES128GCMSHA256Value);
+
+        /// <summary> TLS_DHE_RSA_WITH_AES_256_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHERSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSDHERSAWITHAES256CBCSHAValue);
+
+        /// <summary> TLS_DHE_RSA_WITH_AES_128_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHERSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSDHERSAWITHAES128CBCSHAValue);
+
+        /// <summary> TLS_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES256GCMSHA384Value);
+
+        /// <summary> TLS_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES128GCMSHA256Value);
+
+        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES256CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES256CBCSHA256Value);
+
+        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES128CBCSHA256Value);
+
+        /// <summary> TLS_RSA_WITH_AES_256_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES256CBCSHAValue);
+
+        /// <summary> TLS_RSA_WITH_AES_128_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITHAES128CBCSHAValue);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256GCMSHA384Value);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128GCMSHA256Value);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHA384Value);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHA256Value);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES256CBCSHAValue);
+
+        /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHEECDSAWITHAES128CBCSHAValue);
+
+        /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHEDSSWITHAES256CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSDHEDSSWITHAES256CBCSHA256Value);
+
+        /// <summary> TLS_DHE_DSS_WITH_AES_128_CBC_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHEDSSWITHAES128CBCSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSDHEDSSWITHAES128CBCSHA256Value);
+
+        /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHEDSSWITHAES256CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSDHEDSSWITHAES256CBCSHAValue);
+
+        /// <summary> TLS_DHE_DSS_WITH_AES_128_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHEDSSWITHAES128CBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSDHEDSSWITHAES128CBCSHAValue);
+
+        /// <summary> TLS_RSA_WITH_3DES_EDE_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSRSAWITH3DESEDECBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSRSAWITH3DESEDECBCSHAValue);
+
+        /// <summary> TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSDHEDSSWITH3DESEDECBCSHA { get; } = new ApplicationGatewaySslCipherSuite(TLSDHEDSSWITH3DESEDECBCSHAValue);
+
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128GCMSHA256 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES128GCMSHA256Value);
+
+        /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
+        public static ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256GCMSHA384 { get; } = new ApplicationGatewaySslCipherSuite(TLSECDHERSAWITHAES256GCMSHA384Value);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslCipherSuite"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySslCipherSuite left, ApplicationGatewaySslCipherSuite right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslCipherSuite"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySslCipherSuite left, ApplicationGatewaySslCipherSuite right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySslCipherSuite(string value) => new ApplicationGatewaySslCipherSuite(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslCipherSuite"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySslCipherSuite?(string value) => value == null ? null : new ApplicationGatewaySslCipherSuite(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySslCipherSuite other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySslCipherSuite other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

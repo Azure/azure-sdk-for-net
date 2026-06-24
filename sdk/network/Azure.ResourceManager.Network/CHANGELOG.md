@@ -1,6 +1,6 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.17.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.16.0 (2026-06-22)
+
+### Features Added
+
+- Upgraded api-version to 2025-07-01.
+
+### Breaking Changes
+
+- This is the first GA release generated from TypeSpec. Some obsolete APIs were added as migration compatibility shims and are not supported by the TypeSpec-generated SDK; please review obsolete messages for replacement guidance.
+
+### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
 
 ## 1.15.0 (2026-02-02)
 
@@ -450,7 +464,6 @@ VirtualNetworkData vnet = new VirtualNetworkData()
 vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
 vnet.Subnets.Add(new SubnetData
 {
-    Name = "mySubnet",
     AddressPrefix = "10.0.0.0/24",
 });
 

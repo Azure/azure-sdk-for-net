@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCrossConnectionPeering data model.
-    /// Peering in an ExpressRoute Cross Connection resource.
-    /// </summary>
+    /// <summary> Peering in an ExpressRoute Cross Connection resource. </summary>
     public partial class ExpressRouteCrossConnectionPeeringData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
@@ -25,92 +23,253 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="peeringType"> The peering type. </param>
-        /// <param name="state"> The peering state. </param>
-        /// <param name="azureASN"> The Azure ASN. </param>
-        /// <param name="peerASN"> The peer ASN. </param>
-        /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
-        /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
-        /// <param name="primaryAzurePort"> The primary port. </param>
-        /// <param name="secondaryAzurePort"> The secondary port. </param>
-        /// <param name="sharedKey"> The shared key. </param>
-        /// <param name="vlanId"> The VLAN ID. </param>
-        /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route cross connection peering resource. </param>
-        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
-        /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
-        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
-        internal ExpressRouteCrossConnectionPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route cross connection peering. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteCrossConnectionPeeringData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteCrossConnectionPeeringProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            PeeringType = peeringType;
-            State = state;
-            AzureASN = azureASN;
-            PeerASN = peerASN;
-            PrimaryPeerAddressPrefix = primaryPeerAddressPrefix;
-            SecondaryPeerAddressPrefix = secondaryPeerAddressPrefix;
-            PrimaryAzurePort = primaryAzurePort;
-            SecondaryAzurePort = secondaryAzurePort;
-            SharedKey = sharedKey;
-            VlanId = vlanId;
-            MicrosoftPeeringConfig = microsoftPeeringConfig;
-            ProvisioningState = provisioningState;
-            GatewayManagerETag = gatewayManagerETag;
-            LastModifiedBy = lastModifiedBy;
-            IPv6PeeringConfig = ipv6PeeringConfig;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the express route cross connection peering. </summary>
+        [WirePath("properties")]
+        internal ExpressRouteCrossConnectionPeeringProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The peering type. </summary>
         [WirePath("properties.peeringType")]
-        public ExpressRoutePeeringType? PeeringType { get; set; }
+        public ExpressRoutePeeringType? PeeringType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.PeeringType = value;
+            }
+        }
+
         /// <summary> The peering state. </summary>
         [WirePath("properties.state")]
-        public ExpressRoutePeeringState? State { get; set; }
+        public ExpressRoutePeeringState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> The Azure ASN. </summary>
         [WirePath("properties.azureASN")]
-        public int? AzureASN { get; }
+        public int? AzureASN
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureASN;
+            }
+        }
+
         /// <summary> The peer ASN. </summary>
         [WirePath("properties.peerASN")]
-        public long? PeerASN { get; set; }
+        public long? PeerASN
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerASN;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.PeerASN = value;
+            }
+        }
+
         /// <summary> The primary address prefix. </summary>
         [WirePath("properties.primaryPeerAddressPrefix")]
-        public string PrimaryPeerAddressPrefix { get; set; }
+        public string PrimaryPeerAddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryPeerAddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.PrimaryPeerAddressPrefix = value;
+            }
+        }
+
         /// <summary> The secondary address prefix. </summary>
         [WirePath("properties.secondaryPeerAddressPrefix")]
-        public string SecondaryPeerAddressPrefix { get; set; }
+        public string SecondaryPeerAddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryPeerAddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.SecondaryPeerAddressPrefix = value;
+            }
+        }
+
         /// <summary> The primary port. </summary>
         [WirePath("properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; }
+        public string PrimaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryAzurePort;
+            }
+        }
+
         /// <summary> The secondary port. </summary>
         [WirePath("properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; }
+        public string SecondaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryAzurePort;
+            }
+        }
+
         /// <summary> The shared key. </summary>
         [WirePath("properties.sharedKey")]
-        public string SharedKey { get; set; }
+        public string SharedKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SharedKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.SharedKey = value;
+            }
+        }
+
         /// <summary> The VLAN ID. </summary>
         [WirePath("properties.vlanId")]
-        public int? VlanId { get; set; }
+        public int? VlanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VlanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.VlanId = value;
+            }
+        }
+
         /// <summary> The Microsoft peering configuration. </summary>
         [WirePath("properties.microsoftPeeringConfig")]
-        public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
+        public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MicrosoftPeeringConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.MicrosoftPeeringConfig = value;
+            }
+        }
+
         /// <summary> The provisioning state of the express route cross connection peering resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The GatewayManager Etag. </summary>
         [WirePath("properties.gatewayManagerEtag")]
-        public string GatewayManagerETag { get; set; }
+        public string GatewayManagerEtag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayManagerEtag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.GatewayManagerEtag = value;
+            }
+        }
+
         /// <summary> Who was the last to modify the peering. </summary>
         [WirePath("properties.lastModifiedBy")]
-        public string LastModifiedBy { get; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+        }
+
         /// <summary> The IPv6 peering configuration. </summary>
         [WirePath("properties.ipv6PeeringConfig")]
-        public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
+        public IPv6ExpressRouteCircuitPeeringConfig Ipv6PeeringConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Ipv6PeeringConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionPeeringProperties();
+                }
+                Properties.Ipv6PeeringConfig = value;
+            }
+        }
     }
 }

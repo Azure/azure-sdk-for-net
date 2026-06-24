@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Network.Tests
 
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
             var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
-            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties1);
+            var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties1, System.Threading.CancellationToken.None);
             Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();
             ;
 
-            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties2);
+            var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties2, System.Threading.CancellationToken.None);
             Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();
             ;
 

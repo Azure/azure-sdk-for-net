@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Samples
             ReachabilityAnalysisRunResource reachabilityAnalysisRun = client.GetReachabilityAnalysisRunResource(reachabilityAnalysisRunResourceId);
 
             // invoke the operation
-            await reachabilityAnalysisRun.DeleteAsync(WaitUntil.Completed);
+            await reachabilityAnalysisRun.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Description = "A sample reachability analysis run",
             });
-            ArmOperation<ReachabilityAnalysisRunResource> lro = await reachabilityAnalysisRun.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ReachabilityAnalysisRunResource> lro = await reachabilityAnalysisRun.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ReachabilityAnalysisRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

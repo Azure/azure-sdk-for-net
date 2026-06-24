@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapCloudForCustomerSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSink"/>. </summary>
-        public SapCloudForCustomerSink()
+        public SapCloudForCustomerSink() : base("SapCloudForCustomerSink")
         {
-            CopySinkType = "SapCloudForCustomerSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerSink"/>. </summary>
@@ -28,18 +27,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="writeBehavior"> The write behavior for the operation. Default is 'Insert'. </param>
         /// <param name="httpRequestTimeout"> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         internal SapCloudForCustomerSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, SapCloudForCustomerSinkWriteBehavior? writeBehavior, DataFactoryElement<string> httpRequestTimeout) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             HttpRequestTimeout = httpRequestTimeout;
-            CopySinkType = copySinkType ?? "SapCloudForCustomerSink";
         }
 
         /// <summary> The write behavior for the operation. Default is 'Insert'. </summary>
         public SapCloudForCustomerSinkWriteBehavior? WriteBehavior { get; set; }
+
         /// <summary> The timeout (TimeSpan) to get an HTTP response. It is the timeout to get a response, not the timeout to read response data. Default value: 00:05:00. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </summary>
         public DataFactoryElement<string> HttpRequestTimeout { get; set; }
     }

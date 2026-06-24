@@ -7,50 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> network service design version properties. </summary>
     public partial class NetworkServiceDesignVersionPropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         public NetworkServiceDesignVersionPropertiesFormat()
         {
-            ConfigurationGroupSchemaReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
-            NfvisFromSite = new ChangeTrackingDictionary<string, NfviDetails>();
+            ReferencedConfigurationGroupSchemas = new ChangeTrackingDictionary<string, ReferencedResourceById>();
+            NfvisFromSite = new ChangeTrackingDictionary<string, NfviSiteDetails>();
             ResourceElementTemplates = new ChangeTrackingList<ResourceElementTemplate>();
         }
 
@@ -58,40 +29,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>
-        /// <param name="configurationGroupSchemaReferences"> The configuration schemas to used to define the values. </param>
+        /// <param name="referencedConfigurationGroupSchemas"> The configuration schemas to used to define the values. </param>
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
-        /// <param name="resourceElementTemplates">
-        /// List of resource element template
-        /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, WritableSubResource> configurationGroupSchemaReferences, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resourceElementTemplates"> List of resource element template. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas, IDictionary<string, NfviSiteDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
             Description = description;
-            ConfigurationGroupSchemaReferences = configurationGroupSchemaReferences;
+            ReferencedConfigurationGroupSchemas = referencedConfigurationGroupSchemas;
             NfvisFromSite = nfvisFromSite;
             ResourceElementTemplates = resourceElementTemplates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the network service design version resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> The network service design version state. </summary>
         public VersionState? VersionState { get; }
+
         /// <summary> The network service design version description. </summary>
         public string Description { get; set; }
+
         /// <summary> The configuration schemas to used to define the values. </summary>
-        public IDictionary<string, WritableSubResource> ConfigurationGroupSchemaReferences { get; }
+        public IDictionary<string, ReferencedResourceById> ReferencedConfigurationGroupSchemas { get; }
+
         /// <summary> The nfvis from the site. </summary>
-        public IDictionary<string, NfviDetails> NfvisFromSite { get; }
-        /// <summary>
-        /// List of resource element template
-        /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
-        /// </summary>
+        public IDictionary<string, NfviSiteDetails> NfvisFromSite { get; }
+
+        /// <summary> List of resource element template. </summary>
         public IList<ResourceElementTemplate> ResourceElementTemplates { get; }
     }
 }

@@ -1,0 +1,1 @@
+CannotRemoveAttribute : Attribute 'System.Diagnostics.CodeAnalysis.ExperimentalAttribute' exists on 'Azure.AI.Projects.Agents.HostedAgentDefinition' in the contract but not the implementation.

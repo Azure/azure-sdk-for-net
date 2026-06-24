@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnConnectionStatus : IEquatable<VpnConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Connecting. </summary>
+        private const string ConnectingValue = "Connecting";
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> NotConnected. </summary>
+        private const string NotConnectedValue = "NotConnected";
 
         /// <summary> Initializes a new instance of <see cref="VpnConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string ConnectingValue = "Connecting";
-        private const string ConnectedValue = "Connected";
-        private const string NotConnectedValue = "NotConnected";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static VpnConnectionStatus Unknown { get; } = new VpnConnectionStatus(UnknownValue);
+
         /// <summary> Connecting. </summary>
         public static VpnConnectionStatus Connecting { get; } = new VpnConnectionStatus(ConnectingValue);
+
         /// <summary> Connected. </summary>
         public static VpnConnectionStatus Connected { get; } = new VpnConnectionStatus(ConnectedValue);
+
         /// <summary> NotConnected. </summary>
         public static VpnConnectionStatus NotConnected { get; } = new VpnConnectionStatus(NotConnectedValue);
+
         /// <summary> Determines if two <see cref="VpnConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnConnectionStatus left, VpnConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnConnectionStatus left, VpnConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnConnectionStatus(string value) => new VpnConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnConnectionStatus?(string value) => value == null ? null : new VpnConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

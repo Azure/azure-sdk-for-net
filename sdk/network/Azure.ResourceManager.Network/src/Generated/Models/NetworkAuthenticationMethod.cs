@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkAuthenticationMethod : IEquatable<NetworkAuthenticationMethod>
     {
         private readonly string _value;
+        /// <summary> EAPTLS. </summary>
+        private const string EAPTLSValue = "EAPTLS";
+        /// <summary> EAPMSCHAPv2. </summary>
+        private const string EAPMSCHAPv2Value = "EAPMSCHAPv2";
 
         /// <summary> Initializes a new instance of <see cref="NetworkAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkAuthenticationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EaptlsValue = "EAPTLS";
-        private const string EapmschaPv2Value = "EAPMSCHAPv2";
-
         /// <summary> EAPTLS. </summary>
-        public static NetworkAuthenticationMethod Eaptls { get; } = new NetworkAuthenticationMethod(EaptlsValue);
+        public static NetworkAuthenticationMethod EAPTLS { get; } = new NetworkAuthenticationMethod(EAPTLSValue);
+
         /// <summary> EAPMSCHAPv2. </summary>
-        public static NetworkAuthenticationMethod EapmschaPv2 { get; } = new NetworkAuthenticationMethod(EapmschaPv2Value);
+        public static NetworkAuthenticationMethod EAPMSCHAPv2 { get; } = new NetworkAuthenticationMethod(EAPMSCHAPv2Value);
+
         /// <summary> Determines if two <see cref="NetworkAuthenticationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkAuthenticationMethod left, NetworkAuthenticationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkAuthenticationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkAuthenticationMethod left, NetworkAuthenticationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkAuthenticationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkAuthenticationMethod(string value) => new NetworkAuthenticationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkAuthenticationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkAuthenticationMethod?(string value) => value == null ? null : new NetworkAuthenticationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkAuthenticationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkAuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

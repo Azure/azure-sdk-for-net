@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingDepartmentCollection : ArmCollection, IEnumerable<BillingDepartmentResource>, IAsyncEnumerable<BillingDepartmentResource>
     {
-        private readonly ClientDiagnostics _billingDepartmentDepartmentsClientDiagnostics;
-        private readonly DepartmentsRestOperations _billingDepartmentDepartmentsRestClient;
+        private readonly ClientDiagnostics _departmentsClientDiagnostics;
+        private readonly Departments _departmentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingDepartmentCollection for mocking. </summary>
         protected BillingDepartmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingDepartmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingDepartmentDepartmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingDepartmentResource.ResourceType, out string billingDepartmentDepartmentsApiVersion);
-            _billingDepartmentDepartmentsRestClient = new DepartmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentDepartmentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingDepartmentResource.ResourceType, out string billingDepartmentApiVersion);
+            _departmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingDepartmentResource.ResourceType.Namespace, Diagnostics);
+            _departmentsRestClient = new Departments(_departmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a department by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingDepartmentResource>> GetAsync(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Get");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentDepartmentsRestClient.GetAsync(Id.Name, departmentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingDepartmentData> response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a department by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingDepartmentResource> Get(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Get");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingDepartmentDepartmentsRestClient.Get(Id.Name, departmentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingDepartmentData> response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,106 +156,134 @@ namespace Azure.ResourceManager.Billing
         /// Lists the departments that a user has access to. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingDepartmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingDepartmentResource> GetAllAsync(string filter = null, string orderBy = null, long? top = null, long? skip = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingDepartmentDepartmentsRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, top, skip, search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingDepartmentDepartmentsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, top, skip, search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingDepartmentResource(Client, BillingDepartmentData.DeserializeBillingDepartmentData(e)), _billingDepartmentDepartmentsClientDiagnostics, Pipeline, "BillingDepartmentCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the departments that a user has access to. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
         /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingDepartmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingDepartmentResource> GetAll(string filter = null, string orderBy = null, long? top = null, long? skip = null, string search = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingDepartmentResource> GetAllAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingDepartmentDepartmentsRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, top, skip, search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingDepartmentDepartmentsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, top, skip, search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingDepartmentResource(Client, BillingDepartmentData.DeserializeBillingDepartmentData(e)), _billingDepartmentDepartmentsClientDiagnostics, Pipeline, "BillingDepartmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingDepartmentData, BillingDepartmentResource>(new DepartmentsGetByBillingAccountAsyncCollectionResultOfT(
+                _departmentsRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                search,
+                context,
+                "BillingDepartmentCollection.GetAll"), data => new BillingDepartmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the departments that a user has access to. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_ListByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingDepartmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingDepartmentResource> GetAll(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingDepartmentData, BillingDepartmentResource>(new DepartmentsGetByBillingAccountCollectionResultOfT(
+                _departmentsRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                search,
+                context,
+                "BillingDepartmentCollection.GetAll"), data => new BillingDepartmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Exists");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentDepartmentsRestClient.GetAsync(Id.Name, departmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingDepartmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -258,36 +297,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Exists");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingDepartmentDepartmentsRestClient.Get(Id.Name, departmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingDepartmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,38 +354,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingDepartmentResource>> GetIfExistsAsync(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.GetIfExists");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentDepartmentsRestClient.GetAsync(Id.Name, departmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingDepartmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingDepartmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,38 +415,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="departmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="departmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingDepartmentResource> GetIfExists(string departmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(departmentName, nameof(departmentName));
 
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.GetIfExists");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingDepartmentDepartmentsRestClient.Get(Id.Name, departmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Name, departmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingDepartmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingDepartmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingDepartmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,6 +482,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingDepartmentResource> IAsyncEnumerable<BillingDepartmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

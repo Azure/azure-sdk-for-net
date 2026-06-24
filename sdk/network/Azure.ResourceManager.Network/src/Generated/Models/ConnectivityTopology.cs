@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectivityTopology : IEquatable<ConnectivityTopology>
     {
         private readonly string _value;
+        /// <summary> HubAndSpoke. </summary>
+        private const string HubAndSpokeValue = "HubAndSpoke";
+        /// <summary> Mesh. </summary>
+        private const string MeshValue = "Mesh";
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityTopology"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectivityTopology(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HubAndSpokeValue = "HubAndSpoke";
-        private const string MeshValue = "Mesh";
+            _value = value;
+        }
 
         /// <summary> HubAndSpoke. </summary>
         public static ConnectivityTopology HubAndSpoke { get; } = new ConnectivityTopology(HubAndSpokeValue);
+
         /// <summary> Mesh. </summary>
         public static ConnectivityTopology Mesh { get; } = new ConnectivityTopology(MeshValue);
+
         /// <summary> Determines if two <see cref="ConnectivityTopology"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectivityTopology left, ConnectivityTopology right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectivityTopology"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectivityTopology left, ConnectivityTopology right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectivityTopology"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectivityTopology"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectivityTopology(string value) => new ConnectivityTopology(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectivityTopology"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectivityTopology?(string value) => value == null ? null : new ConnectivityTopology(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectivityTopology other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectivityTopology other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
