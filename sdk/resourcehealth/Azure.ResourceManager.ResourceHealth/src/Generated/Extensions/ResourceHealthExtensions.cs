@@ -193,6 +193,48 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatusesAsync(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusesAsync(scope, filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthArmClient.GetAvailabilityStatuses(ResourceIdentifier, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(this ArmClient client, ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatuses(scope, filter, expand, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets current availability status for a single resource
         /// <item>
         /// <term> Mocking. </term>
@@ -314,6 +356,46 @@ namespace Azure.ResourceManager.ResourceHealth
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusOfChildResources(scope, filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroupAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroupAsync(filter, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the current availability status for all the resources in the resource group.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -593,11 +675,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<OperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static async Task<Response<OperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return await GetMockableResourceHealthTenantResource(tenantResource).GetAllAsync(cancellationToken).ConfigureAwait(false);
         }
 
@@ -610,11 +689,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<OperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Response<OperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableResourceHealthTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }

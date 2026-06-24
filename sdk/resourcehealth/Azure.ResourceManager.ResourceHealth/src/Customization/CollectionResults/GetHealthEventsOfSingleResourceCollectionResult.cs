@@ -10,6 +10,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/60100: pageable wrapper over the
+    // generated Events REST operation, used by the GetHealthEventsOfSingleResource compatibility shim.
+    // TODO: Remove once the emitter ships the #60102 fix that emits the extension method directly.
     internal partial class GetHealthEventsOfSingleResourceCollectionResult : Pageable<ResourceHealthEventData>
     {
         private readonly Events _client;

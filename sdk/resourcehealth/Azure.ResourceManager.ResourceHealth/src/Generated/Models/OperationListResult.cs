@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Lists the operations response. </summary>
-    public partial class OperationListResult
+    internal partial class OperationListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

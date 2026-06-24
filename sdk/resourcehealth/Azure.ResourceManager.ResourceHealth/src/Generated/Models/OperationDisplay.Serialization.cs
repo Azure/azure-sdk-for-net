@@ -14,7 +14,7 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Properties of the operation. </summary>
-    public partial class OperationDisplay : IJsonModel<OperationDisplay>
+    internal partial class OperationDisplay : IJsonModel<OperationDisplay>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

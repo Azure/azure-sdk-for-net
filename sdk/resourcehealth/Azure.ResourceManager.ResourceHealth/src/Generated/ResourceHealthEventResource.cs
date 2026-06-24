@@ -216,9 +216,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceHealthEventResource>> FetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingIdAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceHealthEventResource>> FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingIdAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventResource.FetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingId");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventResource.FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingId");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateFetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _eventRestClient.CreateFetchBillingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceHealthEventResource> FetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingId(CancellationToken cancellationToken = default)
+        public virtual Response<ResourceHealthEventResource> FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingId(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventResource.FetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingId");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("ResourceHealthEventResource.FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingId");
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateFetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _eventRestClient.CreateFetchBillingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)

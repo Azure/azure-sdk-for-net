@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> TaxChanges. </summary>
         private const string TaxChangesValue = "TaxChanges";
         /// <summary> MeterIDChanges. </summary>
-        private const string MeterIDChangesValue = "MeterIDChanges";
+        private const string MeterIdChangesValue = "MeterIDChanges";
         /// <summary> UnauthorizedPartyAbuse. </summary>
         private const string UnauthorizedPartyAbuseValue = "UnauthorizedPartyAbuse";
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EventSubTypeValue TaxChanges { get; } = new EventSubTypeValue(TaxChangesValue);
 
         /// <summary> MeterIDChanges. </summary>
-        public static EventSubTypeValue MeterIDChanges { get; } = new EventSubTypeValue(MeterIDChangesValue);
+        public static EventSubTypeValue MeterIdChanges { get; } = new EventSubTypeValue(MeterIdChangesValue);
 
         /// <summary> UnauthorizedPartyAbuse. </summary>
         public static EventSubTypeValue UnauthorizedPartyAbuse { get; } = new EventSubTypeValue(UnauthorizedPartyAbuseValue);

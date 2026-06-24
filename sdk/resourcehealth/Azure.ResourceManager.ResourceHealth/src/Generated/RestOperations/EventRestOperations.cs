@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateFetchBilllingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(string subscriptionId, string eventTrackingId, RequestContext context)
+        internal HttpMessage CreateFetchBillingCommunicationDetailsBySubscriptionIdAndTrackingIdRequest(string subscriptionId, string eventTrackingId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

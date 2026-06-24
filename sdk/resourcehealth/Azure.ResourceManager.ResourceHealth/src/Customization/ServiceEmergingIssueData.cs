@@ -3,30 +3,19 @@
 
 using System.Collections.Generic;
 using Azure.ResourceManager.ResourceHealth.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    // This is required because the generated property is IList<T>, while GA exposed IReadOnlyList<T>,
-    // and @@alternateType cannot change the collection interface type.
+    // GA exposed these collection properties as IReadOnlyList<T> while the generated flattened properties are
+    // IList<T>, and no client.tsp decorator can change the collection interface. Re-expose them as
+    // IReadOnlyList<T> to preserve the GA surface; the generator omits its IList<T> versions because these
+    // custom members already define the names.
     public partial class ServiceEmergingIssueData
     {
         /// <summary> The list of emerging issues of banner type. </summary>
-        public IReadOnlyList<EmergingIssueBannerType> StatusBanners
-        {
-            get
-            {
-                return Properties?.StatusBanners as IReadOnlyList<EmergingIssueBannerType>;
-            }
-        }
+        public IReadOnlyList<EmergingIssueBannerType> StatusBanners => Properties?.StatusBanners as IReadOnlyList<EmergingIssueBannerType>;
 
         /// <summary> The list of emerging issues of active event type. </summary>
-        public IReadOnlyList<EmergingIssueActiveEventType> StatusActiveEvents
-        {
-            get
-            {
-                return Properties?.StatusActiveEvents as IReadOnlyList<EmergingIssueActiveEventType>;
-            }
-        }
+        public IReadOnlyList<EmergingIssueActiveEventType> StatusActiveEvents => Properties?.StatusActiveEvents as IReadOnlyList<EmergingIssueActiveEventType>;
     }
 }

@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
     {
         private ClientDiagnostics _availabilityStatusesClientDiagnostics;
         private AvailabilityStatuses _availabilityStatusesRestClient;
+        private ClientDiagnostics _childAvailabilityStatusesClientDiagnostics;
+        private ChildAvailabilityStatuses _childAvailabilityStatusesRestClient;
         private ClientDiagnostics _childResourcesClientDiagnostics;
         private ChildResources _childResourcesRestClient;
 
@@ -40,6 +42,10 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+
+        private ClientDiagnostics ChildAvailabilityStatusesClientDiagnostics => _childAvailabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ChildAvailabilityStatuses ChildAvailabilityStatusesRestClient => _childAvailabilityStatusesRestClient ??= new ChildAvailabilityStatuses(ChildAvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
         private ClientDiagnostics ChildResourcesClientDiagnostics => _childResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

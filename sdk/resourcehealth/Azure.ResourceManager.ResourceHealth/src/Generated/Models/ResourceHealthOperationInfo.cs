@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Operation available in the Microsoft.ResourceHealth resource provider. </summary>
-    public partial class ResourceHealthOperationInfo
+    internal partial class ResourceHealthOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

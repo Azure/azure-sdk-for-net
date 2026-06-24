@@ -15,7 +15,7 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Lists the operations response. </summary>
-    public partial class OperationListResult : IJsonModel<OperationListResult>
+    internal partial class OperationListResult : IJsonModel<OperationListResult>
     {
         /// <summary> Initializes a new instance of <see cref="OperationListResult"/> for deserialization. </summary>
         internal OperationListResult()

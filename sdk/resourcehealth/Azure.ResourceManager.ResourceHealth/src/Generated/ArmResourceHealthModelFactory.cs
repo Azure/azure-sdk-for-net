@@ -17,32 +17,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourceHealthModelFactory
     {
-        /// <param name="value"> List of operations available in the Microsoft.ResourceHealth resource provider. </param>
-        /// <returns> A new <see cref="Models.OperationListResult"/> instance for mocking. </returns>
-        public static OperationListResult OperationListResult(IEnumerable<ResourceHealthOperationInfo> value = default)
-        {
-            value ??= new ChangeTrackingList<ResourceHealthOperationInfo>();
-
-            return new OperationListResult((value ?? new ChangeTrackingList<ResourceHealthOperationInfo>()).ToList(), default);
-        }
-
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="display"> Properties of the operation. </param>
-        /// <returns> A new <see cref="Models.ResourceHealthOperationInfo"/> instance for mocking. </returns>
-        public static ResourceHealthOperationInfo ResourceHealthOperationInfo(string name = default, OperationDisplay display = default)
-        {
-            return new ResourceHealthOperationInfo(name, display, default);
-        }
-
-        /// <param name="provider"> Provider name. </param>
-        /// <param name="resource"> Resource name. </param>
-        /// <param name="operation"> Operation name. </param>
-        /// <param name="description"> Description of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new OperationDisplay(provider, resource, operation, description, default);
-        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"></param>
