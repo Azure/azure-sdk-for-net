@@ -14,8 +14,6 @@ using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
-[assembly: CodeGenSuppressType("PartnerConfigurationData")]
-
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary> Partner configuration information. </summary>

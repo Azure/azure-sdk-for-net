@@ -14,10 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-[assembly: CodeGenSuppressType("EventTypeUnderTopic")]
-[assembly: CodeGenSuppressType("PartnerDetails")]
-[assembly: CodeGenSuppressType("TopicTypeAdditionalEnforcedPermission")]
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     // These replacements preserve GA mutable model shapes that changed during the Swagger -> TypeSpec migration.

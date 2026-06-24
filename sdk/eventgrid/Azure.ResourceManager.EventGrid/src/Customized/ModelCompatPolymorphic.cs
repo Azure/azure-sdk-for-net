@@ -12,14 +12,6 @@ using System.Text.Json;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-[assembly: CodeGenSuppressType("AdvancedFilter")]
-[assembly: CodeGenSuppressType("DeadLetterDestination")]
-[assembly: CodeGenSuppressType("DeliveryAttributeMapping")]
-[assembly: CodeGenSuppressType("EventGridFilter")]
-[assembly: CodeGenSuppressType("EventGridInputSchemaMapping")]
-[assembly: CodeGenSuppressType("EventSubscriptionDestination")]
-[assembly: CodeGenSuppressType("StaticRoutingEnrichment")]
-
 namespace Azure.ResourceManager.EventGrid.Models
 {
     // These replacements preserve GA polymorphic model shapes and unknown-variant handling after the Swagger -> TypeSpec migration.
