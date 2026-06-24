@@ -19,5 +19,15 @@ namespace Azure.Communication.Identity.Models
         /// <returns>A new <see cref="Azure.Communication.Identity.CommunicationUserIdentifierAndToken"/> instance for mocking.</returns>
         public static CommunicationUserIdentifierAndToken CommunicationUserIdentifierAndToken(CommunicationUserIdentifier user, AccessToken accessToken)
             => new CommunicationUserIdentifierAndToken(new CommunicationIdentity(user.Id), new CommunicationIdentityAccessToken(accessToken.Token, accessToken.ExpiresOn));
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Azure.Communication.Identity.Models.CommunicationUserDetail"/> class.
+        /// </summary>
+        /// <param name="customId"> The custom Id if one has been associated with the identity. </param>
+        /// <param name="lastTokenIssuedAt"> Last time a token has been issued for the identity. </param>
+        /// <param name="user"> Identifier of the identity. </param>
+        /// <returns>A new <see cref="Azure.Communication.Identity.Models.CommunicationUserDetail"/> instance for mocking.</returns>
+        public static CommunicationUserDetail CommunicationUserDetail(string customId, DateTimeOffset? lastTokenIssuedAt, CommunicationUserIdentifier user)
+            => new CommunicationUserDetail(customId, lastTokenIssuedAt, user?.Id);
     }
 }

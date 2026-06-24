@@ -14,67 +14,62 @@ using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Request payload for activating a Bring Your Own Root policy with a customer-provided signed certificate. </summary>
-    public partial class ActivateBringYourOwnRootRequest : IJsonModel<ActivateBringYourOwnRootRequest>
+    /// <summary> Request payload for revoking device credentials. </summary>
+    public partial class DeviceCredentialsRevokeContent : IJsonModel<DeviceCredentialsRevokeContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ActivateBringYourOwnRootRequest"/> for deserialization. </summary>
-        internal ActivateBringYourOwnRootRequest()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActivateBringYourOwnRootRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DeviceCredentialsRevokeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateBringYourOwnRootRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActivateBringYourOwnRootRequest(document.RootElement, options);
+                        return DeserializeDeviceCredentialsRevokeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActivateBringYourOwnRootRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCredentialsRevokeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateBringYourOwnRootRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActivateBringYourOwnRootRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceCredentialsRevokeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActivateBringYourOwnRootRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DeviceCredentialsRevokeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivateBringYourOwnRootRequest IPersistableModel<ActivateBringYourOwnRootRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DeviceCredentialsRevokeContent IPersistableModel<DeviceCredentialsRevokeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActivateBringYourOwnRootRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceCredentialsRevokeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="activateBringYourOwnRootRequest"> The <see cref="ActivateBringYourOwnRootRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ActivateBringYourOwnRootRequest activateBringYourOwnRootRequest)
+        /// <param name="deviceCredentialsRevokeContent"> The <see cref="DeviceCredentialsRevokeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DeviceCredentialsRevokeContent deviceCredentialsRevokeContent)
         {
-            if (activateBringYourOwnRootRequest == null)
+            if (deviceCredentialsRevokeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(activateBringYourOwnRootRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(deviceCredentialsRevokeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActivateBringYourOwnRootRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceCredentialsRevokeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +80,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateBringYourOwnRootRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivateBringYourOwnRootRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCredentialsRevokeContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("certificateChain"u8);
-            writer.WriteStringValue(CertificateChain);
+            if (Optional.IsDefined(Disable))
+            {
+                writer.WritePropertyName("disable"u8);
+                writer.WriteBooleanValue(Disable.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +109,40 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivateBringYourOwnRootRequest IJsonModel<ActivateBringYourOwnRootRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DeviceCredentialsRevokeContent IJsonModel<DeviceCredentialsRevokeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActivateBringYourOwnRootRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DeviceCredentialsRevokeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActivateBringYourOwnRootRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeviceCredentialsRevokeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivateBringYourOwnRootRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceCredentialsRevokeContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActivateBringYourOwnRootRequest(document.RootElement, options);
+            return DeserializeDeviceCredentialsRevokeContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActivateBringYourOwnRootRequest DeserializeActivateBringYourOwnRootRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeviceCredentialsRevokeContent DeserializeDeviceCredentialsRevokeContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string certificateChain = default;
+            bool? disable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("certificateChain"u8))
+                if (prop.NameEquals("disable"u8))
                 {
-                    certificateChain = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActivateBringYourOwnRootRequest(certificateChain, additionalBinaryDataProperties);
+            return new DeviceCredentialsRevokeContent(disable, additionalBinaryDataProperties);
         }
     }
 }

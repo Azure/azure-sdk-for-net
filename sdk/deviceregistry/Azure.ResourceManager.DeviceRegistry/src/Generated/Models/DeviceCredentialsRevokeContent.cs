@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Request payload for revoking device credentials. </summary>
-    public partial class DeviceCredentialsRevokeRequest
+    public partial class DeviceCredentialsRevokeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceCredentialsRevokeRequest"/>. </summary>
-        public DeviceCredentialsRevokeRequest()
+        /// <summary> Initializes a new instance of <see cref="DeviceCredentialsRevokeContent"/>. </summary>
+        public DeviceCredentialsRevokeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceCredentialsRevokeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceCredentialsRevokeContent"/>. </summary>
         /// <param name="disable"> Indicates whether to disable the device(s) after revoking credentials. Prevents new credentials to be issued. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceCredentialsRevokeRequest(bool? disable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceCredentialsRevokeContent(bool? disable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Disable = disable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
