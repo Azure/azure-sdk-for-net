@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -31,6 +32,7 @@ public abstract partial class AgentResponseItem
 
     /// <summary> Converts this agent response item into an OpenAI response item. </summary>
     /// <returns> The OpenAI response item representation. </returns>
+    [Experimental("OPENAI001")]
     public ResponseItem AsResponseResultItem()
     {
         BinaryData serializedAgentResponseItem = ModelReaderWriter.Write(

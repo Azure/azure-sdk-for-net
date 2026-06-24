@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI;
@@ -13,13 +14,14 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("CreateConversationBody")]
-[CodeGenSerialization(nameof(Items), SerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue), SerializationValueHook = nameof(SerializeItemsValue))]
+[CodeGenSerialization("Items", SerializationName = "items", DeserializationValueHook = nameof(DeserializeItemsValue), SerializationValueHook = nameof(SerializeItemsValue))]
 public partial class ProjectConversationCreationOptions
 {
     /// <summary>
     /// Gets the initial items to include in the conversation context.
     /// You may add up to 20 items at a time.
     /// </summary>
+    [Experimental("OPENAI001")]
     [CodeGenMember("Items")]
     public IList<global::OpenAI.Responses.ResponseItem> Items { get; }
 
@@ -33,7 +35,9 @@ public partial class ProjectConversationCreationOptions
     public ProjectConversationCreationOptions()
     {
         InternalMetadata = new global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer(new ChangeTrackingDictionary<string, string>(), null);
+#pragma warning disable OPENAI001
         Items = new ChangeTrackingList<ResponseItem>();
+#pragma warning restore OPENAI001
     }
 
     /// <summary> Initializes a new instance of <see cref="ProjectConversationCreationOptions"/>. </summary>
@@ -50,6 +54,7 @@ public partial class ProjectConversationCreationOptions
     /// You may add up to 20 items at a time.
     /// </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    [Experimental("OPENAI001")]
     internal ProjectConversationCreationOptions(IDictionary<string, string> metadata, IList<ResponseItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
     {
         InternalMetadata = new global::Azure.AI.Extensions.OpenAI.InternalMetadataContainer(metadata, null);
@@ -57,12 +62,13 @@ public partial class ProjectConversationCreationOptions
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 
+#pragma warning disable OPENAI001
     private void SerializeItemsValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         => ResponseItemHelpers.SerializeItemsValue(writer, Items, options);
 
     private static void DeserializeItemsValue(JsonProperty property, ref IList<ResponseItem> items)
         => ResponseItemHelpers.DeserializeItemsValue(property, ref items);
-
+#pragma warning restore OPENAI001
     /// <summary> Converts project conversation creation options into binary content. </summary>
     /// <param name="projectConversationCreationOptions"> The <see cref="ProjectConversationCreationOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
     /// <returns> The binary content representation of the project conversation creation options. </returns>
@@ -90,11 +96,13 @@ public partial class ProjectConversationCreationOptions
             writer.WritePropertyName("metadata"u8);
             writer.WriteObjectValue(InternalMetadata, options);
         }
+#pragma warning disable OPENAI001
         if (Optional.IsCollectionDefined(Items))
         {
             writer.WritePropertyName("items"u8);
             SerializeItemsValue(writer, options);
         }
+#pragma warning restore OPENAI001
         if (options.Format != "W" && _additionalBinaryDataProperties != null)
         {
             foreach (var item in _additionalBinaryDataProperties)
