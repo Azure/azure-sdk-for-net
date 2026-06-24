@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusesRequest(string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetAvailabilityStatusesRequest(Uri nextPage, string resourceUri, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAvailabilityStatusResourcesByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusesByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailabilityStatusResourcesByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetAvailabilityStatusesByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

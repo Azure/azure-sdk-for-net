@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             ResourceHealthEventTypeValue? eventType = default;
-            EventSubTypeValues? eventSubType = default;
+            EventSubTypeValue? eventSubType = default;
             ResourceHealthEventSourceValue? eventSource = default;
             ResourceHealthEventStatusValue? status = default;
             string title = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    eventSubType = new EventSubTypeValues(prop.Value.GetString());
+                    eventSubType = new EventSubTypeValue(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventSource"u8))

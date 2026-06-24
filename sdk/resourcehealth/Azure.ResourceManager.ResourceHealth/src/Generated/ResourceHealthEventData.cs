@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> Sub-type of event. </summary>
-        public EventSubTypeValues? EventSubType
+        public EventSubTypeValue? EventSubType
         {
             get
             {

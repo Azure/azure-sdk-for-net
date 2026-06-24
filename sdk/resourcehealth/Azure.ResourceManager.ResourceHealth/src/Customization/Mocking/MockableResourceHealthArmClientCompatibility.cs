@@ -24,20 +24,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        // This customization preserves the GA GetAvailabilityStatuses* mockable API while forwarding to the generated child-resource availability status list operation.
-        /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusOfChildResourcesAsync(scope, filter, expand, cancellationToken);
-        }
-        // This customization preserves the GA GetAvailabilityStatuses* mockable API while forwarding to the generated child-resource availability status list operation.
-        /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusOfChildResources(scope, filter, expand, cancellationToken);
-        }
         // The generator only emits the low-level Events REST operation for this arbitrary resource URI scope.
         // This customization preserves the GA ArmClient/mockable API and wraps that REST operation in a pageable result.
         /// <summary> Lists service health events for a single resource. </summary>

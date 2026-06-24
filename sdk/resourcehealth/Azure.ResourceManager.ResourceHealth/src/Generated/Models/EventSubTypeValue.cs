@@ -12,7 +12,7 @@ using Azure.ResourceManager.ResourceHealth;
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Sub-type of event. </summary>
-    public readonly partial struct EventSubTypeValues : IEquatable<EventSubTypeValues>
+    public readonly partial struct EventSubTypeValue : IEquatable<EventSubTypeValue>
     {
         private readonly string _value;
         /// <summary> Retirement. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> UnauthorizedPartyAbuse. </summary>
         private const string UnauthorizedPartyAbuseValue = "UnauthorizedPartyAbuse";
 
-        /// <summary> Initializes a new instance of <see cref="EventSubTypeValues"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubTypeValue"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventSubTypeValues(string value)
+        public EventSubTypeValue(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Retirement. </summary>
-        public static EventSubTypeValues Retirement { get; } = new EventSubTypeValues(RetirementValue);
+        public static EventSubTypeValue Retirement { get; } = new EventSubTypeValue(RetirementValue);
 
         /// <summary> ForeignExchangeRateChange. </summary>
-        public static EventSubTypeValues ForeignExchangeRateChange { get; } = new EventSubTypeValues(ForeignExchangeRateChangeValue);
+        public static EventSubTypeValue ForeignExchangeRateChange { get; } = new EventSubTypeValue(ForeignExchangeRateChangeValue);
 
         /// <summary> Underbilling. </summary>
-        public static EventSubTypeValues Underbilling { get; } = new EventSubTypeValues(UnderbillingValue);
+        public static EventSubTypeValue Underbilling { get; } = new EventSubTypeValue(UnderbillingValue);
 
         /// <summary> Overbilling. </summary>
-        public static EventSubTypeValues Overbilling { get; } = new EventSubTypeValues(OverbillingValue);
+        public static EventSubTypeValue Overbilling { get; } = new EventSubTypeValue(OverbillingValue);
 
         /// <summary> PriceChanges. </summary>
-        public static EventSubTypeValues PriceChanges { get; } = new EventSubTypeValues(PriceChangesValue);
+        public static EventSubTypeValue PriceChanges { get; } = new EventSubTypeValue(PriceChangesValue);
 
         /// <summary> TaxChanges. </summary>
-        public static EventSubTypeValues TaxChanges { get; } = new EventSubTypeValues(TaxChangesValue);
+        public static EventSubTypeValue TaxChanges { get; } = new EventSubTypeValue(TaxChangesValue);
 
         /// <summary> MeterIDChanges. </summary>
-        public static EventSubTypeValues MeterIDChanges { get; } = new EventSubTypeValues(MeterIDChangesValue);
+        public static EventSubTypeValue MeterIDChanges { get; } = new EventSubTypeValue(MeterIDChangesValue);
 
         /// <summary> UnauthorizedPartyAbuse. </summary>
-        public static EventSubTypeValues UnauthorizedPartyAbuse { get; } = new EventSubTypeValues(UnauthorizedPartyAbuseValue);
+        public static EventSubTypeValue UnauthorizedPartyAbuse { get; } = new EventSubTypeValue(UnauthorizedPartyAbuseValue);
 
-        /// <summary> Determines if two <see cref="EventSubTypeValues"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EventSubTypeValue"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EventSubTypeValues left, EventSubTypeValues right) => left.Equals(right);
+        public static bool operator ==(EventSubTypeValue left, EventSubTypeValue right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EventSubTypeValues"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EventSubTypeValue"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EventSubTypeValues left, EventSubTypeValues right) => !left.Equals(right);
+        public static bool operator !=(EventSubTypeValue left, EventSubTypeValue right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EventSubTypeValues"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventSubTypeValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventSubTypeValues(string value) => new EventSubTypeValues(value);
+        public static implicit operator EventSubTypeValue(string value) => new EventSubTypeValue(value);
 
-        /// <summary> Converts a string to a <see cref="EventSubTypeValues"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EventSubTypeValue"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EventSubTypeValues?(string value) => value == null ? null : new EventSubTypeValues(value);
+        public static implicit operator EventSubTypeValue?(string value) => value == null ? null : new EventSubTypeValue(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EventSubTypeValues other && Equals(other);
+        public override bool Equals(object obj) => obj is EventSubTypeValue other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EventSubTypeValues other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EventSubTypeValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

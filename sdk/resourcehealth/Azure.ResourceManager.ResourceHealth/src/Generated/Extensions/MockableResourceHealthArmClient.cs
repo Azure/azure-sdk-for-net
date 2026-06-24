@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAllAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAllAsyncCollectionResultOfT(
+            return new AvailabilityStatusesGetAvailabilityStatusesAsyncCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAll");
+                "MockableResourceHealthArmClient.GetAvailabilityStatuses");
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAll(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatuses(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -270,13 +270,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAllCollectionResultOfT(
+            return new AvailabilityStatusesGetAvailabilityStatusesCollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAll");
+                "MockableResourceHealthArmClient.GetAvailabilityStatuses");
         }
 
         /// <summary>

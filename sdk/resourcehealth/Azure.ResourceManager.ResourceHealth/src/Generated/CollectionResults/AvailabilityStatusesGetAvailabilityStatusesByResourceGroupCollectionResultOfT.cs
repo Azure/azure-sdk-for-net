@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class AvailabilityStatusesGetAvailabilityStatusResourcesByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ResourceHealthAvailabilityStatus>
+    internal partial class AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT : Pageable<ResourceHealthAvailabilityStatus>
     {
         private readonly AvailabilityStatuses _client;
         private readonly string _subscriptionId;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AvailabilityStatusesGetAvailabilityStatusResourcesByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AvailabilityStatuses client used to send requests. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AvailabilityStatusesGetAvailabilityStatusResourcesByResourceGroupAsyncCollectionResultOfT(AvailabilityStatuses client, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT(AvailabilityStatuses client, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,16 +43,16 @@ namespace Azure.ResourceManager.ResourceHealth
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AvailabilityStatusesGetAvailabilityStatusResourcesByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AvailabilityStatusesGetAvailabilityStatusResourcesByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ResourceHealthAvailabilityStatus>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AvailabilityStatusesGetAvailabilityStatusesByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ResourceHealthAvailabilityStatus>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -72,14 +71,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAvailabilityStatusResourcesByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _context) : _client.CreateGetAvailabilityStatusResourcesByResourceGroupRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAvailabilityStatusesByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _context) : _client.CreateGetAvailabilityStatusesByResourceGroupRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {
