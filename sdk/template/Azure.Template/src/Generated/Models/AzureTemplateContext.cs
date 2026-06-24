@@ -15,6 +15,7 @@ namespace Azure.Template
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(FakedSharedModel))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusError))]
     [ModelReaderWriterBuildable(typeof(PagedWidgetSuite))]
     [ModelReaderWriterBuildable(typeof(ResourceOperationStatusWidgetSuiteWidgetSuiteError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
