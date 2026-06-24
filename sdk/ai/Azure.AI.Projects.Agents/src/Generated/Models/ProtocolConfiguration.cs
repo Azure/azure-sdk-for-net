@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="invocations"> Configuration for the invocations protocol. </param>
         /// <param name="invocationsWs"> Configuration for the WebSocket-based invocations protocol. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolConfiguration(ActivityProtocolConfiguration activity, ResponsesProtocolConfiguration responses, A2aProtocolConfiguration a2a, McpProtocolConfiguration mcp, InvocationsProtocolConfiguration invocations, InvocationsWsProtocolConfiguration invocationsWs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtocolConfiguration(ActivityProtocolConfiguration activity, ResponsesProtocolConfiguration responses, A2AProtocolConfiguration a2a, McpProtocolConfiguration mcp, InvocationsProtocolConfiguration invocations, InvocationsWsProtocolConfiguration invocationsWs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Activity = activity;
             Responses = responses;
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         public ResponsesProtocolConfiguration Responses { get; set; }
 
         /// <summary> Configuration for the A2A protocol. </summary>
-        public A2aProtocolConfiguration A2a { get; set; }
+        public A2AProtocolConfiguration A2a { get; set; }
 
         /// <summary> Configuration for the MCP protocol. </summary>
         public McpProtocolConfiguration Mcp { get; set; }

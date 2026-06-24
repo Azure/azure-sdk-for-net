@@ -8,19 +8,19 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Configuration specific to the A2A protocol. </summary>
-    public partial class A2aProtocolConfiguration
+    public partial class A2AProtocolConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="A2aProtocolConfiguration"/>. </summary>
-        public A2aProtocolConfiguration()
+        /// <summary> Initializes a new instance of <see cref="A2AProtocolConfiguration"/>. </summary>
+        public A2AProtocolConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="A2aProtocolConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtocolConfiguration"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2aProtocolConfiguration(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AProtocolConfiguration(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

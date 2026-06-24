@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
             }
             ActivityProtocolConfiguration activity = default;
             ResponsesProtocolConfiguration responses = default;
-            A2aProtocolConfiguration a2a = default;
+            A2AProtocolConfiguration a2a = default;
             McpProtocolConfiguration mcp = default;
             InvocationsProtocolConfiguration invocations = default;
             InvocationsWsProtocolConfiguration invocationsWs = default;
@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    a2a = A2aProtocolConfiguration.DeserializeA2aProtocolConfiguration(prop.Value, options);
+                    a2a = A2AProtocolConfiguration.DeserializeA2AProtocolConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mcp"u8))

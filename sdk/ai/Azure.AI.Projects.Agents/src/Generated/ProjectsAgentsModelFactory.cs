@@ -883,7 +883,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="invocations"> Configuration for the invocations protocol. </param>
         /// <param name="invocationsWs"> Configuration for the WebSocket-based invocations protocol. </param>
         /// <returns> A new <see cref="Agents.ProtocolConfiguration"/> instance for mocking. </returns>
-        public static ProtocolConfiguration ProtocolConfiguration(ActivityProtocolConfiguration activity = default, ResponsesProtocolConfiguration responses = default, A2aProtocolConfiguration a2a = default, McpProtocolConfiguration mcp = default, InvocationsProtocolConfiguration invocations = default, InvocationsWsProtocolConfiguration invocationsWs = default)
+        public static ProtocolConfiguration ProtocolConfiguration(ActivityProtocolConfiguration activity = default, ResponsesProtocolConfiguration responses = default, A2AProtocolConfiguration a2a = default, McpProtocolConfiguration mcp = default, InvocationsProtocolConfiguration invocations = default, InvocationsWsProtocolConfiguration invocationsWs = default)
         {
             return new ProtocolConfiguration(
                 activity,
@@ -911,10 +911,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Configuration specific to the A2A protocol. </summary>
-        /// <returns> A new <see cref="Agents.A2aProtocolConfiguration"/> instance for mocking. </returns>
-        public static A2aProtocolConfiguration A2aProtocolConfiguration()
+        /// <returns> A new <see cref="Agents.A2AProtocolConfiguration"/> instance for mocking. </returns>
+        public static A2AProtocolConfiguration A2AProtocolConfiguration()
         {
-            return new A2aProtocolConfiguration(additionalBinaryDataProperties: null);
+            return new A2AProtocolConfiguration(additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration specific to the MCP protocol. </summary>

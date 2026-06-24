@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// </summary>
     [ModelReaderWriterBuildable(typeof(A2APreviewTool))]
     [ModelReaderWriterBuildable(typeof(A2APreviewToolboxTool))]
-    [ModelReaderWriterBuildable(typeof(A2aProtocolConfiguration))]
+    [ModelReaderWriterBuildable(typeof(A2AProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ActivityProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(AgentCard))]
