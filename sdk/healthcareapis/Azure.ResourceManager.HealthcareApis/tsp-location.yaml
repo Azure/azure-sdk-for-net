@@ -1,4 +1,4 @@
 directory: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/HealthcareApis
-commit: f8efb64da694e8533e3c772b23ad881e836b82cf
-repo: zedy-wj/azure-rest-api-specs-migration
+commit: 598dbcc7e96162fbd5f48147433e4fa93ce2dbe4
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
