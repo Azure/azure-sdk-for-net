@@ -416,10 +416,21 @@ namespace Azure.AI.Extensions.OpenAI
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesA2APreviewTool"/> instance for mocking. </returns>
-        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default)
+        public static ResponsesA2APreviewTool ResponsesA2APreviewTool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
-            return new ResponsesA2APreviewTool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUrl, agentCardPath, projectConnectionId);
+            return new ResponsesA2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard);
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>

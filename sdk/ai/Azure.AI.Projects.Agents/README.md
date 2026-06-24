@@ -153,7 +153,7 @@ To create the hosted agent from existing Docker image, please use the `HostedAge
 private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
+        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
         cpu: "0.5",
         memory: "1Gi"
     )
@@ -211,7 +211,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
         memory: "1Gi"
     )
     {
-        Versions = { new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0") },
+        Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
             runtime: "python_3_14",
             entryPoint: ["python", "main.py"],

@@ -990,7 +990,7 @@ public class AgentsTests : AgentsTestBase
         Uri uriEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
             cpu: "0.5",
             memory: "1Gi"
         )

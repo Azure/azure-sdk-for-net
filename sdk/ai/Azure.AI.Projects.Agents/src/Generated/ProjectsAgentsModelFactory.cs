@@ -488,10 +488,21 @@ namespace Azure.AI.Projects.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
-        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
+        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
-            return new A2APreviewTool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
+            return new A2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                baseUri,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard);
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>
@@ -628,7 +639,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <returns> A new <see cref="Agents.ProtocolVersionRecord"/> instance for mocking. </returns>
-        public static ProtocolVersionRecord ProtocolVersionRecord(AgentEndpointProtocol protocol = default, string version = default)
+        public static ProtocolVersionRecord ProtocolVersionRecord(ProjectsAgentProtocol protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
         }
@@ -1339,8 +1350,13 @@ namespace Azure.AI.Projects.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
-        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default)
+        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -1352,7 +1368,8 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null,
                 baseUrl,
                 agentCardPath,
-                projectConnectionId);
+                projectConnectionId,
+                sendCredentialsForAgentCard);
         }
 
         /// <summary> A browser automation tool stored in a toolbox. </summary>
@@ -1892,6 +1909,23 @@ namespace Azure.AI.Projects.Agents
         public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
         {
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        ///             If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        ///             The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2APreviewTool A2APreviewTool(Uri baseUri, string agentCardPath, string projectConnectionId)
+        {
+            return A2APreviewTool(baseUri: baseUri, agentCardPath: agentCardPath, projectConnectionId: projectConnectionId, sendCredentialsForAgentCard: default);
         }
 
         /// <summary> The hosted agent definition. </summary>

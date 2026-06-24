@@ -59,6 +59,7 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(ContentFilterResult))]
     [ModelReaderWriterBuildable(typeof(ConversationReference))]
     [ModelReaderWriterBuildable(typeof(CoordParam))]
+    [ModelReaderWriterBuildable(typeof(CreateConversationRequest))]
     [ModelReaderWriterBuildable(typeof(CustomGrammarFormatParam))]
     [ModelReaderWriterBuildable(typeof(DoubleClickAction))]
     [ModelReaderWriterBuildable(typeof(DragParam))]

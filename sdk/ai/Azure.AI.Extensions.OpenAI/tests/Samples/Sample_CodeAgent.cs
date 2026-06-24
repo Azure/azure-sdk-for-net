@@ -35,7 +35,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
             memory: "1Gi"
         )
         {
-            Versions = { new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0") },
+            Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
                 runtime: "python_3_14",
                 entryPoint: ["python", "main.py"],

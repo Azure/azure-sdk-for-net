@@ -34,11 +34,17 @@ namespace Azure.AI.Projects.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal A2APreviewToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        internal A2APreviewToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             BaseUrl = baseUrl;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
+            SendCredentialsForAgentCard = sendCredentialsForAgentCard;
         }
 
         /// <summary> Base URL of the agent. </summary>
@@ -55,5 +61,12 @@ namespace Azure.AI.Projects.Agents
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary>
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </summary>
+        public bool? SendCredentialsForAgentCard { get; set; }
     }
 }
