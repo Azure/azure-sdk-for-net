@@ -25,11 +25,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [TearDown]
         public async Task TestTearDown()
         {
-            if (TestEnvironment.Mode == RecordedTestMode.Playback)
-            {
-                return;
-            }
-
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
