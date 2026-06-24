@@ -11,6 +11,7 @@
 
 ### Sample Updates
 - Added sample for evaluator generator job.
+- Added sample for dispatching manual routine runs.
 
 ### Other Changes
 

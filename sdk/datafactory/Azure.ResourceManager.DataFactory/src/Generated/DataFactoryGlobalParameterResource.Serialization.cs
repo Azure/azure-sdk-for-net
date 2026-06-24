@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    /// <summary></summary>
     public partial class DataFactoryGlobalParameterResource : IJsonModel<DataFactoryGlobalParameterData>
     {
-        private static DataFactoryGlobalParameterData s_dataDeserializationInstance;
-        private static DataFactoryGlobalParameterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataFactoryGlobalParameterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataFactoryGlobalParameterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataFactoryGlobalParameterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryGlobalParameterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryGlobalParameterData>)Data).Write(writer, options);
 
-        DataFactoryGlobalParameterData IJsonModel<DataFactoryGlobalParameterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryGlobalParameterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryGlobalParameterData IJsonModel<DataFactoryGlobalParameterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataFactoryGlobalParameterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryGlobalParameterData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataFactoryGlobalParameterData IPersistableModel<DataFactoryGlobalParameterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryGlobalParameterData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryGlobalParameterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryGlobalParameterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryGlobalParameterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
@@ -52,10 +53,13 @@ namespace Azure.Generator.Provisioning.Providers
                 var baseField = baseEnumValue.Field;
                 var memberName = baseEnumValue.Name;
                 var serializedValue = baseEnumValue.Value?.ToString();
+                var description = string.IsNullOrEmpty(baseField.Description?.ToString())
+                    ? (FormattableString)$"{memberName}."
+                    : baseField.Description;
 
                 // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
                 IEnumerable<AttributeStatement>? attributes = baseField.Attributes;
-                if (serializedValue != null && serializedValue != memberName && baseField.Attributes.Count == 0)
+                if (serializedValue != null && serializedValue != memberName)
                 {
                     attributes =
                     [
@@ -70,7 +74,7 @@ namespace Azure.Generator.Provisioning.Providers
                     typeof(int), // placeholder — enum members don't need an explicit type
                     memberName,
                     this,
-                    description: baseField.Description,
+                    description: description,
                     attributes: attributes);
 
                 fields[i] = field;

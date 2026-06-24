@@ -8,17 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Properties of a managed private endpoint. </summary>
     public partial class DataFactoryPrivateEndpointProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
         public DataFactoryPrivateEndpointProperties()
         {
             Fqdns = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryPrivateEndpointProperties"/>. </summary>
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="isReserved"> Denotes whether the managed private endpoint is reserved. </param>
         /// <param name="privateLinkResourceId"> The ARM resource ID of the resource to which the managed private endpoint is created. </param>
         /// <param name="provisioningState"> The managed private endpoint provisioning state. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal DataFactoryPrivateEndpointProperties(ConnectionStateProperties connectionState, IList<string> fqdns, string groupId, bool? isReserved, ResourceIdentifier privateLinkResourceId, string provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             ConnectionState = connectionState;
@@ -37,51 +41,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             IsReserved = isReserved;
             PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The managed private endpoint connection state. </summary>
         public ConnectionStateProperties ConnectionState { get; set; }
+
         /// <summary> Fully qualified domain names. </summary>
         public IList<string> Fqdns { get; }
+
         /// <summary> The groupId to which the managed private endpoint is created. </summary>
         public string GroupId { get; set; }
+
         /// <summary> Denotes whether the managed private endpoint is reserved. </summary>
         public bool? IsReserved { get; }
+
         /// <summary> The ARM resource ID of the resource to which the managed private endpoint is created. </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
+
         /// <summary> The managed private endpoint provisioning state. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

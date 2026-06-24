@@ -1,14 +1,11 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2026-06-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgrade to API version 2026-04-16.
+- Added `PerformanceTier` property to `QumuloFileSystemResourceData` and `FileSystemResourceUpdateProperties`.
 
 ## 1.2.0 (2025-10-22)
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct TeradataAuthenticationType : IEquatable<TeradataAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="TeradataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TeradataAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static TeradataAuthenticationType Basic { get; } = new TeradataAuthenticationType(BasicValue);
+
         /// <summary> Windows. </summary>
         public static TeradataAuthenticationType Windows { get; } = new TeradataAuthenticationType(WindowsValue);
+
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TeradataAuthenticationType left, TeradataAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TeradataAuthenticationType left, TeradataAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TeradataAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TeradataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TeradataAuthenticationType(string value) => new TeradataAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TeradataAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TeradataAuthenticationType?(string value) => value == null ? null : new TeradataAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TeradataAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TeradataAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

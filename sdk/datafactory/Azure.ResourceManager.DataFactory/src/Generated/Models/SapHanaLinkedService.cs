@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SapHanaLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SapHanaLinkedService"/>. </summary>
-        public SapHanaLinkedService()
+        public SapHanaLinkedService() : base("SapHana")
         {
-            LinkedServiceType = "SapHana";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="SapHanaLinkedService"/>. </summary>
@@ -27,35 +27,101 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
-        /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP HANA server. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SapHanaLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, SapHanaAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to this linked service type. </param>
+        /// <param name="password"></param>
+        internal SapHanaLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SapHanaLinkedServiceProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            Server = server;
-            AuthenticationType = authenticationType;
-            UserName = userName;
+            TypeProperties = typeProperties;
             Password = password;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "SapHana";
         }
 
+        /// <summary> Properties specific to this linked service type. </summary>
+        internal SapHanaLinkedServiceProperties TypeProperties { get; set; }
+
         /// <summary> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapHanaLinkedServiceProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapHanaLinkedServiceProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> The authentication type to be used to connect to the SAP HANA server. </summary>
-        public SapHanaAuthenticationType? AuthenticationType { get; set; }
+        public SapHanaAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapHanaLinkedServiceProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> Password to access the SAP HANA server. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapHanaLinkedServiceProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SapHanaLinkedServiceProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }
