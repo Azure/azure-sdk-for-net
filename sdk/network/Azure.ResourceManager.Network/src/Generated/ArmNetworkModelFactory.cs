@@ -16886,7 +16886,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
-        ///
+        ///                         
         ///                          - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
         /// </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>

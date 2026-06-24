@@ -261,7 +261,6 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(SuspectFile))]
     [ModelReaderWriterBuildable(typeof(SvmPeerCommandResponseProperties))]
     [ModelReaderWriterBuildable(typeof(SvmPeerCommandResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateNetworkSiblingSetContent))]
     [ModelReaderWriterBuildable(typeof(UsageProperties))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
@@ -276,6 +275,7 @@ namespace Azure.ResourceManager.NetApp
     [ModelReaderWriterBuildable(typeof(VolumeQuotaRulesList))]
     [ModelReaderWriterBuildable(typeof(VolumeQuotaRulesProperties))]
     [ModelReaderWriterBuildable(typeof(VolumeSnapshotProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerNetAppContext : ModelReaderWriterContext
     {
     }
