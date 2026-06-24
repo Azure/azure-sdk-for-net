@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates
             ClientDiagnostics diagnostics)
         {
             Argument.AssertNotNull(endpoint,    nameof(endpoint));
-            Argument.AssertNotNull(apiVersion,  nameof(apiVersion));
+            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
             Argument.AssertNotNull(pipeline,    nameof(pipeline));
             Argument.AssertNotNull(diagnostics, nameof(diagnostics));
 

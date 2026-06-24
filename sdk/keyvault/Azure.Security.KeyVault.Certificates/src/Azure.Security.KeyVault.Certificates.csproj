@@ -38,11 +38,11 @@
   <Target Name="InternalizeGeneratedCode"
           BeforeTargets="CoreCompile"
           Inputs="$(MSBuildThisFileDirectory)Generated\**\*.cs;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1"
-          Outputs="$(IntermediateOutputPath)InternalizeGeneratedCode.stamp">
+          Outputs="$(BaseIntermediateOutputPath)InternalizeGeneratedCode.stamp">
     <Exec Command="pwsh -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildThisFileDirectory)..\eng\Internalize-Generated.ps1&quot;"
           ConsoleToMSBuild="true"
           IgnoreExitCode="false" />
-    <Touch Files="$(IntermediateOutputPath)InternalizeGeneratedCode.stamp" AlwaysCreate="true" />
+    <Touch Files="$(BaseIntermediateOutputPath)InternalizeGeneratedCode.stamp" AlwaysCreate="true" />
   </Target>
 
   <!--
