@@ -7,74 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterProfile data model.
-    /// The network security perimeter profile resource
-    /// </summary>
+    /// <summary> The network security perimeter profile resource. </summary>
     public partial class NetworkSecurityPerimeterProfileData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileData"/>. </summary>
         public NetworkSecurityPerimeterProfileData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
-        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accessRulesVersion, string diagnosticSettingsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            AccessRulesVersion = accessRulesVersion;
-            DiagnosticSettingsVersion = diagnosticSettingsVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Properties of the network security perimeter profile. </summary>
+        [WirePath("properties")]
+        internal NspProfileProperties Properties { get; set; }
 
         /// <summary> Version number that increases with every update to access rules within the profile. </summary>
         [WirePath("properties.accessRulesVersion")]
-        public string AccessRulesVersion { get; }
+        public string AccessRulesVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessRulesVersion;
+            }
+        }
+
         /// <summary> Version number that increases with every update to diagnostic settings within the profile. </summary>
         [WirePath("properties.diagnosticSettingsVersion")]
-        public string DiagnosticSettingsVersion { get; }
+        public string DiagnosticSettingsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiagnosticSettingsVersion;
+            }
+        }
     }
 }

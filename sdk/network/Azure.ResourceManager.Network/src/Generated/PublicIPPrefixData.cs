@@ -7,124 +7,177 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the PublicIPPrefix data model.
-    /// Public IP prefix resource.
-    /// </summary>
+    /// <summary> Public IP prefix resource. </summary>
     public partial class PublicIPPrefixData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixData"/>. </summary>
         public PublicIPPrefixData()
         {
             Zones = new ChangeTrackingList<string>();
-            IPTags = new ChangeTrackingList<IPTag>();
-            PublicIPAddresses = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Public IP prefix properties. </param>
         /// <param name="extendedLocation"> The extended location of the public ip address. </param>
         /// <param name="sku"> The public IP prefix SKU. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        /// <param name="publicIPAddressVersion"> The public IP address version. </param>
-        /// <param name="ipTags"> The list of tags associated with the public IP prefix. </param>
-        /// <param name="prefixLength"> The Length of the Public IP Prefix. </param>
-        /// <param name="ipPrefix"> The allocated Prefix. </param>
-        /// <param name="publicIPAddresses"> The list of all referenced PublicIPAddresses. </param>
-        /// <param name="loadBalancerFrontendIPConfiguration"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
-        /// <param name="customIPPrefix"> The customIpPrefix that this prefix is associated with. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
-        /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        internal PublicIPPrefixData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, ETag? etag, IList<string> zones, NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, WritableSubResource loadBalancerFrontendIPConfiguration, WritableSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal PublicIPPrefixData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, PublicIPPrefixPropertiesFormat properties, ExtendedLocation extendedLocation, PublicIPPrefixSku sku, ETag? eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
             Sku = sku;
-            ETag = etag;
+            ETag = eTag;
             Zones = zones;
-            PublicIPAddressVersion = publicIPAddressVersion;
-            IPTags = ipTags;
-            PrefixLength = prefixLength;
-            IPPrefix = ipPrefix;
-            PublicIPAddresses = publicIPAddresses;
-            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
-            CustomIPPrefix = customIPPrefix;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            NatGateway = natGateway;
         }
+
+        /// <summary> Public IP prefix properties. </summary>
+        [WirePath("properties")]
+        internal PublicIPPrefixPropertiesFormat Properties { get; set; }
 
         /// <summary> The extended location of the public ip address. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> The public IP prefix SKU. </summary>
         [WirePath("sku")]
         public PublicIPPrefixSku Sku { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> The public IP address version. </summary>
         [WirePath("properties.publicIPAddressVersion")]
-        public NetworkIPVersion? PublicIPAddressVersion { get; set; }
-        /// <summary> The list of tags associated with the public IP prefix. </summary>
-        [WirePath("properties.ipTags")]
-        public IList<IPTag> IPTags { get; }
-        /// <summary> The Length of the Public IP Prefix. </summary>
-        [WirePath("properties.prefixLength")]
-        public int? PrefixLength { get; set; }
-        /// <summary> The allocated Prefix. </summary>
-        [WirePath("properties.ipPrefix")]
-        public string IPPrefix { get; }
-        /// <summary> The list of all referenced PublicIPAddresses. </summary>
-        [WirePath("properties.publicIPAddresses")]
-        public IReadOnlyList<SubResource> PublicIPAddresses { get; }
-        /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
-        internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
-        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        public NetworkIPVersion? PublicIPAddressVersion
         {
-            get => LoadBalancerFrontendIPConfiguration?.Id;
-        }
-
-        /// <summary> The customIpPrefix that this prefix is associated with. </summary>
-        internal WritableSubResource CustomIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.customIPPrefix.id")]
-        public ResourceIdentifier CustomIPPrefixId
-        {
-            get => CustomIPPrefix is null ? default : CustomIPPrefix.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressVersion;
+            }
             set
             {
-                if (CustomIPPrefix is null)
-                    CustomIPPrefix = new WritableSubResource();
-                CustomIPPrefix.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                Properties.PublicIPAddressVersion = value;
             }
         }
 
-        /// <summary> The resource GUID property of the public IP prefix resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        /// <summary> The list of tags associated with the public IP prefix. </summary>
+        [WirePath("properties.ipTags")]
+        public IList<IPTag> IpTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                return Properties.IpTags;
+            }
+        }
+
+        /// <summary> The Length of the Public IP Prefix. </summary>
+        [WirePath("properties.prefixLength")]
+        public int? PrefixLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrefixLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                Properties.PrefixLength = value;
+            }
+        }
+
+        /// <summary> The allocated Prefix. </summary>
+        [WirePath("properties.ipPrefix")]
+        public string IpPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpPrefix;
+            }
+        }
+
         /// <summary> The provisioning state of the public IP prefix resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> NatGateway of Public IP Prefix. </summary>
         [WirePath("properties.natGateway")]
-        public NatGatewayData NatGateway { get; set; }
+        public NatGatewayData NatGateway
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NatGateway;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                Properties.NatGateway = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadBalancerFrontendIpConfiguration.id")]
+        public ResourceIdentifier LoadBalancerFrontendIpConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerFrontendIpConfigurationId;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.customIPPrefix.id")]
+        public ResourceIdentifier CustomIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPPrefixPropertiesFormat();
+                }
+                Properties.CustomIPPrefixId = value;
+            }
+        }
     }
 }

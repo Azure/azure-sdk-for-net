@@ -7,19 +7,81 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryChangeDataCaptureData : IUtf8JsonSerializable, IJsonModel<DataFactoryChangeDataCaptureData>
+    /// <summary> Change data capture resource type. </summary>
+    public partial class DataFactoryChangeDataCaptureData : ResourceData, IJsonModel<DataFactoryChangeDataCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryChangeDataCaptureData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/> for deserialization. </summary>
+        internal DataFactoryChangeDataCaptureData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryChangeDataCaptureData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryChangeDataCaptureData IPersistableModel<DataFactoryChangeDataCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataFactoryChangeDataCaptureData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryChangeDataCaptureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataFactoryChangeDataCaptureData"> The <see cref="DataFactoryChangeDataCaptureData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataFactoryChangeDataCaptureData dataFactoryChangeDataCaptureData)
+        {
+            if (dataFactoryChangeDataCaptureData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataFactoryChangeDataCaptureData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataFactoryChangeDataCaptureData"/> from. </param>
+        internal static DataFactoryChangeDataCaptureData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataFactoryChangeDataCaptureData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryChangeDataCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,253 +93,51 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Folder))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder, options);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WritePropertyName("sourceConnectionsInfo"u8);
-            writer.WriteStartArray();
-            foreach (var item in SourceConnectionsInfo)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("targetConnectionsInfo"u8);
-            writer.WriteStartArray();
-            foreach (var item in TargetConnectionsInfo)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy, options);
-            if (Optional.IsDefined(AllowVnetOverride))
-            {
-                writer.WritePropertyName("allowVNetOverride"u8);
-                writer.WriteBooleanValue(AllowVnetOverride.Value);
-            }
-            if (Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            writer.WriteEndObject();
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
-        DataFactoryChangeDataCaptureData IJsonModel<DataFactoryChangeDataCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryChangeDataCaptureData IJsonModel<DataFactoryChangeDataCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataFactoryChangeDataCaptureData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryChangeDataCaptureData(document.RootElement, options);
         }
-
-        internal static DataFactoryChangeDataCaptureData DeserializeDataFactoryChangeDataCaptureData(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            ChangeDataCaptureFolder folder = default;
-            string description = default;
-            IList<MapperSourceConnectionsInfo> sourceConnectionsInfo = default;
-            IList<MapperTargetConnectionsInfo> targetConnectionsInfo = default;
-            MapperPolicy policy = default;
-            bool? allowVnetOverride = default;
-            string status = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("folder"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            folder = ChangeDataCaptureFolder.DeserializeChangeDataCaptureFolder(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceConnectionsInfo"u8))
-                        {
-                            List<MapperSourceConnectionsInfo> array = new List<MapperSourceConnectionsInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(MapperSourceConnectionsInfo.DeserializeMapperSourceConnectionsInfo(item, options));
-                            }
-                            sourceConnectionsInfo = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("targetConnectionsInfo"u8))
-                        {
-                            List<MapperTargetConnectionsInfo> array = new List<MapperTargetConnectionsInfo>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(MapperTargetConnectionsInfo.DeserializeMapperTargetConnectionsInfo(item, options));
-                            }
-                            targetConnectionsInfo = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("policy"u8))
-                        {
-                            policy = MapperPolicy.DeserializeMapperPolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("allowVNetOverride"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowVnetOverride = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryChangeDataCaptureData(
-                id,
-                name,
-                type,
-                systemData,
-                folder,
-                description,
-                sourceConnectionsInfo,
-                targetConnectionsInfo,
-                policy,
-                allowVnetOverride,
-                status,
-                etag,
-                additionalProperties);
-        }
-
-        BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryChangeDataCaptureData IPersistableModel<DataFactoryChangeDataCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryChangeDataCaptureData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryChangeDataCaptureData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryChangeDataCaptureData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryChangeDataCaptureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

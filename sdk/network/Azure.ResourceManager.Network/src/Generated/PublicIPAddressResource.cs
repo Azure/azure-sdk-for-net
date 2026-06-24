@@ -7,121 +7,132 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a PublicIPAddress along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublicIPAddressResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPublicIPAddressResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublicIPAddress method.
+    /// A class representing a PublicIPAddress along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublicIPAddressResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublicIPAddresses method.
     /// </summary>
     public partial class PublicIPAddressResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PublicIPAddressResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="publicIPAddressName"> The publicIPAddressName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIPAddressName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIPAddressName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _publicIPAddressClientDiagnostics;
-        private readonly PublicIPAddressesRestOperations _publicIPAddressRestClient;
+        private readonly ClientDiagnostics _publicIPAddressesClientDiagnostics;
+        private readonly PublicIPAddresses _publicIPAddressesRestClient;
         private readonly PublicIPAddressData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/publicIPAddresses";
 
-        /// <summary> Initializes a new instance of the <see cref="PublicIPAddressResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublicIPAddressResource for mocking. </summary>
         protected PublicIPAddressResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicIPAddressResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublicIPAddressResource(ArmClient client, PublicIPAddressData data) : this(client, data.Id)
         {
-            HasData = true;
+            this.HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublicIPAddressResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publicIPAddressClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string publicIPAddressApiVersion);
-            _publicIPAddressRestClient = new PublicIPAddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            this.TryGetApiVersion(ResourceType, out string publicIPAddressApiVersion);
+            _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Endpoint, publicIPAddressApiVersion ?? "2025-07-01");
+            PublicIPAddressResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PublicIPAddressData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publicIpAddressName"> The publicIpAddressName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publicIpAddressName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified public IP address in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PublicIPAddressResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPAddressResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Get");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Get");
             scope.Start();
             try
             {
-                var response = await _publicIPAddressRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,119 +146,43 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified public IP address in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PublicIPAddressResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPAddressResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Get");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Get");
             scope.Start();
             try
             {
-                var response = _publicIPAddressRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified public IP address.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _publicIPAddressRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the specified public IP address.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _publicIPAddressRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -260,20 +195,20 @@ namespace Azure.ResourceManager.Network
         /// Updates public IP address tags.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_UpdateTags</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_UpdateTags. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,11 +219,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Update");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Update");
             scope.Start();
             try
             {
-                var response = await _publicIPAddressRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,20 +247,20 @@ namespace Azure.ResourceManager.Network
         /// Updates public IP address tags.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_UpdateTags</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_UpdateTags. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,11 +271,21 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.Update");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Update");
             scope.Start();
             try
             {
-                var response = _publicIPAddressRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkTagsObject, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -341,23 +296,121 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deletes the specified public IP address.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_publicIPAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the specified public IP address.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_publicIPAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets the Ddos Protection Status of a Public IP Address
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/ddosProtectionStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/ddosProtectionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_DdosProtectionStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_DdosProtectionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,14 +418,27 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<PublicIPDdosProtectionStatusResult>> DdosProtectionStatusAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.DdosProtectionStatus");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DdosProtectionStatus");
             scope.Start();
             try
             {
-                var response = await _publicIPAddressRestClient.DdosProtectionStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<PublicIPDdosProtectionStatusResult> operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(
+                    new PublicIPDdosProtectionStatusResultOperationSource(),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -386,20 +452,20 @@ namespace Azure.ResourceManager.Network
         /// Gets the Ddos Protection Status of a Public IP Address
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/ddosProtectionStatus</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/ddosProtectionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_DdosProtectionStatus</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_DdosProtectionStatus. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,106 +473,27 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<PublicIPDdosProtectionStatusResult> DdosProtectionStatus(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.DdosProtectionStatus");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DdosProtectionStatus");
             scope.Start();
             try
             {
-                var response = _publicIPAddressRestClient.DdosProtectionStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(new PublicIPDdosProtectionStatusResultOperationSource(), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDdosProtectionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDdosProtectionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<PublicIPDdosProtectionStatusResult> operation = new NetworkArmOperation<PublicIPDdosProtectionStatusResult>(
+                    new PublicIPDdosProtectionStatusResultOperationSource(),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/reserveCloudServicePublicIpAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_ReserveCloudServicePublicIPAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PublicIPAddressResource>> ReserveCloudServicePublicIPAddressAsync(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIPAddress");
-            scope.Start();
-            try
-            {
-                var response = await _publicIPAddressRestClient.ReserveCloudServicePublicIPAddressAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PublicIPAddressResource>(new PublicIPAddressOperationSource(Client), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateReserveCloudServicePublicIPAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/reserveCloudServicePublicIpAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_ReserveCloudServicePublicIPAddress</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PublicIPAddressResource> ReserveCloudServicePublicIPAddress(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIPAddress");
-            scope.Start();
-            try
-            {
-                var response = _publicIPAddressRestClient.ReserveCloudServicePublicIPAddress(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<PublicIPAddressResource>(new PublicIPAddressOperationSource(Client), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateReserveCloudServicePublicIPAddressRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -520,20 +507,20 @@ namespace Azure.ResourceManager.Network
         /// Disassociates the Cloud Service reserved Public IP and associates the specified Standalone Public IP to the same Cloud Service frontend.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/disassociateCloudServiceReservedPublicIp</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/disassociateCloudServiceReservedPublicIp. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_DisassociateCloudServiceReservedPublicIP</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_DisassociateCloudServiceReservedPublicIp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -541,18 +528,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIPAsync(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIpAsync(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIP");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIp");
             scope.Start();
             try
             {
-                var response = await _publicIPAddressRestClient.DisassociateCloudServiceReservedPublicIPAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PublicIPAddressResource>(new PublicIPAddressOperationSource(Client), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
+                    new PublicIPAddressResourceOperationSource(Client),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -566,20 +566,20 @@ namespace Azure.ResourceManager.Network
         /// Disassociates the Cloud Service reserved Public IP and associates the specified Standalone Public IP to the same Cloud Service frontend.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/disassociateCloudServiceReservedPublicIp</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/disassociateCloudServiceReservedPublicIp. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_DisassociateCloudServiceReservedPublicIP</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_DisassociateCloudServiceReservedPublicIp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,18 +587,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PublicIPAddressResource> DisassociateCloudServiceReservedPublicIP(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PublicIPAddressResource> DisassociateCloudServiceReservedPublicIp(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIP");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIp");
             scope.Start();
             try
             {
-                var response = _publicIPAddressRestClient.DisassociateCloudServiceReservedPublicIP(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation<PublicIPAddressResource>(new PublicIPAddressOperationSource(Client), _publicIPAddressClientDiagnostics, Pipeline, _publicIPAddressRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
+                    new PublicIPAddressResourceOperationSource(Client),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -609,26 +622,124 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/reserveCloudServicePublicIpAddress. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_ReserveCloudServicePublicIpAddress. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PublicIPAddressResource>> ReserveCloudServicePublicIpAddressAsync(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIpAddress");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
+                    new PublicIPAddressResourceOperationSource(Client),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reserves the specified Cloud Service Public IP by switching its allocation method to Static. If rollback is requested, reverts the allocation method to Dynamic.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}/reserveCloudServicePublicIpAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_ReserveCloudServicePublicIpAddress. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublicIPAddressResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PublicIPAddressResource> ReserveCloudServicePublicIpAddress(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIpAddress");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
+                    new PublicIPAddressResourceOperationSource(Client),
+                    _publicIPAddressesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -638,29 +749,35 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.AddTag");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publicIPAddressRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkTagsObject();
-                    foreach (var tag in current.Tags)
+                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublicIPAddressResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -670,27 +787,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -700,29 +797,35 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.AddTag");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publicIPAddressRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkTagsObject();
-                    foreach (var tag in current.Tags)
+                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublicIPAddressResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -732,54 +835,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<PublicIPAddressResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.SetTags");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publicIPAddressRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkTagsObject();
+                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublicIPAddressResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -789,54 +878,40 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<PublicIPAddressResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.SetTags");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publicIPAddressRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkTagsObject();
+                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublicIPAddressResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -846,27 +921,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -874,29 +929,35 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.RemoveTag");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publicIPAddressRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new NetworkTagsObject();
-                    foreach (var tag in current.Tags)
+                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublicIPAddressResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -906,27 +967,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -934,29 +975,35 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _publicIPAddressClientDiagnostics.CreateScope("PublicIPAddressResource.RemoveTag");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publicIPAddressRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new PublicIPAddressResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publicIPAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
+                    return Response.FromValue(new PublicIPAddressResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new NetworkTagsObject();
-                    foreach (var tag in current.Tags)
+                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkTagsObject patch = new NetworkTagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublicIPAddressResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

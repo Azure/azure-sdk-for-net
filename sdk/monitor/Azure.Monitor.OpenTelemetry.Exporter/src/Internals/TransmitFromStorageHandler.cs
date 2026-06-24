@@ -80,9 +80,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             }
                         }
 
+                        var stopwatch = _networkSdkStatsManager != null ? System.Diagnostics.Stopwatch.StartNew() : null;
+
                         using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
 
+                        stopwatch?.Stop();
+
                         var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
+
+                        if (_networkSdkStatsManager != null && httpMessage.HasResponse)
+                        {
+                            _networkSdkStatsManager.TrackDuration(httpMessage.Request.Uri.Host, stopwatch!.Elapsed.TotalMilliseconds);
+                        }
 
                         if (result == ExportResult.Success)
                         {
@@ -103,6 +112,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
                         else
                         {
+                            if (_networkSdkStatsManager != null)
+                            {
+                                if (httpMessage.HasResponse)
+                                {
+                                    // 206 partial-success per-envelope handling happens in
+                                    // HttpPipelineHelper.HandlePartialSuccess.
+                                    _networkSdkStatsManager.TrackResponseFailure(httpMessage.Request.Uri.Host, httpMessage.Response.Status);
+                                }
+                                else
+                                {
+                                    _networkSdkStatsManager.TrackException(httpMessage.Request.Uri.Host, exceptionType: null);
+                                }
+                            }
+
                             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
                             HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
                             break;
@@ -110,6 +133,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     catch (Exception ex)
                     {
+                        _networkSdkStatsManager?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
                         AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
                         CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
                     }

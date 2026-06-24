@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VerbosityLevel : IEquatable<VerbosityLevel>
     {
         private readonly string _value;
+        /// <summary> Normal. </summary>
+        private const string NormalValue = "Normal";
+        /// <summary> Minimum. </summary>
+        private const string MinimumValue = "Minimum";
+        /// <summary> Full. </summary>
+        private const string FullValue = "Full";
 
         /// <summary> Initializes a new instance of <see cref="VerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VerbosityLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NormalValue = "Normal";
-        private const string MinimumValue = "Minimum";
-        private const string FullValue = "Full";
+            _value = value;
+        }
 
         /// <summary> Normal. </summary>
         public static VerbosityLevel Normal { get; } = new VerbosityLevel(NormalValue);
+
         /// <summary> Minimum. </summary>
         public static VerbosityLevel Minimum { get; } = new VerbosityLevel(MinimumValue);
+
         /// <summary> Full. </summary>
         public static VerbosityLevel Full { get; } = new VerbosityLevel(FullValue);
+
         /// <summary> Determines if two <see cref="VerbosityLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VerbosityLevel left, VerbosityLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VerbosityLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VerbosityLevel left, VerbosityLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VerbosityLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VerbosityLevel(string value) => new VerbosityLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VerbosityLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VerbosityLevel?(string value) => value == null ? null : new VerbosityLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VerbosityLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VerbosityLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

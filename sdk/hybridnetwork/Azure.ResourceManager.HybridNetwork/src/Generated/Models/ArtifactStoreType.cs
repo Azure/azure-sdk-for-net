@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct ArtifactStoreType : IEquatable<ArtifactStoreType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ArtifactStoreType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ArtifactStoreType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string AzureContainerRegistryValue = "AzureContainerRegistry";
         private const string AzureStorageAccountValue = "AzureStorageAccount";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ArtifactStoreType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ArtifactStoreType Unknown { get; } = new ArtifactStoreType(UnknownValue);
-        /// <summary> AzureContainerRegistry. </summary>
+
+        /// <summary> Gets the AzureContainerRegistry. </summary>
         public static ArtifactStoreType AzureContainerRegistry { get; } = new ArtifactStoreType(AzureContainerRegistryValue);
-        /// <summary> AzureStorageAccount. </summary>
+
+        /// <summary> Gets the AzureStorageAccount. </summary>
         public static ArtifactStoreType AzureStorageAccount { get; } = new ArtifactStoreType(AzureStorageAccountValue);
+
         /// <summary> Determines if two <see cref="ArtifactStoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArtifactStoreType left, ArtifactStoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArtifactStoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArtifactStoreType left, ArtifactStoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactStoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArtifactStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArtifactStoreType(string value) => new ArtifactStoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArtifactStoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArtifactStoreType?(string value) => value == null ? null : new ArtifactStoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArtifactStoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArtifactStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

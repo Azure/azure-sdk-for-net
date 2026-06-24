@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines the virtual machine scale set lifecycle hook event properties. </summary>
     public partial class VmScaleSetLifecycleHookEventProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventProperties"/>. </summary>
         public VmScaleSetLifecycleHookEventProperties()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
         /// </param>
         /// <param name="state"> Specifies the state of the virtual machine scale set lifecycle hook event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VmScaleSetLifecycleHookEventProperties(VmScaleSetLifecycleHookEventType? eventType, string waitUntil, string maxWaitUntil, string timeCreated, LifecycleHookAction? defaultAction, IList<VirtualMachineScaleSetLifecycleHookEventTarget> targetResources, VmScaleSetLifecycleHookEventAdditionalContext additionalContext, VmScaleSetLifecycleHookEventState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventType = eventType;
             WaitUntil = waitUntil;
@@ -76,21 +48,27 @@ namespace Azure.ResourceManager.Compute.Models
             TargetResources = targetResources;
             AdditionalContext = additionalContext;
             State = state;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the type or scenario for sending a virtual machine scale set lifecycle hook event to the customer. </summary>
         public VmScaleSetLifecycleHookEventType? EventType { get; set; }
+
         /// <summary> Specifies the exact UTC timestamp in ISO 8601 format till which the event would remain in the current lifecycle state waiting for an action from the customer. Beyond this timestamp, the platform will apply the defaultAction for the event. </summary>
         public string WaitUntil { get; set; }
+
         /// <summary> Specifies the exact UTC timestamp in ISO 8601 format till when the customer can delay the lifecycle hook event. The customer will not be allowed to delay the event to a timestamp beyond this. </summary>
         public string MaxWaitUntil { get; }
+
         /// <summary> The UTC timestamp in ISO 8601 format at which the platform creates the virtual machine scale set lifecycle hook event entity. </summary>
         public string TimeCreated { get; }
+
         /// <summary> Specify the action that will be applied on the a target resource in the virtual machine scale set lifecycle hook event if the platform does not get a response from the customer for the target resource before waitUntil. </summary>
         public LifecycleHookAction? DefaultAction { get; }
+
         /// <summary> List of target resources which are getting processed in the virtual machine scale set lifecycle hook event. </summary>
-        public IList<VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources { get; }
+        public IList<VirtualMachineScaleSetLifecycleHookEventTarget> TargetResources { get; } = new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTarget>();
+
         /// <summary>
         /// Additional key-value pairs set on the lifecycle hook event that gives customer some useful context/data.
         /// The keys in this dictionary are specific to the lifecycle hook type. Different lifecycle hook events can have different sets of keys in the additional context depending on the lifecycle hook type.
@@ -98,22 +76,28 @@ namespace Azure.ResourceManager.Compute.Models
         /// the additional context can contain the key "priority" that helps customer identify the priority of the Auto OS Upgrade operation triggered on the virtual machine scale set.
         /// </summary>
         internal VmScaleSetLifecycleHookEventAdditionalContext AdditionalContext { get; set; }
+
+        /// <summary> Specifies the state of the virtual machine scale set lifecycle hook event. </summary>
+        public VmScaleSetLifecycleHookEventState? State { get; }
+
         /// <summary>
         /// Can only be present for a lifecycle hook event of type "UpgradeAutoOSScheduling".
         /// Denotes the priority of the virtual machine scale set lifecycle hook event for the Auto OS Upgrade scheduled on the virtual machine scale set.
         /// </summary>
         public string AdditionalContextPriority
         {
-            get => AdditionalContext is null ? default : AdditionalContext.Priority;
+            get
+            {
+                return AdditionalContext is null ? default : AdditionalContext.Priority;
+            }
             set
             {
                 if (AdditionalContext is null)
+                {
                     AdditionalContext = new VmScaleSetLifecycleHookEventAdditionalContext();
+                }
                 AdditionalContext.Priority = value;
             }
         }
-
-        /// <summary> Specifies the state of the virtual machine scale set lifecycle hook event. </summary>
-        public VmScaleSetLifecycleHookEventState? State { get; }
     }
 }

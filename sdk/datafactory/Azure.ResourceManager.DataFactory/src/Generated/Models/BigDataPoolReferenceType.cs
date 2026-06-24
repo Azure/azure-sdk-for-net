@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct BigDataPoolReferenceType : IEquatable<BigDataPoolReferenceType>
     {
         private readonly string _value;
+        /// <summary> BigDataPoolReference. </summary>
+        private const string BigDataPoolReferenceValue = "BigDataPoolReference";
 
         /// <summary> Initializes a new instance of <see cref="BigDataPoolReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BigDataPoolReferenceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BigDataPoolReferenceValue = "BigDataPoolReference";
+            _value = value;
+        }
 
         /// <summary> BigDataPoolReference. </summary>
         public static BigDataPoolReferenceType BigDataPoolReference { get; } = new BigDataPoolReferenceType(BigDataPoolReferenceValue);
+
         /// <summary> Determines if two <see cref="BigDataPoolReferenceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BigDataPoolReferenceType left, BigDataPoolReferenceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BigDataPoolReferenceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BigDataPoolReferenceType left, BigDataPoolReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BigDataPoolReferenceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BigDataPoolReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BigDataPoolReferenceType(string value) => new BigDataPoolReferenceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BigDataPoolReferenceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BigDataPoolReferenceType?(string value) => value == null ? null : new BigDataPoolReferenceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BigDataPoolReferenceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BigDataPoolReferenceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

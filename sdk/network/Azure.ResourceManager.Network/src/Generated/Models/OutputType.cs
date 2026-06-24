@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct OutputType : IEquatable<OutputType>
     {
         private readonly string _value;
+        /// <summary> Workspace. </summary>
+        private const string WorkspaceValue = "Workspace";
 
         /// <summary> Initializes a new instance of <see cref="OutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OutputType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WorkspaceValue = "Workspace";
+            _value = value;
+        }
 
         /// <summary> Workspace. </summary>
         public static OutputType Workspace { get; } = new OutputType(WorkspaceValue);
+
         /// <summary> Determines if two <see cref="OutputType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OutputType left, OutputType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OutputType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OutputType left, OutputType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OutputType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OutputType(string value) => new OutputType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OutputType?(string value) => value == null ? null : new OutputType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OutputType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OutputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,63 +7,40 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format read settings.
-    /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="ParquetReadSettings"/> and <see cref="XmlReadSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ParquetReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/>, and <see cref="BinaryReadSettings"/>.
     /// </summary>
     public abstract partial class FormatReadSettings
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
-        protected FormatReadSettings()
+        /// <param name="formatReadSettingsType"> The read setting type. </param>
+        private protected FormatReadSettings(string formatReadSettingsType)
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FormatReadSettingsType = formatReadSettingsType;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal FormatReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties)
         {
             FormatReadSettingsType = formatReadSettingsType;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The read setting type. </summary>
         internal string FormatReadSettingsType { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

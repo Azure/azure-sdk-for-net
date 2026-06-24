@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct SecurityConfigurationRuleProtocol : IEquatable<SecurityConfigurationRuleProtocol>
     {
         private readonly string _value;
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Udp. </summary>
+        private const string UdpValue = "Udp";
+        /// <summary> Icmp. </summary>
+        private const string IcmpValue = "Icmp";
+        /// <summary> Esp. </summary>
+        private const string EspValue = "Esp";
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> Ah. </summary>
+        private const string AhValue = "Ah";
 
         /// <summary> Initializes a new instance of <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityConfigurationRuleProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "Tcp";
-        private const string UdpValue = "Udp";
-        private const string IcmpValue = "Icmp";
-        private const string EspValue = "Esp";
-        private const string AnyValue = "Any";
-        private const string AhValue = "Ah";
+            _value = value;
+        }
 
         /// <summary> Tcp. </summary>
         public static SecurityConfigurationRuleProtocol Tcp { get; } = new SecurityConfigurationRuleProtocol(TcpValue);
+
         /// <summary> Udp. </summary>
         public static SecurityConfigurationRuleProtocol Udp { get; } = new SecurityConfigurationRuleProtocol(UdpValue);
+
         /// <summary> Icmp. </summary>
         public static SecurityConfigurationRuleProtocol Icmp { get; } = new SecurityConfigurationRuleProtocol(IcmpValue);
+
         /// <summary> Esp. </summary>
         public static SecurityConfigurationRuleProtocol Esp { get; } = new SecurityConfigurationRuleProtocol(EspValue);
+
         /// <summary> Any. </summary>
         public static SecurityConfigurationRuleProtocol Any { get; } = new SecurityConfigurationRuleProtocol(AnyValue);
+
         /// <summary> Ah. </summary>
         public static SecurityConfigurationRuleProtocol Ah { get; } = new SecurityConfigurationRuleProtocol(AhValue);
+
         /// <summary> Determines if two <see cref="SecurityConfigurationRuleProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityConfigurationRuleProtocol left, SecurityConfigurationRuleProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityConfigurationRuleProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityConfigurationRuleProtocol left, SecurityConfigurationRuleProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityConfigurationRuleProtocol(string value) => new SecurityConfigurationRuleProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityConfigurationRuleProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityConfigurationRuleProtocol?(string value) => value == null ? null : new SecurityConfigurationRuleProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityConfigurationRuleProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityConfigurationRuleProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

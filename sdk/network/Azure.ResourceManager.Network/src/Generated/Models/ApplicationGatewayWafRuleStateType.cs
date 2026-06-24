@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayWafRuleStateType : IEquatable<ApplicationGatewayWafRuleStateType>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayWafRuleStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static ApplicationGatewayWafRuleStateType Enabled { get; } = new ApplicationGatewayWafRuleStateType(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static ApplicationGatewayWafRuleStateType Disabled { get; } = new ApplicationGatewayWafRuleStateType(DisabledValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayWafRuleStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayWafRuleStateType left, ApplicationGatewayWafRuleStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayWafRuleStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayWafRuleStateType left, ApplicationGatewayWafRuleStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayWafRuleStateType(string value) => new ApplicationGatewayWafRuleStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayWafRuleStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayWafRuleStateType?(string value) => value == null ? null : new ApplicationGatewayWafRuleStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayWafRuleStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayWafRuleStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

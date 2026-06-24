@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySkuFamily : IEquatable<ApplicationGatewaySkuFamily>
     {
         private readonly string _value;
+        /// <summary> Generation_1. </summary>
+        private const string Generation1Value = "Generation_1";
+        /// <summary> Generation_2. </summary>
+        private const string Generation2Value = "Generation_2";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySkuFamily(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Generation1Value = "Generation_1";
-        private const string Generation2Value = "Generation_2";
+            _value = value;
+        }
 
         /// <summary> Generation_1. </summary>
         public static ApplicationGatewaySkuFamily Generation1 { get; } = new ApplicationGatewaySkuFamily(Generation1Value);
+
         /// <summary> Generation_2. </summary>
         public static ApplicationGatewaySkuFamily Generation2 { get; } = new ApplicationGatewaySkuFamily(Generation2Value);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuFamily"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySkuFamily left, ApplicationGatewaySkuFamily right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySkuFamily"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySkuFamily left, ApplicationGatewaySkuFamily right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySkuFamily"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySkuFamily(string value) => new ApplicationGatewaySkuFamily(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySkuFamily"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySkuFamily?(string value) => value == null ? null : new ApplicationGatewaySkuFamily(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySkuFamily other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySkuFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
