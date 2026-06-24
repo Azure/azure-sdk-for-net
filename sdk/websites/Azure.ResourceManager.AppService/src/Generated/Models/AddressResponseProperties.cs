@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="AddressResponseProperties"/>. </summary>
         internal AddressResponseProperties()
         {
-            OutboundIpAddresses = new ChangeTrackingList<string>();
+            OutboundIpAddresses = new ChangeTrackingList<IPAddress>();
             VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outboundIpAddresses"> IP addresses appearing on outbound connections. </param>
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddressResponseProperties(string serviceIpAddress, string internalIpAddress, IList<string> outboundIpAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddressResponseProperties(IPAddress serviceIpAddress, IPAddress internalIpAddress, IList<IPAddress> outboundIpAddresses, IList<VirtualIPMapping> virtualIPMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceIpAddress = serviceIpAddress;
             InternalIpAddress = internalIpAddress;
@@ -41,15 +42,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Main public virtual IP. </summary>
         [WirePath("serviceIpAddress")]
-        public string ServiceIpAddress { get; }
+        public IPAddress ServiceIpAddress { get; }
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         [WirePath("internalIpAddress")]
-        public string InternalIpAddress { get; }
+        public IPAddress InternalIpAddress { get; }
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("outboundIpAddresses")]
-        public IList<string> OutboundIpAddresses { get; } = new ChangeTrackingList<string>();
+        public IList<IPAddress> OutboundIpAddresses { get; } = new ChangeTrackingList<IPAddress>();
 
         /// <summary> Additional virtual IPs. </summary>
         [WirePath("vipMappings")]

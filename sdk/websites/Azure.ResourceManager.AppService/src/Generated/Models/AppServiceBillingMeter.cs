@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
         [WirePath("properties.meterId")]
-        public string MeterId
+        public Guid? MeterId
         {
             get
             {

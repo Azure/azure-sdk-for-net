@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +18,10 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WebAppResource"/> and their operations.
-    /// Each <see cref="WebAppResource"/> in the collection will belong to the same instance of <see cref="WebSiteResource"/>.
-    /// To get a <see cref="WebAppCollection"/> instance call the GetWebApps method from an instance of <see cref="WebSiteResource"/>.
+    /// Each <see cref="WebAppResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="WebAppCollection"/> instance call the GetWebApps method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
-    public partial class WebAppCollection : ArmCollection, IEnumerable<WebAppResource>, IAsyncEnumerable<WebAppResource>
+    public partial class WebAppCollection : ArmCollection
     {
         private readonly ClientDiagnostics _webAppsClientDiagnostics;
         private readonly WebApps _webAppsRestClient;
@@ -48,22 +46,22 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebSiteResource.ResourceType)
+            if (id.ResourceType != WebSiteSlotResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteSlotResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -71,13 +69,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<WebAppResource>> GetAsync(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<WebAppResource>> GetAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.Get");
             scope.Start();
@@ -87,9 +85,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                Response<NetworkFeaturesData> response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -104,15 +102,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -120,13 +118,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<WebAppResource> Get(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<WebAppResource> Get(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.Get");
             scope.Start();
@@ -136,9 +134,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                Response<NetworkFeaturesData> response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -153,83 +151,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// List the workflows for a web site, or a deployment slot.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_ListWorkflows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAppResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<WorkflowEnvelopeData, WebAppResource>(new WebAppsGetWorkflowsAsyncCollectionResultOfT(
-                _webAppsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "WebAppCollection.GetAll"), data => new WebAppResource(Client, data));
-        }
-
-        /// <summary>
-        /// List the workflows for a web site, or a deployment slot.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_ListWorkflows. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebAppResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<WorkflowEnvelopeData, WebAppResource>(new WebAppsGetWorkflowsCollectionResultOfT(
-                _webAppsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "WebAppCollection.GetAll"), data => new WebAppResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,13 +167,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.Exists");
             scope.Start();
@@ -253,17 +183,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<WorkflowEnvelopeData> response = default;
+                Response<NetworkFeaturesData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        response = Response.FromValue((NetworkFeaturesData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -282,11 +212,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -294,13 +224,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.Exists");
             scope.Start();
@@ -310,17 +240,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<WorkflowEnvelopeData> response = default;
+                Response<NetworkFeaturesData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        response = Response.FromValue((NetworkFeaturesData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -339,11 +269,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,13 +281,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<WebAppResource>> GetIfExistsAsync(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<WebAppResource>> GetIfExistsAsync(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.GetIfExists");
             scope.Start();
@@ -367,17 +297,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<WorkflowEnvelopeData> response = default;
+                Response<NetworkFeaturesData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        response = Response.FromValue((NetworkFeaturesData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -400,11 +330,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,13 +342,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workflowName"> Workflow name. </param>
+        /// <param name="view"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<WebAppResource> GetIfExists(string workflowName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="view"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<WebAppResource> GetIfExists(string view, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(view, nameof(view));
 
             using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebAppCollection.GetIfExists");
             scope.Start();
@@ -428,17 +358,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workflowName, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, view, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<WorkflowEnvelopeData> response = default;
+                Response<NetworkFeaturesData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((WorkflowEnvelopeData)null, result);
+                        response = Response.FromValue((NetworkFeaturesData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -454,22 +384,6 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<WebAppResource> IEnumerable<WebAppResource>.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<WebAppResource> IAsyncEnumerable<WebAppResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

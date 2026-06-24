@@ -13,14 +13,14 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of static site basic auth. </summary>
-    public partial class StaticSiteBasicAuthPropertiesCollection
+    internal partial class StaticSiteBasicAuthPropertiesCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertiesCollection"/>. </summary>
         /// <param name="value"> The StaticSiteBasicAuthPropertiesARMResource items on this page. </param>
-        internal StaticSiteBasicAuthPropertiesCollection(IEnumerable<StaticSiteBasicAuthPropertiesData> value)
+        internal StaticSiteBasicAuthPropertiesCollection(IEnumerable<StaticSiteBasicAuthPropertyData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> The StaticSiteBasicAuthPropertiesARMResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBasicAuthPropertiesCollection(IList<StaticSiteBasicAuthPropertiesData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteBasicAuthPropertiesCollection(IList<StaticSiteBasicAuthPropertyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The StaticSiteBasicAuthPropertiesARMResource items on this page. </summary>
         [WirePath("value")]
-        public IList<StaticSiteBasicAuthPropertiesData> Value { get; }
+        public IList<StaticSiteBasicAuthPropertyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

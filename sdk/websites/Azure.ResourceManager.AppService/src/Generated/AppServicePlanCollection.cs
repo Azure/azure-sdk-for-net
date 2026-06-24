@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// Each <see cref="AppServicePlanResource"/> in the collection will belong to the same instance of <see cref="AppServicePlanResource"/>.
     /// To get a <see cref="AppServicePlanCollection"/> instance call the GetAppServicePlans method from an instance of <see cref="AppServicePlanResource"/>.
     /// </summary>
-    public partial class AppServicePlanCollection : ArmCollection
+    public partial class AppServicePlanCollection : ArmCollection, IEnumerable<AppServicePlanResource>, IAsyncEnumerable<AppServicePlanResource>
     {
         private readonly ClientDiagnostics _appServicePlansClientDiagnostics;
         private readonly AppServicePlans _appServicePlansRestClient;
@@ -53,15 +55,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Update a Virtual Network gateway.
+        /// Description for Get a Virtual Network associated with an App Service plan.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_UpdateVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -69,123 +71,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
-        /// <param name="data"> Definition of the gateway. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AppServicePlanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AppServicePlanResource>> GetAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Update a Virtual Network gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VnetGateways_UpdateVnetGateway. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
-        /// <param name="data"> Definition of the gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AppServicePlanResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appServicePlansRestClient.CreateUpdateVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Get a Virtual Network gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AppServicePlanResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.Get");
             scope.Start();
@@ -195,9 +87,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkData> response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -212,15 +104,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get a Virtual Network gateway.
+        /// Description for Get a Virtual Network associated with an App Service plan.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -228,13 +120,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AppServicePlanResource> Get(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AppServicePlanResource> Get(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.Get");
             scope.Start();
@@ -244,9 +136,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                Response<AppServiceVirtualNetworkData> response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -258,6 +150,74 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VnetInfoResources_ListVnets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServicePlanResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppServiceVirtualNetworkData, AppServicePlanResource>(new MicrosoftWebVnetInfoResourcesListVnetsAsyncCollectionResultOfT(
+                _appServicePlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// Description for Get all Virtual Networks associated with an App Service plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VnetInfoResources_ListVnets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServicePlanResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppServiceVirtualNetworkData, AppServicePlanResource>(new MicrosoftWebVnetInfoResourcesListVnetsCollectionResultOfT(
+                _appServicePlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServicePlanCollection.GetAll"), data => new AppServicePlanResource(Client, data));
         }
 
         /// <summary>
@@ -265,11 +225,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -277,13 +237,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
             scope.Start();
@@ -293,17 +253,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AppServiceVirtualNetworkGatewayData> response = default;
+                Response<AppServiceVirtualNetworkData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AppServiceVirtualNetworkGatewayData)null, result);
+                        response = Response.FromValue((AppServiceVirtualNetworkData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -322,11 +282,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -334,13 +294,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.Exists");
             scope.Start();
@@ -350,17 +310,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AppServiceVirtualNetworkGatewayData> response = default;
+                Response<AppServiceVirtualNetworkData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AppServiceVirtualNetworkGatewayData)null, result);
+                        response = Response.FromValue((AppServiceVirtualNetworkData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -379,11 +339,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -391,13 +351,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AppServicePlanResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<AppServicePlanResource>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
             scope.Start();
@@ -407,17 +367,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AppServiceVirtualNetworkGatewayData> response = default;
+                Response<AppServiceVirtualNetworkData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AppServiceVirtualNetworkGatewayData)null, result);
+                        response = Response.FromValue((AppServiceVirtualNetworkData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -440,11 +400,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VnetGateways_GetVnetGateway. </description>
+        /// <description> VnetInfoResources_GetVnetFromServerFarm. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -452,13 +412,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Only the 'primary' gateway is supported. </param>
+        /// <param name="vnetName"> Name of the Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AppServicePlanResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<AppServicePlanResource> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
 
             using DiagnosticScope scope = _appServicePlansClientDiagnostics.CreateScope("AppServicePlanCollection.GetIfExists");
             scope.Start();
@@ -468,17 +428,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServicePlansRestClient.CreateGetVnetGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, context);
+                HttpMessage message = _appServicePlansRestClient.CreateGetVnetFromServerFarmRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, vnetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AppServiceVirtualNetworkGatewayData> response = default;
+                Response<AppServiceVirtualNetworkData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceVirtualNetworkData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AppServiceVirtualNetworkGatewayData)null, result);
+                        response = Response.FromValue((AppServiceVirtualNetworkData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -494,6 +454,22 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<AppServicePlanResource> IEnumerable<AppServicePlanResource>.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<AppServicePlanResource> IAsyncEnumerable<AppServicePlanResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

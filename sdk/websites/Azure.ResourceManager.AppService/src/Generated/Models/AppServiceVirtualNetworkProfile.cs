@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="type"> Resource type of the Virtual Network (read-only). </param>
         /// <param name="subnet"> Subnet within the Virtual Network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceVirtualNetworkProfile(ResourceIdentifier id, string name, string @type, string subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceVirtualNetworkProfile(ResourceIdentifier id, string name, ResourceType? @type, string subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource type of the Virtual Network (read-only). </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? Type { get; }
 
         /// <summary> Subnet within the Virtual Network. </summary>
         [WirePath("subnet")]

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingMeterProperties(string meterId, string billingLocation, string shortName, string friendlyName, string resourceType, string osType, double? multiplier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingMeterProperties(Guid? meterId, string billingLocation, string shortName, string friendlyName, string resourceType, string osType, double? multiplier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
         [WirePath("meterId")]
-        public string MeterId { get; }
+        public Guid? MeterId { get; }
 
         /// <summary> Azure Location of billable resource. </summary>
         [WirePath("billingLocation")]

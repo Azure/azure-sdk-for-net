@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             string code = default;
             string clientRequestId = default;
             string serviceRequestId = default;
-            WorkflowErrorResponse error = default;
+            WebAppErrorResponse error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WorkflowErrorResponse.DeserializeWorkflowErrorResponse(prop.Value, options);
+                    error = WebAppErrorResponse.DeserializeWebAppErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

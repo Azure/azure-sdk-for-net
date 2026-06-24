@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of site containers. </summary>
-    internal partial class SiteContainerCollection : IJsonModel<SiteContainerCollection>
+    public partial class SiteContainerCollection : IJsonModel<SiteContainerCollection>
     {
         /// <summary> Initializes a new instance of <see cref="SiteContainerCollection"/> for deserialization. </summary>
         internal SiteContainerCollection()

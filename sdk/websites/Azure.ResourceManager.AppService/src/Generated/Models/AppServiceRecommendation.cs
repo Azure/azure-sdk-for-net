@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
         [WirePath("properties.resourceId")]
-        public string ResourceId
+        public ResourceIdentifier ResourceId
         {
             get
             {

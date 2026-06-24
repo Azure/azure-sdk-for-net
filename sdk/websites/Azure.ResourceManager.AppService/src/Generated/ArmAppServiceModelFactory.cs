@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <param name="name"> Name of the Virtual Network (read-only). </param>
-        /// <param name="type"> Resource type of the Virtual Network (read-only). </param>
+        /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>
         /// <param name="subnet"> Subnet within the Virtual Network. </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkProfile"/> instance for mocking. </returns>
-        public static AppServiceVirtualNetworkProfile AppServiceVirtualNetworkProfile(ResourceIdentifier id = default, string name = default, string @type = default, string subnet = default)
+        public static AppServiceVirtualNetworkProfile AppServiceVirtualNetworkProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string subnet = default)
         {
-            return new AppServiceVirtualNetworkProfile(id, name, @type, subnet, default);
+            return new AppServiceVirtualNetworkProfile(id, name, default, subnet, default);
         }
 
         /// <param name="name"> Pair name. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <returns> A new <see cref="Models.AppServiceBillingMeter"/> instance for mocking. </returns>
-        public static AppServiceBillingMeter AppServiceBillingMeter(string id = default, string stackName = default, string kind = default, string @type = default, string meterId = default, string billingLocation = default, string shortName = default, string friendlyName = default, string resourceType = default, string osType = default, double? multiplier = default)
+        public static AppServiceBillingMeter AppServiceBillingMeter(string id = default, string stackName = default, string kind = default, string @type = default, Guid? meterId = default, string billingLocation = default, string shortName = default, string friendlyName = default, string resourceType = default, string osType = default, double? multiplier = default)
         {
             return new AppServiceBillingMeter(
                 id,
@@ -1737,11 +1737,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
-        /// <param name="type"> Resource type of the App Service Environment. </param>
+        /// <param name="resourceType"> Resource type of the App Service Environment. </param>
         /// <returns> A new <see cref="Models.HostingEnvironmentProfile"/> instance for mocking. </returns>
-        public static HostingEnvironmentProfile HostingEnvironmentProfile(ResourceIdentifier id = default, string name = default, string @type = default)
+        public static HostingEnvironmentProfile HostingEnvironmentProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new HostingEnvironmentProfile(id, name, @type, default);
+            return new HostingEnvironmentProfile(id, name, default, default);
         }
 
         /// <param name="correlationId">
@@ -2065,11 +2065,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
-        /// <param name="type"> Resource type of the Kubernetes Environment. </param>
+        /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
         /// <returns> A new <see cref="Models.KubeEnvironmentProfile"/> instance for mocking. </returns>
-        public static KubeEnvironmentProfile KubeEnvironmentProfile(ResourceIdentifier id = default, string name = default, string @type = default)
+        public static KubeEnvironmentProfile KubeEnvironmentProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new KubeEnvironmentProfile(id, name, @type, default);
+            return new KubeEnvironmentProfile(id, name, default, default);
         }
 
         /// <param name="identityType"></param>
@@ -2165,14 +2165,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentAddressResultData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressResultData AppServiceEnvironmentAddressResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceIpAddress = default, string internalIpAddress = default, IEnumerable<string> outboundIpAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
+        public static AppServiceEnvironmentAddressResultData AppServiceEnvironmentAddressResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress serviceIpAddress = default, IPAddress internalIpAddress = default, IEnumerable<IPAddress> outboundIpAddresses = default, IEnumerable<VirtualIPMapping> virtualIPMappings = default, string kind = default)
         {
             return new AppServiceEnvironmentAddressResultData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                serviceIpAddress is null && internalIpAddress is null && outboundIpAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIpAddress, internalIpAddress, (outboundIpAddresses ?? new ChangeTrackingList<string>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
+                serviceIpAddress is null && internalIpAddress is null && outboundIpAddresses is null && virtualIPMappings is null ? default : new AddressResponseProperties(serviceIpAddress, internalIpAddress, (outboundIpAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>()).ToList(), default),
                 kind,
                 default);
         }
@@ -2301,7 +2301,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="bladeName"> Deep link to a blade on the portal. </param>
         /// <param name="forwardLink"> Forward link to an external document associated with the rule. </param>
         /// <returns> A new <see cref="Models.AppServiceRecommendation"/> instance for mocking. </returns>
-        public static AppServiceRecommendation AppServiceRecommendation(string id = default, string stackName = default, string kind = default, string @type = default, DateTimeOffset? createdOn = default, string recommendationId = default, string resourceId = default, ResourceScopeType? resourceScope = default, string ruleName = default, string displayName = default, string message = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, string actionName = default, int? enabled = default, IEnumerable<string> states = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? nextNotificationOn = default, DateTimeOffset? notificationExpirationOn = default, DateTimeOffset? notifiedOn = default, double? score = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default)
+        public static AppServiceRecommendation AppServiceRecommendation(string id = default, string stackName = default, string kind = default, string @type = default, DateTimeOffset? createdOn = default, string recommendationId = default, ResourceIdentifier resourceId = default, ResourceScopeType? resourceScope = default, string ruleName = default, string displayName = default, string message = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, string actionName = default, int? enabled = default, IEnumerable<string> states = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? nextNotificationOn = default, DateTimeOffset? notificationExpirationOn = default, DateTimeOffset? notifiedOn = default, double? score = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default)
         {
             return new AppServiceRecommendation(
                 id,
@@ -2574,7 +2574,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
-        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string functionAppResourceId = default, string functionAppRegion = default, DateTimeOffset? createdOn = default, string kind = default)
+        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier functionAppResourceId = default, string functionAppRegion = default, DateTimeOffset? createdOn = default, string kind = default)
         {
             return new StaticSiteUserProvidedFunctionAppData(
                 id,
@@ -2931,15 +2931,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
         /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertiesData"/> instance for mocking. </returns>
-        public static StaticSiteBasicAuthPropertiesData StaticSiteBasicAuthPropertiesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
+        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
+        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
         {
-            return new StaticSiteBasicAuthPropertiesData(
+            return new StaticSiteBasicAuthPropertyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                password is null && secretUri is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertiesARMResourceProperties(
+                password is null && secretUri is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
                     password,
                     secretUri,
                     applicableEnvironmentsMode,
@@ -2948,16 +2948,6 @@ namespace Azure.ResourceManager.AppService.Models
                     default),
                 kind,
                 default);
-        }
-
-        /// <param name="value"> The StaticSiteBasicAuthPropertiesARMResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.StaticSiteBasicAuthPropertiesCollection"/> instance for mocking. </returns>
-        public static StaticSiteBasicAuthPropertiesCollection StaticSiteBasicAuthPropertiesCollection(IEnumerable<StaticSiteBasicAuthPropertiesData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<StaticSiteBasicAuthPropertiesData>();
-
-            return new StaticSiteBasicAuthPropertiesCollection((value ?? new ChangeTrackingList<StaticSiteBasicAuthPropertiesData>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3891,7 +3881,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <returns> A new <see cref="Models.DeletedAppRestoreContent"/> instance for mocking. </returns>
-        public static DeletedAppRestoreContent DeletedAppRestoreContent(string id = default, string stackName = default, string kind = default, string @type = default, string deletedSiteId = default, bool? recoverConfiguration = default, string snapshotTime = default, bool? useDRSecondary = default)
+        public static DeletedAppRestoreContent DeletedAppRestoreContent(string id = default, string stackName = default, string kind = default, string @type = default, ResourceIdentifier deletedSiteId = default, bool? recoverConfiguration = default, string snapshotTime = default, bool? useDRSecondary = default)
         {
             return new DeletedAppRestoreContent(
                 id,
@@ -5843,6 +5833,16 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppEnvironmentVariable(name, value, default);
         }
 
+        /// <param name="value"> The SiteContainer items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.SiteContainerCollection"/> instance for mocking. </returns>
+        public static SiteContainerCollection SiteContainerCollection(IEnumerable<SiteContainerData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SiteContainerData>();
+
+            return new SiteContainerCollection((value ?? new ChangeTrackingList<SiteContainerData>()).ToList(), nextLink, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -7152,7 +7152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 startTime,
                 endTime,
                 staticSiteProperties,
-                errorInfo is null ? default : new WorkflowErrorResponse(errorInfo, default),
+                errorInfo is null ? default : new WebAppErrorResponse(errorInfo, default),
                 default);
         }
 
@@ -7239,11 +7239,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
-        /// <param name="type"> Gets the resource type. </param>
+        /// <param name="resourceType"> Gets the resource type. </param>
         /// <returns> A new <see cref="Models.WorkflowResourceReference"/> instance for mocking. </returns>
-        public static WorkflowResourceReference WorkflowResourceReference(ResourceIdentifier id = default, string name = default, string @type = default)
+        public static WorkflowResourceReference WorkflowResourceReference(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new WorkflowResourceReference(id, name, @type, default);
+            return new WorkflowResourceReference(id, name, default, default);
         }
 
         /// <param name="name"> Gets the name. </param>
@@ -7408,7 +7408,7 @@ namespace Azure.ResourceManager.AppService.Models
                 code,
                 clientRequestId,
                 serviceRequestId,
-                errorInfo is null ? default : new WorkflowErrorResponse(errorInfo, default),
+                errorInfo is null ? default : new WebAppErrorResponse(errorInfo, default),
                 default);
         }
 
@@ -9679,6 +9679,37 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBasicAuthPropertyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="password"> The password for basic auth. </param>
+        /// <param name="secretUri"> Url to the secret in Key Vault. </param>
+        /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
+        /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
+        /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, Uri secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default, string kind = default)
+        {
+            return new StaticSiteBasicAuthPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                password is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
+                    password,
+                    default,
+                    applicableEnvironmentsMode,
+                    (environments ?? new ChangeTrackingList<string>()).ToList(),
+                    secretState,
+                    default),
+                kind,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9795,29 +9826,6 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 region is null && createdOn is null && provisioningState is null ? default : new StaticSiteLinkedBackendARMResourceProperties(default, region, createdOn, provisioningState, default),
-                kind,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
-        /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
-        /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier functionAppResourceId = default, string functionAppRegion = default, DateTimeOffset? createdOn = default, string kind = default)
-        {
-            return new StaticSiteUserProvidedFunctionAppData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                functionAppRegion is null && createdOn is null ? default : new StaticSiteUserProvidedFunctionAppProperties(default, functionAppRegion, createdOn, default),
                 kind,
                 default);
         }
@@ -10617,8 +10625,8 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 default,
                 default,
-                shortName is null && friendlyName is null && osType is null && multiplier is null ? default : new BillingMeterProperties(
-                    default,
+                meterId is null && shortName is null && friendlyName is null && osType is null && multiplier is null ? default : new BillingMeterProperties(
+                    meterId,
                     default,
                     shortName,
                     friendlyName,
@@ -10759,26 +10767,6 @@ namespace Azure.ResourceManager.AppService.Models
                     default),
                 kind,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentProfile"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the App Service Environment.
-        ///             Serialized Name: HostingEnvironmentProfile.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the App Service Environment.
-        ///             Serialized Name: HostingEnvironmentProfile.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type of the App Service Environment.
-        ///             Serialized Name: HostingEnvironmentProfile.type
-        /// </param>
-        /// <returns> A new <see cref="Models.HostingEnvironmentProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostingEnvironmentProfile HostingEnvironmentProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new HostingEnvironmentProfile(id, name, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameSites"/>. </summary>
@@ -10928,30 +10916,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default,
                 default,
                 description is null && displayName is null && orgDomain is null ? default : new GeoRegionProperties(description, displayName, orgDomain, default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkProfile"/>. </summary>
-        /// <param name="id">
-        /// Resource id of the Virtual Network.
-        ///             Serialized Name: VirtualNetworkProfile.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the Virtual Network (read-only).
-        ///             Serialized Name: VirtualNetworkProfile.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type of the Virtual Network (read-only).
-        ///             Serialized Name: VirtualNetworkProfile.type
-        /// </param>
-        /// <param name="subnet">
-        /// Subnet within the Virtual Network.
-        ///             Serialized Name: VirtualNetworkProfile.subnet
-        /// </param>
-        /// <returns> A new <see cref="Models.AppServiceVirtualNetworkProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AppServiceVirtualNetworkProfile AppServiceVirtualNetworkProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string subnet = default)
-        {
-            return new AppServiceVirtualNetworkProfile(id, name, default, subnet, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.CustomDnsSuffixConfigurationData"/>. </summary>
@@ -11476,10 +11440,10 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 default,
                 default,
-                createdOn is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
+                createdOn is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
                     createdOn,
                     default,
-                    default,
+                    resourceId,
                     resourceScope,
                     ruleName,
                     displayName,
@@ -11734,26 +11698,6 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 default,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentProfile"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the Kubernetes Environment.
-        ///             Serialized Name: KubeEnvironmentProfile.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the Kubernetes Environment.
-        ///             Serialized Name: KubeEnvironmentProfile.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type of the Kubernetes Environment.
-        ///             Serialized Name: KubeEnvironmentProfile.type
-        /// </param>
-        /// <returns> A new <see cref="Models.KubeEnvironmentProfile"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KubeEnvironmentProfile KubeEnvironmentProfile(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new KubeEnvironmentProfile(id, name, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
@@ -12454,7 +12398,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                functionAppRegion is null && createdOn is null ? default : new StaticSiteUserProvidedFunctionAppProperties(default, functionAppRegion, createdOn, default),
+                functionAppResourceId is null && functionAppRegion is null && createdOn is null ? default : new StaticSiteUserProvidedFunctionAppProperties(functionAppResourceId, functionAppRegion, createdOn, default),
                 kind,
                 default);
         }
@@ -15181,26 +15125,6 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowResourceReference"/>. </summary>
-        /// <param name="id">
-        /// The resource id.
-        ///             Serialized Name: ResourceReference.id
-        /// </param>
-        /// <param name="name">
-        /// Gets the resource name.
-        ///             Serialized Name: ResourceReference.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Gets the resource type.
-        ///             Serialized Name: ResourceReference.type
-        /// </param>
-        /// <returns> A new <see cref="Models.WorkflowResourceReference"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WorkflowResourceReference WorkflowResourceReference(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new WorkflowResourceReference(id, name, default, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.WorkflowExpressionResourceErrorInfo"/>. </summary>
         /// <param name="code">
         /// The error code.
@@ -16112,7 +16036,7 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 default,
                 default,
-                recoverConfiguration is null && snapshotTime is null && useDRSecondary is null ? default : new DeletedAppRestoreRequestProperties(default, recoverConfiguration, snapshotTime, useDRSecondary, default));
+                deletedSiteId is null && recoverConfiguration is null && snapshotTime is null && useDRSecondary is null ? default : new DeletedAppRestoreRequestProperties(deletedSiteId, recoverConfiguration, snapshotTime, useDRSecondary, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotRestoreRequest"/>. </summary>
@@ -16778,6 +16702,55 @@ namespace Azure.ResourceManager.AppService.Models
                     publicNetworkAccess,
                     (databaseConnections ?? new ChangeTrackingList<StaticSiteDatabaseConnectionOverview>()).ToList(),
                     default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBasicAuthPropertyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
+        /// </param>
+        /// <param name="password">
+        /// The password for basic auth.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
+        /// </param>
+        /// <param name="secretUri">
+        /// Url to the secret in Key Vault.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
+        /// </param>
+        /// <param name="applicableEnvironmentsMode">
+        /// State indicating if basic auth is enabled and for what environments it is active.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
+        /// </param>
+        /// <param name="environments">
+        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
+        /// </param>
+        /// <param name="secretState">
+        /// State indicating if basic auth has a secret and what type it is.
+        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
+        /// </param>
+        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string password = default, Uri secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default)
+        {
+            return new StaticSiteBasicAuthPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                password is null && applicableEnvironmentsMode is null && environments is null && secretState is null ? default : new StaticSiteBasicAuthPropertyProperties(
+                    password,
+                    default,
+                    applicableEnvironmentsMode,
+                    (environments ?? new ChangeTrackingList<string>()).ToList(),
+                    secretState,
+                    default),
+                kind,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBuildData"/>. </summary>

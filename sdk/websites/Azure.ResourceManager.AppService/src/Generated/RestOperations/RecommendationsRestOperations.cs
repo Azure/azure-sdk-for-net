@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateDisableRecommendationForSiteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string name, RequestContext context)
+        internal HttpMessage CreateDisableRequest(Guid subscriptionId, string resourceGroupName, string siteName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateResetAllFiltersRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateResetAllRecommendationFiltersRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateDisableRecommendationForSubscriptionRequest(Guid subscriptionId, string name, RequestContext context)
+        internal HttpMessage CreateDisableAppServiceRecommendationRequest(Guid subscriptionId, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

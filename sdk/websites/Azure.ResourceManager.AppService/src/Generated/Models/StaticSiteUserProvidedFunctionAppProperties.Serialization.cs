@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string functionAppResourceId = default;
+            ResourceIdentifier functionAppResourceId = default;
             string functionAppRegion = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("functionAppResourceId"u8))
                 {
-                    functionAppResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    functionAppResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("functionAppRegion"u8))

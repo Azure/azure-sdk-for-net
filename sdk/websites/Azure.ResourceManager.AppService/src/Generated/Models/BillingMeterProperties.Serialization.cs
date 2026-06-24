@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
-                writer.WriteStringValue(MeterId);
+                writer.WriteStringValue(MeterId.Value);
             }
             if (Optional.IsDefined(BillingLocation))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string meterId = default;
+            Guid? meterId = default;
             string billingLocation = default;
             string shortName = default;
             string friendlyName = default;
@@ -163,7 +163,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("meterId"u8))
                 {
-                    meterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    meterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("billingLocation"u8))

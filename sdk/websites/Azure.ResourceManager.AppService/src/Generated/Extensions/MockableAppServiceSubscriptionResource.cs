@@ -671,9 +671,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppServiceDeploymentLocations>> GetSubscriptionDeploymentLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSubscriptionDeploymentLocations");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations");
             scope.Start();
             try
             {
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetSubscriptionDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
@@ -715,9 +715,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppServiceDeploymentLocations> GetSubscriptionDeploymentLocations(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetSubscriptionDeploymentLocations");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations");
             scope.Start();
             try
             {
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetSubscriptionDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
@@ -889,11 +889,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckNameAvailabilityAsync(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
             try
             {
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -937,11 +937,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AppServiceNameAvailabilityResult> CheckNameAvailability(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(AppServiceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability");
             scope.Start();
             try
             {
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
         /// <returns> A collection of <see cref="AppServiceIdentifierData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceIdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppServiceIdentifierData> GetAllSiteIdentifierDataAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetSiteIdentifiersAssignedToHostNameAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
+            return new WebClientGetAllSiteIdentifierDataAsyncCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetAllSiteIdentifierData");
         }
 
         /// <summary>
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
         /// <returns> A collection of <see cref="AppServiceIdentifierData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceIdentifierData> GetSiteIdentifiersAssignedToHostName(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppServiceIdentifierData> GetAllSiteIdentifierData(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
 
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WebClientGetSiteIdentifiersAssignedToHostNameCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetSiteIdentifiersAssignedToHostName");
+            return new WebClientGetAllSiteIdentifierDataCollectionResultOfT(WebClientRestClient, Guid.Parse(Id.SubscriptionId), AppServiceDomainNameIdentifier.ToRequestContent(nameIdentifier), context, "MockableAppServiceSubscriptionResource.GetAllSiteIdentifierData");
         }
 
         /// <summary>
@@ -1193,12 +1193,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> RegionalCheckNameAvailabilityAsync(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
             scope.Start();
             try
             {
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1244,12 +1244,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnlResourceNameAvailabilityResult> RegionalCheckNameAvailability(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(string location, DnlResourceNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.RegionalCheckNameAvailability");
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability");
             scope.Start();
             try
             {
@@ -1257,7 +1257,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateRegionalCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
+                HttpMessage message = WebClientRestClient.CreateCheckDnlResourceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DnlResourceNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnlResourceNameAvailabilityResult> response = Response.FromValue(DnlResourceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1603,9 +1603,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResetAllFiltersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAllRecommendationFiltersAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllFilters");
+            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1613,7 +1613,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateResetAllFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = RecommendationsRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1642,9 +1642,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ResetAllFilters(CancellationToken cancellationToken = default)
+        public virtual Response ResetAllRecommendationFilters(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllFilters");
+            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters");
             scope.Start();
             try
             {
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateResetAllFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = RecommendationsRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1684,11 +1684,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DisableRecommendationForSubscriptionAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableAppServiceRecommendationAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableRecommendationForSubscription");
+            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
             try
             {
@@ -1696,7 +1696,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateDisableRecommendationForSubscriptionRequest(Guid.Parse(Id.SubscriptionId), name, context);
+                HttpMessage message = RecommendationsRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1728,11 +1728,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response DisableRecommendationForSubscription(string name, CancellationToken cancellationToken = default)
+        public virtual Response DisableAppServiceRecommendation(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableRecommendationForSubscription");
+            using DiagnosticScope scope = RecommendationsClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation");
             scope.Start();
             try
             {
@@ -1740,7 +1740,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsRestClient.CreateDisableRecommendationForSubscriptionRequest(Guid.Parse(Id.SubscriptionId), name, context);
+                HttpMessage message = RecommendationsRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1773,12 +1773,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewWorkflowAsync(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewWorkflow");
+            using DiagnosticScope scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();
             try
             {
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesRestClient.CreatePreviewWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
+                HttpMessage message = StaticSitesRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
                 if (response.Value == null)
@@ -1824,12 +1824,12 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<StaticSitesWorkflowPreview> PreviewWorkflow(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(string location, StaticSitesWorkflowPreviewRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewWorkflow");
+            using DiagnosticScope scope = StaticSitesClientDiagnostics.CreateScope("MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow");
             scope.Start();
             try
             {
@@ -1837,7 +1837,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesRestClient.CreatePreviewWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
+                HttpMessage message = StaticSitesRestClient.CreatePreviewStaticSiteWorkflowRequest(Guid.Parse(Id.SubscriptionId), location, StaticSitesWorkflowPreviewRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSitesWorkflowPreview> response = Response.FromValue(StaticSitesWorkflowPreview.FromResponse(result), result);
                 if (response.Value == null)

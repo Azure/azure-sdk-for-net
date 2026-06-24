@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of StaticSites and their operations over a StaticSiteResource. </returns>
         public virtual StaticSiteCollection GetStaticSites()
         {
-            return this.GetCachedClient(client => new StaticSiteCollection(client, Id));
+            return GetCachedClient(client => new StaticSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -616,13 +616,13 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthMetadataData> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataDataAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthMetadataGetByResourceGroupAsyncCollectionResultOfT(ResourceHealthMetadataRestClient, Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceResourceGroupResource.GetByResourceGroup");
+            return new ResourceHealthMetadataGetAllResourceHealthMetadataDataAsyncCollectionResultOfT(ResourceHealthMetadataRestClient, Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceResourceGroupResource.GetAllResourceHealthMetadataData");
         }
 
         /// <summary>
@@ -644,13 +644,13 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthMetadataData> GetByResourceGroup(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataData(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceHealthMetadataGetByResourceGroupCollectionResultOfT(ResourceHealthMetadataRestClient, Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceResourceGroupResource.GetByResourceGroup");
+            return new ResourceHealthMetadataGetAllResourceHealthMetadataDataCollectionResultOfT(ResourceHealthMetadataRestClient, Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context, "MockableAppServiceResourceGroupResource.GetAllResourceHealthMetadataData");
         }
     }
 }

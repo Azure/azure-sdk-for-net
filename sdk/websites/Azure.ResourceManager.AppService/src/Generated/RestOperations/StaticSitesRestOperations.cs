@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteUsersRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, RequestContext context)
+        internal HttpMessage CreateGetUsersRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetStaticSiteUsersRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string authprovider, RequestContext context)
+        internal HttpMessage CreateNextGetUsersRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string authprovider, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateDeleteStaticSiteUserRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, string userid, RequestContext context)
+        internal HttpMessage CreateDeleteUserRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, string userid, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateUpdateStaticSiteUserRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, string userid, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateUserRequest(Guid subscriptionId, string resourceGroupName, string name, string authprovider, string userid, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateDetachStaticSiteRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateDetachRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteConfiguredRolesRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetConfiguredRolesRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateResetStaticSiteApiKeyRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateResetApiKeyRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -911,7 +911,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteBuildFunctionsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
+        internal HttpMessage CreateGetFunctionsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetStaticSiteBuildFunctionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
+        internal HttpMessage CreateNextGetFunctionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetStaticSiteBuildFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
+        internal HttpMessage CreateGetFunctionAppSettingsRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateCreateZipDeploymentForStaticSiteBuildRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateZipDeploymentRequest(Guid subscriptionId, string resourceGroupName, string name, string environmentName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -2265,7 +2265,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreatePreviewWorkflowRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePreviewStaticSiteWorkflowRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

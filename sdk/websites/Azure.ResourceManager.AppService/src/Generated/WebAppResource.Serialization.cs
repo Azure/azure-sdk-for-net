@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
-    public partial class WebAppResource : IJsonModel<WorkflowEnvelopeData>
+    public partial class WebAppResource : IJsonModel<NetworkFeaturesData>
     {
-        private static IJsonModel<WorkflowEnvelopeData> s_dataDeserializationInstance;
+        private static IJsonModel<NetworkFeaturesData> s_dataDeserializationInstance;
 
-        private static IJsonModel<WorkflowEnvelopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkflowEnvelopeData();
+        private static IJsonModel<NetworkFeaturesData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFeaturesData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkflowEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowEnvelopeData>)Data).Write(writer, options);
+        void IJsonModel<NetworkFeaturesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeaturesData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowEnvelopeData IJsonModel<WorkflowEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetworkFeaturesData IJsonModel<NetworkFeaturesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkflowEnvelopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowEnvelopeData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<NetworkFeaturesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFeaturesData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowEnvelopeData IPersistableModel<WorkflowEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowEnvelopeData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        NetworkFeaturesData IPersistableModel<NetworkFeaturesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeaturesData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkflowEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFeaturesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

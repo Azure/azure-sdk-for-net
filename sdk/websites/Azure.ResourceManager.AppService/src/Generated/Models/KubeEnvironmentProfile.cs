@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="type"> Resource type of the Kubernetes Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource type of the Kubernetes Environment. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? Type { get; }
     }
 }

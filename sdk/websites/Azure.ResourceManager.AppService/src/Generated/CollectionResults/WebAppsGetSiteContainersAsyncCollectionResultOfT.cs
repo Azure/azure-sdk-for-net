@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     yield break;
                 }
-                SiteContainerCollection result = SiteContainerCollection.FromResponse(response);
+                Models.SiteContainerCollection result = Models.SiteContainerCollection.FromResponse(response);
                 yield return Page<SiteContainerData>.FromValues((IReadOnlyList<SiteContainerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.AppService;
 
@@ -77,25 +78,25 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServiceIpAddress))
             {
                 writer.WritePropertyName("serviceIpAddress"u8);
-                writer.WriteStringValue(ServiceIpAddress);
+                writer.WriteStringValue(ServiceIpAddress.ToString());
             }
             if (Optional.IsDefined(InternalIpAddress))
             {
                 writer.WritePropertyName("internalIpAddress"u8);
-                writer.WriteStringValue(InternalIpAddress);
+                writer.WriteStringValue(InternalIpAddress.ToString());
             }
             if (Optional.IsCollectionDefined(OutboundIpAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in OutboundIpAddresses)
+                foreach (IPAddress item in OutboundIpAddresses)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -151,21 +152,29 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            string serviceIpAddress = default;
-            string internalIpAddress = default;
-            IList<string> outboundIpAddresses = default;
+            IPAddress serviceIpAddress = default;
+            IPAddress internalIpAddress = default;
+            IList<IPAddress> outboundIpAddresses = default;
             IList<VirtualIPMapping> virtualIPMappings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("serviceIpAddress"u8))
                 {
-                    serviceIpAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("internalIpAddress"u8))
                 {
-                    internalIpAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    internalIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("outboundIpAddresses"u8))
@@ -174,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -183,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
                     outboundIpAddresses = array;
@@ -208,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AddressResponseProperties(serviceIpAddress, internalIpAddress, outboundIpAddresses ?? new ChangeTrackingList<string>(), virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
+            return new AddressResponseProperties(serviceIpAddress, internalIpAddress, outboundIpAddresses ?? new ChangeTrackingList<IPAddress>(), virtualIPMappings ?? new ChangeTrackingList<VirtualIPMapping>(), additionalBinaryDataProperties);
         }
     }
 }

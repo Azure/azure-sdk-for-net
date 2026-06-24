@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderGetWebAppStacksForLocationAsyncCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksForLocation");
+            return new ProviderGetWebAppStacksByLocationAsyncCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksByLocation");
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksForLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.AppService.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderGetWebAppStacksForLocationCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksForLocation");
+            return new ProviderGetWebAppStacksByLocationCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksByLocation");
         }
 
         /// <summary>

@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing a WebApp along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebAppResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebApps method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource"/> using the GetWebApps method.
     /// </summary>
     public partial class WebAppResource : ArmResource
     {
         private readonly ClientDiagnostics _webAppsClientDiagnostics;
         private readonly WebApps _webAppsRestClient;
-        private readonly WorkflowEnvelopeData _data;
+        private readonly NetworkFeaturesData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/workflows";
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/networkFeatures";
 
         /// <summary> Initializes a new instance of WebAppResource for mocking. </summary>
         protected WebAppResource()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of <see cref="WebAppResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebAppResource(ArmClient client, WorkflowEnvelopeData data) : this(client, data.Id)
+        internal WebAppResource(ArmClient client, NetworkFeaturesData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual WorkflowEnvelopeData Data
+        public virtual NetworkFeaturesData Data
         {
             get
             {
@@ -74,10 +74,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="workflowName"> The workflowName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName)
+        /// <param name="slot"> The slot. </param>
+        /// <param name="view"> The view. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string view)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +93,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -123,9 +124,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                Response<NetworkFeaturesData> response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -140,15 +141,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Get workflow information by its ID for web site, or a deployment slot.
+        /// Description for Gets all network features used by the app (or deployment slot, if specified).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/workflows/{workflowName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkFeatures/{view}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkflowEnvelopeOperationGroup_GetWorkflow. </description>
+        /// <description> NetworkFeaturesSlotOperationGroup_ListNetworkFeaturesSlot. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -171,9 +172,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetWorkflowRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetNetworkFeaturesSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowEnvelopeData> response = Response.FromValue(WorkflowEnvelopeData.FromResponse(result), result);
+                Response<NetworkFeaturesData> response = Response.FromValue(NetworkFeaturesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

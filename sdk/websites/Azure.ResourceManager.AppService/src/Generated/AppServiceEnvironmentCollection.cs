@@ -15,13 +15,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppServiceEnvironmentResource"/> and their operations.
-    /// Each <see cref="AppServiceEnvironmentResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
-    /// To get a <see cref="AppServiceEnvironmentCollection"/> instance call the GetAppServiceEnvironments method from an instance of <see cref="AppServiceEnvironmentResource"/>.
+    /// Each <see cref="AppServiceEnvironmentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AppServiceEnvironmentCollection"/> instance call the GetAppServiceEnvironments method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppServiceEnvironmentCollection : ArmCollection, IEnumerable<AppServiceEnvironmentResource>, IAsyncEnumerable<AppServiceEnvironmentResource>
     {
@@ -48,22 +49,22 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AppServiceEnvironmentResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceEnvironmentResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Description for Approves or rejects a private endpoint connection
+        /// Description for Create or update an App Service Environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_ApproveOrRejectPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,14 +73,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
-        /// <param name="data"></param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<AppServiceEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
@@ -113,15 +114,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Approves or rejects a private endpoint connection
+        /// Description for Create or update an App Service Environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_ApproveOrRejectPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,14 +131,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
-        /// <param name="data"></param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="data"> Configuration details of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<AppServiceEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, AppServiceEnvironmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.CreateOrUpdate");
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
@@ -171,15 +172,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,13 +188,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AppServiceEnvironmentResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AppServiceEnvironmentResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
@@ -203,9 +204,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -220,15 +221,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets a private endpoint connection
+        /// Description for Get the properties of an App Service Environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,13 +237,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AppServiceEnvironmentResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AppServiceEnvironmentResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Get");
             scope.Start();
@@ -252,9 +253,9 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                Response<AppServiceEnvironmentData> response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,15 +270,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets the list of private endpoints associated with a hosting environment
+        /// Description for Get all App Service Environments in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnectionList. </description>
+        /// <description> AppServiceEnvironmentResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -293,25 +294,19 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RemotePrivateEndpointConnectionARMResourceData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetPrivateEndpointConnectionListAsyncCollectionResultOfT(
-                _appServiceEnvironmentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_appServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
-        /// Description for Gets the list of private endpoints associated with a hosting environment
+        /// Description for Get all App Service Environments in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnectionList. </description>
+        /// <description> AppServiceEnvironmentResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -327,13 +322,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RemotePrivateEndpointConnectionARMResourceData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetPrivateEndpointConnectionListCollectionResultOfT(
-                _appServiceEnvironmentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
+            return new PageableWrapper<AppServiceEnvironmentData, AppServiceEnvironmentResource>(new AppServiceEnvironmentsGetByResourceGroupCollectionResultOfT(_appServiceEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppServiceEnvironmentCollection.GetAll"), data => new AppServiceEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -341,11 +330,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,13 +342,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
@@ -369,17 +358,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = default;
+                Response<AppServiceEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, result);
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -398,11 +387,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,13 +399,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.Exists");
             scope.Start();
@@ -426,17 +415,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = default;
+                Response<AppServiceEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, result);
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -455,11 +444,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,13 +456,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AppServiceEnvironmentResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<AppServiceEnvironmentResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -483,17 +472,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = default;
+                Response<AppServiceEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, result);
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -516,11 +505,11 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RemotePrivateEndpointConnectionARMResources_GetPrivateEndpointConnection. </description>
+        /// <description> AppServiceEnvironmentResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,13 +517,13 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AppServiceEnvironmentResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<AppServiceEnvironmentResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentCollection.GetIfExists");
             scope.Start();
@@ -544,17 +533,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
+                HttpMessage message = _appServiceEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RemotePrivateEndpointConnectionARMResourceData> response = default;
+                Response<AppServiceEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(AppServiceEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RemotePrivateEndpointConnectionARMResourceData)null, result);
+                        response = Response.FromValue((AppServiceEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

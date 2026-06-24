@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(string resourceGroupName, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetAllResourceHealthMetadataDataRequest(string resourceGroupName, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, string resourceGroupName, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetAllResourceHealthMetadataDataRequest(Uri nextPage, string resourceGroupName, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
         [WirePath("properties.deletedSiteId")]
-        public string DeletedSiteId
+        public ResourceIdentifier DeletedSiteId
         {
             get
             {

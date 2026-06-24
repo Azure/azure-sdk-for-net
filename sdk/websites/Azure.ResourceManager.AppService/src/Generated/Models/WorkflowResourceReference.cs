@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="type"> Gets the resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowResourceReference(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowResourceReference(ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? Type { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
         /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserProvidedFunctionAppProperties(string functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteUserProvidedFunctionAppProperties(ResourceIdentifier functionAppResourceId, string functionAppRegion, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FunctionAppResourceId = functionAppResourceId;
             FunctionAppRegion = functionAppRegion;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
         [WirePath("functionAppResourceId")]
-        public string FunctionAppResourceId { get; set; }
+        public ResourceIdentifier FunctionAppResourceId { get; set; }
 
         /// <summary> The region of the function app registered with the static site. </summary>
         [WirePath("functionAppRegion")]

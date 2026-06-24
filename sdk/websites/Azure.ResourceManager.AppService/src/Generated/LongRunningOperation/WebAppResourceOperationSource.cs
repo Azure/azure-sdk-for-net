@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         WebAppResource IOperationSource<WebAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RemotePrivateEndpointConnectionARMResourceData data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CsmDeploymentStatusData data = CsmDeploymentStatusData.DeserializeCsmDeploymentStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new WebAppResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         async ValueTask<WebAppResource> IOperationSource<WebAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RemotePrivateEndpointConnectionARMResourceData data = RemotePrivateEndpointConnectionARMResourceData.DeserializeRemotePrivateEndpointConnectionARMResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            CsmDeploymentStatusData data = CsmDeploymentStatusData.DeserializeCsmDeploymentStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new WebAppResource(_client, data);
         }
     }

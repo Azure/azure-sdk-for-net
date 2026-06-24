@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="staticSiteProperties"> The generic properties of a staticSite. </param>
         /// <param name="error"> Error details for the asynchronous operation, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesOperationStatusProperties(string status, string startTime, string endTime, StaticSiteProperties staticSiteProperties, WorkflowErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSitesOperationStatusProperties(string status, string startTime, string endTime, StaticSiteProperties staticSiteProperties, WebAppErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartTime = startTime;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Error details for the asynchronous operation, if any. </summary>
         [WirePath("error")]
-        internal WorkflowErrorResponse Error { get; }
+        internal WebAppErrorResponse Error { get; }
 
         /// <summary> The error properties. </summary>
         [WirePath("error.error")]

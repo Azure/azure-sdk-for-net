@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="useDRSecondary"> If true, the snapshot is retrieved from DRSecondary endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAppRestoreRequestProperties(string deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedAppRestoreRequestProperties(ResourceIdentifier deletedSiteId, bool? recoverConfiguration, string snapshotTime, bool? useDRSecondary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeletedSiteId = deletedSiteId;
             RecoverConfiguration = recoverConfiguration;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
         [WirePath("deletedSiteId")]
-        public string DeletedSiteId { get; set; }
+        public ResourceIdentifier DeletedSiteId { get; set; }
 
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
         [WirePath("recoverConfiguration")]

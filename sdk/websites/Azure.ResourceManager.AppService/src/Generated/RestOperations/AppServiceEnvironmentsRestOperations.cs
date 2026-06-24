@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetWebAppsRequest(Guid subscriptionId, string resourceGroupName, string name, string propertiesToInclude, RequestContext context)
+        internal HttpMessage CreateGetAllWebAppDataRequest(Guid subscriptionId, string resourceGroupName, string name, string propertiesToInclude, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetWebAppsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string propertiesToInclude, RequestContext context)
+        internal HttpMessage CreateNextGetAllWebAppDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string propertiesToInclude, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

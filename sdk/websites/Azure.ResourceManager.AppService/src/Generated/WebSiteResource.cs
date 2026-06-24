@@ -3798,9 +3798,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PremierAddOnData>> GetPremierAddOnsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PremierAddOnData>> GetAllPremierAddOnDataAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetPremierAddOns");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllPremierAddOnData");
             scope.Start();
             try
             {
@@ -3808,7 +3808,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetPremierAddOnsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -3846,9 +3846,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PremierAddOnData> GetPremierAddOns(CancellationToken cancellationToken = default)
+        public virtual Response<PremierAddOnData> GetAllPremierAddOnData(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetPremierAddOns");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllPremierAddOnData");
             scope.Start();
             try
             {
@@ -3856,7 +3856,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetPremierAddOnsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetAllPremierAddOnDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PremierAddOnData> response = Response.FromValue(PremierAddOnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -4108,9 +4108,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RelayServiceConnectionEntityData>> GetRelayServiceConnectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RelayServiceConnectionEntityData>> GetAllRelayServiceConnectionDataAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetRelayServiceConnections");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllRelayServiceConnectionData");
             scope.Start();
             try
             {
@@ -4118,7 +4118,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetRelayServiceConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -4156,9 +4156,9 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RelayServiceConnectionEntityData> GetRelayServiceConnections(CancellationToken cancellationToken = default)
+        public virtual Response<RelayServiceConnectionEntityData> GetAllRelayServiceConnectionData(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetRelayServiceConnections");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSiteResource.GetAllRelayServiceConnectionData");
             scope.Start();
             try
             {
@@ -4166,7 +4166,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webAppsRestClient.CreateGetRelayServiceConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _webAppsRestClient.CreateGetAllRelayServiceConnectionDataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayServiceConnectionEntityData> response = Response.FromValue(RelayServiceConnectionEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -4205,19 +4205,19 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppBackupData> GetSiteBackupsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppBackupData> GetAllSiteBackupDataAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSiteBackupsAsyncCollectionResultOfT(
+            return new WebAppsGetAllSiteBackupDataAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "WebSiteResource.GetSiteBackups");
+                "WebSiteResource.GetAllSiteBackupData");
         }
 
         /// <summary>
@@ -4243,19 +4243,19 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppBackupData> GetSiteBackups(CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppBackupData> GetAllSiteBackupData(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WebAppsGetSiteBackupsCollectionResultOfT(
+            return new WebAppsGetAllSiteBackupDataCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "WebSiteResource.GetSiteBackups");
+                "WebSiteResource.GetAllSiteBackupData");
         }
 
         /// <summary>
@@ -7822,11 +7822,11 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteSlots().Get(slot, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="WebSiteResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of SitePrivateEndpointConnections in the <see cref="WebSiteResource"/>. </summary>
+        /// <returns> An object representing collection of SitePrivateEndpointConnections and their operations over a SitePrivateEndpointConnectionResource. </returns>
+        public virtual SitePrivateEndpointConnectionCollection GetSitePrivateEndpointConnections()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
+            return GetCachedClient(client => new SitePrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Description for Gets a private endpoint connection. </summary>
@@ -7835,11 +7835,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SitePrivateEndpointConnectionResource>> GetSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await this.GetWebApps().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetSitePrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Description for Gets a private endpoint connection. </summary>
@@ -7848,11 +7848,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<SitePrivateEndpointConnectionResource> GetSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return this.GetWebApps().Get(privateEndpointConnectionName, cancellationToken);
+            return GetSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebApps in the <see cref="WebSiteResource"/>. </summary>
@@ -8339,11 +8339,11 @@ namespace Azure.ResourceManager.AppService
             return this.GetWebApps().Get(instanceId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="WebSiteResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of SiteProcesses in the <see cref="WebSiteResource"/>. </summary>
+        /// <returns> An object representing collection of SiteProcesses and their operations over a SiteProcessResource. </returns>
+        public virtual SiteProcessCollection GetSiteProcesses()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
+            return GetCachedClient(client => new SiteProcessCollection(client, Id));
         }
 
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
@@ -8352,11 +8352,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string processId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteProcessResource>> GetSiteProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            return await this.GetWebApps().GetAsync(processId, cancellationToken).ConfigureAwait(false);
+            return await GetSiteProcesses().GetAsync(processId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Description for Get process information by its ID for a specific scaled-out instance in a web site. </summary>
@@ -8365,11 +8365,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string processId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteProcessResource> GetSiteProcess(string processId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(processId, nameof(processId));
 
-            return this.GetWebApps().Get(processId, cancellationToken);
+            return GetSiteProcesses().Get(processId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it in the <see cref="WebSiteResource"/>. </summary>
@@ -8492,11 +8492,11 @@ namespace Azure.ResourceManager.AppService
             return GetWebSitePublicCertificates().Get(publicCertificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="WebSiteResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of SiteContainers in the <see cref="WebSiteResource"/>. </summary>
+        /// <returns> An object representing collection of SiteContainers and their operations over a SiteContainerResource. </returns>
+        public virtual SiteContainerCollection GetSiteContainers()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
+            return GetCachedClient(client => new SiteContainerCollection(client, Id));
         }
 
         /// <summary> Gets a site container of a site, or a deployment slot. </summary>
@@ -8505,11 +8505,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string containerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteContainerResource>> GetSiteContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            return await this.GetWebApps().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteContainers().GetAsync(containerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a site container of a site, or a deployment slot. </summary>
@@ -8518,31 +8518,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string containerName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteContainerResource> GetSiteContainer(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            return this.GetWebApps().Get(containerName, cancellationToken);
+            return GetSiteContainers().Get(containerName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebSiteSiteExtensions in the <see cref="WebSiteResource"/>. </summary>
-        /// <returns> An object representing collection of WebSiteSiteExtensions and their operations over a WebSiteSiteExtensionResource. </returns>
-        public virtual WebSiteSiteExtensionCollection GetWebSiteSiteExtensions()
+        /// <summary> Gets a collection of WebSiteExtensions in the <see cref="WebSiteResource"/>. </summary>
+        /// <returns> An object representing collection of WebSiteExtensions and their operations over a WebSiteExtensionResource. </returns>
+        public virtual WebSiteExtensionCollection GetWebSiteExtensions()
         {
-            return GetCachedClient(client => new WebSiteSiteExtensionCollection(client, Id));
-        }
-
-        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
-        /// <param name="siteExtensionId"> Site extension name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WebSiteSiteExtensionResource>> GetWebSiteSiteExtensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
-
-            return await GetWebSiteSiteExtensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new WebSiteExtensionCollection(client, Id));
         }
 
         /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
@@ -8551,11 +8538,24 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebSiteSiteExtensionResource> GetWebSiteSiteExtension(string siteExtensionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSiteExtensionResource>> GetWebSiteExtensionAsync(string siteExtensionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
 
-            return GetWebSiteSiteExtensions().Get(siteExtensionId, cancellationToken);
+            return await GetWebSiteExtensions().GetAsync(siteExtensionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Description for Get site extension information by its ID for a web site, or a deployment slot. </summary>
+        /// <param name="siteExtensionId"> Site extension name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="siteExtensionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WebSiteExtensionResource> GetWebSiteExtension(string siteExtensionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(siteExtensionId, nameof(siteExtensionId));
+
+            return GetWebSiteExtensions().Get(siteExtensionId, cancellationToken);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteSourceControlResource"/> along with the instance operations that can be performed on it in the <see cref="WebSiteResource"/>. </summary>
@@ -8631,11 +8631,11 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteWebJobs().Get(webJobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="WebSiteResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of SiteWorkflows in the <see cref="WebSiteResource"/>. </summary>
+        /// <returns> An object representing collection of SiteWorkflows and their operations over a SiteWorkflowResource. </returns>
+        public virtual SiteWorkflowCollection GetSiteWorkflows()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
+            return GetCachedClient(client => new SiteWorkflowCollection(client, Id));
         }
 
         /// <summary> Get workflow information by its ID for web site, or a deployment slot. </summary>
@@ -8644,11 +8644,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string workflowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteWorkflowResource>> GetSiteWorkflowAsync(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            return await this.GetWebApps().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
+            return await GetSiteWorkflows().GetAsync(workflowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get workflow information by its ID for web site, or a deployment slot. </summary>
@@ -8657,11 +8657,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string workflowName, CancellationToken cancellationToken = default)
+        public virtual Response<SiteWorkflowResource> GetSiteWorkflow(string workflowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
-            return this.GetWebApps().Get(workflowName, cancellationToken);
+            return GetSiteWorkflows().Get(workflowName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SiteCertificates in the <see cref="WebSiteResource"/>. </summary>

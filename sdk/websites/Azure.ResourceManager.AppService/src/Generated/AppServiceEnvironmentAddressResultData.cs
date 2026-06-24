@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Main public virtual IP. </summary>
         [WirePath("properties.serviceIpAddress")]
-        public string ServiceIpAddress
+        public IPAddress ServiceIpAddress
         {
             get
             {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
         [WirePath("properties.internalIpAddress")]
-        public string InternalIpAddress
+        public IPAddress InternalIpAddress
         {
             get
             {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
         [WirePath("properties.outboundIpAddresses")]
-        public IList<string> OutboundIpAddresses
+        public IList<IPAddress> OutboundIpAddresses
         {
             get
             {

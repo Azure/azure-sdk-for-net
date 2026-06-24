@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="type"> Resource type of the App Service Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Resource type of the App Service Environment. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public ResourceType? Type { get; }
     }
 }

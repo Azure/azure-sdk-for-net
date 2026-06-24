@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             DateTimeOffset? createdOn = default;
             string recommendationId = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             ResourceScopeType? resourceScope = default;
             string ruleName = default;
             string displayName = default;
@@ -293,7 +294,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceScope"u8))

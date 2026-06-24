@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetRelayServiceConnectionsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetAllRelayServiceConnectionSlotDataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetSiteBackupsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetAllSiteBackupSlotDataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSiteBackupsSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextGetAllSiteBackupSlotDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1420,7 +1420,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetPremierAddOnsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetAllPremierAddOnSlotDataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetSlotSnapshotsRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSnapshotsSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextGetSlotSnapshotsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsFromDRSecondarySlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetSlotSnapshotsFromDRSecondaryRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1781,7 +1781,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSnapshotsFromDRSecondarySlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextGetSlotSnapshotsFromDRSecondaryRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -3842,7 +3842,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetRelayServiceConnectionsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetAllRelayServiceConnectionDataRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3888,7 +3888,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetSiteBackupsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetAllSiteBackupDataRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3911,7 +3911,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetSiteBackupsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateNextGetAllSiteBackupDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -4314,7 +4314,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetPremierAddOnsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetAllPremierAddOnDataRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6242,7 +6242,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateGetAllConfigurationDataRequest(Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6265,7 +6265,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
+        internal HttpMessage CreateNextGetAllConfigurationDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -6465,7 +6465,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateGetAllConfigurationSlotDataRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6490,7 +6490,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetConfigurationsSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
+        internal HttpMessage CreateNextGetAllConfigurationSlotDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -9063,7 +9063,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetInstanceProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string instanceId, string processId, RequestContext context)
+        internal HttpMessage CreateGetSiteInstanceProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string instanceId, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -9090,7 +9090,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetInstanceProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string instanceId, string processId, RequestContext context)
+        internal HttpMessage CreateNextGetSiteInstanceProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string instanceId, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -9231,7 +9231,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string processId, RequestContext context)
+        internal HttpMessage CreateGetSiteProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -9256,7 +9256,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string processId, RequestContext context)
+        internal HttpMessage CreateNextGetSiteProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -9413,7 +9413,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetInstanceProcessThreadsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, RequestContext context)
+        internal HttpMessage CreateGetSiteSlotInstanceProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -9442,7 +9442,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetInstanceProcessThreadsSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, RequestContext context)
+        internal HttpMessage CreateNextGetSiteSlotInstanceProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -9591,7 +9591,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetProcessThreadsSlotRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string processId, RequestContext context)
+        internal HttpMessage CreateGetSiteSlotProcessThreadsRequest(Guid subscriptionId, string resourceGroupName, string name, string slot, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -9618,7 +9618,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetProcessThreadsSlotRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string processId, RequestContext context)
+        internal HttpMessage CreateNextGetSiteSlotProcessThreadsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string slot, string processId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

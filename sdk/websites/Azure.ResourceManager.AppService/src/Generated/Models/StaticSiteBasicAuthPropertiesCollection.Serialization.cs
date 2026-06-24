@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of static site basic auth. </summary>
-    public partial class StaticSiteBasicAuthPropertiesCollection : IJsonModel<StaticSiteBasicAuthPropertiesCollection>
+    internal partial class StaticSiteBasicAuthPropertiesCollection : IJsonModel<StaticSiteBasicAuthPropertiesCollection>
     {
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertiesCollection"/> for deserialization. </summary>
         internal StaticSiteBasicAuthPropertiesCollection()
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (StaticSiteBasicAuthPropertiesData item in Value)
+            foreach (StaticSiteBasicAuthPropertyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IList<StaticSiteBasicAuthPropertiesData> value = default;
+            IList<StaticSiteBasicAuthPropertyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<StaticSiteBasicAuthPropertiesData> array = new List<StaticSiteBasicAuthPropertiesData>();
+                    List<StaticSiteBasicAuthPropertyData> array = new List<StaticSiteBasicAuthPropertyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteBasicAuthPropertiesData.DeserializeStaticSiteBasicAuthPropertiesData(item, options));
+                        array.Add(StaticSiteBasicAuthPropertyData.DeserializeStaticSiteBasicAuthPropertyData(item, options));
                     }
                     value = array;
                     continue;

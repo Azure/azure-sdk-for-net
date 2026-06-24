@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateExecuteSiteAnalysisRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
+        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string analysisName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateExecuteSiteDetectorRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
+        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

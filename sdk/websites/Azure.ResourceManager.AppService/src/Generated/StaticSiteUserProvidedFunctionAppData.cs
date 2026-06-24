@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
         [WirePath("properties.functionAppResourceId")]
-        public string FunctionAppResourceId
+        public ResourceIdentifier FunctionAppResourceId
         {
             get
             {

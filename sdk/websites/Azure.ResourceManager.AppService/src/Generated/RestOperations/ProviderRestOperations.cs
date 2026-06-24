@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateGetWebAppStacksForLocationRequest(string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateGetWebAppStacksByLocationRequest(string location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateNextGetWebAppStacksForLocationRequest(Uri nextPage, string location, string stackOsType, RequestContext context)
+        internal HttpMessage CreateNextGetWebAppStacksByLocationRequest(Uri nextPage, string location, string stackOsType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
