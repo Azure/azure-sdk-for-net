@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityRuleResource securityRule = client.GetSecurityRuleResource(securityRuleResourceId);
 
             // invoke the operation
-            await securityRule.DeleteAsync(WaitUntil.Completed);
+            await securityRule.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Priority = 100,
                 Direction = SecurityRuleDirection.Outbound,
             };
-            ArmOperation<SecurityRuleResource> lro = await securityRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<SecurityRuleResource> lro = await securityRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

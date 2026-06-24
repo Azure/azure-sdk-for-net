@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.ManagedOps
     [ModelReaderWriterBuildable(typeof(ManagedOpsAzureMonitorInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsChangeTrackingInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsDesiredConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ManagedOpsDesiredConfigurationUpdate))]
+    [ModelReaderWriterBuildable(typeof(ManagedOpsDesiredConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsServiceInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsSku))]
     [ModelReaderWriterBuildable(typeof(ManagedOpUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateManagerInformation))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerManagedOpsContext : ModelReaderWriterContext
     {
     }

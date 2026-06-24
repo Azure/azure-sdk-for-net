@@ -8,70 +8,37 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The request for DisassociateCloudServicePublicIpOperation. </summary>
     public partial class DisassociateCloudServicePublicIPContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DisassociateCloudServicePublicIPContent"/>. </summary>
-        /// <param name="publicIPArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIPArmId"/> is null. </exception>
-        public DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIPArmId)
+        /// <param name="publicIpArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpArmId"/> is null. </exception>
+        public DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIpArmId)
         {
-            Argument.AssertNotNull(publicIPArmId, nameof(publicIPArmId));
+            Argument.AssertNotNull(publicIpArmId, nameof(publicIpArmId));
 
-            PublicIPArmId = publicIPArmId;
+            PublicIpArmId = publicIpArmId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DisassociateCloudServicePublicIPContent"/>. </summary>
-        /// <param name="publicIPArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIPArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="publicIpArmId"> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DisassociateCloudServicePublicIPContent(ResourceIdentifier publicIpArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicIPArmId = publicIPArmId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DisassociateCloudServicePublicIPContent"/> for deserialization. </summary>
-        internal DisassociateCloudServicePublicIPContent()
-        {
+            PublicIpArmId = publicIpArmId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ARM ID of the Standalone Public IP to associate. This is of the form : /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Network/publicIPAddresses/{publicIpAddressName}. </summary>
         [WirePath("publicIpArmId")]
-        public ResourceIdentifier PublicIPArmId { get; }
+        public ResourceIdentifier PublicIpArmId { get; }
     }
 }

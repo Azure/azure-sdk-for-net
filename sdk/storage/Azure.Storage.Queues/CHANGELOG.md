@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on the `QueueClient` did not honor the `DelegatedUserObjectId` property set on the supplied `QueueSasBuilder`.
 
 ### Other Changes
 

@@ -1,0 +1,88 @@
+name: auto-build-repair-trigger-eval
+description: Trigger and anti-trigger tests for the auto-build-repair skill
+
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: auto-build-repair
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-fix-the-sdk-pr-build
+    prompt: "fix the SDK PR build"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["auto-build-repair"]
+  - name: trigger-auto-build-repair
+    prompt: "auto build repair"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["auto-build-repair"]
+  - name: trigger-auto-sdk-build-fix-label
+    prompt: "This Auto SDK PR is labeled auto-sdk-build-fix and the build is red. Repair it."
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["auto-build-repair"]
+  - name: trigger-custom-code-build-repair
+    prompt: "custom-code build repair on the generated SDK PR"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["auto-build-repair"]
+  - name: trigger-generated-pr-custom-code-drift
+    prompt: "The generated SDK PR fails to build because the custom code drifted from the regenerated surface. Fix it."
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["auto-build-repair"]
+
+  - name: anti-trigger-write-unit-tests
+    prompt: "write unit tests"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]
+  - name: anti-trigger-create-a-new-typespec-definition
+    prompt: "create a new TypeSpec definition"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]
+  - name: anti-trigger-migrate-swagger-to-typespec
+    prompt: "migrate my SDK from Swagger to TypeSpec"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]
+  - name: anti-trigger-resolve-apiview-feedback
+    prompt: "resolve APIView feedback"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]
+  - name: anti-trigger-debug-ci-pipeline
+    prompt: "my CI pipeline failed, help me debug it"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]
+  - name: anti-trigger-release-my-sdk-package
+    prompt: "release my SDK package"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["auto-build-repair"]

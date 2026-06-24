@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on Data Lake clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `DataLakeSasBuilder`.
 
 ### Other Changes
 

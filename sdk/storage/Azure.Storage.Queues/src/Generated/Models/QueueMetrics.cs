@@ -7,14 +7,14 @@
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for queues. </summary>
+    /// <summary> The metrics properties. </summary>
     public partial class QueueMetrics
     {
         /// <summary> Initializes a new instance of <see cref="QueueMetrics"/>. </summary>
-        /// <param name="version"> The version of Storage Analytics to configure. </param>
-        /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
-        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
-        /// <param name="retentionPolicy"> the retention policy. </param>
+        /// <param name="version"> The version of the metrics properties. </param>
+        /// <param name="enabled"> Whether it is enabled. </param>
+        /// <param name="includeApis"> Whether to include API in the metrics. </param>
+        /// <param name="retentionPolicy"> The retention policy of the metrics. </param>
         internal QueueMetrics(string version, bool enabled, bool? includeApis, QueueRetentionPolicy retentionPolicy)
         {
             Version = version;
@@ -23,11 +23,16 @@ namespace Azure.Storage.Queues.Models
             RetentionPolicy = retentionPolicy;
         }
 
-        /// <summary> The version of Storage Analytics to configure. </summary>
+        /// <summary> The version of the metrics properties. </summary>
         public string Version { get; set; }
-        /// <summary> Indicates whether metrics are enabled for the Queue service. </summary>
+
+        /// <summary> Whether it is enabled. </summary>
         public bool Enabled { get; set; }
-        /// <summary> the retention policy. </summary>
+
+        /// <summary> Whether to include API in the metrics. </summary>
+        public bool? IncludeApis { get; set; }
+
+        /// <summary> The retention policy of the metrics. </summary>
         public QueueRetentionPolicy RetentionPolicy { get; set; }
     }
 }

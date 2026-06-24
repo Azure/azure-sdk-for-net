@@ -8,47 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class ManagedInstancePrivateEndpointConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateEndpointConnectionProperties"/>. </summary>
-        internal ManagedInstancePrivateEndpointConnectionProperties()
+        public ManagedInstancePrivateEndpointConnectionProperties()
         {
         }
 
@@ -56,29 +27,43 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePrivateEndpointConnectionProperties(ManagedInstancePrivateEndpointProperty privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal WritableSubResource PrivateEndpoint { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get => PrivateEndpoint?.Id;
-        }
+        [WirePath("privateEndpoint")]
+        internal ManagedInstancePrivateEndpointProperty PrivateEndpoint { get; set; }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; }
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+
         /// <summary> State of the Private Endpoint Connection. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
+
+        /// <summary> Resource id of the private endpoint. </summary>
+        [WirePath("privateEndpoint.id")]
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            }
+            set
+            {
+                if (PrivateEndpoint is null)
+                {
+                    PrivateEndpoint = new ManagedInstancePrivateEndpointProperty();
+                }
+                PrivateEndpoint.Id = value;
+            }
+        }
     }
 }

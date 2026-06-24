@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The details of refund request. </summary>
     public partial class RefundDetailsSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RefundDetailsSummary"/>. </summary>
         public RefundDetailsSummary()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="refundStatus"> The status of refund request. </param>
         /// <param name="refundOperationId"> The ID of refund operation. </param>
         /// <param name="refundReason"> The reason for refund. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RefundDetailsSummary(DateTimeOffset? requestedOn, DateTimeOffset? approvedOn, DateTimeOffset? completedOn, BillingAmount amountRequested, BillingAmount amountRefunded, ResourceIdentifier rebillInvoiceId, int? transactionCount, RefundStatus? refundStatus, string refundOperationId, RefundReasonCode? refundReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RefundDetailsSummary(DateTimeOffset? requestedOn, DateTimeOffset? approvedOn, DateTimeOffset? completedOn, BillingAmount amountRequested, BillingAmount amountRefunded, ResourceIdentifier rebillInvoiceId, int? transactionCount, RefundStatus? refundStatus, string refundOperationId, RefundReasonCode? refundReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestedOn = requestedOn;
             ApprovedOn = approvedOn;
@@ -75,36 +47,45 @@ namespace Azure.ResourceManager.Billing.Models
             RefundStatus = refundStatus;
             RefundOperationId = refundOperationId;
             RefundReason = refundReason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Date when the refund was requested. </summary>
         [WirePath("requestedOn")]
         public DateTimeOffset? RequestedOn { get; }
+
         /// <summary> Date when the refund was approved. </summary>
         [WirePath("approvedOn")]
         public DateTimeOffset? ApprovedOn { get; }
+
         /// <summary> Date when the refund was completed. </summary>
         [WirePath("completedOn")]
         public DateTimeOffset? CompletedOn { get; }
+
         /// <summary> The amount of refund requested. </summary>
         [WirePath("amountRequested")]
-        public BillingAmount AmountRequested { get; }
+        public BillingAmount AmountRequested { get; set; }
+
         /// <summary> The amount refunded. </summary>
         [WirePath("amountRefunded")]
-        public BillingAmount AmountRefunded { get; }
+        public BillingAmount AmountRefunded { get; set; }
+
         /// <summary> The invoice ID of the rebill invoice for a refund. </summary>
         [WirePath("rebillInvoiceId")]
         public ResourceIdentifier RebillInvoiceId { get; }
+
         /// <summary> The number of transactions refunded. </summary>
         [WirePath("transactionCount")]
         public int? TransactionCount { get; }
+
         /// <summary> The status of refund request. </summary>
         [WirePath("refundStatus")]
         public RefundStatus? RefundStatus { get; }
+
         /// <summary> The ID of refund operation. </summary>
         [WirePath("refundOperationId")]
         public string RefundOperationId { get; }
+
         /// <summary> The reason for refund. </summary>
         [WirePath("refundReason")]
         public RefundReasonCode? RefundReason { get; }

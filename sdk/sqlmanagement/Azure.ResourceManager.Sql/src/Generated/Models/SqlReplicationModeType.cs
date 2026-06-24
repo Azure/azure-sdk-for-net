@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlReplicationModeType : IEquatable<SqlReplicationModeType>
     {
         private readonly string _value;
+        /// <summary> Async. </summary>
+        private const string AsyncValue = "Async";
+        /// <summary> Sync. </summary>
+        private const string SyncValue = "Sync";
 
         /// <summary> Initializes a new instance of <see cref="SqlReplicationModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlReplicationModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AsyncValue = "Async";
-        private const string SyncValue = "Sync";
+            _value = value;
+        }
 
         /// <summary> Async. </summary>
         public static SqlReplicationModeType Async { get; } = new SqlReplicationModeType(AsyncValue);
+
         /// <summary> Sync. </summary>
         public static SqlReplicationModeType Sync { get; } = new SqlReplicationModeType(SyncValue);
+
         /// <summary> Determines if two <see cref="SqlReplicationModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlReplicationModeType left, SqlReplicationModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlReplicationModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlReplicationModeType left, SqlReplicationModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlReplicationModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlReplicationModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlReplicationModeType(string value) => new SqlReplicationModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlReplicationModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlReplicationModeType?(string value) => value == null ? null : new SqlReplicationModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlReplicationModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlReplicationModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

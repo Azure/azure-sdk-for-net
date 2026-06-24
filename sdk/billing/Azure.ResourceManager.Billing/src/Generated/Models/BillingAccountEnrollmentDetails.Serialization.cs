@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingAccountEnrollmentDetails : IUtf8JsonSerializable, IJsonModel<BillingAccountEnrollmentDetails>
+    /// <summary> The properties of an enrollment. </summary>
+    public partial class BillingAccountEnrollmentDetails : IJsonModel<BillingAccountEnrollmentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingAccountEnrollmentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingAccountEnrollmentDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingAccountEnrollmentDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingAccountEnrollmentDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingAccountEnrollmentDetails IPersistableModel<BillingAccountEnrollmentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingAccountEnrollmentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingAccountEnrollmentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
@@ -110,15 +149,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("invoiceRecipient"u8);
                 writer.WriteStringValue(InvoiceRecipient);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -127,28 +166,33 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        BillingAccountEnrollmentDetails IJsonModel<BillingAccountEnrollmentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingAccountEnrollmentDetails IJsonModel<BillingAccountEnrollmentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingAccountEnrollmentDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingAccountEnrollmentDetails(document.RootElement, options);
         }
 
-        internal static BillingAccountEnrollmentDetails DeserializeBillingAccountEnrollmentDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingAccountEnrollmentDetails DeserializeBillingAccountEnrollmentDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? startDate = default;
-            DateTimeOffset? endDate = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             string currency = default;
             string channel = default;
             string language = default;
@@ -162,118 +206,116 @@ namespace Azure.ResourceManager.Billing.Models
             EnrollmentMarkupStatus? markupStatus = default;
             IndirectRelationshipInfo indirectRelationshipInfo = default;
             string invoiceRecipient = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("startDate"u8))
+                if (prop.NameEquals("startDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDate = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDate"u8))
+                if (prop.NameEquals("endDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endDate = property.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("currency"u8))
+                if (prop.NameEquals("currency"u8))
                 {
-                    currency = property.Value.GetString();
+                    currency = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channel"u8))
+                if (prop.NameEquals("channel"u8))
                 {
-                    channel = property.Value.GetString();
+                    channel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("language"u8))
+                if (prop.NameEquals("language"u8))
                 {
-                    language = property.Value.GetString();
+                    language = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCode"u8))
+                if (prop.NameEquals("countryCode"u8))
                 {
-                    countryCode = property.Value.GetString();
+                    countryCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("billingCycle"u8))
+                if (prop.NameEquals("billingCycle"u8))
                 {
-                    billingCycle = property.Value.GetString();
+                    billingCycle = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extendedTermOption"u8))
+                if (prop.NameEquals("extendedTermOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedTermOption = new ExtendedTermOption(property.Value.GetString());
+                    extendedTermOption = new ExtendedTermOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportLevel"u8))
+                if (prop.NameEquals("supportLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    supportLevel = new BillingEnrollmentSupportLevel(property.Value.GetString());
+                    supportLevel = new BillingEnrollmentSupportLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("supportCoverage"u8))
+                if (prop.NameEquals("supportCoverage"u8))
                 {
-                    supportCoverage = property.Value.GetString();
+                    supportCoverage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloud"u8))
+                if (prop.NameEquals("cloud"u8))
                 {
-                    cloud = property.Value.GetString();
+                    cloud = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("poNumber"u8))
+                if (prop.NameEquals("poNumber"u8))
                 {
-                    poNumber = property.Value.GetString();
+                    poNumber = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("markupStatus"u8))
+                if (prop.NameEquals("markupStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    markupStatus = new EnrollmentMarkupStatus(property.Value.GetString());
+                    markupStatus = new EnrollmentMarkupStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("indirectRelationshipInfo"u8))
+                if (prop.NameEquals("indirectRelationshipInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    indirectRelationshipInfo = IndirectRelationshipInfo.DeserializeIndirectRelationshipInfo(property.Value, options);
+                    indirectRelationshipInfo = IndirectRelationshipInfo.DeserializeIndirectRelationshipInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("invoiceRecipient"u8))
+                if (prop.NameEquals("invoiceRecipient"u8))
                 {
-                    invoiceRecipient = property.Value.GetString();
+                    invoiceRecipient = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BillingAccountEnrollmentDetails(
-                startDate,
-                endDate,
+                startOn,
+                endOn,
                 currency,
                 channel,
                 language,
@@ -287,354 +329,7 @@ namespace Azure.ResourceManager.Billing.Models
                 markupStatus,
                 indirectRelationshipInfo,
                 invoiceRecipient,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndOn))
-                {
-                    builder.Append("  endDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Currency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Currency))
-                {
-                    builder.Append("  currency: ");
-                    if (Currency.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Currency}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Currency}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Channel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  channel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Channel))
-                {
-                    builder.Append("  channel: ");
-                    if (Channel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Channel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Channel}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Language), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  language: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Language))
-                {
-                    builder.Append("  language: ");
-                    if (Language.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Language}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Language}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  countryCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountryCode))
-                {
-                    builder.Append("  countryCode: ");
-                    if (CountryCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CountryCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CountryCode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingCycle), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingCycle: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingCycle))
-                {
-                    builder.Append("  billingCycle: ");
-                    if (BillingCycle.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BillingCycle}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BillingCycle}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedTermOption), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extendedTermOption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtendedTermOption))
-                {
-                    builder.Append("  extendedTermOption: ");
-                    builder.AppendLine($"'{ExtendedTermOption.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  supportLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SupportLevel))
-                {
-                    builder.Append("  supportLevel: ");
-                    builder.AppendLine($"'{SupportLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportCoverage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  supportCoverage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SupportCoverage))
-                {
-                    builder.Append("  supportCoverage: ");
-                    if (SupportCoverage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SupportCoverage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SupportCoverage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cloud), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cloud: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cloud))
-                {
-                    builder.Append("  cloud: ");
-                    if (Cloud.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Cloud}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Cloud}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PoNumber), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  poNumber: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PoNumber))
-                {
-                    builder.Append("  poNumber: ");
-                    if (PoNumber.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PoNumber}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PoNumber}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarkupStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  markupStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MarkupStatus))
-                {
-                    builder.Append("  markupStatus: ");
-                    builder.AppendLine($"'{MarkupStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndirectRelationshipInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  indirectRelationshipInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IndirectRelationshipInfo))
-                {
-                    builder.Append("  indirectRelationshipInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, IndirectRelationshipInfo, options, 2, false, "  indirectRelationshipInfo: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceRecipient), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  invoiceRecipient: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InvoiceRecipient))
-                {
-                    builder.Append("  invoiceRecipient: ");
-                    if (InvoiceRecipient.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InvoiceRecipient}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InvoiceRecipient}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BillingAccountEnrollmentDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingAccountEnrollmentDetails IPersistableModel<BillingAccountEnrollmentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingAccountEnrollmentDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingAccountEnrollmentDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingAccountEnrollmentDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingAccountEnrollmentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

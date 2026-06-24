@@ -121,11 +121,11 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
             EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
             await projectClient.EvaluatorGenerationJobs.CancelAsync(runningJob.Id);
         }
-        await Delay(20000);
-        List<EvaluatorGenerationJob> records = await projectClient.EvaluatorGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs.EvaluatorDisplayName.StartsWith(INPUT_PREFIX)).ToListAsync();
+        await Delay(60000);
+        List<EvaluatorGenerationJob> records = await projectClient.EvaluatorGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<EvaluatorGenerationJob> forward = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs.EvaluatorDisplayName.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<EvaluatorGenerationJob> forward = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
@@ -136,7 +136,7 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         //Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         //Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<EvaluatorGenerationJob> backwards = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "desc", after: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs.EvaluatorDisplayName.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<EvaluatorGenerationJob> backwards = await projectClient.EvaluatorGenerationJobs.GetAllAsync(order: "desc", after: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
@@ -158,14 +158,14 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
         try
         {
             await projectClient.AgentAdministrationClient.DeleteAgentAsync(AGENT_NAME);
         }
         catch { }
         // Delete Jobs and generated evaluators.
-        List<EvaluatorGenerationJob> evaluatorGenerations = await projectClient.EvaluatorGenerationJobs.GetAllAsync().Where(x => x.Inputs.EvaluatorDisplayName.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<EvaluatorGenerationJob> evaluatorGenerations = await projectClient.EvaluatorGenerationJobs.GetAllAsync().Where(x => x.Inputs?.EvaluatorDisplayName?.StartsWith(INPUT_PREFIX) == true).ToListAsync();
         foreach (EvaluatorGenerationJob job in evaluatorGenerations)
         {
             await projectClient.EvaluatorGenerationJobs.DeleteAsync(job.Id);

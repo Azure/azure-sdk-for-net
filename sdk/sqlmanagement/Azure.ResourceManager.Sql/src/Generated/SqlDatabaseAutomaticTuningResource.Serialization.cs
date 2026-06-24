@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlDatabaseAutomaticTuningResource : IJsonModel<SqlDatabaseAutomaticTuningData>
     {
-        private static SqlDatabaseAutomaticTuningData s_dataDeserializationInstance;
-        private static SqlDatabaseAutomaticTuningData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlDatabaseAutomaticTuningData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlDatabaseAutomaticTuningData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlDatabaseAutomaticTuningData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDatabaseAutomaticTuningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)Data).Write(writer, options);
 
-        SqlDatabaseAutomaticTuningData IJsonModel<SqlDatabaseAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlDatabaseAutomaticTuningData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDatabaseAutomaticTuningData IJsonModel<SqlDatabaseAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlDatabaseAutomaticTuningData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlDatabaseAutomaticTuningData IPersistableModel<SqlDatabaseAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlDatabaseAutomaticTuningData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlDatabaseAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlDatabaseAutomaticTuningData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlDatabaseAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

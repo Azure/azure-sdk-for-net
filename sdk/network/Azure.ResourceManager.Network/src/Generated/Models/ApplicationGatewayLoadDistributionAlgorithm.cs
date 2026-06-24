@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayLoadDistributionAlgorithm : IEquatable<ApplicationGatewayLoadDistributionAlgorithm>
     {
         private readonly string _value;
+        /// <summary> RoundRobin. </summary>
+        private const string RoundRobinValue = "RoundRobin";
+        /// <summary> LeastConnections. </summary>
+        private const string LeastConnectionsValue = "LeastConnections";
+        /// <summary> IpHash. </summary>
+        private const string IpHashValue = "IpHash";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayLoadDistributionAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RoundRobinValue = "RoundRobin";
-        private const string LeastConnectionsValue = "LeastConnections";
-        private const string IPHashValue = "IpHash";
+            _value = value;
+        }
 
         /// <summary> RoundRobin. </summary>
         public static ApplicationGatewayLoadDistributionAlgorithm RoundRobin { get; } = new ApplicationGatewayLoadDistributionAlgorithm(RoundRobinValue);
+
         /// <summary> LeastConnections. </summary>
         public static ApplicationGatewayLoadDistributionAlgorithm LeastConnections { get; } = new ApplicationGatewayLoadDistributionAlgorithm(LeastConnectionsValue);
+
         /// <summary> IpHash. </summary>
-        public static ApplicationGatewayLoadDistributionAlgorithm IPHash { get; } = new ApplicationGatewayLoadDistributionAlgorithm(IPHashValue);
+        public static ApplicationGatewayLoadDistributionAlgorithm IpHash { get; } = new ApplicationGatewayLoadDistributionAlgorithm(IpHashValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayLoadDistributionAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayLoadDistributionAlgorithm left, ApplicationGatewayLoadDistributionAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayLoadDistributionAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayLoadDistributionAlgorithm left, ApplicationGatewayLoadDistributionAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayLoadDistributionAlgorithm(string value) => new ApplicationGatewayLoadDistributionAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayLoadDistributionAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayLoadDistributionAlgorithm?(string value) => value == null ? null : new ApplicationGatewayLoadDistributionAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayLoadDistributionAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayLoadDistributionAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
