@@ -38,6 +38,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Pageable<SecurityAlertData> GetAlertsByResourceGroup(CancellationToken cancellationToken = default)
             => new ResourceGroupAlertsPageable(Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}")), this, cancellationToken);
 
+        /// <summary> Gets JIT network access policies across all Security Center locations for this resource group. </summary>
+        public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(CancellationToken cancellationToken = default)
+            => GetJitNetworkAccessPoliciesByResourceGroupAsync(cancellationToken);
+
+        /// <summary> Gets JIT network access policies across all Security Center locations for this resource group. </summary>
+        public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(CancellationToken cancellationToken = default)
+            => GetJitNetworkAccessPoliciesByResourceGroup(cancellationToken);
+
         private sealed class ResourceGroupAlertsPageable : Pageable<SecurityAlertData>
         {
             private readonly SubscriptionResource _subscriptionResource;

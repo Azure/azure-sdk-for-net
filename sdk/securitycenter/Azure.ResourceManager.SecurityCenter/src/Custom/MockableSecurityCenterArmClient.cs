@@ -4,6 +4,10 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
@@ -67,5 +71,41 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
         public virtual Azure.ResourceManager.SecurityCenter.SoftwareInventoryResource GetSoftwareInventoryResource(Azure.Core.ResourceIdentifier id) { throw new System.NotSupportedException("This API is no longer supported by the service. No direct replacement is available."); }
+
+        /// <summary> Gets an object representing a security connector governance rule resource. </summary>
+        public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
+        {
+            return new SecurityConnectorGovernanceRuleResource(Client, GetGovernanceRuleResource(id));
+        }
+
+        /// <summary> Gets an object representing a subscription governance rule resource. </summary>
+        public virtual SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(ResourceIdentifier id)
+        {
+            return new SubscriptionGovernanceRuleResource(Client, GetGovernanceRuleResource(id));
+        }
+
+        /// <summary> Gets a SQL vulnerability assessment baseline rule. </summary>
+        public virtual Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(ResourceIdentifier scope, string ruleId, System.Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentBaselineRule(scope, ruleId, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Gets a SQL vulnerability assessment baseline rule. </summary>
+        public virtual Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(ResourceIdentifier scope, string ruleId, System.Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentBaselineRuleAsync(scope, ruleId, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Gets a SQL vulnerability assessment scan. </summary>
+        public virtual Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(ResourceIdentifier scope, string scanId, System.Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentScan(scope, scanId, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Gets a SQL vulnerability assessment scan. </summary>
+        public virtual Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(ResourceIdentifier scope, string scanId, System.Guid workspaceId, CancellationToken cancellationToken = default)
+        {
+            return GetSqlVulnerabilityAssessmentScanAsync(scope, scanId, cancellationToken: cancellationToken);
+        }
     }
 }

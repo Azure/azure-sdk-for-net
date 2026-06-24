@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,82 +31,26 @@ namespace Azure.ResourceManager.SecurityCenter
     [CodeGenSuppress("GetTopologies", typeof(SubscriptionResource), typeof(CancellationToken))]
     public static partial class SecurityCenterExtensions
     {
-        private sealed class SubscriptionAlertsPageable : Pageable<SecurityAlertData>
-        {
-            private readonly SubscriptionResource _subscriptionResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public SubscriptionAlertsPageable(SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override IEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAll(_cancellationToken))
-                {
-                    foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAll(_cancellationToken).AsPages(continuationToken, pageSizeHint))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
-
-        private sealed class SubscriptionAlertsAsyncPageable : AsyncPageable<SecurityAlertData>
-        {
-            private readonly SubscriptionResource _subscriptionResource;
-            private readonly CancellationToken _cancellationToken;
-
-            public SubscriptionAlertsAsyncPageable(SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            {
-                _subscriptionResource = subscriptionResource;
-                _cancellationToken = cancellationToken;
-            }
-
-            public override async IAsyncEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                await foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAllAsync(_cancellationToken).ConfigureAwait(false))
-                {
-                    await foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAllAsync(_cancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
-                    {
-                        List<SecurityAlertData> values = new List<SecurityAlertData>();
-                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
-                        {
-                            values.Add(alert.Data);
-                        }
-                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
-                    }
-                }
-            }
-        }
-
         private static Response<Models.DiscoveredSecuritySolution> ToLegacyResponse(Response<DiscoveredSecuritySolutionResource> response)
-            => Response.FromValue(new Models.DiscoveredSecuritySolution(response.Value.Data), response.GetRawResponse());
+            => Response.FromValue(new Models.DiscoveredSecuritySolution(response.Value?.Data), response.GetRawResponse());
 
         private static async System.Threading.Tasks.Task<Response<Models.DiscoveredSecuritySolution>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<DiscoveredSecuritySolutionResource>> responseTask)
             => ToLegacyResponse(await responseTask.ConfigureAwait(false));
 
         private static Response<Models.SecuritySolution> ToLegacyResponse(Response<SecuritySolutionResource> response)
-            => Response.FromValue(new Models.SecuritySolution(response.Value.Data), response.GetRawResponse());
+            => Response.FromValue(new Models.SecuritySolution(response.Value?.Data), response.GetRawResponse());
 
         private static async System.Threading.Tasks.Task<Response<Models.SecuritySolution>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecuritySolutionResource>> responseTask)
             => ToLegacyResponse(await responseTask.ConfigureAwait(false));
 
         private static Response<Models.SecurityTopologyResource> ToLegacyResponse(Response<SecurityTopologyResource> response)
-            => Response.FromValue(new Models.SecurityTopologyResource(response.Value.Data), response.GetRawResponse());
+            => Response.FromValue(new Models.SecurityTopologyResource(response.Value?.Data), response.GetRawResponse());
 
         private static async System.Threading.Tasks.Task<Response<Models.SecurityTopologyResource>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecurityTopologyResource>> responseTask)
             => ToLegacyResponse(await responseTask.ConfigureAwait(false));
 
         private static Response<Models.SecurityCenterAllowedConnection> ToLegacyResponse(Response<SecurityCenterAllowedConnectionResource> response)
-            => Response.FromValue(new Models.SecurityCenterAllowedConnection(response.Value.Data), response.GetRawResponse());
+            => Response.FromValue(new Models.SecurityCenterAllowedConnection(response.Value?.Data), response.GetRawResponse());
 
         private static async System.Threading.Tasks.Task<Response<Models.SecurityCenterAllowedConnection>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecurityCenterAllowedConnectionResource>> responseTask)
             => ToLegacyResponse(await responseTask.ConfigureAwait(false));
@@ -195,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicies(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesByResourceGroup(cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPolicies(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetJitNetworkAccessPoliciesAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -203,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesByResourceGroupAsync(cancellationToken);
+            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetJitNetworkAccessPoliciesAsync(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecureScoreControlsAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -222,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
-            => new SecurityConnectorGovernanceRuleResource(client, client.GetGovernanceRuleResource(id));
+            => GetMockableSecurityCenterArmClient(client).GetSecurityConnectorGovernanceRuleResource(id);
     }
 }
 
@@ -249,7 +192,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string discoveredSecuritySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => ToLegacyResponse(resourceGroupResource.GetDiscoveredSecuritySolutions().Get(ascLocation, discoveredSecuritySolutionName, cancellationToken));
+            => ToLegacyResponse(GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetDiscoveredSecuritySolutionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -260,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string discoveredSecuritySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => ToLegacyResponseAsync(resourceGroupResource.GetDiscoveredSecuritySolutions().GetAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken));
+            => ToLegacyResponseAsync(GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetExternalSecuritySolution operation preserved from the previous public API surface.
         /// </summary>
@@ -316,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource> GetSecurityContact(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecurityContacts().Get(securityContactName, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContact(securityContactName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityContactAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -326,7 +269,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityContactResource>> GetSecurityContactAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string securityContactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecurityContacts().GetAsync(securityContactName, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContactAsync(securityContactName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySolution operation preserved from the previous public API surface.
         /// </summary>
@@ -337,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution> GetSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string securitySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => ToLegacyResponse(resourceGroupResource.GetSecuritySolutions().Get(ascLocation, securitySolutionName, cancellationToken));
+            => ToLegacyResponse(GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySolutionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -348,7 +291,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution>> GetSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string securitySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => ToLegacyResponseAsync(resourceGroupResource.GetSecuritySolutions().GetAsync(ascLocation, securitySolutionName, cancellationToken));
+            => ToLegacyResponseAsync(GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetServerVulnerabilityAssessment operation preserved from the previous public API surface.
         /// </summary>
@@ -395,7 +338,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => client.GetSqlVulnerabilityAssessmentBaselineRules(scope).Get(ruleId, cancellationToken: cancellationToken);
+            => GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRule(scope, ruleId, workspaceId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentBaselineRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -407,7 +350,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => client.GetSqlVulnerabilityAssessmentBaselineRules(scope).GetAsync(ruleId, cancellationToken: cancellationToken);
+            => GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentBaselineRuleAsync(scope, ruleId, workspaceId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentScan operation preserved from the previous public API surface.
         /// </summary>
@@ -419,7 +362,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => client.GetSqlVulnerabilityAssessmentScans(scope).Get(scanId, cancellationToken: cancellationToken);
+            => GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScan(scope, scanId, workspaceId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSqlVulnerabilityAssessmentScanAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -431,7 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string scanId, System.Guid workspaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => client.GetSqlVulnerabilityAssessmentScans(scope).GetAsync(scanId, cancellationToken: cancellationToken);
+            => GetMockableSecurityCenterArmClient(client).GetSqlVulnerabilityAssessmentScanAsync(scope, scanId, workspaceId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRule operation preserved from the previous public API surface.
         /// </summary>
@@ -441,7 +384,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRule(ruleId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSubscriptionGovernanceRuleAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -451,7 +394,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string ruleId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRuleAsync(ruleId, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetTopology operation preserved from the previous public API surface.
         /// </summary>
@@ -514,7 +457,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlertsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => new SubscriptionAlertsAsyncPageable(subscriptionResource, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAlertsAsync(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetAlertsByResourceGroupAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -547,7 +490,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.SecurityAlertData> GetAlerts(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => new SubscriptionAlertsPageable(subscriptionResource, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAlerts(cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetAlertsByResourceGroup operation preserved from the previous public API surface.
         /// </summary>
@@ -586,7 +529,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         public static Azure.ResourceManager.SecurityCenter.SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id)
-            => new SubscriptionGovernanceRuleResource(client, client.GetGovernanceRuleResource(id));
+            => GetMockableSecurityCenterArmClient(client).GetSubscriptionGovernanceRuleResource(id);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityAssessment operation preserved from the previous public API surface.
         /// </summary>
@@ -638,7 +581,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource> GetSecurityCenterLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecurityCenterLocations().Get(ascLocation, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocation(ascLocation, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySetting operation preserved from the previous public API surface.
         /// </summary>
@@ -648,7 +591,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource> GetSecuritySetting(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecuritySettings().Get(settingName, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySetting(settingName, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetMdeOnboardingAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -676,7 +619,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation ascLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecurityCenterLocations().GetAsync(ascLocation, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityCenterLocationAsync(ascLocation, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySettingAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -686,7 +629,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecuritySettingResource>> GetSecuritySettingAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecuritySettingName settingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => subscriptionResource.GetSecuritySettings().GetAsync(settingName, cancellationToken);
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySettingAsync(settingName, cancellationToken);
     }
 }
 

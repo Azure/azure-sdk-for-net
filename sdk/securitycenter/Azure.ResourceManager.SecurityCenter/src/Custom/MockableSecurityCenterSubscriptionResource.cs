@@ -17,6 +17,62 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
     public partial class MockableSecurityCenterSubscriptionResource
     {
+        private sealed class SubscriptionAlertsPageable : Pageable<SecurityAlertData>
+        {
+            private readonly MockableSecurityCenterSubscriptionResource _subscriptionResource;
+            private readonly CancellationToken _cancellationToken;
+
+            public SubscriptionAlertsPageable(MockableSecurityCenterSubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            {
+                _subscriptionResource = subscriptionResource;
+                _cancellationToken = cancellationToken;
+            }
+
+            public override IEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAll(_cancellationToken))
+                {
+                    foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAll(_cancellationToken).AsPages(continuationToken, pageSizeHint))
+                    {
+                        List<SecurityAlertData> values = new List<SecurityAlertData>();
+                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
+                        {
+                            values.Add(alert.Data);
+                        }
+                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+            }
+        }
+
+        private sealed class SubscriptionAlertsAsyncPageable : AsyncPageable<SecurityAlertData>
+        {
+            private readonly MockableSecurityCenterSubscriptionResource _subscriptionResource;
+            private readonly CancellationToken _cancellationToken;
+
+            public SubscriptionAlertsAsyncPageable(MockableSecurityCenterSubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            {
+                _subscriptionResource = subscriptionResource;
+                _cancellationToken = cancellationToken;
+            }
+
+            public override async IAsyncEnumerable<Page<SecurityAlertData>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                await foreach (SecurityCenterLocationResource location in _subscriptionResource.GetSecurityCenterLocations().GetAllAsync(_cancellationToken).ConfigureAwait(false))
+                {
+                    await foreach (Page<SubscriptionSecurityAlertResource> page in location.GetSubscriptionSecurityAlerts().GetAllAsync(_cancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                    {
+                        List<SecurityAlertData> values = new List<SecurityAlertData>();
+                        foreach (SubscriptionSecurityAlertResource alert in page.Values)
+                        {
+                            values.Add(alert.Data);
+                        }
+                        yield return Page<SecurityAlertData>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
+                    }
+                }
+            }
+        }
+
         private ClientDiagnostics _mdeOnboardingsClientDiagnostics;
         private MdeOnboardings _mdeOnboardingsRestClient;
 
@@ -35,9 +91,49 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(string pricingName, CancellationToken cancellationToken = default)
             => Client.GetSecurityCenterPricingAsync(Id, pricingName, cancellationToken);
 
+        /// <summary> Gets a security contact for this subscription. </summary>
+        public virtual Response<SecurityContactResource> GetSecurityContact(string securityContactName, CancellationToken cancellationToken = default)
+            => GetSecurityContact(new SecurityContactName(securityContactName), cancellationToken);
+
+        /// <summary> Gets a security contact for this subscription. </summary>
+        public virtual Task<Response<SecurityContactResource>> GetSecurityContactAsync(string securityContactName, CancellationToken cancellationToken = default)
+            => GetSecurityContactAsync(new SecurityContactName(securityContactName), cancellationToken);
+
         /// <summary> Gets subscription governance rules for this subscription. </summary>
         public virtual SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules()
             => new SubscriptionGovernanceRuleCollection(Client, Id);
+
+        /// <summary> Gets a subscription governance rule for this subscription. </summary>
+        public virtual Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(string ruleId, CancellationToken cancellationToken = default)
+            => GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
+
+        /// <summary> Gets a subscription governance rule for this subscription. </summary>
+        public virtual Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(string ruleId, CancellationToken cancellationToken = default)
+            => GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken);
+
+        /// <summary> Gets alerts for this subscription. </summary>
+        public virtual AsyncPageable<SecurityAlertData> GetAlertsAsync(CancellationToken cancellationToken = default)
+            => new SubscriptionAlertsAsyncPageable(this, cancellationToken);
+
+        /// <summary> Gets alerts for this subscription. </summary>
+        public virtual Pageable<SecurityAlertData> GetAlerts(CancellationToken cancellationToken = default)
+            => new SubscriptionAlertsPageable(this, cancellationToken);
+
+        /// <summary> Gets a Security Center location for this subscription. </summary>
+        public virtual Response<SecurityCenterLocationResource> GetSecurityCenterLocation(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+            => GetSecurityCenterLocation(ascLocation.ToString(), cancellationToken);
+
+        /// <summary> Gets a Security Center location for this subscription. </summary>
+        public virtual Task<Response<SecurityCenterLocationResource>> GetSecurityCenterLocationAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+            => GetSecurityCenterLocationAsync(ascLocation.ToString(), cancellationToken);
+
+        /// <summary> Gets a security setting for this subscription. </summary>
+        public virtual Response<SecuritySettingResource> GetSecuritySetting(SecuritySettingName settingName, CancellationToken cancellationToken = default)
+            => GetSecuritySetting(new SettingName(settingName.ToString()), cancellationToken);
+
+        /// <summary> Gets a security setting for this subscription. </summary>
+        public virtual Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(SecuritySettingName settingName, CancellationToken cancellationToken = default)
+            => GetSecuritySettingAsync(new SettingName(settingName.ToString()), cancellationToken);
 
         /// <summary> Gets the configuration or data needed to onboard machines to MDE. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
