@@ -5,20 +5,23 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
-    internal partial class InternalImageGenTool : ResponsesTool
+    internal partial class InternalImageGenTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
-        internal InternalImageGenTool() : base(ToolType.ImageGeneration)
+        internal InternalImageGenTool() : base("image_generation")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="model"></param>
         /// <param name="quality">
         /// The quality of the generated image. One of `low`, `medium`, `high`,
@@ -52,7 +55,8 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalImageGenTool(ResponseToolKind @type, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Model = model;
             Quality = quality;
@@ -68,6 +72,7 @@ namespace OpenAI
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Model. </summary>

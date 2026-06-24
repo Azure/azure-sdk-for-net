@@ -15,6 +15,19 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="output"> The structured output captured during the response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentStructuredOutputsResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, id, agentReference, responseId)
+        {
+            Output = output;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary>
         /// The structured output captured during the response.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>

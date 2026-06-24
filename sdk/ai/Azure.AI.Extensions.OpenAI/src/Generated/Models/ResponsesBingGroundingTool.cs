@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    public partial class ResponsesBingGroundingTool : ResponsesTool
+    public partial class ResponsesBingGroundingTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
+        internal ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base("bing_grounding")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             BingGrounding = bingGrounding;
@@ -20,7 +24,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -29,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal ResponsesBingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingGroundingSearchToolParameters bingGrounding) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesBingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingGroundingSearchToolParameters bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             BingGrounding = bingGrounding;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

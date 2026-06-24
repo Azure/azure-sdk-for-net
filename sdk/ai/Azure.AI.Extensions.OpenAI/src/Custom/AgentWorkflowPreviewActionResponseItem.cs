@@ -22,7 +22,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
     internal AgentWorkflowPreviewActionResponseItem(string kind, string actionId, AgentWorkflowPreviewActionStatus? status) : base(ResponseItemKind.WorkflowAction)
     {
-        Kind = kind;
+        CSDLActionKind = kind;
         ActionId = actionId;
         Status = status;
     }
@@ -39,7 +39,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentWorkflowPreviewActionResponseItem(string id, AgentReference agentReference, string responseId, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.WorkflowAction)
     {
-        Kind = kind;
+        CSDLActionKind = kind;
         ActionId = actionId;
         ParentActionId = parentActionId;
         PreviousActionId = previousActionId;

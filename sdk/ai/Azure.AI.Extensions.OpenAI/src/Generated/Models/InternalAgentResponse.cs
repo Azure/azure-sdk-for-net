@@ -35,7 +35,7 @@ namespace OpenAI
         /// <param name="agentReference"> The agent used for this response. </param>
         internal InternalAgentResponse(string id, DateTimeOffset createdAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IEnumerable<ResponseItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
         {
-            Tools = new ChangeTrackingList<ResponsesTool>();
+            Tools = new ChangeTrackingList<ResponseTool>();
             Id = id;
             CreatedAt = createdAt;
             Error = error;
@@ -102,7 +102,7 @@ namespace OpenAI
         /// <param name="agentReference"> The agent used for this response. </param>
         /// <param name="contentFilters"> The content filter evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentResponse(InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier, ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponsesTool> tools, BinaryData toolChoice, Prompt prompt, ResponseTruncation? truncation, string id, string @object, InternalAgentResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IList<ResponseItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentResponse(InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier, ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponseTool> tools, BinaryData toolChoice, Prompt prompt, ResponseTruncation? truncation, string id, string @object, InternalAgentResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IList<ResponseItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -198,7 +198,7 @@ namespace OpenAI
         public ResponseTextParam Text { get; }
 
         /// <summary> Gets the Tools. </summary>
-        public IList<ResponsesTool> Tools { get; }
+        public IList<ResponseTool> Tools { get; }
 
         /// <summary>
         /// Gets the ToolChoice.

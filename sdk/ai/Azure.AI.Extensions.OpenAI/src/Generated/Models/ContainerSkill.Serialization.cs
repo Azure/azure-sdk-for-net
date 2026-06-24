@@ -4,16 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesSkillReferenceParam"/> and <see cref="ResponsesInlineSkillParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownContainerSkill))]
-    public abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
+    /// <summary> The ContainerSkill. </summary>
+    public partial class ContainerSkill : IJsonModel<ContainerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerSkill"/> for deserialization. </summary>
         internal ContainerSkill()
@@ -122,17 +119,21 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ContainerSkillType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "skill_reference":
-                        return ResponsesSkillReferenceParam.DeserializeResponsesSkillReferenceParam(element, options);
-                    case "inline":
-                        return ResponsesInlineSkillParam.DeserializeResponsesInlineSkillParam(element, options);
+                    @type = new ContainerSkillType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownContainerSkill.DeserializeUnknownContainerSkill(element, options);
+            return new ContainerSkill(@type, additionalBinaryDataProperties);
         }
     }
 }

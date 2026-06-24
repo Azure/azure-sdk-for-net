@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class ResponsesCaptureStructuredOutputsTool : ResponsesTool
+    public partial class ResponsesCaptureStructuredOutputsTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        internal ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base("capture_structured_outputs")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Outputs = outputs;
@@ -20,7 +24,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -29,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesCaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesStructuredOutputDefinition outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             Outputs = outputs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

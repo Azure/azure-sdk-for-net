@@ -4,22 +4,27 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer. </summary>
-    public partial class ResponsesComputerTool : ResponsesTool
+    public partial class ResponsesComputerTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesComputerTool"/>. </summary>
-        internal ResponsesComputerTool() : base(ToolType.Computer)
+        internal ResponsesComputerTool() : base("computer")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesComputerTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesComputerTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesComputerTool(ResponseToolKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

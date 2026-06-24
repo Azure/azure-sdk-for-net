@@ -4,21 +4,24 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Web search. </summary>
-    public partial class ResponsesWebSearchTool : ResponsesTool
+    public partial class ResponsesWebSearchTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchTool"/>. </summary>
-        internal ResponsesWebSearchTool() : base(ToolType.WebSearch)
+        internal ResponsesWebSearchTool() : base("web_search")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filters"></param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
@@ -33,7 +36,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal ResponsesWebSearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, ResponsesWebSearchApproximateLocation userLocation, ResponsesWebSearchToolSearchContextSize? searchContextSize, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesWebSearchConfiguration customSearchConfiguration) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesWebSearchTool(ResponseToolKind @type, WebSearchToolFilters filters, ResponsesWebSearchApproximateLocation userLocation, ResponsesWebSearchToolSearchContextSize? searchContextSize, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesWebSearchConfiguration customSearchConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Filters = filters;
             UserLocation = userLocation;
@@ -42,6 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
             Description = description;
             ToolConfigs = toolConfigs;
             CustomSearchConfiguration = customSearchConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Filters. </summary>

@@ -4,28 +4,33 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Tool search tool. </summary>
-    public partial class ResponsesToolSearchToolParam : ResponsesTool
+    public partial class ResponsesToolSearchToolParam : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchToolParam"/>. </summary>
-        internal ResponsesToolSearchToolParam() : base(ToolType.ToolSearch)
+        internal ResponsesToolSearchToolParam() : base("tool_search")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal ResponsesToolSearchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesToolSearchToolParam(ResponseToolKind @type, ResponsesToolSearchExecutionType? execution, string description, ResponsesEmptyModelParam parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Execution = execution;
             Description = description;
             Parameters = parameters;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>

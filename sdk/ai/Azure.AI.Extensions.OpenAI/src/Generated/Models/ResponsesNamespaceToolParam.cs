@@ -6,17 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Namespace. </summary>
-    public partial class ResponsesNamespaceToolParam : ResponsesTool
+    public partial class ResponsesNamespaceToolParam : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesNamespaceToolParam"/>. </summary>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        internal ResponsesNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base(ToolType.Namespace)
+        internal ResponsesNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base("namespace")
         {
             Name = name;
             Description = description;
@@ -25,15 +29,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesNamespaceToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        internal ResponsesNamespaceToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IList<BinaryData> tools) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesNamespaceToolParam(ResponseToolKind @type, string name, string description, IList<BinaryData> tools, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             Tools = tools;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The namespace name used in tool calls (for example, `crm`). </summary>

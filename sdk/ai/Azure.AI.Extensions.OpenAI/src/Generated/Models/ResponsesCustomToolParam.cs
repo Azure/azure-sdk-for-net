@@ -4,32 +4,37 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Custom tool. </summary>
-    public partial class ResponsesCustomToolParam : ResponsesTool
+    public partial class ResponsesCustomToolParam : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        internal ResponsesCustomToolParam(string name) : base(ToolType.Custom)
+        internal ResponsesCustomToolParam(string name) : base("custom")
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="shouldDeferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal ResponsesCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesCustomToolParamFormat format, bool? shouldDeferLoading) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesCustomToolParam(ResponseToolKind @type, string name, string description, ResponsesCustomToolParamFormat format, bool? shouldDeferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             Format = format;
             ShouldDeferLoading = shouldDeferLoading;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>

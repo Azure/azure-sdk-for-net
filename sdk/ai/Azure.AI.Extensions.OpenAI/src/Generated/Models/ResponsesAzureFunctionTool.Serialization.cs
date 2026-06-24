@@ -6,11 +6,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    public partial class ResponsesAzureFunctionTool : ResponsesTool, IJsonModel<ResponsesAzureFunctionTool>
+    public partial class ResponsesAzureFunctionTool : ResponseTool, IJsonModel<ResponsesAzureFunctionTool>
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/> for deserialization. </summary>
         internal ResponsesAzureFunctionTool()
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,6 +90,21 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -97,7 +113,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponsesTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesAzureFunctionTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -116,15 +132,15 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "azure_function";
             ResponsesAzureFunctionDefinition azureFunction = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("azure_function"u8))
@@ -151,7 +167,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesAzureFunctionTool(@type, additionalBinaryDataProperties, azureFunction, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new ResponsesAzureFunctionTool(@type, azureFunction, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), additionalBinaryDataProperties);
         }
     }
 }

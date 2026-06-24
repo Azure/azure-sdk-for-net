@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-    public partial class ResponsesAzureAISearchTool : ResponsesTool
+    public partial class ResponsesAzureAISearchTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
+        internal ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base("azure_ai_search")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAISearch = azureAISearch;
@@ -20,7 +24,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -29,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        internal ResponsesAzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesAzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             AzureAISearch = azureAISearch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

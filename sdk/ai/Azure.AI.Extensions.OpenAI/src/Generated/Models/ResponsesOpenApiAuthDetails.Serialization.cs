@@ -4,15 +4,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesOpenApiAnonymousAuthDetails"/>, <see cref="ResponsesOpenApiProjectConnectionAuthDetails"/>, and <see cref="ResponsesOpenApiManagedAuthDetails"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownOpenApiAuthDetails))]
+    /// <summary> authentication details for OpenApiFunctionDefinition. </summary>
     public abstract partial class ResponsesOpenApiAuthDetails : IJsonModel<ResponsesOpenApiAuthDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiAuthDetails"/> for deserialization. </summary>
@@ -122,19 +119,21 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            OpenApiAuthType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "anonymous":
-                        return ResponsesOpenApiAnonymousAuthDetails.DeserializeResponsesOpenApiAnonymousAuthDetails(element, options);
-                    case "project_connection":
-                        return ResponsesOpenApiProjectConnectionAuthDetails.DeserializeResponsesOpenApiProjectConnectionAuthDetails(element, options);
-                    case "managed_identity":
-                        return ResponsesOpenApiManagedAuthDetails.DeserializeResponsesOpenApiManagedAuthDetails(element, options);
+                    @type = new OpenApiAuthType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownOpenApiAuthDetails.DeserializeUnknownOpenApiAuthDetails(element, options);
+            return new OpenAI.ResponsesOpenApiAuthDetails(@type, additionalBinaryDataProperties);
         }
     }
 }

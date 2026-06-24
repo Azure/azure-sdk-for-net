@@ -4,15 +4,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The ResponsesFunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ResponsesContainerAutoParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownFunctionShellToolParamEnvironment))]
+    /// <summary> The ResponsesFunctionShellToolParamEnvironment. </summary>
     public abstract partial class ResponsesFunctionShellToolParamEnvironment : IJsonModel<ResponsesFunctionShellToolParamEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironment"/> for deserialization. </summary>
@@ -122,19 +119,21 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            FunctionShellToolParamEnvironmentType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "local":
-                        return ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(element, options);
-                    case "container_reference":
-                        return ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam.DeserializeResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(element, options);
-                    case "container_auto":
-                        return ResponsesContainerAutoParam.DeserializeResponsesContainerAutoParam(element, options);
+                    @type = new FunctionShellToolParamEnvironmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownFunctionShellToolParamEnvironment.DeserializeUnknownFunctionShellToolParamEnvironment(element, options);
+            return new OpenAI.ResponsesFunctionShellToolParamEnvironment(@type, additionalBinaryDataProperties);
         }
     }
 }

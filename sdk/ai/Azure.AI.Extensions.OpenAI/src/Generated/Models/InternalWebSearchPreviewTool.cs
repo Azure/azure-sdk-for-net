@@ -5,28 +5,33 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
-    internal partial class InternalWebSearchPreviewTool : ResponsesTool
+    internal partial class InternalWebSearchPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
-        internal InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)
+        internal InternalWebSearchPreviewTool() : base("web_search_preview")
         {
             SearchContentTypes = new ChangeTrackingList<SearchContentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="searchContentTypes"></param>
-        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalWebSearchPreviewTool(ResponseToolKind @type, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
             SearchContentTypes = searchContentTypes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the UserLocation. </summary>

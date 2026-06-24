@@ -6,14 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
-    internal partial class InternalMCPTool : ResponsesTool
+    internal partial class InternalMCPTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        internal InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
+        internal InternalMCPTool(string serverLabel) : base("mcp")
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +26,6 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <param name="serverUrl">
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
@@ -51,7 +54,8 @@ namespace OpenAI
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalMCPTool(ResponseToolKind @type, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -64,6 +68,7 @@ namespace OpenAI
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
             ToolConfigs = toolConfigs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>

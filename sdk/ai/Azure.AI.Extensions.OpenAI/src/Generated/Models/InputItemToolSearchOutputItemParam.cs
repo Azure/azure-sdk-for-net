@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -14,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/>. </summary>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tools"/> is null. </exception>
-        public InputItemToolSearchOutputItemParam(IEnumerable<ResponsesTool> tools) : base(InputItemType.ToolSearchOutput)
+        public InputItemToolSearchOutputItemParam(IEnumerable<ResponseTool> tools) : base(InputItemType.ToolSearchOutput)
         {
             Argument.AssertNotNull(tools, nameof(tools));
 
@@ -29,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
         /// <param name="status"></param>
-        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType? execution, IList<ResponsesTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType? execution, IList<ResponseTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -48,7 +49,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ResponsesToolSearchExecutionType? Execution { get; set; }
 
         /// <summary> The loaded tool definitions returned by the tool search output. </summary>
-        public IList<ResponsesTool> Tools { get; }
+        public IList<ResponseTool> Tools { get; }
 
         /// <summary> Gets or sets the Status. </summary>
         public FunctionCallItemStatus? Status { get; set; }

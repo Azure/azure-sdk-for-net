@@ -4,16 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// Network access policy for the container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesContainerNetworkPolicyDisabledParam"/> and <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownContainerNetworkPolicyParam))]
-    public abstract partial class ResponsesContainerNetworkPolicyParam : IJsonModel<ResponsesContainerNetworkPolicyParam>
+    /// <summary> Network access policy for the container. </summary>
+    public partial class ResponsesContainerNetworkPolicyParam : IJsonModel<ResponsesContainerNetworkPolicyParam>
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyParam"/> for deserialization. </summary>
         internal ResponsesContainerNetworkPolicyParam()
@@ -122,17 +119,21 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ContainerNetworkPolicyParamType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "disabled":
-                        return ResponsesContainerNetworkPolicyDisabledParam.DeserializeResponsesContainerNetworkPolicyDisabledParam(element, options);
-                    case "allowlist":
-                        return ResponsesContainerNetworkPolicyAllowlistParam.DeserializeResponsesContainerNetworkPolicyAllowlistParam(element, options);
+                    @type = new ContainerNetworkPolicyParamType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownContainerNetworkPolicyParam.DeserializeUnknownContainerNetworkPolicyParam(element, options);
+            return new ResponsesContainerNetworkPolicyParam(@type, additionalBinaryDataProperties);
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -91,8 +92,13 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Execution.ToSerialString());
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (ResponsesTool item in Tools)
+            foreach (ResponseTool item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -135,7 +141,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             string callId = default;
             ResponsesToolSearchExecutionType execution = default;
-            IList<ResponsesTool> tools = default;
+            IList<ResponseTool> tools = default;
             ResponsesFunctionCallOutputStatus status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -167,10 +173,17 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ResponsesTool> array = new List<ResponsesTool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesTool.DeserializeResponsesTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     tools = array;
                     continue;

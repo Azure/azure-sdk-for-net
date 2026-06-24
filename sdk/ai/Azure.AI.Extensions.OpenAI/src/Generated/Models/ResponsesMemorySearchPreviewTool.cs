@@ -4,12 +4,16 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
-    public partial class ResponsesMemorySearchPreviewTool : ResponsesTool
+    public partial class ResponsesMemorySearchPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
@@ -17,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
-        internal ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearchPreview)
+        internal ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base("memory_search_preview")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             MemoryStoreName = memoryStoreName;
@@ -26,7 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesMemorySearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -42,7 +45,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
-        internal ResponsesMemorySearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesMemorySearchPreviewTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, string memoryStoreName, string scope, ResponsesMemorySearchOptions searchOptions, int? updateDelayInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
@@ -51,6 +55,7 @@ namespace Azure.AI.Extensions.OpenAI
             Scope = scope;
             SearchOptions = searchOptions;
             UpdateDelayInSeconds = updateDelayInSeconds;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

@@ -160,8 +160,13 @@ namespace OpenAI
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (ResponsesTool item in Tools)
+                foreach (ResponseTool item in Tools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -344,7 +349,7 @@ namespace OpenAI
             long? maxOutputTokens = default;
             long? maxToolCalls = default;
             ResponseTextParam text = default;
-            IList<ResponsesTool> tools = default;
+            IList<ResponseTool> tools = default;
             BinaryData toolChoice = default;
             Prompt prompt = default;
             ResponseTruncation? truncation = default;
@@ -511,10 +516,17 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    List<ResponsesTool> array = new List<ResponsesTool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResponsesTool.DeserializeResponsesTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     tools = array;
                     continue;
@@ -708,7 +720,7 @@ namespace OpenAI
                 maxOutputTokens,
                 maxToolCalls,
                 text,
-                tools ?? new ChangeTrackingList<ResponsesTool>(),
+                tools ?? new ChangeTrackingList<ResponseTool>(),
                 toolChoice,
                 prompt,
                 truncation,

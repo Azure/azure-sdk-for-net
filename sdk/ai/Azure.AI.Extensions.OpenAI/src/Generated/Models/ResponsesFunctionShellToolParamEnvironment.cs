@@ -7,10 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The ResponsesFunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ResponsesContainerAutoParam"/>.
-    /// </summary>
+    /// <summary> The ResponsesFunctionShellToolParamEnvironment. </summary>
     public abstract partial class ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

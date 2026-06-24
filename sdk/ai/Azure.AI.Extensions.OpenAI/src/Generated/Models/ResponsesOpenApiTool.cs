@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    public partial class ResponsesOpenApiTool : ResponsesTool
+    public partial class ResponsesOpenApiTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="openApi"> The openapi function definition. </param>
-        internal ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
+        internal ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base("openapi")
         {
             OpenApi = openApi;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
@@ -20,17 +24,18 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="openApi"> The openapi function definition. </param>
         /// <param name="toolConfigs">
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesOpenApiTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesOpenApiFunctionDefinition openApi, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesOpenApiTool(ResponseToolKind @type, ResponsesOpenApiFunctionDefinition openApi, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             OpenApi = openApi;
             ToolConfigs = toolConfigs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The openapi function definition. </summary>

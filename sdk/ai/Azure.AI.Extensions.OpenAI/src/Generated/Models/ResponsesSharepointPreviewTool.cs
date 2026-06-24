@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    public partial class ResponsesSharepointPreviewTool : ResponsesTool
+    public partial class ResponsesSharepointPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesSharepointPreviewTool"/>. </summary>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        internal ResponsesSharepointPreviewTool(ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(ToolType.SharepointGroundingPreview)
+        internal ResponsesSharepointPreviewTool(ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base("sharepoint_grounding_preview")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             SharepointGroundingPreview = sharepointGroundingPreview;
@@ -20,7 +24,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesSharepointPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -29,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="sharepointGroundingPreview"> The sharepoint grounding tool parameters. </param>
-        internal ResponsesSharepointPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesSharepointPreviewTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesSharepointGroundingToolParameters sharepointGroundingPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             SharepointGroundingPreview = sharepointGroundingPreview;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

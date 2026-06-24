@@ -7,10 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesOpenApiAnonymousAuthDetails"/>, <see cref="ResponsesOpenApiProjectConnectionAuthDetails"/>, and <see cref="ResponsesOpenApiManagedAuthDetails"/>.
-    /// </summary>
+    /// <summary> authentication details for OpenApiFunctionDefinition. </summary>
     public abstract partial class ResponsesOpenApiAuthDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

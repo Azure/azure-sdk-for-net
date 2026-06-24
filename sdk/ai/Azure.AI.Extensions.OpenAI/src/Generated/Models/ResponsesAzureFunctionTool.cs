@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    public partial class ResponsesAzureFunctionTool : ResponsesTool
+    public partial class ResponsesAzureFunctionTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        internal ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base(ToolType.AzureFunction)
+        internal ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base("azure_function")
         {
             AzureFunction = azureFunction;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
@@ -20,17 +24,18 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <param name="toolConfigs">
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal ResponsesAzureFunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesAzureFunctionTool(ResponseToolKind @type, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             AzureFunction = azureFunction;
             ToolConfigs = toolConfigs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Function Tool definition. </summary>

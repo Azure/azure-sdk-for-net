@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/>. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
-        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base(FunctionShellToolParamEnvironmentType.ContainerReference)
+        internal ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId) : base("container_reference")
         {
             ContainerId = containerId;
         }

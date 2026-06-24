@@ -130,6 +130,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
+            ResponseItemKind @type = "azure_ai_search_call_output";
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
@@ -139,6 +140,11 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
@@ -183,6 +189,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
             }
             return new AzureAISearchToolCallOutput(
+                @type,
                 id,
                 agentReference,
                 responseId,

@@ -4,15 +4,19 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
-    public partial class ResponsesBingCustomSearchPreviewTool : ResponsesTool
+    public partial class ResponsesBingCustomSearchPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
+        internal ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base("bing_custom_search_preview")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             BingCustomSearchPreview = bingCustomSearchPreview;
@@ -20,7 +24,6 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -29,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        internal ResponsesBingCustomSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesBingCustomSearchPreviewTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesBingCustomSearchToolParameters bingCustomSearchPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             BingCustomSearchPreview = bingCustomSearchPreview;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

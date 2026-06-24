@@ -4,21 +4,24 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
-    public partial class ResponsesA2APreviewTool : ResponsesTool
+    public partial class ResponsesA2APreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
-        internal ResponsesA2APreviewTool() : base(ToolType.A2aPreview)
+        internal ResponsesA2APreviewTool() : base("a2a_preview")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -35,7 +38,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal ResponsesA2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, Uri baseUrl, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponsesA2APreviewTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, Uri baseUrl, string agentCardPath, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
@@ -43,6 +47,7 @@ namespace Azure.AI.Extensions.OpenAI
             BaseUrl = baseUrl;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>

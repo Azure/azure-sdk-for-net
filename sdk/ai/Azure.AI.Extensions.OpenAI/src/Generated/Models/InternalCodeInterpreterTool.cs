@@ -6,20 +6,23 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
-    internal partial class InternalCodeInterpreterTool : ResponsesTool
+    internal partial class InternalCodeInterpreterTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
-        internal InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
+        internal InternalCodeInterpreterTool() : base("code_interpreter")
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="toolConfigs">
@@ -33,12 +36,14 @@ namespace OpenAI
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal InternalCodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternalCodeInterpreterTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
             Container = container;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
