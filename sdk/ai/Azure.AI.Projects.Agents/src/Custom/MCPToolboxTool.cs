@@ -16,7 +16,7 @@ public partial class MCPToolboxTool
     /// <summary>
     /// The approval policy used by the tool.
     /// </summary>
-    public McpToolCallApprovalPolicy ToolCallApprovalPolicy { get => ModelReaderWriter.Read<McpToolCallApprovalPolicy>(RequireApprovalInternal, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default); set => RequireApprovalInternal = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); }
+    public McpToolCallApprovalPolicy ToolCallApprovalPolicy { get => ModelReaderWriter.Read<McpToolCallApprovalPolicy>(RequireApprovalInternal, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); set => RequireApprovalInternal = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); }
     /// <summary>
     /// The URI of an MCP server.
     /// </summary>

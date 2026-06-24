@@ -29,13 +29,13 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
-        /// <param name="internalRankingOptions"> Ranking options for search. </param>
+        /// <param name="rankingOptionsInternal"> Ranking options for search. </param>
         /// <param name="filters"></param>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, InternalRankingOptions internalRankingOptions, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal FileSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? maxNumResults, InternalRankingOptions rankingOptionsInternal, BinaryData filters, IList<string> vectorStoreIds) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             MaxNumResults = maxNumResults;
-            InternalRankingOptions = internalRankingOptions;
+            RankingOptionsInternal = rankingOptionsInternal;
             Filters = filters;
             VectorStoreIds = vectorStoreIds;
         }

@@ -48,7 +48,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         MCPToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
-            Description = "Sa,mple MCP tool",
+            Description = "Sample MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
@@ -134,7 +134,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         MCPToolboxTool tool = new(serverLabel: "api-specs")
         {
             Name = "mcp-tool",
-            Description = "Sa,mple MCP tool",
+            Description = "Sample MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
             ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };

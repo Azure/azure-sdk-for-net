@@ -76,10 +76,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("max_num_results"u8);
                 writer.WriteNumberValue(MaxNumResults.Value);
             }
-            if (Optional.IsDefined(InternalRankingOptions))
+            if (Optional.IsDefined(RankingOptionsInternal))
             {
                 writer.WritePropertyName("ranking_options"u8);
-                writer.WriteObjectValue(InternalRankingOptions, options);
+                writer.WriteObjectValue(RankingOptionsInternal, options);
             }
             if (Optional.IsDefined(Filters))
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? maxNumResults = default;
-            InternalRankingOptions internalRankingOptions = default;
+            InternalRankingOptions rankingOptionsInternal = default;
             BinaryData filters = default;
             IList<string> vectorStoreIds = default;
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    internalRankingOptions = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
+                    rankingOptionsInternal = InternalRankingOptions.DeserializeInternalRankingOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -236,7 +236,7 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
                 maxNumResults,
-                internalRankingOptions,
+                rankingOptionsInternal,
                 filters,
                 vectorStoreIds ?? new ChangeTrackingList<string>());
         }
