@@ -104,7 +104,7 @@ Properties = new HciVmIPConfigurationProperties
 SubnetId = new ResourceIdentifier("/subscriptions/a95612cb-f1fa-4daa-a4fd-272844fa512c/resourceGroups/dogfoodarc/providers/Microsoft.AzureStackHCI/logicalNetworks/test-lnet"),
 },
 }},
-                    CreateFromLocal = true,
+                    IsCreatingFromLocal = true,
                 },
                 ExtendedLocation = new HciVmExtendedLocation
                 {

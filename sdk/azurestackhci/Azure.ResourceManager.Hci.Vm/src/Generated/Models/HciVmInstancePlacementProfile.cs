@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstancePlacementProfile"/>. </summary>
         /// <param name="zone"> The zone in which the VM should be placed in. </param>
-        /// <param name="strictPlacementPolicy"> Specifies whether VM can only failover strictly within the zone it was placed in. </param>
+        /// <param name="isStrictPlacementPolicyEnabled"> Specifies whether VM can only failover strictly within the zone it was placed in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstancePlacementProfile(string zone, bool? strictPlacementPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstancePlacementProfile(string zone, bool? isStrictPlacementPolicyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Zone = zone;
-            StrictPlacementPolicy = strictPlacementPolicy;
+            IsStrictPlacementPolicyEnabled = isStrictPlacementPolicyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string Zone { get; set; }
 
         /// <summary> Specifies whether VM can only failover strictly within the zone it was placed in. </summary>
-        public bool? StrictPlacementPolicy { get; set; }
+        public bool? IsStrictPlacementPolicyEnabled { get; set; }
     }
 }

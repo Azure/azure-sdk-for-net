@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SapOpenHubSource"/>. </summary>
         public SapOpenHubSource()
         {
-            CopySourceType = "SapOpenHubSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="SapOpenHubSource"/>. </summary>
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
         /// <param name="excludeLastRequest"> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
@@ -39,15 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             BaseRequestId = baseRequestId;
             CustomRfcReadTableFunctionModule = customRfcReadTableFunctionModule;
             SapDataColumnDelimiter = sapDataColumnDelimiter;
-            CopySourceType = copySourceType ?? "SapOpenHubSource";
         }
 
         /// <summary> Whether to exclude the records of the last request. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> ExcludeLastRequest { get; set; }
+
         /// <summary> The ID of request for delta loading. Once it is set, only data with requestId larger than the value of this property will be retrieved. The default value is 0. Type: integer (or Expression with resultType integer ). </summary>
         public DataFactoryElement<int> BaseRequestId { get; set; }
+
         /// <summary> Specifies the custom RFC function module that will be used to read data from SAP Table. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CustomRfcReadTableFunctionModule { get; set; }
+
         /// <summary> The single character that will be used as delimiter passed to SAP RFC as well as splitting the output data retrieved. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SapDataColumnDelimiter { get; set; }
     }

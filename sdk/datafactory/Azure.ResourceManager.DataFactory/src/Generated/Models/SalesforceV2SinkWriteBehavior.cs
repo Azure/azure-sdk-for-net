@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SalesforceV2SinkWriteBehavior : IEquatable<SalesforceV2SinkWriteBehavior>
     {
         private readonly string _value;
+        /// <summary> Insert. </summary>
+        private const string InsertValue = "Insert";
+        /// <summary> Upsert. </summary>
+        private const string UpsertValue = "Upsert";
 
         /// <summary> Initializes a new instance of <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SalesforceV2SinkWriteBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InsertValue = "Insert";
-        private const string UpsertValue = "Upsert";
+            _value = value;
+        }
 
         /// <summary> Insert. </summary>
         public static SalesforceV2SinkWriteBehavior Insert { get; } = new SalesforceV2SinkWriteBehavior(InsertValue);
+
         /// <summary> Upsert. </summary>
         public static SalesforceV2SinkWriteBehavior Upsert { get; } = new SalesforceV2SinkWriteBehavior(UpsertValue);
+
         /// <summary> Determines if two <see cref="SalesforceV2SinkWriteBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SalesforceV2SinkWriteBehavior left, SalesforceV2SinkWriteBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SalesforceV2SinkWriteBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SalesforceV2SinkWriteBehavior left, SalesforceV2SinkWriteBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SalesforceV2SinkWriteBehavior(string value) => new SalesforceV2SinkWriteBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SalesforceV2SinkWriteBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SalesforceV2SinkWriteBehavior?(string value) => value == null ? null : new SalesforceV2SinkWriteBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SalesforceV2SinkWriteBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SalesforceV2SinkWriteBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

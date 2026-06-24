@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             {
                 throw new FormatException($"The model {nameof(CopilotSettingsResourceUpdateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AccessControlEnabled))
+            if (Optional.IsDefined(IsAccessControlEnabled))
             {
                 writer.WritePropertyName("accessControlEnabled"u8);
-                writer.WriteBooleanValue(AccessControlEnabled.Value);
+                writer.WriteBooleanValue(IsAccessControlEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
             {
                 return null;
             }
-            bool? accessControlEnabled = default;
+            bool? isAccessControlEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     {
                         continue;
                     }
-                    accessControlEnabled = prop.Value.GetBoolean();
+                    isAccessControlEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CopilotSettingsResourceUpdateProperties(accessControlEnabled, additionalBinaryDataProperties);
+            return new CopilotSettingsResourceUpdateProperties(isAccessControlEnabled, additionalBinaryDataProperties);
         }
     }
 }
