@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Optional.IsDefined(IgnoreFirstRecord))
+            if (Optional.IsDefined(ShouldIgnoreFirstRecord))
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
-                writer.WriteBooleanValue(IgnoreFirstRecord.Value);
+                writer.WriteBooleanValue(ShouldIgnoreFirstRecord.Value);
             }
             if (Optional.IsDefined(BlobStorageEventType))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string tableName = default;
             string mappingRuleName = default;
             KustoEventGridDataFormat? dataFormat = default;
-            bool? ignoreFirstRecord = default;
+            bool? shouldIgnoreFirstRecord = default;
             BlobStorageEventType? blobStorageEventType = default;
             ResourceIdentifier managedIdentityResourceId = default;
             Guid? managedIdentityObjectId = default;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    ignoreFirstRecord = prop.Value.GetBoolean();
+                    shouldIgnoreFirstRecord = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("blobStorageEventType"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 tableName,
                 mappingRuleName,
                 dataFormat,
-                ignoreFirstRecord,
+                shouldIgnoreFirstRecord,
                 blobStorageEventType,
                 managedIdentityResourceId,
                 managedIdentityObjectId,

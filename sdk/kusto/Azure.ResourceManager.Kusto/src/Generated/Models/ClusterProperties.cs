@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterZoneStatus? ZoneStatus { get; }
 
         /// <summary> The list of language extensions. </summary>
-        public IList<KustoLanguageExtension> Value
+        public IList<KustoLanguageExtension> LanguageExtensionsValue
         {
             get
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     LanguageExtensions = new KustoLanguageExtensionList();
                 }
-                return LanguageExtensions.Value;
+                return LanguageExtensions.LanguageExtensionsValue;
             }
         }
 

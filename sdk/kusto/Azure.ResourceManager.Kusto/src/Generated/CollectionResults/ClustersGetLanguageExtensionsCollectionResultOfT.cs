@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kusto
                     yield break;
                 }
                 KustoLanguageExtensionList result = KustoLanguageExtensionList.FromResponse(response);
-                yield return Page<KustoLanguageExtension>.FromValues((IReadOnlyList<KustoLanguageExtension>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<KustoLanguageExtension>.FromValues((IReadOnlyList<KustoLanguageExtension>)result.LanguageExtensionsValue, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

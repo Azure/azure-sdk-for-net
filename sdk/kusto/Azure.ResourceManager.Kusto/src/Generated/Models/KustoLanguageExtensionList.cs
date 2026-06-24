@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
         public KustoLanguageExtensionList()
         {
-            Value = new ChangeTrackingList<KustoLanguageExtension>();
+            LanguageExtensionsValue = new ChangeTrackingList<KustoLanguageExtension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
-        /// <param name="value"> The list of language extensions. </param>
+        /// <param name="languageExtensionsValue"> The list of language extensions. </param>
         /// <param name="nextLink"> The link to the next page of resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KustoLanguageExtensionList(IList<KustoLanguageExtension> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KustoLanguageExtensionList(IList<KustoLanguageExtension> languageExtensionsValue, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
+            LanguageExtensionsValue = languageExtensionsValue;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of language extensions. </summary>
-        public IList<KustoLanguageExtension> Value { get; } = new ChangeTrackingList<KustoLanguageExtension>();
+        public IList<KustoLanguageExtension> LanguageExtensionsValue { get; } = new ChangeTrackingList<KustoLanguageExtension>();
 
         /// <summary> The link to the next page of resources. </summary>
         public string NextLink { get; set; }

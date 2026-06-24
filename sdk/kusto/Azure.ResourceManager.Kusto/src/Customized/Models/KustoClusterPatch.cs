@@ -5,17 +5,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    // these renaming properties are from flattened `Properties`.
-    // in GA code, under this class and its `Properties` class, they are named differently.
+    // This property is from flattend property class ClusterProperties
+    // In GA, it's named ClusterUri in ClusterProperties but named Uri in this class.
     public partial class KustoClusterPatch
     {
         /// <summary> The cluster URI. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Uri Uri => ClusterUri;
-
-        /// <summary> The list of language extensions. </summary>
-        public IList<KustoLanguageExtension> LanguageExtensionsValue => Value;
     }
 }

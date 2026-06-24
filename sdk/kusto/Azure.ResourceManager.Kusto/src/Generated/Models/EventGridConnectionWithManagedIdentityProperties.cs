@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
         /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
         /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="ignoreFirstRecord"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
+        /// <param name="shouldIgnoreFirstRecord"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
         /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
         /// <param name="managedIdentityObjectId"> The object ID of managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridConnectionWithManagedIdentityProperties(ResourceIdentifier storageAccountResourceIdForManagedIdentity, ResourceIdentifier eventHubResourceIdForManagedIdentity, ResourceIdentifier eventGridResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridConnectionWithManagedIdentityProperties(ResourceIdentifier storageAccountResourceIdForManagedIdentity, ResourceIdentifier eventHubResourceIdForManagedIdentity, ResourceIdentifier eventGridResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? shouldIgnoreFirstRecord, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceIdForManagedIdentity = storageAccountResourceIdForManagedIdentity;
             EventHubResourceIdForManagedIdentity = eventHubResourceIdForManagedIdentity;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kusto.Models
             TableName = tableName;
             MappingRuleName = mappingRuleName;
             DataFormat = dataFormat;
-            IgnoreFirstRecord = ignoreFirstRecord;
+            ShouldIgnoreFirstRecord = shouldIgnoreFirstRecord;
             BlobStorageEventType = blobStorageEventType;
             ManagedIdentityResourceId = managedIdentityResourceId;
             ManagedIdentityObjectId = managedIdentityObjectId;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoEventGridDataFormat? DataFormat { get; set; }
 
         /// <summary> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </summary>
-        public bool? IgnoreFirstRecord { get; set; }
+        public bool? ShouldIgnoreFirstRecord { get; set; }
 
         /// <summary> The name of blob storage event type to process. </summary>
         public BlobStorageEventType? BlobStorageEventType { get; set; }

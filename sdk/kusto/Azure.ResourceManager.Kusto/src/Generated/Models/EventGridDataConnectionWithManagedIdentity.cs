@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </summary>
-        public bool? IgnoreFirstRecord
+        public bool? ShouldIgnoreFirstRecord
         {
             get
             {
-                return Properties is null ? default : Properties.IgnoreFirstRecord;
+                return Properties is null ? default : Properties.ShouldIgnoreFirstRecord;
             }
             set
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new EventGridConnectionWithManagedIdentityProperties();
                 }
-                Properties.IgnoreFirstRecord = value;
+                Properties.ShouldIgnoreFirstRecord = value;
             }
         }
 
