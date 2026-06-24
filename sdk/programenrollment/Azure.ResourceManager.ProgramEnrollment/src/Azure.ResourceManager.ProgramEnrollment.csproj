@@ -3,7 +3,8 @@
     <Description>This is the Azure.ResourceManager.ProgramEnrollment client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ProgramEnrollment</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.ProgramEnrollment</PackageTags>
+    <PackageId>Azure.ResourceManager.ProgramEnrollment</PackageId>
+    <PackageTags>azure;management;resource;programenrollment</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 </Project>
