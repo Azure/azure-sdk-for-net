@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderApplication))]
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(StorageIndexingConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceList))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHealthcareApisContext : ModelReaderWriterContext
     {
     }
