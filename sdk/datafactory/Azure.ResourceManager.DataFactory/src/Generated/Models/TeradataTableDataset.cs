@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class TeradataTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public TeradataTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "TeradataTable";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,24 +23,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="database"> The database name of Teradata. Type: string (or Expression with resultType string). </param>
-        /// <param name="table"> The table name of Teradata. Type: string (or Expression with resultType string). </param>
-        internal TeradataTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> database, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Teradata dataset properties. </param>
+        internal TeradataTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, TeradataTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            Database = database;
-            Table = table;
-            DatasetType = datasetType ?? "TeradataTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/> for deserialization. </summary>
-        internal TeradataTableDataset()
-        {
-        }
+        /// <summary> Teradata dataset properties. </summary>
+        internal TeradataTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The database name of Teradata. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeradataTableDatasetTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> The table name of Teradata. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeradataTableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
     }
 }

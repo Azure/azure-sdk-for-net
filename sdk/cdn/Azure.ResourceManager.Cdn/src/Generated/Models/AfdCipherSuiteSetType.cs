@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
         private const string CustomizedValue = "Customized";
-        private const string TLS102019Value = "TLS10_2019";
-        private const string TLS122022Value = "TLS12_2022";
-        private const string TLS122023Value = "TLS12_2023";
+        private const string Tls1_0_2019Value = "TLS10_2019";
+        private const string Tls1_2_2022Value = "TLS12_2022";
+        private const string Tls1_2_2023Value = "TLS12_2023";
 
         /// <summary> Initializes a new instance of <see cref="AfdCipherSuiteSetType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,6 +32,15 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the Customized. </summary>
         public static AfdCipherSuiteSetType Customized { get; } = new AfdCipherSuiteSetType(CustomizedValue);
+
+        /// <summary> Gets the Tls1_0_2019. </summary>
+        public static AfdCipherSuiteSetType Tls1_0_2019 { get; } = new AfdCipherSuiteSetType(Tls1_0_2019Value);
+
+        /// <summary> Gets the Tls1_2_2022. </summary>
+        public static AfdCipherSuiteSetType Tls1_2_2022 { get; } = new AfdCipherSuiteSetType(Tls1_2_2022Value);
+
+        /// <summary> Gets the Tls1_2_2023. </summary>
+        public static AfdCipherSuiteSetType Tls1_2_2023 { get; } = new AfdCipherSuiteSetType(Tls1_2_2023Value);
 
         /// <summary> Determines if two <see cref="AfdCipherSuiteSetType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

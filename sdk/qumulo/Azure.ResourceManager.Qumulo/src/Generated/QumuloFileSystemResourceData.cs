@@ -111,6 +111,23 @@ namespace Azure.ResourceManager.Qumulo
             }
         }
 
+        /// <summary> Pre-Provisioned Performance of the Resource. </summary>
+        public string PerformanceTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerformanceTier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                Properties.PerformanceTier = value;
+            }
+        }
+
         /// <summary> File system Id of the resource. </summary>
         public Uri ClusterLoginUri
         {

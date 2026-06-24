@@ -17,6 +17,13 @@ public class RoutinesTests : ProjectsClientTestBase
     public static readonly string HOSTED_AGENT_PREFIX = "cs-routines-hosted-agent";
     public static readonly string ROUTINE_NAME_PREFIX = "cs-routines";
     private static readonly  int PAGE_SIZE = 3;
+
+    public enum TriggerType
+    {
+        Schedule,
+        Timer,
+        ManualDispatch
+    }
     public RoutinesTests(bool isAsync) : base(isAsync)
     {
     }
@@ -128,29 +135,30 @@ public class RoutinesTests : ProjectsClientTestBase
         //Assert.That(backwards[1].Name, Is.EqualTo(records[records.Count - 3].Name));
     }
 
-    [TestCase(true)]
-    [TestCase(false)]
+    [TestCase(TriggerType.Timer)]
+    [TestCase(TriggerType.Schedule)]
+    [TestCase(TriggerType.ManualDispatch)]
     [RecordedTest]
-    public async Task TestRoutineE2E(bool isScheduledTask)
+    public async Task TestRoutineE2E(TriggerType triggerType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineTrigger trigger;
-        if (isScheduledTask)
+        RoutineTrigger trigger = null;
+        if (triggerType == TriggerType.Schedule)
         {
             trigger = new ScheduleRoutineTrigger(
                 cronExpression: "*/5 * * * *",
                 timeZone: "UTC"
             );
         }
-        else
+        else if (triggerType == TriggerType.Timer)
         {
             if (Mode == RecordedTestMode.Playback)
             {
                 // Take the actual time from the recording file.
                 trigger = new TimerRoutineTrigger()
                 {
-                    At = IsAsync ? DateTimeOffset.FromUnixTimeSeconds(1781550024) : DateTimeOffset.FromUnixTimeSeconds(1781549955)
+                    At = IsAsync ? DateTimeOffset.FromUnixTimeSeconds(1782159722) : DateTimeOffset.FromUnixTimeSeconds(1782159326)
                 };
             }
             else
@@ -160,6 +168,14 @@ public class RoutinesTests : ProjectsClientTestBase
                     At = DateTime.UtcNow + TimeSpan.FromSeconds(20),
                 };
             }
+        }
+        else if (triggerType == TriggerType.ManualDispatch)
+        {
+            trigger = new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>());
+        }
+        else
+        {
+            Assert.Fail($"Unsupported trigger type {triggerType}");
         }
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
@@ -172,6 +188,11 @@ public class RoutinesTests : ProjectsClientTestBase
         ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
             routineName: routineName,
             options: routineOptions);
+        if (triggerType == TriggerType.ManualDispatch)
+        {
+            DispatchRoutineResponse dispatch = await projectClient.Routines.DispatchAsyncRoutineAsync(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+            Assert.That(dispatch.TaskId, Is.Not.Null.And.Not.Empty);
+        }
         int minutesWait = 10;
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
@@ -192,6 +213,13 @@ public class RoutinesTests : ProjectsClientTestBase
                 break;
             }
         }
+        // Getting responses is blocked by ADO work item 5375594.
+        // ProjectResponsesClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+        //     apiVersion: "v1"
+        // );
+        // responsesOptions.AgentName = agentVersion.Name;
+        // ProjectResponsesClient oaiClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: responsesOptions));
+        // ResponseResult result = oaiClient.GetResponse(new GetResponseOptions(responseId: completedRun.ResponseId));
         Assert.That(completedRun, Is.Not.Null, $"The run did not complete within {minutesWait} minutes.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");

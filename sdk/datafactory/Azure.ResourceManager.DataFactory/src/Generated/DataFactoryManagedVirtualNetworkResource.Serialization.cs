@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    /// <summary></summary>
     public partial class DataFactoryManagedVirtualNetworkResource : IJsonModel<DataFactoryManagedVirtualNetworkData>
     {
-        private static DataFactoryManagedVirtualNetworkData s_dataDeserializationInstance;
-        private static DataFactoryManagedVirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataFactoryManagedVirtualNetworkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataFactoryManagedVirtualNetworkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataFactoryManagedVirtualNetworkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryManagedVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)Data).Write(writer, options);
 
-        DataFactoryManagedVirtualNetworkData IJsonModel<DataFactoryManagedVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryManagedVirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryManagedVirtualNetworkData IJsonModel<DataFactoryManagedVirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryManagedVirtualNetworkData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataFactoryManagedVirtualNetworkData IPersistableModel<DataFactoryManagedVirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryManagedVirtualNetworkData>(data, options, AzureResourceManagerDataFactoryContext.Default);
 
-        string IPersistableModel<DataFactoryManagedVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryManagedVirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryManagedVirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

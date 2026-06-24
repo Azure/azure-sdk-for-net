@@ -1748,6 +1748,13 @@ Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.")
 Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
+Routines runs can be manually dispatched by calling `DispatchAsyncRoutineAsync` or `DispatchAsyncRoutine` methods.
+
+```C# Snippet:Sample_DispatchTask_RoutinesManualDispatch_Async
+DispatchRoutineResponse dispatch = await routinesClient.DispatchAsyncRoutineAsync(routineName: created.Name, payload: new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+Console.WriteLine($"Dispatched the routine. Dispatch ID {dispatch.DispatchId}, task ID: {dispatch.TaskId}.");
+```
+
 ## Tracing
 
 **Note:** Tracing functionality is in preliminary preview and is subject to change. Spans, attributes, and events may be modified in future versions.
