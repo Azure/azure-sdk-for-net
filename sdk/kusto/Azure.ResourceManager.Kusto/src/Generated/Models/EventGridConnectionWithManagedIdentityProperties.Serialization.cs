@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
-                writer.WriteStringValue(ManagedIdentityObjectId);
+                writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
             if (Optional.IsDefined(DatabaseRouting))
             {
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            string storageAccountResourceIdForManagedIdentity = default;
-            string eventHubResourceIdForManagedIdentity = default;
-            string eventGridResourceId = default;
+            ResourceIdentifier storageAccountResourceIdForManagedIdentity = default;
+            ResourceIdentifier eventHubResourceIdForManagedIdentity = default;
+            ResourceIdentifier eventGridResourceId = default;
             string consumerGroup = default;
             string tableName = default;
             string mappingRuleName = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Kusto.Models
             bool? ignoreFirstRecord = default;
             BlobStorageEventType? blobStorageEventType = default;
             ResourceIdentifier managedIdentityResourceId = default;
-            string managedIdentityObjectId = default;
+            Guid? managedIdentityObjectId = default;
             KustoDatabaseRouting? databaseRouting = default;
             KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -193,17 +193,21 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (prop.NameEquals("storageAccountResourceIdForManagedIdentity"u8))
                 {
-                    storageAccountResourceIdForManagedIdentity = prop.Value.GetString();
+                    storageAccountResourceIdForManagedIdentity = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventHubResourceIdForManagedIdentity"u8))
                 {
-                    eventHubResourceIdForManagedIdentity = prop.Value.GetString();
+                    eventHubResourceIdForManagedIdentity = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventGridResourceId"u8))
                 {
-                    eventGridResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventGridResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("consumerGroup"u8))
@@ -255,7 +259,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("managedIdentityObjectId"u8))
                 {
-                    managedIdentityObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedIdentityObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("databaseRouting"u8))

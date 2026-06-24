@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Kusto.Models
         internal EventGridConnectionWithManagedIdentityProperties Properties { get; set; }
 
         /// <summary> The resource ID of the storage account where the data resides. </summary>
-        public string StorageAccountResourceIdForManagedIdentity
+        public ResourceIdentifier StorageAccountResourceIdForManagedIdentity
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of the event hub that is subscribed to the storage account events. </summary>
-        public string EventHubResourceIdForManagedIdentity
+        public ResourceIdentifier EventHubResourceIdForManagedIdentity
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID where the event grid is configured to send events. </summary>
-        public string EventGridResourceId
+        public ResourceIdentifier EventGridResourceId
         {
             get
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The object ID of managedIdentityResourceId. </summary>
-        public string ManagedIdentityObjectId
+        public Guid? ManagedIdentityObjectId
         {
             get
             {

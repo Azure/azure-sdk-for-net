@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
-                writer.WriteStringValue(ManagedIdentityObjectId);
+                writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
             if (Optional.IsDefined(DatabaseRouting))
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            string eventHubResourceIdForManagedIdentity = default;
+            ResourceIdentifier eventHubResourceIdForManagedIdentity = default;
             string consumerGroup = default;
             string tableName = default;
             string mappingRuleName = default;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Kusto.Models
             EventHubMessagesCompressionType? compression = default;
             KustoProvisioningState? provisioningState = default;
             ResourceIdentifier managedIdentityResourceId = default;
-            string managedIdentityObjectId = default;
+            Guid? managedIdentityObjectId = default;
             KustoDatabaseRouting? databaseRouting = default;
             DateTimeOffset? retrievalStartOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (prop.NameEquals("eventHubResourceIdForManagedIdentity"u8))
                 {
-                    eventHubResourceIdForManagedIdentity = prop.Value.GetString();
+                    eventHubResourceIdForManagedIdentity = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("consumerGroup"u8))
@@ -273,7 +273,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("managedIdentityObjectId"u8))
                 {
-                    managedIdentityObjectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedIdentityObjectId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("databaseRouting"u8))

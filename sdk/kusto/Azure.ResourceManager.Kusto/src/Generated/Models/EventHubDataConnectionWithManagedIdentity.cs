@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Kusto.Models
         internal EventHubConnectionWithManagedIdentityProperties Properties { get; set; }
 
         /// <summary> The resource ID of the event hub to be used to create a data connection. </summary>
-        public string EventHubResourceIdForManagedIdentity
+        public ResourceIdentifier EventHubResourceIdForManagedIdentity
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The object ID of the managedIdentityResourceId. </summary>
-        public string ManagedIdentityObjectId
+        public Guid? ManagedIdentityObjectId
         {
             get
             {
