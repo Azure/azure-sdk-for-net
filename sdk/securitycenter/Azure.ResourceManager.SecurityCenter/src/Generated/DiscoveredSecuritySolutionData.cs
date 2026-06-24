@@ -9,16 +9,24 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter.Models
+namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class SecurityTopologyResource : ResourceData
+    public partial class DiscoveredSecuritySolutionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityTopologyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionData"/>. </summary>
+        /// <param name="properties"></param>
+        internal DiscoveredSecuritySolutionData(DiscoveredSecuritySolutionProperties properties)
+        {
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -26,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="properties"></param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTopologyResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TopologyResourceProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DiscoveredSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiscoveredSecuritySolutionProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -34,26 +42,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets the Properties. </summary>
-        internal TopologyResourceProperties Properties { get; }
+        internal DiscoveredSecuritySolutionProperties Properties { get; }
 
         /// <summary> Location where the resource is stored. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
-        /// <summary> The UTC time on which the topology was calculated. </summary>
-        public DateTimeOffset? CalculatedOn
+        /// <summary> The security family of the discovered solution. </summary>
+        public SecurityFamily SecurityFamily
         {
             get
             {
-                return Properties is null ? default : Properties.CalculatedOn;
+                return Properties.SecurityFamily;
             }
         }
 
-        /// <summary> Azure resources which are part of this topology resource. </summary>
-        public IReadOnlyList<TopologySingleResource> TopologyResources
+        /// <summary> The security solutions' image offer. </summary>
+        public string Offer
         {
             get
             {
-                return Properties is null ? default : Properties.TopologyResources;
+                return Properties.Offer;
+            }
+        }
+
+        /// <summary> The security solutions' image publisher. </summary>
+        public string Publisher
+        {
+            get
+            {
+                return Properties.Publisher;
+            }
+        }
+
+        /// <summary> The security solutions' image sku. </summary>
+        public string Sku
+        {
+            get
+            {
+                return Properties.Sku;
             }
         }
     }

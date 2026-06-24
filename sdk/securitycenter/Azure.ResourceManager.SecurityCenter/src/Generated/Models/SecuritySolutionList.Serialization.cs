@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SecuritySolution item in Value)
+                foreach (SecuritySolutionData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<SecuritySolution> value = default;
+            IList<SecuritySolutionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<SecuritySolution> array = new List<SecuritySolution>();
+                    List<SecuritySolutionData> array = new List<SecuritySolutionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecuritySolution.DeserializeSecuritySolution(item, options));
+                        array.Add(SecuritySolutionData.DeserializeSecuritySolutionData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecuritySolutionList(value ?? new ChangeTrackingList<SecuritySolution>(), nextLink, additionalBinaryDataProperties);
+            return new SecuritySolutionList(value ?? new ChangeTrackingList<SecuritySolutionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

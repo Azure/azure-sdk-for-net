@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT : AsyncPageable<SecurityCenterAllowedConnection>
+    internal partial class AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT : AsyncPageable<SecurityCenterAllowedConnectionData>
     {
         private readonly AllowedConnections _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SecurityCenterAllowedConnection>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SecurityCenterAllowedConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
-                yield return Page<SecurityCenterAllowedConnection>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SecurityCenterAllowedConnectionData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

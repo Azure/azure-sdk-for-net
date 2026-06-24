@@ -9,37 +9,43 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter.Models
+namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
-    public partial class SecurityCenterAllowedConnection : ResourceData
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+    public partial class SecurityTopologyResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityCenterAllowedConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityTopologyResourceData"/>. </summary>
+        internal SecurityTopologyResourceData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityTopologyResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Describes the allowed traffic between Azure resources. </param>
+        /// <param name="properties"></param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterAllowedConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AllowedConnectionsResourceProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityTopologyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TopologyResourceProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Describes the allowed traffic between Azure resources. </summary>
-        internal AllowedConnectionsResourceProperties Properties { get; }
+        /// <summary> Gets the Properties. </summary>
+        internal TopologyResourceProperties Properties { get; }
 
         /// <summary> Location where the resource is stored. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
-        /// <summary> The UTC time on which the allowed connections resource was calculated. </summary>
+        /// <summary> The UTC time on which the topology was calculated. </summary>
         public DateTimeOffset? CalculatedOn
         {
             get
@@ -48,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        /// <summary> List of connectable resources. </summary>
-        public IReadOnlyList<ConnectableResourceInfo> ConnectableResources
+        /// <summary> Azure resources which are part of this topology resource. </summary>
+        public IReadOnlyList<TopologySingleResource> TopologyResources
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectableResources;
+                return Properties is null ? default : Properties.TopologyResources;
             }
         }
     }

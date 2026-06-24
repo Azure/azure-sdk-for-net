@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionList"/>. </summary>
         internal DiscoveredSecuritySolutionList()
         {
-            Value = new ChangeTrackingList<DiscoveredSecuritySolution>();
+            Value = new ChangeTrackingList<DiscoveredSecuritySolutionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredSecuritySolutionList(IList<DiscoveredSecuritySolution> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveredSecuritySolutionList(IList<DiscoveredSecuritySolutionData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<DiscoveredSecuritySolution> Value { get; }
+        public IList<DiscoveredSecuritySolutionData> Value { get; }
 
         /// <summary> The URI to fetch the next page. </summary>
         public string NextLink { get; }

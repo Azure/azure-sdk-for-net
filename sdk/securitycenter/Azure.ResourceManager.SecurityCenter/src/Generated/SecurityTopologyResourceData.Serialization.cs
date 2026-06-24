@@ -10,58 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter.Models
+namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class SecurityTopologyResource : ResourceData, IJsonModel<SecurityTopologyResource>
+    public partial class SecurityTopologyResourceData : ResourceData, IJsonModel<SecurityTopologyResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSecurityTopologyResource(document.RootElement, options);
+                        return DeserializeSecurityTopologyResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityTopologyResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityTopologyResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityTopologyResource IPersistableModel<SecurityTopologyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityTopologyResource)PersistableModelCreateCore(data, options);
+        SecurityTopologyResourceData IPersistableModel<SecurityTopologyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityTopologyResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityTopologyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityTopologyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SecurityTopologyResourceData"/> from. </param>
+        internal static SecurityTopologyResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSecurityTopologyResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SecurityTopologyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityTopologyResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +80,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Properties))
@@ -86,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -107,24 +115,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityTopologyResource IJsonModel<SecurityTopologyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityTopologyResource)JsonModelCreateCore(ref reader, options);
+        SecurityTopologyResourceData IJsonModel<SecurityTopologyResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityTopologyResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityTopologyResource(document.RootElement, options);
+            return DeserializeSecurityTopologyResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityTopologyResource DeserializeSecurityTopologyResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityTopologyResourceData DeserializeSecurityTopologyResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceType resourceType = default;
             SystemData systemData = default;
             TopologyResourceProperties properties = default;
-            AzureLocation? location = default;
+            string location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecurityTopologyResource(
+            return new SecurityTopologyResourceData(
                 id,
                 name,
                 resourceType,

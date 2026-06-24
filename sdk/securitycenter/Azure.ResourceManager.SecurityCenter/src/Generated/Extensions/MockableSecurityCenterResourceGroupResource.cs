@@ -256,6 +256,73 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return GetSecurityConnectors().Get(securityConnectorName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DiscoveredSecuritySolutions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiscoveredSecuritySolutions and their operations over a DiscoveredSecuritySolutionResource. </returns>
+        public virtual DiscoveredSecuritySolutionCollection GetDiscoveredSecuritySolutions()
+        {
+            return GetCachedClient(client => new DiscoveredSecuritySolutionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveredSecuritySolutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiscoveredSecuritySolutionResource>> GetDiscoveredSecuritySolutionAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
+            return await GetDiscoveredSecuritySolutions().GetAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific discovered Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions/{discoveredSecuritySolutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveredSecuritySolutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="discoveredSecuritySolutionName"> Name of a discovered security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredSecuritySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolution(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
+
+            return GetDiscoveredSecuritySolutions().Get(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of JitNetworkAccessPolicies in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of JitNetworkAccessPolicies and their operations over a JitNetworkAccessPolicyResource. </returns>
@@ -322,6 +389,73 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
             return GetJitNetworkAccessPolicies(ascLocation).Get(jitNetworkAccessPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecuritySolutions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecuritySolutions and their operations over a SecuritySolutionResource. </returns>
+        public virtual SecuritySolutionCollection GetSecuritySolutions()
+        {
+            return GetCachedClient(client => new SecuritySolutionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecuritySolutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecuritySolutionResource>> GetSecuritySolutionAsync(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
+            return await GetSecuritySolutions().GetAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific Security Solution.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/securitySolutions/{securitySolutionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecuritySolutions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="securitySolutionName"> Name of security solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securitySolutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecuritySolutionResource> GetSecuritySolution(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
+
+            return GetSecuritySolutions().Get(ascLocation, securitySolutionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityCenterStandards in the <see cref="ResourceGroupResource"/>. </summary>
@@ -650,6 +784,132 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
             return GetPrivateLinkResources().Get(privateLinkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityCenterAllowedConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityCenterAllowedConnections and their operations over a SecurityCenterAllowedConnectionResource. </returns>
+        public virtual SecurityCenterAllowedConnectionCollection GetSecurityCenterAllowedConnections()
+        {
+            return GetCachedClient(client => new SecurityCenterAllowedConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedConnectionsResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityCenterAllowedConnectionResource>> GetSecurityCenterAllowedConnectionAsync(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            return await GetSecurityCenterAllowedConnections().GetAsync(ascLocation, connectionType, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location, based on connection type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections/{connectionType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedConnectionsResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="connectionType"> The type of allowed connections (Internal, External). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnection(AzureLocation ascLocation, ConnectionType connectionType, CancellationToken cancellationToken = default)
+        {
+            return GetSecurityCenterAllowedConnections().Get(ascLocation, connectionType, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityTopologyResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityTopologyResources and their operations over a SecurityTopologyResource. </returns>
+        public virtual SecurityTopologyResourceCollection GetSecurityTopologyResources()
+        {
+            return GetCachedClient(client => new SecurityTopologyResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopologyResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityTopologyResource>> GetSecurityTopologyResourceAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
+            return await GetSecurityTopologyResources().GetAsync(ascLocation, topologyResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a specific topology component.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/topologies/{topologyResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopologyResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="topologyResourceName"> Name of a topology resources collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topologyResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityTopologyResource> GetSecurityTopologyResource(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
+
+            return GetSecurityTopologyResources().Get(ascLocation, topologyResourceName, cancellationToken);
         }
 
         /// <summary>

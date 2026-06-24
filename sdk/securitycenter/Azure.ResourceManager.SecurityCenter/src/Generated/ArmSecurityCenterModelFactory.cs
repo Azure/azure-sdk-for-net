@@ -2978,10 +2978,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sku"> The security solutions' image sku. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/>, <paramref name="publisher"/> or <paramref name="sku"/> is null. </exception>
-        /// <returns> A new <see cref="Models.DiscoveredSecuritySolution"/> instance for mocking. </returns>
-        public static DiscoveredSecuritySolution DiscoveredSecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityFamily securityFamily = default, string offer = default, string publisher = default, string sku = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="SecurityCenter.DiscoveredSecuritySolutionData"/> instance for mocking. </returns>
+        public static DiscoveredSecuritySolutionData DiscoveredSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityFamily securityFamily = default, string offer = default, string publisher = default, string sku = default, string location = default)
         {
-            return new DiscoveredSecuritySolution(
+            return new DiscoveredSecuritySolutionData(
                 id,
                 name,
                 resourceType,
@@ -3147,10 +3147,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="template"> The security solutions' template. </param>
         /// <param name="protectionStatus"> The security solutions' status. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecuritySolution"/> instance for mocking. </returns>
-        public static SecuritySolution SecuritySolution(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityFamily? securityFamily = default, SecurityCenterProvisioningState? provisioningState = default, string template = default, string protectionStatus = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="SecurityCenter.SecuritySolutionData"/> instance for mocking. </returns>
+        public static SecuritySolutionData SecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityFamily? securityFamily = default, SecurityCenterProvisioningState? provisioningState = default, string template = default, string protectionStatus = default, string location = default)
         {
-            return new SecuritySolution(
+            return new SecuritySolutionData(
                 id,
                 name,
                 resourceType,
@@ -4599,10 +4599,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
         /// <param name="connectableResources"> List of connectable resources. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecurityCenterAllowedConnection"/> instance for mocking. </returns>
-        public static SecurityCenterAllowedConnection SecurityCenterAllowedConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<ConnectableResourceInfo> connectableResources = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterAllowedConnectionData"/> instance for mocking. </returns>
+        public static SecurityCenterAllowedConnectionData SecurityCenterAllowedConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<ConnectableResourceInfo> connectableResources = default, string location = default)
         {
-            return new SecurityCenterAllowedConnection(
+            return new SecurityCenterAllowedConnectionData(
                 id,
                 name,
                 resourceType,
@@ -4666,10 +4666,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
         /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="Models.SecurityTopologyResource"/> instance for mocking. </returns>
-        public static SecurityTopologyResource SecurityTopologyResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<TopologySingleResource> topologyResources = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="SecurityCenter.SecurityTopologyResourceData"/> instance for mocking. </returns>
+        public static SecurityTopologyResourceData SecurityTopologyResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<TopologySingleResource> topologyResources = default, string location = default)
         {
-            return new SecurityTopologyResource(
+            return new SecurityTopologyResourceData(
                 id,
                 name,
                 resourceType,

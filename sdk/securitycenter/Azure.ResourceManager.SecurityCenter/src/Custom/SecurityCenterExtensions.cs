@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -19,8 +20,104 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// Provides a compatibility shim for the SecurityCenterExtensions class.
     /// </summary>
+    [CodeGenSuppress("GetAllowedConnectionsAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAllowedConnections", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetDiscoveredSecuritySolutionsAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetDiscoveredSecuritySolutions", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSecuritySolutionsAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSecuritySolutions", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTopologiesAsync", typeof(SubscriptionResource), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTopologies", typeof(SubscriptionResource), typeof(CancellationToken))]
     public static partial class SecurityCenterExtensions
     {
+        private static Response<Models.DiscoveredSecuritySolution> ToLegacyResponse(Response<DiscoveredSecuritySolutionResource> response)
+            => Response.FromValue(new Models.DiscoveredSecuritySolution(response.Value.Data), response.GetRawResponse());
+
+        private static async System.Threading.Tasks.Task<Response<Models.DiscoveredSecuritySolution>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<DiscoveredSecuritySolutionResource>> responseTask)
+            => ToLegacyResponse(await responseTask.ConfigureAwait(false));
+
+        private static Response<Models.SecuritySolution> ToLegacyResponse(Response<SecuritySolutionResource> response)
+            => Response.FromValue(new Models.SecuritySolution(response.Value.Data), response.GetRawResponse());
+
+        private static async System.Threading.Tasks.Task<Response<Models.SecuritySolution>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecuritySolutionResource>> responseTask)
+            => ToLegacyResponse(await responseTask.ConfigureAwait(false));
+
+        private static Response<Models.SecurityTopologyResource> ToLegacyResponse(Response<SecurityTopologyResource> response)
+            => Response.FromValue(new Models.SecurityTopologyResource(response.Value.Data), response.GetRawResponse());
+
+        private static async System.Threading.Tasks.Task<Response<Models.SecurityTopologyResource>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecurityTopologyResource>> responseTask)
+            => ToLegacyResponse(await responseTask.ConfigureAwait(false));
+
+        private static Response<Models.SecurityCenterAllowedConnection> ToLegacyResponse(Response<SecurityCenterAllowedConnectionResource> response)
+            => Response.FromValue(new Models.SecurityCenterAllowedConnection(response.Value.Data), response.GetRawResponse());
+
+        private static async System.Threading.Tasks.Task<Response<Models.SecurityCenterAllowedConnection>> ToLegacyResponseAsync(System.Threading.Tasks.Task<Response<SecurityCenterAllowedConnectionResource>> responseTask)
+            => ToLegacyResponse(await responseTask.ConfigureAwait(false));
+
+        /// <summary> Gets allowed connections compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<Models.SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<SecurityCenterAllowedConnectionResource, Models.SecurityCenterAllowedConnection>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllowedConnectionsAsync(cancellationToken),
+                resource => new Models.SecurityCenterAllowedConnection(resource.Data));
+
+        /// <summary> Gets allowed connections compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<Models.SecurityCenterAllowedConnection> GetAllowedConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new PageableWrapper<SecurityCenterAllowedConnectionResource, Models.SecurityCenterAllowedConnection>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAllowedConnections(cancellationToken),
+                resource => new Models.SecurityCenterAllowedConnection(resource.Data));
+
+        /// <summary> Gets discovered security solution compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<DiscoveredSecuritySolutionResource, Models.DiscoveredSecuritySolution>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(cancellationToken),
+                resource => new Models.DiscoveredSecuritySolution(resource.Data));
+
+        /// <summary> Gets discovered security solution compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new PageableWrapper<DiscoveredSecuritySolutionResource, Models.DiscoveredSecuritySolution>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutions(cancellationToken),
+                resource => new Models.DiscoveredSecuritySolution(resource.Data));
+
+        /// <summary> Gets security solution compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<Models.SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<SecuritySolutionResource, Models.SecuritySolution>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsAsync(cancellationToken),
+                resource => new Models.SecuritySolution(resource.Data));
+
+        /// <summary> Gets security solution compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<Models.SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new PageableWrapper<SecuritySolutionResource, Models.SecuritySolution>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutions(cancellationToken),
+                resource => new Models.SecuritySolution(resource.Data));
+
+        /// <summary> Gets topology compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static AsyncPageable<Models.SecurityTopologyResource> GetTopologiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<SecurityTopologyResource, Models.SecurityTopologyResource>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTopologiesAsync(cancellationToken),
+                resource => new Models.SecurityTopologyResource(resource.Data));
+
+        /// <summary> Gets topology compatibility models. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static Pageable<Models.SecurityTopologyResource> GetTopologies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+            => new PageableWrapper<SecurityTopologyResource, Models.SecurityTopologyResource>(
+                GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTopologies(cancellationToken),
+                resource => new Models.SecurityTopologyResource(resource.Data));
+
         /// <summary>
         /// Provides a compatibility shim for the GetAdvancedThreatProtectionSetting operation preserved from the previous public API surface.
         /// </summary>
@@ -100,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string discoveredSecuritySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+            => ToLegacyResponse(resourceGroupResource.GetDiscoveredSecuritySolutions().Get(ascLocation, discoveredSecuritySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetDiscoveredSecuritySolutionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -111,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string discoveredSecuritySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+            => ToLegacyResponseAsync(resourceGroupResource.GetDiscoveredSecuritySolutions().GetAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetExternalSecuritySolution operation preserved from the previous public API surface.
         /// </summary>
@@ -190,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution> GetSecuritySolution(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string securitySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
+            => ToLegacyResponse(resourceGroupResource.GetSecuritySolutions().Get(ascLocation, securitySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetSecuritySolutionAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -201,7 +298,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecuritySolution>> GetSecuritySolutionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string securitySolutionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken);
+            => ToLegacyResponseAsync(resourceGroupResource.GetSecuritySolutions().GetAsync(ascLocation, securitySolutionName, cancellationToken));
         /// <summary>
         /// Provides a compatibility shim for the GetServerVulnerabilityAssessment operation preserved from the previous public API surface.
         /// </summary>

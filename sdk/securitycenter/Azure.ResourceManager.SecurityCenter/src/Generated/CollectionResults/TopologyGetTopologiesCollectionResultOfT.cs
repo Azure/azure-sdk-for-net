@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class TopologyGetTopologiesCollectionResultOfT : Pageable<SecurityTopologyResource>
+    internal partial class TopologyGetTopologiesCollectionResultOfT : Pageable<SecurityTopologyResourceData>
     {
         private readonly Topology _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TopologyGetTopologiesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SecurityTopologyResource>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SecurityTopologyResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 TopologyList result = TopologyList.FromResponse(response);
-                yield return Page<SecurityTopologyResource>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SecurityTopologyResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

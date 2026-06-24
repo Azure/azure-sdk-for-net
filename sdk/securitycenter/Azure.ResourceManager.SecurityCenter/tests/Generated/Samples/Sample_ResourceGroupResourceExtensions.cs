@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // invoke the operation
             AzureLocation ascLocation = new AzureLocation("centralus");
             string topologyResourceName = "vnets";
-            SecurityTopologyResource result = await resourceGroupResource.GetTopologyAsync(ascLocation, topologyResourceName);
+            global::Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource result = await resourceGroupResource.GetTopologyAsync(ascLocation, topologyResourceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

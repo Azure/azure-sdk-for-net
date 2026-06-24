@@ -15,7 +15,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT : AsyncPageable<SecuritySolution>
+    internal partial class SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT : AsyncPageable<SecuritySolutionData>
     {
         private readonly SecuritySolutions _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SecuritySolution>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SecuritySolutionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 SecuritySolutionList result = SecuritySolutionList.FromResponse(response);
-                yield return Page<SecuritySolution>.FromValues((IReadOnlyList<SecuritySolution>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SecuritySolutionData>.FromValues((IReadOnlyList<SecuritySolutionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Automations _automationsRestClient;
         private ClientDiagnostics _securityConnectorsClientDiagnostics;
         private SecurityConnectors _securityConnectorsRestClient;
+        private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
+        private DiscoveredSecuritySolutions _discoveredSecuritySolutionsRestClient;
         private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
         private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _standardsClientDiagnostics;
@@ -35,10 +37,12 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private IotSecuritySolution _iotSecuritySolutionRestClient;
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
+        private ClientDiagnostics _allowedConnectionsClientDiagnostics;
+        private AllowedConnections _allowedConnectionsRestClient;
+        private ClientDiagnostics _topologyClientDiagnostics;
+        private Topology _topologyRestClient;
         private ClientDiagnostics _alertsClientDiagnostics;
         private Alerts _alertsRestClient;
-        private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
-        private DiscoveredSecuritySolutions _discoveredSecuritySolutionsRestClient;
         private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _securitySolutionsClientDiagnostics;
@@ -53,10 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private SecureScoreControls _secureScoreControlsRestClient;
         private ClientDiagnostics _secureScoreControlDefinitionsClientDiagnostics;
         private SecureScoreControlDefinitions _secureScoreControlDefinitionsRestClient;
-        private ClientDiagnostics _allowedConnectionsClientDiagnostics;
-        private AllowedConnections _allowedConnectionsRestClient;
-        private ClientDiagnostics _topologyClientDiagnostics;
-        private Topology _topologyRestClient;
 
         /// <summary> Initializes a new instance of MockableSecurityCenterSubscriptionResource for mocking. </summary>
         protected MockableSecurityCenterSubscriptionResource()
@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private SecurityConnectors SecurityConnectorsRestClient => _securityConnectorsRestClient ??= new SecurityConnectors(SecurityConnectorsClientDiagnostics, Pipeline, Endpoint, "2024-08-01-preview");
 
+        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
@@ -98,13 +102,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
 
+        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
+        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
-
-        private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -133,14 +141,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
-        private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
-        private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         /// <summary> Gets a collection of SecurityAlertsSuppressionRules in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of SecurityAlertsSuppressionRules and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
@@ -1041,6 +1041,64 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
+        /// Gets a list of discovered Security Solutions for the subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveredSecuritySolutions_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetByHomeRegionAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of discovered Security Solutions for the subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/discoveredSecuritySolutions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiscoveredSecuritySolutions_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutions(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+        }
+
+        /// <summary>
         /// Policies for protecting resources using Just-in-Time access control for the subscription, location
         /// <list type="bullet">
         /// <item>
@@ -1325,6 +1383,122 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedConnectionsResources_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnectionsAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the list of all possible traffic between resources for the subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/allowedConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AllowedConnectionsResources_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAllowedConnectionResource> GetSecurityCenterAllowedConnections(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetByHomeRegionCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list that allows to build a topology view of a subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/topologies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopologyResources_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityTopologyResource> GetSecurityTopologyResourcesAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityTopologyResourceData, SecurityTopologyResource>(new TopologyGetByHomeRegionAsyncCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologyResources"), data => new SecurityTopologyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list that allows to build a topology view of a subscription and location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/topologies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopologyResources_ListByHomeRegion. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SecurityTopologyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityTopologyResource> GetSecurityTopologyResources(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityTopologyResourceData, SecurityTopologyResource>(new TopologyGetByHomeRegionCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologyResources"), data => new SecurityTopologyResource(Client, data));
+        }
+
+        /// <summary>
         /// List all the alerts that are associated with the subscription
         /// <list type="bullet">
         /// <item>
@@ -1398,14 +1572,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions");
+            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1426,14 +1600,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiscoveredSecuritySolution"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DiscoveredSecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DiscoveredSecuritySolutionResource> GetDiscoveredSecuritySolutions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions");
+            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1566,14 +1740,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecuritySolutionResource> GetSecuritySolutionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions");
+            return new AsyncPageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1594,14 +1768,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecuritySolution"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecuritySolution> GetSecuritySolutions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecuritySolutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecuritySolutionResource> GetSecuritySolutions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SecuritySolutionsGetSecuritySolutionsCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions");
+            return new PageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1938,14 +2112,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityCenterAllowedConnection> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityCenterAllowedConnectionResource> GetAllowedConnectionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections");
+            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -1966,14 +2140,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterAllowedConnection"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityCenterAllowedConnection> GetAllowedConnections(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityCenterAllowedConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityCenterAllowedConnectionResource> GetAllowedConnections(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AllowedConnectionsGetAllowedConnectionsCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections");
+            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetAllowedConnectionsCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -2001,7 +2175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TopologyGetTopologiesAsyncCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies");
+            return new AsyncPageableWrapper<SecurityTopologyResourceData, SecurityTopologyResource>(new TopologyGetTopologiesAsyncCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
         }
 
         /// <summary>
@@ -2029,7 +2203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TopologyGetTopologiesCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies");
+            return new PageableWrapper<SecurityTopologyResourceData, SecurityTopologyResource>(new TopologyGetTopologiesCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
         }
     }
 }

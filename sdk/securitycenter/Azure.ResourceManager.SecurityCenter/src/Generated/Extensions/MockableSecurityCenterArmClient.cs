@@ -649,6 +649,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new SecurityOperatorResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="DiscoveredSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiscoveredSecuritySolutionResource"/> object. </returns>
+        public virtual DiscoveredSecuritySolutionResource GetDiscoveredSecuritySolutionResource(ResourceIdentifier id)
+        {
+            DiscoveredSecuritySolutionResource.ValidateResourceId(id);
+            return new DiscoveredSecuritySolutionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="JitNetworkAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JitNetworkAccessPolicyResource"/> object. </returns>
@@ -656,6 +665,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         {
             JitNetworkAccessPolicyResource.ValidateResourceId(id);
             return new JitNetworkAccessPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecuritySolutionResource"/> object. </returns>
+        public virtual SecuritySolutionResource GetSecuritySolutionResource(ResourceIdentifier id)
+        {
+            SecuritySolutionResource.ValidateResourceId(id);
+            return new SecuritySolutionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecurityStandardResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1139,6 +1157,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new GitHubRepositoryResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SecurityCenterAllowedConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityCenterAllowedConnectionResource"/> object. </returns>
+        public virtual SecurityCenterAllowedConnectionResource GetSecurityCenterAllowedConnectionResource(ResourceIdentifier id)
+        {
+            SecurityCenterAllowedConnectionResource.ValidateResourceId(id);
+            return new SecurityCenterAllowedConnectionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServerVulnerabilityAssessmentResource"/> object. </returns>
@@ -1154,6 +1181,15 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         public virtual ServerVulnerabilityAssessmentResource GetServerVulnerabilityAssessment(ResourceIdentifier scope)
         {
             return new ServerVulnerabilityAssessmentResource(Client, scope.AppendProviderResource("Microsoft.Security", "serverVulnerabilityAssessments", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="SecurityTopologyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityTopologyResource"/> object. </returns>
+        public virtual SecurityTopologyResource GetSecurityTopologyResource(ResourceIdentifier id)
+        {
+            SecurityTopologyResource.ValidateResourceId(id);
+            return new SecurityTopologyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="GetSensitivitySettingsResponseResource"/> along with the instance operations that can be performed on it but with no data. </summary>

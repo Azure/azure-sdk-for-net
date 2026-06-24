@@ -10,63 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter.Models
+namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class DiscoveredSecuritySolution : ResourceData, IJsonModel<DiscoveredSecuritySolution>
+    public partial class SecuritySolutionData : ResourceData, IJsonModel<SecuritySolutionData>
     {
-        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolution"/> for deserialization. </summary>
-        internal DiscoveredSecuritySolution()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiscoveredSecuritySolution(document.RootElement, options);
+                        return DeserializeSecuritySolutionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolutionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolutionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiscoveredSecuritySolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecuritySolutionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveredSecuritySolution IPersistableModel<DiscoveredSecuritySolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiscoveredSecuritySolution)PersistableModelCreateCore(data, options);
+        SecuritySolutionData IPersistableModel<SecuritySolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecuritySolutionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiscoveredSecuritySolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecuritySolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SecuritySolutionData"/> from. </param>
+        internal static SecuritySolutionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSecuritySolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiscoveredSecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecuritySolutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,18 +80,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolutionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,24 +115,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveredSecuritySolution IJsonModel<DiscoveredSecuritySolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiscoveredSecuritySolution)JsonModelCreateCore(ref reader, options);
+        SecuritySolutionData IJsonModel<SecuritySolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecuritySolutionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolutionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoveredSecuritySolution(document.RootElement, options);
+            return DeserializeSecuritySolutionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiscoveredSecuritySolution DeserializeDiscoveredSecuritySolution(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecuritySolutionData DeserializeSecuritySolutionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,8 +142,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            DiscoveredSecuritySolutionProperties properties = default;
-            AzureLocation? location = default;
+            SecuritySolutionProperties properties = default;
+            string location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,12 +181,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = DiscoveredSecuritySolutionProperties.DeserializeDiscoveredSecuritySolutionProperties(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = SecuritySolutionProperties.DeserializeSecuritySolutionProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiscoveredSecuritySolution(
+            return new SecuritySolutionData(
                 id,
                 name,
                 resourceType,

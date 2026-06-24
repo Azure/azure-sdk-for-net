@@ -14,30 +14,33 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class AllowedConnectionsGetAllowedConnectionsCollectionResultOfT : Pageable<SecurityCenterAllowedConnectionData>
+    internal partial class AllowedConnectionsGetByHomeRegionCollectionResultOfT : Pageable<SecurityCenterAllowedConnectionData>
     {
         private readonly AllowedConnections _client;
         private readonly Guid _subscriptionId;
+        private readonly AzureLocation _ascLocation;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AllowedConnectionsGetAllowedConnectionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AllowedConnectionsGetByHomeRegionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AllowedConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AllowedConnectionsGetAllowedConnectionsCollectionResultOfT(AllowedConnections client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AllowedConnectionsGetByHomeRegionCollectionResultOfT(AllowedConnections client, Guid subscriptionId, AzureLocation ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _ascLocation = ascLocation;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AllowedConnectionsGetAllowedConnectionsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AllowedConnectionsGetByHomeRegionCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AllowedConnectionsGetAllowedConnectionsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of AllowedConnectionsGetByHomeRegionCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SecurityCenterAllowedConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllowedConnectionsRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllowedConnectionsRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByHomeRegionRequest(nextLink, _subscriptionId, _ascLocation, _context) : _client.CreateGetByHomeRegionRequest(_subscriptionId, _ascLocation, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

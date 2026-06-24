@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SecurityTopologyResource item in Value)
+                foreach (SecurityTopologyResourceData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<SecurityTopologyResource> value = default;
+            IReadOnlyList<SecurityTopologyResourceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<SecurityTopologyResource> array = new List<SecurityTopologyResource>();
+                    List<SecurityTopologyResourceData> array = new List<SecurityTopologyResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecurityTopologyResource.DeserializeSecurityTopologyResource(item, options));
+                        array.Add(SecurityTopologyResourceData.DeserializeSecurityTopologyResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TopologyList(value ?? new ChangeTrackingList<SecurityTopologyResource>(), nextLink, additionalBinaryDataProperties);
+            return new TopologyList(value ?? new ChangeTrackingList<SecurityTopologyResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,6 +16,26 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterLocationResource
     {
+        private static System.Collections.Generic.IReadOnlyList<SecurityCenterAllowedConnection> ToLegacyList(System.Collections.Generic.IReadOnlyList<SecurityCenterAllowedConnectionData> values)
+        {
+            var legacyValues = new System.Collections.Generic.List<SecurityCenterAllowedConnection>(values.Count);
+            foreach (SecurityCenterAllowedConnectionData value in values)
+            {
+                legacyValues.Add(new SecurityCenterAllowedConnection(value));
+            }
+            return legacyValues;
+        }
+
+        private static System.Collections.Generic.IReadOnlyList<Models.SecurityTopologyResource> ToLegacyList(System.Collections.Generic.IReadOnlyList<SecurityTopologyResourceData> values)
+        {
+            var legacyValues = new System.Collections.Generic.List<Models.SecurityTopologyResource>(values.Count);
+            foreach (SecurityTopologyResourceData value in values)
+            {
+                legacyValues.Add(new Models.SecurityTopologyResource(value));
+            }
+            return legacyValues;
+        }
+
         private ClientDiagnostics _allowedConnectionsClientDiagnostics;
         private AllowedConnections _allowedConnectionsRestClient;
         private ClientDiagnostics _discoveredSecuritySolutionsClientDiagnostics;
@@ -105,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
-                    return (result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
         /// <summary>
@@ -124,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
-            return new SecurityCenterCompatibilityAsyncPageable<SecurityTopologyResource>(
+            return new SecurityCenterCompatibilityAsyncPageable<Models.SecurityTopologyResource>(
                 Pipeline,
                 TopologyClientDiagnostics,
                 context,
@@ -135,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     TopologyList result = TopologyList.FromResponse(response);
-                    return (result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
         /// <summary>
@@ -187,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
-                    return (result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
         /// <summary>
@@ -206,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopologiesByHomeRegion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             Azure.RequestContext context = new Azure.RequestContext { CancellationToken = cancellationToken };
-            return new SecurityCenterCompatibilityPageable<SecurityTopologyResource>(
+            return new SecurityCenterCompatibilityPageable<Models.SecurityTopologyResource>(
                 Pipeline,
                 TopologyClientDiagnostics,
                 context,
@@ -217,7 +237,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     TopologyList result = TopologyList.FromResponse(response);
-                    return (result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
     }
