@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenAI;
@@ -201,7 +202,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.BeforeId,
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
-            dataItemDeserializer: ResponseItem.DeserializeResponseItem,
+            dataItemDeserializer: DeserializeResponseItem,
             new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
@@ -238,7 +239,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.BeforeId,
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
-            dataItemDeserializer: ResponseItem.DeserializeResponseItem,
+            dataItemDeserializer: DeserializeResponseItem,
             new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
@@ -288,7 +289,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => ResponseItem.DeserializeResponseItem(element, options),
+                DeserializeResponseItem,
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }
@@ -314,7 +315,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => ResponseItem.DeserializeResponseItem(element, options),
+                DeserializeResponseItem,
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }
@@ -344,4 +345,13 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <summary> Initializes a new instance of <see cref="ProjectConversationsClient"/> for mocking. </summary>
     protected ProjectConversationsClient()
     { }
+
+    // CUSTOM: The OpenAI SDK's ResponseItem.DeserializeResponseItem is internal and inaccessible from this
+    // assembly, so deserialize through the public ModelReaderWriter pipeline (which honors the type's
+    // discriminator) to materialize the correct ResponseItem subtype.
+    private static ResponseItem DeserializeResponseItem(JsonElement element, ModelReaderWriterOptions options)
+        => ModelReaderWriter.Read<ResponseItem>(
+            BinaryData.FromString(element.GetRawText()),
+            options,
+            OpenAIContext.Default);
 }
