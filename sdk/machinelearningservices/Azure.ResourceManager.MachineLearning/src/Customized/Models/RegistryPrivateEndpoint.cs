@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     // Customized: preserve the legacy RegistryPrivateEndpoint compatibility type after the
     // generated private endpoint base type was renamed to MachineLearningPrivateEndpoint.
-    public partial class RegistryPrivateEndpoint : PrivateEndpointResource
+    public partial class RegistryPrivateEndpoint : MachineLearningPrivateEndpoint
     {
         /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpoint"/>. </summary>
         public RegistryPrivateEndpoint()
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         internal RegistryPrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier subnetArmId)
-            : base(id, serializedAdditionalRawData, subnetArmId)
+            : base(id, subnetArmId, serializedAdditionalRawData)
         {
         }
     }

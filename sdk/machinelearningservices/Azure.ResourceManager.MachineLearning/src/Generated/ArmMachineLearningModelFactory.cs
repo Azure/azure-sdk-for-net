@@ -1023,24 +1023,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
         /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, PrivateEndpointResource privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
+        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, RegistryPrivateEndpoint privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
         {
             return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
         }
 
         /// <param name="id"> The resource identifier of the private endpoint. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
-        public static PrivateEndpointResource PrivateEndpointResource(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
-        {
-            return new PrivateEndpointResource(id, default, subnetArmId);
-        }
-
-        /// <param name="id"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = default)
+        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
         {
-            return new MachineLearningPrivateEndpoint(id, default);
+            return new MachineLearningPrivateEndpoint(id, subnetArmId, default);
         }
 
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
@@ -9136,15 +9129,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 identity,
                 sku,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointResource"/>. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateEndpointResource PrivateEndpointResource(ResourceIdentifier id = default)
-        {
-            return new PrivateEndpointResource(id, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookResourceInfo"/>. </summary>
