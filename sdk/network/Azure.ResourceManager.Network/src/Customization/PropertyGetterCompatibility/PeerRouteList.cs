@@ -6,7 +6,7 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the PeerRouteList type. </summary>
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release, please use `PeerRoute` instead.", false)]
     public partial class PeerRouteList
     {
         /// <summary> Compatibility member. </summary>

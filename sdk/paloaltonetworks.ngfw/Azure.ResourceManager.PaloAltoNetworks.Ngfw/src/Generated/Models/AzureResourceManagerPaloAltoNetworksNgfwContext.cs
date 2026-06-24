@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(StrataCloudManagerConfig))]
     [ModelReaderWriterBuildable(typeof(StrataCloudManagerInfo))]
     [ModelReaderWriterBuildable(typeof(SupportInfoModel))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPaloAltoNetworksNgfwContext : ModelReaderWriterContext
     {
     }

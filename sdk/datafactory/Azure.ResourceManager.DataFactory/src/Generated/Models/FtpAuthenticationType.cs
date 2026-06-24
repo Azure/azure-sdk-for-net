@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct FtpAuthenticationType : IEquatable<FtpAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Anonymous. </summary>
+        private const string AnonymousValue = "Anonymous";
 
         /// <summary> Initializes a new instance of <see cref="FtpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FtpAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string AnonymousValue = "Anonymous";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static FtpAuthenticationType Basic { get; } = new FtpAuthenticationType(BasicValue);
+
         /// <summary> Anonymous. </summary>
         public static FtpAuthenticationType Anonymous { get; } = new FtpAuthenticationType(AnonymousValue);
+
         /// <summary> Determines if two <see cref="FtpAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FtpAuthenticationType left, FtpAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FtpAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FtpAuthenticationType left, FtpAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FtpAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FtpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FtpAuthenticationType(string value) => new FtpAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FtpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FtpAuthenticationType?(string value) => value == null ? null : new FtpAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FtpAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FtpAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

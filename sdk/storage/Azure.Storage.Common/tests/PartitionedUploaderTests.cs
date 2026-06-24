@@ -98,13 +98,13 @@ namespace Azure.Storage.Tests
             Action<UploadTransferValidationOptions> validationOptionsAssertion = default)
         {
             var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionStreamingInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
-                .Returns<Stream, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((stream, offset, obj, progress, validationOptions, async, cancellation) =>
+            mock.Setup(del => del(It.IsNotNull<Stream>(), It.IsAny<long>(), It.IsAny<string>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
+                .Returns<Stream, long, string, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((stream, offset, blockId, obj, progress, validationOptions, async, cancellation) =>
                 {
                     Assert.IsTrue(stream.CanSeek, "PartitionedUploader sent non-seekable stream to the REST client");
                     Assert.GreaterOrEqual(maxSize, stream.Read(new byte[maxSize], 0, maxSize));
                     validationOptionsAssertion?.Invoke(validationOptions);
-                    return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
+                    return Task.CompletedTask;
                 });
 
             return mock;
@@ -115,12 +115,12 @@ namespace Azure.Storage.Tests
             Action<UploadTransferValidationOptions> validationOptionsAssertion = default)
         {
             var mock = new Mock<PartitionedUploader<object, object>.UploadPartitionBinaryDataInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<BinaryData>(), It.IsAny<long>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
-                .Returns<BinaryData, long, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((content, offset, obj, progress, validationOptions, async, cancellation) =>
+            mock.Setup(del => del(It.IsNotNull<BinaryData>(), It.IsAny<long>(), It.IsAny<string>(), s_objectArgs, It.IsAny<IProgress<long>>(), It.IsAny<UploadTransferValidationOptions>(), IsAsync, s_cancellation))
+                .Returns<BinaryData, long, string, object, IProgress<long>, UploadTransferValidationOptions, bool, CancellationToken>((content, offset, blockId, obj, progress, validationOptions, async, cancellation) =>
                 {
                     Assert.GreaterOrEqual(maxSize, content.ToMemory().Length);
                     validationOptionsAssertion?.Invoke(validationOptions);
-                    return Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object);
+                    return Task.CompletedTask;
                 });
 
             return mock;
@@ -129,7 +129,7 @@ namespace Azure.Storage.Tests
         private Mock<PartitionedUploader<object, object>.CommitPartitionedUploadInternal> GetMockCommitPartitionedUploadInternal()
         {
             var mock = new Mock<PartitionedUploader<object, object>.CommitPartitionedUploadInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<List<(long Offset, long Size)>>(), s_objectArgs, IsAsync, s_cancellation))
+            mock.Setup(del => del(It.IsNotNull<List<(long Offset, long Size, string BlockId)>>(), s_objectArgs, IsAsync, s_cancellation))
                 .Returns(Task.FromResult(new Mock<Response<object>>(MockBehavior.Loose).Object));
 
             return mock;

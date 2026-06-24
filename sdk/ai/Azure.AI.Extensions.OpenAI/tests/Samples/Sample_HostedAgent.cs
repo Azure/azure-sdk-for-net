@@ -13,7 +13,6 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
-# pragma warning disable AAIP001
 public class Sample_HostedAgent : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_HostedAgentDefinition_HostedAgent

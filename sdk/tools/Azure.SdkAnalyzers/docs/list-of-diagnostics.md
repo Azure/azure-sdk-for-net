@@ -1,5 +1,52 @@
 # List of diagnostics produced by Azure.SdkAnalyzers
 
+## AZC0034
+
+### Cause
+
+A public type in an `Azure.*` namespace has a name that conflicts with a well-known type from another Azure SDK package or the .NET platform.
+
+### How to fix violation
+
+Rename the type to something more specific, typically by adding a namespace-derived prefix or a descriptive suffix.
+
+### Example of a violation
+
+#### Description
+
+The following code defines a public `BlobClient` type, which collides with `Azure.Storage.Blobs.BlobClient`.
+
+#### Code
+
+```c#
+namespace Azure.Test
+{
+    public class BlobClient { } // This will cause AZC0034
+}
+```
+
+### Example of how to fix
+
+#### Description
+
+Rename to a name that does not collide with the reserved type.
+
+#### Code
+
+```diff
+namespace Azure.Test
+{
+-   public class BlobClient { } // This will cause AZC0034
++   public class TestBlobClient { }
+}
+```
+
+### Notes
+
+- Only public, non-nested types in namespaces starting with `Azure` are analyzed.
+- A type defined in the same assembly as the reserved entry (e.g., `Operation` declared in `Azure.Core`) is not flagged against itself.
+- The set of reserved names is maintained in the `reserved-type-names.txt` and `reserved-type-qualified-names.txt` embedded resources.
+
 ## AZC0101
 
 ### Cause

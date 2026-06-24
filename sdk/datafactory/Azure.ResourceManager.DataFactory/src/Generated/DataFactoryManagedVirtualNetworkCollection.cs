@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryManagedVirtualNetworkCollection : ArmCollection, IEnumerable<DataFactoryManagedVirtualNetworkResource>, IAsyncEnumerable<DataFactoryManagedVirtualNetworkResource>
     {
-        private readonly ClientDiagnostics _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics;
-        private readonly ManagedVirtualNetworksRestOperations _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient;
+        private readonly ClientDiagnostics _managedVirtualNetworksClientDiagnostics;
+        private readonly ManagedVirtualNetworks _managedVirtualNetworksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedVirtualNetworkCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkCollection for mocking. </summary>
         protected DataFactoryManagedVirtualNetworkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataFactoryManagedVirtualNetworkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataFactoryManagedVirtualNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryManagedVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataFactoryManagedVirtualNetworkResource.ResourceType, out string dataFactoryManagedVirtualNetworkManagedVirtualNetworksApiVersion);
-            _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient = new ManagedVirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryManagedVirtualNetworkManagedVirtualNetworksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataFactoryManagedVirtualNetworkResource.ResourceType, out string dataFactoryManagedVirtualNetworkApiVersion);
+            _managedVirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", DataFactoryManagedVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
+            _managedVirtualNetworksRestClient = new ManagedVirtualNetworks(_managedVirtualNetworksClientDiagnostics, Pipeline, Endpoint, dataFactoryManagedVirtualNetworkApiVersion ?? "2018-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataFactoryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataFactoryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a managed Virtual Network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Managed Virtual Network resource definition. </param>
         /// <param name="ifMatch"> ETag of the managed Virtual Network entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataFactoryManagedVirtualNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DataFactoryManagedVirtualNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource>(Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryManagedVirtualNetworkData> response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource> operation = new DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource>(Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.DataFactory
         /// Creates or updates a managed Virtual Network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="data"> Managed Virtual Network resource definition. </param>
         /// <param name="ifMatch"> ETag of the managed Virtual Network entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DataFactoryManagedVirtualNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DataFactoryManagedVirtualNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, data, ifMatch, cancellationToken);
-                var uri = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource>(Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryManagedVirtualNetworkData> response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource> operation = new DataFactoryArmOperation<DataFactoryManagedVirtualNetworkResource>(Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,39 +170,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a managed Virtual Network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual async Task<Response<DataFactoryManagedVirtualNetworkResource>> GetAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataFactoryManagedVirtualNetworkResource>> GetAsync(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataFactoryManagedVirtualNetworkData> response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,39 +220,43 @@ namespace Azure.ResourceManager.DataFactory
         /// Gets a managed Virtual Network.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual Response<DataFactoryManagedVirtualNetworkResource> Get(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataFactoryManagedVirtualNetworkResource> Get(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataFactoryManagedVirtualNetworkData> response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,50 +270,50 @@ namespace Azure.ResourceManager.DataFactory
         /// Lists managed Virtual Networks.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryManagedVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryManagedVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryManagedVirtualNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedVirtualNetworkResource(Client, DataFactoryManagedVirtualNetworkData.DeserializeDataFactoryManagedVirtualNetworkData(e)), _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics, Pipeline, "DataFactoryManagedVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryAsyncCollectionResultOfT(
+                _managedVirtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryManagedVirtualNetworkCollection.GetAll"), data => new DataFactoryManagedVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// Lists managed Virtual Networks.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_ListByFactory</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_ListByFactory. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,46 +321,68 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryManagedVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryManagedVirtualNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryManagedVirtualNetworkResource(Client, DataFactoryManagedVirtualNetworkData.DeserializeDataFactoryManagedVirtualNetworkData(e)), _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics, Pipeline, "DataFactoryManagedVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataFactoryManagedVirtualNetworkData, DataFactoryManagedVirtualNetworkResource>(new ManagedVirtualNetworksGetByFactoryCollectionResultOfT(
+                _managedVirtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryManagedVirtualNetworkCollection.GetAll"), data => new DataFactoryManagedVirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryManagedVirtualNetworkData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryManagedVirtualNetworkData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,37 +396,51 @@ namespace Azure.ResourceManager.DataFactory
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual Response<bool> Exists(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryManagedVirtualNetworkData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryManagedVirtualNetworkData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,39 +454,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual async Task<NullableResponse<DataFactoryManagedVirtualNetworkResource>> GetIfExistsAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DataFactoryManagedVirtualNetworkResource>> GetIfExistsAsync(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataFactoryManagedVirtualNetworkData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryManagedVirtualNetworkData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryManagedVirtualNetworkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,39 +516,55 @@ namespace Azure.ResourceManager.DataFactory
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedVirtualNetworks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedVirtualNetworkResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
-        public virtual NullableResponse<DataFactoryManagedVirtualNetworkResource> GetIfExists(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DataFactoryManagedVirtualNetworkResource> GetIfExists(string managedVirtualNetworkName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
+            using DiagnosticScope scope = _managedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedVirtualNetworksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedVirtualNetworkName, ifNoneMatch, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataFactoryManagedVirtualNetworkData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataFactoryManagedVirtualNetworkData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataFactoryManagedVirtualNetworkData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataFactoryManagedVirtualNetworkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataFactoryManagedVirtualNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +584,7 @@ namespace Azure.ResourceManager.DataFactory
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataFactoryManagedVirtualNetworkResource> IAsyncEnumerable<DataFactoryManagedVirtualNetworkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
