@@ -539,17 +539,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 linkedService0);
         }
 
-        /// <param name="type"> Linked service reference type. </param>
-        /// <param name="referenceName"> Reference LinkedService name. </param>
-        /// <param name="parameters"> Arguments for LinkedService. </param>
-        /// <returns> A new <see cref="Core.Expressions.DataFactory.DataFactoryLinkedServiceReference"/> instance for mocking. </returns>
-        public static DataFactoryLinkedServiceReference DataFactoryLinkedServiceReference(LinkedServiceReferenceType @type = default, string referenceName = default, IDictionary<string, BinaryData> parameters = default)
-        {
-            parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryLinkedServiceReference(@type, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -1215,22 +1204,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 catalogPricingTier,
                 dualStandbyPairName,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <summary> Azure Data Factory secure string definition. The string value will be masked with asterisks '*' during Get or List API calls. </summary>
-        /// <param name="value"> Value of secure string. </param>
-        /// <returns> A new <see cref="Core.Expressions.DataFactory.DataFactorySecretString"/> instance for mocking. </returns>
-        public static DataFactorySecretString DataFactorySecretString(string value = default)
-        {
-            return new DataFactorySecretString(default, value);
-        }
-
-        /// <summary> The base definition of a secret type. </summary>
-        /// <param name="type"> Type of the secret. </param>
-        /// <returns> A new <see cref="Core.Expressions.DataFactory.DataFactorySecret"/> instance for mocking. </returns>
-        public static DataFactorySecret DataFactorySecret(string @type = default)
-        {
-            return new Core.Expressions.DataFactory.DataFactorySecret(@type);
         }
 
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
