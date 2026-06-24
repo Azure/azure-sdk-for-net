@@ -86,18 +86,37 @@ namespace Azure.Security.ConfidentialLedger
                     throw new ArgumentNullException(nameof(credential));
             }
             var actualOptions = ledgerOptions ?? new ConfidentialLedgerClientOptions();
-            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions(), ledgerOptions: ledgerOptions).Cert;
+            var actualCertificateClientOptions = certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions();
+            X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, actualCertificateClientOptions, ledgerOptions: ledgerOptions).Cert;
 
-            var transportOptions = GetIdentityServerTlsCertAndTrust(serviceCert, ledgerOptions?.VerifyConnection ?? true);
-            if (clientCertificate != null)
-            {
-                transportOptions.ClientCertificates.Add(clientCertificate);
-            }
+            // The transport pins against a SET of ledger identity certificates rather than a single one,
+            // because failover requests target other ledgers that present their own identity certificates.
+            // The primary ledger's certificate is trusted up front; failover certificates are added lazily.
+            bool verifyConnection = ledgerOptions?.VerifyConnection ?? true;
+            var trustStore = new ConfidentialLedgerCertificateTrustStore(verifyConnection);
+            trustStore.Trust(GetLedgerId(ledgerEndpoint), serviceCert);
+
+            var transportOptions = CreateTransportOptions(trustStore, clientCertificate);
             ClientDiagnostics = new ClientDiagnostics(actualOptions);
             _tokenCredential = credential;
+
+            // Failover discovery and per-ledger identity certificate lookups must use a pipeline with
+            // normal TLS validation (the identity service presents a publicly-trusted certificate, not a
+            // ledger identity certificate). Reusing the ledger pipeline would also be re-entrant because
+            // it now contains the FailoverPolicy.
+            HttpPipeline discoveryPipeline = HttpPipelineBuilder.Build(actualOptions);
+            Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
+            _failoverService = new ConfidentialLedgerFailoverService(
+                discoveryPipeline,
+                ClientDiagnostics,
+                identityServiceEndpoint,
+                trustStore,
+                endpoint => GetIdentityServerTlsCert(endpoint, actualCertificateClientOptions, ledgerOptions: actualOptions).Cert,
+                actualOptions.Failover);
+
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                Array.Empty<HttpPipelinePolicy>(),
+                new HttpPipelinePolicy[] { new FailoverPolicy(_failoverService, actualOptions.FailoverNetworkTimeout) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
@@ -105,15 +124,18 @@ namespace Azure.Security.ConfidentialLedger
                 new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
-            _failoverService = new ConfidentialLedgerFailoverService(
-                _pipeline,
-                ClientDiagnostics,
-                actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint));
             _enableArchivedCollectionFallback = actualOptions.EnableArchivedCollectionFallback;
             // Drive GetLedgerEntry "Loading" polling from the client's configured retry settings rather
             // than hardcoded values, so callers control the upper bound and the delay between attempts.
             _maxLoadingRetries = actualOptions.Retry.MaxRetries;
             _loadingPollDelay = actualOptions.Retry.Delay;
+        }
+
+        private static string GetLedgerId(Uri endpoint)
+        {
+            string host = endpoint.Host;
+            int dotIndex = host.IndexOf('.');
+            return dotIndex > 0 ? host.Substring(0, dotIndex) : host;
         }
 
         internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
@@ -239,42 +261,19 @@ namespace Azure.Security.ConfidentialLedger
             return (GetCertFromPEM(eccPem), eccPem);
         }
 
-        private static HttpPipelineTransportOptions GetIdentityServerTlsCertAndTrust(X509Certificate2 identityServiceCert = null, bool verifyConnection = true)
+        private static HttpPipelineTransportOptions CreateTransportOptions(ConfidentialLedgerCertificateTrustStore trustStore, X509Certificate2 clientCertificate)
         {
-            X509Chain certificateChain = new();
-            // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
-            certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            // Add the ledger identity TLS certificate to the ExtraStore.
-            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
-            // AllowUnknownCertificateAuthority will NOT allow validation of all unknown self-signed certificates.
-            // It extends trust to the ExtraStore, which in this case contains the trusted ledger identity TLS certificate.
-            // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
-            // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
-            certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
-
-            // Define a validation function to ensure that certificates presented to the client only pass validation if
-            // they are trusted by the ledger identity TLS certificate.
-            bool CertValidationCheck(X509Certificate2 cert)
+            // Validation is delegated to the trust store, which accepts certificate chains terminating in
+            // any of the trusted ledger identity certificates (primary plus any discovered failover ledgers).
+            var options = new HttpPipelineTransportOptions
             {
-                if (!verifyConnection)
-                {
-                    return true;
-                }
-
-                // Validate the presented certificate chain, using the ChainPolicy defined above.
-                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid)
-                    return false;
-
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the the ledger identity TLS certificate.
-                var rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
-                var isChainRootedInTheTlsCert = rootCert.RawData.SequenceEqual(identityServiceCert.RawData);
-                return isChainRootedInTheTlsCert;
+                ServerCertificateCustomValidationCallback = args => trustStore.Validate(args.Certificate)
+            };
+            if (clientCertificate != null)
+            {
+                options.ClientCertificates.Add(clientCertificate);
             }
-
-            return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+            return options;
         }
 
         private static X509Certificate2 GetCertFromPEM(string eccPem)

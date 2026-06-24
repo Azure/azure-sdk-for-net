@@ -3,11 +3,14 @@
 ## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support to route to failover ledgers for the `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync` methods.
+- Added support to route to failover ledgers for the `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync` methods. Failover is now implemented as a pipeline policy (`FailoverPolicy`), so each failover endpoint is attempted underneath the normal retry pipeline and only idempotent reads (HTTP GET) are failed over.
+- Added `ConfidentialLedgerClientOptions.Failover` to control the order in which failover endpoints are attempted: `Ordered` (default, preserves the order reported by the identity service) or `Random` (shuffles the candidates to spread load across failover ledgers).
+- Added `ConfidentialLedgerClientOptions.FailoverNetworkTimeout`. When set, each failover attempt is granted this network timeout so that time spent on the failed primary attempt does not consume the failover budget. When not set (the default), the request's configured network timeout applies to every attempt.
 - The client now treats a `GetLedgerEntry`/`GetLedgerEntryAsync` response that is still in the `Loading` state as transient and automatically polls until the entry is committed, bounded by the client's configured retry settings (`ClientOptions.Retry.MaxRetries` attempts with `ClientOptions.Retry.Delay` between attempts). Callers no longer need to write a manual polling loop.
 - Added `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback`. When enabled, `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` transparently fall back to a historical query for a collection whose latest entry has been archived (pruned) by the service, returning the most recent committed entry instead of failing with `404 Not Found`. Defaults to `false` so callers must explicitly opt in.
 
 ### Bugs Fixed
+- Failover requests are now validated against the failover ledger's own identity TLS certificate. The transport previously pinned only the primary ledger's certificate, so a failover request would fail TLS validation (unless certificate verification was disabled). The client now trusts the identity certificate of each ledger it talks to, fetched from the (independently validated) identity service. Failover endpoint discovery likewise uses a pipeline with normal TLS validation rather than the primary-pinned ledger pipeline.
 - `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` (instead of failing) and tolerates up to 3 consecutive `404 NotFound` responses while a transaction is being replicated across nodes, preventing spurious `RequestFailedException`s during normal commit propagation.
 
 ## 1.4.1-beta.3 (Unreleased)

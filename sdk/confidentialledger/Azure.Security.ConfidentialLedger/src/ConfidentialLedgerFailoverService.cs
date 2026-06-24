@@ -3,17 +3,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.ConfidentialLedger
 {
+    /// <summary>
+    /// Discovers a ledger's failover endpoints from the identity service and ensures their identity TLS
+    /// certificates are trusted by the client transport. The actual failover requests are issued by
+    /// <see cref="FailoverPolicy"/>; this service only provides endpoint discovery and certificate trust.
+    /// </summary>
     internal class ConfidentialLedgerFailoverService
     {
-        private readonly HttpPipeline _pipeline;
+        // Discovery uses a dedicated pipeline with normal TLS validation rather than the ledger pipeline:
+        // the identity service presents a publicly-trusted certificate (not a ledger identity certificate),
+        // and routing discovery through the (failover-enabled) ledger pipeline would also be re-entrant.
+        private readonly HttpPipeline _discoveryPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         // The identity service used to discover failover ledgers. Honors a custom
@@ -21,57 +29,53 @@ namespace Azure.Security.ConfidentialLedger
         // the default identity service endpoint otherwise.
         private readonly Uri _identityServiceEndpoint;
 
+        private readonly ConfidentialLedgerCertificateTrustStore _trustStore;
+        private readonly Func<Uri, X509Certificate2> _identityCertResolver;
+        private readonly ConfidentialLedgerClientOptions.FailoverSelection _selection;
+        private readonly Random _random = new Random();
+
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        public ConfidentialLedgerFailoverService(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Uri identityServiceEndpoint = null)
+        public ConfidentialLedgerFailoverService(
+            HttpPipeline discoveryPipeline,
+            ClientDiagnostics clientDiagnostics,
+            Uri identityServiceEndpoint,
+            ConfidentialLedgerCertificateTrustStore trustStore,
+            Func<Uri, X509Certificate2> identityCertResolver,
+            ConfidentialLedgerClientOptions.FailoverSelection selection)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _discoveryPipeline = discoveryPipeline ?? throw new ArgumentNullException(nameof(discoveryPipeline));
             _clientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _identityServiceEndpoint = identityServiceEndpoint ?? new Uri(ConfidentialLedgerClient.Default_Certificate_Endpoint);
-        }
-        // Overloads for failover-only execution with collectionId gating.
-        public Task<T> ExecuteOnFailoversAsync<T>(
-            Uri primaryEndpoint,
-            Func<Uri, Task<T>> operationAsync,
-            string operationName,
-            string collectionIdGate,
-            CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(collectionIdGate))
-            {
-                return operationAsync(primaryEndpoint); // collection gating: no failover
-            }
-            return ExecuteOnFailoversAsync(primaryEndpoint, operationAsync, operationName, cancellationToken);
+            _trustStore = trustStore ?? throw new ArgumentNullException(nameof(trustStore));
+            _identityCertResolver = identityCertResolver ?? throw new ArgumentNullException(nameof(identityCertResolver));
+            _selection = selection;
         }
 
-        public T ExecuteOnFailovers<T>(
-            Uri primaryEndpoint,
-            Func<Uri, T> operationSync,
-            string operationName,
-            string collectionIdGate,
-            CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Registers the failover ledger's identity TLS certificate with the shared trust store so that
+        /// the transport will accept its TLS connection. No-op when the certificate is already trusted.
+        /// </summary>
+        public void EnsureEndpointTrusted(Uri endpoint)
         {
-            if (string.IsNullOrEmpty(collectionIdGate))
+            string ledgerId = GetLedgerId(endpoint);
+            if (string.IsNullOrEmpty(ledgerId) || _trustStore.IsTrusted(ledgerId))
             {
-                return operationSync(primaryEndpoint);
+                return;
             }
-            return ExecuteOnFailovers(primaryEndpoint, operationSync, operationName, cancellationToken);
+
+            X509Certificate2 cert = _identityCertResolver(endpoint);
+            _trustStore.Trust(ledgerId, cert);
         }
 
-        private async Task<List<Uri>> GetFailoverEndpointsAsync(
-            Uri primaryEndpoint,
-            CancellationToken cancellationToken = default)
+        public async Task<List<Uri>> GetFailoverEndpointsAsync(Uri primaryEndpoint)
         {
             try
             {
-                string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
-
-                Uri failoverUrl = new Uri(_identityServiceEndpoint, $"/failover/{ledgerId}");
-
-                using HttpMessage message = CreateFailoverRequest(failoverUrl);
-                Response response = await _pipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
-                return ParseFailoverEndpoints(primaryEndpoint, response);
+                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint));
+                Response response = await _discoveryPipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
+                return OrderEndpoints(ParseFailoverEndpoints(primaryEndpoint, response));
             }
             catch (Exception)
             {
@@ -80,26 +84,52 @@ namespace Azure.Security.ConfidentialLedger
             return new List<Uri>();
         }
 
-        private List<Uri> GetFailoverEndpoints(
-            Uri primaryEndpoint,
-            CancellationToken cancellationToken = default)
+        public List<Uri> GetFailoverEndpoints(Uri primaryEndpoint)
         {
             try
             {
-                // retrieving sync metadata
-                string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
-
-                Uri failoverUrl = new Uri(_identityServiceEndpoint, $"/failover/{ledgerId}");
-
-                using HttpMessage message = CreateFailoverRequest(failoverUrl);
-                Response response = _pipeline.ProcessMessage(message, new RequestContext());
-                return ParseFailoverEndpoints(primaryEndpoint, response);
+                using HttpMessage message = CreateFailoverRequest(BuildFailoverUrl(primaryEndpoint));
+                Response response = _discoveryPipeline.ProcessMessage(message, new RequestContext());
+                return OrderEndpoints(ParseFailoverEndpoints(primaryEndpoint, response));
             }
             catch (Exception)
             {
                 // suppress metadata retrieval exception
             }
             return new List<Uri>();
+        }
+
+        private Uri BuildFailoverUrl(Uri primaryEndpoint)
+        {
+            string ledgerId = GetLedgerId(primaryEndpoint);
+            return new Uri(_identityServiceEndpoint, $"/failover/{ledgerId}");
+        }
+
+        private static string GetLedgerId(Uri endpoint)
+        {
+            string host = endpoint.Host;
+            int dotIndex = host.IndexOf('.');
+            return dotIndex > 0 ? host.Substring(0, dotIndex) : host;
+        }
+
+        // Returns the candidate endpoints either in the order reported by the identity service (priority
+        // ordered) or randomly shuffled to spread load across failover ledgers, per client configuration.
+        private List<Uri> OrderEndpoints(List<Uri> endpoints)
+        {
+            if (_selection != ConfidentialLedgerClientOptions.FailoverSelection.Random || endpoints.Count < 2)
+            {
+                return endpoints;
+            }
+
+            // Fisher-Yates shuffle.
+            for (int i = endpoints.Count - 1; i > 0; i--)
+            {
+                int j = _random.Next(i + 1);
+                Uri tmp = endpoints[i];
+                endpoints[i] = endpoints[j];
+                endpoints[j] = tmp;
+            }
+            return endpoints;
         }
 
         private static List<Uri> ParseFailoverEndpoints(Uri primaryEndpoint, Response response)
@@ -176,7 +206,7 @@ namespace Azure.Security.ConfidentialLedger
 
         private HttpMessage CreateFailoverRequest(Uri failoverUrl)
         {
-            HttpMessage message = _pipeline.CreateMessage(new RequestContext(), ResponseClassifier200);
+            HttpMessage message = _discoveryPipeline.CreateMessage(new RequestContext(), ResponseClassifier200);
             Request request = message.Request;
 
             request.Method = RequestMethod.Get;
@@ -188,71 +218,6 @@ namespace Azure.Security.ConfidentialLedger
             request.Headers.Add("Accept", "application/json");
 
             return message;
-        }
-
-        private static bool IsRetriableFailure(RequestFailedException ex)
-        {
-            // Move on to the next failover endpoint only for transient conditions. A 404 means the
-            // ledger/entry does not exist on that endpoint (its replicas would report the same), so it
-            // is not retried. 503/504 are already covered by the >= 500 check.
-            return ex != null && (ex.Status == 408 || ex.Status == 429 || ex.Status >= 500);
-        }
-
-        // Execute an operation only against discovered failover endpoints (skips primary). Used for specialized fallback flows.
-        public async Task<T> ExecuteOnFailoversAsync<T>(
-            Uri primaryEndpoint,
-            Func<Uri, Task<T>> operationAsync,
-            string operationName,
-            CancellationToken cancellationToken = default)
-        {
-            List<Uri> endpoints = await GetFailoverEndpointsAsync(primaryEndpoint, cancellationToken).ConfigureAwait(false);
-            Exception last = null;
-            foreach (var ep in endpoints)
-            {
-                try
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return await operationAsync(ep).ConfigureAwait(false);
-                }
-                catch (RequestFailedException ex) when (IsRetriableFailure(ex))
-                {
-                    // Transient failure on this endpoint; continue to the next failover endpoint.
-                    last = ex;
-                }
-                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-                {
-                    throw;
-                }
-            }
-            throw last ?? new RequestFailedException("All failover endpoints failed in failovers mode");
-        }
-
-        public T ExecuteOnFailovers<T>(
-            Uri primaryEndpoint,
-            Func<Uri, T> operationSync,
-            string operationName,
-            CancellationToken cancellationToken = default)
-        {
-            List<Uri> endpoints = GetFailoverEndpoints(primaryEndpoint, cancellationToken);
-            Exception last = null;
-            foreach (var ep in endpoints)
-            {
-                try
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    return operationSync(ep);
-                }
-                catch (RequestFailedException ex) when (IsRetriableFailure(ex))
-                {
-                    // Transient failure on this endpoint; continue to the next failover endpoint.
-                    last = ex;
-                }
-                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
-                {
-                    throw;
-                }
-            }
-            throw last ?? new RequestFailedException("All failover endpoints failed in failovers mode");
         }
     }
 }

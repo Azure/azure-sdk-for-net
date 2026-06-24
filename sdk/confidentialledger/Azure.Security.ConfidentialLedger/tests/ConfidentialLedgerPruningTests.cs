@@ -251,5 +251,93 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await operation.WaitForCompletionResponseAsync());
             Assert.GreaterOrEqual(statusCalls, 4, "Expected the operation to fail only after exceeding the 404 tolerance.");
         }
+
+        [Test]
+        public async Task Failover_RoutesReadToFailoverLedger_OnTransientPrimaryFailure()
+        {
+            const string collectionId = "c1";
+            string servedFromHost = null;
+
+            var transport = new MockTransport(req =>
+            {
+                string path = req.Uri.Path;
+                string host = req.Uri.Host;
+
+                if (path.StartsWith("/failover/"))
+                {
+                    var meta = new MockResponse(200);
+                    meta.SetContent(@"{ ""ledgerId"": ""testledger"", ""failoverLedgers"": [ ""backupledger"" ] }");
+                    return meta;
+                }
+                if (path.Contains("/current"))
+                {
+                    if (host.StartsWith("testledger"))
+                    {
+                        // Primary ledger is temporarily unavailable.
+                        return new MockResponse(503);
+                    }
+                    // Request was routed to a failover ledger.
+                    servedFromHost = host;
+                    var ok = new MockResponse(200);
+                    ok.SetContent($@"{{ ""collectionId"": ""{collectionId}"", ""contents"": ""v"", ""transactionId"": ""2.1"" }}");
+                    return ok;
+                }
+                return new MockResponse(404);
+            });
+
+            var client = CreateClient(transport, enableArchivedFallback: false);
+
+            Response response = await client.GetCurrentLedgerEntryAsync(collectionId);
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual("backupledger.confidential-ledger.azure.com", servedFromHost,
+                "Expected the read to be routed to the failover ledger after the primary returned a transient failure.");
+        }
+
+        [Test]
+        public void Failover_DoesNotRouteWritesToFailoverLedger()
+        {
+            int failoverMetadataCalls = 0;
+
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    failoverMetadataCalls++;
+                    var meta = new MockResponse(200);
+                    meta.SetContent(@"{ ""failoverLedgers"": [ ""backupledger"" ] }");
+                    return meta;
+                }
+                // The write (POST) consistently fails with a transient error.
+                return new MockResponse(503);
+            });
+
+            var client = CreateClient(transport, enableArchivedFallback: false);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await client.CreateLedgerEntryAsync(RequestContent.Create(new { contents = "x" }), collectionId: "c1", context: new RequestContext()));
+            Assert.AreEqual(0, failoverMetadataCalls, "Writes must not trigger failover discovery or routing.");
+        }
+
+        [Test]
+        public void Failover_AllEndpointsFail_SurfacesError()
+        {
+            var transport = new MockTransport(req =>
+            {
+                if (req.Uri.Path.StartsWith("/failover/"))
+                {
+                    var meta = new MockResponse(200);
+                    meta.SetContent(@"{ ""failoverLedgers"": [ ""backupledger"" ] }");
+                    return meta;
+                }
+                // Both the primary and the failover ledger are unavailable.
+                return new MockResponse(503);
+            });
+
+            var client = CreateClient(transport, enableArchivedFallback: false);
+
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetCurrentLedgerEntryAsync("c1"));
+            Assert.AreEqual(503, ex.Status);
+        }
     }
 }

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Runtime.ExceptionServices;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -265,34 +264,11 @@ namespace Azure.Security.ConfidentialLedger
                 // by the client's configured retry count and delay (see _maxLoadingRetries / _loadingPollDelay).
                 for (int attempt = 0; ; attempt++)
                 {
-                    try
-                    {
-                        using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                        response = await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
-                    }
-                    catch (Exception primaryException)
-                    {
-                        try
-                        {
-                            Response failoverCurrent = await _failoverService.ExecuteOnFailoversAsync(
-                                _ledgerEndpoint,
-                                async (endpoint) =>
-                                {
-                                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                                },
-                                nameof(GetCurrentLedgerEntryAsync),
-                                collectionId,
-                                context?.CancellationToken ?? default).ConfigureAwait(false);
-                            return FormatLedgerEntry(failoverCurrent);
-                        }
-                        catch (Exception)
-                        {
-                            // Failover also failed; rethrow the original primary error
-                            ExceptionDispatchInfo.Capture(primaryException).Throw();
-                            throw; // unreachable
-                        }
-                    }
+                    // Transient failures are transparently retried against the ledger's failover endpoints by
+                    // the FailoverPolicy in the pipeline; a thrown exception here means primary and all
+                    // failover endpoints failed and is allowed to propagate.
+                    using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
+                    response = await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
 
                     if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
                     {
@@ -350,34 +326,11 @@ namespace Azure.Security.ConfidentialLedger
                 // by the client's configured retry count and delay (see _maxLoadingRetries / _loadingPollDelay).
                 for (int attempt = 0; ; attempt++)
                 {
-                    try
-                    {
-                        using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                        response = _pipeline.ProcessMessage(primaryMessage, context);
-                    }
-                    catch (Exception primaryException)
-                    {
-                        try
-                        {
-                            Response failoverCurrent = _failoverService.ExecuteOnFailovers(
-                                _ledgerEndpoint,
-                                (endpoint) =>
-                                {
-                                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                                    return _pipeline.ProcessMessage(message, context);
-                                },
-                                nameof(GetCurrentLedgerEntry),
-                                collectionId,
-                                context?.CancellationToken ?? default);
-                            return FormatLedgerEntry(failoverCurrent);
-                        }
-                        catch (Exception)
-                        {
-                            // Failover also failed; rethrow the original primary error
-                            ExceptionDispatchInfo.Capture(primaryException).Throw();
-                            throw; // unreachable
-                        }
-                    }
+                    // Transient failures are transparently retried against the ledger's failover endpoints by
+                    // the FailoverPolicy in the pipeline; a thrown exception here means primary and all
+                    // failover endpoints failed and is allowed to propagate.
+                    using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
+                    response = _pipeline.ProcessMessage(primaryMessage, context);
 
                     if (!IsLoadingResponse(response) || attempt >= _maxLoadingRetries)
                     {
@@ -563,6 +516,9 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
+                // Transient failures are transparently retried against the ledger's failover endpoints by
+                // the FailoverPolicy in the pipeline. A pruned collection still surfaces as a 404 here, which
+                // is handled by the archived-collection fallback below.
                 try
                 {
                     using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
@@ -579,19 +535,6 @@ namespace Azure.Security.ConfidentialLedger
                         return archived;
                     }
                     throw;
-                }
-                catch (Exception)
-                {
-                    return await _failoverService.ExecuteOnFailoversAsync(
-                        _ledgerEndpoint,
-                        async (endpoint) =>
-                        {
-                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                        },
-                        nameof(GetCurrentLedgerEntryAsync),
-                        collectionId,
-                        context?.CancellationToken ?? default).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -622,6 +565,9 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
+                // Transient failures are transparently retried against the ledger's failover endpoints by
+                // the FailoverPolicy in the pipeline. A pruned collection still surfaces as a 404 here, which
+                // is handled by the archived-collection fallback below.
                 try
                 {
                     using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
@@ -638,19 +584,6 @@ namespace Azure.Security.ConfidentialLedger
                         return archived;
                     }
                     throw;
-                }
-                catch (Exception)
-                {
-                    return _failoverService.ExecuteOnFailovers(
-                        _ledgerEndpoint,
-                        (endpoint) =>
-                        {
-                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                            return _pipeline.ProcessMessage(message, context);
-                        },
-                        nameof(GetCurrentLedgerEntry),
-                        collectionId,
-                        context?.CancellationToken ?? default);
                 }
             }
             catch (Exception e)
@@ -2860,56 +2793,5 @@ namespace Azure.Security.ConfidentialLedger
         private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
-
-        // Format a GetLedgerEntry-shaped response from a GetCurrentLedgerEntry response body.
-        // Expected current entry body: { "collectionId":"...", "contents":"...", "transactionId":"..." }
-        // Desired ledger entry body: { "entry": { same fields }, "state": "Ready" }
-        private Response FormatLedgerEntry(Response currentResponse)
-        {
-            try
-            {
-                if (currentResponse?.ContentStream == null)
-                {
-                    return currentResponse; // nothing to do
-                }
-
-                byte[] reshaped;
-                currentResponse.ContentStream.Position = 0;
-                using (var doc = System.Text.Json.JsonDocument.Parse(currentResponse.ContentStream))
-                {
-                    var root = doc.RootElement;
-                    using var ms = new System.IO.MemoryStream();
-                    var jsonWriterOptions = new System.Text.Json.JsonWriterOptions
-                    {
-                        Indented = true,
-                        // Match the escaping the service uses for entry contents so that characters
-                        // such as '+' or '<' are not re-encoded (e.g. to \u002B) in the reshaped body.
-                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-                    };
-                    using (var writer = new System.Text.Json.Utf8JsonWriter(ms, jsonWriterOptions))
-                    {
-                        writer.WriteStartObject();
-                        writer.WritePropertyName("entry");
-                        writer.WriteStartObject();
-                        if (root.TryGetProperty("collectionId", out var col)) writer.WriteString("collectionId", col.GetString());
-                        if (root.TryGetProperty("contents", out var contents)) writer.WriteString("contents", contents.GetString());
-                        if (root.TryGetProperty("transactionId", out var tx)) writer.WriteString("transactionId", tx.GetString());
-                        writer.WriteEndObject();
-                        writer.WriteString("state", "Ready");
-                        writer.WriteEndObject();
-                    }
-                    reshaped = ms.ToArray();
-                }
-
-                // Reuse the original (200) response, swapping in the reshaped content. The Azure
-                // Response.ContentStream is settable, so no synthetic Response wrapper is needed.
-                currentResponse.ContentStream = new System.IO.MemoryStream(reshaped, writable: false);
-                return currentResponse;
-            }
-            catch (Exception)
-            {
-                return currentResponse; // fall back to original
-            }
-        }
     }
 }
