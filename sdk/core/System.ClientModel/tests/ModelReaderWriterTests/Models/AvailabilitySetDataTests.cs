@@ -33,7 +33,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             expectedSerializedString += "\"sku\":{\"name\":\"Classic\"";
             expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}";
             return expectedSerializedString;
-            ;
         }
 
         protected override void VerifyModel(AvailabilitySetData model, string format)
