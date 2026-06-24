@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -12,7 +11,6 @@ using System.Linq;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_SessionsCRUD : SamplesBase
 {
@@ -30,9 +28,7 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Async
         ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
@@ -40,21 +36,17 @@ public class Sample_SessionsCRUD : SamplesBase
             agentVersion: hostedAgentVersion);
         #endregion
         #region Snippet:Sample_CreateSessions_SessionsCRUD_Async
-        string sessionKey1 = Guid.NewGuid().ToString();
-        string sessionKey2 = Guid.NewGuid().ToString();
         string sessionId1 = Guid.NewGuid().ToString();
         string sessionId2 = Guid.NewGuid().ToString();
         ProjectAgentSession session1 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId1,
-            isolationKey: sessionKey1,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
         ProjectAgentSession session2 = await agentsClient.CreateSessionAsync(
             agentName: agentVersion.Name,
             agentSessionId: sessionId2,
-            isolationKey: sessionKey2,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
@@ -82,8 +74,8 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Async
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         #endregion
     }
 
@@ -100,30 +92,24 @@ public class Sample_SessionsCRUD : SamplesBase
         var hostedAgentName = TestEnvironment.HOSTED_AGENT_NAME;
         var hostedAgentVersion = TestEnvironment.HOSTED_AGENT_VERSION;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateAgent_SessionsCRUD_Sync
         ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
         #endregion
         #region Snippet:Sample_CreateSessions_SessionsCRUD_Sync
-        string sessionKey1 = "sample-isolation-key";
-        string sessionKey2 = "sample-isolation-key2";
         string sessionId1 = Guid.NewGuid().ToString();
         string sessionId2 = Guid.NewGuid().ToString();
         ProjectAgentSession session1 = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId1,
-            isolationKey: sessionKey1,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session1.AgentSessionId}");
         ProjectAgentSession session2 = agentsClient.CreateSession(
             agentName: agentVersion.Name,
             agentSessionId: sessionId2,
-            isolationKey: sessionKey2,
             versionIndicator: new VersionRefIndicator(agentVersion.Version)
         );
         Console.WriteLine($"Created session with ID {session2.AgentSessionId}");
@@ -152,8 +138,8 @@ public class Sample_SessionsCRUD : SamplesBase
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Sync
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId, isolationKey: sessionKey1);
-        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId, isolationKey: sessionKey2);
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
+        agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         #endregion
     }
 

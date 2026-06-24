@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SapVirtualInstanceProperties properties, SapVirtualInstanceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SapVirtualInstanceProperties properties, SapVirtualInstanceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         public SapVirtualInstanceIdentity Identity { get; set; }
 
         /// <summary> Defines the environment type - Production/Non Production. </summary>
-        public SapEnvironmentType Environment
+        public SapEnvironmentType? Environment
         {
             get
             {
@@ -57,16 +57,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new SapVirtualInstanceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new SapVirtualInstanceProperties();
+                    }
+                    Properties.Environment = value.Value;
                 }
-                Properties.Environment = value;
             }
         }
 
         /// <summary> Defines the SAP Product type. </summary>
-        public SapProductType SapProduct
+        public SapProductType? SapProduct
         {
             get
             {
@@ -74,11 +77,14 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new SapVirtualInstanceProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new SapVirtualInstanceProperties();
+                    }
+                    Properties.SapProduct = value.Value;
                 }
-                Properties.SapProduct = value;
             }
         }
 
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     Properties = new SapVirtualInstanceProperties();
                 }
-                Properties.ManagedResourcesNetworkAccessType = value.Value;
+                Properties.ManagedResourcesNetworkAccessType = value;
             }
         }
 

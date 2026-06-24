@@ -5,12 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary> Deleted storage account. </summary>
     public partial class DeletedAccountData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountData"/>. </summary>
+        public DeletedAccountData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the deleted account. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedAccountProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Properties of the deleted account. </summary>
+        [WirePath("properties")]
+        internal DeletedAccountProperties Properties { get; set; }
+
+        /// <summary> Full resource id of the original storage account. </summary>
+        [WirePath("properties.storageAccountResourceId")]
+        public ResourceIdentifier StorageAccountResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountResourceId;
+            }
+        }
+
+        /// <summary> Location of the deleted account. </summary>
+        [WirePath("properties.location")]
+        public AzureLocation? Location
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Location;
+            }
+        }
+
+        /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
+        [WirePath("properties.restoreReference")]
+        public string RestoreReference
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestoreReference;
+            }
+        }
+
+        /// <summary> Creation time of the deleted account. </summary>
+        [WirePath("properties.creationTime")]
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Deletion time of the deleted account. </summary>
+        [WirePath("properties.deletionTime")]
+        public DateTimeOffset? DeletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedOn;
+            }
+        }
     }
 }

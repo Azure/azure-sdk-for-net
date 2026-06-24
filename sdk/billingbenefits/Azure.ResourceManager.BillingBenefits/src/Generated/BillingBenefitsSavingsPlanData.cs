@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Savings plan properties. </param>
         /// <param name="sku"> Savings plan SKU. </param>
-        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SavingsPlanModelProperties properties, ResourceSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavingsPlanModelProperties properties, ResourceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Savings plan properties. </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.Term = value.Value;
+                Properties.Term = value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.BillingPlan = value.Value;
+                Properties.BillingPlan = value;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.AppliedScopeType = value.Value;
+                Properties.AppliedScopeType = value;
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.BenefitStartOn = value.Value;
+                Properties.BenefitStartOn = value;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.IsRenewed = value.Value;
+                Properties.IsRenewed = value;
             }
         }
 

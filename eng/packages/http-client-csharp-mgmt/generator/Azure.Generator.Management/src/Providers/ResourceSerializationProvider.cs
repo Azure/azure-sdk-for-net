@@ -51,8 +51,8 @@ namespace Azure.Generator.Management.Providers
         /// </summary>
         private CSharpType GetInstantiableDataType()
         {
-            var resourceData = _resource.ResourceData;
-            if (resourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
+            if (_resource.ResourceData is ModelProvider resourceData &&
+                resourceData.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Abstract))
             {
                 var unknownDerivedModel = resourceData.DerivedModels
                     .FirstOrDefault(m => m.IsUnknownDiscriminatorModel);

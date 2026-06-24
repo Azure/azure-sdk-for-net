@@ -5,34 +5,27 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed character device item. </summary>
     internal partial class CharDeviceItem
     {
         /// <summary> Initializes a new instance of <see cref="CharDeviceItem"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The character device name. </param>
         /// <param name="properties"> File properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal CharDeviceItem(StringEncoded name, FileProperty properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="CharDeviceItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="fileId"></param>
+        /// <param name="name"> The character device name. </param>
+        /// <param name="fileId"> The file ID. </param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="linkCount"></param>
-        /// <param name="deviceMajor"></param>
-        /// <param name="deviceMinor"></param>
+        /// <param name="linkCount"> NFS only. The link count of the character device. </param>
+        /// <param name="deviceMajor"> NFS only. The major device number of the character device. </param>
+        /// <param name="deviceMinor"> NFS only. The minor device number of the character device. </param>
         internal CharDeviceItem(StringEncoded name, string fileId, FileProperty properties, long? linkCount, long? deviceMajor, long? deviceMinor)
         {
             Name = name;
@@ -43,17 +36,22 @@ namespace Azure.Storage.Files.Shares.Models
             DeviceMinor = deviceMinor;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The character device name. </summary>
         public StringEncoded Name { get; }
-        /// <summary> Gets the file id. </summary>
+
+        /// <summary> The file ID. </summary>
         public string FileId { get; }
+
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the link count. </summary>
+
+        /// <summary> NFS only. The link count of the character device. </summary>
         public long? LinkCount { get; }
-        /// <summary> Gets the device major. </summary>
+
+        /// <summary> NFS only. The major device number of the character device. </summary>
         public long? DeviceMajor { get; }
-        /// <summary> Gets the device minor. </summary>
+
+        /// <summary> NFS only. The minor device number of the character device. </summary>
         public long? DeviceMinor { get; }
     }
 }

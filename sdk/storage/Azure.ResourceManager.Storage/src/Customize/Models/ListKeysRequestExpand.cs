@@ -11,10 +11,19 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Specifies type of the key to be listed. Possible value is kerb. </summary>
-    public readonly partial struct ListKeysRequestExpand : IEquatable<ListKeysRequestExpand>
+    public readonly partial struct ListKeysRequestExpand
     {
+        // Workaround for a regression in @typespec/http-client-csharp 1.0.0-alpha.20260506.3
+        // (introduced by https://github.com/microsoft/typespec/pull/10584,
+        // tracked by https://github.com/microsoft/typespec/issues/10649,
+        // picked up here via https://github.com/Azure/azure-sdk-for-net/pull/59170):
+        // anonymous inline-union operation-parameter enums are emitted twice in tspCodeModel.json,
+        // causing the C# generator to drop the struct body partial
+        // (field/ctor/named values/Equals/GetHashCode/ToString) and emit only the
+        // operators/conversions partial, breaking the build. Re-declare the missing members
+        // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
         private readonly string _value;
+        private const string KerbValue = "kerb";
 
         /// <summary> Initializes a new instance of <see cref="ListKeysRequestExpand"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -23,17 +32,8 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string KerbValue = "kerb";
-
-        /// <summary> kerb. </summary>
+        /// <summary> Kerb. </summary>
         public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
-
-        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are the same. </summary>
-        public static bool operator ==(ListKeysRequestExpand left, ListKeysRequestExpand right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ListKeysRequestExpand"/> values are not the same. </summary>
-        public static bool operator !=(ListKeysRequestExpand left, ListKeysRequestExpand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ListKeysRequestExpand"/>. </summary>
-        public static implicit operator ListKeysRequestExpand(string value) => new ListKeysRequestExpand(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -47,13 +47,15 @@ namespace Azure.ResourceManager.Storage.Models
         /// <inheritdoc />
         public override string ToString() => _value;
 
-        // Backward-compatible: Converts to StorageListKeyExpand.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageListKeyExpand(ListKeysRequestExpand value) => new StorageListKeyExpand(value._value);
-        // Backward-compatible: Converts from StorageListKeyExpand.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
     }
 
-    // Backward-compatible alias for ListKeysRequestExpand.
+    /// <summary> Specifies the type of key to list. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageListKeyExpand : IEquatable<StorageListKeyExpand>
     {

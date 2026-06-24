@@ -35,18 +35,18 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the container registry. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, ContainerRegistrySku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistryProperties properties, ContainerRegistrySku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the container registry. </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.IsAdminUserEnabled = value.Value;
+                Properties.IsAdminUserEnabled = value;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.IsDataEndpointEnabled = value.Value;
+                Properties.IsDataEndpointEnabled = value;
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.RegionalEndpoints = value.Value;
+                Properties.RegionalEndpoints = value;
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.EndpointProtocol = value.Value;
+                Properties.EndpointProtocol = value;
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.NetworkRuleBypassOptions = value.Value;
+                Properties.NetworkRuleBypassOptions = value;
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.IsNetworkRuleBypassAllowedForTasks = value.Value;
+                Properties.IsNetworkRuleBypassAllowedForTasks = value;
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.ZoneRedundancy = value.Value;
+                Properties.ZoneRedundancy = value;
             }
         }
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.IsAnonymousPullEnabled = value.Value;
+                Properties.IsAnonymousPullEnabled = value;
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.MetadataSearch = value.Value;
+                Properties.MetadataSearch = value;
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.AutoGeneratedDomainNameLabelScope = value.Value;
+                Properties.AutoGeneratedDomainNameLabelScope = value;
             }
         }
 
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new RegistryProperties();
                 }
-                Properties.RoleAssignmentMode = value.Value;
+                Properties.RoleAssignmentMode = value;
             }
         }
     }

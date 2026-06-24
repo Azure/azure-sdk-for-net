@@ -1,6 +1,23 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.2 (2026-06-06)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.58.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.3.0-beta.1 (2026-04-23)
 
 ### Features Added
 
@@ -8,18 +25,15 @@
 - Migrated from Swagger/AutoRest to TypeSpec-based generation
 - Added support for new resource types and operations from the latest API version
 
-### Breaking Changes
+### Other Changes
 
 - This version is a major migration from AutoRest to TypeSpec-based code generation.
 - Some property types changed (e.g., `ConnectivityProperties` from `BinaryData` to a typed model).
 - Some resource collection and extension method signatures changed.
 - Some model factory overloads changed signatures.
-
-### Bugs Fixed
-
-### Other Changes
-
 - Backward-compatible type aliases (e.g., `OfferResource`, `PublisherResource`, `UpdateData`) are preserved but may be removed in a future release.
+- Upgraded dependent `Azure.Core` to 1.53.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.2.1 (2025-03-11)
 

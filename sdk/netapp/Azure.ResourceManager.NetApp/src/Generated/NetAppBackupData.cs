@@ -13,43 +13,11 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppBackup data model.
-    /// Backup under a Backup Vault
-    /// </summary>
+    /// <summary> Backup under a Backup Vault. </summary>
     public partial class NetAppBackupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
         /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
@@ -58,80 +26,181 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(volumeResourceId, nameof(volumeResourceId));
 
-            VolumeResourceId = volumeResourceId;
+            Properties = new BackupProperties(volumeResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
-        /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
-        /// <param name="completionOn"> The completion date of the backup. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="size"> Size of backup in bytes. </param>
-        /// <param name="label"> Label for backup. </param>
-        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
-        /// <param name="failureReason"> Failure reason. </param>
-        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
-        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
-        /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
-        /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Backup Properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            BackupId = backupId;
-            CreatedOn = createdOn;
-            SnapshotCreationOn = snapshotCreationOn;
-            CompletionOn = completionOn;
-            ProvisioningState = provisioningState;
-            Size = size;
-            Label = label;
-            BackupType = backupType;
-            FailureReason = failureReason;
-            VolumeResourceId = volumeResourceId;
-            UseExistingSnapshot = useExistingSnapshot;
-            SnapshotName = snapshotName;
-            BackupPolicyArmResourceId = backupPolicyArmResourceId;
-            IsLargeVolume = isLargeVolume;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/> for deserialization. </summary>
-        internal NetAppBackupData()
-        {
-        }
+        /// <summary> Backup Properties. </summary>
+        internal BackupProperties Properties { get; set; }
 
         /// <summary> UUID v4 used to identify the Backup. </summary>
-        public string BackupId { get; }
+        public string BackupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupId;
+            }
+        }
+
         /// <summary> The creation date of the backup. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The snapshot creation date of the backup. </summary>
-        public DateTimeOffset? SnapshotCreationOn { get; }
+        public DateTimeOffset? SnapshotCreationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotCreationOn;
+            }
+        }
+
         /// <summary> The completion date of the backup. </summary>
-        public DateTimeOffset? CompletionOn { get; }
+        public DateTimeOffset? CompletionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletionOn;
+            }
+        }
+
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Size of backup in bytes. </summary>
-        public long? Size { get; }
+        public long? Size
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Size;
+            }
+        }
+
         /// <summary> Label for backup. </summary>
-        public string Label { get; set; }
+        public string Label
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Label;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupProperties();
+                }
+                Properties.Label = value;
+            }
+        }
+
         /// <summary> Type of backup Manual or Scheduled. </summary>
-        public NetAppBackupType? BackupType { get; }
+        public NetAppBackupType? BackupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupType;
+            }
+        }
+
         /// <summary> Failure reason. </summary>
-        public string FailureReason { get; }
+        public string FailureReason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailureReason;
+            }
+        }
+
         /// <summary> ResourceId used to identify the Volume. </summary>
-        public ResourceIdentifier VolumeResourceId { get; set; }
+        public ResourceIdentifier VolumeResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VolumeResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupProperties();
+                }
+                Properties.VolumeResourceId = value;
+            }
+        }
+
         /// <summary> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </summary>
-        public bool? UseExistingSnapshot { get; set; }
+        public bool? UseExistingSnapshot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UseExistingSnapshot;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupProperties();
+                }
+                Properties.UseExistingSnapshot = value;
+            }
+        }
+
         /// <summary> The name of the snapshot. </summary>
-        public string SnapshotName { get; set; }
+        public string SnapshotName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackupProperties();
+                }
+                Properties.SnapshotName = value;
+            }
+        }
+
         /// <summary> ResourceId used to identify the backup policy. </summary>
-        public ResourceIdentifier BackupPolicyArmResourceId { get; }
+        public ResourceIdentifier BackupPolicyArmResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupPolicyArmResourceId;
+            }
+        }
+
         /// <summary> Specifies if the backup is for a large volume. </summary>
-        public bool? IsLargeVolume { get; }
+        public bool? IsLargeVolume
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLargeVolume;
+            }
+        }
     }
 }

@@ -5,40 +5,181 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class SymLinkItem
+    /// <summary> A listed symbolic link item. </summary>
+    internal partial class SymLinkItem : IPersistableModel<SymLinkItem>, IXmlSerializable
     {
-        internal static SymLinkItem DeserializeSymLinkItem(XElement element)
+        /// <summary> Initializes a new instance of <see cref="SymLinkItem"/> for deserialization. </summary>
+        internal SymLinkItem()
         {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SymLinkItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SymLinkItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (Stream dataStream = data.ToStream())
+                    {
+                        return DeserializeSymLinkItem(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SymLinkItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SymLinkItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "X":
+                    using (MemoryStream stream = new MemoryStream(256))
+                    {
+                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        {
+                            WriteXml(writer, options, "SymLink");
+                        }
+                        if (stream.Position > int.MaxValue)
+                        {
+                            return BinaryData.FromStream(stream);
+                        }
+                        else
+                        {
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                        }
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SymLinkItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SymLinkItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SymLinkItem IPersistableModel<SymLinkItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SymLinkItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
+        {
+            if (nameHint != null)
+            {
+                writer.WriteStartElement(nameHint);
+            }
+
+            XmlModelWriteCore(writer, options);
+
+            if (nameHint != null)
+            {
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SymLinkItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "X")
+            {
+                throw new FormatException($"The model {nameof(SymLinkItem)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartElement("Name");
+            writer.WriteObjectValue(Name, options);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(FileId))
+            {
+                writer.WriteStartElement("FileId");
+                writer.WriteValue(FileId);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("Properties");
+            writer.WriteObjectValue(Properties, options);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(LinkCount))
+            {
+                writer.WriteStartElement("LinkCount");
+                writer.WriteValue(LinkCount.Value);
+                writer.WriteEndElement();
+            }
+            if (Optional.IsDefined(LinkText))
+            {
+                writer.WriteStartElement("LinkText");
+                writer.WriteValue(LinkText);
+                writer.WriteEndElement();
+            }
+        }
+
+        /// <param name="element"> The xml element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SymLinkItem DeserializeSymLinkItem(XElement element, ModelReaderWriterOptions options)
+        {
+            if (element == null)
+            {
+                return null;
+            }
+
             StringEncoded name = default;
             string fileId = default;
             FileProperty properties = default;
             long? linkCount = default;
             string linkText = default;
-            if (element.Element("Name") is XElement nameElement)
+
+            foreach (var child in element.Elements())
             {
-                name = StringEncoded.DeserializeStringEncoded(nameElement);
-            }
-            if (element.Element("FileId") is XElement fileIdElement)
-            {
-                fileId = (string)fileIdElement;
-            }
-            if (element.Element("Properties") is XElement propertiesElement)
-            {
-                properties = FileProperty.DeserializeFileProperty(propertiesElement);
-            }
-            if (element.Element("LinkCount") is XElement linkCountElement)
-            {
-                linkCount = (long?)linkCountElement;
-            }
-            if (element.Element("LinkText") is XElement linkTextElement)
-            {
-                linkText = (string)linkTextElement;
+                string localName = child.Name.LocalName;
+                if (localName == "Name")
+                {
+                    name = StringEncoded.DeserializeStringEncoded(child, options);
+                    continue;
+                }
+                if (localName == "FileId")
+                {
+                    fileId = (string)child;
+                    continue;
+                }
+                if (localName == "Properties")
+                {
+                    properties = FileProperty.DeserializeFileProperty(child, options);
+                    continue;
+                }
+                if (localName == "LinkCount")
+                {
+                    linkCount = (long?)child;
+                    continue;
+                }
+                if (localName == "LinkText")
+                {
+                    linkText = (string)child;
+                    continue;
+                }
             }
             return new SymLinkItem(name, fileId, properties, linkCount, linkText);
         }
+
+        /// <param name="writer"> The XML writer. </param>
+        /// <param name="nameHint"> An optional name hint. </param>
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

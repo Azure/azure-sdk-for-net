@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Static sites user roles invitation link resource. </summary>
+    /// <summary>
+    /// Static sites user roles invitation link resource.
+    /// Serialized Name: StaticSiteUserInvitationResponseResource
+    /// </summary>
     public partial class StaticSiteUserInvitationResult : ResourceData
     {
         /// <summary>
@@ -57,9 +60,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="expiresOn"> The expiration time of the invitation. </param>
-        /// <param name="invitationUri"> The url for the invitation link. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="expiresOn">
+        /// The expiration time of the invitation
+        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.expiresOn
+        /// </param>
+        /// <param name="invitationUri">
+        /// The url for the invitation link
+        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.invitationUrl
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteUserInvitationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? expiresOn, Uri invitationUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,13 +81,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The expiration time of the invitation. </summary>
+        /// <summary>
+        /// The expiration time of the invitation
+        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.expiresOn
+        /// </summary>
         [WirePath("properties.expiresOn")]
         public DateTimeOffset? ExpiresOn { get; }
-        /// <summary> The url for the invitation link. </summary>
+        /// <summary>
+        /// The url for the invitation link
+        /// Serialized Name: StaticSiteUserInvitationResponseResource.properties.invitationUrl
+        /// </summary>
         [WirePath("properties.invitationUrl")]
         public Uri InvitationUri { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

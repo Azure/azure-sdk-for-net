@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuth, IJsonModel<HeaderTelemetryEndpointAuth>
+    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication, IJsonModel<HeaderTelemetryEndpointAuth>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/> for deserialization. </summary>
         internal HeaderTelemetryEndpointAuth()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TelemetryEndpointAuth PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TelemetryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HeaderTelemetryEndpointAuth>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -90,7 +90,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TelemetryEndpointAuth JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TelemetryEndpointAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<HeaderTelemetryEndpointAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            TelemetryEndpointAuthType @type = default;
+            TelemetryEndpointAuthenticationKind @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string headerName = default;
             string secretId = default;
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new TelemetryEndpointAuthType(prop.Value.GetString());
+                    @type = new TelemetryEndpointAuthenticationKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("header_name"u8))

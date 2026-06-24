@@ -1,14 +1,46 @@
 # Release History
 
-## 2.1.0-beta.2 (Unreleased)
+## 2.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
+- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
+- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview`
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+
+- Added client for Agent optimization Jobs.
+
+### Breaking Changes
+
+- `CreateSkillFromPackage` and `CreateSkillFromPackageAsync` methods of `ProjectAgentSkills` client were replaced by `CreateSkillVersionFromFiles` and `CreateSkillVersionFromFilesAsync` respectively.
+- `DownloadSkill` and `DownloadSkillAsync`  methods of `ProjectAgentSkills` client were replaced by `GetSkillContent` and `GetSkillContentAsync` respectively.
+- `UpdateSkill` and `UpdateSkillAsync`  methods of `ProjectAgentSkills` now can only set the default version of `AgentsSkill`.
+- `OptimizationTaskResult.Tokens` was changed from `int` to `long`.
+
+## 2.1.0-beta.2 (2026-05-14)
+
+### Features Added
+- Added `FabricIQPreviewTool`.
+- Added `ToolboxSearchPreviewTool` for discovering deferred tools via `search_tools` queries at runtime.
+- Added `WorkIQPreviewTool`.
+- Added `Name` and `Description` properties to tool classes (`A2APreviewTool`, `AzureAISearchTool`, `BingCustomSearchPreviewTool`, `BingGroundingTool`, `BrowserAutomationPreviewTool`, `MemorySearchPreviewTool`, `MicrosoftFabricPreviewTool`, `SharepointPreviewTool`).
+
+### Breaking Changes
+- `AgentEndpoint` was renamed to `AgentEndpointConfiguration`.
+- `TelemetryEndpointAuth` was renamed to `TelemetryEndpointAuthentication`.
+- `TelemetryEndpoint` property `Auth` was renamed to `Authentication`.
+- `TelemetryEndpoint` property `Data` was renamed to `ExportedDataTypes`.
+- `isolationKey` was removed from `CreateSession` and `DeleteSession` operations.
 
 ## 2.1.0-beta.1 (2026-04-21)
 

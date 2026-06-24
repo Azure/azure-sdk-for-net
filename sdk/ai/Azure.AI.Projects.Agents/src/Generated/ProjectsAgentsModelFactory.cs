@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -58,7 +60,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ProjectsAgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, and <see cref="Agents.WorkflowAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.ExternalAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
@@ -82,42 +84,37 @@ namespace Azure.AI.Projects.Agents
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </param>
-        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
         /// <param name="containerConfiguration"> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </param>
-        /// <param name="protocolVersions"> The protocols that the agent supports for ingress communication. </param>
+        /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> protocolVersions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
         {
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
-            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-            protocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
 
             return new HostedAgentDefinition(
                 ProjectsAgentKind.Hosted,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
-                versions.ToList(),
                 cpu,
                 memory,
                 environmentVariables,
-                image,
                 containerConfiguration,
-                protocolVersions.ToList(),
+                versions.ToList(),
                 codeConfiguration,
                 telemetryConfig);
         }
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, and <see cref="Agents.MemorySearchPreviewTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="Agents.ToolboxSearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -127,11 +124,41 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingGroundingTool"/> instance for mocking. </returns>
-        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions = default)
+        public static BingGroundingTool BingGroundingTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingGroundingSearchToolOptions searchToolOptions = default)
         {
-            return new BingGroundingTool(ToolType.BingGrounding, additionalBinaryDataProperties: null, searchToolOptions);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BingGroundingTool(
+                ToolType.BingGrounding,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                searchToolOptions);
+        }
+
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -166,11 +193,26 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
-        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions = default)
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, FabricDataAgentToolOptions toolOptions = default)
         {
-            return new MicrosoftFabricPreviewTool(ToolType.FabricDataagentPreview, additionalBinaryDataProperties: null, toolOptions);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new MicrosoftFabricPreviewTool(
+                ToolType.FabricDataagentPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                toolOptions);
         }
 
         /// <summary> The fabric data agent tool parameters. </summary>
@@ -195,11 +237,26 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
-        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions = default)
+        public static SharepointPreviewTool SharepointPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, SharePointGroundingToolOptions toolOptions = default)
         {
-            return new SharepointPreviewTool(ToolType.SharepointGroundingPreview, additionalBinaryDataProperties: null, toolOptions);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new SharepointPreviewTool(
+                ToolType.SharepointGroundingPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                toolOptions);
         }
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
@@ -216,11 +273,26 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="options"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="Agents.AzureAISearchTool"/> instance for mocking. </returns>
-        public static AzureAISearchTool AzureAISearchTool(AzureAISearchToolOptions options = default)
+        public static AzureAISearchTool AzureAISearchTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions options = default)
         {
-            return new AzureAISearchTool(ToolType.AzureAiSearch, additionalBinaryDataProperties: null, options);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureAISearchTool(
+                ToolType.AzureAiSearch,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                options);
         }
 
         /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
@@ -258,10 +330,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
         /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <returns> A new <see cref="Agents.OpenAPITool"/> instance for mocking. </returns>
-        public static OpenAPITool OpenAPITool(OpenApiFunctionDefinition functionDefinition = default)
+        public static OpenAPITool OpenAPITool(OpenApiFunctionDefinition functionDefinition = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new OpenAPITool(ToolType.Openapi, additionalBinaryDataProperties: null, functionDefinition);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new OpenAPITool(ToolType.Openapi, additionalBinaryDataProperties: null, functionDefinition, toolConfigs);
         }
 
         /// <summary> The input definition information for an openapi function. </summary>
@@ -351,11 +430,26 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
-        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview = default)
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
-            return new BingCustomSearchPreviewTool(ToolType.BingCustomSearchPreview, additionalBinaryDataProperties: null, bingCustomSearchPreview);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BingCustomSearchPreviewTool(
+                ToolType.BingCustomSearchPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                bingCustomSearchPreview);
         }
 
         /// <summary> The bing custom search tool parameters. </summary>
@@ -392,11 +486,26 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
-        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters = default)
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
         {
-            return new BrowserAutomationPreviewTool(ToolType.BrowserAutomationPreview, additionalBinaryDataProperties: null, toolParameters);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BrowserAutomationPreviewTool(
+                ToolType.BrowserAutomationPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                toolParameters);
         }
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
@@ -417,10 +526,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <returns> A new <see cref="Agents.AzureFunctionTool"/> instance for mocking. </returns>
-        public static AzureFunctionTool AzureFunctionTool(AzureFunctionDefinition azureFunction = default)
+        public static AzureFunctionTool AzureFunctionTool(AzureFunctionDefinition azureFunction = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new AzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureFunctionTool(ToolType.AzureFunction, additionalBinaryDataProperties: null, azureFunction, toolConfigs);
         }
 
         /// <summary> The definition of Azure function. </summary>
@@ -463,11 +579,24 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A tool for capturing structured outputs. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="Agents.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
-        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = default, string description = default, StructuredOutputDefinition outputDefinition = default)
+        public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, StructuredOutputDefinition outputDefinition = default)
         {
-            return new CaptureStructuredOutputsTool(ToolType.CaptureStructuredOutputs, additionalBinaryDataProperties: null, name, description, outputDefinition);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new CaptureStructuredOutputsTool(
+                ToolType.CaptureStructuredOutputs,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                outputDefinition);
         }
 
         /// <summary> A structured output that can be produced by the agent. </summary>
@@ -484,6 +613,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
@@ -494,30 +630,81 @@ namespace Azure.AI.Projects.Agents
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
-        public static A2APreviewTool A2APreviewTool(Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
+        public static A2APreviewTool A2APreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
         {
-            return new A2APreviewTool(ToolType.A2aPreview, additionalBinaryDataProperties: null, baseUri, agentCardPath, projectConnectionId);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new A2APreviewTool(
+                ToolType.A2aPreview,
+                additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
+                baseUri,
+                agentCardPath,
+                projectConnectionId);
         }
 
         /// <summary> A WorkIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
-        public static WorkIQPreviewTool WorkIQPreviewTool(string name = default, string description = default, WorkIQPreviewToolParameters workIqPreview = default)
+        public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, name, description, workIqPreview);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WorkIQPreviewTool(
+                ToolType.WorkIqPreview,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                name,
+                description,
+                toolConfigs);
         }
 
-        /// <summary> The WorkIQ tool parameters. </summary>
-        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <returns> A new <see cref="Agents.WorkIQPreviewToolParameters"/> instance for mocking. </returns>
-        public static WorkIQPreviewToolParameters WorkIQPreviewToolParameters(string projectConnectionId = default)
+        /// <summary> A FabricIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
+        public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
-            return new WorkIQPreviewToolParameters(projectConnectionId, additionalBinaryDataProperties: null);
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new FabricIQPreviewTool(
+                ToolType.FabricIqPreview,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                serverUrl,
+                requireApproval,
+                name,
+                description,
+                toolConfigs);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
         /// <param name="memoryStoreName"> The name of the memory store to use. </param>
         /// <param name="scope">
         /// The namespace used to group and isolate memories, such as a user ID.
@@ -527,11 +714,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
-        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
         {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
             return new MemorySearchPreviewTool(
                 ToolType.MemorySearchPreview,
                 additionalBinaryDataProperties: null,
+                name,
+                description,
+                toolConfigs,
                 memoryStoreName,
                 scope,
                 searchOptions,
@@ -546,6 +738,26 @@ namespace Azure.AI.Projects.Agents
             return new MemorySearchToolOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A tool for searching over the agent's toolbox.
+        /// When present, deferred tools are hidden from `tools/list` and only
+        /// discoverable via `search_tools` queries at runtime.
+        /// </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ToolboxSearchPreviewTool"/> instance for mocking. </returns>
+        public static ToolboxSearchPreviewTool ToolboxSearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ToolboxSearchPreviewTool(ToolType.ToolboxSearchPreview, additionalBinaryDataProperties: null, name, description, toolConfigs);
+        }
+
         /// <summary> A web search configuration for bing custom search. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
@@ -553,6 +765,31 @@ namespace Azure.AI.Projects.Agents
         public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
         {
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The EmptyModelParam. </summary>
+        /// <returns> A new <see cref="OpenAI.EmptyModelParam"/> instance for mocking. </returns>
+        public static EmptyModelParam EmptyModelParam()
+        {
+            return new EmptyModelParam(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tool search tool. </summary>
+        /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
+        /// <param name="description"></param>
+        /// <param name="parameters"></param>
+        /// <returns> A new <see cref="Agents.ToolSearchTool"/> instance for mocking. </returns>
+        public static ToolSearchTool ToolSearchTool(ToolSearchExecutionType? execution = default, string description = default, EmptyModelParam parameters = default)
+        {
+            return new ToolSearchTool(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
+        }
+
+        /// <summary> Container-based deployment configuration for a hosted agent. </summary>
+        /// <param name="image"> The container image for the hosted agent. </param>
+        /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
+        public static ContainerConfiguration ContainerConfiguration(string image = default)
+        {
+            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A record mapping for a single protocol and its version. </summary>
@@ -564,23 +801,22 @@ namespace Azure.AI.Projects.Agents
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Container-based deployment configuration for a hosted agent. </summary>
-        /// <param name="image"> The container image for the hosted agent. </param>
-        /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
-        public static ContainerConfiguration ContainerConfiguration(string image = default)
-        {
-            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Code-based deployment configuration for a hosted agent. </summary>
         /// <param name="runtime"> The runtime identifier for code execution (e.g., 'python_3_11', 'python_3_12', 'python_3_13'). </param>
         /// <param name="entryPoint"> The entry point command and arguments for the code execution. </param>
+        /// <param name="dependencyResolution">
+        /// How package dependencies are resolved at deployment time. Defaults to `bundled`,
+        /// where the caller bundles all dependencies into the uploaded zip and the service
+        /// performs no remote build. `remote_build` instructs the service to build
+        /// dependencies remotely from the manifest included in the uploaded zip.
+        /// </param>
+        /// <param name="contentHash"> The SHA-256 hex digest of the uploaded code zip. Set by the service from the `x-ms-code-zip-sha256` request header; read-only in responses and never accepted in request payloads. </param>
         /// <returns> A new <see cref="Agents.CodeConfiguration"/> instance for mocking. </returns>
-        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default)
+        public static CodeConfiguration CodeConfiguration(string runtime = default, IEnumerable<string> entryPoint = default, CodeDependencyResolution dependencyResolution = default, string contentHash = default)
         {
             entryPoint ??= new ChangeTrackingList<string>();
 
-            return new CodeConfiguration(runtime, entryPoint.ToList(), additionalBinaryDataProperties: null);
+            return new CodeConfiguration(runtime, entryPoint.ToList(), dependencyResolution, contentHash, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </summary>
@@ -598,14 +834,14 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
         /// </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <returns> A new <see cref="Agents.TelemetryEndpoint"/> instance for mocking. </returns>
-        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default)
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
-            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), auth, additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), exportedDataTypes.ToList(), authentication, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -613,10 +849,10 @@ namespace Azure.AI.Projects.Agents
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
         /// </summary>
         /// <param name="type"> The authentication type. </param>
-        /// <returns> A new <see cref="Agents.TelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static TelemetryEndpointAuth TelemetryEndpointAuth(string @type = default)
+        /// <returns> A new <see cref="Agents.TelemetryEndpointAuthentication"/> instance for mocking. </returns>
+        public static TelemetryEndpointAuthentication TelemetryEndpointAuthentication(string @type = default)
         {
-            return new UnknownTelemetryEndpointAuth(new TelemetryEndpointAuthType(@type), additionalBinaryDataProperties: null);
+            return new UnknownTelemetryEndpointAuthentication(new TelemetryEndpointAuthenticationKind(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
@@ -626,23 +862,23 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
         public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
         {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthType.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
+            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
         }
 
         /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-        /// <param name="data"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="auth"> Optional authentication configuration. </param>
+        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
+        /// <param name="authentication"> Optional authentication configuration. </param>
         /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
         /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
         /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryDataKind> data = default, TelemetryEndpointAuth auth = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
         {
-            data ??= new ChangeTrackingList<TelemetryDataKind>();
+            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
 
             return new OtlpTelemetryEndpoint(
                 TelemetryEndpointKind.OTLP,
-                data.ToList(),
-                auth,
+                exportedDataTypes.ToList(),
+                authentication,
                 additionalBinaryDataProperties: null,
                 endpoint,
                 protocol);
@@ -654,14 +890,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
         /// <param name="temperature">
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </param>
         /// <param name="topP">
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </param>
         /// <param name="reasoningOptions"></param>
         /// <param name="tools">
@@ -699,7 +935,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
         public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IDictionary<string, BinaryData> schema = default, bool? isRequired = default)
         {
@@ -715,6 +951,25 @@ namespace Azure.AI.Projects.Agents
         public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
             return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
+        }
+
+        /// <summary>
+        /// The external agent definition. Represents a third-party agent hosted outside Foundry (for example, on GCP or AWS).
+        /// Registration is metadata-only: Foundry records the agent definition to light up observability experiences (traces, evaluations)
+        /// over customer-emitted OpenTelemetry data.
+        /// </summary>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="otelAgentId">
+        /// The OpenTelemetry agent identifier used to attribute customer-emitted spans to this Foundry agent.
+        /// Spans must include the attribute `gen_ai.agent.id = &lt;otel_agent_id&gt;` to appear under this registration.
+        /// Defaults to the top-level agent name when omitted. Provide an explicit value only for migration scenarios
+        /// where the running external agent already emits a stable id that differs from the Foundry agent name.
+        /// The resolved value is always echoed on read.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ExternalAgentDefinition"/> instance for mocking. </returns>
+        public static ExternalAgentDefinition ExternalAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
+        {
+            return new ExternalAgentDefinition(ProjectsAgentKind.External, contentFilterConfiguration, additionalBinaryDataProperties: null, otelAgentId);
         }
 
         /// <summary> The AgentIdentity. </summary>
@@ -745,17 +1000,17 @@ namespace Azure.AI.Projects.Agents
             return new ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint, additionalBinaryDataProperties: null, blueprintId);
         }
 
-        /// <summary> The AgentEndpoint. </summary>
+        /// <summary> The AgentEndpointConfiguration. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
         /// <param name="protocols"> The protocols that the agent supports. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
-        /// <returns> A new <see cref="Agents.AgentEndpoint"/> instance for mocking. </returns>
-        public static AgentEndpoint AgentEndpoint(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
+        /// <returns> A new <see cref="Agents.AgentEndpointConfiguration"/> instance for mocking. </returns>
+        public static AgentEndpointConfiguration AgentEndpointConfiguration(VersionSelector versionSelector = default, IEnumerable<AgentEndpointProtocol> protocols = default, IEnumerable<AgentEndpointAuthorizationScheme> authorizationSchemes = default)
         {
             protocols ??= new ChangeTrackingList<AgentEndpointProtocol>();
             authorizationSchemes ??= new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
 
-            return new AgentEndpoint(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEndpointConfiguration(versionSelector, protocols.ToList(), authorizationSchemes.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The VersionSelector. </summary>
@@ -801,7 +1056,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The EntraAuthorizationScheme. </summary>
-        /// <param name="isolationKeySource"></param>
+        /// <param name="isolationKeySource"> The source from which the per-user isolation key is derived for requests authorized via this scheme. Defaults to Entra-based isolation when omitted. </param>
         /// <returns> A new <see cref="Agents.EntraAuthorizationScheme"/> instance for mocking. </returns>
         public static EntraAuthorizationScheme EntraAuthorizationScheme(IsolationKeySource isolationKeySource = default)
         {
@@ -827,12 +1082,10 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The HeaderIsolationKeySource. </summary>
-        /// <param name="userIsolationKey"> The user isolation key header value. </param>
-        /// <param name="chatIsolationKey"> The chat isolation key header value. </param>
         /// <returns> A new <see cref="Agents.HeaderIsolationKeySource"/> instance for mocking. </returns>
-        public static HeaderIsolationKeySource HeaderIsolationKeySource(string userIsolationKey = default, string chatIsolationKey = default)
+        public static HeaderIsolationKeySource HeaderIsolationKeySource()
         {
-            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null, userIsolationKey, chatIsolationKey);
+            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BotServiceAuthorizationScheme. </summary>
@@ -880,6 +1133,38 @@ namespace Azure.AI.Projects.Agents
                 tags.ToList(),
                 examples.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
+        /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
+        /// <param name="code"> The code zip file (max 250 MB). </param>
+        /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
+        public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
+        {
+            return new CreateAgentFromCodeOptions(metadata, code);
+        }
+
+        /// <summary>
+        /// JSON metadata for code-based agent operations (create, update, create version).
+        /// The agent name comes from the URL path parameter or the `x-ms-agent-name` header,
+        /// so it is not included in this model.
+        /// The content hash (SHA-256 of the zip) is carried in the `x-ms-code-zip-sha256` header.
+        /// </summary>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
+        /// <returns> A new <see cref="Agents.CreateAgentVersionFromCodeMetadata"/> instance for mocking. </returns>
+        public static CreateAgentVersionFromCodeMetadata CreateAgentVersionFromCodeMetadata(string description = default, IDictionary<string, string> metadata = default, HostedAgentDefinition definition = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateAgentVersionFromCodeMetadata(description, metadata, definition, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentManifestOptions. </summary>
@@ -966,6 +1251,26 @@ namespace Azure.AI.Projects.Agents
             return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A skill source included in a toolbox.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxSkillReference"/>.
+        /// </summary>
+        /// <param name="type"> The type of skill source. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkill"/> instance for mocking. </returns>
+        public static ToolboxSkill ToolboxSkill(string @type = default)
+        {
+            return new UnknownToolboxSkill(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A reference to an existing skill to include in a toolbox. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkillReference"/> instance for mocking. </returns>
+        public static ToolboxSkillReference ToolboxSkillReference(string name = default, string version = default)
+        {
+            return new ToolboxSkillReference("skill_reference", additionalBinaryDataProperties: null, name, version);
+        }
+
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
         /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
         /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
@@ -988,12 +1293,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
+        /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
-        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectsAgentTool> tools = default, ToolboxPolicies policies = default)
+        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
+            skills ??= new ChangeTrackingList<ToolboxSkill>();
 
             return new ToolboxVersion(
                 metadata,
@@ -1003,6 +1310,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 tools.ToList(),
+                skills.ToList(),
                 policies,
                 additionalBinaryDataProperties: null);
         }
@@ -1017,39 +1325,88 @@ namespace Azure.AI.Projects.Agents
             return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A skill object. </summary>
-        /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
+        /// <summary> A skill resource. </summary>
+        /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
+        /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
-        public static AgentsSkill AgentsSkill(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
+        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdAt = default, string defaultVersion = default, string latestVersion = default)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
             return new AgentsSkill(
-                skillId,
-                hasBlob,
+                id,
                 name,
                 description,
-                metadata,
+                createdAt,
+                defaultVersion,
+                latestVersion,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A deleted skill Object. </summary>
+        /// <summary> A deleted skill. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
         /// <returns> A new <see cref="Agents.DeleteSkillResponse"/> instance for mocking. </returns>
-        public static DeleteSkillResponse DeleteSkillResponse(string name = default, bool deleted = default)
+        public static DeleteSkillResponse DeleteSkillResponse(string id = default, string name = default, bool deleted = default)
         {
-            return new DeleteSkillResponse(name, deleted, additionalBinaryDataProperties: null);
+            return new DeleteSkillResponse(id, name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
+        /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
+        /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
+        /// <param name="license"> License name or reference to a bundled license file. </param>
+        /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
+        /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
+        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            allowedTools ??= new ChangeTrackingList<string>();
+
+            return new SkillInlineContent(
+                description,
+                instructions,
+                license,
+                compatibility,
+                metadata,
+                allowedTools.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A specific version of a skill. </summary>
+        /// <param name="id"> The unique identifier of the skill version. </param>
+        /// <param name="skillId"> The identifier of the parent skill. </param>
+        /// <param name="name"> The name of the skill version. </param>
+        /// <param name="version"> The version identifier. Skill versions are immutable. </param>
+        /// <param name="description"> A human-readable description of the skill version. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
+        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default)
+        {
+            return new SkillVersion(
+                id,
+                skillId,
+                name,
+                version,
+                description,
+                createdAt,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill version. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill version. </param>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
+        /// <param name="version"> The version that was deleted. </param>
+        /// <returns> A new <see cref="Agents.DeleteSkillVersionResponse"/> instance for mocking. </returns>
+        public static DeleteSkillVersionResponse DeleteSkillVersionResponse(string id = default, string name = default, bool deleted = default, string version = default)
+        {
+            return new DeleteSkillVersionResponse(id, name, deleted, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response from uploading a file to a session sandbox. </summary>
@@ -1061,17 +1418,6 @@ namespace Azure.AI.Projects.Agents
             return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response from listing a directory in a session sandbox. </summary>
-        /// <param name="path"> The path that was listed, relative to the session home directory. </param>
-        /// <param name="entries"> The directory entries. </param>
-        /// <returns> A new <see cref="Agents.SessionDirectoryListResponse"/> instance for mocking. </returns>
-        public static SessionDirectoryListResponse SessionDirectoryListResponse(string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
-        {
-            entries ??= new ChangeTrackingList<SessionDirectoryEntry>();
-
-            return new SessionDirectoryListResponse(path, entries.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A single entry in a directory listing. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
@@ -1081,6 +1427,174 @@ namespace Azure.AI.Projects.Agents
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
         {
             return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an optimization job. </summary>
+        /// <param name="agent"> The agent (and pinned version) being optimized. </param>
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
+        /// <param name="options"> Tuning knobs and run-mode. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
+        public static OptimizationJobInputs OptimizationJobInputs(OptimizationAgentIdentifier agent = default, OptimizationDatasetInput trainDataset = default, OptimizationDatasetInput validationDataset = default, IEnumerable<OptimizationEvaluatorRef> evaluators = default, OptimizationOptions options = default)
+        {
+            evaluators ??= new ChangeTrackingList<OptimizationEvaluatorRef>();
+
+            return new OptimizationJobInputs(
+                agent,
+                trainDataset,
+                validationDataset,
+                evaluators.ToList(),
+                options,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
+        /// <param name="agentName"> Registered Foundry agent name (required). </param>
+        /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
+        /// <returns> A new <see cref="Agents.OptimizationAgentIdentifier"/> instance for mocking. </returns>
+        public static OptimizationAgentIdentifier OptimizationAgentIdentifier(string agentName = default, string agentVersion = default)
+        {
+            return new OptimizationAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base discriminated model for dataset input. Either inline items or a registered reference.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OptimizationInlineDatasetInput"/> and <see cref="Agents.OptimizationReferenceDatasetInput"/>.
+        /// </summary>
+        /// <param name="type"> Dataset input type discriminator. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationDatasetInput OptimizationDatasetInput(string @type = default)
+        {
+            return new UnknownOptimizationDatasetInput(new OptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
+        /// <param name="items"> Dataset items. </param>
+        /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
+        {
+            items ??= new ChangeTrackingList<OptimizationDatasetItem>();
+
+            return new OptimizationInlineDatasetInput(OptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
+        }
+
+        /// <summary> A single item in an inline dataset. </summary>
+        /// <param name="query"> The user query / prompt. </param>
+        /// <param name="groundTruth"> Expected ground truth answer. </param>
+        /// <param name="desiredNumTurns"> Desired number of conversation turns for simulation mode (1-20). </param>
+        /// <param name="criteria"> Per-item evaluation criteria. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
+        public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredNumTurns = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
+        {
+            criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
+
+            return new OptimizationDatasetItem(query, groundTruth, desiredNumTurns, criteria.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+        /// <param name="name"> Criterion name. </param>
+        /// <param name="instruction"> Criterion instruction / description. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetCriterion"/> instance for mocking. </returns>
+        public static OptimizationDatasetCriterion OptimizationDatasetCriterion(string name = default, string instruction = default)
+        {
+            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a registered Foundry dataset. </summary>
+        /// <param name="name"> Registered dataset name. </param>
+        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationReferenceDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = default, string version = default)
+        {
+            return new OptimizationReferenceDatasetInput(OptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
+        }
+
+        /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+        /// <param name="name"> Evaluator name. </param>
+        /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationEvaluatorRef"/> instance for mocking. </returns>
+        public static OptimizationEvaluatorRef OptimizationEvaluatorRef(string name = default, string version = default)
+        {
+            return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
+        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
+        /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
+        /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
+        /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
+        /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
+        /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
+        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, EvaluationLevel? evaluationLevel = default)
+        {
+            optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OptimizationOptions(
+                maxCandidates,
+                optimizationConfig,
+                evalModel,
+                optimizationModel,
+                evaluationLevel,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
+        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
+        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
+        /// <param name="candidates"> All evaluated candidates including baseline. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
+        public static OptimizationJobResult OptimizationJobResult(string baseline = default, string best = default, IEnumerable<OptimizationCandidate> candidates = default)
+        {
+            candidates ??= new ChangeTrackingList<OptimizationCandidate>();
+
+            return new OptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
+        /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
+        /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
+        /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
+        /// <param name="avgScore"> Average composite score across all tasks. </param>
+        /// <param name="avgTokens"> Average token usage across all tasks. </param>
+        /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
+        /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
+        /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
+        /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
+        public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
+        {
+            mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OptimizationCandidate(
+                candidateId,
+                name,
+                mutations,
+                avgScore,
+                avgTokens,
+                evalId,
+                evalRunId,
+                promotion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
+        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
+        /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
+        /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
+        public static PromotionInfo PromotionInfo(DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
+        {
+            return new PromotionInfo(promotedAt, agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
+        /// <param name="bestScore"> Best score observed so far across all candidates. </param>
+        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
+        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
+        {
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
@@ -1126,7 +1640,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
-        public static PatchAgentOptions PatchAgentOptions(AgentEndpoint agentEndpoint = default, AgentCard agentCard = default)
+        public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }
@@ -1138,6 +1652,14 @@ namespace Azure.AI.Projects.Agents
         public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
+        {
+            return ProjectsAgentRecord(id: id, name: name, state: default);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>
@@ -1161,13 +1683,118 @@ namespace Azure.AI.Projects.Agents
             return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
         }
 
+        /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+        /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BingGroundingTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BingGroundingTool BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions)
+        {
+            return BingGroundingTool(name: default, description: default, toolConfigs: default, searchToolOptions: searchToolOptions);
+        }
+
+        /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
+        /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(FabricDataAgentToolOptions toolOptions)
+        {
+            return MicrosoftFabricPreviewTool(name: default, description: default, toolConfigs: default, toolOptions: toolOptions);
+        }
+
+        /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
+        /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
+        /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharepointPreviewTool SharepointPreviewTool(SharePointGroundingToolOptions toolOptions)
+        {
+            return SharepointPreviewTool(name: default, description: default, toolConfigs: default, toolOptions: toolOptions);
+        }
+
+        /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
+        /// <param name="options"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="Agents.AzureAISearchTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureAISearchTool AzureAISearchTool(AzureAISearchToolOptions options)
+        {
+            return AzureAISearchTool(name: default, description: default, toolConfigs: default, options: options);
+        }
+
+        /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <returns> A new <see cref="Agents.OpenAPITool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OpenAPITool OpenAPITool(OpenApiFunctionDefinition functionDefinition)
+        {
+            return OpenAPITool(functionDefinition: functionDefinition, toolConfigs: default);
+        }
+
+        /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+        /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(BingCustomSearchToolOptions bingCustomSearchPreview)
+        {
+            return BingCustomSearchPreviewTool(name: default, description: default, toolConfigs: default, bingCustomSearchPreview: bingCustomSearchPreview);
+        }
+
+        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions toolParameters)
+        {
+            return BrowserAutomationPreviewTool(name: default, description: default, toolConfigs: default, toolParameters: toolParameters);
+        }
+
+        /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+        /// <param name="azureFunction"> The Azure Function Tool definition. </param>
+        /// <returns> A new <see cref="Agents.AzureFunctionTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureFunctionTool AzureFunctionTool(AzureFunctionDefinition azureFunction)
+        {
+            return AzureFunctionTool(azureFunction: azureFunction, toolConfigs: default);
+        }
+
         /// <summary> A tool for capturing structured outputs. </summary>
         /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
         /// <returns> A new <see cref="Agents.CaptureStructuredOutputsTool"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CaptureStructuredOutputsTool CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition)
         {
-            return CaptureStructuredOutputsTool(name: default, description: default, outputDefinition: outputDefinition);
+            return CaptureStructuredOutputsTool(name: default, description: default, toolConfigs: default, outputDefinition: outputDefinition);
+        }
+
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        ///             If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        ///             The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static A2APreviewTool A2APreviewTool(Uri baseUri, string agentCardPath, string projectConnectionId)
+        {
+            return A2APreviewTool(name: default, description: default, toolConfigs: default, baseUri: baseUri, agentCardPath: agentCardPath, projectConnectionId: projectConnectionId);
+        }
+
+        /// <summary> A tool for integrating memories into the agent. </summary>
+        /// <param name="memoryStoreName"> The name of the memory store to use. </param>
+        /// <param name="scope">
+        /// The namespace used to group and isolate memories, such as a user ID.
+        ///             Limits which memories can be retrieved or updated.
+        ///             Use special variable `{{$userId}}` to scope memories to the current signed-in user.
+        /// </param>
+        /// <param name="searchOptions"> Options for searching the memory store. </param>
+        /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
+        /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName, string scope, MemorySearchToolOptions searchOptions, int? updateDelayInSecs)
+        {
+            return MemorySearchPreviewTool(name: default, description: default, toolConfigs: default, memoryStoreName: memoryStoreName, scope: scope, searchOptions: searchOptions, updateDelayInSecs: updateDelayInSecs);
         }
 
         /// <summary> The hosted agent definition. </summary>
@@ -1185,7 +1812,22 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
         {
-            return HostedAgentDefinition(contentFilterConfiguration: contentFilterConfiguration, tools: tools, versions: versions, cpu: cpu, memory: memory, environmentVariables: environmentVariables, image: image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default, telemetryConfig: default);
+            tools ??= new ChangeTrackingList<ProjectsAgentTool>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HostedAgentDefinition(
+                ProjectsAgentKind.Hosted,
+                contentFilterConfiguration,
+                additionalBinaryDataProperties: null,
+                tools.ToList(),
+                cpu,
+                memory,
+                environmentVariables,
+                default,
+                versions.ToList(),
+                default,
+                default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

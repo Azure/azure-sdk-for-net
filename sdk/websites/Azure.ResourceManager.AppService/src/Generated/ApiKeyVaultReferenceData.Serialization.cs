@@ -240,6 +240,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 reference,
                 status,
                 vaultName,
@@ -249,7 +250,6 @@ namespace Azure.ResourceManager.AppService
                 details,
                 source,
                 activeVersion,
-                kind,
                 serializedAdditionalRawData);
         }
 

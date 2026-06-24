@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> State details. </summary>
     public partial class AvailableProvidersListState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailableProvidersListState"/>. </summary>
         internal AvailableProvidersListState()
@@ -56,21 +28,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="stateName"> The state name. </param>
         /// <param name="providers"> A list of Internet service providers. </param>
         /// <param name="cities"> List of available cities or towns in the state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableProvidersListState(string stateName, IReadOnlyList<string> providers, IReadOnlyList<AvailableProvidersListCity> cities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersListState(string stateName, IReadOnlyList<string> providers, IReadOnlyList<AvailableProvidersListCity> cities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StateName = stateName;
             Providers = providers;
             Cities = cities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The state name. </summary>
         [WirePath("stateName")]
         public string StateName { get; }
+
         /// <summary> A list of Internet service providers. </summary>
         [WirePath("providers")]
         public IReadOnlyList<string> Providers { get; }
+
         /// <summary> List of available cities or towns in the state. </summary>
         [WirePath("cities")]
         public IReadOnlyList<AvailableProvidersListCity> Cities { get; }

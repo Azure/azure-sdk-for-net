@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Analytics.Purview.DataMap
@@ -288,9 +290,10 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Business metadata to send to the service. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <returns> A new <see cref="DataMap.BusinessMetadataOptions"/> instance for mocking. </returns>
-        public static BusinessMetadataOptions BusinessMetadataOptions(BinaryData @file = default)
+        [Experimental("SCME0004")]
+        public static BusinessMetadataOptions BusinessMetadataOptions(FileBinaryContent @file = default)
         {
-            return new BusinessMetadataOptions(@file, additionalBinaryDataProperties: null);
+            return new BusinessMetadataOptions(@file);
         }
 
         /// <summary> Bulk import result. </summary>

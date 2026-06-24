@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 privateEndpointId is null && connectionState is null && provisioningState is null
                     ? default
                     : new PrivateEndpointConnectionProperties(
@@ -44,7 +43,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         connectionState,
                         provisioningState,
                         null),
-                location);
+                location,
+                additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> The id. </param>
@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null
@@ -92,7 +91,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         alternateName,
                         null),
                 sku,
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
     }
 }

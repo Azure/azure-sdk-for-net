@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of an application rule. </summary>
     public partial class AzureFirewallApplicationRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
         public AzureFirewallApplicationRule()
@@ -52,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>();
             TargetFqdns = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIPGroups = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
@@ -62,9 +34,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocols"> Array of ApplicationRuleProtocols. </param>
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIPGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIpGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -72,30 +44,36 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = protocols;
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
-            SourceIPGroups = sourceIPGroups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SourceIpGroups = sourceIpGroups;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the application rule. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Description of the rule. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> List of source IP addresses for this rule. </summary>
         [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
+
         /// <summary> Array of ApplicationRuleProtocols. </summary>
         [WirePath("protocols")]
         public IList<AzureFirewallApplicationRuleProtocol> Protocols { get; }
+
         /// <summary> List of FQDNs for this rule. </summary>
         [WirePath("targetFqdns")]
         public IList<string> TargetFqdns { get; }
+
         /// <summary> List of FQDN Tags for this rule. </summary>
         [WirePath("fqdnTags")]
         public IList<string> FqdnTags { get; }
+
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIPGroups { get; }
+        public IList<string> SourceIpGroups { get; }
     }
 }

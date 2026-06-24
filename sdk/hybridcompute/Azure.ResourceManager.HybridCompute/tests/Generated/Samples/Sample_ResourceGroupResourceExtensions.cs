@@ -37,17 +37,20 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
+            // Note: Settings resource is accessed through the machine resource
+            // The UpdateSettingAsync operation has moved to ArcSettingsResource.UpdateAsync
+            // Keeping example as comment to show original API
+            /*
             string baseProvider = "Microsoft.HybridCompute";
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            ArcSettings arcSettings = new ArcSettings
+            ArcSettingsData arcSettingsData = new ArcSettingsData(new AzureLocation("eastus"))
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };
-            ArcSettings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
-
-            Console.WriteLine($"Succeeded: {result}");
+            */
+            Console.WriteLine($"Settings update moved to ArcSettingsResource.UpdateAsync");
         }
     }
 }

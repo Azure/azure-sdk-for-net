@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualRouterPeeringResource virtualRouterPeering = client.GetVirtualRouterPeeringResource(virtualRouterPeeringResourceId);
 
             // invoke the operation
-            await virtualRouterPeering.DeleteAsync(WaitUntil.Completed);
+            await virtualRouterPeering.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
                 PeerAsn = 20000L,
                 PeerIP = "192.168.1.5",
             };
-            ArmOperation<VirtualRouterPeeringResource> lro = await virtualRouterPeering.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VirtualRouterPeeringResource> lro = await virtualRouterPeering.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualRouterPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

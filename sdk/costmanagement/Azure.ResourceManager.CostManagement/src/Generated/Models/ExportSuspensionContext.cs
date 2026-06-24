@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExportSuspensionContext"/>. </summary>
-        public ExportSuspensionContext()
+        internal ExportSuspensionContext()
         {
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The code for export suspension. </summary>
-        public string SuspensionCode { get; set; }
+        public string SuspensionCode { get; }
 
         /// <summary> The detailed reason for export suspension. </summary>
-        public string SuspensionReason { get; set; }
+        public string SuspensionReason { get; }
 
         /// <summary> The time when the export was suspended. </summary>
-        public DateTimeOffset? SuspensionOn { get; set; }
+        public DateTimeOffset? SuspensionOn { get; }
     }
 }

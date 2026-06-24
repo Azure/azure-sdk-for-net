@@ -49,6 +49,8 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public System.Uri RedirectUri { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class AzureAuthorityHosts
@@ -162,6 +164,8 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -185,6 +189,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -204,6 +210,8 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
@@ -212,11 +220,16 @@ namespace Azure.Identity
     {
         public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureCredentialResolver(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureCredentialResolver(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder WithAzureCredential(this System.ClientModel.Primitives.IClientBuilder clientBuilder) { throw null; }
-        public static T WithAzureCredential<T>(this T settings) where T : System.ClientModel.Primitives.ClientSettings { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
@@ -296,6 +309,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -363,6 +378,8 @@ namespace Azure.Identity
         public System.Uri RedirectUri { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -415,6 +432,8 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool SendCertificateChain { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0003")]
+        public System.Action<Azure.Identity.TokenRequestCallbackContext> TokenRequestCallback { get { throw null; } set { } }
     }
     [System.ObsoleteAttribute("This credential is deprecated. Consider using other dev tool credentials, such as VisualStudioCredential.")]
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
@@ -481,6 +500,8 @@ namespace Azure.Identity
     public partial class TokenCredentialOptions : Azure.Core.ClientOptions
     {
         public TokenCredentialOptions() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0001")]
+        public System.Collections.Generic.IDictionary<string, (string Value, bool IncludeInCacheKey)> AdditionalQueryParameters { get { throw null; } }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
         public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
@@ -567,6 +588,7 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0002")]
         public bool IsAzureProxyEnabled { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
         public string TokenFilePath { get { throw null; } set { } }

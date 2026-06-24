@@ -90,6 +90,11 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.ToString());
+            }
             writer.WritePropertyName("versions"u8);
             writer.WriteObjectValue(Versions, options);
             if (Optional.IsDefined(AgentEndpoint))
@@ -162,8 +167,9 @@ namespace Azure.AI.Projects.Agents
             string @object = default;
             string id = default;
             string name = default;
+            AgentState state = default;
             AgentObjectVersions versions = default;
-            AgentEndpoint agentEndpoint = default;
+            AgentEndpointConfiguration agentEndpoint = default;
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
@@ -186,6 +192,11 @@ namespace Azure.AI.Projects.Agents
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("state"u8))
+                {
+                    state = new AgentState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("versions"u8))
                 {
                     versions = AgentObjectVersions.DeserializeAgentObjectVersions(prop.Value, options);
@@ -197,7 +208,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    agentEndpoint = AgentEndpoint.DeserializeAgentEndpoint(prop.Value, options);
+                    agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))
@@ -245,6 +256,7 @@ namespace Azure.AI.Projects.Agents
                 @object,
                 id,
                 name,
+                state,
                 versions,
                 agentEndpoint,
                 instanceIdentity,

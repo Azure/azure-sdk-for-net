@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2026_04_01), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
     public partial class KnowledgeBaseRetrieval : SearchTestBase
     {
         public KnowledgeBaseRetrieval(bool async, SearchClientOptions.ServiceVersion serviceVersion)

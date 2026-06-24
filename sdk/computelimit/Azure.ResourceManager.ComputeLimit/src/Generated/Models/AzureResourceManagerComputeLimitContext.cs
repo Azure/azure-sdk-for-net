@@ -16,17 +16,38 @@ namespace Azure.ResourceManager.ComputeLimit
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureEnableContent))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitFeatureResource))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionData))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitGuestSubscriptionResource))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitLimitName))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitSetMemberCapOverridesContent))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitData))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeLimitSharedLimitResource))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyData))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyProperties))]
+    [ModelReaderWriterBuildable(typeof(ComputeLimitVmFamilyResource))]
+    [ModelReaderWriterBuildable(typeof(FeatureListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionListResult))]
     [ModelReaderWriterBuildable(typeof(GuestSubscriptionProperties))]
+    [ModelReaderWriterBuildable(typeof(MemberCap))]
+    [ModelReaderWriterBuildable(typeof(MemberCapOverrideData))]
+    [ModelReaderWriterBuildable(typeof(MemberCapOverrideListResult))]
+    [ModelReaderWriterBuildable(typeof(MemberCapOverrideProperties))]
+    [ModelReaderWriterBuildable(typeof(MemberCapOverrideResource))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SetMemberCapOverridesResult))]
+    [ModelReaderWriterBuildable(typeof(SharedLimitCapData))]
+    [ModelReaderWriterBuildable(typeof(SharedLimitCapListResult))]
+    [ModelReaderWriterBuildable(typeof(SharedLimitCapProperties))]
+    [ModelReaderWriterBuildable(typeof(SharedLimitCapResource))]
     [ModelReaderWriterBuildable(typeof(SharedLimitListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(VmFamilyListResult))]
     public partial class AzureResourceManagerComputeLimitContext : ModelReaderWriterContext
     {
     }

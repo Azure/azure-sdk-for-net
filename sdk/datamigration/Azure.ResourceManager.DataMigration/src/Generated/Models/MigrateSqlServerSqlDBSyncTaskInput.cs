@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -31,22 +32,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="validationOptions"> Validation options. </param>
-        internal MigrateSqlServerSqlDBSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, MigrationValidationOptions validationOptions) : base(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties)
         {
             SelectedDatabases = selectedDatabases;
             ValidationOptions = validationOptions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskInput"/> for deserialization. </summary>
-        internal MigrateSqlServerSqlDBSyncTaskInput()
-        {
-        }
-
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlDBSyncDatabaseInput> SelectedDatabases { get; }
+
         /// <summary> Validation options. </summary>
         public MigrationValidationOptions ValidationOptions { get; set; }
     }

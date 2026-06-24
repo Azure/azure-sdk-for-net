@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,83 +23,126 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRoutingRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule type. </param>
-        /// <param name="priority"> Priority of the routing rule. </param>
-        /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
-        /// <param name="backendSettings"> Backend settings resource of the application gateway. </param>
-        /// <param name="listener"> Listener resource of the application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendSettings, WritableSubResource listener, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway routing rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayRoutingRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RuleType = ruleType;
-            Priority = priority;
-            BackendAddressPool = backendAddressPool;
-            BackendSettings = backendSettings;
-            Listener = listener;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway routing rule. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayRoutingRulePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Rule type. </summary>
         [WirePath("properties.ruleType")]
-        public ApplicationGatewayRequestRoutingRuleType? RuleType { get; set; }
+        public ApplicationGatewayRequestRoutingRuleType? RuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRoutingRulePropertiesFormat();
+                }
+                Properties.RuleType = value;
+            }
+        }
+
         /// <summary> Priority of the routing rule. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
-        /// <summary> Backend address pool resource of the application gateway. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public int? Priority
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
-            set
+            get
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                return Properties is null ? default : Properties.Priority;
             }
-        }
-
-        /// <summary> Backend settings resource of the application gateway. </summary>
-        internal WritableSubResource BackendSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendSettings.id")]
-        public ResourceIdentifier BackendSettingsId
-        {
-            get => BackendSettings is null ? default : BackendSettings.Id;
             set
             {
-                if (BackendSettings is null)
-                    BackendSettings = new WritableSubResource();
-                BackendSettings.Id = value;
-            }
-        }
-
-        /// <summary> Listener resource of the application gateway. </summary>
-        internal WritableSubResource Listener { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.listener.id")]
-        public ResourceIdentifier ListenerId
-        {
-            get => Listener is null ? default : Listener.Id;
-            set
-            {
-                if (Listener is null)
-                    Listener = new WritableSubResource();
-                Listener.Id = value;
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ApplicationGatewayRoutingRulePropertiesFormat();
+                    }
+                    Properties.Priority = value.Value;
+                }
             }
         }
 
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendAddressPool.id")]
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRoutingRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendSettings.id")]
+        public ResourceIdentifier BackendSettingsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendSettingsId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRoutingRulePropertiesFormat();
+                }
+                Properties.BackendSettingsId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.listener.id")]
+        public ResourceIdentifier ListenerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ListenerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRoutingRulePropertiesFormat();
+                }
+                Properties.ListenerId = value;
+            }
+        }
     }
 }

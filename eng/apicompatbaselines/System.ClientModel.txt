@@ -1,6 +1,12 @@
-# IClientBuilder no longer inherits from IHostApplicationBuilder (composition over inheritance).
-# These are intentional breaking changes to experimental API (SCME0002).
-CannotRemoveBaseTypeOrInterface : Type 'System.ClientModel.Primitives.IClientBuilder' does not implement interface 'Microsoft.Extensions.Hosting.IHostApplicationBuilder' in the implementation but it does in the contract.
-MembersMustExist : Member 'public Microsoft.Extensions.Hosting.IHostApplicationBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' does not exist in the implementation but it does exist in the contract.
-InterfacesShouldHaveSameMembers : Interface member 'public System.ClientModel.Primitives.IClientBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' is present in the implementation but not in the contract.
-InterfacesShouldHaveSameMembers : Interface member 'public Microsoft.Extensions.Hosting.IHostApplicationBuilder System.ClientModel.Primitives.IClientBuilder.PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings>)' is present in the contract but not in the implementation.
+# IConfiguration.GetCredential(...) shipped in 1.12.0 returning AuthenticationTokenProvider?.
+# It is decorated with [Experimental("SCME0002")] and is being redesigned in 1.13.0-beta.1
+# to return CredentialSettings? so standalone callers can dispatch on inline ApiKey
+# (Credential.Key) versus token credentials (Credential.CredentialProvider) without
+# binding a ClientSettings. Safe to change in this experimental surface; the new shape
+# preserves all three overload arities and parameter lists, only the return type changes.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String, System.ClientModel.Primitives.CredentialResolver[])' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver>, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection>)' does not exist in the implementation but it does exist in the contract.
+
+# [Experimental("SCME0002")]
+CannotMakeMemberNonVirtual : Member 'public System.Boolean System.ClientModel.Primitives.CredentialResolver.TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>, System.ClientModel.AuthenticationTokenProvider)' is non-virtual in the implementation but is virtual in the contract.

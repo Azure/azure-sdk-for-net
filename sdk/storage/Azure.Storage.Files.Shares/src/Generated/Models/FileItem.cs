@@ -5,35 +5,27 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed file item. </summary>
     internal partial class FileItem
     {
         /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The file name. </param>
         /// <param name="properties"> File properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal FileItem(StringEncoded name, FileProperty properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="fileId"></param>
+        /// <param name="name"> The file name. </param>
+        /// <param name="fileId"> The file ID. </param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="attributes"></param>
-        /// <param name="permissionKey"></param>
-        /// <param name="linkCount"></param>
-        /// <param name="fileType"> Type of the file. </param>
+        /// <param name="attributes"> The file attributes. </param>
+        /// <param name="permissionKey"> The permission key. </param>
+        /// <param name="linkCount"> NFS only. The link count of the file. </param>
+        /// <param name="fileType"> NFS only. The type of the file. </param>
         internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, long? linkCount, NfsFileType? fileType)
         {
             Name = name;
@@ -45,19 +37,25 @@ namespace Azure.Storage.Files.Shares.Models
             FileType = fileType;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The file name. </summary>
         public StringEncoded Name { get; }
-        /// <summary> Gets the file id. </summary>
+
+        /// <summary> The file ID. </summary>
         public string FileId { get; }
+
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the attributes. </summary>
+
+        /// <summary> The file attributes. </summary>
         public string Attributes { get; }
-        /// <summary> Gets the permission key. </summary>
+
+        /// <summary> The permission key. </summary>
         public string PermissionKey { get; }
-        /// <summary> Gets the link count. </summary>
+
+        /// <summary> NFS only. The link count of the file. </summary>
         public long? LinkCount { get; }
-        /// <summary> Type of the file. </summary>
+
+        /// <summary> NFS only. The type of the file. </summary>
         public NfsFileType? FileType { get; }
     }
 }

@@ -7,111 +7,208 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnSite data model.
-    /// VpnSite Resource.
-    /// </summary>
+    /// <summary> VpnSite Resource. </summary>
     public partial class VpnSiteData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         public VpnSiteData()
         {
-            VpnSiteLinks = new ChangeTrackingList<VpnSiteLinkData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="virtualWan"> The VirtualWAN to which the vpnSite belongs. </param>
-        /// <param name="deviceProperties"> The device properties. </param>
-        /// <param name="ipAddress"> The ip-address for the vpn-site. </param>
-        /// <param name="siteKey"> The key for vpn-site that can be used for connections. </param>
-        /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges. </param>
-        /// <param name="bgpProperties"> The set of bgp properties. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN site resource. </param>
-        /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
-        /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
-        /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, VirtualNetworkAddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the VPN site. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnSiteData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VpnSiteProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            VirtualWan = virtualWan;
-            DeviceProperties = deviceProperties;
-            IPAddress = ipAddress;
-            SiteKey = siteKey;
-            AddressSpace = addressSpace;
-            BgpProperties = bgpProperties;
-            ProvisioningState = provisioningState;
-            IsSecuritySite = isSecuritySite;
-            VpnSiteLinks = vpnSiteLinks;
-            O365Policy = o365Policy;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the VPN site. </summary>
+        [WirePath("properties")]
+        internal VpnSiteProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The VirtualWAN to which the vpnSite belongs. </summary>
-        internal WritableSubResource VirtualWan { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualWan.id")]
-        public ResourceIdentifier VirtualWanId
-        {
-            get => VirtualWan is null ? default : VirtualWan.Id;
-            set
-            {
-                if (VirtualWan is null)
-                    VirtualWan = new WritableSubResource();
-                VirtualWan.Id = value;
-            }
-        }
 
         /// <summary> The device properties. </summary>
         [WirePath("properties.deviceProperties")]
-        public DeviceProperties DeviceProperties { get; set; }
+        public DeviceProperties DeviceProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeviceProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.DeviceProperties = value;
+            }
+        }
+
         /// <summary> The ip-address for the vpn-site. </summary>
         [WirePath("properties.ipAddress")]
-        public string IPAddress { get; set; }
+        public string IpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.IpAddress = value;
+            }
+        }
+
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         [WirePath("properties.siteKey")]
-        public string SiteKey { get; set; }
+        public string SiteKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.SiteKey = value;
+            }
+        }
+
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
         [WirePath("properties.addressSpace")]
-        public VirtualNetworkAddressSpace AddressSpace { get; set; }
+        public VirtualNetworkAddressSpace AddressSpace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressSpace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.AddressSpace = value;
+            }
+        }
+
         /// <summary> The set of bgp properties. </summary>
         [WirePath("properties.bgpProperties")]
-        public BgpSettings BgpProperties { get; set; }
+        public BgpSettings BgpProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.BgpProperties = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN site resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> IsSecuritySite flag. </summary>
         [WirePath("properties.isSecuritySite")]
-        public bool? IsSecuritySite { get; set; }
+        public bool? IsSecuritySite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSecuritySite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.IsSecuritySite = value;
+            }
+        }
+
         /// <summary> List of all vpn site links. </summary>
         [WirePath("properties.vpnSiteLinks")]
-        public IList<VpnSiteLinkData> VpnSiteLinks { get; }
-        /// <summary> Office365 Policy. </summary>
-        internal O365PolicyProperties O365Policy { get; set; }
+        public IList<VpnSiteLinkData> VpnSiteLinks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                return Properties.VpnSiteLinks;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.virtualWan.id")]
+        public ResourceIdentifier VirtualWanId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualWanId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.VirtualWanId = value;
+            }
+        }
+
         /// <summary> Office365 breakout categories. </summary>
         [WirePath("properties.o365Policy.breakOutCategories")]
         public O365BreakOutCategoryPolicies O365BreakOutCategories
         {
-            get => O365Policy is null ? default : O365Policy.BreakOutCategories;
+            get
+            {
+                return Properties is null ? default : Properties.O365BreakOutCategories;
+            }
             set
             {
-                if (O365Policy is null)
-                    O365Policy = new O365PolicyProperties();
-                O365Policy.BreakOutCategories = value;
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.O365BreakOutCategories = value;
             }
         }
     }

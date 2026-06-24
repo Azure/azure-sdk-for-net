@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Properties of function key info. </summary>
+    /// <summary>
+    /// Properties of function key info.
+    /// Serialized Name: KeyInfoProperties
+    /// </summary>
     public partial class WebAppKeyInfoProperties
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppKeyInfoProperties"/>. </summary>
-        /// <param name="name"> Key name. </param>
-        /// <param name="value"> Key value. </param>
+        /// <param name="name">
+        /// Key name
+        /// Serialized Name: KeyInfoProperties.name
+        /// </param>
+        /// <param name="value">
+        /// Key value
+        /// Serialized Name: KeyInfoProperties.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppKeyInfoProperties(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Key name. </summary>
+        /// <summary>
+        /// Key name
+        /// Serialized Name: KeyInfoProperties.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Key value. </summary>
+        /// <summary>
+        /// Key value
+        /// Serialized Name: KeyInfoProperties.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

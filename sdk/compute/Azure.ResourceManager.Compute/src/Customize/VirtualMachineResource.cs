@@ -23,10 +23,28 @@ namespace Azure.ResourceManager.Compute
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, null, null, cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+            => await DeallocateAsync(waitUntil, hibernate, null, cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation Deallocate(WaitUntil waitUntil, bool? hibernate, CancellationToken cancellationToken)
+            => Deallocate(waitUntil, hibernate, null, cancellationToken);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await UpdateAsync(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
     }
 }

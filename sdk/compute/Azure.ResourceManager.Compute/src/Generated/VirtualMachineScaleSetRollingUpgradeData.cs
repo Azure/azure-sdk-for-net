@@ -13,83 +13,70 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary>
-    /// A class representing the VirtualMachineScaleSetRollingUpgrade data model.
-    /// The status of the latest virtual machine scale set rolling upgrade.
-    /// </summary>
+    /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
     public partial class VirtualMachineScaleSetRollingUpgradeData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public VirtualMachineScaleSetRollingUpgradeData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="policy"> The rolling upgrade policies applied for this upgrade. </param>
-        /// <param name="runningStatus"> Information about the current running state of the overall upgrade. </param>
-        /// <param name="progress"> Information about the number of virtual machine instances in each upgrade state. </param>
-        /// <param name="error"> Error details for this upgrade, if there are any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RollingUpgradePolicy policy, RollingUpgradeRunningStatus runningStatus, RollingUpgradeProgressInfo progress, ComputeApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The status of the latest virtual machine scale set rolling upgrade. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetRollingUpgradeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetRollingUpgradeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Policy = policy;
-            RunningStatus = runningStatus;
-            Progress = progress;
-            Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetRollingUpgradeData"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetRollingUpgradeData()
-        {
-        }
+        /// <summary> The status of the latest virtual machine scale set rolling upgrade. </summary>
+        internal VirtualMachineScaleSetRollingUpgradeProperties Properties { get; set; }
 
         /// <summary> The rolling upgrade policies applied for this upgrade. </summary>
-        public RollingUpgradePolicy Policy { get; }
+        public RollingUpgradePolicy Policy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Policy;
+            }
+        }
+
         /// <summary> Information about the current running state of the overall upgrade. </summary>
-        public RollingUpgradeRunningStatus RunningStatus { get; }
+        public RollingUpgradeRunningStatus RunningStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunningStatus;
+            }
+        }
+
         /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
-        public RollingUpgradeProgressInfo Progress { get; }
+        public RollingUpgradeProgressInfo Progress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Progress;
+            }
+        }
+
         /// <summary> Error details for this upgrade, if there are any. </summary>
-        public ComputeApiError Error { get; }
+        public ComputeApiError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
     }
 }

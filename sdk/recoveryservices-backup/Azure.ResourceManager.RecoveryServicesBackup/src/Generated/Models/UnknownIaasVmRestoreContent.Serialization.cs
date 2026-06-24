@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmRestoreContent IPersistableModel<IaasVmRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownIaasVmRestoreContent)PersistableModelCreateCore(data, options);
+        IaasVmRestoreContent IPersistableModel<IaasVmRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (IaasVmRestoreContent)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IaasVmRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmRestoreContent IJsonModel<IaasVmRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownIaasVmRestoreContent)JsonModelCreateCore(ref reader, options);
+        IaasVmRestoreContent IJsonModel<IaasVmRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (IaasVmRestoreContent)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

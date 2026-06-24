@@ -7,59 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingInvoiceSection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingInvoiceSectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingInvoiceSectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingInvoiceSection method.
+    /// A class representing a BillingInvoiceSection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingInvoiceSectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingInvoiceSections method.
     /// </summary>
     public partial class BillingInvoiceSectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingInvoiceSectionResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="billingProfileName"> The billingProfileName. </param>
-        /// <param name="invoiceSectionName"> The invoiceSectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string invoiceSectionName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingInvoiceSectionInvoiceSectionsClientDiagnostics;
-        private readonly InvoiceSectionsRestOperations _billingInvoiceSectionInvoiceSectionsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissionsRestOperations _billingPermissionsRestClient;
-        private readonly ClientDiagnostics _billingRequestClientDiagnostics;
-        private readonly BillingRequestsRestOperations _billingRequestRestClient;
-        private readonly ClientDiagnostics _billingRoleAssignmentsClientDiagnostics;
-        private readonly BillingRoleAssignmentsRestOperations _billingRoleAssignmentsRestClient;
+        private readonly ClientDiagnostics _invoiceSectionsClientDiagnostics;
+        private readonly InvoiceSections _invoiceSectionsRestClient;
+        private readonly ClientDiagnostics _billingRequestsClientDiagnostics;
+        private readonly BillingRequests _billingRequestsRestClient;
         private readonly ClientDiagnostics _billingSubscriptionsClientDiagnostics;
-        private readonly BillingSubscriptionsRestOperations _billingSubscriptionsRestClient;
-        private readonly ClientDiagnostics _billingProductProductsClientDiagnostics;
-        private readonly ProductsRestOperations _billingProductProductsRestClient;
+        private readonly BillingSubscriptions _billingSubscriptionsRestClient;
+        private readonly ClientDiagnostics _billingRoleAssignmentsClientDiagnostics;
+        private readonly BillingRoleAssignments _billingRoleAssignmentsRestClient;
+        private readonly ClientDiagnostics _productsClientDiagnostics;
+        private readonly Products _productsRestClient;
         private readonly ClientDiagnostics _transactionsClientDiagnostics;
-        private readonly TransactionsRestOperations _transactionsRestClient;
+        private readonly Transactions _transactionsRestClient;
         private readonly BillingInvoiceSectionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/invoiceSections";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceSectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingInvoiceSectionResource for mocking. </summary>
         protected BillingInvoiceSectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceSectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInvoiceSectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingInvoiceSectionResource(ArmClient client, BillingInvoiceSectionData data) : this(client, data.Id)
@@ -68,292 +56,102 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceSectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInvoiceSectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingInvoiceSectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingInvoiceSectionInvoiceSectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingInvoiceSectionInvoiceSectionsApiVersion);
-            _billingInvoiceSectionInvoiceSectionsRestClient = new InvoiceSectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceSectionInvoiceSectionsApiVersion);
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _billingRequestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingRequestResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingRequestResource.ResourceType, out string billingRequestApiVersion);
-            _billingRequestRestClient = new BillingRequestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingRequestApiVersion);
-            _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _billingProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingProductResource.ResourceType, out string billingProductProductsApiVersion);
-            _billingProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProductProductsApiVersion);
-            _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _transactionsRestClient = new TransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingInvoiceSectionApiVersion);
+            _invoiceSectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _invoiceSectionsRestClient = new InvoiceSections(_invoiceSectionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceSectionApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingInvoiceSectionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="invoiceSectionName"> The invoiceSectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string invoiceSectionName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of BillingInvoiceSectionRoleAssignmentResources in the BillingInvoiceSection. </summary>
-        /// <returns> An object representing collection of BillingInvoiceSectionRoleAssignmentResources and their operations over a BillingInvoiceSectionRoleAssignmentResource. </returns>
-        public virtual BillingInvoiceSectionRoleAssignmentCollection GetBillingInvoiceSectionRoleAssignments()
-        {
-            return GetCachedClient(client => new BillingInvoiceSectionRoleAssignmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingInvoiceSectionRoleAssignmentResource>> GetBillingInvoiceSectionRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingInvoiceSectionRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingInvoiceSectionRoleAssignmentResource> GetBillingInvoiceSectionRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingInvoiceSectionRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingInvoiceSectionRoleDefinitionResources in the BillingInvoiceSection. </summary>
-        /// <returns> An object representing collection of BillingInvoiceSectionRoleDefinitionResources and their operations over a BillingInvoiceSectionRoleDefinitionResource. </returns>
-        public virtual BillingInvoiceSectionRoleDefinitionCollection GetBillingInvoiceSectionRoleDefinitions()
-        {
-            return GetCachedClient(client => new BillingInvoiceSectionRoleDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions/{roleDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingInvoiceSectionRoleDefinitionResource>> GetBillingInvoiceSectionRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingInvoiceSectionRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRoleDefinitions/{roleDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingInvoiceSectionRoleDefinitionResource> GetBillingInvoiceSectionRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingInvoiceSectionRoleDefinitions().Get(roleDefinitionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingTransferDetailResources in the BillingInvoiceSection. </summary>
-        /// <returns> An object representing collection of BillingTransferDetailResources and their operations over a BillingTransferDetailResource. </returns>
-        public virtual BillingTransferDetailCollection GetBillingTransferDetails()
-        {
-            return GetCachedClient(client => new BillingTransferDetailCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transfers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingTransferDetailResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingTransferDetailResource>> GetBillingTransferDetailAsync(string transferName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingTransferDetails().GetAsync(transferName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transfers/{transferName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transfers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingTransferDetailResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingTransferDetailResource> GetBillingTransferDetail(string transferName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingTransferDetails().Get(transferName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an invoice section by its ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingInvoiceSectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Get");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceSectionInvoiceSectionsRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -367,33 +165,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets an invoice section by its ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingInvoiceSectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Get");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Get");
             scope.Start();
             try
             {
-                var response = _billingInvoiceSectionInvoiceSectionsRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -407,20 +213,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,14 +234,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Delete");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceSectionInvoiceSectionsRestClient.DeleteAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingInvoiceSectionInvoiceSectionsClientDiagnostics, Pipeline, _billingInvoiceSectionInvoiceSectionsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation operation = new BillingArmOperation(_invoiceSectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -449,20 +262,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,14 +283,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Delete");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _billingInvoiceSectionInvoiceSectionsRestClient.Delete(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingInvoiceSectionInvoiceSectionsClientDiagnostics, Pipeline, _billingInvoiceSectionInvoiceSectionsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation operation = new BillingArmOperation(_invoiceSectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -488,192 +308,274 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Creates or updates an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// The list of billing requests submitted for the invoice section.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRequests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_BillingRequestsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> An invoice section. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingInvoiceSectionResource>> UpdateAsync(WaitUntil waitUntil, BillingInvoiceSectionData data, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingRequestResource> GetByInvoiceSectionAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Update");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await _billingInvoiceSectionInvoiceSectionsRestClient.CreateOrUpdateAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingInvoiceSectionResource>(new BillingInvoiceSectionOperationSource(Client), _billingInvoiceSectionInvoiceSectionsClientDiagnostics, Pipeline, _billingInvoiceSectionInvoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByInvoiceSectionAsyncCollectionResultOfT(
+                _billingRequestsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
-        /// Creates or updates an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// The list of billing requests submitted for the invoice section.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRequests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_BillingRequestsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> An invoice section. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BillingInvoiceSectionResource> Update(WaitUntil waitUntil, BillingInvoiceSectionData data, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingRequestResource> GetByInvoiceSection(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Update");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = _billingInvoiceSectionInvoiceSectionsRestClient.CreateOrUpdate(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingInvoiceSectionResource>(new BillingInvoiceSectionOperationSource(Client), _billingInvoiceSectionInvoiceSectionsClientDiagnostics, Pipeline, _billingInvoiceSectionInvoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByInvoiceSectionCollectionResultOfT(
+                _billingRequestsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection"), data => new BillingRequestResource(Client, data));
         }
 
         /// <summary>
-        /// Lists the billing permissions the caller has for an invoice section.
+        /// Lists the subscriptions that are billed to an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingSubscriptions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_BillingSubscriptionsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingSubscriptionData> GetByInvoiceSectionAsync(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingPermissions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BillingSubscriptionsGetByInvoiceSectionAsyncCollectionResultOfT(
+                _billingSubscriptionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                includeDeleted,
+                expand,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection");
         }
 
         /// <summary>
-        /// Lists the billing permissions the caller has for an invoice section.
+        /// Lists the subscriptions that are billed to an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingSubscriptions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_BillingSubscriptionsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="includeDeleted"> Can be used to get deleted billing subscriptions. </param>
+        /// <param name="expand"> Can be used to expand `Reseller`, `ConsumptionCostCenter`, `LastMonthCharges` and `MonthToDateCharges`. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingSubscriptionData> GetByInvoiceSection(bool? includeDeleted = default, string expand = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingPermissions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BillingSubscriptionsGetByInvoiceSectionCollectionResultOfT(
+                _billingSubscriptionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                includeDeleted,
+                expand,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection");
         }
 
         /// <summary>
         /// Provides a list of check access response objects for an invoice section.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/checkAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/checkAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_CheckAccessByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CheckAccessByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionAsyncCollectionResultOfT(
+                _invoiceSectionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                BillingCheckAccessContent.ToRequestContent(content),
+                context,
+                "BillingInvoiceSectionResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
         /// Provides a list of check access response objects for an invoice section.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/checkAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/checkAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_CheckAccessByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CheckAccessByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -685,90 +587,38 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.CheckAccessBillingPermissions", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// The list of billing requests submitted for the invoice section.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_ListByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingRequestResource> GetBillingRequestsAsync(BillingInvoiceSectionResourceGetBillingRequestsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new BillingInvoiceSectionResourceGetBillingRequestsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingRequestRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingRequestRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingRequestResource(Client, BillingRequestData.DeserializeBillingRequestData(e)), _billingRequestClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingRequests", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// The list of billing requests submitted for the invoice section.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingRequests</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRequests_ListByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingRequestResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingRequestResource> GetBillingRequests(BillingInvoiceSectionResourceGetBillingRequestsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new BillingInvoiceSectionResourceGetBillingRequestsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingRequestRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingRequestRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingRequestResource(Client, BillingRequestData.DeserializeBillingRequestData(e)), _billingRequestClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingRequests", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT(
+                _invoiceSectionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                BillingCheckAccessContent.ToRequestContent(content),
+                context,
+                "BillingInvoiceSectionResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
         /// Adds a role assignment on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/createBillingRoleAssignment</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/createBillingRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_CreateByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CreateByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,14 +630,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
-            using var scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.CreateByInvoiceSectionBillingRoleAssignment");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.CreateByInvoiceSectionBillingRoleAssignment");
             scope.Start();
             try
             {
-                var response = await _billingRoleAssignmentsRestClient.CreateByInvoiceSectionAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, billingRoleAssignmentProperties, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingRoleAssignmentData>(new BillingRoleAssignmentDataOperationSource(), _billingRoleAssignmentsClientDiagnostics, Pipeline, _billingRoleAssignmentsRestClient.CreateCreateByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, billingRoleAssignmentProperties).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByInvoiceSectionBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
+                    new BillingRoleAssignmentDataOperationSource(),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -801,16 +664,20 @@ namespace Azure.ResourceManager.Billing
         /// Adds a role assignment on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/createBillingRoleAssignment</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/createBillingRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_CreateByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CreateByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -822,14 +689,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
-            using var scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.CreateByInvoiceSectionBillingRoleAssignment");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.CreateByInvoiceSectionBillingRoleAssignment");
             scope.Start();
             try
             {
-                var response = _billingRoleAssignmentsRestClient.CreateByInvoiceSection(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, billingRoleAssignmentProperties, cancellationToken);
-                var operation = new BillingArmOperation<BillingRoleAssignmentData>(new BillingRoleAssignmentDataOperationSource(), _billingRoleAssignmentsClientDiagnostics, Pipeline, _billingRoleAssignmentsRestClient.CreateCreateByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, billingRoleAssignmentProperties).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByInvoiceSectionBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
+                    new BillingRoleAssignmentDataOperationSource(),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -840,19 +720,199 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
+        /// Lists the billing permissions the caller has for an invoice section.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ListByInvoiceSection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new InvoiceSectionsGetBillingPermissionsAsyncCollectionResultOfT(
+                _invoiceSectionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "BillingInvoiceSectionResource.GetBillingPermissions");
+        }
+
+        /// <summary>
+        /// Lists the billing permissions the caller has for an invoice section.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ListByInvoiceSection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new InvoiceSectionsGetBillingPermissionsCollectionResultOfT(
+                _invoiceSectionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "BillingInvoiceSectionResource.GetBillingPermissions");
+        }
+
+        /// <summary>
+        /// Lists the products for an invoice section. These don't include products billed based on usage. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ProductsListByInvoiceSection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsAsyncCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetProducts"), data => new BillingProductResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the products for an invoice section. These don't include products billed based on usage. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ProductsListByInvoiceSection. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingProductResource> GetProducts(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new ProductsGetProductsCollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetProducts"), data => new BillingProductResource(Client, data));
+        }
+
+        /// <summary>
         /// Lists the role assignments for the caller on an invoice section while fetching user info for each role assignment. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/resolveBillingRoleAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/resolveBillingRoleAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_ResolveByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ResolveByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -860,16 +920,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="resolveScopeDisplayNames"> Resolves the scope display name for each of the role assignments. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BillingRoleAssignmentListResult>> ResolveByInvoiceSectionBillingRoleAssignmentAsync(WaitUntil waitUntil, bool? resolveScopeDisplayNames = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingRoleAssignmentListResult>> ResolveByInvoiceSectionBillingRoleAssignmentAsync(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ResolveByInvoiceSectionBillingRoleAssignment");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ResolveByInvoiceSectionBillingRoleAssignment");
             scope.Start();
             try
             {
-                var response = await _billingRoleAssignmentsRestClient.ResolveByInvoiceSectionAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingRoleAssignmentListResult>(new BillingRoleAssignmentListResultOperationSource(), _billingRoleAssignmentsClientDiagnostics, Pipeline, _billingRoleAssignmentsRestClient.CreateResolveByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByInvoiceSectionBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
+                    new BillingRoleAssignmentListResultOperationSource(),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -883,16 +956,20 @@ namespace Azure.ResourceManager.Billing
         /// Lists the role assignments for the caller on an invoice section while fetching user info for each role assignment. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/resolveBillingRoleAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/resolveBillingRoleAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_ResolveByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ResolveByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -900,16 +977,29 @@ namespace Azure.ResourceManager.Billing
         /// <param name="resolveScopeDisplayNames"> Resolves the scope display name for each of the role assignments. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BillingRoleAssignmentListResult> ResolveByInvoiceSectionBillingRoleAssignment(WaitUntil waitUntil, bool? resolveScopeDisplayNames = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingRoleAssignmentListResult> ResolveByInvoiceSectionBillingRoleAssignment(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ResolveByInvoiceSectionBillingRoleAssignment");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ResolveByInvoiceSectionBillingRoleAssignment");
             scope.Start();
             try
             {
-                var response = _billingRoleAssignmentsRestClient.ResolveByInvoiceSection(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, cancellationToken);
-                var operation = new BillingArmOperation<BillingRoleAssignmentListResult>(new BillingRoleAssignmentListResultOperationSource(), _billingRoleAssignmentsClientDiagnostics, Pipeline, _billingRoleAssignmentsRestClient.CreateResolveByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByInvoiceSectionBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
+                    new BillingRoleAssignmentListResultOperationSource(),
+                    _billingRoleAssignmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -920,92 +1010,156 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the subscriptions that are billed to an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Lists the billed or unbilled transactions by invoice section name for given start date and end date. Transactions include purchases, refunds and Azure usage charges. Unbilled transactions are listed under pending invoice Id and do not include tax. Tax is added to the amount once an invoice is generated.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingSubscriptions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transactions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_TransactionsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="type"> The type of transaction. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingSubscriptionData> GetBillingSubscriptionsAsync(BillingInvoiceSectionResourceGetBillingSubscriptionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceSectionAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceSectionResourceGetBillingSubscriptionsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingSubscriptionData.DeserializeBillingSubscriptionData(e), _billingSubscriptionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingSubscriptions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByInvoiceSectionAsyncCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                @type.ToString(),
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection");
         }
 
         /// <summary>
-        /// Lists the subscriptions that are billed to an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Lists the billed or unbilled transactions by invoice section name for given start date and end date. Transactions include purchases, refunds and Azure usage charges. Unbilled transactions are listed under pending invoice Id and do not include tax. Tax is added to the amount once an invoice is generated.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/billingSubscriptions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transactions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_TransactionsListByInvoiceSection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="type"> The type of transaction. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingSubscriptionData> GetBillingSubscriptions(BillingInvoiceSectionResourceGetBillingSubscriptionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransactionData> GetByInvoiceSection(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceSectionResourceGetBillingSubscriptionsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.IncludeDeleted, options.Expand, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingSubscriptionData.DeserializeBillingSubscriptionData(e), _billingSubscriptionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetBillingSubscriptions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByInvoiceSectionCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                periodStartDate,
+                periodEndDate,
+                @type.ToString(),
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceSectionResource.GetByInvoiceSection");
         }
 
         /// <summary>
         /// Validates if the invoice section can be deleted. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/validateDeleteEligibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/validateDeleteEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_ValidateDeleteEligibility</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ValidateDeleteEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeleteInvoiceSectionEligibilityResult>> ValidateDeleteEligibilityAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ValidateDeleteEligibility");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ValidateDeleteEligibility");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceSectionInvoiceSectionsRestClient.ValidateDeleteEligibilityAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateValidateDeleteEligibilityRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeleteInvoiceSectionEligibilityResult> response = Response.FromValue(DeleteInvoiceSectionEligibilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1019,31 +1173,41 @@ namespace Azure.ResourceManager.Billing
         /// Validates if the invoice section can be deleted. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/validateDeleteEligibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/validateDeleteEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_ValidateDeleteEligibility</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_ValidateDeleteEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeleteInvoiceSectionEligibilityResult> ValidateDeleteEligibility(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ValidateDeleteEligibility");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.ValidateDeleteEligibility");
             scope.Start();
             try
             {
-                var response = _billingInvoiceSectionInvoiceSectionsRestClient.ValidateDeleteEligibility(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateValidateDeleteEligibilityRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeleteInvoiceSectionEligibilityResult> response = Response.FromValue(DeleteInvoiceSectionEligibilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1054,152 +1218,124 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the products for an invoice section. These don't include products billed based on usage. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Update a BillingInvoiceSection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/products</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> An invoice section. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(BillingInvoiceSectionResourceGetProductsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingInvoiceSectionResource>> UpdateAsync(WaitUntil waitUntil, BillingInvoiceSectionData data, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceSectionResourceGetProductsOptions();
+            Argument.AssertNotNull(data, nameof(data));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetProducts", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingInvoiceSectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
+                    new BillingInvoiceSectionResourceOperationSource(Client),
+                    _invoiceSectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Lists the products for an invoice section. These don't include products billed based on usage. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
+        /// Update a BillingInvoiceSection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/products</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ListByInvoiceSection</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceSections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceSectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> An invoice section. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingProductResource> GetProducts(BillingInvoiceSectionResourceGetProductsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<BillingInvoiceSectionResource> Update(WaitUntil waitUntil, BillingInvoiceSectionData data, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceSectionResourceGetProductsOptions();
+            Argument.AssertNotNull(data, nameof(data));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingProductProductsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingProductProductsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingProductResource(Client, BillingProductData.DeserializeBillingProductData(e)), _billingProductProductsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetProducts", "value", "nextLink", cancellationToken);
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingInvoiceSectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
+                    new BillingInvoiceSectionResourceOperationSource(Client),
+                    _invoiceSectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Lists the billed or unbilled transactions by invoice section name for given start date and end date. Transactions include purchases, refunds and Azure usage charges. Unbilled transactions are listed under pending invoice Id and do not include tax. Tax is added to the amount once an invoice is generated.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transactions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_ListByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetTransactionsAsync(BillingInvoiceSectionResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetTransactions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the billed or unbilled transactions by invoice section name for given start date and end date. Transactions include purchases, refunds and Azure usage charges. Unbilled transactions are listed under pending invoice Id and do not include tax. Tax is added to the amount once an invoice is generated.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/transactions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_ListByInvoiceSection</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetTransactions(BillingInvoiceSectionResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceSectionRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceSectionNextPageRequest(nextLink, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.PeriodStartDate, options.PeriodEndDate, options.Type, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceSectionResource.GetTransactions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1209,23 +1345,29 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.AddTag");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingInvoiceSectionInvoiceSectionsRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingInvoiceSectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingInvoiceSectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1236,27 +1378,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1266,23 +1388,29 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.AddTag");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingInvoiceSectionInvoiceSectionsRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingInvoiceSectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingInvoiceSectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1293,52 +1421,38 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BillingInvoiceSectionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.SetTags");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingInvoiceSectionInvoiceSectionsRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingInvoiceSectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingInvoiceSectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1349,52 +1463,38 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BillingInvoiceSectionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.SetTags");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingInvoiceSectionInvoiceSectionsRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingInvoiceSectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingInvoiceSectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1405,27 +1505,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1433,23 +1513,29 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.RemoveTag");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingInvoiceSectionInvoiceSectionsRestClient.GetAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingInvoiceSectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingInvoiceSectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1460,27 +1546,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InvoiceSections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceSectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1488,23 +1554,29 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingInvoiceSectionInvoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.RemoveTag");
+            using DiagnosticScope scope = _invoiceSectionsClientDiagnostics.CreateScope("BillingInvoiceSectionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingInvoiceSectionInvoiceSectionsRestClient.Get(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingInvoiceSectionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _invoiceSectionsRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingInvoiceSectionData> response = Response.FromValue(BillingInvoiceSectionData.FromResponse(result), result);
+                    return Response.FromValue(new BillingInvoiceSectionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingInvoiceSectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingInvoiceSectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1513,6 +1585,105 @@ namespace Azure.ResourceManager.Billing
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of BillingInvoiceSectionRoleAssignments in the <see cref="BillingInvoiceSectionResource"/>. </summary>
+        /// <returns> An object representing collection of BillingInvoiceSectionRoleAssignments and their operations over a BillingInvoiceSectionRoleAssignmentResource. </returns>
+        public virtual BillingInvoiceSectionRoleAssignmentCollection GetBillingInvoiceSectionRoleAssignments()
+        {
+            return GetCachedClient(client => new BillingInvoiceSectionRoleAssignmentCollection(client, Id));
+        }
+
+        /// <summary> Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingInvoiceSectionRoleAssignmentResource>> GetBillingInvoiceSectionRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
+
+            return await GetBillingInvoiceSectionRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a role assignment for the caller on an invoice section. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingInvoiceSectionRoleAssignmentResource> GetBillingInvoiceSectionRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
+
+            return GetBillingInvoiceSectionRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingTransferDetails in the <see cref="BillingInvoiceSectionResource"/>. </summary>
+        /// <returns> An object representing collection of BillingTransferDetails and their operations over a BillingTransferDetailResource. </returns>
+        public virtual BillingTransferDetailCollection GetBillingTransferDetails()
+        {
+            return GetCachedClient(client => new BillingTransferDetailCollection(client, Id));
+        }
+
+        /// <summary> Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingTransferDetailResource>> GetBillingTransferDetailAsync(string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
+
+            return await GetBillingTransferDetails().GetAsync(transferName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingTransferDetailResource> GetBillingTransferDetail(string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
+
+            return GetBillingTransferDetails().Get(transferName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingInvoiceSectionRoleDefinitions in the <see cref="BillingInvoiceSectionResource"/>. </summary>
+        /// <returns> An object representing collection of BillingInvoiceSectionRoleDefinitions and their operations over a BillingInvoiceSectionRoleDefinitionResource. </returns>
+        public virtual BillingInvoiceSectionRoleDefinitionCollection GetBillingInvoiceSectionRoleDefinitions()
+        {
+            return GetCachedClient(client => new BillingInvoiceSectionRoleDefinitionCollection(client, Id));
+        }
+
+        /// <summary> Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingInvoiceSectionRoleDefinitionResource>> GetBillingInvoiceSectionRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            return await GetBillingInvoiceSectionRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the definition for a role on an invoice section. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement. </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingInvoiceSectionRoleDefinitionResource> GetBillingInvoiceSectionRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            return GetBillingInvoiceSectionRoleDefinitions().Get(roleDefinitionName, cancellationToken);
         }
     }
 }

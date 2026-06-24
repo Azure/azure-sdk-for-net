@@ -5,31 +5,24 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> A listed directory item. </summary>
     internal partial class DirectoryItem
     {
         /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="name"> The directory name. </param>
         internal DirectoryItem(StringEncoded name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="DirectoryItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="fileId"></param>
+        /// <param name="name"> The directory name. </param>
+        /// <param name="fileId"> The file ID. </param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="attributes"></param>
-        /// <param name="permissionKey"></param>
-        /// <param name="linkCount"></param>
+        /// <param name="attributes"> The file attributes. </param>
+        /// <param name="permissionKey"> The permission key. </param>
+        /// <param name="linkCount"> NFS only. The link count of the directory. </param>
         internal DirectoryItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey, long? linkCount)
         {
             Name = name;
@@ -40,17 +33,22 @@ namespace Azure.Storage.Files.Shares.Models
             LinkCount = linkCount;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The directory name. </summary>
         public StringEncoded Name { get; }
-        /// <summary> Gets the file id. </summary>
+
+        /// <summary> The file ID. </summary>
         public string FileId { get; }
+
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the attributes. </summary>
+
+        /// <summary> The file attributes. </summary>
         public string Attributes { get; }
-        /// <summary> Gets the permission key. </summary>
+
+        /// <summary> The permission key. </summary>
         public string PermissionKey { get; }
-        /// <summary> Gets the link count. </summary>
+
+        /// <summary> NFS only. The link count of the directory. </summary>
         public long? LinkCount { get; }
     }
 }

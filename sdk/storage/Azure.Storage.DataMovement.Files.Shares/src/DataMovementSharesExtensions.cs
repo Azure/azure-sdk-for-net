@@ -165,6 +165,33 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
         }
 
+        /// <summary>
+        /// Resolves just the FilePermissionKey without computing other SMB properties.
+        /// Used during file creation where SMB properties are deferred to CompleteTransferAsync.
+        /// </summary>
+        public static string GetFilePermissionKey(
+            this ShareFileStorageResourceOptions options,
+            StorageResourceItemProperties sourceProperties,
+            string destinationPermissionKey)
+        {
+            if (options?.ShareProtocol == ShareProtocol.Nfs)
+            {
+                return default;
+            }
+
+            if (!string.IsNullOrEmpty(destinationPermissionKey))
+            {
+                return destinationPermissionKey;
+            }
+
+            bool setPermissions = options?.FilePermissions ?? false;
+            return setPermissions
+                ? sourceProperties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
+                    ? (string)permissionKeyObject
+                    : default
+                : default;
+        }
+
         public static FileSmbProperties GetFileSmbProperties(
             this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties sourceProperties)

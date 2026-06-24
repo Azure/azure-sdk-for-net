@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-01-15-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _projectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesProjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesProjectResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(
-                    new CognitiveServicesProjectOperationSource(Client),
+                    new CognitiveServicesProjectResourceOperationSource(Client),
                     _projectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _projectsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesProjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesProjectResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectResource>(
-                    new CognitiveServicesProjectOperationSource(Client),
+                    new CognitiveServicesProjectResourceOperationSource(Client),
                     _projectsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CognitiveServicesProjectResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CognitiveServicesProjectResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 else
                 {
                     CognitiveServicesProjectData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData();
+                    CognitiveServicesProjectData patch = new CognitiveServicesProjectData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -776,6 +776,39 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             return GetCognitiveServicesAgentApplications().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesWorkbenches in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesWorkbenches and their operations over a CognitiveServicesWorkbenchResource. </returns>
+        public virtual CognitiveServicesWorkbenchCollection GetCognitiveServicesWorkbenches()
+        {
+            return GetCachedClient(client => new CognitiveServicesWorkbenchCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesWorkbenchResource>> GetCognitiveServicesWorkbenchAsync(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return await GetCognitiveServicesWorkbenches().GetAsync(workbenchName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified workbench associated with the project. </summary>
+        /// <param name="workbenchName"> The name of the workbench associated with the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workbenchName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workbenchName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesWorkbenchResource> GetCognitiveServicesWorkbench(string workbenchName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
+
+            return GetCognitiveServicesWorkbenches().Get(workbenchName, cancellationToken);
         }
     }
 }

@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeMachineJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeMachineJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<EdgeMachineJobResource> operation = new HciArmOperation<EdgeMachineJobResource>(
-                    new EdgeMachineJobOperationSource(Client),
+                    new EdgeMachineJobResourceOperationSource(Client),
                     _edgeMachineJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _edgeMachineJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeMachineJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<EdgeMachineJobResource> operation = new HciArmOperation<EdgeMachineJobResource>(
-                    new EdgeMachineJobOperationSource(Client),
+                    new EdgeMachineJobResourceOperationSource(Client),
                     _edgeMachineJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

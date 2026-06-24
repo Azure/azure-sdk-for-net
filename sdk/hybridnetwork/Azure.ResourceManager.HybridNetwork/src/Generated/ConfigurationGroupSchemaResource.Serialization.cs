@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
+    /// <summary></summary>
     public partial class ConfigurationGroupSchemaResource : IJsonModel<ConfigurationGroupSchemaData>
     {
-        private static ConfigurationGroupSchemaData s_dataDeserializationInstance;
-        private static ConfigurationGroupSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConfigurationGroupSchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConfigurationGroupSchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConfigurationGroupSchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfigurationGroupSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupSchemaData>)Data).Write(writer, options);
 
-        ConfigurationGroupSchemaData IJsonModel<ConfigurationGroupSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfigurationGroupSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigurationGroupSchemaData IJsonModel<ConfigurationGroupSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConfigurationGroupSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfigurationGroupSchemaData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConfigurationGroupSchemaData IPersistableModel<ConfigurationGroupSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfigurationGroupSchemaData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<ConfigurationGroupSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfigurationGroupSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfigurationGroupSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

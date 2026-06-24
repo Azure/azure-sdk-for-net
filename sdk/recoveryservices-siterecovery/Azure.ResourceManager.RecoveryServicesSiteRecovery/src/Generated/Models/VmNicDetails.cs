@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Hyper V VM network details. </summary>
     public partial class VmNicDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VmNicDetails"/>. </summary>
         internal VmNicDetails()
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="tfoRecoveryNicResourceGroupName"> The resource group of the NIC to be used when creating target NICs in TFO. </param>
         /// <param name="isTfoReuseExistingNicAllowed"> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </param>
         /// <param name="targetNicName"> Target NIC name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnRecoveryEnabled, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnTfoEnabled, string recoveryNicName, string recoveryNicResourceGroupName, bool? isReuseExistingNicAllowed, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? isTfoReuseExistingNicAllowed, string targetNicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VmNicDetails(string nicId, string replicaNicId, ResourceIdentifier sourceNicArmId, string vmNetworkName, ResourceIdentifier recoveryVmNetworkId, IReadOnlyList<HyperVIPConfigDetails> ipConfigs, string selectionType, string recoveryNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnRecoveryEnabled, ResourceIdentifier tfoVmNetworkId, string tfoNetworkSecurityGroupId, bool? isAcceleratedNetworkingOnTfoEnabled, string recoveryNicName, string recoveryNicResourceGroupName, bool? isReuseExistingNicAllowed, string tfoRecoveryNicName, string tfoRecoveryNicResourceGroupName, bool? isTfoReuseExistingNicAllowed, string targetNicName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicId = nicId;
             ReplicaNicId = replicaNicId;
@@ -94,45 +66,63 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TfoRecoveryNicResourceGroupName = tfoRecoveryNicResourceGroupName;
             IsTfoReuseExistingNicAllowed = isTfoReuseExistingNicAllowed;
             TargetNicName = targetNicName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The nic Id. </summary>
         public string NicId { get; }
+
         /// <summary> The replica nic Id. </summary>
         public string ReplicaNicId { get; }
+
         /// <summary> The source nic ARM Id. </summary>
         public ResourceIdentifier SourceNicArmId { get; }
+
         /// <summary> VM network name. </summary>
         public string VmNetworkName { get; }
+
         /// <summary> Recovery VM network Id. </summary>
         public ResourceIdentifier RecoveryVmNetworkId { get; }
+
         /// <summary> The IP configurations of the NIC. </summary>
         public IReadOnlyList<HyperVIPConfigDetails> IPConfigs { get; }
+
         /// <summary> Selection type for failover. </summary>
         public string SelectionType { get; }
+
         /// <summary> The id of the NSG associated with the NIC. </summary>
         public string RecoveryNetworkSecurityGroupId { get; }
+
         /// <summary> A value indicating whether the NIC has accelerated networking enabled. </summary>
         public bool? IsAcceleratedNetworkingOnRecoveryEnabled { get; }
+
         /// <summary> The network to be used by NIC during test failover. </summary>
         public ResourceIdentifier TfoVmNetworkId { get; }
+
         /// <summary> The NSG to be used by NIC during test failover. </summary>
         public string TfoNetworkSecurityGroupId { get; }
+
         /// <summary> Whether the TFO NIC has accelerated networking enabled. </summary>
         public bool? IsAcceleratedNetworkingOnTfoEnabled { get; }
+
         /// <summary> The name of the NIC to be used when creating target NICs. </summary>
         public string RecoveryNicName { get; }
+
         /// <summary> The resource group of the NIC to be used when creating target NICs. </summary>
         public string RecoveryNicResourceGroupName { get; }
+
         /// <summary> A value indicating whether an existing NIC is allowed to be reused during failover subject to availability. </summary>
         public bool? IsReuseExistingNicAllowed { get; }
+
         /// <summary> The name of the NIC to be used when creating target NICs in TFO. </summary>
         public string TfoRecoveryNicName { get; }
+
         /// <summary> The resource group of the NIC to be used when creating target NICs in TFO. </summary>
         public string TfoRecoveryNicResourceGroupName { get; }
+
         /// <summary> A value indicating whether an existing NIC is allowed to be reused during test failover subject to availability. </summary>
         public bool? IsTfoReuseExistingNicAllowed { get; }
+
         /// <summary> Target NIC name. </summary>
         public string TargetNicName { get; }
     }

@@ -11,31 +11,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AgentDefinitionOptInKeys value) => value switch
         {
-            AgentDefinitionOptInKeys.HostedAgentsV1Preview => "HostedAgents=V1Preview",
             AgentDefinitionOptInKeys.WorkflowAgentsV1Preview => "WorkflowAgents=V1Preview",
-            AgentDefinitionOptInKeys.ContainerAgentsV1Preview => "ContainerAgents=V1Preview",
-            AgentDefinitionOptInKeys.AgentEndpointV1Preview => "AgentEndpoints=V1Preview",
+            AgentDefinitionOptInKeys.ExternalAgentsV1Preview => "ExternalAgents=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static AgentDefinitionOptInKeys ToAgentDefinitionOptInKeys(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HostedAgents=V1Preview"))
-            {
-                return AgentDefinitionOptInKeys.HostedAgentsV1Preview;
-            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "WorkflowAgents=V1Preview"))
             {
                 return AgentDefinitionOptInKeys.WorkflowAgentsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContainerAgents=V1Preview"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExternalAgents=V1Preview"))
             {
-                return AgentDefinitionOptInKeys.ContainerAgentsV1Preview;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentEndpoints=V1Preview"))
-            {
-                return AgentDefinitionOptInKeys.AgentEndpointV1Preview;
+                return AgentDefinitionOptInKeys.ExternalAgentsV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AgentDefinitionOptInKeys value.");
         }

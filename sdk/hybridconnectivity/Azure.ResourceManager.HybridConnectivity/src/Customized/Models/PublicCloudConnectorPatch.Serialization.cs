@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties,
                 properties);
         }
     }

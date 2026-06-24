@@ -14,7 +14,10 @@ namespace Azure.AI.Projects.Agents
         private const string ActivityValue = "activity";
         private const string ResponsesValue = "responses";
         private const string A2aValue = "a2a";
+        private const string McpValue = "mcp";
         private const string InvocationsValue = "invocations";
+        /// <summary> WebSocket-based protocol for hosted voice and real-time streaming agents. </summary>
+        private const string InvocationsWsValue = "invocations_ws";
 
         /// <summary> Initializes a new instance of <see cref="AgentEndpointProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,8 +38,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the A2a. </summary>
         public static AgentEndpointProtocol A2a { get; } = new AgentEndpointProtocol(A2aValue);
 
+        /// <summary> Gets the Mcp. </summary>
+        public static AgentEndpointProtocol Mcp { get; } = new AgentEndpointProtocol(McpValue);
+
         /// <summary> Gets the Invocations. </summary>
         public static AgentEndpointProtocol Invocations { get; } = new AgentEndpointProtocol(InvocationsValue);
+
+        /// <summary> WebSocket-based protocol for hosted voice and real-time streaming agents. </summary>
+        public static AgentEndpointProtocol InvocationsWs { get; } = new AgentEndpointProtocol(InvocationsWsValue);
 
         /// <summary> Determines if two <see cref="AgentEndpointProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

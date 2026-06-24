@@ -9,28 +9,37 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> File properties. </summary>
     internal partial class FileProperty
     {
         /// <summary> Initializes a new instance of <see cref="FileProperty"/>. </summary>
-        /// <param name="contentLength"> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </param>
+        /// <param name="contentLength">
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </param>
         internal FileProperty(long contentLength)
         {
             ContentLength = contentLength;
         }
 
         /// <summary> Initializes a new instance of <see cref="FileProperty"/>. </summary>
-        /// <param name="contentLength"> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </param>
-        /// <param name="creationTime"></param>
-        /// <param name="lastAccessTime"></param>
-        /// <param name="lastWriteTime"></param>
-        /// <param name="changeTime"></param>
-        /// <param name="lastModified"></param>
-        /// <param name="etag"></param>
-        /// <param name="uid"></param>
-        /// <param name="gid"></param>
-        /// <param name="mode"></param>
-        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string etag, string uid, string gid, string mode)
+        /// <param name="contentLength">
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </param>
+        /// <param name="creationTime"> The creation time. </param>
+        /// <param name="lastAccessTime"> The last access time. </param>
+        /// <param name="lastWriteTime"> The last write time. </param>
+        /// <param name="changeTime"> The change time. </param>
+        /// <param name="lastModified"> The last modified time. </param>
+        /// <param name="eTag"> The ETag of the file. </param>
+        /// <param name="owner"> NFS only. The owner user identifier (UID) of the file. </param>
+        /// <param name="group"> NFS only. The owner group identifier (GID) of the file. </param>
+        /// <param name="fileMode"> NFS only. The file mode of the file. </param>
+        internal FileProperty(long contentLength, DateTimeOffset? creationTime, DateTimeOffset? lastAccessTime, DateTimeOffset? lastWriteTime, DateTimeOffset? changeTime, DateTimeOffset? lastModified, string eTag, string owner, string @group, string fileMode)
         {
             ContentLength = contentLength;
             CreationTime = creationTime;
@@ -38,31 +47,45 @@ namespace Azure.Storage.Files.Shares.Models
             LastWriteTime = lastWriteTime;
             ChangeTime = changeTime;
             LastModified = lastModified;
-            Etag = etag;
-            Uid = uid;
-            Gid = gid;
-            Mode = mode;
+            ETag = eTag;
+            Owner = owner;
+            Group = @group;
+            FileMode = fileMode;
         }
 
-        /// <summary> Content length of the file. This value may not be up-to-date since an SMB client may have modified the file locally. The value of Content-Length may not reflect that fact until the handle is closed or the op-lock is broken. To retrieve current property values, call Get File Properties. </summary>
+        /// <summary>
+        /// Content length of the file. This value may not be up-to-date since an SMB
+        /// client may have modified the file locally. The value of Content-Length may not
+        /// reflect that fact until the handle is closed or the op-lock is broken. To
+        /// retrieve current property values, call Get File Properties.
+        /// </summary>
         public long ContentLength { get; }
-        /// <summary> Gets the creation time. </summary>
+
+        /// <summary> The creation time. </summary>
         public DateTimeOffset? CreationTime { get; }
-        /// <summary> Gets the last access time. </summary>
+
+        /// <summary> The last access time. </summary>
         public DateTimeOffset? LastAccessTime { get; }
-        /// <summary> Gets the last write time. </summary>
+
+        /// <summary> The last write time. </summary>
         public DateTimeOffset? LastWriteTime { get; }
-        /// <summary> Gets the change time. </summary>
+
+        /// <summary> The change time. </summary>
         public DateTimeOffset? ChangeTime { get; }
-        /// <summary> Gets the last modified. </summary>
+
+        /// <summary> The last modified time. </summary>
         public DateTimeOffset? LastModified { get; }
-        /// <summary> Gets the etag. </summary>
-        public string Etag { get; }
-        /// <summary> Gets the uid. </summary>
-        public string Uid { get; }
-        /// <summary> Gets the gid. </summary>
-        public string Gid { get; }
-        /// <summary> Gets the mode. </summary>
-        public string Mode { get; }
+
+        /// <summary> The ETag of the file. </summary>
+        public string ETag { get; }
+
+        /// <summary> NFS only. The owner user identifier (UID) of the file. </summary>
+        public string Owner { get; }
+
+        /// <summary> NFS only. The owner group identifier (GID) of the file. </summary>
+        public string Group { get; }
+
+        /// <summary> NFS only. The file mode of the file. </summary>
+        public string FileMode { get; }
     }
 }

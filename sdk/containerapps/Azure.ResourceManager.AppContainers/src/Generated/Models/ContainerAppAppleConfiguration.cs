@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Apple provider. </summary>
     public partial class ContainerAppAppleConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAppleConfiguration"/>. </summary>
         public ContainerAppAppleConfiguration()
@@ -54,23 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Apple registration. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAppleConfiguration(bool? isEnabled, ContainerAppAppleRegistrationConfiguration registration, LoginScopes login, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAppleConfiguration(bool? isEnabled, ContainerAppAppleRegistrationConfiguration registration, LoginScopes login, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
+
         /// <summary> The configuration settings of the Apple registration. </summary>
         [WirePath("registration")]
         public ContainerAppAppleRegistrationConfiguration Registration { get; set; }
+
         /// <summary> The configuration settings of the login flow. </summary>
+        [WirePath("login")]
         internal LoginScopes Login { get; set; }
+
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
         [WirePath("login.scopes")]
         public IList<string> LoginScopes
@@ -78,7 +54,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             get
             {
                 if (Login is null)
+                {
                     Login = new LoginScopes();
+                }
                 return Login.Scopes;
             }
         }

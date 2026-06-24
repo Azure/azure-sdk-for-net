@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkManagerSecurityUserConfigurationResource : IJsonModel<NetworkManagerSecurityUserConfigurationData>
     {
-        private static NetworkManagerSecurityUserConfigurationData s_dataDeserializationInstance;
-        private static NetworkManagerSecurityUserConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkManagerSecurityUserConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkManagerSecurityUserConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkManagerSecurityUserConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkManagerSecurityUserConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserConfigurationData>)Data).Write(writer, options);
 
-        NetworkManagerSecurityUserConfigurationData IJsonModel<NetworkManagerSecurityUserConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkManagerSecurityUserConfigurationData IJsonModel<NetworkManagerSecurityUserConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerSecurityUserConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkManagerSecurityUserConfigurationData IPersistableModel<NetworkManagerSecurityUserConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkManagerSecurityUserConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkManagerSecurityUserConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

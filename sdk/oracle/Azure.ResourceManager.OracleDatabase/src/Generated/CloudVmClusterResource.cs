@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateAddVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesAsyncCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new CloudVmClusterResourceGetPrivateIPAddressesCollectionResultOfT(
+            return new OracleDatabaseCloudVmClustersListPrivateIpAddressesCollectionResultOfT(
                 _cloudVmClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudVmClusterDBNodeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
+                    new CloudVmClusterResourceOperationSource(Client),
                     _cloudVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

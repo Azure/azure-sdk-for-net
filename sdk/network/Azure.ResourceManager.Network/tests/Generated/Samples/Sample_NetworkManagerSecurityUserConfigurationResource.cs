@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManagerSecurityUserConfiguration.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManagerSecurityUserConfiguration.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Description = "A sample policy",
             };
-            ArmOperation<NetworkManagerSecurityUserConfigurationResource> lro = await networkManagerSecurityUserConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerSecurityUserConfigurationResource> lro = await networkManagerSecurityUserConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

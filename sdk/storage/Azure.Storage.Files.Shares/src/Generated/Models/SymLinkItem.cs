@@ -5,33 +5,26 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed symbolic link item. </summary>
     internal partial class SymLinkItem
     {
         /// <summary> Initializes a new instance of <see cref="SymLinkItem"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The symbolic link name. </param>
         /// <param name="properties"> File properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal SymLinkItem(StringEncoded name, FileProperty properties)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="SymLinkItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="fileId"></param>
+        /// <param name="name"> The symbolic link name. </param>
+        /// <param name="fileId"> The file ID. </param>
         /// <param name="properties"> File properties. </param>
-        /// <param name="linkCount"></param>
-        /// <param name="linkText"></param>
+        /// <param name="linkCount"> NFS only. The link count of the symbolic link. </param>
+        /// <param name="linkText"> NFS only. The path to the original file, the symbolic link is pointing to. </param>
         internal SymLinkItem(StringEncoded name, string fileId, FileProperty properties, long? linkCount, string linkText)
         {
             Name = name;
@@ -41,15 +34,19 @@ namespace Azure.Storage.Files.Shares.Models
             LinkText = linkText;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The symbolic link name. </summary>
         public StringEncoded Name { get; }
-        /// <summary> Gets the file id. </summary>
+
+        /// <summary> The file ID. </summary>
         public string FileId { get; }
+
         /// <summary> File properties. </summary>
         public FileProperty Properties { get; }
-        /// <summary> Gets the link count. </summary>
+
+        /// <summary> NFS only. The link count of the symbolic link. </summary>
         public long? LinkCount { get; }
-        /// <summary> Gets the link text. </summary>
+
+        /// <summary> NFS only. The path to the original file, the symbolic link is pointing to. </summary>
         public string LinkText { get; }
     }
 }

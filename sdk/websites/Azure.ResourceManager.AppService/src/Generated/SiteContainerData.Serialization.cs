@@ -321,6 +321,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 image,
                 targetPort,
                 isMain,
@@ -334,7 +335,6 @@ namespace Azure.ResourceManager.AppService
                 volumeMounts ?? new ChangeTrackingList<SiteContainerVolumeMount>(),
                 inheritAppSettingsAndConnectionStrings,
                 environmentVariables ?? new ChangeTrackingList<WebAppEnvironmentVariable>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

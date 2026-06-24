@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class ListFilesIncludeTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ListFilesIncludeType value) => value switch
         {
             ListFilesIncludeType.Timestamps => "Timestamps",
@@ -24,16 +25,41 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListFilesIncludeType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ListFilesIncludeType ToListFilesIncludeType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timestamps")) return ListFilesIncludeType.Timestamps;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Etag")) return ListFilesIncludeType.Etag;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Attributes")) return ListFilesIncludeType.Attributes;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PermissionKey")) return ListFilesIncludeType.PermissionKey;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permissions")) return ListFilesIncludeType.Permissions;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LinkCount")) return ListFilesIncludeType.LinkCount;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NfsAttributes")) return ListFilesIncludeType.NfsAttributes;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return ListFilesIncludeType.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timestamps"))
+            {
+                return ListFilesIncludeType.Timestamps;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Etag"))
+            {
+                return ListFilesIncludeType.Etag;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Attributes"))
+            {
+                return ListFilesIncludeType.Attributes;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PermissionKey"))
+            {
+                return ListFilesIncludeType.PermissionKey;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permissions"))
+            {
+                return ListFilesIncludeType.Permissions;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LinkCount"))
+            {
+                return ListFilesIncludeType.LinkCount;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NfsAttributes"))
+            {
+                return ListFilesIncludeType.NfsAttributes;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All"))
+            {
+                return ListFilesIncludeType.All;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListFilesIncludeType value.");
         }
     }

@@ -28,6 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="object"> The object type, which is always 'agent'. </param>
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
+        /// <param name="state"> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </param>
         /// <param name="versions"> The latest version of the agent. </param>
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="instanceIdentity"> The instance identity of the agent. </param>
@@ -35,11 +36,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentObjectVersions versions, AgentEndpoint agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentState state, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
             Name = name;
+            State = state;
             Versions = versions;
             AgentEndpoint = agentEndpoint;
             InstanceIdentity = instanceIdentity;
@@ -55,8 +57,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The name of the agent. </summary>
         public string Name { get; }
 
+        /// <summary> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </summary>
+        public AgentState State { get; }
+
         /// <summary> The endpoint configuration for the agent. </summary>
-        public AgentEndpoint AgentEndpoint { get; }
+        public AgentEndpointConfiguration AgentEndpoint { get; }
 
         /// <summary> The instance identity of the agent. </summary>
         public AgentIdentity InstanceIdentity { get; }

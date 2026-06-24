@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 AppliesToGroups = { new NetworkManagerSecurityGroupItem(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup")) },
             };
-            ArmOperation<AdminRuleGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
+            ArmOperation<AdminRuleGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             AdminRuleGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

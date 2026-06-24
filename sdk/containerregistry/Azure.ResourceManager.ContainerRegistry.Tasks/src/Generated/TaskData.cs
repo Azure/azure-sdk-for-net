@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of a task. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, ContainerRegistryTaskIdentityProperties identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TaskProperties properties, ContainerRegistryTaskIdentityProperties identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of a task. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new TaskProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new TaskProperties();
                 }
-                Properties.TimeoutInSeconds = value.Value;
+                Properties.TimeoutInSeconds = value;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new TaskProperties();
                 }
-                Properties.IsSystemTask = value.Value;
+                Properties.IsSystemTask = value;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 {
                     Properties = new TaskProperties();
                 }
-                Properties.AgentCpu = value.Value;
+                Properties.AgentCpu = value;
             }
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingSupportedAccountType : IEquatable<BillingSupportedAccountType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Partner. </summary>
+        private const string PartnerValue = "Partner";
+        /// <summary> Individual. </summary>
+        private const string IndividualValue = "Individual";
+        /// <summary> Enterprise. </summary>
+        private const string EnterpriseValue = "Enterprise";
 
         /// <summary> Initializes a new instance of <see cref="BillingSupportedAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingSupportedAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string PartnerValue = "Partner";
-        private const string IndividualValue = "Individual";
-        private const string EnterpriseValue = "Enterprise";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static BillingSupportedAccountType None { get; } = new BillingSupportedAccountType(NoneValue);
+
         /// <summary> Partner. </summary>
         public static BillingSupportedAccountType Partner { get; } = new BillingSupportedAccountType(PartnerValue);
+
         /// <summary> Individual. </summary>
         public static BillingSupportedAccountType Individual { get; } = new BillingSupportedAccountType(IndividualValue);
+
         /// <summary> Enterprise. </summary>
         public static BillingSupportedAccountType Enterprise { get; } = new BillingSupportedAccountType(EnterpriseValue);
+
         /// <summary> Determines if two <see cref="BillingSupportedAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingSupportedAccountType left, BillingSupportedAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingSupportedAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingSupportedAccountType left, BillingSupportedAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingSupportedAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingSupportedAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingSupportedAccountType(string value) => new BillingSupportedAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingSupportedAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingSupportedAccountType?(string value) => value == null ? null : new BillingSupportedAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingSupportedAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingSupportedAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
