@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Resource status of the origin group. </summary>
     public enum OriginGroupResourceState
     {
+        /// <summary> Creating. </summary>
         Creating,
+        /// <summary> Active. </summary>
         Active,
+        /// <summary> Deleting. </summary>
         Deleting
     }
 }

@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> whether this route will be linked to the default endpoint domain. </summary>
     public enum LinkToDefaultDomain
     {
+        /// <summary> Enabled. </summary>
         Enabled,
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

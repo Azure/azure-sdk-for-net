@@ -10,9 +10,13 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The redirect type the rule will use when redirecting traffic. </summary>
     public enum RedirectType
     {
+        /// <summary> Moved. </summary>
         Moved,
+        /// <summary> Found. </summary>
         Found,
+        /// <summary> TemporaryRedirect. </summary>
         TemporaryRedirect,
+        /// <summary> PermanentRedirect. </summary>
         PermanentRedirect
     }
 }

@@ -12,11 +12,15 @@ namespace Azure.Provisioning.Cdn
     /// <summary> cipher suite set type that will be used for Https. </summary>
     public enum AfdCipherSuiteSetType
     {
+        /// <summary> Customized. </summary>
         Customized,
+        /// <summary> Tls1_0_2019. </summary>
         [DataMember(Name = "TLS10_2019")]
         Tls1_0_2019,
+        /// <summary> Tls1_2_2022. </summary>
         [DataMember(Name = "TLS12_2022")]
         Tls1_2_2022,
+        /// <summary> Tls1_2_2023. </summary>
         [DataMember(Name = "TLS12_2023")]
         Tls1_2_2023
     }

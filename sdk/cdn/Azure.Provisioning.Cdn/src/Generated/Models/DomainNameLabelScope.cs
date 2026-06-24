@@ -10,9 +10,13 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Indicates the endpoint name reuse scope. The default value is TenantReuse. </summary>
     public enum DomainNameLabelScope
     {
+        /// <summary> TenantReuse. </summary>
         TenantReuse,
+        /// <summary> SubscriptionReuse. </summary>
         SubscriptionReuse,
+        /// <summary> ResourceGroupReuse. </summary>
         ResourceGroupReuse,
+        /// <summary> NoReuse. </summary>
         NoReuse
     }
 }

@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
     public enum RuleIsCompressionEnabled
     {
+        /// <summary> Enabled. </summary>
         Enabled,
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

@@ -12,8 +12,10 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum AfdCustomizedCipherSuiteForTls13
     {
+        /// <summary> Tls_Aes_128_Gcm_Sha256. </summary>
         [DataMember(Name = "TLS_AES_128_GCM_SHA256")]
         Tls_Aes_128_Gcm_Sha256,
+        /// <summary> Tls_Aes_256_Gcm_Sha384. </summary>
         [DataMember(Name = "TLS_AES_256_GCM_SHA384")]
         Tls_Aes_256_Gcm_Sha384
     }

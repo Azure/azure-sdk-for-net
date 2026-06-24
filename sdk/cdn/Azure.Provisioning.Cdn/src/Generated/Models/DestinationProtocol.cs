@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Protocol to use for the redirect. The default value is MatchRequest. </summary>
     public enum DestinationProtocol
     {
+        /// <summary> MatchRequest. </summary>
         MatchRequest,
+        /// <summary> Http. </summary>
         Http,
+        /// <summary> Https. </summary>
         Https
     }
 }

@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum SslProtocolOperator
     {
+        /// <summary> Equal. </summary>
         Equal
     }
 }

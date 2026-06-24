@@ -12,6 +12,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Algorithm to use for URL signing. </summary>
     public enum UriSigningAlgorithm
     {
+        /// <summary> Sha256. </summary>
         [DataMember(Name = "SHA256")]
         Sha256
     }

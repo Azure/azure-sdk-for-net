@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public enum EnabledState
     {
+        /// <summary> Enabled. </summary>
         Enabled,
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Defines the TLS extension protocol that is used for secure delivery. </summary>
     public enum SecureDeliveryProtocolType
     {
+        /// <summary> ServerNameIndication. </summary>
         ServerNameIndication,
+        /// <summary> IPBased. </summary>
         IPBased
     }
 }

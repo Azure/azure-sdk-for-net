@@ -10,14 +10,23 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Resource status of the profile. </summary>
     public enum ProfileResourceState
     {
+        /// <summary> Creating. </summary>
         Creating,
+        /// <summary> Active. </summary>
         Active,
+        /// <summary> Deleting. </summary>
         Deleting,
+        /// <summary> Disabled. </summary>
         Disabled,
+        /// <summary> Migrating. </summary>
         Migrating,
+        /// <summary> Migrated. </summary>
         Migrated,
+        /// <summary> PendingMigrationCommit. </summary>
         PendingMigrationCommit,
+        /// <summary> CommittingMigration. </summary>
         CommittingMigration,
+        /// <summary> AbortingMigration. </summary>
         AbortingMigration
     }
 }

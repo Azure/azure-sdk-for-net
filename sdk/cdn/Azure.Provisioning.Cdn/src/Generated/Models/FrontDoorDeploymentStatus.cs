@@ -10,9 +10,13 @@ namespace Azure.Provisioning.Cdn
     /// <summary></summary>
     public enum FrontDoorDeploymentStatus
     {
+        /// <summary> NotStarted. </summary>
         NotStarted,
+        /// <summary> InProgress. </summary>
         InProgress,
+        /// <summary> Succeeded. </summary>
         Succeeded,
+        /// <summary> Failed. </summary>
         Failed
     }
 }

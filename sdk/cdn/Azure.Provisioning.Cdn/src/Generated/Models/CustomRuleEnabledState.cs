@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
     public enum CustomRuleEnabledState
     {
+        /// <summary> Disabled. </summary>
         Disabled,
+        /// <summary> Enabled. </summary>
         Enabled
     }
 }

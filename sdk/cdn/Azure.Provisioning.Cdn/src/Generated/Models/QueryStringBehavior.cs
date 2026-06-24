@@ -10,9 +10,13 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Caching behavior for the requests. </summary>
     public enum QueryStringBehavior
     {
+        /// <summary> Include. </summary>
         Include,
+        /// <summary> IncludeAll. </summary>
         IncludeAll,
+        /// <summary> Exclude. </summary>
         Exclude,
+        /// <summary> ExcludeAll. </summary>
         ExcludeAll
     }
 }

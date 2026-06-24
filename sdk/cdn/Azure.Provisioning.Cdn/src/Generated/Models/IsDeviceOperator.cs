@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum IsDeviceOperator
     {
+        /// <summary> Equal. </summary>
         Equal
     }
 }

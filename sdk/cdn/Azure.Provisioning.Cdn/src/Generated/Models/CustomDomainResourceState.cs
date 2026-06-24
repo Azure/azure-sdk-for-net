@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Resource status of the custom domain. </summary>
     public enum CustomDomainResourceState
     {
+        /// <summary> Creating. </summary>
         Creating,
+        /// <summary> Active. </summary>
         Active,
+        /// <summary> Deleting. </summary>
         Deleting
     }
 }

@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The level at which the content needs to be cached. </summary>
     public enum CdnCacheLevel
     {
+        /// <summary> All. </summary>
         All
     }
 }

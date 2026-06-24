@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes the action that shall be taken when the certificate is removed from Key Vault. </summary>
     public enum CertificateDeleteAction
     {
+        /// <summary> NoAction. </summary>
         NoAction
     }
 }

@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Caching behavior for the requests. </summary>
     public enum RuleCacheBehavior
     {
+        /// <summary> HonorOrigin. </summary>
         HonorOrigin,
+        /// <summary> OverrideAlways. </summary>
         OverrideAlways,
+        /// <summary> OverrideIfOriginMissing. </summary>
         OverrideIfOriginMissing
     }
 }

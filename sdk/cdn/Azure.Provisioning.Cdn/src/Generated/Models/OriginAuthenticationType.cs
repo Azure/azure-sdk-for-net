@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> The type of the authentication for the origin. </summary>
     public enum OriginAuthenticationType
     {
+        /// <summary> SystemAssignedIdentity. </summary>
         SystemAssignedIdentity,
+        /// <summary> UserAssignedIdentity. </summary>
         UserAssignedIdentity
     }
 }

@@ -10,6 +10,7 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes operator to be matched. </summary>
     public enum HttpVersionOperator
     {
+        /// <summary> Equal. </summary>
         Equal
     }
 }

@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Protocol this rule will use when forwarding traffic to backends. </summary>
     public enum ForwardingProtocol
     {
+        /// <summary> HttpOnly. </summary>
         HttpOnly,
+        /// <summary> HttpsOnly. </summary>
         HttpsOnly,
+        /// <summary> MatchRequest. </summary>
         MatchRequest
     }
 }

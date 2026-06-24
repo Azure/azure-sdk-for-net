@@ -10,8 +10,11 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Provisioning state of the WebApplicationFirewallPolicy. </summary>
     public enum WebApplicationFirewallPolicyProvisioningState
     {
+        /// <summary> Creating. </summary>
         Creating,
+        /// <summary> Succeeded. </summary>
         Succeeded,
+        /// <summary> Failed. </summary>
         Failed
     }
 }

@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Type of certificate used. </summary>
     public enum CdnManagedCertificateType
     {
+        /// <summary> Shared. </summary>
         Shared,
+        /// <summary> Dedicated. </summary>
         Dedicated
     }
 }

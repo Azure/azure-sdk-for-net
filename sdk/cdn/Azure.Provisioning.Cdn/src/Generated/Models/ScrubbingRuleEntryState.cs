@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Defines the state of a log scrubbing rule. Default value is enabled. </summary>
     public enum ScrubbingRuleEntryState
     {
+        /// <summary> Enabled. </summary>
         Enabled,
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

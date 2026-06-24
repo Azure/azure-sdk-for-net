@@ -10,7 +10,9 @@ namespace Azure.Provisioning.Cdn
     /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
     public enum PolicyMode
     {
+        /// <summary> Prevention. </summary>
         Prevention,
+        /// <summary> Detection. </summary>
         Detection
     }
 }
