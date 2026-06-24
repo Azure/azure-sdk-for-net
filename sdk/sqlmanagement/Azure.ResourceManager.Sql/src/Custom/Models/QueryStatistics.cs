@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     Properties = new QueryStatisticsProperties();
                 }
-                return (IList<QueryMetricInterval>)Properties.Intervals;
+                return Properties.Intervals as IList<QueryMetricInterval>;
             }
         }
     }

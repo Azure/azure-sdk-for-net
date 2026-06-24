@@ -441,6 +441,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsByResourceGroupLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given location based on resource group.
         /// </summary>
@@ -452,6 +453,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given location based on resource group.
         /// </summary>
@@ -463,6 +465,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given server based on resource group.
         /// </summary>
@@ -474,6 +477,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given server based on resource group.
         /// </summary>
@@ -485,6 +489,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given managed instance based on resource group.
         /// </summary>
@@ -496,6 +501,7 @@ namespace Azure.ResourceManager.Sql
             return GetMockableSqlResourceGroupResource(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
+        // To avoid duplicating the same method name in client.tsp, we define different method names which are not same as the original method names, then use this custom code to keep the original method names and ensure backward compatibility.
         /// <summary>
         /// Lists the long term retention backups for a given managed instance based on resource group.
         /// </summary>

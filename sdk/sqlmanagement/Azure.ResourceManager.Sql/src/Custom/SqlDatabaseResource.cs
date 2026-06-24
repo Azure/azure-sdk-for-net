@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Sql
 {
+    // This CodeGenSuppress is to avoid this issue https://github.com/Azure/azure-sdk-for-net/issues/59990, the code will be removed once the issue is fixed.
     [CodeGenSuppress("GetDatabaseColumnsAsync", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetDatabaseColumns", typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCurrentSensitivityLabelsAsync", typeof(string), typeof(bool?), typeof(string), typeof(CancellationToken))]

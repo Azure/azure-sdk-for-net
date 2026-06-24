@@ -3,13 +3,17 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlNameAvailabilityContent
     {
-        /// <summary> Backward-compatible single-argument constructor; defaults to <see cref="SqlNameAvailabilityResourceType.MicrosoftSqlServers"/>. </summary>
+        // Backward-compatible single-argument constructor
+        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public SqlNameAvailabilityContent(string name) : this(name, SqlNameAvailabilityResourceType.MicrosoftSqlServers)
         {

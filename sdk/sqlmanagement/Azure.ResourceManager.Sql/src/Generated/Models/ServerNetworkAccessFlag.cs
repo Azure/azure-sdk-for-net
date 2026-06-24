@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Sql.Models
         private const string EnabledValue = "Enabled";
         /// <summary> Disabled. </summary>
         private const string DisabledValue = "Disabled";
+        /// <summary> SecuredByPerimeter. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="ServerNetworkAccessFlag"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Disabled. </summary>
         public static ServerNetworkAccessFlag Disabled { get; } = new ServerNetworkAccessFlag(DisabledValue);
+
+        /// <summary> SecuredByPerimeter. </summary>
+        public static ServerNetworkAccessFlag SecuredByPerimeter { get; } = new ServerNetworkAccessFlag(SecuredByPerimeterValue);
 
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
