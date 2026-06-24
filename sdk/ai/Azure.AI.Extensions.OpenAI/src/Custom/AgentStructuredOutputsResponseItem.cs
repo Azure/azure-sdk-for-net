@@ -34,4 +34,17 @@ public partial class AgentStructuredOutputsResponseItem
     internal AgentStructuredOutputsResponseItem(): base(ResponseItemKind.StructuredOutputs)
     {
     }
+
+    /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
+    /// <param name="type"></param>
+    /// <param name="id"></param>
+    /// <param name="agentReference"> The agent that created the item. </param>
+    /// <param name="responseId"> The response on which the item is created. </param>
+    /// <param name="output"> The structured output captured during the response. </param>
+    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    internal AgentStructuredOutputsResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+    {
+        Output = output;
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+    }
 }

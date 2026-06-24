@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using OpenAI.Responses;
 
@@ -1055,15 +1056,16 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="output"> The structured output captured during the response. </param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="output"></param>
         /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
         {
             return new AgentStructuredOutputsResponseItem(
-                "structured_outputs",
+                @type,
                 id,
                 agentReference,
                 responseId,
@@ -1615,6 +1617,18 @@ namespace Azure.AI.Extensions.OpenAI
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
+        /// <param name="id"></param>
+        /// <param name="agentReference"> The agent that created the item. </param>
+        /// <param name="responseId"> The response on which the item is created. </param>
+        /// <param name="output"> The structured output captured during the response. </param>
+        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id, AgentReference agentReference, string responseId, BinaryData output)
+        {
+            return AgentStructuredOutputsResponseItem(@type: default, id: id, agentReference: agentReference, responseId: responseId, output: output);
         }
     }
 }
