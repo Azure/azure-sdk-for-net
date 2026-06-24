@@ -54,7 +54,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -107,7 +107,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -156,7 +156,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://mock-backend"),
                         Transport = new HttpClientPipelineTransport(mockBackend),
@@ -670,7 +670,7 @@ public class OpenAIProxyEndToEndTests
             {
                 var upstream = new ResponsesClient(
                     new ApiKeyCredential("unused-key"),
-                    new OpenAIClientOptions
+                    new ResponsesClientOptions
                     {
                         Endpoint = new Uri("http://server-b"),
                         Transport = new HttpClientPipelineTransport(serverBClient),
@@ -685,7 +685,7 @@ public class OpenAIProxyEndToEndTests
         var httpClient = factory.CreateClient();
         return new ResponsesClient(
             new ApiKeyCredential("test-key"),
-            new OpenAIClientOptions
+            new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://localhost"),
                 Transport = new HttpClientPipelineTransport(httpClient),

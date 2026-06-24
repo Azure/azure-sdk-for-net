@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null)
         : this(projectEndpoint, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
@@ -47,6 +49,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null, ProjectResponsesClientOptions options = null)
         : this(
               pipeline: ProjectOpenAIClient.CreatePipeline(
@@ -68,6 +71,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// </remarks>
     /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
     /// <param name="options"> The options used to configure the client. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options)
         : this(projectEndpoint: null, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
     { }
@@ -77,11 +81,112 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to configure the client. </param>
     /// <param name="defaultAgent"> The default agent used for response requests. </param>
     /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectResponsesClientOptions options = null, AgentReference defaultAgent = null, string defaultConversationId = null)
         : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
     { }
 
-    internal ProjectResponsesClient(ClientPipeline pipeline, OpenAIClientOptions options, AgentReference defaultAgent, string defaultConversationId)
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
+    /// </summary>
+    /// <remarks>
+    /// This constructor automatically constructs the base URI for requests from the supplied <paramref name="projectEndpoint"/>
+    /// value. To use a base URI directly, use the alternative constructor and set
+    /// <see cref="ResponsesClientOptions.Endpoint"/> on the supplied options.
+    /// </remarks>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options)
+        : this(projectEndpoint, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default agent settings.
+    /// </summary>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId, ProjectOAIResponsesClientOptions options)
+        : this(
+              pipeline: CreatePipeline(
+                  CreateAuthenticationPolicy(
+                      tokenProvider,
+                      GetMergedOptions(projectEndpoint, tokenProvider, options)),
+                  GetMergedOptions(projectEndpoint, tokenProvider, options)),
+              options: GetMergedOptions(projectEndpoint, tokenProvider, options),
+              defaultAgent: defaultAgent,
+              defaultConversationId: defaultConversationId)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
+    /// </summary>
+    /// <remarks>
+    /// This constructor directly uses the supplied value from the provided
+    /// <see cref="ResponsesClientOptions.Endpoint"/> and performs no additional automatic resolution.
+    /// </remarks>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options)
+        : this(projectEndpoint: null, tokenProvider, defaultAgent: null, defaultConversationId: null, options)
+    { }
+
+    /// <summary> Initializes a new instance of <see cref="ProjectResponsesClient"/>. </summary>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options, AgentReference defaultAgent = null, string defaultConversationId = null)
+        : this(projectEndpoint: null, tokenProvider, defaultAgent, defaultConversationId, options)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default options.
+    /// </summary>
+    /// <remarks>
+    /// This constructor automatically constructs the base URI for requests from the supplied
+    /// <paramref name="projectEndpoint"/> value.
+    /// </remarks>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider)
+        : this(projectEndpoint, tokenProvider, (ProjectOAIResponsesClientOptions)null)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default agent settings
+    /// and default options.
+    /// </summary>
+    /// <param name="projectEndpoint"> The Azure AI project endpoint. </param>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    public ProjectResponsesClient(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null)
+        : this(projectEndpoint, tokenProvider, defaultAgent, defaultConversationId, (ProjectOAIResponsesClientOptions)null)
+    { }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ProjectResponsesClient"/> with default options.
+    /// </summary>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider)
+        : this(tokenProvider, (ProjectOAIResponsesClientOptions)null)
+    { }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ProjectResponsesClient"/> with default options.
+    /// </summary>
+    /// <param name="tokenProvider"> The token provider used to authenticate requests. </param>
+    /// <param name="defaultAgent"> The default agent used for response requests. </param>
+    /// <param name="defaultConversationId"> The default conversation ID used for response requests. </param>
+    public ProjectResponsesClient(AuthenticationTokenProvider tokenProvider, AgentReference defaultAgent, string defaultConversationId = null)
+        : this(tokenProvider, (ProjectOAIResponsesClientOptions)null, defaultAgent, defaultConversationId)
+    { }
+
+    internal ProjectResponsesClient(ClientPipeline pipeline, ProjectOAIResponsesClientOptions options, AgentReference defaultAgent, string defaultConversationId)
         : base(pipeline, options)
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
@@ -580,5 +685,50 @@ public partial class ProjectResponsesClient : ResponsesClient
             BinaryData.FromString(element.GetRawText()),
             options,
             OpenAIContext.Default);
+    }
+
+    internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOAIResponsesClientOptions options)
+    {
+        options ??= new ProjectOAIResponsesClientOptions();
+
+        TelemetryDetails telemetryDetails = new(typeof(OpenAIClient).Assembly, default);
+        string prefix = "AIProjectClient";
+        if (!string.IsNullOrEmpty(options.UserAgentApplicationId))
+        {
+            prefix = $"{options.UserAgentApplicationId}-AIProjectClient";
+        }
+        if (!string.IsNullOrEmpty(options.AgentName))
+        {
+            PipelinePolicyHelpers.AddQueryParameterPolicy(options, "api-version", options.ApiVersion);
+        }
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
+        PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
+        PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
+        PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
+
+        return ClientPipeline.Create(options: options, perCallPolicies: [], perTryPolicies: [authenticationPolicy], beforeTransportPolicies: []);
+    }
+
+    internal static AuthenticationPolicy CreateAuthenticationPolicy(AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options = null)
+        => ProjectOpenAIClient.CreateAuthenticationPolicy(tokenProvider);
+
+    internal static ProjectOAIResponsesClientOptions GetMergedOptions(Uri projectEndpoint, AuthenticationTokenProvider tokenProvider, ProjectOAIResponsesClientOptions options = null)
+    {
+        if (projectEndpoint is null)
+        {
+            return options;
+        }
+        string path = string.IsNullOrEmpty(options?.AgentName) ? "/openai/v1" : $"/agents/{options.AgentName}/endpoint/protocols/openai";
+        string rawTargetOpenAIEndpoint = projectEndpoint.AbsoluteUri.TrimEnd('/') + path;
+        if (options?.Endpoint is not null && options?.Endpoint?.AbsoluteUri != rawTargetOpenAIEndpoint)
+        {
+            throw new InvalidOperationException(
+                $"Cannot supply both a constructor '{nameof(projectEndpoint)}' and {nameof(options)}.{nameof(options.Endpoint)}.");
+        }
+        options ??= new();
+        options.Endpoint ??= new Uri(rawTargetOpenAIEndpoint);
+        options.TokenProvider = tokenProvider;
+        return options;
     }
 }

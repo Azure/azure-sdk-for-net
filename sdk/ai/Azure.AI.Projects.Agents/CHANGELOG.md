@@ -13,6 +13,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.11.0`.
 
 ## 2.1.0-beta.3 (2026-05-29)
 

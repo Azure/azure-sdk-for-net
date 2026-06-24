@@ -3,6 +3,9 @@
 ## 2.1.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added `ProjectOAIResponsesClientOptions`, a new options type for `ProjectResponsesClient` that derives from `OpenAI.Responses.ResponsesClientOptions`. This aligns with the upstream OpenAI client option hierarchy after `ResponsesClientOptions` was split out as a sibling of `OpenAIClientOptions`.
+- Added an implicit conversion from `ProjectOpenAIClientOptions` to `ProjectOAIResponsesClientOptions` that copies all public configuration (endpoint, organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings, network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`).
+- Added new `ProjectResponsesClient` constructors that accept `ProjectOAIResponsesClientOptions`, including parameterless-options overloads so `new ProjectResponsesClient(projectEndpoint, tokenProvider)` resolves to a visible constructor without requiring an options argument.
 
 ### Breaking Changes
 
@@ -11,6 +14,8 @@
 - Fixed issue with stateless encrypted reasoning [issue](https://github.com/Azure/azure-sdk-for-net/issues/59967).
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.11.0`. This release reshapes `OpenAI.Responses.ResponsesClientOptions` to derive directly from `System.ClientModel.Primitives.ClientPipelineOptions` (a sibling of `OpenAI.OpenAIClientOptions` rather than a subclass), which motivated the new `ProjectOAIResponsesClientOptions` type above.
+- The legacy `ProjectResponsesClientOptions` type and the `ProjectResponsesClient` constructors that take it are retained for binary compatibility but are now hidden from IntelliSense via `[EditorBrowsable(EditorBrowsableState.Never)]`. New code should prefer `ProjectOAIResponsesClientOptions`.
 
 ## 2.1.0-beta.3 (2026-05-29)
 
