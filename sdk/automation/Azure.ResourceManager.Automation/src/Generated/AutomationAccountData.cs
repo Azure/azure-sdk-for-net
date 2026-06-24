@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Gets or sets the automation account properties. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutomationAccountProperties properties, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
+        /// <summary> Identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Gets or sets the SKU of account. </summary>
