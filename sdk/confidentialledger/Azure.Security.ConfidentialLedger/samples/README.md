@@ -4,7 +4,6 @@ languages:
 - csharp
 products:
 - azure
-- azure-confidential-ledger
 name: Azure.Security.ConfidentialLedger samples for .NET
 description: Samples for the Azure.Security.ConfidentialLedger client library
 ---
