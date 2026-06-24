@@ -111,44 +111,6 @@ function Convert-ScopeMetadataToHierarchyScope {
     return $kind
 }
 
-function Get-LeafResourceInfoFromTemplate {
-    param([string] $Path)
-
-    if ([string]::IsNullOrWhiteSpace($Path)) { return $null }
-
-    $tokens = $Path.TrimStart('/').Split('/')
-    $scopeInfo = Get-ScopePrefix -Tokens $tokens
-    $rest = $scopeInfo.Rest
-    if (-not $rest -or $rest.Count -lt 2 -or -not ($rest -contains 'providers')) { return $null }
-
-    $parsed = Get-ResourceSegmentsWithIndex -Tokens $rest
-    $segments = @($parsed.Segments)
-    if ($segments.Count -eq 0) { return $null }
-
-    [string[]] $cumulative = Get-CumulativeResourceTypes -Segments $segments
-    $leaf = $segments[$segments.Count - 1]
-    return [pscustomobject]@{
-        ResourceType = [string]$cumulative[$cumulative.Length - 1]
-        IsSingleton  = ($leaf.IsLiteralSingleton -or (-not $leaf.HasName))
-    }
-}
-
-function Get-ArmProviderSchemaResources {
-    param($CodeModel)
-
-    $resources = New-Object System.Collections.Generic.List[object]
-    foreach ($client in @($CodeModel.clients)) {
-        foreach ($decorator in @($client.decorators)) {
-            if ($decorator.name -eq 'Azure.ClientGenerator.Core.@armProviderSchema' -and $decorator.arguments.resources) {
-                foreach ($resource in @($decorator.arguments.resources)) {
-                    $resources.Add($resource) | Out-Null
-                }
-            }
-        }
-    }
-    return $resources.ToArray()
-}
-
 # === Main =====================================================================
 
 $tspFile = Resolve-TspCodeModelFile -Path $TspCodeModelPath
@@ -241,48 +203,6 @@ foreach ($resource in $providerResources) {
 
 # Build ParentResources (class names) from ParentResourceTypes by lookup.
 [Console]::Error.WriteLine("Discovered $($resourcesByType.Count) resources")
-
-# Prefer the ARM provider schema when it is present. The path scan above is
-# intentionally broad so it can discover scopes from generated clients, but
-# action paths such as `/webhooks/generateUri` can otherwise look like literal
-# singleton resources. The provider schema carries the canonical resource ID
-# pattern and direct parent resource ID emitted by the ARM decorators.
-$schemaResources = @(Get-ArmProviderSchemaResources -CodeModel $json)
-if ($schemaResources.Count -gt 0) {
-    $schemaResourceIdToType = @{}
-    foreach ($schemaResource in $schemaResources) {
-        if ($schemaResource.resourceIdPattern -and $schemaResource.resourceType) {
-            $schemaResourceIdToType[[string]$schemaResource.resourceIdPattern] = [string]$schemaResource.resourceType
-        }
-    }
-
-    foreach ($schemaResource in $schemaResources) {
-        $resourceType = [string]$schemaResource.resourceType
-        if (-not $resourceType -or -not $resourcesByType.ContainsKey($resourceType)) { continue }
-
-        $resource = $resourcesByType[$resourceType]
-        if ($schemaResource.resourceIdPattern) {
-            $resource.ResourceId = [string]$schemaResource.resourceIdPattern
-            $leafInfo = Get-LeafResourceInfoFromTemplate -Path ([string]$schemaResource.resourceIdPattern)
-            if ($null -ne $leafInfo) {
-                $resource.IsSingleton = [bool]$leafInfo.IsSingleton
-            }
-        }
-
-        $parentType = $null
-        $parentResourceId = [string]$schemaResource.parentResourceId
-        if ($parentResourceId) {
-            if ($schemaResourceIdToType.ContainsKey($parentResourceId)) {
-                $parentType = $schemaResourceIdToType[$parentResourceId]
-            }
-            else {
-                $parentInfo = Get-LeafResourceInfoFromTemplate -Path $parentResourceId
-                if ($null -ne $parentInfo) { $parentType = [string]$parentInfo.ResourceType }
-            }
-        }
-        $resource.ParentResourceTypes = if ($parentType) { @($parentType) } else { @() }
-    }
-}
 
 foreach ($key in @($resourcesByType.Keys)) {
     $r = $resourcesByType[$key]
