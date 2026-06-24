@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.RegistryPrivateEndpoint"/>. </summary>
         public static RegistryPrivateEndpoint RegistryPrivateEndpoint(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
         {
-            return new RegistryPrivateEndpoint(id, serializedAdditionalRawData: null, subnetArmId);
+            return new RegistryPrivateEndpoint(id, additionalBinaryDataProperties: null, subnetArmId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningWorkspaceConnectionProperties"/>. </summary>

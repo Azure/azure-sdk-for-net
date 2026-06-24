@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
                 return Properties.PrivateEndpoint is RegistryPrivateEndpoint registryPrivateEndpoint
                     ? registryPrivateEndpoint
-                    : new RegistryPrivateEndpoint(Properties.PrivateEndpoint.Id, serializedAdditionalRawData: null, Properties.PrivateEndpoint.SubnetArmId);
+                    : new RegistryPrivateEndpoint(Properties.PrivateEndpoint.Id, additionalBinaryDataProperties: null, Properties.PrivateEndpoint.SubnetArmId);
             }
             set
             {

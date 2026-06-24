@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPrivateEndpointConnectionProperties(IList<string> groupIds, MachineLearningPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistryPrivateEndpointConnectionProperties(IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The PE network resource that is linked to this PE connection. </summary>
         [WirePath("privateEndpoint")]
-        public MachineLearningPrivateEndpoint PrivateEndpoint { get; set; }
+        public RegistryPrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary> The connection state. </summary>
         [WirePath("registryPrivateLinkServiceConnectionState")]

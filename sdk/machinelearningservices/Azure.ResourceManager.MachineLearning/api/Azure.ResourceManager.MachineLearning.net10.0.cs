@@ -13732,6 +13732,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class RegistryPrivateEndpoint : Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpoint, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint>
     {
         public RegistryPrivateEndpoint() { }
+        protected override Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
