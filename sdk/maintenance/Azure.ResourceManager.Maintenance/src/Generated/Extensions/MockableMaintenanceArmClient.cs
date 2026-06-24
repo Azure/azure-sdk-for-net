@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Maintenance.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMaintenanceArmClient : ArmResource
     {
-        private ClientDiagnostics _scheduledEventClientDiagnostics;
-        private ScheduledEvent _scheduledEventRestClient;
+        private ClientDiagnostics _scheduledEventsClientDiagnostics;
+        private ScheduledEvents _scheduledEventsRestClient;
         private ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
         private ClientDiagnostics _updatesClientDiagnostics;
@@ -39,25 +39,25 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         {
         }
 
-        private ClientDiagnostics ScheduledEventClientDiagnostics => _scheduledEventClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ScheduledEventsClientDiagnostics => _scheduledEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledEvent ScheduledEventRestClient => _scheduledEventRestClient ??= new ScheduledEvent(ScheduledEventClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private ScheduledEvents ScheduledEventsRestClient => _scheduledEventsRestClient ??= new ScheduledEvents(ScheduledEventsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2023-10-01-preview");
+        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary> Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MaintenanceGroupApplyUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource"/> object. </returns>
-        public virtual MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MaintenanceGroupApplyUpdateResource"/> object. </returns>
+        public virtual MaintenanceGroupApplyUpdateResource GetMaintenanceGroupApplyUpdateResource(ResourceIdentifier id)
         {
-            MaintenancePublicConfigurationResource.ValidateResourceId(id);
-            return new MaintenancePublicConfigurationResource(Client, id);
+            MaintenanceGroupApplyUpdateResource.ValidateResourceId(id);
+            return new MaintenanceGroupApplyUpdateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -280,12 +280,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
 
-            using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
+            using DiagnosticScope scope0 = ScheduledEventsClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
             scope0.Start();
             try
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         }
 
         /// <summary>
-        /// Post Scheduled Event Acknowledgement
+        /// Post ScheduledEvents Acknowledgement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -331,12 +331,12 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="scheduledEventId"> Scheduled Event Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="scheduledEventId"> ScheduledEvents Id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(scheduledEventId, nameof(scheduledEventId));
 
-            using DiagnosticScope scope0 = ScheduledEventClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
+            using DiagnosticScope scope0 = ScheduledEventsClientDiagnostics.CreateScope("MockableMaintenanceArmClient.Acknowledge");
             scope0.Start();
             try
             {
@@ -353,7 +353,107 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledEventOperationGroup_AcknowledgeList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventsIdList"/> is null. </exception>
+        public virtual async Task<Response<MaintenanceScheduledEventApproveResult>> AcknowledgeListAsync(ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(scheduledEventsIdList, nameof(scheduledEventsIdList));
+
+            using DiagnosticScope scope0 = ScheduledEventsClientDiagnostics.CreateScope("MockableMaintenanceArmClient.AcknowledgeList");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Post List of ScheduledEvents Acknowledgement
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/scheduledevents. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledEventOperationGroup_AcknowledgeList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scheduledEventsIdList"> List of ScheduledEvents Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scheduledEventsIdList"/> is null. </exception>
+        public virtual Response<MaintenanceScheduledEventApproveResult> AcknowledgeList(ResourceIdentifier scope, MaintenanceScheduledEventIdList scheduledEventsIdList, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(scheduledEventsIdList, nameof(scheduledEventsIdList));
+
+            using DiagnosticScope scope0 = ScheduledEventsClientDiagnostics.CreateScope("MockableMaintenanceArmClient.AcknowledgeList");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -382,7 +482,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,7 +530,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -478,7 +578,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +626,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -574,7 +674,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -616,7 +716,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -658,7 +758,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -698,7 +798,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
