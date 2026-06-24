@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.AI.AgentServer.Optimization" Version="1.0.0-beta.1" />
-    <PackageReference Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.1" />
+    <PackageReference Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.21" />
     <PackageReference Include="Azure.AI.AgentServer.Responses" Version="1.0.0-beta.1" />
     <PackageReference Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
     <!-- Microsoft Agent Framework: build the response agent with AIAgent + tools. -->
