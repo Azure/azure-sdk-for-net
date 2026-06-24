@@ -6606,7 +6606,7 @@ namespace Azure.Storage.Files.Shares
                 operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeListDiff)}")
             .ToAsyncCollection(cancellationToken);
 
-        internal async Task<Response<ShareFileRangeList>> GetAllRangeListInternal(
+        internal async Task<Response<ShareFileRangeListSegment>> GetAllRangeListInternal(
             string marker,
             int? pageSizeHint,
             HttpRange? range,
@@ -6633,11 +6633,11 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
-                    Response<ShareFileRangeList> response;
+                    Response<ShareFileRangeListSegment> response;
 
                     if (async)
                     {
-                        response = await FileRestClient.GetRangeListAsync(
+                        response = await FileRestClient.GetAllRangesAsync(
                             sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
                             supportRename: supportRename,
@@ -6650,7 +6650,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        response = FileRestClient.GetRangeList(
+                        response = FileRestClient.GetAllRanges(
                             sharesnapshot: snapshot,
                             prevsharesnapshot: previousSnapshot,
                             supportRename: supportRename,

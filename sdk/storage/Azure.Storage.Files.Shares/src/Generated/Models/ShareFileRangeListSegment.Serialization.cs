@@ -17,29 +17,30 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ShareFileRangeList : IPersistableModel<ShareFileRangeList>, IXmlSerializable
+    /// <summary> The paginated list of file ranges. </summary>
+    internal partial class ShareFileRangeListSegment : IPersistableModel<ShareFileRangeListSegment>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ShareFileRangeList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ShareFileRangeListSegment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeListSegment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeShareFileRangeList(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeShareFileRangeListSegment(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareFileRangeListSegment)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeListSegment>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -59,22 +60,22 @@ namespace Azure.Storage.Files.Shares.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareFileRangeListSegment)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ShareFileRangeList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ShareFileRangeListSegment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ShareFileRangeList IPersistableModel<ShareFileRangeList>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ShareFileRangeListSegment IPersistableModel<ShareFileRangeListSegment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ShareFileRangeList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ShareFileRangeListSegment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ShareFileRangeList"/> from. </param>
-        public static explicit operator ShareFileRangeList(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ShareFileRangeListSegment"/> from. </param>
+        public static explicit operator ShareFileRangeListSegment(Response response)
         {
             using Stream stream = response.ContentStream;
             if (stream == null)
@@ -82,7 +83,7 @@ namespace Azure.Storage.Files.Shares.Models
                 return default;
             }
 
-            return DeserializeShareFileRangeList(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return DeserializeShareFileRangeListSegment(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -107,10 +108,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeList>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ShareFileRangeListSegment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(ShareFileRangeList)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareFileRangeListSegment)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Ranges))
@@ -131,11 +132,17 @@ namespace Azure.Storage.Files.Shares.Models
                     writer.WriteEndElement();
                 }
             }
+            if (Optional.IsDefined(NextMarker))
+            {
+                writer.WriteStartElement("NextMarker");
+                writer.WriteValue(NextMarker);
+                writer.WriteEndElement();
+            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ShareFileRangeList DeserializeShareFileRangeList(XElement element, ModelReaderWriterOptions options)
+        internal static ShareFileRangeListSegment DeserializeShareFileRangeListSegment(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -144,6 +151,7 @@ namespace Azure.Storage.Files.Shares.Models
 
             IList<FileRange> ranges = default;
             IList<ClearRange> clearRanges = default;
+            string nextMarker = default;
 
             foreach (var child in element.Elements())
             {
@@ -166,8 +174,13 @@ namespace Azure.Storage.Files.Shares.Models
                     clearRanges.Add(ClearRange.DeserializeClearRange(child, options));
                     continue;
                 }
+                if (localName == "NextMarker")
+                {
+                    nextMarker = (string)child;
+                    continue;
+                }
             }
-            return new ShareFileRangeList(ranges ?? new ChangeTrackingList<FileRange>(), clearRanges ?? new ChangeTrackingList<ClearRange>());
+            return new ShareFileRangeListSegment(ranges ?? new ChangeTrackingList<FileRange>(), clearRanges ?? new ChangeTrackingList<ClearRange>(), nextMarker);
         }
 
         /// <param name="writer"> The XML writer. </param>

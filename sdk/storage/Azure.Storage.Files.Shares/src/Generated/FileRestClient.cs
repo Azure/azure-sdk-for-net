@@ -1245,18 +1245,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next List Ranges operation. </param>
-        /// <param name="maxresults"> Specifies the maximum number of ranges to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetRangeList(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        public virtual Response GetRangeList(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetRangeList");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, context);
+                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1280,18 +1278,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next List Ranges operation. </param>
-        /// <param name="maxresults"> Specifies the maximum number of ranges to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetRangeListAsync(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        public virtual async Task<Response> GetRangeListAsync(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetRangeList");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, context);
+                using HttpMessage message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1308,13 +1304,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next List Ranges operation. </param>
-        /// <param name="maxresults"> Specifies the maximum number of ranges to return. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ShareFileRangeList> GetRangeList(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual Response<ShareFileRangeList> GetRangeList(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetRangeList(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, cancellationToken.ToRequestContext());
+            Response result = GetRangeList(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, cancellationToken.ToRequestContext());
             return Response.FromValue((ShareFileRangeList)result, result);
         }
 
@@ -1325,14 +1319,116 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range"> Return file data only from the specified byte range. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next List Ranges operation. </param>
-        /// <param name="maxresults"> Specifies the maximum number of ranges to return. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ShareFileRangeList>> GetRangeListAsync(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ShareFileRangeList>> GetRangeListAsync(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetRangeListAsync(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetRangeListAsync(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ShareFileRangeList)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of valid page ranges for a file or snapshot of a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAllRanges(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetAllRanges");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAllRangesRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paginated list of valid page ranges for a file or snapshot of a file.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAllRangesAsync(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileRestClient.GetAllRanges");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAllRangesRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Returns a paginated list of valid page ranges for a file or snapshot of a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ShareFileRangeListSegment> GetAllRanges(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GetAllRanges(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, cancellationToken.ToRequestContext());
+            return Response.FromValue((ShareFileRangeListSegment)result, result);
+        }
+
+        /// <summary> Returns a paginated list of valid page ranges for a file or snapshot of a file. </summary>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
+        /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that specifies a previous file snapshot to compare against. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="range"> Return file data only from the specified byte range. </param>
+        /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved should be listed. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ShareFileRangeListSegment>> GetAllRangesAsync(string sharesnapshot = default, string prevsharesnapshot = default, int? timeout = default, string range = default, string leaseId = default, bool? supportRename = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetAllRangesAsync(sharesnapshot, prevsharesnapshot, timeout, range, leaseId, supportRename, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ShareFileRangeListSegment)result, result);
         }
 
         /// <summary>

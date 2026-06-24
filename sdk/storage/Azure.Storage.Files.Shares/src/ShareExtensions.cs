@@ -568,7 +568,7 @@ namespace Azure.Storage.Files.Shares
             => new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1);
 
         #region ToShareFileRanges
-        internal static ShareFileRange[] ToShareFileRanges(this Response<ShareFileRangeList> response)
+        internal static ShareFileRange[] ToShareFileRanges(this Response<ShareFileRangeListSegment> response)
         {
             if (response == null)
             {

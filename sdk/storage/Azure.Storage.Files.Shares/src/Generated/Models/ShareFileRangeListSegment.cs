@@ -10,22 +10,25 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class ShareFileRangeList
+    /// <summary> The paginated list of file ranges. </summary>
+    internal partial class ShareFileRangeListSegment
     {
-        /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
-        internal ShareFileRangeList()
+        /// <summary> Initializes a new instance of <see cref="ShareFileRangeListSegment"/>. </summary>
+        internal ShareFileRangeListSegment()
         {
             Ranges = new ChangeTrackingList<FileRange>();
             ClearRanges = new ChangeTrackingList<ClearRange>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareFileRangeListSegment"/>. </summary>
         /// <param name="ranges"> The file ranges. </param>
         /// <param name="clearRanges"> The clear ranges. </param>
-        internal ShareFileRangeList(IList<FileRange> ranges, IList<ClearRange> clearRanges)
+        /// <param name="nextMarker"> The next marker. </param>
+        internal ShareFileRangeListSegment(IList<FileRange> ranges, IList<ClearRange> clearRanges, string nextMarker)
         {
             Ranges = ranges;
             ClearRanges = clearRanges;
+            NextMarker = nextMarker;
         }
 
         /// <summary> The file ranges. </summary>
@@ -33,5 +36,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> The clear ranges. </summary>
         public IList<ClearRange> ClearRanges { get; }
+
+        /// <summary> The next marker. </summary>
+        public string NextMarker { get; }
     }
 }
