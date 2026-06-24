@@ -106,17 +106,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            var options = new ArmClientOptions();
-            options.SetApiVersion(SecurityAutomationResource.ResourceType, "2019-01-01-preview");
-            var playbackClient = GetArmClient(options);
             string automationName = Recording.GenerateAssetName("automation");
             var automation = await CreateSecurityAutomation(automationName);
             bool flag = await _automationCollection.ExistsAsync(automationName);
             Assert.IsTrue(flag);
-
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
             {
-                automation = playbackClient.GetSecurityAutomationResource(automation.Id);
                 await automation.DeleteAsync(WaitUntil.Completed);
                 flag = await _automationCollection.ExistsAsync(automationName);
                 Assert.IsFalse(flag);
