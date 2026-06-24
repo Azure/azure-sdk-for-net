@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary>
     /// Options for <see cref="ManagedInstanceResource.GetTopQueries(ManagedInstanceResourceGetTopQueriesOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    [Obsolete("This options class is obsolete and will be removed in a future release. Use the explicit parameter overload of GetTopQueries instead.", false)]
+    [Obsolete("This options class is obsolete and will be removed in a future release.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ManagedInstanceResourceGetTopQueriesOptions
     {
