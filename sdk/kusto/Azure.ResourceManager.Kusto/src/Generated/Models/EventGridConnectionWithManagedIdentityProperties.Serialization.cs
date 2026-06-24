@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoEventGridDataFormat? dataFormat = default;
             bool? ignoreFirstRecord = default;
             BlobStorageEventType? blobStorageEventType = default;
-            string managedIdentityResourceId = default;
+            ResourceIdentifier managedIdentityResourceId = default;
             string managedIdentityObjectId = default;
             KustoDatabaseRouting? databaseRouting = default;
             KustoProvisioningState? provisioningState = default;
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("managedIdentityResourceId"u8))
                 {
-                    managedIdentityResourceId = prop.Value.GetString();
+                    managedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedIdentityObjectId"u8))

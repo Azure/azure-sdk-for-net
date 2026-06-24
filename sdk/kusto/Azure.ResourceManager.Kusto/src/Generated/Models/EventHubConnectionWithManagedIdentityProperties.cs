@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="consumerGroup"> The event hub consumer group. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubResourceIdForManagedIdentity"/>, <paramref name="consumerGroup"/> or <paramref name="managedIdentityResourceId"/> is null. </exception>
-        public EventHubConnectionWithManagedIdentityProperties(string eventHubResourceIdForManagedIdentity, string consumerGroup, string managedIdentityResourceId)
+        public EventHubConnectionWithManagedIdentityProperties(string eventHubResourceIdForManagedIdentity, string consumerGroup, ResourceIdentifier managedIdentityResourceId)
         {
             Argument.AssertNotNull(eventHubResourceIdForManagedIdentity, nameof(eventHubResourceIdForManagedIdentity));
             Argument.AssertNotNull(consumerGroup, nameof(consumerGroup));
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubConnectionWithManagedIdentityProperties(string eventHubResourceIdForManagedIdentity, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, string managedIdentityResourceId, string managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubConnectionWithManagedIdentityProperties(string eventHubResourceIdForManagedIdentity, string consumerGroup, string tableName, string mappingRuleName, KustoEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, EventHubMessagesCompressionType? compression, KustoProvisioningState? provisioningState, ResourceIdentifier managedIdentityResourceId, string managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, DateTimeOffset? retrievalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventHubResourceIdForManagedIdentity = eventHubResourceIdForManagedIdentity;
             ConsumerGroup = consumerGroup;
@@ -90,7 +91,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </summary>
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary> The object ID of the managedIdentityResourceId. </summary>
         public string ManagedIdentityObjectId { get; }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </summary>
-        public string ManagedIdentityResourceId
+        public ResourceIdentifier ManagedIdentityResourceId
         {
             get
             {

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoProvisioningState? provisioningState = default;
             KustoScriptLevel? scriptLevel = default;
             PrincipalPermissionsAction? principalPermissionsAction = default;
-            string managedIdentityResourceId = default;
+            ResourceIdentifier managedIdentityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,7 +236,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (prop.NameEquals("managedIdentityResourceId"u8))
                 {
-                    managedIdentityResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

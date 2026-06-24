@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
         /// <param name="managedIdentityResourceId"> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptProperties(Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, KustoScriptLevel? scriptLevel, PrincipalPermissionsAction? principalPermissionsAction, string managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScriptProperties(Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, KustoScriptLevel? scriptLevel, PrincipalPermissionsAction? principalPermissionsAction, ResourceIdentifier managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScriptUri = scriptUri;
             ScriptUriSasToken = scriptUriSasToken;
@@ -71,6 +72,6 @@ namespace Azure.ResourceManager.Kusto.Models
         public PrincipalPermissionsAction? PrincipalPermissionsAction { get; set; }
 
         /// <summary> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </summary>
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
     }
 }

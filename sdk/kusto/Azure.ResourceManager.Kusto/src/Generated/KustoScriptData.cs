@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </summary>
-        public string ManagedIdentityResourceId
+        public ResourceIdentifier ManagedIdentityResourceId
         {
             get
             {

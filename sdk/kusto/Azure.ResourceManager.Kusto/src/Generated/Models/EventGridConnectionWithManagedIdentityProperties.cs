@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="consumerGroup"> The event hub consumer group. </param>
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceIdForManagedIdentity"/>, <paramref name="eventHubResourceIdForManagedIdentity"/>, <paramref name="consumerGroup"/> or <paramref name="managedIdentityResourceId"/> is null. </exception>
-        public EventGridConnectionWithManagedIdentityProperties(string storageAccountResourceIdForManagedIdentity, string eventHubResourceIdForManagedIdentity, string consumerGroup, string managedIdentityResourceId)
+        public EventGridConnectionWithManagedIdentityProperties(string storageAccountResourceIdForManagedIdentity, string eventHubResourceIdForManagedIdentity, string consumerGroup, ResourceIdentifier managedIdentityResourceId)
         {
             Argument.AssertNotNull(storageAccountResourceIdForManagedIdentity, nameof(storageAccountResourceIdForManagedIdentity));
             Argument.AssertNotNull(eventHubResourceIdForManagedIdentity, nameof(eventHubResourceIdForManagedIdentity));
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridConnectionWithManagedIdentityProperties(string storageAccountResourceIdForManagedIdentity, string eventHubResourceIdForManagedIdentity, string eventGridResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, BlobStorageEventType? blobStorageEventType, string managedIdentityResourceId, string managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridConnectionWithManagedIdentityProperties(string storageAccountResourceIdForManagedIdentity, string eventHubResourceIdForManagedIdentity, string eventGridResourceId, string consumerGroup, string tableName, string mappingRuleName, KustoEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, BlobStorageEventType? blobStorageEventType, ResourceIdentifier managedIdentityResourceId, string managedIdentityObjectId, KustoDatabaseRouting? databaseRouting, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceIdForManagedIdentity = storageAccountResourceIdForManagedIdentity;
             EventHubResourceIdForManagedIdentity = eventHubResourceIdForManagedIdentity;
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public BlobStorageEventType? BlobStorageEventType { get; set; }
 
         /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </summary>
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
         /// <summary> The object ID of managedIdentityResourceId. </summary>
         public string ManagedIdentityObjectId { get; }
