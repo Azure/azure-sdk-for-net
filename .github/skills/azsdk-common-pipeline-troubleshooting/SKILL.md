@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: 'Analyze Azure SDK CI/CD pipeline failures and provide actionable diagnosis. **UTILITY SKILL**. USE FOR: "pipeline failed", "build failure", "CI check failing", "tests failing in CI", "analyze pipeline", "what went wrong in my pipeline", "debug SDK pipeline". DO NOT USE FOR: local build issues without pipeline context, API design review, SDK publishing, applying code fixes (use azsdk-common-pipeline-fixer for that). INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_get_pipeline_llm_artifacts, azure-sdk-mcp:azsdk_get_pr_checks, azure-sdk-mcp:azsdk_get_pipeline_status.'
+description: 'Analyze Azure SDK CI/CD pipeline failures and provide actionable diagnosis. USE FOR: "pipeline failed", "build failure", "CI check failing", "tests failing in CI", "analyze pipeline", "debug SDK pipeline". DO NOT USE FOR: local build issues without pipeline context, API design review, SDK publishing, applying code fixes (use azsdk-common-pipeline-fixer for that). INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_get_pipeline_llm_artifacts, azure-sdk-mcp:azsdk_get_pr_checks, azure-sdk-mcp:azsdk_get_pipeline_status.'
 compatibility: "azure-sdk-mcp server, Azure DevOps pipeline build ID or GitHub PR link"
 ---
 

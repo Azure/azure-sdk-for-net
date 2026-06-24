@@ -1,0 +1,66 @@
+name: azsdk-common-pipeline-fixer-eval
+description: Evaluation suite for the azsdk-common-pipeline-fixer skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-pipeline-fixer
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "120s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Should trigger fixer
+  - name: trigger-fix-pipeline
+    prompt: "Fix the pipeline failure for build 6447834"
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_analyze_pipeline
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+
+  - name: trigger-fix-tests
+    prompt: "The tests are failing in my PR pipeline, auto-fix them"
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_analyze_pipeline
+
+  - name: trigger-fix-type-error
+    prompt: "My Python SDK CI is failing with a mypy type error, fix it"
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_analyze_pipeline
+      - type: output-contains
+        config:
+          substring: "type"
+
+  # Should NOT trigger (analysis only, no fix)
+  - name: anti-trigger-analyze-only
+    prompt: "What went wrong in my pipeline build 12345? Just tell me, don't fix anything."
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]
+
+  - name: anti-trigger-typespec
+    prompt: "Generate an SDK from my TypeSpec definition"
+    graders:
+      - type: tool-calls
+        config:
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_analyze_pipeline
