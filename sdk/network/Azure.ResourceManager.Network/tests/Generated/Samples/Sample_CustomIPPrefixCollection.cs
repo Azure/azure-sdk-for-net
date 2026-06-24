@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Cidr = "0.0.0.0/24",
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<CustomIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customIPPrefixName, data);
+            ArmOperation<CustomIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customIPPrefixName, data, cancellationToken: System.Threading.CancellationToken.None);
             CustomIPPrefixResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

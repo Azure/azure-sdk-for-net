@@ -58,7 +58,7 @@ NextHops = {"10.0.0.68"},
 }},
                 AttachedConnections = { "All_Vnets" },
             };
-            ArmOperation<VirtualHubRouteTableV2Resource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, data);
+            ArmOperation<VirtualHubRouteTableV2Resource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routeTableName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubRouteTableV2Resource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

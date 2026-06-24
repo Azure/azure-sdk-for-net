@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PcProtocol : IEquatable<PcProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
 
         /// <summary> Initializes a new instance of <see cref="PcProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PcProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string AnyValue = "Any";
-
         /// <summary> TCP. </summary>
-        public static PcProtocol Tcp { get; } = new PcProtocol(TcpValue);
+        public static PcProtocol TCP { get; } = new PcProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static PcProtocol Udp { get; } = new PcProtocol(UdpValue);
+        public static PcProtocol UDP { get; } = new PcProtocol(UDPValue);
+
         /// <summary> Any. </summary>
         public static PcProtocol Any { get; } = new PcProtocol(AnyValue);
+
         /// <summary> Determines if two <see cref="PcProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PcProtocol left, PcProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PcProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PcProtocol left, PcProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PcProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PcProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PcProtocol(string value) => new PcProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PcProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PcProtocol?(string value) => value == null ? null : new PcProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PcProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PcProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

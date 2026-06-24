@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class PrivateDnsZoneGroupResource : IJsonModel<PrivateDnsZoneGroupData>
     {
-        private static PrivateDnsZoneGroupData s_dataDeserializationInstance;
-        private static PrivateDnsZoneGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PrivateDnsZoneGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PrivateDnsZoneGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PrivateDnsZoneGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateDnsZoneGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)Data).Write(writer, options);
 
-        PrivateDnsZoneGroupData IJsonModel<PrivateDnsZoneGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateDnsZoneGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrivateDnsZoneGroupData IJsonModel<PrivateDnsZoneGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PrivateDnsZoneGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateDnsZoneGroupData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PrivateDnsZoneGroupData IPersistableModel<PrivateDnsZoneGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateDnsZoneGroupData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PrivateDnsZoneGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateDnsZoneGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PrivateDnsZoneGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

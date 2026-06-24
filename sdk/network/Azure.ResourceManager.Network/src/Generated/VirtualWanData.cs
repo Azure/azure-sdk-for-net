@@ -7,80 +7,133 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualWan data model.
-    /// VirtualWAN Resource.
-    /// </summary>
-    public partial class VirtualWanData : NetworkTrackedResourceData
+    /// <summary> VirtualWAN Resource. </summary>
+    public partial class VirtualWanData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         public VirtualWanData()
         {
-            VirtualHubs = new ChangeTrackingList<WritableSubResource>();
-            VpnSites = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualWanData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="disableVpnEncryption"> Vpn encryption to be disabled or not. </param>
-        /// <param name="virtualHubs"> List of VirtualHubs in the VirtualWAN. </param>
-        /// <param name="vpnSites"> List of VpnSites in the VirtualWAN. </param>
-        /// <param name="allowBranchToBranchTraffic"> True if branch to branch traffic is allowed. </param>
-        /// <param name="allowVnetToVnetTraffic"> True if Vnet to Vnet traffic is allowed. </param>
-        /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
-        /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
-        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual WAN. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualWanData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualWanProperties properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            DisableVpnEncryption = disableVpnEncryption;
-            VirtualHubs = virtualHubs;
-            VpnSites = vpnSites;
-            AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
-            AllowVnetToVnetTraffic = allowVnetToVnetTraffic;
-            Office365LocalBreakoutCategory = office365LocalBreakoutCategory;
-            ProvisioningState = provisioningState;
-            VirtualWanType = virtualWanType;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the virtual WAN. </summary>
+        [WirePath("properties")]
+        internal VirtualWanProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Vpn encryption to be disabled or not. </summary>
         [WirePath("properties.disableVpnEncryption")]
-        public bool? DisableVpnEncryption { get; set; }
-        /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
-        [WirePath("properties.virtualHubs")]
-        public IReadOnlyList<WritableSubResource> VirtualHubs { get; }
-        /// <summary> List of VpnSites in the VirtualWAN. </summary>
-        [WirePath("properties.vpnSites")]
-        public IReadOnlyList<WritableSubResource> VpnSites { get; }
+        public bool? DisableVpnEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableVpnEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                Properties.DisableVpnEncryption = value;
+            }
+        }
+
         /// <summary> True if branch to branch traffic is allowed. </summary>
         [WirePath("properties.allowBranchToBranchTraffic")]
-        public bool? AllowBranchToBranchTraffic { get; set; }
+        public bool? AllowBranchToBranchTraffic
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowBranchToBranchTraffic;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                Properties.AllowBranchToBranchTraffic = value;
+            }
+        }
+
         /// <summary> True if Vnet to Vnet traffic is allowed. </summary>
         [WirePath("properties.allowVnetToVnetTraffic")]
-        public bool? AllowVnetToVnetTraffic { get; set; }
+        public bool? AllowVnetToVnetTraffic
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowVnetToVnetTraffic;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                Properties.AllowVnetToVnetTraffic = value;
+            }
+        }
+
         /// <summary> The office local breakout category. </summary>
         [WirePath("properties.office365LocalBreakoutCategory")]
-        public OfficeTrafficCategory? Office365LocalBreakoutCategory { get; }
+        public OfficeTrafficCategory? Office365LocalBreakoutCategory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Office365LocalBreakoutCategory;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual WAN resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The type of the VirtualWAN. </summary>
         [WirePath("properties.type")]
-        public string VirtualWanType { get; set; }
+        public string VirtualWanType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualWanType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualWanProperties();
+                }
+                Properties.VirtualWanType = value;
+            }
+        }
     }
 }

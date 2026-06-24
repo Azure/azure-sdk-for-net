@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayRegenerateAccessKeyContent))]
     [ModelReaderWriterBuildable(typeof(RelaySku))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WcfRelayAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(WcfRelayData))]
     [ModelReaderWriterBuildable(typeof(WcfRelayProperties))]
     [ModelReaderWriterBuildable(typeof(WcfRelayResource))]
     [ModelReaderWriterBuildable(typeof(WcfRelaysListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRelayContext : ModelReaderWriterContext
     {
     }

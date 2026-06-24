@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Define a single target ARM resource in a virtual machine scale set lifecycle hook event. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </summary>
     public partial class VirtualMachineScaleSetLifecycleHookEventTarget
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTarget"/>. </summary>
         public VirtualMachineScaleSetLifecycleHookEventTarget()
@@ -55,29 +25,35 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTarget"/>. </summary>
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </param>
         /// <param name="actionState"> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventTarget(WritableSubResource resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetLifecycleHookEventTarget(ComputeApiEntityReference resource, LifecycleHookActionState? actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             ActionState = actionState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the target ARM resource. Currently, this can be a virtual machine scale set resource or an individual virtual machine resource within a VMScaleSet. </summary>
-        internal WritableSubResource Resource { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ResourceId
-        {
-            get => Resource is null ? default : Resource.Id;
-            set
-            {
-                if (Resource is null)
-                    Resource = new WritableSubResource();
-                Resource.Id = value;
-            }
-        }
+        internal ComputeApiEntityReference Resource { get; set; }
 
         /// <summary> State of the lifecycle hook for the target resource. The customer can patch this property to move the lifecycle hook to a terminal state. </summary>
         public LifecycleHookActionState? ActionState { get; set; }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Resource is null ? default : Resource.Id;
+            }
+            set
+            {
+                if (Resource is null)
+                {
+                    Resource = new ComputeApiEntityReference();
+                }
+                Resource.Id = value;
+            }
+        }
     }
 }

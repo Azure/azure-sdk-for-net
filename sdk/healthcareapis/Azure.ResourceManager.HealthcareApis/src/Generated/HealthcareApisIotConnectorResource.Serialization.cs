@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
+    /// <summary></summary>
     public partial class HealthcareApisIotConnectorResource : IJsonModel<HealthcareApisIotConnectorData>
     {
-        private static HealthcareApisIotConnectorData s_dataDeserializationInstance;
-        private static HealthcareApisIotConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthcareApisIotConnectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthcareApisIotConnectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthcareApisIotConnectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthcareApisIotConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotConnectorData>)Data).Write(writer, options);
 
-        HealthcareApisIotConnectorData IJsonModel<HealthcareApisIotConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisIotConnectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareApisIotConnectorData IJsonModel<HealthcareApisIotConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisIotConnectorData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthcareApisIotConnectorData IPersistableModel<HealthcareApisIotConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisIotConnectorData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<HealthcareApisIotConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisIotConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthcareApisIotConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

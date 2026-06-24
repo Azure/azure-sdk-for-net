@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.SelfHelp
     [ModelReaderWriterBuildable(typeof(SolutionsTroubleshooters))]
     [ModelReaderWriterBuildable(typeof(SolutionTriggerCriterion))]
     [ModelReaderWriterBuildable(typeof(SolutionWarmUpContent))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterContinueContent))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterResult))]
     [ModelReaderWriterBuildable(typeof(TroubleshooterStepInput))]
     [ModelReaderWriterBuildable(typeof(VideoGroupDetail))]
     [ModelReaderWriterBuildable(typeof(VideoGroupVideo))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSelfHelpContext : ModelReaderWriterContext
     {
     }

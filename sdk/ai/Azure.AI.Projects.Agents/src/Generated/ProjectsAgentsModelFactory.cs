@@ -1654,6 +1654,14 @@ namespace Azure.AI.Projects.Agents
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
+        {
+            return ProjectsAgentRecord(id: id, name: name, state: default);
+        }
+
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be

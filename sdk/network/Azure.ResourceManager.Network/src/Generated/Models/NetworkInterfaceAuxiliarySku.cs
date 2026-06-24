@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkInterfaceAuxiliarySku : IEquatable<NetworkInterfaceAuxiliarySku>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> A1. </summary>
+        private const string A1Value = "A1";
+        /// <summary> A2. </summary>
+        private const string A2Value = "A2";
+        /// <summary> A4. </summary>
+        private const string A4Value = "A4";
+        /// <summary> A8. </summary>
+        private const string A8Value = "A8";
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkInterfaceAuxiliarySku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string A1Value = "A1";
-        private const string A2Value = "A2";
-        private const string A4Value = "A4";
-        private const string A8Value = "A8";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static NetworkInterfaceAuxiliarySku None { get; } = new NetworkInterfaceAuxiliarySku(NoneValue);
+
         /// <summary> A1. </summary>
         public static NetworkInterfaceAuxiliarySku A1 { get; } = new NetworkInterfaceAuxiliarySku(A1Value);
+
         /// <summary> A2. </summary>
         public static NetworkInterfaceAuxiliarySku A2 { get; } = new NetworkInterfaceAuxiliarySku(A2Value);
+
         /// <summary> A4. </summary>
         public static NetworkInterfaceAuxiliarySku A4 { get; } = new NetworkInterfaceAuxiliarySku(A4Value);
+
         /// <summary> A8. </summary>
         public static NetworkInterfaceAuxiliarySku A8 { get; } = new NetworkInterfaceAuxiliarySku(A8Value);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliarySku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkInterfaceAuxiliarySku left, NetworkInterfaceAuxiliarySku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliarySku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkInterfaceAuxiliarySku left, NetworkInterfaceAuxiliarySku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkInterfaceAuxiliarySku(string value) => new NetworkInterfaceAuxiliarySku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkInterfaceAuxiliarySku?(string value) => value == null ? null : new NetworkInterfaceAuxiliarySku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkInterfaceAuxiliarySku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkInterfaceAuxiliarySku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

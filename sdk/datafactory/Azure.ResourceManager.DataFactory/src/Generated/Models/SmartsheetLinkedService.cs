@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,41 +14,37 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SmartsheetLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/>. </summary>
-        /// <param name="apiToken"> The api token for the Smartsheet source. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
-        public SmartsheetLinkedService(DataFactorySecret apiToken)
-        {
-            Argument.AssertNotNull(apiToken, nameof(apiToken));
-
-            ApiToken = apiToken;
-            LinkedServiceType = "Smartsheet";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="apiToken"> The api token for the Smartsheet source. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SmartsheetLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactorySecret apiToken, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Smartsheet linked service properties. </param>
+        internal SmartsheetLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, SmartsheetLinkedServiceTypeProperties typeProperties) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ApiToken = apiToken;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "Smartsheet";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/> for deserialization. </summary>
-        internal SmartsheetLinkedService()
-        {
-        }
+        /// <summary> Smartsheet linked service properties. </summary>
+        internal SmartsheetLinkedServiceTypeProperties TypeProperties { get; set; }
 
-        /// <summary> The api token for the Smartsheet source. </summary>
-        public DataFactorySecret ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new SmartsheetLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

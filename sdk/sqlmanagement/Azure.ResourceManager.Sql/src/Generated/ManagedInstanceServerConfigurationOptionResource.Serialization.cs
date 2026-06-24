@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceServerConfigurationOptionResource : IJsonModel<ManagedInstanceServerConfigurationOptionData>
     {
-        private static ManagedInstanceServerConfigurationOptionData s_dataDeserializationInstance;
-        private static ManagedInstanceServerConfigurationOptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceServerConfigurationOptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceServerConfigurationOptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceServerConfigurationOptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceServerConfigurationOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceServerConfigurationOptionData>)Data).Write(writer, options);
 
-        ManagedInstanceServerConfigurationOptionData IJsonModel<ManagedInstanceServerConfigurationOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceServerConfigurationOptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceServerConfigurationOptionData IJsonModel<ManagedInstanceServerConfigurationOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceServerConfigurationOptionData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceServerConfigurationOptionData IPersistableModel<ManagedInstanceServerConfigurationOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceServerConfigurationOptionData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceServerConfigurationOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceServerConfigurationOptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceServerConfigurationOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

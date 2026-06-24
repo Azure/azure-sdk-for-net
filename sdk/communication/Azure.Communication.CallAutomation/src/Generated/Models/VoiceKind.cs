@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Voice kind type. </summary>
+    /// <summary> Audio kind type. </summary>
     public readonly partial struct VoiceKind : IEquatable<VoiceKind>
     {
         private readonly string _value;
