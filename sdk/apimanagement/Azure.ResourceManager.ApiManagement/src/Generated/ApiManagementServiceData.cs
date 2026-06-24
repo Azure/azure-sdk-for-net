@@ -511,11 +511,11 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant
+        public bool? IsZoneRedundant
         {
             get
             {
-                return Properties is null ? default : Properties.ZoneRedundant;
+                return Properties is null ? default : Properties.IsZoneRedundant;
             }
             set
             {
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     Properties = new ApiManagementServiceProperties();
                 }
-                Properties.ZoneRedundant = value;
+                Properties.IsZoneRedundant = value;
             }
         }
 

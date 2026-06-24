@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (GatewayHostnameBindingResourceData item in Value)
+            foreach (GatewayHostnameBindingData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<GatewayHostnameBindingResourceData> value = default;
+            IList<GatewayHostnameBindingData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<GatewayHostnameBindingResourceData> array = new List<GatewayHostnameBindingResourceData>();
+                    List<GatewayHostnameBindingData> array = new List<GatewayHostnameBindingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(GatewayHostnameBindingResourceData.DeserializeGatewayHostnameBindingResourceData(item, options));
+                        array.Add(GatewayHostnameBindingData.DeserializeGatewayHostnameBindingData(item, options));
                     }
                     value = array;
                     continue;

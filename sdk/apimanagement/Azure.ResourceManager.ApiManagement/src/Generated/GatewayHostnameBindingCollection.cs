@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="GatewayHostnameBindingResource"/> and their operations.
     /// Each <see cref="GatewayHostnameBindingResource"/> in the collection will belong to the same instance of <see cref="ApiGatewayResource"/>.
-    /// To get a <see cref="GatewayHostnameBindingResourceCollection"/> instance call the GetGatewayHostnameBindingResources method from an instance of <see cref="ApiGatewayResource"/>.
+    /// To get a <see cref="GatewayHostnameBindingCollection"/> instance call the GetGatewayHostnameBindings method from an instance of <see cref="ApiGatewayResource"/>.
     /// </summary>
-    public partial class GatewayHostnameBindingResourceCollection : ArmCollection, IEnumerable<GatewayHostnameBindingResource>, IAsyncEnumerable<GatewayHostnameBindingResource>
+    public partial class GatewayHostnameBindingCollection : ArmCollection, IEnumerable<GatewayHostnameBindingResource>, IAsyncEnumerable<GatewayHostnameBindingResource>
     {
         private readonly ClientDiagnostics _apiGatewayHostnameBindingClientDiagnostics;
         private readonly ApiGatewayHostnameBinding _apiGatewayHostnameBindingRestClient;
 
-        /// <summary> Initializes a new instance of GatewayHostnameBindingResourceCollection for mocking. </summary>
-        protected GatewayHostnameBindingResourceCollection()
+        /// <summary> Initializes a new instance of GatewayHostnameBindingCollection for mocking. </summary>
+        protected GatewayHostnameBindingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GatewayHostnameBindingResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GatewayHostnameBindingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GatewayHostnameBindingResource.ResourceType, out string gatewayHostnameBindingResourceApiVersion);
+            TryGetApiVersion(GatewayHostnameBindingResource.ResourceType, out string gatewayHostnameBindingApiVersion);
             _apiGatewayHostnameBindingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GatewayHostnameBindingResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingResourceApiVersion ?? "2025-09-01-preview");
+            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<GatewayHostnameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GatewayHostnameBindingResource> CreateOrUpdate(WaitUntil waitUntil, string hostnameBindingName, GatewayHostnameBindingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.Get");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.Get");
             scope.Start();
             try
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.Get");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.Get");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -295,13 +295,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "GatewayHostnameBindingResourceCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
+                "GatewayHostnameBindingCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
         }
 
         /// <summary>
@@ -329,13 +329,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GatewayHostnameBindingResourceData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
+            return new PageableWrapper<GatewayHostnameBindingData, GatewayHostnameBindingResource>(new ApiGatewayHostnameBindingGetByGatewayCollectionResultOfT(
                 _apiGatewayHostnameBindingRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "GatewayHostnameBindingResourceCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
+                "GatewayHostnameBindingCollection.GetAll"), data => new GatewayHostnameBindingResource(Client, data));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.Exists");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<GatewayHostnameBindingResourceData> response = default;
+                Response<GatewayHostnameBindingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GatewayHostnameBindingResourceData)null, result);
+                        response = Response.FromValue((GatewayHostnameBindingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.Exists");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.Exists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<GatewayHostnameBindingResourceData> response = default;
+                Response<GatewayHostnameBindingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GatewayHostnameBindingResourceData)null, result);
+                        response = Response.FromValue((GatewayHostnameBindingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,14 +488,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<GatewayHostnameBindingResourceData> response = default;
+                Response<GatewayHostnameBindingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GatewayHostnameBindingResourceData)null, result);
+                        response = Response.FromValue((GatewayHostnameBindingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _apiGatewayHostnameBindingClientDiagnostics.CreateScope("GatewayHostnameBindingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,14 +549,14 @@ namespace Azure.ResourceManager.ApiManagement
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hostnameBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<GatewayHostnameBindingResourceData> response = default;
+                Response<GatewayHostnameBindingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                        response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GatewayHostnameBindingResourceData)null, result);
+                        response = Response.FromValue((GatewayHostnameBindingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

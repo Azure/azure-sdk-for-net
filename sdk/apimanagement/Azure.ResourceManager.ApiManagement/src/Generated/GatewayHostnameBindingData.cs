@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -14,16 +15,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management gateway hostname binding resource in List or Get response. </summary>
-    public partial class GatewayHostnameBindingResourceData : ResourceData
+    public partial class GatewayHostnameBindingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingData"/>. </summary>
         /// <param name="hostname"> The default hostname of the data-plane gateway. </param>
         /// <param name="keyVault"> The link to the API Management service workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostname"/> or <paramref name="keyVault"/> is null. </exception>
-        public GatewayHostnameBindingResourceData(string hostname, GatewayHostnameBindingKeyVault keyVault)
+        public GatewayHostnameBindingData(string hostname, GatewayHostnameBindingKeyVault keyVault)
         {
             Argument.AssertNotNull(hostname, nameof(hostname));
             Argument.AssertNotNull(keyVault, nameof(keyVault));
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
             Properties = new GatewayHostnameBindingBaseProperties(hostname, keyVault);
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="properties"> Properties of the API Management gateway hostname binding. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameBindingResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GatewayHostnameBindingBaseProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal GatewayHostnameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GatewayHostnameBindingBaseProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The current provisioning state of the API Management gateway hostname binding. </summary>
         [WirePath("properties.provisioningState")]

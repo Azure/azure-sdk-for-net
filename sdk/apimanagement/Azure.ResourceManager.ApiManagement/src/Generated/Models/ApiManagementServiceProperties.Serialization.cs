@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             LegacyPortalStatus? legacyPortalStatus = default;
             DeveloperPortalStatus? developerPortalStatus = default;
             ReleaseChannel? releaseChannel = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string publisherEmail = default;
             string publisherName = default;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publisherEmail"u8))
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 legacyPortalStatus,
                 developerPortalStatus,
                 releaseChannel,
-                zoneRedundant,
+                isZoneRedundant,
                 additionalBinaryDataProperties,
                 publisherEmail,
                 publisherName);

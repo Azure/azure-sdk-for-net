@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT : AsyncPageable<GatewayHostnameBindingResourceData>
+    internal partial class ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT : AsyncPageable<GatewayHostnameBindingData>
     {
         private readonly ApiGatewayHostnameBinding _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ApiGatewayHostnameBindingGetByGatewayAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GatewayHostnameBindingResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<GatewayHostnameBindingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
                     yield break;
                 }
                 GatewayHostnameBindingListResult result = GatewayHostnameBindingListResult.FromResponse(response);
-                yield return Page<GatewayHostnameBindingResourceData>.FromValues((IReadOnlyList<GatewayHostnameBindingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<GatewayHostnameBindingData>.FromValues((IReadOnlyList<GatewayHostnameBindingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

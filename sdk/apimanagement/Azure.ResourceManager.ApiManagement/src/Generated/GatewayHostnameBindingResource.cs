@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a GatewayHostnameBindingResource along with the instance operations that can be performed on it.
+    /// A class representing a GatewayHostnameBinding along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GatewayHostnameBindingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiGatewayResource"/> using the GetGatewayHostnameBindingResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiGatewayResource"/> using the GetGatewayHostnameBindings method.
     /// </summary>
     public partial class GatewayHostnameBindingResource : ArmResource
     {
         private readonly ClientDiagnostics _apiGatewayHostnameBindingClientDiagnostics;
         private readonly ApiGatewayHostnameBinding _apiGatewayHostnameBindingRestClient;
-        private readonly GatewayHostnameBindingResourceData _data;
+        private readonly GatewayHostnameBindingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/gateways/hostnameBindings";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GatewayHostnameBindingResource(ArmClient client, GatewayHostnameBindingResourceData data) : this(client, data.Id)
+        internal GatewayHostnameBindingResource(ArmClient client, GatewayHostnameBindingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GatewayHostnameBindingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string gatewayHostnameBindingResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string gatewayHostnameBindingApiVersion);
             _apiGatewayHostnameBindingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingResourceApiVersion ?? "2025-09-01-preview");
+            _apiGatewayHostnameBindingRestClient = new ApiGatewayHostnameBinding(_apiGatewayHostnameBindingClientDiagnostics, Pipeline, Endpoint, gatewayHostnameBindingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual GatewayHostnameBindingResourceData Data
+        public virtual GatewayHostnameBindingData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement
                 };
                 HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GatewayHostnameBindingResourceData> response = Response.FromValue(GatewayHostnameBindingResourceData.FromResponse(result), result);
+                Response<GatewayHostnameBindingData> response = Response.FromValue(GatewayHostnameBindingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Update a GatewayHostnameBindingResource.
+        /// Update a GatewayHostnameBinding.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> UpdateAsync(WaitUntil waitUntil, GatewayHostnameBindingResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GatewayHostnameBindingResource>> UpdateAsync(WaitUntil waitUntil, GatewayHostnameBindingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Update a GatewayHostnameBindingResource.
+        /// Update a GatewayHostnameBinding.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GatewayHostnameBindingResource> Update(WaitUntil waitUntil, GatewayHostnameBindingResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GatewayHostnameBindingResource> Update(WaitUntil waitUntil, GatewayHostnameBindingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayHostnameBindingResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _apiGatewayHostnameBindingRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, GatewayHostnameBindingData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<GatewayHostnameBindingResource> operation = new ApiManagementArmOperation<GatewayHostnameBindingResource>(
                     new GatewayHostnameBindingResourceOperationSource(Client),

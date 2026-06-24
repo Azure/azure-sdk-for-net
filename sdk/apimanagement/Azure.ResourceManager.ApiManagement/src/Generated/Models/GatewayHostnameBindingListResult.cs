@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management gateway hostname binding operation. </param>
-        internal GatewayHostnameBindingListResult(IEnumerable<GatewayHostnameBindingResourceData> value)
+        internal GatewayHostnameBindingListResult(IEnumerable<GatewayHostnameBindingData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Result of the List API Management gateway hostname binding operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayHostnameBindingListResult(IList<GatewayHostnameBindingResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayHostnameBindingListResult(IList<GatewayHostnameBindingData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Result of the List API Management gateway hostname binding operation. </summary>
         [WirePath("value")]
-        public IList<GatewayHostnameBindingResourceData> Value { get; }
+        public IList<GatewayHostnameBindingData> Value { get; }
 
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management gateway hostname bindings. </summary>
         [WirePath("nextLink")]

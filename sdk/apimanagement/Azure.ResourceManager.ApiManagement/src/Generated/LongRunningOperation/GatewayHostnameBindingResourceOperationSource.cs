@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         GatewayHostnameBindingResource IOperationSource<GatewayHostnameBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GatewayHostnameBindingResourceData data = GatewayHostnameBindingResourceData.DeserializeGatewayHostnameBindingResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            GatewayHostnameBindingData data = GatewayHostnameBindingData.DeserializeGatewayHostnameBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GatewayHostnameBindingResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ApiManagement
         async ValueTask<GatewayHostnameBindingResource> IOperationSource<GatewayHostnameBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GatewayHostnameBindingResourceData data = GatewayHostnameBindingResourceData.DeserializeGatewayHostnameBindingResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            GatewayHostnameBindingData data = GatewayHostnameBindingData.DeserializeGatewayHostnameBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GatewayHostnameBindingResource(_client, data);
         }
     }

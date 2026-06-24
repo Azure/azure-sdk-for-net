@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="legacyPortalStatus"> Status of legacy portal in the API Management service. </param>
         /// <param name="developerPortalStatus"> Status of developer portal in this API Management service. </param>
         /// <param name="releaseChannel"> Release Channel of this API Management service. </param>
-        /// <param name="zoneRedundant"> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </param>
+        /// <param name="isZoneRedundant"> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementServiceBaseProperties(string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, ReleaseChannel? releaseChannel, bool? zoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementServiceBaseProperties(string notificationSenderEmail, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, Uri gatewayUri, Uri gatewayRegionalUri, Uri portalUri, Uri managementApiUri, Uri scmUri, Uri developerPortalUri, IList<HostnameConfiguration> hostnameConfigurations, IReadOnlyList<IPAddress> publicIPAddresses, IReadOnlyList<IPAddress> privateIPAddresses, ResourceIdentifier publicIPAddressId, PublicNetworkAccess? publicNetworkAccess, ConfigurationApi configurationApi, VirtualNetworkConfiguration virtualNetworkConfiguration, IList<AdditionalLocation> additionalLocations, IDictionary<string, string> customProperties, IList<CertificateConfiguration> certificates, bool? enableClientCertificate, ApiManagementNatGatewayState? natGatewayState, IReadOnlyList<string> outboundPublicIPAddresses, bool? disableGateway, VirtualNetworkType? virtualNetworkType, ApiVersionConstraint apiVersionConstraint, bool? restore, IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections, PlatformVersion? platformVersion, LegacyPortalStatus? legacyPortalStatus, DeveloperPortalStatus? developerPortalStatus, ReleaseChannel? releaseChannel, bool? isZoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NotificationSenderEmail = notificationSenderEmail;
             ProvisioningState = provisioningState;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             LegacyPortalStatus = legacyPortalStatus;
             DeveloperPortalStatus = developerPortalStatus;
             ReleaseChannel = releaseChannel;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Zone Redundant Requirement when creating StandardV2 and PremiumV2. If this flag is set to True, will return a APIM service with Zone redundant or fail the request if any underneath component cannot be zone redundant. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
 
         /// <summary> Indication whether or not the legacy Configuration API (v1) should be exposed on the API Management service. Value is optional but must be 'Enabled' or 'Disabled'. If 'Disabled', legacy Configuration API (v1) will not be available for self-hosted gateways. Default value is 'Enabled'. </summary>
         [WirePath("configurationApi.legacyApi")]

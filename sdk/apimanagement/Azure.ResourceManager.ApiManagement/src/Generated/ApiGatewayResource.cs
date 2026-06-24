@@ -694,11 +694,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiGatewayConfigConnections().Get(configConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GatewayHostnameBindingResources in the <see cref="ApiGatewayResource"/>. </summary>
-        /// <returns> An object representing collection of GatewayHostnameBindingResources and their operations over a GatewayHostnameBindingResource. </returns>
-        public virtual GatewayHostnameBindingResourceCollection GetGatewayHostnameBindingResources()
+        /// <summary> Gets a collection of GatewayHostnameBindings in the <see cref="ApiGatewayResource"/>. </summary>
+        /// <returns> An object representing collection of GatewayHostnameBindings and their operations over a GatewayHostnameBindingResource. </returns>
+        public virtual GatewayHostnameBindingCollection GetGatewayHostnameBindings()
         {
-            return GetCachedClient(client => new GatewayHostnameBindingResourceCollection(client, Id));
+            return GetCachedClient(client => new GatewayHostnameBindingCollection(client, Id));
         }
 
         /// <summary> Gets an API Management gateway hostname binding resource description. </summary>
@@ -707,11 +707,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayHostnameBindingResource>> GetGatewayHostnameBindingResourceAsync(string hostnameBindingName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GatewayHostnameBindingResource>> GetGatewayHostnameBindingAsync(string hostnameBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            return await GetGatewayHostnameBindingResources().GetAsync(hostnameBindingName, cancellationToken).ConfigureAwait(false);
+            return await GetGatewayHostnameBindings().GetAsync(hostnameBindingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an API Management gateway hostname binding resource description. </summary>
@@ -720,11 +720,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="hostnameBindingName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="hostnameBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayHostnameBindingResource> GetGatewayHostnameBindingResource(string hostnameBindingName, CancellationToken cancellationToken = default)
+        public virtual Response<GatewayHostnameBindingResource> GetGatewayHostnameBinding(string hostnameBindingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(hostnameBindingName, nameof(hostnameBindingName));
 
-            return GetGatewayHostnameBindingResources().Get(hostnameBindingName, cancellationToken);
+            return GetGatewayHostnameBindings().Get(hostnameBindingName, cancellationToken);
         }
     }
 }

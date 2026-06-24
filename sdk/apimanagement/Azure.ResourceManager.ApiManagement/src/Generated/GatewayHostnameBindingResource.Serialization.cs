@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary></summary>
-    public partial class GatewayHostnameBindingResource : IJsonModel<GatewayHostnameBindingResourceData>
+    public partial class GatewayHostnameBindingResource : IJsonModel<GatewayHostnameBindingData>
     {
-        private static IJsonModel<GatewayHostnameBindingResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<GatewayHostnameBindingData> s_dataDeserializationInstance;
 
-        private static IJsonModel<GatewayHostnameBindingResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GatewayHostnameBindingResourceData();
+        private static IJsonModel<GatewayHostnameBindingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GatewayHostnameBindingData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GatewayHostnameBindingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GatewayHostnameBindingResourceData>)Data).Write(writer, options);
+        void IJsonModel<GatewayHostnameBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GatewayHostnameBindingData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayHostnameBindingResourceData IJsonModel<GatewayHostnameBindingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        GatewayHostnameBindingData IJsonModel<GatewayHostnameBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GatewayHostnameBindingResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GatewayHostnameBindingResourceData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<GatewayHostnameBindingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GatewayHostnameBindingData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayHostnameBindingResourceData IPersistableModel<GatewayHostnameBindingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GatewayHostnameBindingResourceData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        GatewayHostnameBindingData IPersistableModel<GatewayHostnameBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GatewayHostnameBindingData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GatewayHostnameBindingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<GatewayHostnameBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

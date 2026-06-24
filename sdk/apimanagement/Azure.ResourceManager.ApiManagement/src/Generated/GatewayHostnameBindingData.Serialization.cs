@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary> A single API Management gateway hostname binding resource in List or Get response. </summary>
-    public partial class GatewayHostnameBindingResourceData : ResourceData, IJsonModel<GatewayHostnameBindingResourceData>
+    public partial class GatewayHostnameBindingData : ResourceData, IJsonModel<GatewayHostnameBindingData>
     {
-        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingResourceData"/> for deserialization. </summary>
-        internal GatewayHostnameBindingResourceData()
+        /// <summary> Initializes a new instance of <see cref="GatewayHostnameBindingData"/> for deserialization. </summary>
+        internal GatewayHostnameBindingData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGatewayHostnameBindingResourceData(document.RootElement, options);
+                        return DeserializeGatewayHostnameBindingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayHostnameBindingResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayHostnameBindingData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayHostnameBindingResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayHostnameBindingData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GatewayHostnameBindingResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GatewayHostnameBindingData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayHostnameBindingResourceData IPersistableModel<GatewayHostnameBindingResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GatewayHostnameBindingResourceData)PersistableModelCreateCore(data, options);
+        GatewayHostnameBindingData IPersistableModel<GatewayHostnameBindingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GatewayHostnameBindingData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GatewayHostnameBindingResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GatewayHostnameBindingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="gatewayHostnameBindingResourceData"> The <see cref="GatewayHostnameBindingResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GatewayHostnameBindingResourceData gatewayHostnameBindingResourceData)
+        /// <param name="gatewayHostnameBindingData"> The <see cref="GatewayHostnameBindingData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(GatewayHostnameBindingData gatewayHostnameBindingData)
         {
-            if (gatewayHostnameBindingResourceData == null)
+            if (gatewayHostnameBindingData == null)
             {
                 return null;
             }
-            return RequestContent.Create(gatewayHostnameBindingResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(gatewayHostnameBindingData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GatewayHostnameBindingResourceData"/> from. </param>
-        internal static GatewayHostnameBindingResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GatewayHostnameBindingData"/> from. </param>
+        internal static GatewayHostnameBindingData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGatewayHostnameBindingResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeGatewayHostnameBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GatewayHostnameBindingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GatewayHostnameBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayHostnameBindingResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayHostnameBindingData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayHostnameBindingResourceData IJsonModel<GatewayHostnameBindingResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GatewayHostnameBindingResourceData)JsonModelCreateCore(ref reader, options);
+        GatewayHostnameBindingData IJsonModel<GatewayHostnameBindingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GatewayHostnameBindingData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayHostnameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayHostnameBindingResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayHostnameBindingData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGatewayHostnameBindingResourceData(document.RootElement, options);
+            return DeserializeGatewayHostnameBindingData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GatewayHostnameBindingResourceData DeserializeGatewayHostnameBindingResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static GatewayHostnameBindingData DeserializeGatewayHostnameBindingData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceType resourceType = default;
             SystemData systemData = default;
             GatewayHostnameBindingBaseProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,11 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayHostnameBindingResourceData(
+            return new GatewayHostnameBindingData(
                 id,
                 name,
                 resourceType,

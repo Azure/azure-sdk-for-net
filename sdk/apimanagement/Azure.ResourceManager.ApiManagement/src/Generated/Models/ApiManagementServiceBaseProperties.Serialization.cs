@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("releaseChannel"u8);
                 writer.WriteStringValue(ReleaseChannel.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             LegacyPortalStatus? legacyPortalStatus = default;
             DeveloperPortalStatus? developerPortalStatus = default;
             ReleaseChannel? releaseChannel = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 legacyPortalStatus,
                 developerPortalStatus,
                 releaseChannel,
-                zoneRedundant,
+                isZoneRedundant,
                 additionalBinaryDataProperties);
         }
     }
