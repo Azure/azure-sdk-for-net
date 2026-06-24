@@ -22,12 +22,10 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
-        private readonly InputEnumType _inputEnum;
         private readonly EnumProvider _baseEnumProvider;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
-            _inputEnum = inputEnum;
             _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
@@ -53,9 +51,11 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 var baseEnumValue = baseEnumValues[i];
                 var baseField = baseEnumValue.Field;
-                var inputValue = _inputEnum.Values[i];
                 var memberName = baseEnumValue.Name;
                 var serializedValue = baseEnumValue.Value?.ToString();
+                var description = string.IsNullOrEmpty(baseField.Description?.ToString())
+                    ? (FormattableString)$"{memberName}."
+                    : baseField.Description;
 
                 // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
                 IEnumerable<AttributeStatement>? attributes = baseField.Attributes;
@@ -74,7 +74,7 @@ namespace Azure.Generator.Provisioning.Providers
                     typeof(int), // placeholder — enum members don't need an explicit type
                     memberName,
                     this,
-                    description: (FormattableString)$"{inputValue.Doc ?? $"{memberName}."}",
+                    description: description,
                     attributes: attributes);
 
                 fields[i] = field;
