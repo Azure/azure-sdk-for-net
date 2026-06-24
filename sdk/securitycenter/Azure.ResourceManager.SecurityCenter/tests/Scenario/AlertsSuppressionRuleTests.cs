@@ -19,11 +19,17 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         public AlertsSuppressionRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
+            IgnoredHeaders.Add("Accept");
         }
 
         [TearDown]
         public async Task TestTearDown()
         {
+            if (TestEnvironment.Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
             var list = await _alertsSuppressionRuleCollection.GetAllAsync().ToEnumerableAsync();
             foreach (var item in list)
             {
@@ -55,18 +61,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertsSuppressionRuleName, data);
             return alertSuppressionRule.Value;
         }
-
         [RecordedTest]
-        [Category("Manually")]
         public async Task CreateOrUpdateUpdate()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
             var alertSuppressionRule = await CreateAlertsSuppressionRule(alertsSuppressionRuleName);
             ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
         }
-
         [RecordedTest]
-        [Category("Manually")]
         public async Task Exist()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -74,9 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
             Assert.IsTrue(flag);
         }
-
         [RecordedTest]
-        [Category("Manually")]
         public async Task Get()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -84,9 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.GetAsync(alertsSuppressionRuleName);
             ValidateAlertsSuppressionRule(alertSuppressionRule, alertsSuppressionRuleName);
         }
-
         [RecordedTest]
-        [Category("Manually")]
         public async Task GetAll()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -97,7 +95,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Category("Manually")]
         public async Task Delete()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -105,9 +102,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             bool flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
             Assert.IsTrue(flag);
 
-            await alertSuppressionRule.DeleteAsync(WaitUntil.Completed);
-            flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
-            Assert.IsFalse(flag);
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+            {
+                await alertSuppressionRule.DeleteAsync(WaitUntil.Completed);
+                flag = await _alertsSuppressionRuleCollection.ExistsAsync(alertsSuppressionRuleName);
+                Assert.IsFalse(flag);
+            }
         }
 
         private void ValidateAlertsSuppressionRule(SecurityAlertsSuppressionRuleResource alertSuppressionRule, string alertsSuppressionRuleName)

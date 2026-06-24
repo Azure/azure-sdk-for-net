@@ -37,16 +37,13 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Category("Manually")]
         public async Task Get()
         {
-            var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            ValidateAllowedConnections(list.FirstOrDefault());
+            var allowedConnection = await _resourceGroup.GetAllowedConnectionAsync(AzureLocation.CentralUS, SecurityCenterConnectionType.Internal);
+            ValidateAllowedConnections(allowedConnection);
         }
 
         [RecordedTest]
-        [Category("Manually")]
         public async Task GetAll()
         {
             var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();

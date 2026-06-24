@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityCenterLocationResource
     {
-        private static System.Collections.Generic.IReadOnlyList<SecurityCenterAllowedConnection> ToLegacyList(System.Collections.Generic.IReadOnlyList<SecurityCenterAllowedConnectionData> values)
+        private static System.Collections.Generic.IReadOnlyList<SecurityCenterAllowedConnection> ToLegacyList(System.Collections.Generic.IEnumerable<SecurityCenterAllowedConnectionData> values)
         {
-            var legacyValues = new System.Collections.Generic.List<SecurityCenterAllowedConnection>(values.Count);
+            var legacyValues = new System.Collections.Generic.List<SecurityCenterAllowedConnection>();
             foreach (SecurityCenterAllowedConnectionData value in values)
             {
                 legacyValues.Add(new SecurityCenterAllowedConnection(value));
@@ -26,9 +26,19 @@ namespace Azure.ResourceManager.SecurityCenter
             return legacyValues;
         }
 
-        private static System.Collections.Generic.IReadOnlyList<Models.SecurityTopologyResource> ToLegacyList(System.Collections.Generic.IReadOnlyList<SecurityTopologyResourceData> values)
+        private static System.Collections.Generic.IReadOnlyList<DiscoveredSecuritySolution> ToLegacyList(System.Collections.Generic.IEnumerable<DiscoveredSecuritySolutionData> values)
         {
-            var legacyValues = new System.Collections.Generic.List<Models.SecurityTopologyResource>(values.Count);
+            var legacyValues = new System.Collections.Generic.List<DiscoveredSecuritySolution>();
+            foreach (DiscoveredSecuritySolutionData value in values)
+            {
+                legacyValues.Add(new DiscoveredSecuritySolution(value));
+            }
+            return legacyValues;
+        }
+
+        private static System.Collections.Generic.IReadOnlyList<Models.SecurityTopologyResource> ToLegacyList(System.Collections.Generic.IEnumerable<SecurityTopologyResourceData> values)
+        {
+            var legacyValues = new System.Collections.Generic.List<Models.SecurityTopologyResource>();
             foreach (SecurityTopologyResourceData value in values)
             {
                 legacyValues.Add(new Models.SecurityTopologyResource(value));
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     DiscoveredSecuritySolutionList result = DiscoveredSecuritySolutionList.FromResponse(response);
-                    return ((System.Collections.Generic.IReadOnlyList<DiscoveredSecuritySolution>)result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
         /// <summary>
@@ -185,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 response =>
                 {
                     DiscoveredSecuritySolutionList result = DiscoveredSecuritySolutionList.FromResponse(response);
-                    return ((System.Collections.Generic.IReadOnlyList<DiscoveredSecuritySolution>)result.Value, result.NextLink);
+                    return (ToLegacyList(result.Value), result.NextLink);
                 });
         }
         /// <summary>

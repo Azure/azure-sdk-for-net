@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(OfferingType))
             {
                 writer.WritePropertyName("offeringType"u8);
-                writer.WriteObjectValue(OfferingType, options);
+                writer.WriteStringValue(OfferingType.ToString());
             }
             WriteAdditionalProperties(writer, options, _additionalBinaryDataProperties);
         }
