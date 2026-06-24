@@ -141,6 +141,42 @@ function shouldSkipCodeownersInPrContext([PSCustomObject] $PackageProperties, [P
     return $true
 }
 
+function getCheckPackageOutputText([array] $OutputLines) {
+    if (!$OutputLines) {
+        return ""
+    }
+
+    return ((@($OutputLines) | ForEach-Object { "$_" }) -join [Environment]::NewLine).Trim()
+}
+
+function getCheckPackageResponse([string] $OutputText) {
+    if (!$OutputText) {
+        return $null
+    }
+
+    try {
+        return $OutputText | ConvertFrom-Json -ErrorAction Stop
+    }
+    catch {
+        return $null
+    }
+}
+
+function getSuggestedPrompts([object] $CheckPackageResponse) {
+    if (!$CheckPackageResponse -or !$CheckPackageResponse.PSObject.Properties['issues']) {
+        return ,@()
+    }
+
+    $prompts = @()
+    foreach ($issue in @($CheckPackageResponse.issues)) {
+        if ($issue.next_step) {
+            $prompts += $issue.next_step
+        }
+    }
+
+    return ,@($prompts | Sort-Object -Unique)
+}
+
 $failedPackages = @()
 $prDiff = $null
 $isPrCheck = $false
@@ -157,6 +193,8 @@ if ($PrDiffFile) {
 }
 
 Write-Host "SDK types to validate: $($SdkTypes -join ', ')"
+
+LogGroupStart "Validating CODEOWNERS for Artifacts"
 
 foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter '*.json' -File) {
     $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
@@ -188,11 +226,26 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
             --directory-path $pkgProperties.DirectoryPath `
             --repo $Repo `
             --output json 2>&1
+        $checkPackageExitCode = $LASTEXITCODE
+        $outputText = getCheckPackageOutputText -OutputLines $output
 
-        if ($LASTEXITCODE) {
+        Write-Host "  check-package output:"
+        if ($outputText) {
+            Write-Host $outputText
+        } else {
+            Write-Host "  (no output)"
+        }
+
+        if ($checkPackageExitCode) {
             LogError "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
-            $output | Write-Host
-            $failedPackages += $pkgProperties.DirectoryPath
+            $checkPackageResponse = getCheckPackageResponse -OutputText $outputText
+            $failedPackages += [PSCustomObject]@{
+                Name = $pkgProperties.Name
+                DirectoryPath = $pkgProperties.DirectoryPath
+                ResponseError = if ($checkPackageResponse) { $checkPackageResponse.response_error } else { $null }
+                SuggestedPrompts = getSuggestedPrompts -CheckPackageResponse $checkPackageResponse
+                HasParsedResponse = $null -ne $checkPackageResponse
+            }
         } else {
             Write-Host "  Codeowners validation succeeded for package: $($pkgProperties.DirectoryPath)"
         }
@@ -201,11 +254,25 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
     }
 }
 
+LogGroupEnd
+
 if ($failedPackages.Count -gt 0) {
     Write-Host ""
     Write-Host "Failed Packages:"
-    foreach ($directoryPath in $failedPackages) {
-        LogError "  - $directoryPath does not have sufficient code owners coverage"
+    foreach ($failedPackage in $failedPackages) {
+        LogError "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
+        if ($failedPackage.ResponseError) {
+            Write-Host "    $($failedPackage.ResponseError)"
+        }
+
+        if ($failedPackage.HasParsedResponse -and @($failedPackage.SuggestedPrompts).Count -gt 0) {
+            Write-Host "    Suggested prompt(s):"
+            foreach ($prompt in $failedPackage.SuggestedPrompts) {
+                Write-Host "      $prompt"
+            }
+        } elseif (!$failedPackage.HasParsedResponse) {
+            Write-Host "    Unable to parse check-package output; see grouped output above."
+        }
     }
     LogError "Codeowners validation failed for one or more packages. See http://aka.ms/azsdk/codeowners for instructions to fix the issue."
     exit 1
