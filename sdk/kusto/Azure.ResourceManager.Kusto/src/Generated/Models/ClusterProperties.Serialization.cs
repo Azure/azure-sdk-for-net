@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
             }
-            if (Optional.IsDefined(LanguageExtensionsValue))
+            if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensionsValue, options);
+                writer.WriteObjectValue(LanguageExtensions, options);
             }
             if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Kusto.Models
             KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default;
             KustoKeyVaultProperties keyVaultProperties = default;
             bool? isPurgeEnabled = default;
-            KustoLanguageExtensionList languageExtensionsValue = default;
+            KustoLanguageExtensionList languageExtensions = default;
             bool? isDoubleEncryptionEnabled = default;
             KustoClusterPublicNetworkAccess? publicNetworkAccess = default;
             IList<string> allowedIPRangeList = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    languageExtensionsValue = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(prop.Value, options);
+                    languageExtensions = KustoLanguageExtensionList.DeserializeKustoLanguageExtensionList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("enableDoubleEncryption"u8))
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 virtualNetworkConfiguration,
                 keyVaultProperties,
                 isPurgeEnabled,
-                languageExtensionsValue,
+                languageExtensions,
                 isDoubleEncryptionEnabled,
                 publicNetworkAccess,
                 allowedIPRangeList ?? new ChangeTrackingList<string>(),

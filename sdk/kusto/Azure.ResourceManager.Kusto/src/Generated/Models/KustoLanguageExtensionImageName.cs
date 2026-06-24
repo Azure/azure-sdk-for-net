@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> R. </summary>
         private const string RValue = "R";
         /// <summary> Python3_6_5. </summary>
-        private const string Python365Value = "Python3_6_5";
+        private const string Python3_6_5Value = "Python3_6_5";
         /// <summary> Python3_10_8. </summary>
-        private const string Python3108Value = "Python3_10_8";
+        private const string Python3_10_8Value = "Python3_10_8";
         /// <summary> Python3_10_8_DL. </summary>
         private const string Python3108DLValue = "Python3_10_8_DL";
         /// <summary> PythonCustomImage. </summary>
@@ -42,6 +42,12 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
+
+        /// <summary> Python3_6_5. </summary>
+        public static KustoLanguageExtensionImageName Python3_6_5 { get; } = new KustoLanguageExtensionImageName(Python3_6_5Value);
+
+        /// <summary> Python3_10_8. </summary>
+        public static KustoLanguageExtensionImageName Python3_10_8 { get; } = new KustoLanguageExtensionImageName(Python3_10_8Value);
 
         /// <summary> Python3_10_8_DL. </summary>
         public static KustoLanguageExtensionImageName Python3108DL { get; } = new KustoLanguageExtensionImageName(Python3108DLValue);

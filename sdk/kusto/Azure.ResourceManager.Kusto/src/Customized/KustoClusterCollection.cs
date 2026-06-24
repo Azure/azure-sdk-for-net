@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -17,14 +18,28 @@ namespace Azure.ResourceManager.Kusto
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<KustoClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, KustoClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return CreateOrUpdate(waitUntil, clusterName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken);
+            return CreateOrUpdate(waitUntil, clusterName, data, ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
         }
 
         /// <summary> Create or update a Kusto cluster. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, KustoClusterData data, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
-            return await CreateOrUpdateAsync(waitUntil, clusterName, data, CompatibilityRequestConditions.Create(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+            return await CreateOrUpdateAsync(waitUntil, clusterName, data, ToMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+        }
+
+        private static MatchConditions ToMatchConditions(string ifMatch, string ifNoneMatch)
+        {
+            if (ifMatch is null && ifNoneMatch is null)
+            {
+                return null;
+            }
+
+            return new MatchConditions
+            {
+                IfMatch = ifMatch is null ? default(ETag?) : new ETag(ifMatch),
+                IfNoneMatch = ifNoneMatch is null ? default(ETag?) : new ETag(ifNoneMatch),
+            };
         }
     }
 }
