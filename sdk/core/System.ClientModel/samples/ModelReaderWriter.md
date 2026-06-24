@@ -101,7 +101,7 @@ options.AddProxy<InputModel>((IJsonModel<InputModel>)new InputModelProxy());
 
 // ResolveProxy returns the proxy if one is registered, otherwise the model itself.
 IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)model);
-BinaryData data = ModelReaderWriter.Write((IPersistableModel<InputModel>)resolved, options);
+BinaryData data = ((IPersistableModel<InputModel>)resolved).Write(options);
 ```
 
 ### Conditional proxy
