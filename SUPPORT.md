@@ -31,4 +31,4 @@ Further information, including the MSRC PGP key, can be found in the [Security T
 
 ## Microsoft Support Policy
 
-Please refer to [Azure SDK Support and Lifecycle information](https://azure.github.io/azure-sdk/policies_support.html)
+Pls refer to [Azure SDK Support and Lifecycle information](https://azure.github.io/azure-sdk/policies_support.html)
