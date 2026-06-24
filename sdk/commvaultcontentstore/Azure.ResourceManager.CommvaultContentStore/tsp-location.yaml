@@ -1,0 +1,6 @@
+directory: specification/liftrcommvault/Commvault.ContentStore.Management
+commit: c988a5e360aca671131d37955d362f51f0b5c677
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
