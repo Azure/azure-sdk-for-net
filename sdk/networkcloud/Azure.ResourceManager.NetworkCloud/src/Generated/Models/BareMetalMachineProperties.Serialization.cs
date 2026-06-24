@@ -216,6 +216,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(MonitoringConfigurationStatus))
+            {
+                writer.WritePropertyName("monitoringConfigurationStatus"u8);
+                writer.WriteObjectValue(MonitoringConfigurationStatus, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(OamIPv4Address))
             {
                 writer.WritePropertyName("oamIpv4Address"u8);
@@ -349,6 +354,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string kubernetesVersion = default;
             string machineClusterVersion = default;
             IReadOnlyList<string> machineRoles = default;
+            BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = default;
             IPAddress oamIPv4Address = default;
             string oamIPv6Address = default;
             string osImage = default;
@@ -573,6 +579,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     machineRoles = array;
                     continue;
                 }
+                if (prop.NameEquals("monitoringConfigurationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringConfigurationStatus = BareMetalMachineMonitoringConfigurationStatus.DeserializeBareMetalMachineMonitoringConfigurationStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("oamIpv4Address"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -700,6 +715,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 kubernetesVersion,
                 machineClusterVersion,
                 machineRoles ?? new ChangeTrackingList<string>(),
+                monitoringConfigurationStatus,
                 oamIPv4Address,
                 oamIPv6Address,
                 osImage,
