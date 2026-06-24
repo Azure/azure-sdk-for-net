@@ -125,5 +125,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// flow through to the same Statsbeat ingestion resource.
         /// </summary>
         internal const string DistroFeatureSdkStatsMeterName = "MicrosoftOpenTelemetryFeatureSdkStatsMeter";
+
+        /// <summary>
+        /// Meter name used by the Microsoft OpenTelemetry distro to publish distro-owned Network
+        /// SDKStats. When the distro runs with a non-Azure-Monitor exporter (e.g. the Agent365
+        /// exporter), the distro owns the Network signal and records request success/failure,
+        /// retry, throttle, duration, and exception counters on this meter. The Statsbeat
+        /// <c>MeterProvider</c> subscribes to it so those measurements flow through the same
+        /// Statsbeat ingestion resource as the Attach and Feature signals.
+        /// </summary>
+        internal const string DistroNetworkSdkStatsMeterName = "MicrosoftOpenTelemetryNetworkSdkStatsMeter";
     }
 }
