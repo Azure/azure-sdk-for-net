@@ -10871,7 +10871,7 @@ namespace Azure.ResourceManager.Sql.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Sql.Models.ManagedInstanceQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This options class is obsolete and will be removed in a future release. Use the explicit parameter overload of GetTopQueries instead.", false)]
+    [System.ObsoleteAttribute("This options class is obsolete and will be removed in a future release.", false)]
     public partial class ManagedInstanceResourceGetTopQueriesOptions
     {
         public ManagedInstanceResourceGetTopQueriesOptions() { }
