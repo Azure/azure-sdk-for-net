@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
@@ -1862,6 +1863,85 @@ namespace Azure.AI.Projects.Agents
         public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
+        {
+            return ProjectsAgentRecord(id: id, name: name, state: default);
+        }
+
+        /// <summary> The ProjectsAgentVersion. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        ///             useful for storing additional information about the object in a structured
+        ///             format, and querying for objects via API or the dashboard.
+        ///             Keys are strings with a maximum length of 64 characters. Values are strings
+        ///             with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="id"> The unique identifier of the agent version. </param>
+        /// <param name="name"> The name of the agent. Name can be used to retrieve/update/delete the agent. </param>
+        /// <param name="version"> The version identifier of the agent. Agents are immutable and every update creates a new version while keeping the name same. </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
+        /// <param name="definition"></param>
+        /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
+        {
+            return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
+        }
+
+        /// <summary> The hosted agent definition. </summary>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="tools">
+        /// An array of tools the hosted agent's model may call while generating a response. You
+        ///             can specify which tool to use by setting the `tool_choice` parameter.
+        /// </param>
+        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
+        /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
+        /// <param name="memory"> The memory configuration for the hosted agent. </param>
+        /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
+        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
+        /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
+        {
+            tools ??= new ChangeTrackingList<ProjectsAgentTool>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HostedAgentDefinition(
+                ProjectsAgentKind.Hosted,
+                contentFilterConfiguration,
+                additionalBinaryDataProperties: null,
+                tools.ToList(),
+                cpu,
+                memory,
+                environmentVariables,
+                default,
+                versions.ToList(),
+                default,
+                default);
+        }
+
+        /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        ///             useful for storing additional information about the object in a structured
+        ///             format, and querying for objects via API or the dashboard.
+        ///             Keys are strings with a maximum length of 64 characters. Values are strings
+        ///             with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="description"> A human-readable description of the agent. </param>
+        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
+        /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
+        {
+            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default);
         }
     }
 }
