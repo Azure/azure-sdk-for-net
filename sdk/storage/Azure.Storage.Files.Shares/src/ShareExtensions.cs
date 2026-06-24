@@ -567,7 +567,53 @@ namespace Azure.Storage.Files.Shares
         internal static HttpRange ToHttpRange(this ClearRange clearRange)
             => new HttpRange(clearRange.Start, clearRange.End - clearRange.Start + 1);
 
-        // ToStorageClosedHandlesSegment for File is consolidated into the single method above.
+        #region ToShareFileRanges
+        internal static ShareFileRange[] ToShareFileRanges(this Response<ShareFileRangeListSegment> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return ToShareFileRanges(response.Value.Ranges, response.Value.ClearRanges);
+        }
+
+        internal static ShareFileRange[] ToShareFileRanges(
+            IList<FileRange> ranges,
+            IList<ClearRange> clearRanges)
+        {
+            List<ShareFileRange> merged = new List<ShareFileRange>(ranges.Count + clearRanges.Count);
+
+            int rangeIndex = 0;
+            int clearIndex = 0;
+
+            while (rangeIndex < ranges.Count || clearIndex < clearRanges.Count)
+            {
+                if (rangeIndex < ranges.Count
+                    && (clearIndex >= clearRanges.Count
+                        || ranges[rangeIndex].Start <= clearRanges[clearIndex].Start))
+                {
+                    merged.Add(new ShareFileRange
+                    {
+                        IsClear = false,
+                        Range = ranges[rangeIndex].ToHttpRange()
+                    });
+                    rangeIndex++;
+                }
+                else
+                {
+                    merged.Add(new ShareFileRange
+                    {
+                        IsClear = true,
+                        Range = clearRanges[clearIndex].ToHttpRange()
+                    });
+                    clearIndex++;
+                }
+            }
+
+            return merged.ToArray();
+        }
+        #endregion ToShareFileRanges
 
         internal enum ShareLeaseHeaderType
         {

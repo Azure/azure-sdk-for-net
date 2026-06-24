@@ -6021,6 +6021,7 @@ namespace Azure.Storage.Files.Shares
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileRangeInfo> GetRangeList(
             ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
@@ -6059,6 +6060,7 @@ namespace Azure.Storage.Files.Shares
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
             ShareFileGetRangeListOptions options = default,
             CancellationToken cancellationToken = default) =>
@@ -6393,6 +6395,7 @@ namespace Azure.Storage.Files.Shares
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileRangeInfo> GetRangeListDiff(
             ShareFileGetRangeListDiffOptions options = default,
             CancellationToken cancellationToken = default) =>
@@ -6432,6 +6435,7 @@ namespace Azure.Storage.Files.Shares
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListDiffAsync(
             ShareFileGetRangeListDiffOptions options = default,
             CancellationToken cancellationToken = default) =>
@@ -6446,6 +6450,233 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
         #endregion GetRangeListDiff
+
+        #region GetAllRangeList
+        /// <summary>
+        /// Returns the list of valid ranges for a file as a paginated sequence.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{ShareFileRange}"/> describing the
+        /// valid ranges for this file.  Items with <see cref="ShareFileRange.IsClear"/>
+        /// set to true represent cleared ranges; all other items are populated ranges.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<ShareFileRange> GetAllRangeList(
+            ShareFileGetRangeListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetShareFileRangeListAsyncCollection(
+                diff: false,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: null,
+                supportRename: null,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// Returns the list of valid ranges for a file as a paginated sequence.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{ShareFileRange}"/> describing the
+        /// valid ranges for this file.  Items with <see cref="ShareFileRange.IsClear"/>
+        /// set to true represent cleared ranges; all other items are populated ranges.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<ShareFileRange> GetAllRangeListAsync(
+            ShareFileGetRangeListOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetShareFileRangeListAsyncCollection(
+                diff: false,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: null,
+                supportRename: null,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}")
+            .ToAsyncCollection(cancellationToken);
+        #endregion GetAllRangeList
+
+        #region GetAllRangeListDiff
+        /// <summary>
+        /// Returns the list of ranges that have changed in the file since
+        /// <see cref="ShareFileGetRangeListDiffOptions.PreviousSnapshot"/> was taken,
+        /// as a paginated sequence.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{ShareFileRange}"/> describing the changed
+        /// ranges for this file.  Items with <see cref="ShareFileRange.IsClear"/>
+        /// set to true represent cleared ranges; all other items are populated ranges.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<ShareFileRange> GetAllRangeListDiff(
+            ShareFileGetRangeListDiffOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetShareFileRangeListAsyncCollection(
+                diff: true,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: options?.PreviousSnapshot,
+                supportRename: options?.IncludeRenames,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeListDiff)}")
+            .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// Returns the list of ranges that have changed in the file since
+        /// <see cref="ShareFileGetRangeListDiffOptions.PreviousSnapshot"/> was taken,
+        /// as a paginated sequence.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-ranges">
+        /// List Ranges</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{ShareFileRange}"/> describing the changed
+        /// ranges for this file.  Items with <see cref="ShareFileRange.IsClear"/>
+        /// set to true represent cleared ranges; all other items are populated ranges.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<ShareFileRange> GetAllRangeListDiffAsync(
+            ShareFileGetRangeListDiffOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            new GetShareFileRangeListAsyncCollection(
+                diff: true,
+                client: this,
+                range: options?.Range,
+                snapshot: options?.Snapshot,
+                previousSnapshot: options?.PreviousSnapshot,
+                supportRename: options?.IncludeRenames,
+                conditions: options?.Conditions,
+                operationName: $"{nameof(ShareFileClient)}.{nameof(GetAllRangeListDiff)}")
+            .ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<ShareFileRangeListSegment>> GetAllRangeListInternal(
+            string marker,
+            int? pageSizeHint,
+            HttpRange? range,
+            string snapshot,
+            string previousSnapshot,
+            bool? supportRename,
+            ShareFileRequestConditions conditions,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(marker)}: {marker}\n" +
+                    $"{nameof(pageSizeHint)}: {pageSizeHint}");
+
+                operationName ??= $"{nameof(ShareFileClient)}.{nameof(GetAllRangeList)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+                try
+                {
+                    scope.Start();
+                    Response<ShareFileRangeListSegment> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetAllRangesAsync(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            supportRename: supportRename,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetAllRanges(
+                            sharesnapshot: snapshot,
+                            prevsharesnapshot: previousSnapshot,
+                            supportRename: supportRename,
+                            range: range?.ToString(),
+                            leaseId: conditions?.LeaseId,
+                            marker: marker,
+                            maxresults: pageSizeHint,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return response;
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion GetAllRangeListDiff
 
         #region GetHandles
         /// <summary>

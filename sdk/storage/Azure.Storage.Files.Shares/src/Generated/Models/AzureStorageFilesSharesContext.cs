@@ -28,6 +28,7 @@ namespace Azure.Storage.Files.Shares
     [ModelReaderWriterBuildable(typeof(ShareAccessPolicy))]
     [ModelReaderWriterBuildable(typeof(ShareCorsRule))]
     [ModelReaderWriterBuildable(typeof(ShareFileRangeList))]
+    [ModelReaderWriterBuildable(typeof(ShareFileRangeListSegment))]
     [ModelReaderWriterBuildable(typeof(ShareItemInternal))]
     [ModelReaderWriterBuildable(typeof(ShareMetrics))]
     [ModelReaderWriterBuildable(typeof(ShareNfsSettings))]

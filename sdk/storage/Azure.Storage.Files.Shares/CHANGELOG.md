@@ -3,6 +3,7 @@
 ## 12.28.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `ShareFileClient.GetAllRangeList()`, `GetAllRangeListAsync()`, `GetAllRangeListDiff()`, and `GetAllRangeListDiffAsync()`.
 
 ### Breaking Changes
 
