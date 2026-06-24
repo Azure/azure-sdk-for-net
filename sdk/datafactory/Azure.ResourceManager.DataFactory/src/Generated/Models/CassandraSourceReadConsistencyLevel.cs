@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct CassandraSourceReadConsistencyLevel : IEquatable<CassandraSourceReadConsistencyLevel>
     {
         private readonly string _value;
+        /// <summary> ALL. </summary>
+        private const string AllValue = "ALL";
+        /// <summary> EACH_QUORUM. </summary>
+        private const string EachQuorumValue = "EACH_QUORUM";
+        /// <summary> QUORUM. </summary>
+        private const string QuorumValue = "QUORUM";
+        /// <summary> LOCAL_QUORUM. </summary>
+        private const string LocalQuorumValue = "LOCAL_QUORUM";
+        /// <summary> ONE. </summary>
+        private const string OneValue = "ONE";
+        /// <summary> TWO. </summary>
+        private const string TwoValue = "TWO";
+        /// <summary> THREE. </summary>
+        private const string ThreeValue = "THREE";
+        /// <summary> LOCAL_ONE. </summary>
+        private const string LocalOneValue = "LOCAL_ONE";
+        /// <summary> SERIAL. </summary>
+        private const string SerialValue = "SERIAL";
+        /// <summary> LOCAL_SERIAL. </summary>
+        private const string LocalSerialValue = "LOCAL_SERIAL";
 
         /// <summary> Initializes a new instance of <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CassandraSourceReadConsistencyLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllValue = "ALL";
-        private const string EachQuorumValue = "EACH_QUORUM";
-        private const string QuorumValue = "QUORUM";
-        private const string LocalQuorumValue = "LOCAL_QUORUM";
-        private const string OneValue = "ONE";
-        private const string TwoValue = "TWO";
-        private const string ThreeValue = "THREE";
-        private const string LocalOneValue = "LOCAL_ONE";
-        private const string SerialValue = "SERIAL";
-        private const string LocalSerialValue = "LOCAL_SERIAL";
+            _value = value;
+        }
 
         /// <summary> ALL. </summary>
         public static CassandraSourceReadConsistencyLevel All { get; } = new CassandraSourceReadConsistencyLevel(AllValue);
+
         /// <summary> EACH_QUORUM. </summary>
         public static CassandraSourceReadConsistencyLevel EachQuorum { get; } = new CassandraSourceReadConsistencyLevel(EachQuorumValue);
+
         /// <summary> QUORUM. </summary>
         public static CassandraSourceReadConsistencyLevel Quorum { get; } = new CassandraSourceReadConsistencyLevel(QuorumValue);
+
         /// <summary> LOCAL_QUORUM. </summary>
         public static CassandraSourceReadConsistencyLevel LocalQuorum { get; } = new CassandraSourceReadConsistencyLevel(LocalQuorumValue);
+
         /// <summary> ONE. </summary>
         public static CassandraSourceReadConsistencyLevel One { get; } = new CassandraSourceReadConsistencyLevel(OneValue);
+
         /// <summary> TWO. </summary>
         public static CassandraSourceReadConsistencyLevel Two { get; } = new CassandraSourceReadConsistencyLevel(TwoValue);
+
         /// <summary> THREE. </summary>
         public static CassandraSourceReadConsistencyLevel Three { get; } = new CassandraSourceReadConsistencyLevel(ThreeValue);
+
         /// <summary> LOCAL_ONE. </summary>
         public static CassandraSourceReadConsistencyLevel LocalOne { get; } = new CassandraSourceReadConsistencyLevel(LocalOneValue);
+
         /// <summary> SERIAL. </summary>
         public static CassandraSourceReadConsistencyLevel Serial { get; } = new CassandraSourceReadConsistencyLevel(SerialValue);
+
         /// <summary> LOCAL_SERIAL. </summary>
         public static CassandraSourceReadConsistencyLevel LocalSerial { get; } = new CassandraSourceReadConsistencyLevel(LocalSerialValue);
+
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CassandraSourceReadConsistencyLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CassandraSourceReadConsistencyLevel left, CassandraSourceReadConsistencyLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CassandraSourceReadConsistencyLevel(string value) => new CassandraSourceReadConsistencyLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CassandraSourceReadConsistencyLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CassandraSourceReadConsistencyLevel?(string value) => value == null ? null : new CassandraSourceReadConsistencyLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CassandraSourceReadConsistencyLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CassandraSourceReadConsistencyLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

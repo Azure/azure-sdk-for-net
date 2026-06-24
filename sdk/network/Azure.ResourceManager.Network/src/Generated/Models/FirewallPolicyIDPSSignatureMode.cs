@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.Network.Models
     public enum FirewallPolicyIDPSSignatureMode
     {
         /// <summary> 0. </summary>
-        _0 = 0,
+        _0,
         /// <summary> 1. </summary>
-        _1 = 1,
+        _1,
         /// <summary> 2. </summary>
-        _2 = 2
+        _2
     }
 }

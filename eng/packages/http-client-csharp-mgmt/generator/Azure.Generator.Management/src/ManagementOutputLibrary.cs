@@ -37,7 +37,7 @@ namespace Azure.Generator.Management
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
         private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
-        internal TypeProvider CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+        internal CustomCodeAttributeDefinition CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
 
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
@@ -177,12 +177,10 @@ namespace Azure.Generator.Management
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
 
-            // Extract extension non-resource methods for MockableArmClientProvider
-            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
-                ? extensionScope.NonResourceMethods
-                : [];
+            // Extract extension methods for MockableArmClientProvider
+            var extensionScope = resourcesAndMethodsPerScope[ResourceScope.Extension];
 
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionScope.ResourceMethods, extensionScope.NonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -306,7 +304,6 @@ namespace Azure.Generator.Management
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
-            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenResourceDataAttributeDefinition.Name);
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             // Extract array response collection results from all methods
@@ -315,7 +312,6 @@ namespace Azure.Generator.Management
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
-                CodeGenResourceDataAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,

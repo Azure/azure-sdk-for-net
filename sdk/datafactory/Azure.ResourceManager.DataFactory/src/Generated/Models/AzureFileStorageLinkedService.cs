@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureFileStorageLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/>. </summary>
-        public AzureFileStorageLinkedService()
+        public AzureFileStorageLinkedService() : base("AzureFileStorage")
         {
-            LinkedServiceType = "AzureFileStorage";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/>. </summary>
@@ -27,59 +27,169 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
-        /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to logon the server. </param>
-        /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
-        /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
-        /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
-        /// <param name="snapshot"> The azure file share snapshot version. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureFileStorageLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure File Storage linked service properties. </param>
+        /// <param name="password"></param>
+        internal AzureFileStorageLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureFileStorageLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            Host = host;
-            UserId = userId;
+            TypeProperties = typeProperties;
             Password = password;
-            ConnectionString = connectionString;
-            AccountKey = accountKey;
-            SasUri = sasUri;
-            SasToken = sasToken;
-            FileShare = fileShare;
-            Snapshot = snapshot;
-            EncryptedCredential = encryptedCredential;
-            ServiceEndpoint = serviceEndpoint;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "AzureFileStorage";
         }
 
+        /// <summary> Azure File Storage linked service properties. </summary>
+        internal AzureFileStorageLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> Host name of the server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Host { get; set; }
+        public DataFactoryElement<string> Host
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Host;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.Host = value;
+            }
+        }
+
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserId { get; set; }
-        /// <summary> Password to logon the server. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> UserId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserId = value;
+            }
+        }
+
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
-        public DataFactoryKeyVaultSecret AccountKey { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> SasUri { get; set; }
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public DataFactoryKeyVaultSecret SasToken { get; set; }
+        public DataFactoryElement<string> SasUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SasUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.SasUri = value;
+            }
+        }
+
         /// <summary> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> FileShare { get; set; }
+        public DataFactoryElement<string> FileShare
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FileShare;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.FileShare = value;
+            }
+        }
+
         /// <summary> The azure file share snapshot version. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Snapshot { get; set; }
+        public DataFactoryElement<string> Snapshot
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Snapshot;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.Snapshot = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
-        public DataFactoryElement<string> ServiceEndpoint { get; set; }
+        public DataFactoryElement<string> ServiceEndpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServiceEndpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServiceEndpoint = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureFileStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }
