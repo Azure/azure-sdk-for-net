@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
@@ -52,14 +51,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
 
             mockGenerator.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
             mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(null, null));
-            typeof(Azure.Generator.Management.ManagementInputLibrary)
-                .GetField("_providerSchema", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(mockInputLibrary.Object, new ArmProviderSchema([], []));
-
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var provisioningInstance = typeof(ProvisioningGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             codeModelInstance!.SetValue(null, mockGenerator.Object);
-            provisioningInstance!.SetValue(null, mockGenerator.Object);
 
             return mockGenerator;
         }
