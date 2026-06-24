@@ -273,12 +273,79 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
+        [Test]
+        public void InputResourceModelCustomCodeBaseTypeOverride_UsesCustomBaseType()
+        {
+            var resourceModel = InputFactory.Model(
+                "Resource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
+                .GetSetMethod(true)!
+                .Invoke(resourceModel, ["Azure.ResourceManager.CommonTypes.Resource"]);
+
+            var inputModel = InputFactory.Model(
+                "ClusterUpdatePatch",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                baseModel: resourceModel,
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, inputModel]);
+
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel);
+            Assert.That(model, Is.Not.Null);
+            SetCustomCodeView(model!, new ClusterUpdatePatchCustomCodeView());
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseType?.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
+
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Tags"), Is.False, "Tags should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Location"), Is.False, "Location should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
+
+            var modelContent = new TypeProviderWriter(result).Write().Content;
+            Assert.That(modelContent, Does.Contain("public partial class ClusterUpdatePatch : global::Azure.ResourceManager.Models.TrackedResourceData"));
+            Assert.That(modelContent, Does.Not.Contain(" : base("));
+        }
+
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
-            typeProvider.GetType().BaseType!.GetField(
-                    "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+            var currentType = typeProvider.GetType();
+            while (currentType is not null)
+            {
+                var field = currentType.GetField("_customCodeView", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (field is not null)
+                {
+                    field.SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    return;
+                }
+
+                currentType = currentType.BaseType;
+            }
+
+            throw new InvalidOperationException($"Unable to find _customCodeView field on {typeProvider.GetType().FullName}.");
         }
 
         /// <summary>
@@ -290,6 +357,13 @@ namespace Azure.Generator.Mgmt.Tests
             protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
             protected override string BuildName() => "MyTrackedModel";
             protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
+        }
+
+        private class ClusterUpdatePatchCustomCodeView : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
+            protected override string BuildName() => "ClusterUpdatePatch";
+            protected override string BuildRelativeFilePath() => "ClusterUpdatePatch.cs";
         }
 
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor

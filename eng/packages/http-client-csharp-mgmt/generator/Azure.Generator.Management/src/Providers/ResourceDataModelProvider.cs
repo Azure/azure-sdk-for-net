@@ -46,5 +46,15 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Type.Name}.cs");
+
+        protected override ModelProvider? BuildBaseModelProvider()
+        {
+            if (ManagementModelProvider.TryGetCustomSystemBaseModelProvider(CustomCodeView?.BaseType, out var customBaseModelProvider))
+            {
+                return customBaseModelProvider;
+            }
+
+            return base.BuildBaseModelProvider();
+        }
     }
 }
