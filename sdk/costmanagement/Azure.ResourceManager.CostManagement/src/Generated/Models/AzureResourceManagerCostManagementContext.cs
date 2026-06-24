@@ -151,7 +151,6 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(SharedScopeBenefitRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(SingleScopeBenefitRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(SourceCostAllocationEntity))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagInheritanceProperties))]
     [ModelReaderWriterBuildable(typeof(TagInheritanceSetting))]
     [ModelReaderWriterBuildable(typeof(TargetCostAllocationEntity))]
@@ -165,6 +164,7 @@ namespace Azure.ResourceManager.CostManagement
     [ModelReaderWriterBuildable(typeof(ViewListResult))]
     [ModelReaderWriterBuildable(typeof(ViewPivotProperties))]
     [ModelReaderWriterBuildable(typeof(ViewProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerCostManagementContext : ModelReaderWriterContext
     {
     }
