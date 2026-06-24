@@ -1,4 +1,4 @@
-# Run one eval shard against the prebuilt mock MCP, then publish its results.
+# Run one eval shard against the prebuilt MCP server(s), then publish its results.
 # Used inside a job that defines `strategy: matrix` from the collect-stimuli output,
 # so $(shardName) and $(evalArgs) are provided per shard. Pass/fail is decided by the
 # eval VERDICT (invoke-eval-shard.js reads results.jsonl), not the `vally` exit code —
@@ -16,19 +16,26 @@ parameters:
     # Where the pinned Vally CLI is installed from (npm ci against its lockfile).
     type: string
     default: eng/skill-eval
-  - name: mockArtifact
+  - name: mcpArtifact
     type: string
-    default: mcp-mock
-  - name: mockStagePath
+    default: mcp-servers
+  - name: mcpStageRoot
     # Relative to $(Build.SourcesDirectory); must match the path .vally.yaml expects.
+    # The published artifact is re-staged here so the DLL subfolders (cli/, mock/) land
+    # at the paths the eval environments resolve against.
     type: string
-    default: artifacts/mcp/mock
+    default: artifacts/mcp
   - name: threshold
     type: string
     default: '0.8'
   - name: nodeVersion
     type: string
     default: 22.x
+  - name: azureServiceConnection
+    # When set, the eval runs inside an AzureCLI@2 task so the agent's MCP tools can
+    # reach real Azure DevOps (the live tier). Empty = plain script (hermetic tiers).
+    type: string
+    default: ''
   - name: githubTokenVariable
     # Name of the secret variable (from the DevOps-linked group) the copilot-sdk
     # executor authenticates with. Passed by name so no group is hardcoded (D5).
@@ -51,13 +58,13 @@ steps:
     workingDirectory: ${{ parameters.skillEvalDir }}
 
   - download: current
-    artifact: ${{ parameters.mockArtifact }}
-    displayName: 'Download mock DLL'
+    artifact: ${{ parameters.mcpArtifact }}
+    displayName: 'Download MCP server(s)'
 
   - script: |
-      mkdir -p "$(Build.SourcesDirectory)/${{ parameters.mockStagePath }}"
-      cp -r "$(Pipeline.Workspace)/${{ parameters.mockArtifact }}/." "$(Build.SourcesDirectory)/${{ parameters.mockStagePath }}/"
-    displayName: 'Stage mock DLL at expected path'
+      mkdir -p "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}"
+      cp -r "$(Pipeline.Workspace)/${{ parameters.mcpArtifact }}/." "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/"
+    displayName: 'Stage MCP server(s) at expected path'
 
   # Clone the git fixtures the workflow evals reference. init-eval-git-fixtures.js
   # scans each eval's `environment.git` block for its (repo, ref) pairs and clones
@@ -68,18 +75,38 @@ steps:
         --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}"
     displayName: 'Prime eval git fixtures (scan + clone)'
 
-  # Gate on the eval verdict, not the `vally` exit code (see header comment).
-  - script: |
-      node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
-        --eval-args "$(evalArgs)" \
-        --shard-name "$(shardName)" \
-        --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
-        --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.skillEvalDir }}" \
-        --threshold ${{ parameters.threshold }}
-    displayName: 'vally eval $(shardName)'
-    workingDirectory: ${{ parameters.vallyRoot }}
-    env:
-      GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
+  # Gate on the eval verdict, not the `vally` exit code (see header comment). The live
+  # tier wraps the same command in AzureCLI@2 so the agent's MCP DevOps calls inherit the
+  # service-connection identity; the hermetic tiers run it as a plain script.
+  - ${{ if ne(parameters.azureServiceConnection, '') }}:
+      - task: AzureCLI@2
+        displayName: 'vally eval $(shardName)'
+        inputs:
+          azureSubscription: ${{ parameters.azureServiceConnection }}
+          scriptType: bash
+          scriptLocation: inlineScript
+          workingDirectory: ${{ parameters.vallyRoot }}
+          inlineScript: |
+            node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
+              --eval-args "$(evalArgs)" \
+              --shard-name "$(shardName)" \
+              --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+              --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.skillEvalDir }}" \
+              --threshold ${{ parameters.threshold }}
+        env:
+          GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
+  - ${{ else }}:
+      - script: |
+          node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/invoke-eval-shard.js" \
+            --eval-args "$(evalArgs)" \
+            --shard-name "$(shardName)" \
+            --output-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+            --skill-eval-prefix "$(Build.SourcesDirectory)/${{ parameters.skillEvalDir }}" \
+            --threshold ${{ parameters.threshold }}
+        displayName: 'vally eval $(shardName)'
+        workingDirectory: ${{ parameters.vallyRoot }}
+        env:
+          GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
 
   # Always publish just the JUnit (a few KB) — all the Summary stage consumes — so
   # green runs stay tiny. Heavy LLM transcripts publish separately, only on failure.

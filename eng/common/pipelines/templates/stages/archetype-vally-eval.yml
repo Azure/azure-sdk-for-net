@@ -1,7 +1,7 @@
 # Reusable orchestrator for the Vally eval CI. Two stages (D8):
-#   Eval    - BuildMock + Detect run in parallel, then RunShard fans out one job per
+#   Eval    - BuildMcp + Detect run in parallel, then RunShard fans out one job per
 #             shard from the Detect matrix. An optional custom-MCP build job hook (D6)
-#             lets a consuming repo build a live MCP alongside the mock.
+#             lets a consuming repo build an extra MCP alongside the default set.
 #   Summary - depends on Eval; merges every shard's JUnit into one rollup.
 #
 # The consuming repo supplies a thin entrypoint (trigger + params + extends this).
@@ -26,21 +26,34 @@ parameters:
     # Optional shared eval root (synced via eng/common). Empty = skip.
     type: string
     default: ''
+  - name: patterns
+    # Optional list of forward-slashed eval globs (per root). Empty = collect-stimuli.js
+    # uses its built-in default (the Vally mock vertical).
+    type: object
+    default: []
   - name: shardBy
     type: string
     default: file
     values:
       - file
       - area
-  - name: mockArtifact
+  - name: mcpArtifact
     type: string
-    default: mcp-mock
-  - name: mockProject
+    default: mcp-servers
+  - name: mcpStageRoot
+    # Common parent the built MCP servers are published from and re-staged into.
     type: string
-    default: tools/azsdk-cli/Azure.Sdk.Tools.Mock
-  - name: mockOutputPath
+    default: artifacts/mcp
+  - name: mcpBuilds
+    # List of { project, outputPath } MCP servers to build once and share with shards.
+    type: object
+    default:
+      - project: tools/azsdk-cli/Azure.Sdk.Tools.Mock
+        outputPath: artifacts/mcp/mock
+  - name: azureServiceConnection
+    # Set for the live tier so shards run inside AzureCLI@2 (real DevOps). Empty = script.
     type: string
-    default: artifacts/mcp/mock
+    default: ''
   - name: threshold
     type: string
     default: '0.8'
@@ -71,20 +84,20 @@ parameters:
 
 stages:
   - stage: Eval
-    displayName: 'Build mock + run eval shards'
+    displayName: 'Build MCP + run eval shards'
     jobs:
-      - job: BuildMock
-        displayName: 'Build + publish mock DLL'
+      - job: BuildMcp
+        displayName: 'Build + publish MCP server(s)'
         pool:
           name: $(LINUXPOOL)
           image: $(LINUXVMIMAGE)
           os: linux
         steps:
-          - template: /eng/common/pipelines/templates/steps/vally-build-mock.yml
+          - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
             parameters:
-              mockProject: ${{ parameters.mockProject }}
-              outputPath: ${{ parameters.mockOutputPath }}
-              artifactName: ${{ parameters.mockArtifact }}
+              mcpBuilds: ${{ parameters.mcpBuilds }}
+              stageRoot: ${{ parameters.mcpStageRoot }}
+              artifactName: ${{ parameters.mcpArtifact }}
 
       - job: Detect
         displayName: 'Glob eval files -> matrix'
@@ -97,6 +110,7 @@ stages:
             parameters:
               evalRoot: ${{ parameters.evalRoot }}
               commonEvalRoot: ${{ parameters.commonEvalRoot }}
+              patterns: ${{ parameters.patterns }}
               shardBy: ${{ parameters.shardBy }}
               scriptDir: ${{ parameters.scriptDir }}
               outputVariableName: matrix
@@ -110,7 +124,7 @@ stages:
       - job: RunShard
         displayName: 'Eval'
         dependsOn:
-          - BuildMock
+          - BuildMcp
           - Detect
         pool:
           name: $(LINUXPOOL)
@@ -129,8 +143,9 @@ stages:
               vallyRoot: ${{ parameters.vallyRoot }}
               scriptDir: ${{ parameters.scriptDir }}
               skillEvalDir: ${{ parameters.skillEvalDir }}
-              mockArtifact: ${{ parameters.mockArtifact }}
-              mockStagePath: ${{ parameters.mockOutputPath }}
+              mcpArtifact: ${{ parameters.mcpArtifact }}
+              mcpStageRoot: ${{ parameters.mcpStageRoot }}
+              azureServiceConnection: ${{ parameters.azureServiceConnection }}
               threshold: ${{ parameters.threshold }}
               nodeVersion: ${{ parameters.nodeVersion }}
               githubTokenVariable: ${{ parameters.githubTokenVariable }}

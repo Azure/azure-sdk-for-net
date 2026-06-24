@@ -1,0 +1,41 @@
+# Build one or more MCP servers once and publish them as a single pipeline artifact,
+# so every eval shard downloads prebuilt DLLs instead of rebuilding them (the biggest
+# speed win; also sidesteps the MSBuild boot race when shards run in parallel — #15947).
+# Vally runs `dotnet <dll>`, not `dotnet run`, so a plain build output is enough.
+#
+# Each entry in `mcpBuilds` is built into its own subfolder under `stageRoot`; the whole
+# `stageRoot` tree is published as one artifact and re-staged at the same path on each
+# shard, matching the relative DLL paths the various .vally.yaml environments expect:
+#   - mock vertical : artifacts/mcp/mock  (azsdk-mock.dll)
+#   - skills        : artifacts/mcp/cli + artifacts/mcp/mock
+#   - live          : artifacts/mcp/cli  (azsdk.dll)
+
+parameters:
+  - name: mcpBuilds
+    # List of { project, outputPath } — outputPath is relative to $(Build.SourcesDirectory)
+    # and must sit under `stageRoot` so it ships inside the published artifact.
+    type: object
+    default:
+      - project: tools/azsdk-cli/Azure.Sdk.Tools.Mock
+        outputPath: artifacts/mcp/mock
+  - name: stageRoot
+    # Common parent of every build's outputPath; published as the artifact. Must match
+    # the path the consuming .vally.yaml resolves its DLLs against.
+    type: string
+    default: artifacts/mcp
+  - name: artifactName
+    type: string
+    default: mcp-servers
+
+steps:
+  - checkout: self
+    fetchDepth: 1
+
+  - ${{ each build in parameters.mcpBuilds }}:
+      - script: |
+          dotnet build ${{ build.project }} -c Release -o ${{ build.outputPath }} --nologo
+        displayName: 'Build MCP: ${{ build.project }}'
+
+  - publish: '$(Build.SourcesDirectory)/${{ parameters.stageRoot }}'
+    artifact: ${{ parameters.artifactName }}
+    displayName: 'Publish MCP server artifact'

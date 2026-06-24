@@ -12,6 +12,11 @@ parameters:
     # Optional shared eval root synced via eng/common. Empty string = skip.
     type: string
     default: ''
+  - name: patterns
+    # Optional list of forward-slashed globs (relative to each root). Empty = let
+    # collect-stimuli.js use its built-in default (the Vally mock vertical).
+    type: object
+    default: []
   - name: shardBy
     type: string
     default: file
@@ -46,9 +51,23 @@ steps:
       if [ -n "${{ parameters.commonEvalRoot }}" ]; then
         roots+=(--eval-root "${{ parameters.commonEvalRoot }}")
       fi
+      # EVAL_PATTERNS is a space-joined list (env, so it survives as a real bash var).
+      # set -f stops the shell from glob-expanding the `*` in each pattern before it
+      # reaches collect-stimuli.js. Empty list -> skip -> the script uses its default.
+      patterns=()
+      if [ -n "$EVAL_PATTERNS" ]; then
+        set -f
+        for p in $EVAL_PATTERNS; do
+          patterns+=(--pattern "$p")
+        done
+        set +f
+      fi
       node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/collect-stimuli.js" \
         "${roots[@]}" \
+        "${patterns[@]}" \
         --shard-by ${{ parameters.shardBy }} \
         --output-variable ${{ parameters.outputVariableName }}
     name: ${{ parameters.stepName }}
     displayName: 'Build fan-out matrix'
+    env:
+      EVAL_PATTERNS: ${{ join(' ', parameters.patterns) }}
