@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,30 +17,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
         /// <param name="version"> The required version of Azure PowerShell to install. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public AzPowerShellSetup(string version)
+        public AzPowerShellSetup(string version) : base("AzPowerShellSetup")
         {
             Argument.AssertNotNull(version, nameof(version));
 
-            Version = version;
-            CustomSetupBaseType = "AzPowerShellSetup";
+            TypeProperties = new AzPowerShellSetupTypeProperties(version);
         }
 
         /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="version"> The required version of Azure PowerShell to install. </param>
-        internal AzPowerShellSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string version) : base(customSetupBaseType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Install Azure PowerShell type properties. </param>
+        internal AzPowerShellSetup(string customSetupBaseType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzPowerShellSetupTypeProperties typeProperties) : base(customSetupBaseType, additionalBinaryDataProperties)
         {
-            Version = version;
-            CustomSetupBaseType = customSetupBaseType ?? "AzPowerShellSetup";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzPowerShellSetup"/> for deserialization. </summary>
-        internal AzPowerShellSetup()
-        {
-        }
+        /// <summary> Install Azure PowerShell type properties. </summary>
+        internal AzPowerShellSetupTypeProperties TypeProperties { get; set; }
 
         /// <summary> The required version of Azure PowerShell to install. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Version;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzPowerShellSetupTypeProperties();
+                }
+                TypeProperties.Version = value;
+            }
+        }
     }
 }

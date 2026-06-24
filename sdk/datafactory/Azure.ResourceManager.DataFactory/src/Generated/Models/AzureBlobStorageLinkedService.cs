@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobStorageLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
-        public AzureBlobStorageLinkedService()
+        public AzureBlobStorageLinkedService() : base("AzureBlobStorage")
         {
-            LinkedServiceType = "AzureBlobStorage";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
@@ -27,67 +27,203 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="accountKey"> The Azure key vault secret reference of accountKey in connection string. </param>
-        /// <param name="sasUri"> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="sasToken"> The Azure key vault secret reference of sasToken in sas uri. </param>
-        /// <param name="serviceEndpoint"> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="accountKind"> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
-        /// <param name="containerUri"> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobStorageLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, DataFactoryElement<string> serviceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountKind, string encryptedCredential, DataFactoryCredentialReference credential, AzureStorageAuthenticationType? authenticationType, DataFactoryElement<string> containerUri) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure Blob Storage linked service properties. </param>
+        /// <param name="servicePrincipalKey"></param>
+        internal AzureBlobStorageLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzureBlobStorageLinkedServiceTypeProperties typeProperties, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            AccountKey = accountKey;
-            SasUri = sasUri;
-            SasToken = sasToken;
-            ServiceEndpoint = serviceEndpoint;
-            ServicePrincipalId = servicePrincipalId;
+            TypeProperties = typeProperties;
             ServicePrincipalKey = servicePrincipalKey;
-            Tenant = tenant;
-            AzureCloudType = azureCloudType;
-            AccountKind = accountKind;
-            EncryptedCredential = encryptedCredential;
-            Credential = credential;
-            AuthenticationType = authenticationType;
-            ContainerUri = containerUri;
-            LinkedServiceType = linkedServiceType ?? "AzureBlobStorage";
         }
 
+        /// <summary> Azure Blob Storage linked service properties. </summary>
+        internal AzureBlobStorageLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> The connection string. It is mutually exclusive with sasUri, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
-        /// <summary> The Azure key vault secret reference of accountKey in connection string. </summary>
-        public DataFactoryKeyVaultSecret AccountKey { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> SasUri { get; set; }
-        /// <summary> The Azure key vault secret reference of sasToken in sas uri. </summary>
-        public DataFactoryKeyVaultSecret SasToken { get; set; }
+        public DataFactoryElement<string> SasUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SasUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.SasUri = value;
+            }
+        }
+
         /// <summary> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </summary>
-        public DataFactoryElement<string> ServiceEndpoint { get; set; }
+        public DataFactoryElement<string> ServiceEndpoint
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServiceEndpoint;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServiceEndpoint = value;
+            }
+        }
+
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AzureCloudType { get; set; }
+        public DataFactoryElement<string> AzureCloudType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AzureCloudType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.AzureCloudType = value;
+            }
+        }
+
         /// <summary> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AccountKind { get; set; }
+        public DataFactoryElement<string> AccountKind
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccountKind;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.AccountKind = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
+
         /// <summary> The type used for authentication. Type: string. </summary>
-        public AzureStorageAuthenticationType? AuthenticationType { get; set; }
+        public AzureStorageAuthenticationType? AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ContainerUri { get; set; }
+        public DataFactoryElement<string> ContainerUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ContainerUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBlobStorageLinkedServiceTypeProperties();
+                }
+                TypeProperties.ContainerUri = value;
+            }
+        }
     }
 }

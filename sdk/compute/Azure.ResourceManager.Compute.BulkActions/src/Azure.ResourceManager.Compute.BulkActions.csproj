@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Resource Manager client SDK for Azure resource provider ComputeBulkActions</Description>
+    <Version>1.0.0</Version>
+    <PackageTags>azure;management;arm;resource manager;compute;bulkactions</PackageTags>
+    <PackageId>Azure.ResourceManager.Compute.BulkActions</PackageId>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>

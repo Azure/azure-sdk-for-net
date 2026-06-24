@@ -18,29 +18,30 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
-        private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
-            : base(typeof(ArmClient), OperationContext.Create(RequestPathPattern.Tenant), resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), nonResourceMethods)
+        private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+            : base(typeof(ArmClient), OperationContext.Create(RequestPathPattern.Tenant), resources, resourceMethods, nonResourceMethods)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="MockableArmClientProvider"/> if there are resources or non-resource methods to generate methods for.
+        /// Creates a new instance of <see cref="MockableArmClientProvider"/> if there are resources or extension methods to generate methods for.
         /// </summary>
         /// <param name="resources">The resources to generate methods for.</param>
+        /// <param name="resourceMethods">The resource methods to generate methods for.</param>
         /// <param name="nonResourceMethods">The non-resource methods to generate methods for.</param>
-        /// <returns>A new instance of <see cref="MockableArmClientProvider"/> if there are resources or non-resource methods, otherwise null.</returns>
-        public static MockableArmClientProvider? TryCreate(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        /// <returns>A new instance of <see cref="MockableArmClientProvider"/> if there are resources or extension methods, otherwise null.</returns>
+        public static MockableArmClientProvider? TryCreate(IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
-            if (resources.Count == 0 && nonResourceMethods.Count == 0)
+            if (resources.Count == 0 && resourceMethods.Count == 0 && nonResourceMethods.Count == 0)
             {
                 return null;
             }
-            return new MockableArmClientProvider(resources, nonResourceMethods);
+            return new MockableArmClientProvider(resources, resourceMethods, nonResourceMethods);
         }
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
+            var methods = new List<MethodProvider>(_resources.Count + _resourceMethods.Sum(kvp => kvp.Value.Count) * 2 + _nonResourceMethods.Count * 2);
 
             // Build methods for extension resources
             foreach (var resource in _resources)
@@ -56,6 +57,24 @@ namespace Azure.Generator.Management.Providers
                     {
                         methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
                     }
+                }
+            }
+
+            // Build methods for extension-scoped resource operations.
+            foreach (var (resource, resourceMethods) in _resourceMethods)
+            {
+                foreach (var resourceMethod in resourceMethods)
+                {
+                    var scopeParameter = new ParameterProvider(
+                        "scope",
+                        $"The scope that the resource will apply against.",
+                        typeof(ResourceIdentifier),
+                        wireInfo: new WireInformation(SerializationFormat.Default, string.Empty),
+                        validation: ParameterValidationType.AssertNotNull);
+                    var scopeContext = OperationContext.Create(resourceMethod.Scope.ScopeIdPattern);
+
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true, scopeContext, scopeParameter));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false, scopeContext, scopeParameter));
                 }
             }
 
