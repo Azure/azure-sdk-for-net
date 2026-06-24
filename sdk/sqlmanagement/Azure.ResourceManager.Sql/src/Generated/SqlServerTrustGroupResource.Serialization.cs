@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerTrustGroupResource : IJsonModel<SqlServerTrustGroupData>
     {
-        private static SqlServerTrustGroupData s_dataDeserializationInstance;
-        private static SqlServerTrustGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerTrustGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerTrustGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerTrustGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerTrustGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)Data).Write(writer, options);
 
-        SqlServerTrustGroupData IJsonModel<SqlServerTrustGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerTrustGroupData IJsonModel<SqlServerTrustGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerTrustGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerTrustGroupData IPersistableModel<SqlServerTrustGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerTrustGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerTrustGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerTrustGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerTrustGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -9,46 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the WorkloadClassifier data model.
-    /// Workload classifier operations for a data warehouse
-    /// </summary>
+    /// <summary> Workload classifier operations for a data warehouse. </summary>
     public partial class WorkloadClassifierData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
         public WorkloadClassifierData()
@@ -56,45 +25,128 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadClassifierData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="memberName"> The workload classifier member name. </param>
-        /// <param name="label"> The workload classifier label. </param>
-        /// <param name="context"> The workload classifier context. </param>
-        /// <param name="startTime"> The workload classifier start time for classification. </param>
-        /// <param name="endTime"> The workload classifier end time for classification. </param>
-        /// <param name="importance"> The workload classifier importance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadClassifierProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            MemberName = memberName;
-            Label = label;
-            Context = context;
-            StartTime = startTime;
-            EndTime = endTime;
-            Importance = importance;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal WorkloadClassifierProperties Properties { get; set; }
 
         /// <summary> The workload classifier member name. </summary>
         [WirePath("properties.memberName")]
-        public string MemberName { get; set; }
+        public string MemberName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemberName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.MemberName = value;
+            }
+        }
+
         /// <summary> The workload classifier label. </summary>
         [WirePath("properties.label")]
-        public string Label { get; set; }
+        public string Label
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Label;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.Label = value;
+            }
+        }
+
         /// <summary> The workload classifier context. </summary>
         [WirePath("properties.context")]
-        public string Context { get; set; }
+        public string Context
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Context;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.Context = value;
+            }
+        }
+
         /// <summary> The workload classifier start time for classification. </summary>
         [WirePath("properties.startTime")]
-        public string StartTime { get; set; }
+        public string StartTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.StartTime = value;
+            }
+        }
+
         /// <summary> The workload classifier end time for classification. </summary>
         [WirePath("properties.endTime")]
-        public string EndTime { get; set; }
+        public string EndTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.EndTime = value;
+            }
+        }
+
         /// <summary> The workload classifier importance. </summary>
         [WirePath("properties.importance")]
-        public string Importance { get; set; }
+        public string Importance
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Importance;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkloadClassifierProperties();
+                }
+                Properties.Importance = value;
+            }
+        }
     }
 }
