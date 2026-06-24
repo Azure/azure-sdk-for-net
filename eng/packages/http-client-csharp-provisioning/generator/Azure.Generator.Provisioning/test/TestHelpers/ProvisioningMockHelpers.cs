@@ -61,16 +61,6 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             codeModelInstance!.SetValue(null, mockGenerator.Object);
             provisioningInstance!.SetValue(null, mockGenerator.Object);
 
-            var factory = mockGenerator.Object.TypeFactory;
-            typeof(Microsoft.TypeSpec.Generator.TypeFactory)
-                .GetField("_primaryNamespace", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(factory, "Azure.Provisioning.Tests");
-            // ProvisioningTypeFactory inherits ManagementTypeFactory and does not define a
-            // provisioning-specific backing field for the resource provider name.
-            typeof(Azure.Generator.Management.ManagementTypeFactory)
-                .GetField("_resourceProviderName", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(factory, "Tests");
-
             return mockGenerator;
         }
     }
