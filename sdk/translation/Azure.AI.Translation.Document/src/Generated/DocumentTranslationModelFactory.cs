@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.Json;
 using Azure;
 
 namespace Azure.AI.Translation.Document
@@ -85,47 +84,6 @@ namespace Azure.AI.Translation.Document
         public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
         {
             return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Document Status Response. </summary>
-        /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
-        /// <param name="sourceDocumentUri"> Location of the source document. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
-        /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translatedToLanguageCode"> To language. </param>
-        /// <param name="progress"> Progress of the translation if available. </param>
-        /// <param name="id"> Document Id. </param>
-        /// <param name="charactersCharged"> Character charged by the API. </param>
-        /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
-        /// <param name="totalImageScansFailed"> Total image scans failed. </param>
-        /// <param name="imageCharged"> Images charged by the API. </param>
-        /// <param name="imageCharacterDetected"> Characters detected within images. </param>
-        /// <param name="deploymentName"> Deployment name of the custom translation model or LLM model used for the translation. </param>
-        /// <param name="error">
-        /// This contains an outer error with error code, message, details, target and an
-        /// inner error with more descriptive details.
-        /// </param>
-        /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
-        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, string translatedToLanguageCode = default, float progress = default, string id = default, long charactersCharged = default, int? totalImageScansSucceeded = default, int? totalImageScansFailed = default, int? imageCharged = default, int? imageCharacterDetected = default, string deploymentName = default, JsonElement error = default)
-        {
-            return new DocumentStatusResult(
-                translatedDocumentUri,
-                sourceDocumentUri,
-                createdOn,
-                lastModified,
-                status,
-                translatedToLanguageCode,
-                progress,
-                id,
-                charactersCharged,
-                totalImageScansSucceeded,
-                totalImageScansFailed,
-                imageCharged,
-                imageCharacterDetected,
-                deploymentName,
-                error,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of supported file formats. </summary>

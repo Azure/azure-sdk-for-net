@@ -4,7 +4,15 @@
 
 ### Features Added
 
+- Added support for the `2026-03-01` service API version, which is now the default.
+- Added the `DeploymentName` property to `TranslationTarget` to specify the deployment name of the custom translation model for a batch translation request.
+- Added the `DeploymentName` property to `DocumentStatusResult`, exposing the deployment name of the custom translation model or LLM model used for the translation.
+- Added the `deploymentName` parameter to `SingleDocumentTranslationClient.Translate` and `TranslateAsync` for single document translation requests.
+
 ### Breaking Changes
+
+- Removed the `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions from `DocumentTranslationClientOptions.ServiceVersion`. Use the stable `V2026_03_01` version instead.
+- Added a `deploymentName` parameter (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
 
 ### Bugs Fixed
 

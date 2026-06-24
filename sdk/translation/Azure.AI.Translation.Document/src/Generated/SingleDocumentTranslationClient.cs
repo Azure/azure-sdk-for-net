@@ -6,9 +6,7 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -209,84 +207,6 @@ namespace Azure.AI.Translation.Document
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Use this API to submit a single translation request to the Document Translation Service. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de 
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
-        /// project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
-        /// Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        [Experimental("SCME0004")]
-        public virtual Response<BinaryData> Translate(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = default, string category = default, string deploymentName = default, bool? allowFallback = default, bool? translateTextWithinImage = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            using MultiPartFormContent content = documentTranslateContent.ToMultipartFormContent();
-            using RequestContent requestContent = RequestContent.Create(content);
-            Response result = Translate(targetLanguage, requestContent, content.MediaType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Use this API to submit a single translation request to the Document Translation Service. </summary>
-        /// <param name="targetLanguage">
-        /// Specifies the language of the output document.
-        /// The target language must be one of the supported languages included in the translation scope.
-        /// For example if you want to translate the document in German language, then use targetLanguage=de 
-        /// </param>
-        /// <param name="documentTranslateContent"> Document Translate Request Content. </param>
-        /// <param name="sourceLanguage">
-        /// Specifies source language of the input document.
-        /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
-        /// For example if the source document is written in English, then use sourceLanguage=en
-        /// </param>
-        /// <param name="category">
-        /// A string specifying the category (domain) of the translation. This parameter is used to get translations 
-        /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
-        /// project details to this parameter to use your deployed customized system. Default value is: general.
-        /// </param>
-        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
-        /// <param name="allowFallback">
-        /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
-        /// Possible values are: true (default) or false.
-        /// </param>
-        /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="documentTranslateContent"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        [Experimental("SCME0004")]
-        public virtual async Task<Response<BinaryData>> TranslateAsync(string targetLanguage, DocumentTranslateContent documentTranslateContent, string sourceLanguage = default, string category = default, string deploymentName = default, bool? allowFallback = default, bool? translateTextWithinImage = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(documentTranslateContent, nameof(documentTranslateContent));
-
-            using MultiPartFormContent content = documentTranslateContent.ToMultipartFormContent();
-            using RequestContent requestContent = RequestContent.Create(content);
-            Response result = await TranslateAsync(targetLanguage, requestContent, content.MediaType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
         }
     }
 }

@@ -35,6 +35,7 @@ namespace Azure.AI.Translation.Document
         internal DocumentStatusResult() { }
         public long CharactersCharged { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string DeploymentName { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public int? ImageCharacterDetected { get { throw null; } }
@@ -151,13 +152,12 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2025_12_01_Preview) { }
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2026_03_01) { }
         public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_05_01 = 1,
-            V2024_11_01_Preview = 2,
-            V2025_12_01_Preview = 3,
+            V2026_03_01 = 2,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -217,7 +217,8 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.TranslationBatch TranslationBatch(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs = null, Azure.AI.Translation.Document.BatchOptions options = null) { throw null; }
         public static Azure.AI.Translation.Document.TranslationGlossary TranslationGlossary(System.Uri glossaryUri = null, string format = null, string formatVersion = null, Azure.AI.Translation.Document.TranslationStorageSource? storageSource = default(Azure.AI.Translation.Document.TranslationStorageSource?)) { throw null; }
         public static Azure.AI.Translation.Document.TranslationStatusResult TranslationStatusResult(string id, System.DateTimeOffset createdOn, System.DateTimeOffset lastModified, Azure.AI.Translation.Document.DocumentTranslationStatus status, System.BinaryData error, int total, int failed, int success, int inProgress, int notYetStarted, int canceled, long totalCharacterCharged) { throw null; }
-        public static Azure.AI.Translation.Document.TranslationTarget TranslationTarget(System.Uri targetUri = null, string categoryId = null, string languageCode = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationGlossary> glossaries = null, Azure.AI.Translation.Document.TranslationStorageSource? storageSource = default(Azure.AI.Translation.Document.TranslationStorageSource?)) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationTarget TranslationTarget(System.Uri targetUri, string categoryId, string languageCode, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationGlossary> glossaries, Azure.AI.Translation.Document.TranslationStorageSource? storageSource) { throw null; }
+        public static Azure.AI.Translation.Document.TranslationTarget TranslationTarget(System.Uri targetUri = null, string categoryId = null, string deploymentName = null, string languageCode = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationGlossary> glossaries = null, Azure.AI.Translation.Document.TranslationStorageSource? storageSource = default(Azure.AI.Translation.Document.TranslationStorageSource?)) { throw null; }
     }
     public partial class DocumentTranslationOperation : Azure.PageableOperation<Azure.AI.Translation.Document.DocumentStatusResult>
     {
@@ -328,14 +329,14 @@ namespace Azure.AI.Translation.Document
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public SingleDocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Translation.Document.DocumentTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<System.BinaryData> Translate(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.BinaryData> Translate(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<System.BinaryData> Translate(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Translate(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response Translate(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Translate(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, string deploymentName = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class SingleDocumentTranslationClientHostExtensions
@@ -481,6 +482,7 @@ namespace Azure.AI.Translation.Document
     {
         public TranslationTarget(System.Uri targetUri, string languageCode) { }
         public string CategoryId { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public Azure.AI.Translation.Document.TranslationStorageSource? StorageSource { get { throw null; } set { } }
