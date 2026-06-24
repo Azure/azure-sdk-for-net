@@ -36,6 +36,6 @@ We prefer all communications to be in English.
 
 ## Policy
 
-Microsoft follows the principle of [Coordinated Vulnerability Disclosure](https://www.microsoft.com/msrc/cvd).
+Microsoft follows the principle of [Coordinated Vulnerability Disclosure](https://www.microsoft.com/msrc/cvgte-d).
 
 <!-- END MICROSOFT SECURITY.MD BLOCK -->
