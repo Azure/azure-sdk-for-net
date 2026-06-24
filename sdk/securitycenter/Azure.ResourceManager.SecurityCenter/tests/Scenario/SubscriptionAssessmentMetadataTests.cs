@@ -99,13 +99,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            var options = new ArmClientOptions();
-            options.SetApiVersion(SubscriptionAssessmentMetadataResource.ResourceType, "2021-06-01");
-            var playbackSubscription = GetArmClient(options).GetSubscriptionResource(DefaultSubscription.Id);
-            var collection = playbackSubscription.GetAllSubscriptionAssessmentMetadata();
             var assessmentMetadataName = Recording.Random.NewGuid().ToString();
-            var subAssessmentMetadata = await CreateSubscriptionAssessmentMetadata(assessmentMetadataName, collection);
-            bool flag = await collection.ExistsAsync(assessmentMetadataName);
+            var subAssessmentMetadata = await CreateSubscriptionAssessmentMetadata(assessmentMetadataName);
+            bool flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
             Assert.IsTrue(flag);
 
             if (TestEnvironment.Mode != RecordedTestMode.Playback)
@@ -115,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 {
                     Thread.Sleep(20000);
                 }
-                flag = await collection.ExistsAsync(assessmentMetadataName);
+                flag = await _subAssessmentMetadataCollection.ExistsAsync(assessmentMetadataName);
                 Assert.IsFalse(flag);
             }
         }

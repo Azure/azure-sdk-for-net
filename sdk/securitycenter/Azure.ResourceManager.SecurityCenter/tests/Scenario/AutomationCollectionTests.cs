@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         public AutomationCollectionTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
-            IgnoredHeaders.Add("Accept");
         }
 
         [SetUp]
@@ -110,12 +109,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var automation = await CreateSecurityAutomation(automationName);
             bool flag = await _automationCollection.ExistsAsync(automationName);
             Assert.IsTrue(flag);
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
-            {
-                await automation.DeleteAsync(WaitUntil.Completed);
-                flag = await _automationCollection.ExistsAsync(automationName);
-                Assert.IsFalse(flag);
-            }
+
+            await automation.DeleteAsync(WaitUntil.Completed);
+            flag = await _automationCollection.ExistsAsync(automationName);
+            Assert.IsFalse(flag);
         }
 
         [TestCase(true)]

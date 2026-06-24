@@ -39,9 +39,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task GenericDevOpsConfiguration_CreateOrUpdateAndDeleteFailed()
         {
-            var options = new ArmClientOptions();
-            options.SetApiVersion(DevOpsConfigurationResource.ResourceType, "2023-09-01-preview");
-            var playbackClient = GetArmClient(options);
             var tempResourceGroupName = Recording.GenerateAssetName(TempDevOpsConnectorsResourceGroup);
             string hierarchyId = Recording.GenerateAssetName("0223e997-c821-4df6-a6df-843c6465"); //workaround to generate semi-random guid to reduce collisions between sync and async tests
             string connectorName = Recording.GenerateAssetName("dfdsdktest-tmp");
@@ -68,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(data.EnvironmentName, securityConnectorOperation.Value.Data.EnvironmentName.Value);
 
             // setup devops
-            var devopsConfigurationResource = playbackClient.GetDevOpsConfigurationResource(securityConnectorOperation.Value.GetDevOpsConfiguration().Id);
+            var devopsConfigurationResource = Client.GetDevOpsConfigurationResource(securityConnectorOperation.Value.GetDevOpsConfiguration().Id);
 
             Assert.IsFalse(devopsConfigurationResource.HasData);
 
@@ -404,9 +401,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task GitLab_GetGitLabSubgroupsAsync()
         {
-            var options = new ArmClientOptions();
-            options.SetApiVersion(GitLabGroupResource.ResourceType, "2023-09-01-preview");
-            var playbackClient = GetArmClient(options);
             string connectorName = GitLabStaticConnectorName;
 
             var securityConnectorResponse = await _defaultResourceGroup.GetSecurityConnectors().GetAsync(connectorName);
@@ -420,7 +414,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.AreEqual(DevOpsProvisioningState.Succeeded, devopsConfigurationResource.Value.Data.Properties.ProvisioningState);
 
             var gitLabGroupId = GitLabGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, DevOpsConnectorsResourceGroup, connectorName, "dfdsdktests");
-            var onboardedSubGroups = (await playbackClient.GetGitLabGroupResource(gitLabGroupId).GetAllAsync()).Value.Value;
+            var onboardedSubGroups = (await Client.GetGitLabGroupResource(gitLabGroupId).GetAllAsync()).Value.Value;
 
             Assert.IsTrue(onboardedSubGroups.Count == 2);
 
