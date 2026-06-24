@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Authorization
 namespace: Azure.ResourceManager.Authorization
-require: https://github.com/jruttle/azure-rest-api-specs/blob/58238ad6bf4aea2978e2505e27dd88cbafa2d52b/specification/authorization/resource-manager/Microsoft.Authorization/Authorization/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/37aa1414390f34d49f3942acec2a75452436b764/specification/authorization/resource-manager/Microsoft.Authorization/Authorization/readme.md
 tag: package-2022-04-01-with-deny-assignment-crud
 output-folder: Generated/
 clear-output-folder: true
