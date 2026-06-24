@@ -66,13 +66,13 @@ public static class OptimizationOptionsLoader
             using var linked = CreateResolverCancellation(cancellationToken, options.ResolverTimeout ?? s_defaultResolverTimeout);
             try
             {
-                var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
+                var deployConfig = await CandidateResolver.ResolveAsync(
+                    candidateId, endpoint, options.Credential, linked.Token).ConfigureAwait(false);
 
-                if (resolved.HasValue)
+                if (deployConfig != null)
                 {
                     string source = $"api:candidate:{candidateId}";
-                    return OptimizationOptions.FromJson(resolved.Value, source: source, candidateId: candidateId);
+                    return MapFromDeployConfig(deployConfig, source, candidateId);
                 }
             }
             catch (Exception ex) when (!options.StrictMode)
@@ -329,5 +329,34 @@ public static class OptimizationOptionsLoader
             result.Skills.Add(s);
         }
         return result;
+    }
+
+    /// <summary>
+    /// Maps a generated <see cref="CandidateDeployConfig"/> to the hand-written
+    /// <see cref="OptimizationOptions"/> returned by the loader.
+    /// </summary>
+    private static OptimizationOptions MapFromDeployConfig(CandidateDeployConfig config, string source, string candidateId)
+    {
+        var opts = new OptimizationOptions
+        {
+            Instructions = config.Instructions,
+            Model = config.Model,
+            Temperature = config.Temperature.HasValue ? (double)config.Temperature.Value : (double?)null,
+            Source = source,
+            CandidateId = candidateId,
+        };
+
+        if (config.Skills != null)
+        {
+            foreach (var skill in config.Skills)
+            {
+                if (skill?.Name != null)
+                {
+                    opts.Skills.Add(new OptimizationSkill(skill.Name, skill.Description ?? "", ""));
+                }
+            }
+        }
+
+        return opts;
     }
 }

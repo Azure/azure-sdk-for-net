@@ -80,10 +80,8 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource(options =>
                 {
-                    // Authenticate the resolver API call. Use either Credential
-                    // (preferred — any Azure.Core TokenCredential, e.g.
-                    // DefaultAzureCredential) or TokenProvider (an
-                    // AuthenticationTokenProvider for System.ClientModel consumers).
+                    // Authenticate the resolver API call with any Azure.Core
+                    // TokenCredential (e.g. DefaultAzureCredential).
                     options.Credential = ResolveMyCredential();
 
                     options.ResolverTimeout = TimeSpan.FromSeconds(10);

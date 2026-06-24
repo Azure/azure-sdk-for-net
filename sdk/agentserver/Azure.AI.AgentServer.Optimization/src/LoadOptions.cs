@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
+using Azure.Core;
 
 namespace Azure.AI.AgentServer.Optimization;
 
@@ -33,10 +33,11 @@ public class LoadOptions
     public string AgentKey { get; set; }
 
     /// <summary>
-    /// Token provider for authenticating to the resolver API (Priority 1).
-    /// When <c>null</c>, the default provider chain is used.
+    /// Credential for authenticating to the resolver API (Priority 1).
+    /// When <c>null</c>, the resolver API is skipped unless both OPTIMIZATION_CANDIDATE_ID
+    /// and OPTIMIZATION_RESOLVE_ENDPOINT are set with a valid credential.
     /// </summary>
-    public AuthenticationTokenProvider TokenProvider { get; set; }
+    public TokenCredential Credential { get; set; }
 
     /// <summary>
     /// Maximum time the resolver API call is allowed to take before being cancelled.

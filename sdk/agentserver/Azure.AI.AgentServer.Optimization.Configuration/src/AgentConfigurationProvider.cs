@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Globalization;
 using Microsoft.Extensions.Configuration;
 
@@ -52,20 +50,18 @@ public class AgentConfigurationProvider : ConfigurationProvider
     /// Resolves the optimization configuration and projects it into <see cref="ConfigurationProvider.Data"/>.
     /// </summary>
     /// <exception cref="InvalidOperationException">
-    /// Thrown when both <see cref="AgentConfigurationOptions.Credential"/> and
-    /// <see cref="AgentConfigurationOptions.TokenProvider"/> are set, when <see cref="AgentConfigurationOptions.SectionName"/>
-    /// is invalid, or when <see cref="AgentConfigurationOptions.FailOnEmpty"/> is <c>true</c>
-    /// and no config source was resolved.
+    /// Thrown when <see cref="AgentConfigurationOptions.SectionName"/> is invalid, or when
+    /// <see cref="AgentConfigurationOptions.FailOnEmpty"/> is <c>true</c> and no config
+    /// source was resolved.
     /// </exception>
     public override void Load()
     {
         string section = ResolveSectionName(_options);
-        AuthenticationTokenProvider? tokenProvider = ResolveTokenProvider(_options);
 
         var loadOptions = new LoadOptions
         {
             AgentKey = _options.AgentKey,
-            TokenProvider = tokenProvider,
+            Credential = _options.Credential,
             ResolverTimeout = _options.ResolverTimeout,
             StrictMode = _options.StrictMode,
             FallbackToUnsuffixedEnvVars = _options.FallbackToUnsuffixedEnvVars,
@@ -123,18 +119,6 @@ public class AgentConfigurationProvider : ConfigurationProvider
         // "Agents:Triage-Agent" and "Agents:triage-agent" resolve to the same node.
         _ = AgentKeyCanonicalizer.Canonicalize(options.AgentKey!, nameof(options.AgentKey));
         return "Agents:" + options.AgentKey;
-    }
-
-    private static AuthenticationTokenProvider? ResolveTokenProvider(AgentConfigurationOptions options)
-    {
-        if (options.Credential is not null && options.TokenProvider is not null)
-        {
-            throw new InvalidOperationException(
-                $"Both {nameof(AgentConfigurationOptions.Credential)} and {nameof(AgentConfigurationOptions.TokenProvider)} are set on {nameof(AgentConfigurationOptions)}; configure exactly one.");
-        }
-
-        // TokenCredential : AuthenticationTokenProvider — direct passthrough.
-        return options.Credential ?? options.TokenProvider;
     }
 
     private static void ValidateSectionName(string sectionName)

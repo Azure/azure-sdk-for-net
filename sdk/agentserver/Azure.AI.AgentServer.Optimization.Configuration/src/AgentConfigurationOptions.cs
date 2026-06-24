@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using Azure.Core;
 
 namespace Azure.AI.AgentServer.Optimization.Configuration;
@@ -53,23 +51,12 @@ public class AgentConfigurationOptions
     public string? SectionName { get; set; }
 
     /// <summary>
-    /// Azure credential used to authenticate the resolver API request. This is the
-    /// preferred way to authenticate; <see cref="TokenProvider"/> is provided as an
-    /// escape hatch for <c>System.ClientModel</c> consumers.
+    /// Azure credential used to authenticate the resolver API request (Priority 1).
+    /// When <c>null</c>, the resolver API is skipped unless both OPTIMIZATION_CANDIDATE_ID
+    /// and OPTIMIZATION_RESOLVE_ENDPOINT are set (in which case the resolver will fail
+    /// and fall through or throw depending on <see cref="StrictMode"/>).
     /// </summary>
-    /// <remarks>
-    /// Setting both <see cref="Credential"/> and <see cref="TokenProvider"/> throws
-    /// <see cref="InvalidOperationException"/> at <see cref="AgentConfigurationProvider.Load"/>
-    /// time — pick one to keep configuration unambiguous.
-    /// </remarks>
     public TokenCredential? Credential { get; set; }
-
-    /// <summary>
-    /// Low-level token provider used to authenticate the resolver API request.
-    /// Prefer <see cref="Credential"/> for typical Azure SDK consumers; use this
-    /// only when you need a custom <see cref="AuthenticationTokenProvider"/>.
-    /// </summary>
-    public AuthenticationTokenProvider? TokenProvider { get; set; }
 
     /// <summary>
     /// Maximum time to wait on the resolver API call. Defaults to 30 seconds when unset.

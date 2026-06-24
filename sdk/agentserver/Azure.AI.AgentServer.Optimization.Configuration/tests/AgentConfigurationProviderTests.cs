@@ -196,29 +196,6 @@ public class AgentConfigurationProviderTests
     }
 
     // ─────────────────────────────────────────────────────────────────
-    // Credential vs TokenProvider
-    // ─────────────────────────────────────────────────────────────────
-
-    [Test]
-    public void BothCredentialAndTokenProvider_Throws()
-    {
-        // ResolveTokenProvider throws unconditionally when both are set —
-        // no env-var setup needed.
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-        {
-            new ConfigurationBuilder()
-                .AddOptimizationConfigSource(o =>
-                {
-                    o.Credential = new FakeTokenCredential();
-                    o.TokenProvider = new FakeTokenCredential(); // TokenCredential : AuthenticationTokenProvider
-                })
-                .Build();
-        });
-
-        Assert.That(ex!.Message, Does.Contain("Credential").And.Contain("TokenProvider"));
-    }
-
-    // ─────────────────────────────────────────────────────────────────
     // SectionName override
     // ─────────────────────────────────────────────────────────────────
 

@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
@@ -34,31 +32,28 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         }
 
         [Test]
-        public async Task LoadOptionsWithTokenProvider()
+        public async Task LoadOptionsWithCredential()
         {
-            #region Snippet:Optimization_ReadMe_LoadWithTokenProvider
+            #region Snippet:Optimization_ReadMe_LoadWithCredential
             LoadOptions loadOptions = new LoadOptions
             {
-                TokenProvider = new MyTokenProvider(),
+                Credential = new StubCredential(),
             };
 
             OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync(loadOptions);
             #endregion
 
-            Assert.That(loadOptions.TokenProvider, Is.Not.Null);
+            Assert.That(loadOptions.Credential, Is.Not.Null);
         }
 
-        #region Snippet:Optimization_ReadMe_TokenProvider
-        private sealed class MyTokenProvider : AuthenticationTokenProvider
+        /// <summary>Stub credential for snippet compilation.</summary>
+        private sealed class StubCredential : TokenCredential
         {
-            public override GetTokenOptions CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => new(properties);
-
-            public override AuthenticationToken GetToken(GetTokenOptions options, CancellationToken cancellationToken) =>
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
                 throw new NotImplementedException();
 
-            public override ValueTask<AuthenticationToken> GetTokenAsync(GetTokenOptions options, CancellationToken cancellationToken) =>
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
                 throw new NotImplementedException();
         }
-        #endregion
     }
 }
