@@ -40,6 +40,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 inputNsModels,
                 inputNsClients,
                 new InputAuth(null, null));
+            // ProvisioningGenerator inherits ManagementClientGenerator and does not define a
+            // provisioning-specific input library type, so tests mock ManagementInputLibrary.
             var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
 
@@ -65,6 +67,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             typeof(Microsoft.TypeSpec.Generator.TypeFactory)
                 .GetField("_primaryNamespace", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(factory, "Azure.Provisioning.Tests");
+            // ProvisioningTypeFactory inherits ManagementTypeFactory and does not define a
+            // provisioning-specific backing field for the resource provider name.
             typeof(Azure.Generator.Management.ManagementTypeFactory)
                 .GetField("_resourceProviderName", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(factory, "Tests");
