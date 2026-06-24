@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
         [Obsolete("This function is obsolete and will be removed in a future release. Use ManagedInstanceQueryData instead.", false)]
         public static ManagedInstanceQuery ManagedInstanceQuery(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string queryText = default)
         {
-            return new ManagedInstanceQuery(id, name, resourceType, systemData, queryText, null);
+            throw new NotSupportedException("This function is obsolete and will be removed in a future release. Use ManagedInstanceQueryData instead.");
         }
     }
 }
