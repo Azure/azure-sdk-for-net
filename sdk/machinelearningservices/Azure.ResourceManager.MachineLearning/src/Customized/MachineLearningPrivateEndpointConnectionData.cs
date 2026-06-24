@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning
                 return new MachineLearningPrivateEndpoint(
                     Properties.PrivateEndpoint.Id is null ? null : new ResourceIdentifier(Properties.PrivateEndpoint.Id),
                     Properties.PrivateEndpoint.SubnetArmId is null ? null : new ResourceIdentifier(Properties.PrivateEndpoint.SubnetArmId),
-                    serializedAdditionalRawData: null);
+                    additionalBinaryDataProperties: null);
             }
             set
             {

@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IList<string> groupIds = default;
-            PrivateEndpointBase privateEndpoint = default;
+            PrivateEndpointResource privateEndpoint = default;
             RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         privateEndpoint = null;
                         continue;
                     }
-                    privateEndpoint = PrivateEndpointBase.DeserializePrivateEndpointBase(prop.Value, options);
+                    privateEndpoint = PrivateEndpointResource.DeserializePrivateEndpointResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("registryPrivateLinkServiceConnectionState"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="finetuningDetails"> [Required]. </param>
         /// <param name="outputs"> [Required]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataGenerationDetails"/>, <paramref name="finetuningDetails"/> or <paramref name="outputs"/> is null. </exception>
-        public DistillationJob(DataGenerationVertical dataGenerationDetails, FinetuningDetails finetuningDetails, IDictionary<string, MachineLearningJobOutput> outputs) : base(JobType.Distillation)
+        public DistillationJob(DataGenerationVertical dataGenerationDetails, FineTuningDetails finetuningDetails, IDictionary<string, MachineLearningJobOutput> outputs) : base(JobType.Distillation)
         {
             Argument.AssertNotNull(dataGenerationDetails, nameof(dataGenerationDetails));
             Argument.AssertNotNull(finetuningDetails, nameof(finetuningDetails));
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="outputs"> [Required]. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Instance types and other resources for the job. </param>
-        internal DistillationJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, DataGenerationVertical dataGenerationDetails, FinetuningDetails finetuningDetails, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, JobResources resources) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
+        internal DistillationJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, DataGenerationVertical dataGenerationDetails, FineTuningDetails finetuningDetails, IDictionary<string, MachineLearningJobOutput> outputs, QueueSettings queueSettings, JobResources resources) : base(description, properties, tags, additionalBinaryDataProperties, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName, services, status)
         {
             DataGenerationDetails = dataGenerationDetails;
             FinetuningDetails = finetuningDetails;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> [Required]. </summary>
         [WirePath("finetuningDetails")]
-        public FinetuningDetails FinetuningDetails { get; set; }
+        public FineTuningDetails FinetuningDetails { get; set; }
 
         /// <summary> [Required]. </summary>
         [WirePath("outputs")]

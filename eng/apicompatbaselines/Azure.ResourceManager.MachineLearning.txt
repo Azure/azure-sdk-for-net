@@ -3,3 +3,10 @@ CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePat
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.DockerSetting.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.EnvironmentVariable.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.ImageSetting.AdditionalProperties' in the contract but not the implementation.
+
+# PrivateEndpointBase was a duplicate generated shape for MachineLearningPrivateEndpoint. The TypeSpec
+# customization now routes the shared private endpoint model to MachineLearningPrivateEndpoint.
+MembersMustExist : Member 'public Azure.ResourceManager.MachineLearning.Models.PrivateEndpointBase Azure.ResourceManager.MachineLearning.Models.ArmMachineLearningModelFactory.PrivateEndpointBase(Azure.Core.ResourceIdentifier)' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.ResourceManager.MachineLearning.Models.PrivateEndpointBase' does not exist in the implementation but it does exist in the contract.
+CannotRemoveBaseTypeOrInterface : Type 'Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint' does not inherit from base type 'Azure.ResourceManager.MachineLearning.Models.PrivateEndpointBase' in the implementation but it does in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.MachineLearning.Models.RegistryPrivateEndpoint.SubnetArmId.set(Azure.Core.ResourceIdentifier)' does not exist in the implementation but it does exist in the contract.

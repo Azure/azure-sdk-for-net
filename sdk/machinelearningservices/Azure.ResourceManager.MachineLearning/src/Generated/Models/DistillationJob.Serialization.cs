@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             DataGenerationVertical dataGenerationDetails = default;
-            FinetuningDetails finetuningDetails = default;
+            FineTuningDetails finetuningDetails = default;
             IDictionary<string, MachineLearningJobOutput> outputs = default;
             QueueSettings queueSettings = default;
             JobResources resources = default;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("finetuningDetails"u8))
                 {
-                    finetuningDetails = FinetuningDetails.DeserializeFinetuningDetails(prop.Value, options);
+                    finetuningDetails = FineTuningDetails.DeserializeFineTuningDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))

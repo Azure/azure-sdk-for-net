@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
         /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNetworkSettingsProperties(ManagedNetworkSettingsEx managedNetwork, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedNetworkSettingsProperties(MachineLearningManagedNetworkSettingsDetails managedNetwork, ManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedNetwork = managedNetwork;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Managed Network settings for a machine learning workspace. </summary>
         [WirePath("managedNetwork")]
-        public ManagedNetworkSettingsEx ManagedNetwork { get; set; }
+        public MachineLearningManagedNetworkSettingsDetails ManagedNetwork { get; set; }
 
         /// <summary> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </summary>
         [WirePath("provisioningState")]

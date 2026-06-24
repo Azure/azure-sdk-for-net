@@ -14,59 +14,59 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ExternalFqdnResult. </summary>
-    public partial class ExternalFqdnResult : IJsonModel<ExternalFqdnResult>
+    /// <summary> The MachineLearningExternalFQDNResult. </summary>
+    public partial class MachineLearningExternalFQDNResult : IJsonModel<MachineLearningExternalFQDNResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalFqdnResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MachineLearningExternalFQDNResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalFqdnResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningExternalFQDNResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExternalFqdnResult(document.RootElement, options);
+                        return DeserializeMachineLearningExternalFQDNResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalFqdnResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningExternalFQDNResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalFqdnResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningExternalFQDNResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalFqdnResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningExternalFQDNResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExternalFqdnResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MachineLearningExternalFQDNResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalFqdnResult IPersistableModel<ExternalFqdnResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MachineLearningExternalFQDNResult IPersistableModel<MachineLearningExternalFQDNResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExternalFqdnResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MachineLearningExternalFQDNResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExternalFqdnResult"/> from. </param>
-        internal static ExternalFqdnResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineLearningExternalFQDNResult"/> from. </param>
+        internal static MachineLearningExternalFQDNResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExternalFqdnResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMachineLearningExternalFQDNResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExternalFqdnResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MachineLearningExternalFQDNResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalFqdnResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningExternalFQDNResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalFqdnResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningExternalFQDNResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (FqdnEndpointsPropertyBag item in Value)
+                foreach (MachineLearningFqdnEndpointGroup item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,30 +111,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExternalFqdnResult IJsonModel<ExternalFqdnResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MachineLearningExternalFQDNResult IJsonModel<MachineLearningExternalFQDNResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExternalFqdnResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MachineLearningExternalFQDNResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExternalFqdnResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningExternalFQDNResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalFqdnResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningExternalFQDNResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExternalFqdnResult(document.RootElement, options);
+            return DeserializeMachineLearningExternalFQDNResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExternalFqdnResult DeserializeExternalFqdnResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static MachineLearningExternalFQDNResult DeserializeMachineLearningExternalFQDNResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<FqdnEndpointsPropertyBag> value = default;
+            IList<MachineLearningFqdnEndpointGroup> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<FqdnEndpointsPropertyBag> array = new List<FqdnEndpointsPropertyBag>();
+                    List<MachineLearningFqdnEndpointGroup> array = new List<MachineLearningFqdnEndpointGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FqdnEndpointsPropertyBag.DeserializeFqdnEndpointsPropertyBag(item, options));
+                        array.Add(MachineLearningFqdnEndpointGroup.DeserializeMachineLearningFqdnEndpointGroup(item, options));
                     }
                     value = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExternalFqdnResult(value ?? new ChangeTrackingList<FqdnEndpointsPropertyBag>(), additionalBinaryDataProperties);
+            return new MachineLearningExternalFQDNResult(value ?? new ChangeTrackingList<MachineLearningFqdnEndpointGroup>(), additionalBinaryDataProperties);
         }
     }
 }

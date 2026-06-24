@@ -13,24 +13,19 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The PE network resource that is linked to this PE connection. </summary>
-    public partial class PrivateEndpointBase : PrivateEndpoint
+    public partial class PrivateEndpointResource : MachineLearningPrivateEndpoint
     {
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
-        public PrivateEndpointBase()
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointResource"/>. </summary>
+        public PrivateEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateEndpointBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointResource"/>. </summary>
         /// <param name="id"> The resource identifier of the private endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        internal PrivateEndpointBase(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier subnetArmId) : base(id, additionalBinaryDataProperties)
+        internal PrivateEndpointResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier subnetArmId) : base(id, subnetArmId, additionalBinaryDataProperties)
         {
-            SubnetArmId = subnetArmId;
         }
-
-        /// <summary> The subnetId that the private endpoint is connected to. </summary>
-        [WirePath("subnetArmId")]
-        public ResourceIdentifier SubnetArmId { get; set; }
     }
 }

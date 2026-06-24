@@ -13,52 +13,52 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ManagedNetworkSettingsEx. </summary>
-    public partial class ManagedNetworkSettingsEx : ManagedNetworkSettings, IJsonModel<ManagedNetworkSettingsEx>
+    /// <summary> The MachineLearningManagedNetworkSettingsDetails. </summary>
+    public partial class MachineLearningManagedNetworkSettingsDetails : ManagedNetworkSettings, IJsonModel<MachineLearningManagedNetworkSettingsDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsEx>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningManagedNetworkSettingsDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedNetworkSettingsEx(document.RootElement, options);
+                        return DeserializeMachineLearningManagedNetworkSettingsDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsEx)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningManagedNetworkSettingsDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsEx>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningManagedNetworkSettingsDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettingsEx)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningManagedNetworkSettingsDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkSettingsEx>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MachineLearningManagedNetworkSettingsDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsEx IPersistableModel<ManagedNetworkSettingsEx>.Create(BinaryData data, ModelReaderWriterOptions options) => (ManagedNetworkSettingsEx)PersistableModelCreateCore(data, options);
+        MachineLearningManagedNetworkSettingsDetails IPersistableModel<MachineLearningManagedNetworkSettingsDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningManagedNetworkSettingsDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkSettingsEx>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MachineLearningManagedNetworkSettingsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkSettingsEx>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MachineLearningManagedNetworkSettingsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsEx>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningManagedNetworkSettingsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsEx)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningManagedNetworkSettingsDetails)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(ChangeableIsolationModes))
@@ -89,24 +89,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkSettingsEx IJsonModel<ManagedNetworkSettingsEx>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ManagedNetworkSettingsEx)JsonModelCreateCore(ref reader, options);
+        MachineLearningManagedNetworkSettingsDetails IJsonModel<MachineLearningManagedNetworkSettingsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningManagedNetworkSettingsDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ManagedNetworkSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettingsEx>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningManagedNetworkSettingsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettingsEx)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningManagedNetworkSettingsDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedNetworkSettingsEx(document.RootElement, options);
+            return DeserializeMachineLearningManagedNetworkSettingsDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedNetworkSettingsEx DeserializeManagedNetworkSettingsEx(JsonElement element, ModelReaderWriterOptions options)
+        internal static MachineLearningManagedNetworkSettingsDetails DeserializeMachineLearningManagedNetworkSettingsDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedNetworkSettingsEx(
+            return new MachineLearningManagedNetworkSettingsDetails(
                 enableNetworkMonitor,
                 isolationMode,
                 networkId,

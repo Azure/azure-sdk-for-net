@@ -13,57 +13,57 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The FinetuningDetails. </summary>
-    public partial class FinetuningDetails : IJsonModel<FinetuningDetails>
+    /// <summary> The FineTuningDetails. </summary>
+    public partial class FineTuningDetails : IJsonModel<FineTuningDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="FinetuningDetails"/> for deserialization. </summary>
-        internal FinetuningDetails()
+        /// <summary> Initializes a new instance of <see cref="FineTuningDetails"/> for deserialization. </summary>
+        internal FineTuningDetails()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FinetuningDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FineTuningDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FinetuningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFinetuningDetails(document.RootElement, options);
+                        return DeserializeFineTuningDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FinetuningDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FineTuningDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FinetuningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FinetuningDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FineTuningDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FinetuningDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FineTuningDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FinetuningDetails IPersistableModel<FinetuningDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FineTuningDetails IPersistableModel<FineTuningDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FinetuningDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FineTuningDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FinetuningDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FineTuningDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FinetuningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FinetuningDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FineTuningDetails)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(HyperParameters))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FinetuningDetails IJsonModel<FinetuningDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FineTuningDetails IJsonModel<FineTuningDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FinetuningDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FineTuningDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FinetuningDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FineTuningDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FinetuningDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FineTuningDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFinetuningDetails(document.RootElement, options);
+            return DeserializeFineTuningDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FinetuningDetails DeserializeFinetuningDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static FineTuningDetails DeserializeFineTuningDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FinetuningDetails(hyperParameters ?? new ChangeTrackingDictionary<string, string>(), studentModel, additionalBinaryDataProperties);
+            return new FineTuningDetails(hyperParameters ?? new ChangeTrackingDictionary<string, string>(), studentModel, additionalBinaryDataProperties);
         }
     }
 }

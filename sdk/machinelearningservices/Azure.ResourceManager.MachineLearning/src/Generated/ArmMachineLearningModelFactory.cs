@@ -847,10 +847,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.FqdnEndpointsPropertyBag"/> instance for mocking. </returns>
-        public static FqdnEndpointsPropertyBag FqdnEndpointsPropertyBag(MachineLearningFqdnEndpoints properties = default)
+        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointGroup"/> instance for mocking. </returns>
+        public static MachineLearningFqdnEndpointGroup MachineLearningFqdnEndpointGroup(MachineLearningFqdnEndpoints properties = default)
         {
-            return new FqdnEndpointsPropertyBag(properties, default);
+            return new MachineLearningFqdnEndpointGroup(properties, default);
         }
 
         /// <param name="category"></param>
@@ -1023,24 +1023,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="registryPrivateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
         /// <returns> A new <see cref="Models.RegistryPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, PrivateEndpointBase privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
+        public static RegistryPrivateEndpointConnection RegistryPrivateEndpointConnection(ResourceIdentifier id = default, AzureLocation? location = default, IEnumerable<string> groupIds = default, PrivateEndpointResource privateEndpoint = default, RegistryPrivateLinkServiceConnectionState registryPrivateLinkServiceConnectionState = default, string provisioningState = default)
         {
             return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
         }
 
         /// <param name="id"> The resource identifier of the private endpoint. </param>
         /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
-        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
+        /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
+        public static PrivateEndpointResource PrivateEndpointResource(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
         {
-            return new PrivateEndpointBase(id, default, subnetArmId);
+            return new PrivateEndpointResource(id, default, subnetArmId);
         }
 
         /// <param name="id"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpoint"/> instance for mocking. </returns>
-        public static PrivateEndpoint PrivateEndpoint(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
+        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = default)
         {
-            return new PrivateEndpoint(id, default);
+            return new MachineLearningPrivateEndpoint(id, default);
         }
 
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
@@ -6235,7 +6235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="queueJobTier"> Enum to determine the job tier. </param>
         /// <param name="resourcesInstanceTypes"> List of instance types to choose from. </param>
         /// <returns> A new <see cref="Models.DistillationJob"/> instance for mocking. </returns>
-        public static DistillationJob DistillationJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, ResourceIdentifier componentId = default, ResourceIdentifier computeId = default, string displayName = default, string experimentName = default, MachineLearningIdentityConfiguration identity = default, bool? isArchived = default, NotificationSetting notificationSetting = default, string parentJobName = default, IDictionary<string, MachineLearningJobService> services = default, MachineLearningJobStatus? status = default, DataGenerationVertical dataGenerationDetails = default, FinetuningDetails finetuningDetails = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default, IEnumerable<string> resourcesInstanceTypes = default)
+        public static DistillationJob DistillationJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, ResourceIdentifier componentId = default, ResourceIdentifier computeId = default, string displayName = default, string experimentName = default, MachineLearningIdentityConfiguration identity = default, bool? isArchived = default, NotificationSetting notificationSetting = default, string parentJobName = default, IDictionary<string, MachineLearningJobService> services = default, MachineLearningJobStatus? status = default, DataGenerationVertical dataGenerationDetails = default, FineTuningDetails finetuningDetails = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? queueJobTier = default, IEnumerable<string> resourcesInstanceTypes = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -6331,12 +6331,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="hyperParameters"> Finetuning Hyperparameters. </param>
         /// <param name="studentModel"> [Required] Student model for fine tuning. </param>
-        /// <returns> A new <see cref="Models.FinetuningDetails"/> instance for mocking. </returns>
-        public static FinetuningDetails FinetuningDetails(IDictionary<string, string> hyperParameters = default, MachineLearningJobInput studentModel = default)
+        /// <returns> A new <see cref="Models.FineTuningDetails"/> instance for mocking. </returns>
+        public static FineTuningDetails FineTuningDetails(IDictionary<string, string> hyperParameters = default, MachineLearningJobInput studentModel = default)
         {
             hyperParameters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FinetuningDetails(hyperParameters ?? new ChangeTrackingDictionary<string, string>(), studentModel, default);
+            return new FineTuningDetails(hyperParameters ?? new ChangeTrackingDictionary<string, string>(), studentModel, default);
         }
 
         /// <param name="description"> The asset description text. </param>
@@ -8824,7 +8824,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
         /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <returns> A new <see cref="Models.ManagedNetworkSettingsProperties"/> instance for mocking. </returns>
-        public static ManagedNetworkSettingsProperties ManagedNetworkSettingsProperties(ManagedNetworkSettingsEx managedNetwork = default, ManagedNetworkProvisioningState? provisioningState = default)
+        public static ManagedNetworkSettingsProperties ManagedNetworkSettingsProperties(MachineLearningManagedNetworkSettingsDetails managedNetwork = default, ManagedNetworkProvisioningState? provisioningState = default)
         {
             return new ManagedNetworkSettingsProperties(managedNetwork, provisioningState, default);
         }
@@ -8838,13 +8838,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="changeableIsolationModes"></param>
-        /// <returns> A new <see cref="Models.ManagedNetworkSettingsEx"/> instance for mocking. </returns>
-        public static ManagedNetworkSettingsEx ManagedNetworkSettingsEx(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, IEnumerable<IsolationMode> changeableIsolationModes = default)
+        /// <returns> A new <see cref="Models.MachineLearningManagedNetworkSettingsDetails"/> instance for mocking. </returns>
+        public static MachineLearningManagedNetworkSettingsDetails MachineLearningManagedNetworkSettingsDetails(bool? enableNetworkMonitor = default, IsolationMode? isolationMode = default, string networkId = default, IDictionary<string, MachineLearningOutboundRule> outboundRules = default, ManagedNetworkProvisionStatus status = default, FirewallSku? firewallSku = default, ManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, IEnumerable<IsolationMode> changeableIsolationModes = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, MachineLearningOutboundRule>();
             changeableIsolationModes ??= new ChangeTrackingList<IsolationMode>();
 
-            return new ManagedNetworkSettingsEx(
+            return new MachineLearningManagedNetworkSettingsDetails(
                 enableNetworkMonitor,
                 isolationMode,
                 networkId,
@@ -9138,13 +9138,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointResource"/>. </summary>
         /// <param name="id"> The ARM identifier for Private Endpoint. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointBase"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PrivateEndpointResource"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateEndpointBase PrivateEndpointBase(ResourceIdentifier id = default)
+        public static PrivateEndpointResource PrivateEndpointResource(ResourceIdentifier id = default)
         {
-            return new PrivateEndpointBase(id, default, default);
+            return new PrivateEndpointResource(id, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningNotebookResourceInfo"/>. </summary>

@@ -11,16 +11,16 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The FinetuningDetails. </summary>
-    public partial class FinetuningDetails
+    /// <summary> The FineTuningDetails. </summary>
+    public partial class FineTuningDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FinetuningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FineTuningDetails"/>. </summary>
         /// <param name="studentModel"> [Required] Student model for fine tuning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="studentModel"/> is null. </exception>
-        public FinetuningDetails(MachineLearningJobInput studentModel)
+        public FineTuningDetails(MachineLearningJobInput studentModel)
         {
             Argument.AssertNotNull(studentModel, nameof(studentModel));
 
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             StudentModel = studentModel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FinetuningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FineTuningDetails"/>. </summary>
         /// <param name="hyperParameters"> Finetuning Hyperparameters. </param>
         /// <param name="studentModel"> [Required] Student model for fine tuning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FinetuningDetails(IDictionary<string, string> hyperParameters, MachineLearningJobInput studentModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FineTuningDetails(IDictionary<string, string> hyperParameters, MachineLearningJobInput studentModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HyperParameters = hyperParameters;
             StudentModel = studentModel;

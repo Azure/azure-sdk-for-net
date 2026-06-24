@@ -15,51 +15,51 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The PE network resource that is linked to this PE connection. </summary>
-    public partial class PrivateEndpointBase : PrivateEndpoint, IJsonModel<PrivateEndpointBase>
+    public partial class PrivateEndpointResource : MachineLearningPrivateEndpoint, IJsonModel<PrivateEndpointResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PrivateEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MachineLearningPrivateEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateEndpointBase(document.RootElement, options);
+                        return DeserializePrivateEndpointResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointBase)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointBase)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateEndpointBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateEndpointResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointBase IPersistableModel<PrivateEndpointBase>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateEndpointBase)PersistableModelCreateCore(data, options);
+        PrivateEndpointResource IPersistableModel<PrivateEndpointResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateEndpointResource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateEndpointBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateEndpointResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateEndpointBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateEndpointResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,39 +70,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointBase)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SubnetArmId))
-            {
-                writer.WritePropertyName("subnetArmId"u8);
-                writer.WriteStringValue(SubnetArmId);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointBase IJsonModel<PrivateEndpointBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateEndpointBase)JsonModelCreateCore(ref reader, options);
+        PrivateEndpointResource IJsonModel<PrivateEndpointResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateEndpointResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override PrivateEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MachineLearningPrivateEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointBase)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateEndpointBase(document.RootElement, options);
+            return DeserializePrivateEndpointResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateEndpointBase DeserializePrivateEndpointBase(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateEndpointResource DeserializePrivateEndpointResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointBase(id, additionalBinaryDataProperties, subnetArmId);
+            return new PrivateEndpointResource(id, additionalBinaryDataProperties, subnetArmId);
         }
     }
 }

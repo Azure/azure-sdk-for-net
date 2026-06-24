@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ManagedNetworkSettingsEx managedNetwork = default;
+            MachineLearningManagedNetworkSettingsDetails managedNetwork = default;
             ManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    managedNetwork = ManagedNetworkSettingsEx.DeserializeManagedNetworkSettingsEx(prop.Value, options);
+                    managedNetwork = MachineLearningManagedNetworkSettingsDetails.DeserializeMachineLearningManagedNetworkSettingsDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

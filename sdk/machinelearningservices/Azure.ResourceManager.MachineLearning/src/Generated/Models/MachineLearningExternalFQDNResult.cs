@@ -11,22 +11,22 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ExternalFqdnResult. </summary>
-    public partial class ExternalFqdnResult
+    /// <summary> The MachineLearningExternalFQDNResult. </summary>
+    public partial class MachineLearningExternalFQDNResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExternalFqdnResult"/>. </summary>
-        internal ExternalFqdnResult()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFQDNResult"/>. </summary>
+        internal MachineLearningExternalFQDNResult()
         {
-            Value = new ChangeTrackingList<FqdnEndpointsPropertyBag>();
+            Value = new ChangeTrackingList<MachineLearningFqdnEndpointGroup>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalFqdnResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningExternalFQDNResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalFqdnResult(IList<FqdnEndpointsPropertyBag> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningExternalFQDNResult(IList<MachineLearningFqdnEndpointGroup> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the Value. </summary>
         [WirePath("value")]
-        public IList<FqdnEndpointsPropertyBag> Value { get; }
+        public IList<MachineLearningFqdnEndpointGroup> Value { get; }
     }
 }

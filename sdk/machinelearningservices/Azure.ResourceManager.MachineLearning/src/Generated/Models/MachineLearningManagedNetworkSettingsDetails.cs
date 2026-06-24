@@ -11,16 +11,16 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ManagedNetworkSettingsEx. </summary>
-    public partial class ManagedNetworkSettingsEx : ManagedNetworkSettings
+    /// <summary> The MachineLearningManagedNetworkSettingsDetails. </summary>
+    public partial class MachineLearningManagedNetworkSettingsDetails : ManagedNetworkSettings
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsEx"/>. </summary>
-        public ManagedNetworkSettingsEx()
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedNetworkSettingsDetails"/>. </summary>
+        public MachineLearningManagedNetworkSettingsDetails()
         {
             ChangeableIsolationModes = new ChangeTrackingList<IsolationMode>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkSettingsEx"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedNetworkSettingsDetails"/>. </summary>
         /// <param name="enableNetworkMonitor"> A flag to indicate if monitoring needs to be enabled for the managed network. </param>
         /// <param name="isolationMode"> Isolation mode for the managed network of a machine learning workspace. </param>
         /// <param name="networkId"></param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="changeableIsolationModes"></param>
-        internal ManagedNetworkSettingsEx(bool? enableNetworkMonitor, IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<IsolationMode> changeableIsolationModes) : base(enableNetworkMonitor, isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, additionalBinaryDataProperties)
+        internal MachineLearningManagedNetworkSettingsDetails(bool? enableNetworkMonitor, IsolationMode? isolationMode, string networkId, IDictionary<string, MachineLearningOutboundRule> outboundRules, ManagedNetworkProvisionStatus status, FirewallSku? firewallSku, ManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<IsolationMode> changeableIsolationModes) : base(enableNetworkMonitor, isolationMode, networkId, outboundRules, status, firewallSku, managedNetworkKind, firewallPublicIpAddress, additionalBinaryDataProperties)
         {
             ChangeableIsolationModes = changeableIsolationModes;
         }
