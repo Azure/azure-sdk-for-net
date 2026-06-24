@@ -1545,7 +1545,7 @@ public class AgentsTests : AgentsTestBase
         string projectName = pathParts[pathParts.Length - 1];
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
         HostedAgentDefinition ProjectsAgentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.ActivityProtocol, "v1")],
+            versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Activity, "v1")],
             cpu: "1",
             memory: "2Gi"
         )
@@ -1576,7 +1576,7 @@ public class AgentsTests : AgentsTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
             cpu: "0.5",
             memory: "1Gi"
         )
@@ -1597,7 +1597,10 @@ public class AgentsTests : AgentsTestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {

@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
@@ -628,7 +627,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <returns> A new <see cref="Agents.ProtocolVersionRecord"/> instance for mocking. </returns>
-        public static ProtocolVersionRecord ProtocolVersionRecord(Agents.ProjectsAgentProtocol protocol = default, string version = default)
+        public static ProtocolVersionRecord ProtocolVersionRecord(AgentEndpointProtocol protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
         }
@@ -1128,7 +1127,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, and <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, and <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -1161,61 +1160,6 @@ namespace Azure.AI.Projects.Agents
             return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> An MCP tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl">
-        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
-        ///   provided.
-        /// </param>
-        /// <param name="connectorId">
-        /// Identifier for service connectors, like those available in ChatGPT. One of
-        ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
-        ///   Currently supported `connector_id` values are:
-        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
-        /// </param>
-        /// <param name="authorization">
-        /// An OAuth access token that can be used with a remote MCP server, either
-        ///   with a custom MCP server URL or a service connector. Your application
-        ///   must handle the OAuth authorization flow and provide the token here.
-        /// </param>
-        /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
-        /// <param name="headers"></param>
-        /// <param name="allowedTools"></param>
-        /// <param name="requireApproval"></param>
-        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
-        /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUrl = default, MCPToolConnectorId? connectorId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, BinaryData requireApproval = default, bool? deferLoading = default, string projectConnectionId = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-            headers ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MCPToolboxTool(
-                ToolboxToolType.Mcp,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                serverLabel,
-                serverUrl,
-                connectorId,
-                authorization,
-                serverDescription,
-                headers,
-                allowedTools,
-                requireApproval,
-                deferLoading,
-                projectConnectionId);
-        }
-
         /// <summary> A code interpreter tool stored in a toolbox. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
@@ -1224,14 +1168,14 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        /// <param name="container">
+        /// <param name="internalContainer">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
         /// <returns> A new <see cref="Agents.CodeInterpreterToolboxTool"/> instance for mocking. </returns>
-        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BinaryData container = default)
+        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BinaryData internalContainer = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -1241,7 +1185,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs,
                 additionalBinaryDataProperties: null,
-                container);
+                internalContainer);
         }
 
         /// <summary> A web search tool stored in a toolbox. </summary>
@@ -1274,6 +1218,61 @@ namespace Azure.AI.Projects.Agents
                 userLocation,
                 searchContextSize,
                 customSearchConfiguration);
+        }
+
+        /// <summary> An MCP tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
+        /// <param name="serverUri">
+        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
+        ///   provided.
+        /// </param>
+        /// <param name="connectorId">
+        /// Identifier for service connectors, like those available in ChatGPT. One of
+        ///   `server_url` or `connector_id` must be provided. Learn more about service
+        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
+        ///   Currently supported `connector_id` values are:
+        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
+        /// </param>
+        /// <param name="authorization">
+        /// An OAuth access token that can be used with a remote MCP server, either
+        ///   with a custom MCP server URL or a service connector. Your application
+        ///   must handle the OAuth authorization flow and provide the token here.
+        /// </param>
+        /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
+        /// <param name="headers"></param>
+        /// <param name="allowedTools"></param>
+        /// <param name="requireApprovalInternal"></param>
+        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
+        /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
+        /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            headers ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MCPToolboxTool(
+                ToolboxToolType.Mcp,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                serverLabel,
+                serverUri,
+                connectorId,
+                authorization,
+                serverDescription,
+                headers,
+                allowedTools,
+                requireApprovalInternal,
+                deferLoading,
+                projectConnectionId);
         }
 
         /// <summary> An Azure AI Search tool stored in a toolbox. </summary>
@@ -1863,85 +1862,6 @@ namespace Azure.AI.Projects.Agents
         public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
-        {
-            return ProjectsAgentRecord(id: id, name: name, state: default);
-        }
-
-        /// <summary> The ProjectsAgentVersion. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        ///             useful for storing additional information about the object in a structured
-        ///             format, and querying for objects via API or the dashboard.
-        ///             Keys are strings with a maximum length of 64 characters. Values are strings
-        ///             with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="id"> The unique identifier of the agent version. </param>
-        /// <param name="name"> The name of the agent. Name can be used to retrieve/update/delete the agent. </param>
-        /// <param name="version"> The version identifier of the agent. Agents are immutable and every update creates a new version while keeping the name same. </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the agent was created. </param>
-        /// <param name="definition"></param>
-        /// <returns> A new <see cref="Agents.ProjectsAgentVersion"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProjectsAgentVersion ProjectsAgentVersion(IDictionary<string, string> metadata, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition)
-        {
-            return ProjectsAgentVersion(metadata: metadata, id: id, name: name, version: version, description: description, createdAt: createdAt, definition: definition, status: default, instanceIdentity: default, blueprint: default, blueprintReference: default, agentGuid: default);
-        }
-
-        /// <summary> The hosted agent definition. </summary>
-        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="tools">
-        /// An array of tools the hosted agent's model may call while generating a response. You
-        ///             can specify which tool to use by setting the `tool_choice` parameter.
-        /// </param>
-        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
-        /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
-        /// <param name="memory"> The memory configuration for the hosted agent. </param>
-        /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
-        /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
-        {
-            tools ??= new ChangeTrackingList<ProjectsAgentTool>();
-            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
-            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HostedAgentDefinition(
-                ProjectsAgentKind.Hosted,
-                contentFilterConfiguration,
-                additionalBinaryDataProperties: null,
-                tools.ToList(),
-                cpu,
-                memory,
-                environmentVariables,
-                default,
-                versions.ToList(),
-                default,
-                default);
-        }
-
-        /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        ///             useful for storing additional information about the object in a structured
-        ///             format, and querying for objects via API or the dashboard.
-        ///             Keys are strings with a maximum length of 64 characters. Values are strings
-        ///             with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="definition"> The agent definition. This can be a workflow, hosted agent, or a simple agent definition. </param>
-        /// <returns> A new <see cref="Agents.ProjectsAgentVersionCreationOptions"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProjectsAgentVersionCreationOptions ProjectsAgentVersionCreationOptions(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition)
-        {
-            return ProjectsAgentVersionCreationOptions(metadata: metadata, description: description, definition: definition, blueprintReference: default);
         }
     }
 }

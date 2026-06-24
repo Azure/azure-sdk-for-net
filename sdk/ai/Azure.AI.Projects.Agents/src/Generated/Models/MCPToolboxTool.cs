@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUrl">
+        /// <param name="serverUri">
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </param>
@@ -53,19 +53,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
-        /// <param name="requireApproval"></param>
+        /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
-            ServerUrl = serverUrl;
+            ServerUri = serverUri;
             ConnectorId = connectorId;
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
             AllowedTools = allowedTools;
-            RequireApproval = requireApproval;
+            RequireApprovalInternal = requireApprovalInternal;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
         }
@@ -74,19 +74,13 @@ namespace Azure.AI.Projects.Agents
         public string ServerLabel { get; set; }
 
         /// <summary>
-        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
-        ///   provided.
-        /// </summary>
-        public Uri ServerUrl { get; set; }
-
-        /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
         ///   `server_url` or `connector_id` must be provided. Learn more about service
         ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolConnectorId? ConnectorId { get; set; }
+        public MCPToolboxToolConnectorId? ConnectorId { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -141,50 +135,6 @@ namespace Azure.AI.Projects.Agents
         /// </para>
         /// </summary>
         public BinaryData AllowedTools { get; set; }
-
-        /// <summary>
-        /// Gets or sets the RequireApproval.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="InternalMCPToolRequireApproval"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> "always". </description>
-        /// </item>
-        /// <item>
-        /// <description> "never". </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RequireApproval { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

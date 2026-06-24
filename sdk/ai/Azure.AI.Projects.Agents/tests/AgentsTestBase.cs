@@ -4,7 +4,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -254,19 +253,19 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "code-interpreter-file",
                 Description = "Test code interpreter with file ID",
-                Container = ((IJsonModel<CodeInterpreterToolContainer>)new CodeInterpreterToolContainer(
+                Container = new CodeInterpreterToolContainer(
                     CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
                         fileIds: [TestEnvironment.OPENAI_FILE_ID]
-                    ))).Write(ModelReaderWriterOptions.Json)
+                    ))
             },
             ToolType.CodeInterpreterGen => new CodeInterpreterToolboxTool()
             {
                 Name = "code-interpreter",
                 Description = "Test code interpreter",
-                Container = ((IJsonModel<CodeInterpreterToolContainer>)new CodeInterpreterToolContainer(
+                Container = new CodeInterpreterToolContainer(
                         CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
                             fileIds: []
-                    ))).Write(ModelReaderWriterOptions.Json)
+                    ))
             },
             ToolType.FileSearch =>new FileSearchToolboxTool()
             {
@@ -294,8 +293,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "mcp-tool",
                 Description = "Test mcp tool",
-                ServerUrl = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                RequireApproval = BinaryData.FromString("always")
+                ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
@@ -369,7 +368,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
+        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), options);
 
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))

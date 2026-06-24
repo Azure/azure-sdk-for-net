@@ -71,13 +71,13 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(CodeInterpreterToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Container))
+            if (Optional.IsDefined(InternalContainer))
             {
                 writer.WritePropertyName("container"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(Container);
+                writer.WriteRawValue(InternalContainer);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Container))
+                using (JsonDocument document = JsonDocument.Parse(InternalContainer))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -115,7 +115,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BinaryData container = default;
+            BinaryData internalContainer = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -153,7 +153,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    container = BinaryData.FromString(prop.Value.GetRawText());
+                    internalContainer = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
-                container);
+                internalContainer);
         }
     }
 }

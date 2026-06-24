@@ -9,7 +9,8 @@
     <AssemblyTitle>Microsoft Azure.AI.Projects.Agents client library</AssemblyTitle>
     <Version>2.1.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>2.0.0</ApiCompatVersion>
+    <!-- Commented, because code generator cannot use baseline file: https://github.com/microsoft/typespec/pull/11048/ -->
+    <!--ApiCompatVersion>2.0.0</ApiCompatVersion-->
     <PackageTags>Azure.AI.Projects.Agents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

@@ -141,8 +141,8 @@ public class AgentsTests : AgentsTestBase
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
-            ServerUrl = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            RequireApproval = BinaryData.FromString("always")
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
@@ -209,8 +209,8 @@ public class AgentsTests : AgentsTestBase
         {
             Name = "mcp-tool",
             Description = "Test mcp tool",
-            ServerUrl = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            RequireApproval = BinaryData.FromString("always")
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
@@ -388,8 +388,8 @@ public class AgentsTests : AgentsTestBase
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
-            ServerUrl = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            RequireApproval = BinaryData.FromString("always")
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
@@ -439,8 +439,8 @@ public class AgentsTests : AgentsTestBase
         {
             Name = "mcp-tool",
             Description = "Test MCP tool",
-            ServerUrl = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            RequireApproval = BinaryData.FromString("always")
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
@@ -479,6 +479,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
+    [Ignore("Blocked by the ADO Item 5384172.")]
     [RecordedTest]
     public async Task TestPatchHostedAgent()
     {

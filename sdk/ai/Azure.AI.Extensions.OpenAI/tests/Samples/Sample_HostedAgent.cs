@@ -19,7 +19,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
     private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
     {
         HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
             cpu: "0.5",
             memory: "1Gi"
         )
@@ -73,7 +73,10 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {
@@ -135,7 +138,10 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {

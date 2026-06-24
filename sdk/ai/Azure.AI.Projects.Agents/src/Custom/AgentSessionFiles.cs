@@ -59,13 +59,12 @@ public partial class AgentSessionFiles
     /// <param name="sessionId"> The session ID. </param>
     /// <param name="sessionStoragePath"> The destination file path within the sandbox, relative to the session home directory. </param>
     /// <param name="localPath"> The path to the local file to be uploaded. </param>
-    /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
     /// <param name="cancellationToken"></param>
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));

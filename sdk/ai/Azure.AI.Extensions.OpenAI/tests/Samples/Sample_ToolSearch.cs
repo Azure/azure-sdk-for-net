@@ -38,17 +38,18 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Async
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
+        };
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"
@@ -153,17 +154,18 @@ public class Sample_ToolSearch : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolSearch_Sync
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
-        ProjectsAgentTool codeInterpreter = ResponseTool.CreateCodeInterpreterTool(
-            new CodeInterpreterToolContainer(
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
+        CodeInterpreterToolboxTool codeInterpreter = new()
+        {
+            Container = new CodeInterpreterToolContainer(
                 CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])
             )
-        ).AsAgentTool();
-        ToolboxSearchPreviewTool searchTool = new()
+        };
+        ToolboxSearchPreviewToolboxTool searchTool = new()
         {
             Name = "ToolBoxSearch",
             Description = "Search for the toolboxes"

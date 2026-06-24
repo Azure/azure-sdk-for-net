@@ -67,7 +67,7 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: creden
 private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 {
     HostedAgentDefinition agentDefinition = new(
-        versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+        versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
         cpu: "0.5",
         memory: "1Gi"
     )
@@ -139,7 +139,10 @@ Synchronous sample:
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = { AgentEndpointProtocol.Responses }
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 PatchAgentOptions patchOptions = new()
 {
@@ -156,7 +159,10 @@ Asynchronous sample:
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = { AgentEndpointProtocol.Responses }
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 PatchAgentOptions patchOptions = new()
 {

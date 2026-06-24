@@ -79,10 +79,10 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            if (Optional.IsDefined(ServerUrl))
+            if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
+                writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectorId))
             {
@@ -127,13 +127,13 @@ namespace Azure.AI.Projects.Agents
                 }
 #endif
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -182,13 +182,13 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
-            Uri serverUrl = default;
-            MCPToolConnectorId? connectorId = default;
+            Uri serverUri = default;
+            MCPToolboxToolConnectorId? connectorId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
-            BinaryData requireApproval = default;
+            BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
             foreach (var prop in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("connector_id"u8))
@@ -242,7 +242,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    connectorId = prop.Value.GetString().ToMCPToolConnectorId();
+                    connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -290,10 +290,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("defer_loading"u8))
@@ -322,13 +322,13 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
                 serverLabel,
-                serverUrl,
+                serverUri,
                 connectorId,
                 authorization,
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
-                requireApproval,
+                requireApprovalInternal,
                 deferLoading,
                 projectConnectionId);
         }

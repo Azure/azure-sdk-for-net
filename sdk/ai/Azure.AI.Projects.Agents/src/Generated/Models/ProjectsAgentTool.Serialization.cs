@@ -127,8 +127,6 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "mcp":
-                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "bing_grounding":
                         return BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
@@ -163,6 +161,8 @@ namespace Azure.AI.Projects.Agents
                         return OpenAI.InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
                     case "web_search":
                         return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
+                    case "mcp":
+                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "function":
                         return OpenAI.InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "computer_use_preview":

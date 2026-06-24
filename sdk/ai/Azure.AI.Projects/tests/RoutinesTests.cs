@@ -274,7 +274,7 @@ public class RoutinesTests : ProjectsClientTestBase
         catch
         {
             HostedAgentDefinition agentDefinition = new(
-                versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+                versions: [new ProtocolVersionRecord(AgentEndpointProtocol.Responses, "1.0.0")],
                 cpu: "0.5",
                 memory: "1Gi"
             )

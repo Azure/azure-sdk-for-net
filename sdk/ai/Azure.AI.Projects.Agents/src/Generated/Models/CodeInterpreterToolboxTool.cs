@@ -4,8 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -27,59 +25,15 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="container">
+        /// <param name="internalContainer">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal CodeInterpreterToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData container) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal CodeInterpreterToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData internalContainer) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            Container = container;
+            InternalContainer = internalContainer;
         }
-
-        /// <summary>
-        /// The code interpreter container. Can be a container ID or an object that
-        /// specifies uploaded file IDs to make available to your code, along with an
-        /// optional `memory_limit` setting.
-        /// If not provided, the service assumes auto.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="InternalAutoCodeInterpreterToolParam"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Container { get; set; }
     }
 }

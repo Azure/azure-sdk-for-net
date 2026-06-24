@@ -10,55 +10,57 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// A tool for searching over the agent's toolbox.
-    /// When present, deferred tools are hidden from `tools/list` and only
-    /// discoverable via `search_tools` queries at runtime.
+    /// A built-in tool that schedules the agent to re-invoke itself after a delay.
+    /// The model passes a single `minutes` argument (positive integer) when calling
+    /// this tool. The service creates a one-shot timer routine that fires after the
+    /// specified delay and re-invokes the agent on the same conversation thread.
+    /// No pre-created routine is required.
     /// </summary>
-    internal partial class ToolboxSearchPreviewTool : InternalTool, IJsonModel<ToolboxSearchPreviewTool>
+    internal partial class ReminderPreviewTool : InternalTool, IJsonModel<ReminderPreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReminderPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolboxSearchPreviewTool(document.RootElement, options);
+                        return DeserializeReminderPreviewTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReminderPreviewTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReminderPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReminderPreviewTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolboxSearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReminderPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxSearchPreviewTool IPersistableModel<ToolboxSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolboxSearchPreviewTool)PersistableModelCreateCore(data, options);
+        ReminderPreviewTool IPersistableModel<ReminderPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ReminderPreviewTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolboxSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReminderPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolboxSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReminderPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +71,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReminderPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReminderPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Name))
@@ -85,39 +87,28 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxSearchPreviewTool IJsonModel<ToolboxSearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ToolboxSearchPreviewTool)JsonModelCreateCore(ref reader, options);
+        ReminderPreviewTool IJsonModel<ReminderPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ReminderPreviewTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReminderPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReminderPreviewTool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolboxSearchPreviewTool(document.RootElement, options);
+            return DeserializeReminderPreviewTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ToolboxSearchPreviewTool DeserializeToolboxSearchPreviewTool(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReminderPreviewTool DeserializeReminderPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +118,6 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -145,26 +135,12 @@ namespace Azure.AI.Projects
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolboxSearchPreviewTool(@type, additionalBinaryDataProperties, name, description, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new ReminderPreviewTool(@type, additionalBinaryDataProperties, name, description);
         }
     }
 }
