@@ -380,17 +380,13 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-The [samples directory][samples] includes end-to-end usage patterns. A typical flow is:
+The [samples directory][samples] includes end-to-end usage patterns:
 
-1. Append an entry and capture the transaction ID (`Snippet:ConfidentialLedger_AppendToLedger`).
-2. Verify the transaction is committed (`Snippet:ConfidentialLedger_GetStatus`).
-3. Retrieve the entry or receipt (`Snippet:ConfidentialLedger_GetEnteryWithNoTransactionId`, `Snippet:ConfidentialLedger_GetReceipt`).
-
-For additional scenarios such as collections, tags, and advanced certificate verification, see:
-
-- `tests/samples/HelloWorldSamples.cs`
-- `tests/samples/AdvancedSamples.cs`
-- `tests/samples/TagsSamples.cs`
+- [Hello World — Create a client, append entries and check status](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample1_HelloWorld.md)
+- [Collections — Organize entries by collection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample2_Collections.md)
+- [Tags — Create and query entries with tags](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample3_Tags.md)
+- [Users and Consortium — Manage users and view consortium info](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample4_UsersAndConsortium.md)
+- [Advanced — Custom TLS certificate validation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample5_Advanced.md)
 
 ## Troubleshooting
 
@@ -429,7 +425,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.ConfidentialLedger
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/tests/samples
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute
