@@ -644,7 +644,6 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SyncMemberListResult))]
     [ModelReaderWriterBuildable(typeof(SyncMemberProperties))]
     [ModelReaderWriterBuildable(typeof(SyncMemberResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TdeCertificate))]
     [ModelReaderWriterBuildable(typeof(TdeCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(TimeZoneListResult))]
@@ -679,6 +678,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(WorkloadGroupProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadGroupResource))]
     [ModelReaderWriterBuildable(typeof(ZonePinningCapability))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSqlContext : ModelReaderWriterContext
     {
     }
