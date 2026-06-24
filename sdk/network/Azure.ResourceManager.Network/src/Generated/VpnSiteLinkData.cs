@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnSiteLink data model.
-    /// VpnSiteLink Resource.
-    /// </summary>
+    /// <summary> VpnSiteLink Resource. </summary>
     public partial class VpnSiteLinkData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkData"/>. </summary>
@@ -25,42 +23,105 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VpnSiteLinkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="linkProperties"> The link provider properties. </param>
-        /// <param name="ipAddress"> The ip-address for the vpn-site-link. </param>
-        /// <param name="fqdn"> FQDN of vpn-site-link. </param>
-        /// <param name="bgpProperties"> The set of bgp properties. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN site link resource. </param>
-        internal VpnSiteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VpnLinkProviderProperties linkProperties, string ipAddress, string fqdn, VpnLinkBgpSettings bgpProperties, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the VPN site link. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnSiteLinkData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnSiteLinkProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            LinkProperties = linkProperties;
-            IPAddress = ipAddress;
-            Fqdn = fqdn;
-            BgpProperties = bgpProperties;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the VPN site link. </summary>
+        [WirePath("properties")]
+        internal VpnSiteLinkProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The link provider properties. </summary>
         [WirePath("properties.linkProperties")]
-        public VpnLinkProviderProperties LinkProperties { get; set; }
+        public VpnLinkProviderProperties LinkProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkProperties();
+                }
+                Properties.LinkProperties = value;
+            }
+        }
+
         /// <summary> The ip-address for the vpn-site-link. </summary>
         [WirePath("properties.ipAddress")]
-        public string IPAddress { get; set; }
+        public string IpAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkProperties();
+                }
+                Properties.IpAddress = value;
+            }
+        }
+
         /// <summary> FQDN of vpn-site-link. </summary>
         [WirePath("properties.fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkProperties();
+                }
+                Properties.Fqdn = value;
+            }
+        }
+
         /// <summary> The set of bgp properties. </summary>
         [WirePath("properties.bgpProperties")]
-        public VpnLinkBgpSettings BgpProperties { get; set; }
+        public VpnLinkBgpSettings BgpProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteLinkProperties();
+                }
+                Properties.BgpProperties = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN site link resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

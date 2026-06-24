@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.HDInsight
     [ModelReaderWriterBuildable(typeof(ScriptActionsList))]
     [ModelReaderWriterBuildable(typeof(SshProfile))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsagesListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHDInsightContext : ModelReaderWriterContext
     {
     }

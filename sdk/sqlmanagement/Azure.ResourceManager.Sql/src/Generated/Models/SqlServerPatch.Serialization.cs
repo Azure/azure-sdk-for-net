@@ -12,13 +12,65 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlServerPatch : IUtf8JsonSerializable, IJsonModel<SqlServerPatch>
+    /// <summary> An update request for an Azure SQL Database server. </summary>
+    public partial class SqlServerPatch : IJsonModel<SqlServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlServerPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlServerPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerPatch IPersistableModel<SqlServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sqlServerPatch"> The <see cref="SqlServerPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlServerPatch sqlServerPatch)
+        {
+            if (sqlServerPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(sqlServerPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +82,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -48,117 +104,24 @@ namespace Azure.ResourceManager.Sql.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorLogin))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (options.Format != "W" && Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
-            {
-                writer.WritePropertyName("fullyQualifiedDomainName"u8);
-                writer.WriteStringValue(FullyQualifiedDomainName);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MinTlsVersion))
-            {
-                writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(WorkspaceFeature))
-            {
-                writer.WritePropertyName("workspaceFeature"u8);
-                writer.WriteStringValue(WorkspaceFeature.Value.ToString());
-            }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
-            {
-                writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
-                writer.WriteStringValue(PrimaryUserAssignedIdentityId);
-            }
-            if (Optional.IsDefined(FederatedClientId))
-            {
-                writer.WritePropertyName("federatedClientId"u8);
-                writer.WriteStringValue(FederatedClientId.Value);
-            }
-            if (Optional.IsDefined(KeyId))
-            {
-                writer.WritePropertyName("keyId"u8);
-                writer.WriteStringValue(KeyId.AbsoluteUri);
-            }
-            if (Optional.IsDefined(Administrators))
-            {
-                writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators, options);
-            }
-            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
-            {
-                writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
-                writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(IsIPv6Enabled))
-            {
-                writer.WritePropertyName("isIPv6Enabled"u8);
-                writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExternalGovernanceStatus))
-            {
-                writer.WritePropertyName("externalGovernanceStatus"u8);
-                writer.WriteStringValue(ExternalGovernanceStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(RetentionDays))
-            {
-                writer.WritePropertyName("retentionDays"u8);
-                writer.WriteNumberValue(RetentionDays.Value);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -167,291 +130,82 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        SqlServerPatch IJsonModel<SqlServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerPatch IJsonModel<SqlServerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlServerPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlServerPatch(document.RootElement, options);
         }
 
-        internal static SqlServerPatch DeserializeSqlServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlServerPatch DeserializeSqlServerPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedServiceIdentity identity = default;
+            ServerProperties properties = default;
             IDictionary<string, string> tags = default;
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
-            string version = default;
-            string state = default;
-            string fullyQualifiedDomainName = default;
-            IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
-            SqlMinimalTlsVersion? minimalTlsVersion = default;
-            ServerNetworkAccessFlag? publicNetworkAccess = default;
-            ServerWorkspaceFeature? workspaceFeature = default;
-            ResourceIdentifier primaryUserAssignedIdentityId = default;
-            Guid? federatedClientId = default;
-            Uri keyId = default;
-            ServerExternalAdministrator administrators = default;
-            ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
-            ServerNetworkAccessFlag? isIPv6Enabled = default;
-            ExternalGovernanceStatus? externalGovernanceStatus = default;
-            int? retentionDays = default;
-            SqlServerCreateMode? createMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerSqlContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ServerProperties.DeserializeServerProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("administratorLogin"u8))
-                        {
-                            administratorLogin = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("administratorLoginPassword"u8))
-                        {
-                            administratorLoginPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            state = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("fullyQualifiedDomainName"u8))
-                        {
-                            fullyQualifiedDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("privateEndpointConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item, options));
-                            }
-                            privateEndpointConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("minimalTlsVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimalTlsVersion = new SqlMinimalTlsVersion(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("workspaceFeature"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryUserAssignedIdentityId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("federatedClientId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            federatedClientId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("keyId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            keyId = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("administrators"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("restrictOutboundNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isIPv6Enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isIPv6Enabled = new ServerNetworkAccessFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("externalGovernanceStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("retentionDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retentionDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("createMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createMode = new SqlServerCreateMode(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SqlServerPatch(
-                identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                administratorLogin,
-                administratorLoginPassword,
-                version,
-                state,
-                fullyQualifiedDomainName,
-                privateEndpointConnections ?? new ChangeTrackingList<SqlServerPrivateEndpointConnection>(),
-                minimalTlsVersion,
-                publicNetworkAccess,
-                workspaceFeature,
-                primaryUserAssignedIdentityId,
-                federatedClientId,
-                keyId,
-                administrators,
-                restrictOutboundNetworkAccess,
-                isIPv6Enabled,
-                externalGovernanceStatus,
-                retentionDays,
-                createMode,
-                serializedAdditionalRawData);
+            return new SqlServerPatch(identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SqlServerPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlServerPatch IPersistableModel<SqlServerPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlServerPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlServerPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlServerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

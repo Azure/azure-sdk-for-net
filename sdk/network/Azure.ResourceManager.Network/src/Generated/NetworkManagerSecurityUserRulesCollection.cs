@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkManagerSecurityUserRulesCollection : ArmCollection, IEnumerable<NetworkManagerSecurityUserRulesResource>, IAsyncEnumerable<NetworkManagerSecurityUserRulesResource>
     {
-        private readonly ClientDiagnostics _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics;
-        private readonly SecurityUserRuleCollectionsRestOperations _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient;
+        private readonly ClientDiagnostics _securityUserRuleCollectionsClientDiagnostics;
+        private readonly SecurityUserRuleCollections _securityUserRuleCollectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerSecurityUserRulesCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkManagerSecurityUserRulesCollection for mocking. </summary>
         protected NetworkManagerSecurityUserRulesCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkManagerSecurityUserRulesCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerSecurityUserRulesCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkManagerSecurityUserRulesCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerSecurityUserRulesResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkManagerSecurityUserRulesResource.ResourceType, out string networkManagerSecurityUserRulesSecurityUserRuleCollectionsApiVersion);
-            _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient = new SecurityUserRuleCollectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkManagerSecurityUserRulesSecurityUserRuleCollectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkManagerSecurityUserRulesResource.ResourceType, out string networkManagerSecurityUserRulesApiVersion);
+            _securityUserRuleCollectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerSecurityUserRulesResource.ResourceType.Namespace, Diagnostics);
+            _securityUserRuleCollectionsRestClient = new SecurityUserRuleCollections(_securityUserRuleCollectionsClientDiagnostics, Pipeline, Endpoint, networkManagerSecurityUserRulesApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkManagerSecurityUserConfigurationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkManagerSecurityUserConfigurationResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkManagerSecurityUserConfigurationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a security user rule collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="data"> The Security User Rule Collection to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkManagerSecurityUserRulesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleCollectionName, NetworkManagerSecurityUserRulesData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerSecurityUserRulesResource>(Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerSecurityUserRulesResource> operation = new NetworkArmOperation<NetworkManagerSecurityUserRulesResource>(Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates a security user rule collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="data"> The Security User Rule Collection to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkManagerSecurityUserRulesResource> CreateOrUpdate(WaitUntil waitUntil, string ruleCollectionName, NetworkManagerSecurityUserRulesData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data, cancellationToken);
-                var uri = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkManagerSecurityUserRulesResource>(Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkManagerSecurityUserRulesResource> operation = new NetworkArmOperation<NetworkManagerSecurityUserRulesResource>(Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Network
         /// Gets a network manager security user configuration rule collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkManagerSecurityUserRulesResource>> GetAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Get");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Network
         /// Gets a network manager security user configuration rule collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkManagerSecurityUserRulesResource> Get(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Get");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,52 +266,16 @@ namespace Azure.ResourceManager.Network
         /// Lists all the security user rule collections in a security configuration, in a paginated format.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkManagerSecurityUserRulesResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkManagerSecurityUserRulesResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerSecurityUserRulesResource(Client, NetworkManagerSecurityUserRulesData.DeserializeNetworkManagerSecurityUserRulesData(e)), _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics, Pipeline, "NetworkManagerSecurityUserRulesCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the security user rule collections in a security configuration, in a paginated format.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +283,111 @@ namespace Azure.ResourceManager.Network
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkManagerSecurityUserRulesResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkManagerSecurityUserRulesResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetworkManagerSecurityUserRulesResource> GetAllAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerSecurityUserRulesResource(Client, NetworkManagerSecurityUserRulesData.DeserializeNetworkManagerSecurityUserRulesData(e)), _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics, Pipeline, "NetworkManagerSecurityUserRulesCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkManagerSecurityUserRulesData, NetworkManagerSecurityUserRulesResource>(new SecurityUserRuleCollectionsGetAllAsyncCollectionResultOfT(
+                _securityUserRuleCollectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkManagerSecurityUserRulesCollection.GetAll"), data => new NetworkManagerSecurityUserRulesResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the security user rule collections in a security configuration, in a paginated format.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerSecurityUserRulesResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkManagerSecurityUserRulesResource> GetAll(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkManagerSecurityUserRulesData, NetworkManagerSecurityUserRulesResource>(new SecurityUserRuleCollectionsGetAllCollectionResultOfT(
+                _securityUserRuleCollectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                skipToken,
+                context,
+                "NetworkManagerSecurityUserRulesCollection.GetAll"), data => new NetworkManagerSecurityUserRulesResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Exists");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkManagerSecurityUserRulesData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkManagerSecurityUserRulesData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +401,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Exists");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkManagerSecurityUserRulesData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkManagerSecurityUserRulesData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +458,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkManagerSecurityUserRulesResource>> GetIfExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.GetIfExists");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkManagerSecurityUserRulesData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkManagerSecurityUserRulesData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkManagerSecurityUserRulesResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +519,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityUserConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityUserRuleCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityUserRuleCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerSecurityUserRulesResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkManagerSecurityUserRulesResource> GetIfExists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.GetIfExists");
+            using DiagnosticScope scope = _securityUserRuleCollectionsClientDiagnostics.CreateScope("NetworkManagerSecurityUserRulesCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkManagerSecurityUserRulesSecurityUserRuleCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkManagerSecurityUserRulesData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkManagerSecurityUserRulesData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkManagerSecurityUserRulesResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkManagerSecurityUserRulesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +586,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkManagerSecurityUserRulesResource> IAsyncEnumerable<NetworkManagerSecurityUserRulesResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

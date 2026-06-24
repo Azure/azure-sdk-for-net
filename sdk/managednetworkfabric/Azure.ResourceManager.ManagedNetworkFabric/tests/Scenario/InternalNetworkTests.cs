@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new InternalNetworkBgpConfiguration()
+                BgpSettings = new BgpConfiguration(61234)
                 {
                     BfdConfiguration = new BfdConfiguration()
                     {
@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerAsn = 61234,
                     IPv4ListenRangePrefixes =
                     {
                         "100.0.0.0/25"
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                     Annotation = "annotation",
                 },
-                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
+                StaticRouteSettings = new StaticRouteConfiguration()
                 {
                     Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()

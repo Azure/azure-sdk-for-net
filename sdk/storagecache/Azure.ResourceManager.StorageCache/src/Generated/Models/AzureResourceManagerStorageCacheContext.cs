@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AmlFileSystemArchive))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemArchiveContent))]
@@ -23,32 +23,47 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(AmlFileSystemContainerStorageInterface))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemData))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemEncryptionSettings))]
+    [ModelReaderWriterBuildable(typeof(AmlFileSystemExpansionJobData))]
+    [ModelReaderWriterBuildable(typeof(AmlFileSystemExpansionJobPatch))]
+    [ModelReaderWriterBuildable(typeof(AmlFileSystemExpansionJobResource))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemHealth))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemHsmSettings))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemPatch))]
+    [ModelReaderWriterBuildable(typeof(AmlFilesystemProperties))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemPropertiesHsm))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemPropertiesMaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemResource))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemRootSquashSettings))]
-    [ModelReaderWriterBuildable(typeof(AmlFilesystemsListResult))]
+    [ModelReaderWriterBuildable(typeof(AmlFileSystemsResult))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemSubnetContent))]
+    [ModelReaderWriterBuildable(typeof(AmlFilesystemUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemUpdatePropertiesMaintenanceWindow))]
+    [ModelReaderWriterBuildable(typeof(AscOperationProperties))]
     [ModelReaderWriterBuildable(typeof(AutoExportJobData))]
     [ModelReaderWriterBuildable(typeof(AutoExportJobPatch))]
+    [ModelReaderWriterBuildable(typeof(AutoExportJobProperties))]
+    [ModelReaderWriterBuildable(typeof(AutoExportJobPropertiesStatus))]
     [ModelReaderWriterBuildable(typeof(AutoExportJobResource))]
     [ModelReaderWriterBuildable(typeof(AutoExportJobsListResult))]
+    [ModelReaderWriterBuildable(typeof(AutoExportJobUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobData))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobPatch))]
+    [ModelReaderWriterBuildable(typeof(AutoImportJobProperties))]
+    [ModelReaderWriterBuildable(typeof(AutoImportJobPropertiesStatus))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobPropertiesStatusBlobSyncEvents))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobResource))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobsListResult))]
+    [ModelReaderWriterBuildable(typeof(AutoImportJobUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(BlobNfsTarget))]
+    [ModelReaderWriterBuildable(typeof(CacheProperties))]
     [ModelReaderWriterBuildable(typeof(ClfsTarget))]
-    [ModelReaderWriterBuildable(typeof(ExpansionJobData))]
-    [ModelReaderWriterBuildable(typeof(ExpansionJobPatch))]
-    [ModelReaderWriterBuildable(typeof(ExpansionJobResource))]
+    [ModelReaderWriterBuildable(typeof(ExpansionJobProperties))]
+    [ModelReaderWriterBuildable(typeof(ExpansionJobPropertiesStatus))]
     [ModelReaderWriterBuildable(typeof(ExpansionJobsListResult))]
-    [ModelReaderWriterBuildable(typeof(ImportJobsListResult))]
+    [ModelReaderWriterBuildable(typeof(ImportJobProperties))]
+    [ModelReaderWriterBuildable(typeof(ImportJobPropertiesStatus))]
+    [ModelReaderWriterBuildable(typeof(ImportJobUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultKeyReferenceSourceVault))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamespaceJunction))]
     [ModelReaderWriterBuildable(typeof(Nfs3Target))]
@@ -62,6 +77,8 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettingsCredentials))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationError))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationInfo))]
     [ModelReaderWriterBuildable(typeof(StorageCacheData))]
     [ModelReaderWriterBuildable(typeof(StorageCacheDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheEncryptionKeyVaultKeyReference))]
@@ -70,6 +87,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageCacheImportJobData))]
     [ModelReaderWriterBuildable(typeof(StorageCacheImportJobPatch))]
     [ModelReaderWriterBuildable(typeof(StorageCacheImportJobResource))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheImportJobsResult))]
     [ModelReaderWriterBuildable(typeof(StorageCacheNetworkSettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheResource))]
     [ModelReaderWriterBuildable(typeof(StorageCacheRestriction))]
@@ -92,13 +110,13 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageCacheUsernameDownloadCredential))]
     [ModelReaderWriterBuildable(typeof(StorageCacheUsernameDownloadSettings))]
     [ModelReaderWriterBuildable(typeof(StorageTargetData))]
+    [ModelReaderWriterBuildable(typeof(StorageTargetProperties))]
     [ModelReaderWriterBuildable(typeof(StorageTargetResource))]
     [ModelReaderWriterBuildable(typeof(StorageTargetSpaceAllocation))]
     [ModelReaderWriterBuildable(typeof(StorageTargetsResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownTarget))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerStorageCacheContext : ModelReaderWriterContext
     {
     }

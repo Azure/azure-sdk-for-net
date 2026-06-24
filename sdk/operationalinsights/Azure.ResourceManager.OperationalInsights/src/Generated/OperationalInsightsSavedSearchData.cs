@@ -7,49 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary>
-    /// A class representing the OperationalInsightsSavedSearch data model.
-    /// Value object for saved search results.
-    /// </summary>
+    /// <summary> Value object for saved search results. </summary>
     public partial class OperationalInsightsSavedSearchData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/>. </summary>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
@@ -62,67 +31,152 @@ namespace Azure.ResourceManager.OperationalInsights
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(query, nameof(query));
 
-            Category = category;
-            DisplayName = displayName;
-            Query = query;
-            Tags = new ChangeTrackingList<OperationalInsightsTag>();
+            Properties = new SavedSearchProperties(category, displayName, query);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
-        /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
-        /// <param name="displayName"> Saved search display name. </param>
-        /// <param name="query"> The query expression for the saved search. </param>
-        /// <param name="functionAlias"> The function alias if query serves as a function. </param>
-        /// <param name="functionParameters"> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </param>
-        /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
-        /// <param name="tags"> The tags attached to the saved search. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IList<OperationalInsightsTag> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the saved search. </param>
+        /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SavedSearchProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
-            Category = category;
-            DisplayName = displayName;
-            Query = query;
-            FunctionAlias = functionAlias;
-            FunctionParameters = functionParameters;
-            Version = version;
-            Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSavedSearchData"/> for deserialization. </summary>
-        internal OperationalInsightsSavedSearchData()
-        {
-        }
+        /// <summary> The properties of the saved search. </summary>
+        [WirePath("properties")]
+        internal SavedSearchProperties Properties { get; set; }
 
         /// <summary> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
         /// <summary> The category of the saved search. This helps the user to find a saved search faster. </summary>
         [WirePath("properties.category")]
-        public string Category { get; set; }
+        public string Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.Category = value;
+            }
+        }
+
         /// <summary> Saved search display name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> The query expression for the saved search. </summary>
         [WirePath("properties.query")]
-        public string Query { get; set; }
+        public string Query
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Query;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.Query = value;
+            }
+        }
+
         /// <summary> The function alias if query serves as a function. </summary>
         [WirePath("properties.functionAlias")]
-        public string FunctionAlias { get; set; }
+        public string FunctionAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FunctionAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.FunctionAlias = value;
+            }
+        }
+
         /// <summary> The optional function parameters if query serves as a function. Value should be in the following format: 'param-name1:type1 = default_value1, param-name2:type2 = default_value2'. For more examples and proper syntax please refer to https://docs.microsoft.com/en-us/azure/kusto/query/functions/user-defined-functions. </summary>
         [WirePath("properties.functionParameters")]
-        public string FunctionParameters { get; set; }
+        public string FunctionParameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FunctionParameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.FunctionParameters = value;
+            }
+        }
+
         /// <summary> The version number of the query language. The current version is 2 and is the default. </summary>
         [WirePath("properties.version")]
-        public long? Version { get; set; }
+        public long? Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
         /// <summary> The tags attached to the saved search. </summary>
         [WirePath("properties.tags")]
-        public IList<OperationalInsightsTag> Tags { get; }
+        public IList<OperationalInsightsTag> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SavedSearchProperties();
+                }
+                return Properties.Tags;
+            }
+        }
     }
 }

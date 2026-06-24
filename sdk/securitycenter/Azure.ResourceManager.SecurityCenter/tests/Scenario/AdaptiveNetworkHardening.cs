@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             _adaptiveNetworkHardeningCollection = _resourceGroup.GetAdaptiveNetworkHardenings("Microsoft.Compute", "virtualMachines", vmName);
         }
 
+        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task GetAll()
         {

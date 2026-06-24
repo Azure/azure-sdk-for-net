@@ -13,101 +13,163 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ManagedServerSecurityAlertPolicy data model.
-    /// A managed server security alert policy.
-    /// </summary>
+    /// <summary> A managed server security alert policy. </summary>
     public partial class ManagedServerSecurityAlertPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedServerSecurityAlertPolicyData"/>. </summary>
         public ManagedServerSecurityAlertPolicyData()
         {
-            DisabledAlerts = new ChangeTrackingList<string>();
-            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServerSecurityAlertPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="state"> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </param>
-        /// <param name="disabledAlerts"> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </param>
-        /// <param name="emailAddresses"> Specifies an array of e-mail addresses to which the alert is sent. </param>
-        /// <param name="sendToEmailAccountAdmins"> Specifies that the alert is sent to the account administrators. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </param>
-        /// <param name="storageAccountAccessKey"> Specifies the identifier key of the Threat Detection audit storage account. </param>
-        /// <param name="retentionDays"> Specifies the number of days to keep in the Threat Detection audit logs. </param>
-        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? sendToEmailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServerSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAlertsPolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            State = state;
-            DisabledAlerts = disabledAlerts;
-            EmailAddresses = emailAddresses;
-            SendToEmailAccountAdmins = sendToEmailAccountAdmins;
-            StorageEndpoint = storageEndpoint;
-            StorageAccountAccessKey = storageAccountAccessKey;
-            RetentionDays = retentionDays;
-            CreatedOn = createdOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal SecurityAlertsPolicyProperties Properties { get; set; }
 
         /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific database. </summary>
         [WirePath("properties.state")]
-        public SecurityAlertsPolicyState? State { get; set; }
+        public SecurityAlertsPolicyState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SecurityAlertsPolicyProperties();
+                    }
+                    Properties.State = value.Value;
+                }
+            }
+        }
+
         /// <summary> Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action, Brute_Force. </summary>
         [WirePath("properties.disabledAlerts")]
-        public IList<string> DisabledAlerts { get; }
+        public IList<string> DisabledAlerts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                return Properties.DisabledAlerts;
+            }
+        }
+
         /// <summary> Specifies an array of e-mail addresses to which the alert is sent. </summary>
         [WirePath("properties.emailAddresses")]
-        public IList<string> EmailAddresses { get; }
+        public IList<string> EmailAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                return Properties.EmailAddresses;
+            }
+        }
+
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
         [WirePath("properties.emailAccountAdmins")]
-        public bool? SendToEmailAccountAdmins { get; set; }
+        public bool? SendToEmailAccountAdmins
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendToEmailAccountAdmins;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                Properties.SendToEmailAccountAdmins = value;
+            }
+        }
+
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob storage will hold all Threat Detection audit logs. </summary>
         [WirePath("properties.storageEndpoint")]
-        public string StorageEndpoint { get; set; }
+        public string StorageEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                Properties.StorageEndpoint = value;
+            }
+        }
+
         /// <summary> Specifies the identifier key of the Threat Detection audit storage account. </summary>
         [WirePath("properties.storageAccountAccessKey")]
-        public string StorageAccountAccessKey { get; set; }
+        public string StorageAccountAccessKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountAccessKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                Properties.StorageAccountAccessKey = value;
+            }
+        }
+
         /// <summary> Specifies the number of days to keep in the Threat Detection audit logs. </summary>
         [WirePath("properties.retentionDays")]
-        public int? RetentionDays { get; set; }
+        public int? RetentionDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAlertsPolicyProperties();
+                }
+                Properties.RetentionDays = value;
+            }
+        }
+
         /// <summary> Specifies the UTC creation time of the policy. </summary>
         [WirePath("properties.creationTime")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
     }
 }

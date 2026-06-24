@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmNatGatewayProperties"/>. </summary>
         /// <param name="publicIPAddresses"> List of public ip addresses that the gateway can use for NAT. </param>
         /// <param name="subnets"> List of subnets associated with the nat gateway. These can only be vnet subnets and must be from the same vnet. </param>
-        /// <param name="inboundNatRules"> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. </param>
+        /// <param name="inboundNatRules"> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. Removed in 2026-04-01-preview; use InboundRule Child resource instead. </param>
         /// <param name="provisioningState"> Provisioning state of the public IP. </param>
         /// <param name="status"> The observed state of Nat Gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> List of subnets associated with the nat gateway. These can only be vnet subnets and must be from the same vnet. </summary>
         public IReadOnlyList<HciVmVirtualNetworkSubnetArmReference> Subnets { get; }
 
-        /// <summary> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. </summary>
+        /// <summary> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. Removed in 2026-04-01-preview; use InboundRule Child resource instead. </summary>
         public IList<HciVmInboundNatRule> InboundNatRules { get; }
 
         /// <summary> Provisioning state of the public IP. </summary>

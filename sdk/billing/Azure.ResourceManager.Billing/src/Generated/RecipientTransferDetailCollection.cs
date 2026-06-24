@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -25,69 +26,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class RecipientTransferDetailCollection : ArmCollection, IEnumerable<RecipientTransferDetailResource>, IAsyncEnumerable<RecipientTransferDetailResource>
     {
-        private readonly ClientDiagnostics _recipientTransferDetailRecipientTransfersClientDiagnostics;
-        private readonly RecipientTransfersRestOperations _recipientTransferDetailRecipientTransfersRestClient;
+        private readonly ClientDiagnostics _recipientTransfersClientDiagnostics;
+        private readonly RecipientTransfers _recipientTransfersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RecipientTransferDetailCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RecipientTransferDetailCollection for mocking. </summary>
         protected RecipientTransferDetailCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecipientTransferDetailCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientTransferDetailCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecipientTransferDetailCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recipientTransferDetailRecipientTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", RecipientTransferDetailResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RecipientTransferDetailResource.ResourceType, out string recipientTransferDetailRecipientTransfersApiVersion);
-            _recipientTransferDetailRecipientTransfersRestClient = new RecipientTransfersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recipientTransferDetailRecipientTransfersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(RecipientTransferDetailResource.ResourceType, out string recipientTransferDetailApiVersion);
+            _recipientTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", RecipientTransferDetailResource.ResourceType.Namespace, Diagnostics);
+            _recipientTransfersRestClient = new RecipientTransfers(_recipientTransfersClientDiagnostics, Pipeline, Endpoint, recipientTransferDetailApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RecipientTransferDetailResource>> GetAsync(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Get");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recipientTransferDetailRecipientTransfersRestClient.GetAsync(transferName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +108,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets a transfer request by ID. The caller must be the recipient of the transfer request.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RecipientTransferDetailResource> Get(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Get");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Get");
             scope.Start();
             try
             {
-                var response = _recipientTransferDetailRecipientTransfersRestClient.Get(transferName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,50 +157,44 @@ namespace Azure.ResourceManager.Billing
         /// Lists the transfer requests received by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecipientTransferDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RecipientTransferDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecipientTransferDetailResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recipientTransferDetailRecipientTransfersRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecipientTransferDetailResource(Client, RecipientTransferDetailData.DeserializeRecipientTransferDetailData(e)), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransfersGetAllAsyncCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
         }
 
         /// <summary>
         /// Lists the transfer requests received by the caller.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +202,61 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="RecipientTransferDetailResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecipientTransferDetailResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recipientTransferDetailRecipientTransfersRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recipientTransferDetailRecipientTransfersRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecipientTransferDetailResource(Client, RecipientTransferDetailData.DeserializeRecipientTransferDetailData(e)), _recipientTransferDetailRecipientTransfersClientDiagnostics, Pipeline, "RecipientTransferDetailCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RecipientTransferDetailData, RecipientTransferDetailResource>(new RecipientTransfersGetAllCollectionResultOfT(_recipientTransfersRestClient, context, "RecipientTransferDetailCollection.GetAll"), data => new RecipientTransferDetailResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Exists");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recipientTransferDetailRecipientTransfersRestClient.GetAsync(transferName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecipientTransferDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecipientTransferDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +270,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Exists");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recipientTransferDetailRecipientTransfersRestClient.Get(transferName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecipientTransferDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecipientTransferDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +327,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RecipientTransferDetailResource>> GetIfExistsAsync(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.GetIfExists");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _recipientTransferDetailRecipientTransfersRestClient.GetAsync(transferName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecipientTransferDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecipientTransferDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RecipientTransferDetailResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +388,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RecipientTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RecipientTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecipientTransferDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transferName"> The ID that uniquely identifies a transfer request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RecipientTransferDetailResource> GetIfExists(string transferName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
 
-            using var scope = _recipientTransferDetailRecipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.GetIfExists");
+            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _recipientTransferDetailRecipientTransfersRestClient.Get(transferName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecipientTransferDetailData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecipientTransferDetailData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RecipientTransferDetailResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecipientTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +455,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RecipientTransferDetailResource> IAsyncEnumerable<RecipientTransferDetailResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

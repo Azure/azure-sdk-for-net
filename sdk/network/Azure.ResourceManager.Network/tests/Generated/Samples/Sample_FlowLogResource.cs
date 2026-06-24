@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             FlowLogResource flowLog = client.GetFlowLogResource(flowLogResourceId);
 
             // invoke the operation
-            await flowLog.DeleteAsync(WaitUntil.Completed);
+            await flowLog.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

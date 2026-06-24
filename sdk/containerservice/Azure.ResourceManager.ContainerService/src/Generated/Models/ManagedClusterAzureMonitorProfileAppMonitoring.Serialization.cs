@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring profile for AKS. </summary>
     public partial class ManagedClusterAzureMonitorProfileAppMonitoring : IJsonModel<ManagedClusterAzureMonitorProfileAppMonitoring>
     {
         /// <param name="data"> The data to parse. </param>
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("openTelemetryMetrics"u8);
                 writer.WriteObjectValue(OpenTelemetryMetrics, options);
             }
-            if (Optional.IsDefined(OpenTelemetryLogs))
+            if (Optional.IsDefined(OpenTelemetryLogsAndTraces))
             {
-                writer.WritePropertyName("openTelemetryLogs"u8);
-                writer.WriteObjectValue(OpenTelemetryLogs, options);
+                writer.WritePropertyName("openTelemetryLogsAndTraces"u8);
+                writer.WriteObjectValue(OpenTelemetryLogsAndTraces, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation autoInstrumentation = default;
             ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics openTelemetryMetrics = default;
-            ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs openTelemetryLogs = default;
+            ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces openTelemetryLogsAndTraces = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     openTelemetryMetrics = ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics.DeserializeManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("openTelemetryLogs"u8))
+                if (prop.NameEquals("openTelemetryLogsAndTraces"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openTelemetryLogs = ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs.DeserializeManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(prop.Value, options);
+                    openTelemetryLogsAndTraces = ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces.DeserializeManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfileAppMonitoring(autoInstrumentation, openTelemetryMetrics, openTelemetryLogs, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileAppMonitoring(autoInstrumentation, openTelemetryMetrics, openTelemetryLogsAndTraces, additionalBinaryDataProperties);
         }
     }
 }

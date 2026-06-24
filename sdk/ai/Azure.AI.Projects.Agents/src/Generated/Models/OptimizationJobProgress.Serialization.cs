@@ -75,8 +75,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(OptimizationJobProgress)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("current_iteration"u8);
-            writer.WriteNumberValue(CurrentIteration);
+            writer.WritePropertyName("candidates_completed"u8);
+            writer.WriteNumberValue(CandidatesCompleted);
             writer.WritePropertyName("best_score"u8);
             writer.WriteNumberValue(BestScore);
             writer.WritePropertyName("elapsed_seconds"u8);
@@ -123,15 +123,15 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            int currentIteration = default;
+            int candidatesCompleted = default;
             double bestScore = default;
             double elapsedSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("current_iteration"u8))
+                if (prop.NameEquals("candidates_completed"u8))
                 {
-                    currentIteration = prop.Value.GetInt32();
+                    candidatesCompleted = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("best_score"u8))
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptimizationJobProgress(currentIteration, bestScore, elapsedSeconds, additionalBinaryDataProperties);
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties);
         }
     }
 }

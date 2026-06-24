@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerDnsAliasResource : IJsonModel<SqlServerDnsAliasData>
     {
-        private static SqlServerDnsAliasData s_dataDeserializationInstance;
-        private static SqlServerDnsAliasData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerDnsAliasData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerDnsAliasData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerDnsAliasData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerDnsAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDnsAliasData>)Data).Write(writer, options);
 
-        SqlServerDnsAliasData IJsonModel<SqlServerDnsAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerDnsAliasData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerDnsAliasData IJsonModel<SqlServerDnsAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerDnsAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerDnsAliasData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerDnsAliasData IPersistableModel<SqlServerDnsAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerDnsAliasData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerDnsAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerDnsAliasData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerDnsAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
