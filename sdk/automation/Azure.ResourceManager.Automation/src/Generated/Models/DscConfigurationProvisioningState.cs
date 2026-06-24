@@ -11,7 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> SDK-only compatibility extensible enum for the previous DscConfigurationProvisioningState API. </summary>
+    /// <summary> Provisioning state of the configuration. </summary>
     public readonly partial struct DscConfigurationProvisioningState : IEquatable<DscConfigurationProvisioningState>
     {
         private readonly string _value;

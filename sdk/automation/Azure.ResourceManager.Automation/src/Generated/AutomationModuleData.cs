@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the provisioning state of the module. </summary>
-        public ModuleProvisioningState? ProvisioningState
+        public AutomationModuleProvisioningState? ModuleProvisioningState
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ModuleProvisioningState;
             }
             set
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ModuleProperties();
                 }
-                Properties.ProvisioningState = value;
+                Properties.ModuleProvisioningState = value;
             }
         }
 

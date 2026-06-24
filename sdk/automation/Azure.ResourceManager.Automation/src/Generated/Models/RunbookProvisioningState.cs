@@ -11,7 +11,7 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> SDK-only compatibility extensible enum for the previous RunbookProvisioningState API. </summary>
+    /// <summary> Provisioning state of the runbook. </summary>
     public readonly partial struct RunbookProvisioningState : IEquatable<RunbookProvisioningState>
     {
         private readonly string _value;

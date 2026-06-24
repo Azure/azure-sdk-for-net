@@ -675,6 +675,7 @@ namespace Azure.ResourceManager.Automation
         public bool? IsComposite { get { throw null; } set { } }
         public bool? IsGlobal { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState? ModuleProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.ModuleProvisioningState? ProvisioningState { get { throw null; } set { } }
         public long? SizeInBytes { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
@@ -1931,7 +1932,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.AutomationKeyVaultProperties AutomationKeyVaultProperties(System.Uri keyvaultUri = null, string keyName = null, string keyVersion = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationLinkedWorkspace AutomationLinkedWorkspace(string id = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationModuleData AutomationModuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), bool? isGlobal = default(bool?), string version = null, long? sizeInBytes = default(long?), int? activityCount = default(int?), Azure.ResourceManager.Automation.Models.ModuleProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.ModuleProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null, bool? isComposite = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Automation.AutomationModuleData AutomationModuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isGlobal = default(bool?), string version = null, long? sizeInBytes = default(long?), int? activityCount = default(int?), Azure.ResourceManager.Automation.Models.ModuleProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.ModuleProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null, bool? isComposite = default(bool?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Automation.AutomationModuleData AutomationModuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isGlobal = default(bool?), string version = null, long? sizeInBytes = default(long?), int? activityCount = default(int?), Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState? moduleProvisioningState = default(Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null, bool? isComposite = default(bool?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo AutomationModuleErrorInfo(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationModuleField AutomationModuleField(string name = null, string fieldType = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent AutomationPackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Models.TrackedResourceData trackedResource = null) { throw null; }
@@ -2852,6 +2853,37 @@ namespace Azure.ResourceManager.Automation.Models
         Azure.ResourceManager.Automation.Models.AutomationModuleField System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationModuleProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationModuleProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ActivitiesStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ConnectionTypeImported { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ContentDownloaded { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ContentRetrieved { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ContentStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ContentValidated { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ModuleDataStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState ModuleImportRunbookComplete { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState RunningImportModuleRunbook { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState StartingImportModuleRunbook { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState left, Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState left, Azure.ResourceManager.Automation.Models.AutomationModuleProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AutomationPackageCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>
     {

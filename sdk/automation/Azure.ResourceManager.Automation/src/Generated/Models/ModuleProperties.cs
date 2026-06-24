@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="version"> Gets or sets the version of the module. </param>
         /// <param name="sizeInBytes"> Gets or sets the size in bytes of the module. </param>
         /// <param name="activityCount"> Gets or sets the activity count of the module. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the module. </param>
+        /// <param name="moduleProvisioningState"> Gets or sets the provisioning state of the module. </param>
         /// <param name="contentLink"> Gets or sets the contentLink of the module. </param>
         /// <param name="error"> Gets or sets the error info of the module. </param>
         /// <param name="createdOn"> Gets or sets the creation time. </param>
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModuleProperties(bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModuleProperties(bool? isGlobal, string version, long? sizeInBytes, int? activityCount, AutomationModuleProvisioningState? moduleProvisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsGlobal = isGlobal;
             Version = version;
             SizeInBytes = sizeInBytes;
             ActivityCount = activityCount;
-            ProvisioningState = provisioningState;
+            ModuleProvisioningState = moduleProvisioningState;
             ContentLink = contentLink;
             Error = error;
             CreatedOn = createdOn;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
         public int? ActivityCount { get; set; }
 
         /// <summary> Gets or sets the provisioning state of the module. </summary>
-        public ModuleProvisioningState? ProvisioningState { get; set; }
+        public AutomationModuleProvisioningState? ModuleProvisioningState { get; set; }
 
         /// <summary> Gets or sets the contentLink of the module. </summary>
         public AutomationContentLink ContentLink { get; set; }

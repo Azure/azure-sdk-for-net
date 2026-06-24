@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("activityCount"u8);
                 writer.WriteNumberValue(ActivityCount.Value);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ModuleProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ModuleProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(ContentLink))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Automation.Models
             string version = default;
             long? sizeInBytes = default;
             int? activityCount = default;
-            ModuleProvisioningState? provisioningState = default;
+            AutomationModuleProvisioningState? moduleProvisioningState = default;
             AutomationContentLink contentLink = default;
             AutomationModuleErrorInfo error = default;
             DateTimeOffset? createdOn = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    provisioningState = prop.Value.GetString().ToModuleProvisioningState();
+                    moduleProvisioningState = new AutomationModuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("contentLink"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Automation.Models
                 version,
                 sizeInBytes,
                 activityCount,
-                provisioningState,
+                moduleProvisioningState,
                 contentLink,
                 error,
                 createdOn,

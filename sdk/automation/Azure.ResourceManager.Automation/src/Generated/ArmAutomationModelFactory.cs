@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="version"> Gets or sets the version of the module. </param>
         /// <param name="sizeInBytes"> Gets or sets the size in bytes of the module. </param>
         /// <param name="activityCount"> Gets or sets the activity count of the module. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the module. </param>
+        /// <param name="moduleProvisioningState"> Gets or sets the provisioning state of the module. </param>
         /// <param name="contentLink"> Gets or sets the contentLink of the module. </param>
         /// <param name="error"> Gets or sets the error info of the module. </param>
         /// <param name="createdOn"> Gets or sets the creation time. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
         /// <param name="eTag"> Gets or sets the etag of the resource. </param>
         /// <returns> A new <see cref="Automation.AutomationModuleData"/> instance for mocking. </returns>
-        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isGlobal = default, string version = default, long? sizeInBytes = default, int? activityCount = default, ModuleProvisioningState? provisioningState = default, AutomationContentLink contentLink = default, AutomationModuleErrorInfo error = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, bool? isComposite = default, ETag? eTag = default)
+        public static AutomationModuleData AutomationModuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isGlobal = default, string version = default, long? sizeInBytes = default, int? activityCount = default, AutomationModuleProvisioningState? moduleProvisioningState = default, AutomationContentLink contentLink = default, AutomationModuleErrorInfo error = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default, bool? isComposite = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -335,12 +335,12 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isGlobal is null && version is null && sizeInBytes is null && activityCount is null && provisioningState is null && contentLink is null && error is null && createdOn is null && lastModifiedOn is null && description is null && isComposite is null ? default : new ModuleProperties(
+                isGlobal is null && version is null && sizeInBytes is null && activityCount is null && moduleProvisioningState is null && contentLink is null && error is null && createdOn is null && lastModifiedOn is null && description is null && isComposite is null ? default : new ModuleProperties(
                     isGlobal,
                     version,
                     sizeInBytes,
                     activityCount,
-                    provisioningState,
+                    moduleProvisioningState,
                     contentLink,
                     error,
                     createdOn,
@@ -2300,12 +2300,12 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isGlobal is null && version is null && sizeInBytes is null && activityCount is null && provisioningState is null && contentLink is null && error is null && createdOn is null && lastModifiedOn is null && description is null && isComposite is null ? default : new ModuleProperties(
+                isGlobal is null && version is null && sizeInBytes is null && activityCount is null && contentLink is null && error is null && createdOn is null && lastModifiedOn is null && description is null && isComposite is null ? default : new ModuleProperties(
                     isGlobal,
                     version,
                     sizeInBytes,
                     activityCount,
-                    provisioningState,
+                    default,
                     contentLink,
                     error,
                     createdOn,
