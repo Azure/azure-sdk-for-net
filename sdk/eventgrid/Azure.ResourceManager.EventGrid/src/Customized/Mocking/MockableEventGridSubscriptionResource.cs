@@ -13,6 +13,10 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
+    // Compatibility customization: EventGridExtensions exposes topic-type subscription listing APIs
+    // that call into MockableEventGridSubscriptionResource. The current generated mockable class
+    // does not emit these specific methods, so we provide them here to preserve the existing
+    // extension surface and mockable/virtual behavior.
     public partial class MockableEventGridSubscriptionResource
     {
         /// <summary> List global event subscriptions under a subscription for a topic type. </summary>
