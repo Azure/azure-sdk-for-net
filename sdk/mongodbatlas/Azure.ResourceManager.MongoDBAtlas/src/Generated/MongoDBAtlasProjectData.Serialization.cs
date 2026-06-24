@@ -18,68 +18,68 @@ using Azure.ResourceManager.MongoDBAtlas.Models;
 namespace Azure.ResourceManager.MongoDBAtlas
 {
     /// <summary> The MongoDB Atlas Project resource type. A project is a logical grouping of clusters within an organization. </summary>
-    public partial class ProjectData : ResourceData, IJsonModel<ProjectData>
+    public partial class MongoDBAtlasProjectData : ResourceData, IJsonModel<MongoDBAtlasProjectData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasProjectData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProjectData(document.RootElement, options);
+                        return DeserializeMongoDBAtlasProjectData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasProjectData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasProjectData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasProjectData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProjectData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MongoDBAtlasProjectData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectData IPersistableModel<ProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ProjectData)PersistableModelCreateCore(data, options);
+        MongoDBAtlasProjectData IPersistableModel<MongoDBAtlasProjectData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoDBAtlasProjectData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasProjectData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectData"> The <see cref="ProjectData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProjectData projectData)
+        /// <param name="mongoDBAtlasProjectData"> The <see cref="MongoDBAtlasProjectData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MongoDBAtlasProjectData mongoDBAtlasProjectData)
         {
-            if (projectData == null)
+            if (mongoDBAtlasProjectData == null)
             {
                 return null;
             }
-            return RequestContent.Create(projectData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(mongoDBAtlasProjectData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ProjectData"/> from. </param>
-        internal static ProjectData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasProjectData"/> from. </param>
+        internal static MongoDBAtlasProjectData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMongoDBAtlasProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasProjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasProjectData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.MongoDBAtlas
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProjectData IJsonModel<ProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ProjectData)JsonModelCreateCore(ref reader, options);
+        MongoDBAtlasProjectData IJsonModel<MongoDBAtlasProjectData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MongoDBAtlasProjectData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasProjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasProjectData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProjectData(document.RootElement, options);
+            return DeserializeMongoDBAtlasProjectData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProjectData DeserializeProjectData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoDBAtlasProjectData DeserializeMongoDBAtlasProjectData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ProjectProperties properties = default;
+            MongoDBAtlasProjectProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     {
                         continue;
                     }
-                    properties = ProjectProperties.DeserializeProjectProperties(prop.Value, options);
+                    properties = MongoDBAtlasProjectProperties.DeserializeMongoDBAtlasProjectProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectData(
+            return new MongoDBAtlasProjectData(
                 id,
                 name,
                 resourceType,

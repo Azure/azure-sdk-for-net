@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 return null;
             }
-            ClusterTier @type = default;
+            MongoDBAtlasClusterTier @type = default;
             int maximum = default;
             int current = default;
             bool isReached = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ClusterTier(prop.Value.GetString());
+                    @type = new MongoDBAtlasClusterTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maximum"u8))

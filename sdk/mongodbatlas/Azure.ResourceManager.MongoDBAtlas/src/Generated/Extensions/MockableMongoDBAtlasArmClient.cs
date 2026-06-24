@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             return new MongoDBAtlasOrganizationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBAtlasProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBAtlasProjectResource"/> object. </returns>
+        public virtual MongoDBAtlasProjectResource GetMongoDBAtlasProjectResource(ResourceIdentifier id)
         {
-            ProjectResource.ValidateResourceId(id);
-            return new ProjectResource(Client, id);
+            MongoDBAtlasProjectResource.ValidateResourceId(id);
+            return new MongoDBAtlasProjectResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MongoDBAtlasClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBAtlasClusterResource"/> object. </returns>
+        public virtual MongoDBAtlasClusterResource GetMongoDBAtlasClusterResource(ResourceIdentifier id)
         {
-            ClusterResource.ValidateResourceId(id);
-            return new ClusterResource(Client, id);
+            MongoDBAtlasClusterResource.ValidateResourceId(id);
+            return new MongoDBAtlasClusterResource(Client, id);
         }
     }
 }

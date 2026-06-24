@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
             }
         }
 
-        /// <summary> Gets a collection of Projects in the <see cref="MongoDBAtlasOrganizationResource"/>. </summary>
-        /// <returns> An object representing collection of Projects and their operations over a ProjectResource. </returns>
-        public virtual ProjectCollection GetProjects()
+        /// <summary> Gets a collection of MongoDBAtlasProjects in the <see cref="MongoDBAtlasOrganizationResource"/>. </summary>
+        /// <returns> An object representing collection of MongoDBAtlasProjects and their operations over a MongoDBAtlasProjectResource. </returns>
+        public virtual MongoDBAtlasProjectCollection GetMongoDBAtlasProjects()
         {
-            return GetCachedClient(client => new ProjectCollection(client, Id));
+            return GetCachedClient(client => new MongoDBAtlasProjectCollection(client, Id));
         }
 
         /// <summary> Get a Project. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasProjectResource>> GetMongoDBAtlasProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetMongoDBAtlasProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Project. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasProjectResource> GetMongoDBAtlasProject(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetProjects().Get(projectName, cancellationToken);
+            return GetMongoDBAtlasProjects().Get(projectName, cancellationToken);
         }
     }
 }

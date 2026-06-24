@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <summary> Initializes a new instance of <see cref="ProjectListResult"/>. </summary>
         /// <param name="value"> The Project items on this page. </param>
-        internal ProjectListResult(IEnumerable<ProjectData> value)
+        internal ProjectListResult(IEnumerable<MongoDBAtlasProjectData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="value"> The Project items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectListResult(IList<ProjectData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectListResult(IList<MongoDBAtlasProjectData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <summary> The Project items on this page. </summary>
-        public IList<ProjectData> Value { get; }
+        public IList<MongoDBAtlasProjectData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <summary> Initializes a new instance of <see cref="TierRegions"/>. </summary>
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
-        internal TierRegions(ClusterTier tier, IEnumerable<string> regions)
+        internal TierRegions(MongoDBAtlasClusterTier tier, IEnumerable<string> regions)
         {
             Tier = tier;
             Regions = regions.ToList();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TierRegions(ClusterTier tier, IList<string> regions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TierRegions(MongoDBAtlasClusterTier tier, IList<string> regions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tier = tier;
             Regions = regions;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <summary> Cluster tier name. </summary>
-        public ClusterTier Tier { get; }
+        public MongoDBAtlasClusterTier Tier { get; }
 
         /// <summary> Supported region names. </summary>
         public IList<string> Regions { get; }

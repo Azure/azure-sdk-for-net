@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.MongoDBAtlas
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MongoDBAtlasProjectResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetProjectResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetMongoDBAtlasProjectResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBAtlasProjectResource"/> object. </returns>
+        public static MongoDBAtlasProjectResource GetMongoDBAtlasProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoDBAtlasArmClient(client).GetProjectResource(id);
+            return GetMockableMongoDBAtlasArmClient(client).GetMongoDBAtlasProjectResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MongoDBAtlasClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMongoDBAtlasArmClient.GetMongoDBAtlasClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoDBAtlasClusterResource"/> object. </returns>
+        public static MongoDBAtlasClusterResource GetMongoDBAtlasClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMongoDBAtlasArmClient(client).GetClusterResource(id);
+            return GetMockableMongoDBAtlasArmClient(client).GetMongoDBAtlasClusterResource(id);
         }
 
         /// <summary>

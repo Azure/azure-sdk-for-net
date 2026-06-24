@@ -12,16 +12,16 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Properties specific to a MongoDB Atlas Cluster. </summary>
-    public partial class ClusterProperties
+    public partial class MongoDBAtlasClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasClusterProperties"/>. </summary>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
         /// <param name="regionName"> Azure region where the cluster is deployed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="regionName"/> is null. </exception>
-        public ClusterProperties(ClusterTier clusterTier, string regionName)
+        public MongoDBAtlasClusterProperties(MongoDBAtlasClusterTier clusterTier, string regionName)
         {
             Argument.AssertNotNull(regionName, nameof(regionName));
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             RegionName = regionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasClusterProperties"/>. </summary>
         /// <param name="clusterName"> Name of the MongoDB Atlas Cluster. </param>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
         /// <param name="regionName"> Azure region where the cluster is deployed. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(string clusterName, ClusterTier clusterTier, string regionName, string mongoDbVersion, bool? backups, string state, MongoDBAtlasResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasClusterProperties(string clusterName, MongoDBAtlasClusterTier clusterTier, string regionName, string mongoDbVersion, bool? backups, string state, MongoDBAtlasResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterName = clusterName;
             ClusterTier = clusterTier;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string ClusterName { get; }
 
         /// <summary> Cluster tier (FREE, FLEX, M10, M30). </summary>
-        public ClusterTier ClusterTier { get; set; }
+        public MongoDBAtlasClusterTier ClusterTier { get; set; }
 
         /// <summary> Azure region where the cluster is deployed. </summary>
         public string RegionName { get; set; }

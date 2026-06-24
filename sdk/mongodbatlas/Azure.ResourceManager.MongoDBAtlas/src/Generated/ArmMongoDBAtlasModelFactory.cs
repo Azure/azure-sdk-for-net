@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.ProjectData"/> instance for mocking. </returns>
-        public static ProjectData ProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProjectProperties properties = default)
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasProjectData"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectData MongoDBAtlasProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasProjectProperties properties = default)
         {
-            return new ProjectData(
+            return new MongoDBAtlasProjectData(
                 id,
                 name,
                 resourceType,
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="organizationId"> Atlas organization id. </param>
         /// <param name="clusterCount"> Number of clusters in the project. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.ProjectProperties"/> instance for mocking. </returns>
-        public static ProjectProperties ProjectProperties(string projectId = default, string projectName = default, string organizationId = default, long? clusterCount = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasProjectProperties"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectProperties MongoDBAtlasProjectProperties(string projectId = default, string projectName = default, string organizationId = default, long? clusterCount = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
         {
-            return new ProjectProperties(
+            return new MongoDBAtlasProjectProperties(
                 projectId,
                 projectName,
                 organizationId,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
         /// <returns> A new <see cref="Models.ProjectLimitStatus"/> instance for mocking. </returns>
-        public static ProjectLimitStatus ProjectLimitStatus(ClusterTier @type = default, int maximum = default, int current = default, bool isReached = default)
+        public static ProjectLimitStatus ProjectLimitStatus(MongoDBAtlasClusterTier @type = default, int maximum = default, int current = default, bool isReached = default)
         {
             return new ProjectLimitStatus(@type, maximum, current, isReached, default);
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
         /// <returns> A new <see cref="Models.TierRegions"/> instance for mocking. </returns>
-        public static TierRegions TierRegions(ClusterTier tier = default, IEnumerable<string> regions = default)
+        public static TierRegions TierRegions(MongoDBAtlasClusterTier tier = default, IEnumerable<string> regions = default)
         {
             regions ??= new ChangeTrackingList<string>();
 
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.ClusterData"/> instance for mocking. </returns>
-        public static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterProperties properties = default)
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasClusterData"/> instance for mocking. </returns>
+        public static MongoDBAtlasClusterData MongoDBAtlasClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasClusterProperties properties = default)
         {
-            return new ClusterData(
+            return new MongoDBAtlasClusterData(
                 id,
                 name,
                 resourceType,
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="backups"> Whether backups are active for the cluster; null if undetermined. </param>
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.ClusterProperties"/> instance for mocking. </returns>
-        public static ClusterProperties ClusterProperties(string clusterName = default, ClusterTier clusterTier = default, string regionName = default, string mongoDbVersion = default, bool? backups = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasClusterProperties"/> instance for mocking. </returns>
+        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDbVersion = default, bool? backups = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
         {
-            return new ClusterProperties(
+            return new MongoDBAtlasClusterProperties(
                 clusterName,
                 clusterTier,
                 regionName,
