@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteFailoverSingleTestDetails : IUtf8JsonSerializable, IJsonModel<ExpressRouteFailoverSingleTestDetails>
+    /// <summary> ExpressRoute failover single test details. </summary>
+    public partial class ExpressRouteFailoverSingleTestDetails : IJsonModel<ExpressRouteFailoverSingleTestDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteFailoverSingleTestDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteFailoverSingleTestDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExpressRouteFailoverSingleTestDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteFailoverSingleTestDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteFailoverSingleTestDetails IPersistableModel<ExpressRouteFailoverSingleTestDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteFailoverSingleTestDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteFailoverSingleTestDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
@@ -60,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("redundantRoutes"u8);
                 writer.WriteStartArray();
-                foreach (var item in RedundantRoutes)
+                foreach (ExpressRouteFailoverRedundantRoute item in RedundantRoutes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -70,8 +108,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("nonRedundantRoutes"u8);
                 writer.WriteStartArray();
-                foreach (var item in NonRedundantRoutes)
+                foreach (string item in NonRedundantRoutes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -85,21 +128,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("failoverConnectionDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in FailoverConnectionDetails)
+                foreach (FailoverConnectionDetails item in FailoverConnectionDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,22 +151,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ExpressRouteFailoverSingleTestDetails IJsonModel<ExpressRouteFailoverSingleTestDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteFailoverSingleTestDetails IJsonModel<ExpressRouteFailoverSingleTestDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteFailoverSingleTestDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExpressRouteFailoverSingleTestDetails(document.RootElement, options);
         }
 
-        internal static ExpressRouteFailoverSingleTestDetails DeserializeExpressRouteFailoverSingleTestDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExpressRouteFailoverSingleTestDetails DeserializeExpressRouteFailoverSingleTestDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,79 +184,85 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<string> nonRedundantRoutes = default;
             bool? wasSimulationSuccessful = default;
             IReadOnlyList<FailoverConnectionDetails> failoverConnectionDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("peeringLocation"u8))
+                if (prop.NameEquals("peeringLocation"u8))
                 {
-                    peeringLocation = property.Value.GetString();
+                    peeringLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new FailoverTestStatusForSingleTest(property.Value.GetString());
+                    status = new FailoverTestStatusForSingleTest(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("startTimeUtc"u8))
+                if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    startTimeUtc = property.Value.GetString();
+                    startTimeUtc = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endTimeUtc"u8))
+                if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endTimeUtc = property.Value.GetString();
+                    endTimeUtc = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("redundantRoutes"u8))
+                if (prop.NameEquals("redundantRoutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExpressRouteFailoverRedundantRoute> array = new List<ExpressRouteFailoverRedundantRoute>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ExpressRouteFailoverRedundantRoute.DeserializeExpressRouteFailoverRedundantRoute(item, options));
                     }
                     redundantRoutes = array;
                     continue;
                 }
-                if (property.NameEquals("nonRedundantRoutes"u8))
+                if (prop.NameEquals("nonRedundantRoutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nonRedundantRoutes = array;
                     continue;
                 }
-                if (property.NameEquals("wasSimulationSuccessful"u8))
+                if (prop.NameEquals("wasSimulationSuccessful"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    wasSimulationSuccessful = property.Value.GetBoolean();
+                    wasSimulationSuccessful = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("failoverConnectionDetails"u8))
+                if (prop.NameEquals("failoverConnectionDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FailoverConnectionDetails> array = new List<FailoverConnectionDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.FailoverConnectionDetails.DeserializeFailoverConnectionDetails(item, options));
                     }
@@ -217,10 +271,9 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteFailoverSingleTestDetails(
                 peeringLocation,
                 status,
@@ -230,237 +283,7 @@ namespace Azure.ResourceManager.Network.Models
                 nonRedundantRoutes ?? new ChangeTrackingList<string>(),
                 wasSimulationSuccessful,
                 failoverConnectionDetails ?? new ChangeTrackingList<FailoverConnectionDetails>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  peeringLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeeringLocation))
-                {
-                    builder.Append("  peeringLocation: ");
-                    if (PeeringLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PeeringLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PeeringLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTimeUtc), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartTimeUtc))
-                {
-                    builder.Append("  startTimeUtc: ");
-                    if (StartTimeUtc.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StartTimeUtc}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StartTimeUtc}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTimeUtc), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndTimeUtc))
-                {
-                    builder.Append("  endTimeUtc: ");
-                    if (EndTimeUtc.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EndTimeUtc}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EndTimeUtc}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedundantRoutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  redundantRoutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RedundantRoutes))
-                {
-                    if (RedundantRoutes.Any())
-                    {
-                        builder.Append("  redundantRoutes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RedundantRoutes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  redundantRoutes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonRedundantRoutes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nonRedundantRoutes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NonRedundantRoutes))
-                {
-                    if (NonRedundantRoutes.Any())
-                    {
-                        builder.Append("  nonRedundantRoutes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NonRedundantRoutes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WasSimulationSuccessful), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  wasSimulationSuccessful: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(WasSimulationSuccessful))
-                {
-                    builder.Append("  wasSimulationSuccessful: ");
-                    var boolValue = WasSimulationSuccessful.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverConnectionDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  failoverConnectionDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FailoverConnectionDetails))
-                {
-                    if (FailoverConnectionDetails.Any())
-                    {
-                        builder.Append("  failoverConnectionDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in FailoverConnectionDetails)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  failoverConnectionDetails: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExpressRouteFailoverSingleTestDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExpressRouteFailoverSingleTestDetails IPersistableModel<ExpressRouteFailoverSingleTestDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteFailoverSingleTestDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpressRouteFailoverSingleTestDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteFailoverSingleTestDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressRouteFailoverSingleTestDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

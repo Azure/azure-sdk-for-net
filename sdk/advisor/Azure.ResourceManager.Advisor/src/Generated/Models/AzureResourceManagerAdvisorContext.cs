@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Advisor
     [ModelReaderWriterBuildable(typeof(ResourceRecommendationBaseListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SuppressionContractListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrackedRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAdvisorContext : ModelReaderWriterContext
     {
     }

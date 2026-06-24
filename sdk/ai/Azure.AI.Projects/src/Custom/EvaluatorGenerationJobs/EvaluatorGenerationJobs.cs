@@ -27,8 +27,8 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
-        ClientResult result = Create(jobInput, default, operationId, cancellationToken.ToRequestOptions());
+        Argument.AssertNotNull(job, nameof(job));
+        ClientResult result = Create(job, default, operationId, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
@@ -43,8 +43,8 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
-        ClientResult result = await CreateAsync(jobInput, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        Argument.AssertNotNull(job, nameof(job));
+        ClientResult result = await CreateAsync(job, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 

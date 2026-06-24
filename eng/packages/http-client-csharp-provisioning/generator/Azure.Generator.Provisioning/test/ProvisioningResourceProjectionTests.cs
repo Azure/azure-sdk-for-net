@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
+using Azure.Generator.Provisioning.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace Azure.Generator.Provisioning.Tests
 {
     public class ProvisioningResourceProjectionTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            ProvisioningMockHelpers.LoadMockPlugin();
+        }
+
         [Test]
         public void SameResourceTypeAndModelCollapse()
         {
@@ -100,8 +107,41 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(projection.ResourceName, Is.EqualTo(model.Name));
             Assert.That(projection.SingletonResourceName, Is.Null);
-            Assert.That(projection.ParentResourceId, Is.EqualTo(firstResource.ParentResourceId));
+            Assert.That(projection.ParentResourceId, Is.Null);
             Assert.That(projection.NameConstraints, Is.EqualTo(new ArmResourceNameConstraints(null, null, null)));
+        }
+
+        [Test]
+        public void CollapsedProjectionKeepsOnlyConsistentParentResourceId()
+        {
+            var model = CreateModel("TestResourceData");
+            const string parentResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}";
+            var firstResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/first",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                parentResourceId: parentResourceId);
+            var secondResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/second",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                parentResourceId: parentResourceId);
+            var parentlessResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/third",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"]);
+
+            var consistentProjection = ProvisioningResourceProjection.Create([firstResource, secondResource])[0];
+            var mixedNullProjection = ProvisioningResourceProjection.Create([firstResource, parentlessResource])[0];
+
+            Assert.That(consistentProjection.ParentResourceId, Is.EqualTo(firstResource.ParentResourceId));
+            Assert.That(mixedNullProjection.ParentResourceId, Is.Null);
         }
 
         [Test]

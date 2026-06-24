@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct DataFactoryRecurrenceFrequency : IEquatable<DataFactoryRecurrenceFrequency>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Minute. </summary>
+        private const string MinuteValue = "Minute";
+        /// <summary> Hour. </summary>
+        private const string HourValue = "Hour";
+        /// <summary> Day. </summary>
+        private const string DayValue = "Day";
+        /// <summary> Week. </summary>
+        private const string WeekValue = "Week";
+        /// <summary> Month. </summary>
+        private const string MonthValue = "Month";
+        /// <summary> Year. </summary>
+        private const string YearValue = "Year";
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataFactoryRecurrenceFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string MinuteValue = "Minute";
-        private const string HourValue = "Hour";
-        private const string DayValue = "Day";
-        private const string WeekValue = "Week";
-        private const string MonthValue = "Month";
-        private const string YearValue = "Year";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static DataFactoryRecurrenceFrequency NotSpecified { get; } = new DataFactoryRecurrenceFrequency(NotSpecifiedValue);
+
         /// <summary> Minute. </summary>
         public static DataFactoryRecurrenceFrequency Minute { get; } = new DataFactoryRecurrenceFrequency(MinuteValue);
+
         /// <summary> Hour. </summary>
         public static DataFactoryRecurrenceFrequency Hour { get; } = new DataFactoryRecurrenceFrequency(HourValue);
+
         /// <summary> Day. </summary>
         public static DataFactoryRecurrenceFrequency Day { get; } = new DataFactoryRecurrenceFrequency(DayValue);
+
         /// <summary> Week. </summary>
         public static DataFactoryRecurrenceFrequency Week { get; } = new DataFactoryRecurrenceFrequency(WeekValue);
+
         /// <summary> Month. </summary>
         public static DataFactoryRecurrenceFrequency Month { get; } = new DataFactoryRecurrenceFrequency(MonthValue);
+
         /// <summary> Year. </summary>
         public static DataFactoryRecurrenceFrequency Year { get; } = new DataFactoryRecurrenceFrequency(YearValue);
+
         /// <summary> Determines if two <see cref="DataFactoryRecurrenceFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataFactoryRecurrenceFrequency left, DataFactoryRecurrenceFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataFactoryRecurrenceFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataFactoryRecurrenceFrequency left, DataFactoryRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataFactoryRecurrenceFrequency(string value) => new DataFactoryRecurrenceFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataFactoryRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataFactoryRecurrenceFrequency?(string value) => value == null ? null : new DataFactoryRecurrenceFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataFactoryRecurrenceFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataFactoryRecurrenceFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

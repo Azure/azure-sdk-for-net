@@ -14,31 +14,31 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSyncCompleteCommandProperties : DataMigrationCommandProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
-        public MigrateSyncCompleteCommandProperties()
+        public MigrateSyncCompleteCommandProperties() : base(DataMigrationCommandType.MigrateSyncCompleteDatabase)
         {
-            CommandType = DataMigrationCommandType.MigrateSyncCompleteDatabase;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSyncCompleteCommandProperties"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
         /// <param name="commandId"> Command id. </param>
-        internal MigrateSyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state, serializedAdditionalRawData)
+        internal MigrateSyncCompleteCommandProperties(DataMigrationCommandType commandType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationCommandState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrateSyncCompleteCommandInput input, MigrateSyncCompleteCommandOutput output, string commandId) : base(commandType, errors, state, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
             CommandId = commandId;
-            CommandType = commandType;
         }
 
         /// <summary> Command input. </summary>
         public MigrateSyncCompleteCommandInput Input { get; set; }
+
         /// <summary> Command output. This is ignored if submitted. </summary>
         public MigrateSyncCompleteCommandOutput Output { get; }
+
         /// <summary> Command id. </summary>
         public string CommandId { get; set; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct ArchiveStatusType : IEquatable<ArchiveStatusType>
     {
         private readonly string _value;
+        /// <summary> NotConfigured. </summary>
+        private const string NotConfiguredValue = "NotConfigured";
+        /// <summary> Idle. </summary>
+        private const string IdleValue = "Idle";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Cancelling. </summary>
+        private const string CancellingValue = "Cancelling";
+        /// <summary> FSScanInProgress. </summary>
+        private const string FSScanInProgressValue = "FSScanInProgress";
 
         /// <summary> Initializes a new instance of <see cref="ArchiveStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArchiveStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotConfiguredValue = "NotConfigured";
-        private const string IdleValue = "Idle";
-        private const string InProgressValue = "InProgress";
-        private const string CanceledValue = "Canceled";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
-        private const string CancellingValue = "Cancelling";
-        private const string FSScanInProgressValue = "FSScanInProgress";
+            _value = value;
+        }
 
         /// <summary> NotConfigured. </summary>
         public static ArchiveStatusType NotConfigured { get; } = new ArchiveStatusType(NotConfiguredValue);
+
         /// <summary> Idle. </summary>
         public static ArchiveStatusType Idle { get; } = new ArchiveStatusType(IdleValue);
+
         /// <summary> InProgress. </summary>
         public static ArchiveStatusType InProgress { get; } = new ArchiveStatusType(InProgressValue);
+
         /// <summary> Canceled. </summary>
         public static ArchiveStatusType Canceled { get; } = new ArchiveStatusType(CanceledValue);
+
         /// <summary> Completed. </summary>
         public static ArchiveStatusType Completed { get; } = new ArchiveStatusType(CompletedValue);
+
         /// <summary> Failed. </summary>
         public static ArchiveStatusType Failed { get; } = new ArchiveStatusType(FailedValue);
+
         /// <summary> Cancelling. </summary>
         public static ArchiveStatusType Cancelling { get; } = new ArchiveStatusType(CancellingValue);
+
         /// <summary> FSScanInProgress. </summary>
         public static ArchiveStatusType FSScanInProgress { get; } = new ArchiveStatusType(FSScanInProgressValue);
+
         /// <summary> Determines if two <see cref="ArchiveStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArchiveStatusType left, ArchiveStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArchiveStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArchiveStatusType left, ArchiveStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArchiveStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArchiveStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArchiveStatusType(string value) => new ArchiveStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArchiveStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArchiveStatusType?(string value) => value == null ? null : new ArchiveStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArchiveStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArchiveStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

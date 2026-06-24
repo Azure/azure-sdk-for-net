@@ -1,5 +1,19 @@
 # Release History
 
+## 1.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Migrated code generation from AutoRest/Swagger to TypeSpec (MPG). The previously published public API surface is preserved through TypeSpec `@@clientName` / `@@alternateType` decorators, `@@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding`, and SDK customizations — no public types, members, or constructors were removed. Some minor, source-only incidental differences may be visible (e.g., a few parameter names and the additional-properties dictionary shape).
+
+### Bugs Fixed
+
+### Other Changes
+
+- Reduced incidental public API surface introduced by the TypeSpec migration: the per-type `*TypeProperties` envelope models and the discriminated-union `Unknown*` fallback types are now `internal` (via `@@access(..., Access.internal, "csharp")` and matching customization), since their properties are already flattened onto the parent LinkedService/Dataset/Activity types. These types were never part of a released package, so this is not a breaking change for existing consumers.
+
 ## 1.11.1 (2026-06-03)
 
 ### Other Changes

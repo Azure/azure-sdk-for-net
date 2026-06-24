@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class OperatingSystemStateTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this OperatingSystemStateType value) => value switch
         {
             OperatingSystemStateType.Generalized => "Generalized",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperatingSystemStateType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static OperatingSystemStateType ToOperatingSystemStateType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generalized")) return OperatingSystemStateType.Generalized;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Specialized")) return OperatingSystemStateType.Specialized;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generalized"))
+            {
+                return OperatingSystemStateType.Generalized;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Specialized"))
+            {
+                return OperatingSystemStateType.Specialized;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperatingSystemStateType value.");
         }
     }

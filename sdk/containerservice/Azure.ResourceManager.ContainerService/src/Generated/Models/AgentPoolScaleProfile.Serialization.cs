@@ -84,10 +84,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Autoscale))
+            if (Optional.IsCollectionDefined(Autoscale))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(Autoscale, options);
+                writer.WriteStartArray();
+                foreach (AgentPoolAutoScaleProfile item in Autoscale)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +137,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<ManualScaleProfile> manual = default;
-            AgentPoolAutoScaleProfile autoscale = default;
+            IList<AgentPoolAutoScaleProfile> autoscale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +161,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    autoscale = AgentPoolAutoScaleProfile.DeserializeAgentPoolAutoScaleProfile(prop.Value, options);
+                    List<AgentPoolAutoScaleProfile> array = new List<AgentPoolAutoScaleProfile>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AgentPoolAutoScaleProfile.DeserializeAgentPoolAutoScaleProfile(item, options));
+                    }
+                    autoscale = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolScaleProfile(manual ?? new ChangeTrackingList<ManualScaleProfile>(), autoscale, additionalBinaryDataProperties);
+            return new AgentPoolScaleProfile(manual ?? new ChangeTrackingList<ManualScaleProfile>(), autoscale ?? new ChangeTrackingList<AgentPoolAutoScaleProfile>(), additionalBinaryDataProperties);
         }
     }
 }

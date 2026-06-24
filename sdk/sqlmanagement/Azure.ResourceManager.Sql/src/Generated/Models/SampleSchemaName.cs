@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SampleSchemaName : IEquatable<SampleSchemaName>
     {
         private readonly string _value;
+        /// <summary> AdventureWorksLT. </summary>
+        private const string AdventureWorksLTValue = "AdventureWorksLT";
+        /// <summary> WideWorldImportersStd. </summary>
+        private const string WideWorldImportersStdValue = "WideWorldImportersStd";
+        /// <summary> WideWorldImportersFull. </summary>
+        private const string WideWorldImportersFullValue = "WideWorldImportersFull";
 
         /// <summary> Initializes a new instance of <see cref="SampleSchemaName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SampleSchemaName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdventureWorksLTValue = "AdventureWorksLT";
-        private const string WideWorldImportersStdValue = "WideWorldImportersStd";
-        private const string WideWorldImportersFullValue = "WideWorldImportersFull";
+            _value = value;
+        }
 
         /// <summary> AdventureWorksLT. </summary>
         public static SampleSchemaName AdventureWorksLT { get; } = new SampleSchemaName(AdventureWorksLTValue);
+
         /// <summary> WideWorldImportersStd. </summary>
         public static SampleSchemaName WideWorldImportersStd { get; } = new SampleSchemaName(WideWorldImportersStdValue);
+
         /// <summary> WideWorldImportersFull. </summary>
         public static SampleSchemaName WideWorldImportersFull { get; } = new SampleSchemaName(WideWorldImportersFullValue);
+
         /// <summary> Determines if two <see cref="SampleSchemaName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SampleSchemaName left, SampleSchemaName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SampleSchemaName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SampleSchemaName left, SampleSchemaName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SampleSchemaName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SampleSchemaName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SampleSchemaName(string value) => new SampleSchemaName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SampleSchemaName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SampleSchemaName?(string value) => value == null ? null : new SampleSchemaName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SampleSchemaName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SampleSchemaName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

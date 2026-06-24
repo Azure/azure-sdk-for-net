@@ -13,46 +13,18 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Database Migration Base Resource properties.
-    /// Please note <see cref="DatabaseMigrationBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/> and <see cref="DatabaseMigrationSqlVmProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatabaseMigrationPropertiesCosmosDbMongo"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/>, and <see cref="DatabaseMigrationSqlVmProperties"/>.
     /// </summary>
     public abstract partial class DatabaseMigrationBaseProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationBaseProperties"/>. </summary>
-        protected DatabaseMigrationBaseProperties()
+        /// <param name="kind"></param>
+        private protected DatabaseMigrationBaseProperties(ResourceType kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationBaseProperties"/>. </summary>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationOperationId"> ID for current migration operation. </param>
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationBaseProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseMigrationBaseProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Scope = scope;
@@ -79,27 +51,36 @@ namespace Azure.ResourceManager.DataMigration.Models
             MigrationOperationId = migrationOperationId;
             MigrationFailureError = migrationFailureError;
             ProvisioningError = provisioningError;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> Gets or sets the Kind. </summary>
         internal ResourceType Kind { get; set; }
+
         /// <summary> Resource Id of the target resource. </summary>
         public string Scope { get; set; }
+
         /// <summary> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </summary>
         public DataMigrationProvisioningState? ProvisioningState { get; }
+
         /// <summary> Migration status. </summary>
         public string MigrationStatus { get; }
+
         /// <summary> Database migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Database migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Resource Id of the Migration Service. </summary>
         public ResourceIdentifier MigrationService { get; set; }
+
         /// <summary> ID for current migration operation. </summary>
         public string MigrationOperationId { get; set; }
+
         /// <summary> Error details in case of migration failure. </summary>
         public SqlMigrationErrorInfo MigrationFailureError { get; }
+
         /// <summary> Error message for migration provisioning failure, if any. </summary>
         public string ProvisioningError { get; set; }
     }

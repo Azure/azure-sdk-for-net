@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,38 +19,65 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddressPool"/>. </summary>
         public ApplicationGatewayBackendAddressPool()
         {
-            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            BackendAddresses = new ChangeTrackingList<ApplicationGatewayBackendAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendAddressPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
-        /// <param name="backendAddresses"> Backend addresses. </param>
-        /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway backend address pool. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayBackendAddressPoolPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            BackendIPConfigurations = backendIPConfigurations;
-            BackendAddresses = backendAddresses;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway backend address pool. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayBackendAddressPoolPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
         [WirePath("properties.backendIPConfigurations")]
-        public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendAddressPoolPropertiesFormat();
+                }
+                return Properties.BackendIPConfigurations;
+            }
+        }
+
         /// <summary> Backend addresses. </summary>
         [WirePath("properties.backendAddresses")]
-        public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
+        public IList<ApplicationGatewayBackendAddress> BackendAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendAddressPoolPropertiesFormat();
+                }
+                return Properties.BackendAddresses;
+            }
+        }
+
         /// <summary> The provisioning state of the backend address pool resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

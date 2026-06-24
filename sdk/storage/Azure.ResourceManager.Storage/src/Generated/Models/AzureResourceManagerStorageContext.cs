@@ -260,7 +260,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageUsage))]
     [ModelReaderWriterBuildable(typeof(StorageUsageName))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableData))]
     [ModelReaderWriterBuildable(typeof(TableProperties))]
     [ModelReaderWriterBuildable(typeof(TableResource))]
@@ -275,6 +274,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(UpdateHistoryEntry))]
     [ModelReaderWriterBuildable(typeof(UsageListResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerStorageContext : ModelReaderWriterContext
     {
     }
