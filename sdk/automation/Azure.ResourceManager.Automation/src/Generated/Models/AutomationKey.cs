@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Automation key which is used to register a DSC Node. </summary>
-    public partial class AutomationKey
+    internal partial class AutomationKey
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

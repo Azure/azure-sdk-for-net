@@ -1030,20 +1030,30 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<AutomationKeyListResult>> GetAutomationAccountKeysInternalAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeysInternal");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new KeysGetAutomationAccountKeysAsyncCollectionResultOfT(
-                _keysRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "AutomationAccountResource.GetAutomationAccountKeys");
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keysRestClient.CreateGetAutomationAccountKeysInternalRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationKeyListResult> response = Response.FromValue(AutomationKeyListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1068,20 +1078,30 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
+        internal virtual Response<AutomationKeyListResult> GetAutomationAccountKeysInternal(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeysInternal");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new KeysGetAutomationAccountKeysCollectionResultOfT(
-                _keysRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "AutomationAccountResource.GetAutomationAccountKeys");
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _keysRestClient.CreateGetAutomationAccountKeysInternalRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationKeyListResult> response = Response.FromValue(AutomationKeyListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
