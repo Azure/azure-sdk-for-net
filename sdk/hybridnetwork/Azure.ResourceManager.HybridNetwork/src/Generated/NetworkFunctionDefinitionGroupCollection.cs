@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource> operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(
-                    new NetworkFunctionDefinitionGroupOperationSource(Client),
+                    new NetworkFunctionDefinitionGroupResourceOperationSource(Client),
                     _networkFunctionDefinitionGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _networkFunctionDefinitionGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, NetworkFunctionDefinitionGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource> operation = new HybridNetworkArmOperation<NetworkFunctionDefinitionGroupResource>(
-                    new NetworkFunctionDefinitionGroupOperationSource(Client),
+                    new NetworkFunctionDefinitionGroupResourceOperationSource(Client),
                     _networkFunctionDefinitionGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

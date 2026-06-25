@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Supported free limit exhaustion behavior options. </summary>
     public partial class FreeLimitExhaustionBehaviorCapability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FreeLimitExhaustionBehaviorCapability"/>. </summary>
         internal FreeLimitExhaustionBehaviorCapability()
@@ -53,17 +25,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="FreeLimitExhaustionBehaviorCapability"/>. </summary>
         /// <param name="exhaustionBehaviorType"> Free limit exhaustion behavior type. </param>
         /// <param name="status"> Free limit exhaustion behavior status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FreeLimitExhaustionBehaviorCapability(FreeLimitExhaustionBehavior? exhaustionBehaviorType, SqlCapabilityStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FreeLimitExhaustionBehaviorCapability(FreeLimitExhaustionBehavior? exhaustionBehaviorType, SqlCapabilityStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExhaustionBehaviorType = exhaustionBehaviorType;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Free limit exhaustion behavior type. </summary>
         [WirePath("exhaustionBehaviorType")]
         public FreeLimitExhaustionBehavior? ExhaustionBehaviorType { get; }
+
         /// <summary> Free limit exhaustion behavior status. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }

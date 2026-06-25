@@ -7,21 +7,16 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers;
 
-internal sealed class CodeGenResourceDataAttributeDefinition : TypeProvider
+internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttributeDefinition
 {
     public const string AttributeName = "CodeGenResourceDataAttribute";
 
     public CodeGenResourceDataAttributeDefinition()
     {
-        // Custom-code attribute providers are compiled before SourceInputModel is initialized.
-        // This generated attribute definition should not itself participate in customization lookup.
-        SuppressSourceInputView("_customCodeView");
-        SuppressSourceInputView("_lastContractView");
     }
 
     protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");
@@ -49,24 +44,5 @@ internal sealed class CodeGenResourceDataAttributeDefinition : TypeProvider
         var ctor = new ConstructorProvider(ctorSignature, MethodBodyStatement.Empty, this);
 
         return [ctor];
-    }
-
-    private void SuppressSourceInputView(string fieldName)
-    {
-        // TODO: Remove this reflection workaround when the base generator provides a supported
-        // source-input-view opt-out for contributed custom-code attribute providers.
-        // https://github.com/microsoft/typespec/issues/10993
-        var currentType = typeof(TypeProvider);
-        while (currentType is not null)
-        {
-            var field = currentType.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
-            if (field is not null)
-            {
-                field.SetValue(this, new Lazy<TypeProvider>(() => null!));
-                return;
-            }
-
-            currentType = currentType.BaseType;
-        }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SensitivityLabelUpdateKindExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SensitivityLabelUpdateKind value) => value switch
         {
             SensitivityLabelUpdateKind.Set => "set",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelUpdateKind value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SensitivityLabelUpdateKind ToSensitivityLabelUpdateKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set")) return SensitivityLabelUpdateKind.Set;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return SensitivityLabelUpdateKind.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set"))
+            {
+                return SensitivityLabelUpdateKind.Set;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove"))
+            {
+                return SensitivityLabelUpdateKind.Remove;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SensitivityLabelUpdateKind value.");
         }
     }

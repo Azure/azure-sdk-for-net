@@ -264,6 +264,15 @@ namespace Azure.ResourceManager.Hci.Mocking
             return new EdgeMachineJobResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="EdgeMachineUpdateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineUpdateResource"/> object. </returns>
+        public virtual EdgeMachineUpdateResource GetEdgeMachineUpdateResource(ResourceIdentifier id)
+        {
+            EdgeMachineUpdateResource.ValidateResourceId(id);
+            return new EdgeMachineUpdateResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ClusterJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ClusterJobResource"/> object. </returns>
@@ -280,6 +289,78 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             DevicePoolResource.ValidateResourceId(id);
             return new DevicePoolResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineGpuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineGpuResource"/> object. </returns>
+        public virtual EdgeMachineGpuResource GetEdgeMachineGpuResource(ResourceIdentifier id)
+        {
+            EdgeMachineGpuResource.ValidateResourceId(id);
+            return new EdgeMachineGpuResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineGpuJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineGpuJobResource"/> object. </returns>
+        public virtual EdgeMachineGpuJobResource GetEdgeMachineGpuJobResource(ResourceIdentifier id)
+        {
+            EdgeMachineGpuJobResource.ValidateResourceId(id);
+            return new EdgeMachineGpuJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineNetworkAdapterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterResource"/> object. </returns>
+        public virtual EdgeMachineNetworkAdapterResource GetEdgeMachineNetworkAdapterResource(ResourceIdentifier id)
+        {
+            EdgeMachineNetworkAdapterResource.ValidateResourceId(id);
+            return new EdgeMachineNetworkAdapterResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineNetworkAdapterJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterJobResource"/> object. </returns>
+        public virtual EdgeMachineNetworkAdapterJobResource GetEdgeMachineNetworkAdapterJobResource(ResourceIdentifier id)
+        {
+            EdgeMachineNetworkAdapterJobResource.ValidateResourceId(id);
+            return new EdgeMachineNetworkAdapterJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineDiskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineDiskResource"/> object. </returns>
+        public virtual EdgeMachineDiskResource GetEdgeMachineDiskResource(ResourceIdentifier id)
+        {
+            EdgeMachineDiskResource.ValidateResourceId(id);
+            return new EdgeMachineDiskResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineVolumeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineVolumeResource"/> object. </returns>
+        public virtual EdgeMachineVolumeResource GetEdgeMachineVolumeResource(ResourceIdentifier id)
+        {
+            EdgeMachineVolumeResource.ValidateResourceId(id);
+            return new EdgeMachineVolumeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineDiskJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineDiskJobResource"/> object. </returns>
+        public virtual EdgeMachineDiskJobResource GetEdgeMachineDiskJobResource(ResourceIdentifier id)
+        {
+            EdgeMachineDiskJobResource.ValidateResourceId(id);
+            return new EdgeMachineDiskJobResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeMachineDiskPrivilegedJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeMachineDiskPrivilegedJobResource"/> object. </returns>
+        public virtual EdgeMachineDiskPrivilegedJobResource GetEdgeMachineDiskPrivilegedJobResource(ResourceIdentifier id)
+        {
+            EdgeMachineDiskPrivilegedJobResource.ValidateResourceId(id);
+            return new EdgeMachineDiskPrivilegedJobResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HciClusterUpdateSummaryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
