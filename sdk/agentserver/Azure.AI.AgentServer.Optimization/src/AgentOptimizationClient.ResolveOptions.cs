@@ -28,6 +28,8 @@ public partial class AgentOptimizationClient
     /// <param name="options">Optional resolution options.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
+#pragma warning disable AZC0015 // Not a service method — local resolution waterfall that may skip the network entirely
+#pragma warning disable AZC0004 // Sync counterpart is ResolveOptions below
     public virtual async Task<OptimizationOptions> ResolveOptionsAsync(
         LoadOptions options = null,
         CancellationToken cancellationToken = default)
@@ -44,7 +46,7 @@ public partial class AgentOptimizationClient
 
         string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
         string endpoint = ResolveEnvVar(OptimizationOptions.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
-        string configuredEndpoint = _endpoint?.ToString().TrimEnd('/');
+        string configuredEndpoint = _endpoint?.AbsoluteUri.TrimEnd('/');
         string effectiveEndpoint = endpoint ?? configuredEndpoint;
 
         // ── Priority 1: Resolver API ────────────────────────────────
@@ -132,6 +134,8 @@ public partial class AgentOptimizationClient
 
         return null;
     }
+#pragma warning restore AZC0004
+#pragma warning restore AZC0015
 
     /// <summary>
     /// Synchronous version of <see cref="ResolveOptionsAsync"/>.
