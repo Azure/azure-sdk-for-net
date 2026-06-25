@@ -66,23 +66,23 @@ extends:
   parameters:
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     stages:
-      - ${{ if and(eq(parameters.SkipPrValidation, true), eq(variables['Build.Reason'], 'Manual')) }}:
-        - stage: NoOp
-          displayName: No-op
-          variables:
-            - template: /eng/pipelines/templates/variables/globals.yml
-            - template: /eng/pipelines/templates/variables/image.yml
-          jobs:
-            - job: NoOp
-              displayName: No-op
-              pool:
-                name: $(LINUXPOOL)
-                image: $(LINUXVMIMAGE)
-                os: linux
-              steps:
-                - checkout: none
-                - pwsh: Write-Host "PR validation skipped because SkipPrValidation was set to true for a manual run."
-                  displayName: Skip PR validation
+      # - ${{ if and(eq(parameters.SkipPrValidation, true), eq(variables['Build.Reason'], 'Manual')) }}:
+      #   - stage: NoOp
+      #     displayName: No-op
+      #     variables:
+      #       - template: /eng/pipelines/templates/variables/globals.yml
+      #       - template: /eng/pipelines/templates/variables/image.yml
+      #     jobs:
+      #       - job: NoOp
+      #         displayName: No-op
+      #         pool:
+      #           name: $(LINUXPOOL)
+      #           image: $(LINUXVMIMAGE)
+      #           os: linux
+      #         steps:
+      #           - checkout: none
+      #           - pwsh: Write-Host "PR validation skipped because SkipPrValidation was set to true for a manual run."
+      #             displayName: Skip PR validation
 
       - stage: Build
         condition: not(and(eq(${{ parameters.SkipPrValidation }}, true), eq(variables['Build.Reason'], 'Manual')))
@@ -115,21 +115,21 @@ extends:
                 - ${{ parameters.MatrixReplace }}
               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
-      # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
-      - ${{if and(not(and(eq(parameters.SkipPrValidation, true), eq(variables['Build.Reason'], 'Manual'))), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
-
-        - template: archetype-net-release.yml
-          parameters:
-            SDKType: ${{ parameters.SDKType }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            DependsOn:
-              - Build
-            Artifacts:
-              - ${{ each artifact in parameters.Artifacts }}:
-                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
-                    - ${{ artifact }}
-            ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-              TestPipeline: true
-            ArtifactName: packages
-            PublicFeed: ${{ parameters.PublicFeed }}
-            PublicPublishEnvironment: ${{ parameters.PublicPublishEnvironment }}
+      # # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
+      # - ${{if and(not(and(eq(parameters.SkipPrValidation, true), eq(variables['Build.Reason'], 'Manual'))), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
+      #
+      #   - template: archetype-net-release.yml
+      #     parameters:
+      #       SDKType: ${{ parameters.SDKType }}
+      #       ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      #       DependsOn:
+      #         - Build
+      #       Artifacts:
+      #         - ${{ each artifact in parameters.Artifacts }}:
+      #            - ${{ if ne(artifact.createReleaseStage, 'false') }}:
+      #               - ${{ artifact }}
+      #       ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+      #         TestPipeline: true
+      #       ArtifactName: packages
+      #       PublicFeed: ${{ parameters.PublicFeed }}
+      #       PublicPublishEnvironment: ${{ parameters.PublicPublishEnvironment }}

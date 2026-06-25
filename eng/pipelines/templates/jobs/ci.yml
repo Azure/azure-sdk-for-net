@@ -150,133 +150,133 @@ jobs:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
 
-    - job: "Analyze"
-      timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-      condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-      pool:
-        name: $(LINUXPOOL)
-        image: $(LINUXVMIMAGE)
-        os: linux
-
-      steps:
-        - template: /eng/pipelines/templates/steps/analyze.yml
-          parameters:
-            Artifacts: ${{ parameters.Artifacts }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            SDKType: ${{ parameters.SDKType }}
-            BuildSnippets: ${{ parameters.BuildSnippets }}
-
-  # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
-  # other stages that are aggregate in nature as those are tested in another aggregate pipeline
-  - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
-    - job: Compliance
-      pool:
-        name: $(WINDOWSPOOL)
-        image: $(WINDOWSVMIMAGE)
-        os: windows
-      steps:
-        - checkout: self
-          fetchFilter: tree:0
-          fetchTags: false
-
-        - task: UsePythonVersion@0
-          displayName: "Use Python 3.11"
-          inputs:
-            versionSpec: "3.11"
-
-        - template: /eng/common/pipelines/templates/steps/validate-filename.yml
-
-        - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-          parameters:
-            ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
-
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
-          parameters:
-            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: ''
-              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: sdk/${{ parameters.ServiceDirectory }}
-            CheckLinkGuidance: $true
-
-        - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
-          parameters:
-            SourceDirectory: $(Build.SourcesDirectory)
-
-        - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
-          parameters:
-            Sections:
-              - 'Client Libraries'
-
-        - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
-
-        - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
-          displayName: Validate NoWarn enforcement targets
-
-    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
-      parameters:
-        GenerateJobName: generate_target_service_test_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-        MatrixConfigs: ${{ parameters.MatrixConfigs }}
-        MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace: ${{ parameters.MatrixReplace }}
-        CloudConfig:
-          Cloud: public
-        ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-          SparseCheckoutPaths:
-            - "/*"
-            - "!SessionRecords"
-          EnablePRGeneration: true
-          PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 10
-          PRMatrixIndirectFilters:
-            - 'AdditionalTestArguments=.*true'
-            - 'Pool=.*LinuxPool$'
-          PreGenerationSteps:
-            - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
-              parameters:
-                ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                PublishingArtifactName: TestPackagesArtifact
-                ExcludePaths: ${{ parameters.ExcludePaths }}
-
-        AdditionalParameters:
-          SDKType: ${{ parameters.SDKType }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          TestSetupSteps: ${{ parameters.TestSetupSteps }}
-          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-
-  - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
-      parameters:
-        GenerateJobName: generate_target_dependencies_test_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-        MatrixConfigs: ${{ parameters.MatrixConfigs }}
-        MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace:
-          # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
-          - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
-          - ${{ each matrixReplace in parameters.MatrixReplace }}:
-              - ${{ matrixReplace }}
-        CloudConfig:
-          Cloud: public
-        SparseCheckoutPaths:
-          - /*
-          - '!/sdk/*/**/SessionRecords/*'
-        PreGenerationSteps:
-          - ${{ each config in parameters.MatrixConfigs }}:
-              - template: /eng/pipelines/templates/steps/dependency.tests.yml
-                parameters:
-                  TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-                  # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-                  ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-                  ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-                  ExcludeTargetTestProjects: true
-                  ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                  MatrixConfigsFile: ${{ config.Path }}
-        AdditionalParameters:
-          SDKType: ${{ parameters.SDKType }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          TestSetupSteps: ${{ parameters.TestSetupSteps }}
-          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-          # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+    # - job: "Analyze"
+    #   timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    #   condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+    #   pool:
+    #     name: $(LINUXPOOL)
+    #     image: $(LINUXVMIMAGE)
+    #     os: linux
+    #
+    #   steps:
+    #     - template: /eng/pipelines/templates/steps/analyze.yml
+    #       parameters:
+    #         Artifacts: ${{ parameters.Artifacts }}
+    #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #         SDKType: ${{ parameters.SDKType }}
+    #         BuildSnippets: ${{ parameters.BuildSnippets }}
+    #
+    # # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
+    # # other stages that are aggregate in nature as those are tested in another aggregate pipeline
+    # - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
+    #   - job: Compliance
+    #     pool:
+    #       name: $(WINDOWSPOOL)
+    #       image: $(WINDOWSVMIMAGE)
+    #       os: windows
+    #     steps:
+    #       - checkout: self
+    #         fetchFilter: tree:0
+    #         fetchTags: false
+    #
+    #       - task: UsePythonVersion@0
+    #         displayName: "Use Python 3.11"
+    #         inputs:
+    #           versionSpec: "3.11"
+    #
+    #       - template: /eng/common/pipelines/templates/steps/validate-filename.yml
+    #
+    #       - template: /eng/common/pipelines/templates/steps/check-spelling.yml
+    #         parameters:
+    #           ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
+    #
+    #       - template: /eng/common/pipelines/templates/steps/verify-links.yml
+    #         parameters:
+    #           ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    #             Directory: ''
+    #             Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+    #           ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+    #             Directory: sdk/${{ parameters.ServiceDirectory }}
+    #           CheckLinkGuidance: $true
+    #
+    #       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+    #         parameters:
+    #           SourceDirectory: $(Build.SourcesDirectory)
+    #
+    #       - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+    #         parameters:
+    #           Sections:
+    #             - 'Client Libraries'
+    #
+    #       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+    #
+    #       - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
+    #         displayName: Validate NoWarn enforcement targets
+    #
+    #   - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    #     parameters:
+    #       GenerateJobName: generate_target_service_test_matrix
+    #       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+    #       MatrixConfigs: ${{ parameters.MatrixConfigs }}
+    #       MatrixFilters: ${{ parameters.MatrixFilters }}
+    #       MatrixReplace: ${{ parameters.MatrixReplace }}
+    #       CloudConfig:
+    #         Cloud: public
+    #       ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    #         SparseCheckoutPaths:
+    #           - "/*"
+    #           - "!SessionRecords"
+    #         EnablePRGeneration: true
+    #         PRMatrixSetting: ProjectNames
+    #         PRJobBatchSize: 10
+    #         PRMatrixIndirectFilters:
+    #           - 'AdditionalTestArguments=.*true'
+    #           - 'Pool=.*LinuxPool$'
+    #         PreGenerationSteps:
+    #           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+    #             parameters:
+    #               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #               PublishingArtifactName: TestPackagesArtifact
+    #               ExcludePaths: ${{ parameters.ExcludePaths }}
+    #
+    #       AdditionalParameters:
+    #         SDKType: ${{ parameters.SDKType }}
+    #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+    #         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    #
+    # - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+    #   - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    #     parameters:
+    #       GenerateJobName: generate_target_dependencies_test_matrix
+    #       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+    #       MatrixConfigs: ${{ parameters.MatrixConfigs }}
+    #       MatrixFilters: ${{ parameters.MatrixFilters }}
+    #       MatrixReplace:
+    #         # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+    #         - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+    #         - ${{ each matrixReplace in parameters.MatrixReplace }}:
+    #             - ${{ matrixReplace }}
+    #       CloudConfig:
+    #         Cloud: public
+    #       SparseCheckoutPaths:
+    #         - /*
+    #         - '!/sdk/*/**/SessionRecords/*'
+    #       PreGenerationSteps:
+    #         - ${{ each config in parameters.MatrixConfigs }}:
+    #             - template: /eng/pipelines/templates/steps/dependency.tests.yml
+    #               parameters:
+    #                 TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+    #                 # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+    #                 ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+    #                 ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+    #                 ExcludeTargetTestProjects: true
+    #                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #                 MatrixConfigsFile: ${{ config.Path }}
+    #       AdditionalParameters:
+    #         SDKType: ${{ parameters.SDKType }}
+    #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+    #         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    #         # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+    #         ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

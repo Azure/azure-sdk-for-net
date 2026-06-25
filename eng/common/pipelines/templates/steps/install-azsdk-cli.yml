@@ -4,14 +4,35 @@ parameters:
   Condition: succeeded()
 
 steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET 8.0 SDK'
+    condition: ${{ parameters.Condition }}
+    retryCountOnTaskFailure: 3
+    inputs:
+      packageType: sdk
+      performMultiLevelLookup: true
+      version: "8.0.x"
+
   - task: Powershell@2
     displayName: 'Install Azure SDK Tools CLI'
     condition: ${{ parameters.Condition }}
     inputs:
       targetType: 'inline'
       script: |
-        & "${{ parameters.SourceRootPath }}/eng/common/mcp/azure-sdk-mcp.ps1" -InstallDirectory ${{ parameters.InstallDirectory }}
-        $azsdkPath = Join-Path "${{ parameters.InstallDirectory }}" "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
+        $ErrorActionPreference = 'Stop'
+        $PSNativeCommandUseErrorActionPreference = $true
+
+        $toolsRepoPath = Join-Path "$(Agent.TempDirectory)" ("azure-sdk-tools-" + [Guid]::NewGuid())
+        $publishDir = Join-Path "${{ parameters.InstallDirectory }}" "azsdk-cli"
+        $cliProjectPath = Join-Path $toolsRepoPath "tools/azsdk-cli/Azure.Sdk.Tools.Cli/Azure.Sdk.Tools.Cli.csproj"
+
+        New-Item -ItemType Directory -Force -Path "${{ parameters.InstallDirectory }}" | Out-Null
+
+        git clone --depth 1 --branch djurek/codeowners-ux-improvements https://github.com/Azure/azure-sdk-tools.git $toolsRepoPath
+        dotnet publish $cliProjectPath -c Release -o $publishDir -p:CopilotSkipCliDownload=true
+
+        $azsdkPath = Join-Path $publishDir "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
+        $env:AZSDK = $azsdkPath
         Write-Host "##vso[task.setvariable variable=AZSDK]$azsdkPath"
         Write-Host "Set AZSDK variable to: $azsdkPath"
       pwsh: true
