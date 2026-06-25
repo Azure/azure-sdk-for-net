@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -70,10 +70,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", contentType);
             request.Headers.Set("x-ms-agent-name", agentName);
             request.Headers.Set("x-ms-code-zip-sha256", codeZipSha256);
@@ -106,7 +102,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateUpdateAgentFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateUpdateAgentFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -118,10 +114,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", contentType);
             request.Headers.Set("x-ms-code-zip-sha256", codeZipSha256);
             request.Headers.Set("Accept", "application/json");
@@ -168,12 +160,16 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentRequest(string agentName, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentRequest(string agentName, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -284,7 +280,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, RequestOptions options)
+        internal PipelineMessage CreateDeleteAgentVersionRequest(string agentName, string agentVersion, bool? force, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -292,6 +288,10 @@ namespace Azure.AI.Projects.Agents
             uri.AppendPath(agentName, true);
             uri.AppendPath("/versions/", false);
             uri.AppendPath(agentVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", TypeFormatters.ConvertToString(force), true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -337,7 +337,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreatePatchAgentObjectRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreatePatchAgentObjectRequest(string agentName, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -349,10 +349,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PATCH", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", "application/merge-patch+json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -360,7 +356,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateCreateAgentVersionFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateCreateAgentVersionFromCodeRequest(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -373,10 +369,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", contentType);
             request.Headers.Set("x-ms-code-zip-sha256", codeZipSha256);
             request.Headers.Set("Accept", "application/json");
@@ -385,53 +377,63 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateDownloadAgentVersionCodeRequest(string agentName, string agentVersion, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/versions/", false);
-            uri.AppendPath(agentVersion, true);
-            uri.AppendPath("/code:download", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
-            request.Headers.Set("Accept", "application/zip");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDownloadAgentCodeRequest(string agentName, string agentVersion, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/agents/", false);
             uri.AppendPath(agentName, true);
             uri.AppendPath("/code:download", false);
+            if (agentVersion != null)
+            {
+                uri.AppendQuery("agent_version", agentVersion, true);
+            }
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/zip");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateEnableAgentRequest(string agentName, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath(":enable", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier204);
+            PipelineRequest request = message.Request;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateDisableAgentRequest(string agentName, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath(":disable", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier204);
+            PipelineRequest request = message.Request;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCreateSessionRequest(string agentName, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -444,10 +446,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -455,7 +453,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetSessionRequest(string agentName, string sessionId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -469,16 +467,12 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionRequest(string agentName, string sessionId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -492,15 +486,30 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionsRequest(string agentName, string foundryFeatures, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateStopSessionRequest(string agentName, string sessionId, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/endpoint/sessions/", false);
+            uri.AppendPath(sessionId, true);
+            uri.AppendPath(":stop", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier204);
+            PipelineRequest request = message.Request;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetSessionsRequest(string agentName, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -529,16 +538,12 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionLogStreamRequest(string agentName, string agentVersion, string sessionId, string foundryFeatures, RequestOptions options)
+        internal PipelineMessage CreateGetSessionLogStreamRequest(string agentName, string agentVersion, string sessionId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -555,10 +560,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             request.Headers.Set("Accept", "text/event-stream");
             message.Apply(options);
             return message;

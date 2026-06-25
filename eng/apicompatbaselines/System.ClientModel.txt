@@ -1,0 +1,12 @@
+# IConfiguration.GetCredential(...) shipped in 1.12.0 returning AuthenticationTokenProvider?.
+# It is decorated with [Experimental("SCME0002")] and is being redesigned in 1.13.0-beta.1
+# to return CredentialSettings? so standalone callers can dispatch on inline ApiKey
+# (Credential.Key) versus token credentials (Credential.CredentialProvider) without
+# binding a ClientSettings. Safe to change in this experimental surface; the new shape
+# preserves all three overload arities and parameter lists, only the return type changes.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String, System.ClientModel.Primitives.CredentialResolver[])' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public System.ClientModel.AuthenticationTokenProvider System.ClientModel.ConfigurationExtensions.GetCredential(Microsoft.Extensions.Configuration.IConfiguration, System.String, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver>, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection>)' does not exist in the implementation but it does exist in the contract.
+
+# [Experimental("SCME0002")]
+CannotMakeMemberNonVirtual : Member 'public System.Boolean System.ClientModel.Primitives.CredentialResolver.TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider>, System.ClientModel.AuthenticationTokenProvider)' is non-virtual in the implementation but is virtual in the contract.

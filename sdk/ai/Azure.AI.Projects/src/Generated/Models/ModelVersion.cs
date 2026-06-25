@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Version Definition. </summary>
-    public partial class ModelVersion
+    internal partial class ModelVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -26,7 +26,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="ModelVersion"/>. </summary>
-        /// <param name="systemData"> System related metadata. </param>
         /// <param name="blobUri"> URI of the model artifact in blob storage. </param>
         /// <param name="weightType"> The weight type of the model. </param>
         /// <param name="baseModel"> Base model asset ID. </param>
@@ -40,9 +39,8 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelVersion(SystemDataV3 systemData, Uri blobUri, FoundryModelWeightType? weightType, string baseModel, ModelSourceData source, LoraConfig loraConfig, ArtifactProfile artifactProfile, IReadOnlyList<FoundryModelWarning> warnings, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelVersion(Uri blobUri, FoundryModelWeightType? weightType, string baseModel, ModelSourceData source, LoraConfig loraConfig, ArtifactProfile artifactProfile, IReadOnlyList<FoundryModelWarning> warnings, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SystemData = systemData;
             BlobUri = blobUri;
             WeightType = weightType;
             BaseModel = baseModel;
@@ -57,9 +55,6 @@ namespace Azure.AI.Projects
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> System related metadata. </summary>
-        public SystemDataV3 SystemData { get; }
 
         /// <summary> URI of the model artifact in blob storage. </summary>
         public Uri BlobUri { get; set; }

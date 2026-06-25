@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Documented that `Locales` is now honored in Enhanced Mode. The service operates in multi-lingual mode by default; if specified, the first locale is used as a hint to guide recognition.
+
 ## 1.0.0 (2026-05-14)
 
 First stable release of the Azure.AI.Speech.Transcription client library.

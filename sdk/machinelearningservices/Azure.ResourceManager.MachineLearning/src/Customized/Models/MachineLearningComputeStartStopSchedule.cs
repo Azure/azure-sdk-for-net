@@ -3,31 +3,44 @@
 
 #nullable disable
 
-using System.ComponentModel;
+using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Compute start stop schedule properties. </summary>
+    // Customized: restore shipped constructors/properties that latest TypeSpec generation normalized but cannot remove from the GA API surface.
     public partial class MachineLearningComputeStartStopSchedule
     {
-        /// <summary> Required if triggerType is Recurrence. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningRecurrenceTrigger Recurrence
-        {
-            get
-            {
-                return new MachineLearningRecurrenceTrigger(new MachineLearningRecurrenceFrequency(RecurrenceSchedule.Frequency.Value.ToString()), RecurrenceSchedule.Interval.Value);
-            }
-        }
-
         /// <summary> Required if triggerType is Cron. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public CronTrigger Cron
+        public CronTrigger Cron => CronSchedule is null ? null : new CronTrigger(endTime: null, CronSchedule.StartTime, CronSchedule.TimeZone, MachineLearningTriggerType.Cron, additionalBinaryDataProperties: null, CronSchedule.Expression);
+
+        /// <summary> Required if triggerType is Recurrence. </summary>
+        public MachineLearningRecurrenceTrigger Recurrence => RecurrenceSchedule is null
+            ? null
+            : new MachineLearningRecurrenceTrigger(
+                endTime: null,
+                RecurrenceSchedule.StartTime,
+                RecurrenceSchedule.TimeZone,
+                MachineLearningTriggerType.Recurrence,
+                additionalBinaryDataProperties: null,
+                RecurrenceSchedule.Frequency.HasValue ? new MachineLearningRecurrenceFrequency(RecurrenceSchedule.Frequency.Value.ToString()) : default,
+                RecurrenceSchedule.Interval.GetValueOrDefault(),
+                RecurrenceSchedule.Schedule is null ? null : new MachineLearningRecurrenceSchedule(RecurrenceSchedule.Schedule.Hours, RecurrenceSchedule.Schedule.Minutes, RecurrenceSchedule.Schedule.MonthDays, ConvertWeekDays(RecurrenceSchedule.Schedule.WeekDays), additionalBinaryDataProperties: null));
+
+        private static IList<MachineLearningDayOfWeek> ConvertWeekDays(IEnumerable<MachineLearningComputeWeekDay> weekDays)
         {
-            get
+            if (weekDays is null)
             {
-                return new CronTrigger(CronSchedule.Expression);
+                return null;
             }
+
+            var result = new List<MachineLearningDayOfWeek>();
+            foreach (var weekDay in weekDays)
+            {
+                result.Add(new MachineLearningDayOfWeek(weekDay.ToString()));
+            }
+
+            return result;
         }
     }
 }

@@ -29,6 +29,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private Zoos _zoosRestClient;
         private ClientDiagnostics _clustersClientDiagnostics;
         private Clusters _clustersRestClient;
+        private ClientDiagnostics _publicSharedConfigsClientDiagnostics;
+        private PublicSharedConfigs _publicSharedConfigsRestClient;
         private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
         private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
         private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
@@ -61,6 +63,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics PublicSharedConfigsClientDiagnostics => _publicSharedConfigsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PublicSharedConfigs PublicSharedConfigsRestClient => _publicSharedConfigsRestClient ??= new PublicSharedConfigs(PublicSharedConfigsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -419,6 +425,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetClusters"), data => new ClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicSharedConfigs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedConfigResource> GetSharedConfigsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new PublicSharedConfigsGetAllAsyncCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
+        }
+
+        /// <summary>
+        /// List a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/sharedConfigs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicSharedConfigs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SharedConfigResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedConfigResource> GetSharedConfigs(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new PublicSharedConfigsGetAllCollectionResultOfT(PublicSharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.GetSharedConfigs"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>

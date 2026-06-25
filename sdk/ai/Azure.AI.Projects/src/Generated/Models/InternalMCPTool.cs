@@ -60,7 +60,7 @@ namespace OpenAI
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary>
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be

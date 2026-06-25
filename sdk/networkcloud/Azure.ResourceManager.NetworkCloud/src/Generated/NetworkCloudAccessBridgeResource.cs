@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudAccessBridgeApiVersion);
             _accessBridgesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-01-01-preview");
+            _accessBridgesRestClient = new AccessBridges(_accessBridgesClientDiagnostics, Pipeline, Endpoint, networkCloudAccessBridgeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
-                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    new NetworkCloudAccessBridgeResourceOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _accessBridgesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudAccessBridgePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
-                    new NetworkCloudAccessBridgeOperationSource(Client),
+                    new NetworkCloudAccessBridgeResourceOperationSource(Client),
                     _accessBridgesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

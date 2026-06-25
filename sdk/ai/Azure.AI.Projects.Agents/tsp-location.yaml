@@ -1,17 +1,20 @@
-directory: specification/ai-foundry/data-plane/Foundry/src/sdk-projects-agents
-commit: b4de814e0b475880111db5c641b78ef85c8a3157
+directory: specification/ai-foundry/data-plane/Foundry/src/sdk-csharp-azure-ai-projects-agents
+commit: 4f9473d8c65a4105d71595e1054797d51b65d764
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/common
 - specification/ai-foundry/data-plane/Foundry/src/memory-stores
 - specification/ai-foundry/data-plane/Foundry/src/openai-conversations
+- specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
 - specification/ai-foundry/data-plane/Foundry/src/openai-responses
+- specification/ai-foundry/data-plane/Foundry/src/red-teams
 - specification/ai-foundry/data-plane/Foundry/src/tools
 - specification/ai-foundry/data-plane/Foundry/src/toolboxes
 - specification/ai-foundry/data-plane/Foundry/src/skills
 - specification/ai-foundry/data-plane/Foundry/src/agents-session-files
 - specification/ai-foundry/data-plane/Foundry/src/managed-blueprints
-- specification/ai-foundry/data-plane/Foundry/src/servicepatterns.tsp
+- specification/ai-foundry/data-plane/Foundry/src/agents-optimization
+- specification/ai-foundry/data-plane/Foundry/src/sdk-common
 
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json

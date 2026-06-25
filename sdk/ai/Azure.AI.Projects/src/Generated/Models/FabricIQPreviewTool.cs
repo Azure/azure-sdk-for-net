@@ -28,20 +28,16 @@ namespace Azure.AI.Projects
         /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
         /// <param name="serverUrl"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
         /// <param name="requireApproval"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal FabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval, string name, string description) : base(@type, additionalBinaryDataProperties)
+        internal FabricIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUrl, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
             RequireApproval = requireApproval;
-            Name = name;
-            Description = description;
         }
 
         /// <summary> The ID of the FabricIQ project connection. </summary>
-        public string ProjectConnectionId { get; }
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> (Optional) The label of the FabricIQ MCP server to connect to. </summary>
         public string ServerLabel { get; set; }
@@ -89,11 +85,5 @@ namespace Azure.AI.Projects
         /// </para>
         /// </summary>
         public BinaryData RequireApproval { get; set; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
     }
 }

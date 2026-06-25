@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ManagedOps.Models
     public static partial class ArmManagedOpsModelFactory
     {
 
-        /// <summary> The Managed Operations resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,8 +32,8 @@ namespace Azure.ResourceManager.ManagedOps.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="sku"> Product plan details of this resource. </param>
@@ -50,17 +49,34 @@ namespace Azure.ResourceManager.ManagedOps.Models
                 provisioningState,
                 desiredConfiguration,
                 services,
-                policyInitiativeAssignmentId is null ? default : new PolicyAssignmentProperties(policyInitiativeAssignmentId, null),
-                additionalBinaryDataProperties: null);
+                policyInitiativeAssignmentId is null ? default : new PolicyAssignmentProperties(policyInitiativeAssignmentId, default),
+                default);
         }
 
-        /// <summary> Specifies the service plan for this resource. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="tier"> Pricing tier of the SKU. </param>
         /// <returns> A new <see cref="Models.ManagedOpsSku"/> instance for mocking. </returns>
         public static ManagedOpsSku ManagedOpsSku(string name = default, string tier = default)
         {
-            return new ManagedOpsSku(name, tier, additionalBinaryDataProperties: null);
+            return new ManagedOpsSku(name, tier, default);
+        }
+
+        /// <param name="changeTrackingAndInventoryLogAnalyticsWorkspaceId"> Log analytics workspace resource ID used by the service. </param>
+        /// <param name="azureMonitorWorkspaceId"> Azure monitor workspace resource ID used by the service. </param>
+        /// <param name="userAssignedManagedIdentityId"> User assigned Managed Identity used to perform operations on machines managed by Ops360. </param>
+        /// <param name="defenderForServers"> Desired enablement state of the Defender For Servers service. </param>
+        /// <param name="defenderCspm"> Desired enablement state of the Defender Cloud Security Posture Management (CSPM) service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="changeTrackingAndInventoryLogAnalyticsWorkspaceId"/> or <paramref name="azureMonitorWorkspaceId"/> is null. </exception>
+        /// <returns> A new <see cref="Models.ManagedOpsDesiredConfiguration"/> instance for mocking. </returns>
+        public static ManagedOpsDesiredConfiguration ManagedOpsDesiredConfiguration(ResourceIdentifier changeTrackingAndInventoryLogAnalyticsWorkspaceId = default, ResourceIdentifier azureMonitorWorkspaceId = default, ResourceIdentifier userAssignedManagedIdentityId = default, ManagedOpsDesiredEnablementState? defenderForServers = default, ManagedOpsDesiredEnablementState? defenderCspm = default)
+        {
+            return new ManagedOpsDesiredConfiguration(
+                changeTrackingAndInventoryLogAnalyticsWorkspaceId is null ? default : new ChangeTrackingConfiguration(changeTrackingAndInventoryLogAnalyticsWorkspaceId, default),
+                azureMonitorWorkspaceId is null ? default : new AzureMonitorConfiguration(azureMonitorWorkspaceId, default),
+                userAssignedManagedIdentityId,
+                defenderForServers,
+                defenderCspm,
+                default);
         }
 
         /// <param name="changeTrackingAndInventory"> Change Tracking and Inventory service information. </param>
@@ -75,29 +91,42 @@ namespace Azure.ResourceManager.ManagedOps.Models
             return new ManagedOpsServiceInformation(
                 changeTrackingAndInventory,
                 azureMonitorInsights,
-                azureUpdateManagerEnablementStatus is null ? default : new UpdateManagerInformation(azureUpdateManagerEnablementStatus.GetValueOrDefault(), null),
-                azurePolicyAndMachineEnablementStatus is null ? default : new GuestConfigurationInformation(azurePolicyAndMachineEnablementStatus.GetValueOrDefault(), null),
-                defenderForServersEnablementStatus is null ? default : new DefenderForServersInformation(defenderForServersEnablementStatus.GetValueOrDefault(), null),
-                defenderCspmEnablementStatus is null ? default : new DefenderCspmInformation(defenderCspmEnablementStatus.GetValueOrDefault(), null),
-                additionalBinaryDataProperties: null);
+                azureUpdateManagerEnablementStatus is null ? default : new UpdateManagerInformation(azureUpdateManagerEnablementStatus.GetValueOrDefault(), default),
+                azurePolicyAndMachineEnablementStatus is null ? default : new GuestConfigurationInformation(azurePolicyAndMachineEnablementStatus.GetValueOrDefault(), default),
+                defenderForServersEnablementStatus is null ? default : new DefenderForServersInformation(defenderForServersEnablementStatus.GetValueOrDefault(), default),
+                defenderCspmEnablementStatus is null ? default : new DefenderCspmInformation(defenderCspmEnablementStatus.GetValueOrDefault(), default),
+                default);
         }
 
-        /// <summary> Change Tracking and Inventory service information. </summary>
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
         /// <returns> A new <see cref="Models.ManagedOpsChangeTrackingInformation"/> instance for mocking. </returns>
         public static ManagedOpsChangeTrackingInformation ManagedOpsChangeTrackingInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default)
         {
-            return new ManagedOpsChangeTrackingInformation(dcrId, enablementStatus, additionalBinaryDataProperties: null);
+            return new ManagedOpsChangeTrackingInformation(dcrId, enablementStatus, default);
         }
 
-        /// <summary> Azure Monitor Insights service information. </summary>
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
         /// <returns> A new <see cref="Models.ManagedOpsAzureMonitorInformation"/> instance for mocking. </returns>
         public static ManagedOpsAzureMonitorInformation ManagedOpsAzureMonitorInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default)
         {
-            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, additionalBinaryDataProperties: null);
+            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, default);
+        }
+
+        /// <param name="managedOpUpdateDesiredConfiguration"> Desired configuration input by the user. </param>
+        /// <returns> A new <see cref="Models.ManagedOpPatch"/> instance for mocking. </returns>
+        public static ManagedOpPatch ManagedOpPatch(ManagedOpsDesiredConfigurationPatch managedOpUpdateDesiredConfiguration = default)
+        {
+            return new ManagedOpPatch(managedOpUpdateDesiredConfiguration is null ? default : new ManagedOpUpdateProperties(managedOpUpdateDesiredConfiguration, default), default);
+        }
+
+        /// <param name="defenderForServers"> Desired enablement state of the Defender For Servers service. </param>
+        /// <param name="defenderCspm"> Desired enablement state of the Defender Cloud Security Posture Management (CSPM) service. </param>
+        /// <returns> A new <see cref="Models.ManagedOpsDesiredConfigurationPatch"/> instance for mocking. </returns>
+        public static ManagedOpsDesiredConfigurationPatch ManagedOpsDesiredConfigurationPatch(ManagedOpsDesiredEnablementState? defenderForServers = default, ManagedOpsDesiredEnablementState? defenderCspm = default)
+        {
+            return new ManagedOpsDesiredConfigurationPatch(defenderForServers, defenderCspm, default);
         }
     }
 }

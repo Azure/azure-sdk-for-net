@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsWorkspaceEntityStatus : IEquatable<OperationalInsightsWorkspaceEntityStatus>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> ProvisioningAccount. </summary>
+        private const string ProvisioningAccountValue = "ProvisioningAccount";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsWorkspaceEntityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletingValue = "Deleting";
-        private const string ProvisioningAccountValue = "ProvisioningAccount";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Creating { get; } = new OperationalInsightsWorkspaceEntityStatus(CreatingValue);
+
         /// <summary> Succeeded. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Succeeded { get; } = new OperationalInsightsWorkspaceEntityStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Failed { get; } = new OperationalInsightsWorkspaceEntityStatus(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Canceled { get; } = new OperationalInsightsWorkspaceEntityStatus(CanceledValue);
+
         /// <summary> Deleting. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Deleting { get; } = new OperationalInsightsWorkspaceEntityStatus(DeletingValue);
+
         /// <summary> ProvisioningAccount. </summary>
         public static OperationalInsightsWorkspaceEntityStatus ProvisioningAccount { get; } = new OperationalInsightsWorkspaceEntityStatus(ProvisioningAccountValue);
+
         /// <summary> Updating. </summary>
         public static OperationalInsightsWorkspaceEntityStatus Updating { get; } = new OperationalInsightsWorkspaceEntityStatus(UpdatingValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceEntityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsWorkspaceEntityStatus left, OperationalInsightsWorkspaceEntityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceEntityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsWorkspaceEntityStatus left, OperationalInsightsWorkspaceEntityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsWorkspaceEntityStatus(string value) => new OperationalInsightsWorkspaceEntityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceEntityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsWorkspaceEntityStatus?(string value) => value == null ? null : new OperationalInsightsWorkspaceEntityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsWorkspaceEntityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsWorkspaceEntityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

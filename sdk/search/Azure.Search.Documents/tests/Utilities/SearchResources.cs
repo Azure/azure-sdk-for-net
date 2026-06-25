@@ -72,6 +72,11 @@ namespace Azure.Search.Documents.Tests
         public string CognitiveServicesKey => TestFixture.TestEnvironment.SearchCognitiveKey;
 
         /// <summary>
+        /// The Cognitive Services endpoint.
+        /// </summary>
+        public string CognitiveServicesEndpoint => TestFixture.TestEnvironment.SearchCognitiveEndpoint;
+
+        /// <summary>
         /// The name of the blob container.
         /// </summary>
         public string BlobContainerName

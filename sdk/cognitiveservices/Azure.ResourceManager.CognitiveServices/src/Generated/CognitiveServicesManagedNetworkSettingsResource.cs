@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesManagedNetworkSettingsApiVersion);
             _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-01-15-preview");
+            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,11 +422,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The Managed Network Settings object of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<CognitiveServicesOutboundRuleListResult>> UpdateOutboundRulesAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
+        internal async Task<ArmOperation<CognitiveServicesOutboundRuleListResult>> UpdateOutboundRulesAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.UpdateOutboundRules");
             scope.Start();
             try
@@ -470,7 +467,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -481,11 +478,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The Managed Network Settings object of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<CognitiveServicesOutboundRuleListResult> UpdateOutboundRules(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
+        internal ArmOperation<CognitiveServicesOutboundRuleListResult> UpdateOutboundRules(WaitUntil waitUntil, CognitiveServicesManagedNetworkSettingsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.UpdateOutboundRules");
             scope.Start();
             try
@@ -529,7 +523,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -538,9 +532,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Managed Network Provisioning Options for a cognitive services account. </param>
+        /// <param name="body"> Managed Network Provisioning Options for a cognitive services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<CognitiveServicesManagedNetworkProvisionStatus>> ProvisionManagedNetworkAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkProvisionOptions content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesManagedNetworkProvisionStatus>> ProvisionManagedNetworkAsync(WaitUntil waitUntil, CognitiveServicesManagedNetworkProvisionConfig body = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.ProvisionManagedNetwork");
             scope.Start();
@@ -550,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionOptions.ToRequestContent(content), context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus>(
                     new CognitiveServicesManagedNetworkProvisionStatusOperationSource(),
@@ -585,7 +579,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -594,9 +588,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Managed Network Provisioning Options for a cognitive services account. </param>
+        /// <param name="body"> Managed Network Provisioning Options for a cognitive services account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<CognitiveServicesManagedNetworkProvisionStatus> ProvisionManagedNetwork(WaitUntil waitUntil, CognitiveServicesManagedNetworkProvisionOptions content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesManagedNetworkProvisionStatus> ProvisionManagedNetwork(WaitUntil waitUntil, CognitiveServicesManagedNetworkProvisionConfig body = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics.CreateScope("CognitiveServicesManagedNetworkSettingsResource.ProvisionManagedNetwork");
             scope.Start();
@@ -606,7 +600,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionOptions.ToRequestContent(content), context);
+                HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkProvisionConfig.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkProvisionStatus>(
                     new CognitiveServicesManagedNetworkProvisionStatusOperationSource(),

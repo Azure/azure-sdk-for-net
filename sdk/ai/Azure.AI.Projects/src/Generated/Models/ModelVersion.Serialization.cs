@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Version Definition. </summary>
-    public partial class ModelVersion : IJsonModel<ModelVersion>
+    internal partial class ModelVersion : IJsonModel<ModelVersion>
     {
         /// <summary> Initializes a new instance of <see cref="ModelVersion"/> for deserialization. </summary>
         internal ModelVersion()
@@ -93,11 +93,6 @@ namespace Azure.AI.Projects
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ModelVersion)} does not support writing '{format}' format.");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData, options);
             }
             writer.WritePropertyName("blobUri"u8);
             writer.WriteStringValue(BlobUri.AbsoluteUri);
@@ -214,7 +209,6 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            SystemDataV3 systemData = default;
             Uri blobUri = default;
             FoundryModelWeightType? weightType = default;
             string baseModel = default;
@@ -230,15 +224,6 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = SystemDataV3.DeserializeSystemDataV3(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("blobUri"u8))
                 {
                     blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
@@ -346,7 +331,6 @@ namespace Azure.AI.Projects
                 }
             }
             return new ModelVersion(
-                systemData,
                 blobUri,
                 weightType,
                 baseModel,

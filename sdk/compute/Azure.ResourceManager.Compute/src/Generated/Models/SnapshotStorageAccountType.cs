@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct SnapshotStorageAccountType : IEquatable<SnapshotStorageAccountType>
     {
         private readonly string _value;
+        /// <summary> Standard HDD locally redundant storage. </summary>
+        private const string StandardLrsValue = "Standard_LRS";
+        /// <summary> Premium SSD locally redundant storage. </summary>
+        private const string PremiumLrsValue = "Premium_LRS";
+        /// <summary> Standard zone redundant storage. </summary>
+        private const string StandardZrsValue = "Standard_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotStorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardLrsValue = "Standard_LRS";
-        private const string PremiumLrsValue = "Premium_LRS";
-        private const string StandardZrsValue = "Standard_ZRS";
+            _value = value;
+        }
 
         /// <summary> Standard HDD locally redundant storage. </summary>
         public static SnapshotStorageAccountType StandardLrs { get; } = new SnapshotStorageAccountType(StandardLrsValue);
+
         /// <summary> Premium SSD locally redundant storage. </summary>
         public static SnapshotStorageAccountType PremiumLrs { get; } = new SnapshotStorageAccountType(PremiumLrsValue);
+
         /// <summary> Standard zone redundant storage. </summary>
         public static SnapshotStorageAccountType StandardZrs { get; } = new SnapshotStorageAccountType(StandardZrsValue);
+
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnapshotStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotStorageAccountType left, SnapshotStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnapshotStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnapshotStorageAccountType(string value) => new SnapshotStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnapshotStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotStorageAccountType?(string value) => value == null ? null : new SnapshotStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnapshotStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -79,16 +79,6 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("project_connection_id"u8);
             writer.WriteStringValue(ProjectConnectionId);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,8 +109,6 @@ namespace Azure.AI.Projects.Agents
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
-            string name = default;
-            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -133,22 +121,12 @@ namespace Azure.AI.Projects.Agents
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId, name, description);
+            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId);
         }
     }
 }

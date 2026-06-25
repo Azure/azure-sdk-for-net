@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(
-                    new CosmosDBForPostgreSqlPrivateEndpointConnectionOperationSource(Client),
+                    new CosmosDBForPostgreSqlPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>(
-                    new CosmosDBForPostgreSqlPrivateEndpointConnectionOperationSource(Client),
+                    new CosmosDBForPostgreSqlPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

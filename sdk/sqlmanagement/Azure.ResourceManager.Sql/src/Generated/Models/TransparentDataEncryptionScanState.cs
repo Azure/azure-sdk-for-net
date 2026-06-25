@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct TransparentDataEncryptionScanState : IEquatable<TransparentDataEncryptionScanState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Resume. </summary>
+        private const string ResumeValue = "Resume";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Suspend. </summary>
+        private const string SuspendValue = "Suspend";
+        /// <summary> Aborted. </summary>
+        private const string AbortedValue = "Aborted";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="TransparentDataEncryptionScanState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransparentDataEncryptionScanState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ResumeValue = "Resume";
-        private const string RunningValue = "Running";
-        private const string SuspendValue = "Suspend";
-        private const string AbortedValue = "Aborted";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static TransparentDataEncryptionScanState None { get; } = new TransparentDataEncryptionScanState(NoneValue);
+
         /// <summary> Resume. </summary>
         public static TransparentDataEncryptionScanState Resume { get; } = new TransparentDataEncryptionScanState(ResumeValue);
+
         /// <summary> Running. </summary>
         public static TransparentDataEncryptionScanState Running { get; } = new TransparentDataEncryptionScanState(RunningValue);
+
         /// <summary> Suspend. </summary>
         public static TransparentDataEncryptionScanState Suspend { get; } = new TransparentDataEncryptionScanState(SuspendValue);
+
         /// <summary> Aborted. </summary>
         public static TransparentDataEncryptionScanState Aborted { get; } = new TransparentDataEncryptionScanState(AbortedValue);
+
         /// <summary> Completed. </summary>
         public static TransparentDataEncryptionScanState Completed { get; } = new TransparentDataEncryptionScanState(CompletedValue);
+
         /// <summary> Determines if two <see cref="TransparentDataEncryptionScanState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransparentDataEncryptionScanState left, TransparentDataEncryptionScanState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransparentDataEncryptionScanState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransparentDataEncryptionScanState left, TransparentDataEncryptionScanState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransparentDataEncryptionScanState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransparentDataEncryptionScanState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransparentDataEncryptionScanState(string value) => new TransparentDataEncryptionScanState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransparentDataEncryptionScanState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransparentDataEncryptionScanState?(string value) => value == null ? null : new TransparentDataEncryptionScanState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransparentDataEncryptionScanState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransparentDataEncryptionScanState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

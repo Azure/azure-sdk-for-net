@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
+    /// <summary></summary>
     public partial class NetworkFunctionDefinitionVersionResource : IJsonModel<NetworkFunctionDefinitionVersionData>
     {
-        private static NetworkFunctionDefinitionVersionData s_dataDeserializationInstance;
-        private static NetworkFunctionDefinitionVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFunctionDefinitionVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFunctionDefinitionVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFunctionDefinitionVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFunctionDefinitionVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionVersionData>)Data).Write(writer, options);
 
-        NetworkFunctionDefinitionVersionData IJsonModel<NetworkFunctionDefinitionVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFunctionDefinitionVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFunctionDefinitionVersionData IJsonModel<NetworkFunctionDefinitionVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFunctionDefinitionVersionData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFunctionDefinitionVersionData IPersistableModel<NetworkFunctionDefinitionVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFunctionDefinitionVersionData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
 
-        string IPersistableModel<NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFunctionDefinitionVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFunctionDefinitionVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

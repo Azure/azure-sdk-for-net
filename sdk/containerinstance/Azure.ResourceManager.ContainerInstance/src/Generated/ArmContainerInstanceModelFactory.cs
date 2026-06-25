@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
@@ -54,8 +54,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -65,38 +66,94 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                tags,
-                zones.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                new ContainerGroupPropertiesProperties(
-                    provisioningState,
-                    (secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>()).ToList(),
+                containers is null && containerGroupOSType is null && diagnosticsLogAnalytics is null && encryptionProperties is null && initContainers is null && confidentialComputeCcePolicy is null && containerGroupProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
+                    default,
+                    default,
                     (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
-                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
-                    restartPolicy,
-                    ipAddress,
+                    default,
+                    default,
+                    default,
                     containerGroupOSType,
-                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
-                    instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, null),
-                    (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
-                    dnsConfig,
-                    sku,
+                    default,
+                    default,
+                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    default,
+                    default,
+                    default,
                     encryptionProperties,
                     (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
-                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, null),
-                    priority,
-                    identityAcls,
+                    default,
+                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    default,
+                    default,
                     containerGroupProfile,
-                    standbyPoolProfile,
+                    default,
                     isCreatedFromStandbyPool,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> The instance view of the container instance. Only valid in response. </summary>
+        /// <param name="name"> The identifier of the secret reference. </param>
+        /// <param name="identity"> The ARM resource id of the managed identity that has access to the secret in the key vault. </param>
+        /// <param name="secretReferenceUri"> The URI to the secret in key vault. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupSecretReference"/> instance for mocking. </returns>
+        public static ContainerGroupSecretReference ContainerGroupSecretReference(string name = default, ResourceIdentifier identity = default, Uri secretReferenceUri = default)
+        {
+            return new ContainerGroupSecretReference(name, identity, secretReferenceUri, default);
+        }
+
+        /// <param name="name"> The user-provided name of the container instance. </param>
+        /// <param name="image"> The name of the image used to create the container instance. </param>
+        /// <param name="command"> The commands to execute within the container instance in exec form. </param>
+        /// <param name="ports"> The exposed ports on the container instance. </param>
+        /// <param name="environmentVariables"> The environment variables to set in the container instance. </param>
+        /// <param name="instanceView"> The instance view of the container instance. Only valid in response. </param>
+        /// <param name="resources"> The resource requirements of the container instance. </param>
+        /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
+        /// <param name="livenessProbe"> The liveness probe. </param>
+        /// <param name="readinessProbe"> The readiness probe. </param>
+        /// <param name="securityContext"> The container security properties. </param>
+        /// <param name="configMapKeyValuePairs"> The key value pairs dictionary in the config map. </param>
+        /// <returns> A new <see cref="Models.ContainerInstanceContainer"/> instance for mocking. </returns>
+        public static ContainerInstanceContainer ContainerInstanceContainer(string name = default, string image = default, IEnumerable<string> command = default, IEnumerable<ContainerPort> ports = default, IEnumerable<ContainerEnvironmentVariable> environmentVariables = default, ContainerInstanceView instanceView = default, ContainerResourceRequirements resources = default, IEnumerable<ContainerVolumeMount> volumeMounts = default, ContainerProbe livenessProbe = default, ContainerProbe readinessProbe = default, ContainerSecurityContextDefinition securityContext = default, IDictionary<string, string> configMapKeyValuePairs = default)
+        {
+            return new ContainerInstanceContainer(name, configMapKeyValuePairs is null ? default : new ContainerProperties(
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
+                default), default);
+        }
+
+        /// <param name="protocol"> The protocol associated with the port. </param>
+        /// <param name="port"> The port number exposed within the container group. </param>
+        /// <returns> A new <see cref="Models.ContainerPort"/> instance for mocking. </returns>
+        public static ContainerPort ContainerPort(ContainerNetworkProtocol? protocol = default, int port = default)
+        {
+            return new ContainerPort(protocol, port, default);
+        }
+
+        /// <param name="name"> The name of the environment variable. </param>
+        /// <param name="value"> The value of the environment variable. </param>
+        /// <param name="secureValue"> The value of the secure environment variable. </param>
+        /// <param name="secureValueReference"> The reference of the secure environment variable. </param>
+        /// <returns> A new <see cref="Models.ContainerEnvironmentVariable"/> instance for mocking. </returns>
+        public static ContainerEnvironmentVariable ContainerEnvironmentVariable(string name = default, string value = default, string secureValue = default, string secureValueReference = default)
+        {
+            return new ContainerEnvironmentVariable(name, value, secureValue, secureValueReference, default);
+        }
+
         /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
         /// <param name="currentState"> Current container instance state. </param>
         /// <param name="previousState"> Previous container instance state. </param>
@@ -106,10 +163,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new ChangeTrackingList<ContainerEvent>();
 
-            return new ContainerInstanceView(restartCount, currentState, previousState, events.ToList(), additionalBinaryDataProperties: null);
+            return new ContainerInstanceView(restartCount, currentState, previousState, (events ?? new ChangeTrackingList<ContainerEvent>()).ToList(), default);
         }
 
-        /// <summary> The container instance state. </summary>
         /// <param name="state"> The state of the container instance. </param>
         /// <param name="startOn"> The date-time when the container instance state started. </param>
         /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>
@@ -124,10 +180,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 exitCode,
                 finishOn,
                 detailStatus,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A container group or container instance event. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
@@ -144,10 +199,73 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 name,
                 message,
                 eventType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The container Http Get settings, for liveness or readiness probe. </summary>
+        /// <param name="requests"> The resource requests of this container instance. </param>
+        /// <param name="limits"> The resource limits of this container instance. </param>
+        /// <returns> A new <see cref="Models.ContainerResourceRequirements"/> instance for mocking. </returns>
+        public static ContainerResourceRequirements ContainerResourceRequirements(ContainerResourceRequestsContent requests = default, ContainerResourceLimits limits = default)
+        {
+            return new ContainerResourceRequirements(requests, limits, default);
+        }
+
+        /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
+        /// <param name="cpu"> The CPU request of this container instance. </param>
+        /// <param name="gpu"> The GPU request of this container instance. </param>
+        /// <returns> A new <see cref="Models.ContainerResourceRequestsContent"/> instance for mocking. </returns>
+        public static ContainerResourceRequestsContent ContainerResourceRequestsContent(double memoryInGB = default, double cpu = default, ContainerGpuResourceInfo gpu = default)
+        {
+            return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu, default);
+        }
+
+        /// <param name="count"> The count of the GPU resource. </param>
+        /// <param name="sku"> The SKU of the GPU resource. </param>
+        /// <returns> A new <see cref="Models.ContainerGpuResourceInfo"/> instance for mocking. </returns>
+        public static ContainerGpuResourceInfo ContainerGpuResourceInfo(int count = default, ContainerGpuSku sku = default)
+        {
+            return new ContainerGpuResourceInfo(count, sku, default);
+        }
+
+        /// <param name="memoryInGB"> The memory limit in GB of this container instance. </param>
+        /// <param name="cpu"> The CPU limit of this container instance. </param>
+        /// <param name="gpu"> The GPU limit of this container instance. </param>
+        /// <returns> A new <see cref="Models.ContainerResourceLimits"/> instance for mocking. </returns>
+        public static ContainerResourceLimits ContainerResourceLimits(double? memoryInGB = default, double? cpu = default, ContainerGpuResourceInfo gpu = default)
+        {
+            return new ContainerResourceLimits(memoryInGB, cpu, gpu, default);
+        }
+
+        /// <param name="name"> The name of the volume mount. </param>
+        /// <param name="mountPath"> The path within the container where the volume should be mounted. Must not contain colon (:). </param>
+        /// <param name="isReadOnly"> The flag indicating whether the volume mount is read-only. </param>
+        /// <returns> A new <see cref="Models.ContainerVolumeMount"/> instance for mocking. </returns>
+        public static ContainerVolumeMount ContainerVolumeMount(string name = default, string mountPath = default, bool? isReadOnly = default)
+        {
+            return new ContainerVolumeMount(name, mountPath, isReadOnly, default);
+        }
+
+        /// <param name="execCommand"> The commands to execute within the container. </param>
+        /// <param name="httpGet"> The Http Get settings to probe. </param>
+        /// <param name="initialDelayInSeconds"> The initial delay seconds. </param>
+        /// <param name="periodInSeconds"> The period seconds. </param>
+        /// <param name="failureThreshold"> The failure threshold. </param>
+        /// <param name="successThreshold"> The success threshold. </param>
+        /// <param name="timeoutInSeconds"> The timeout seconds. </param>
+        /// <returns> A new <see cref="Models.ContainerProbe"/> instance for mocking. </returns>
+        public static ContainerProbe ContainerProbe(IEnumerable<string> execCommand = default, ContainerHttpGet httpGet = default, int? initialDelayInSeconds = default, int? periodInSeconds = default, int? failureThreshold = default, int? successThreshold = default, int? timeoutInSeconds = default)
+        {
+            return new ContainerProbe(
+                execCommand is null ? default : new ContainerExec((execCommand ?? new ChangeTrackingList<string>()).ToList(), default),
+                httpGet,
+                initialDelayInSeconds,
+                periodInSeconds,
+                failureThreshold,
+                successThreshold,
+                timeoutInSeconds,
+                default);
+        }
+
         /// <param name="path"> The path to probe. </param>
         /// <param name="port"> The port number to probe. </param>
         /// <param name="scheme"> The scheme. </param>
@@ -157,10 +275,36 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             httpHeaders ??= new ChangeTrackingList<ContainerHttpHeader>();
 
-            return new ContainerHttpGet(path, port, scheme, httpHeaders.ToList(), additionalBinaryDataProperties: null);
+            return new ContainerHttpGet(path, port, scheme, (httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>()).ToList(), default);
         }
 
-        /// <summary> The capabilities to add or drop from a container. </summary>
+        /// <param name="name"> The header name. </param>
+        /// <param name="value"> The header value. </param>
+        /// <returns> A new <see cref="Models.ContainerHttpHeader"/> instance for mocking. </returns>
+        public static ContainerHttpHeader ContainerHttpHeader(string name = default, string value = default)
+        {
+            return new ContainerHttpHeader(name, value, default);
+        }
+
+        /// <param name="isPrivileged"> The flag to determine if the container permissions is elevated to Privileged. </param>
+        /// <param name="allowPrivilegeEscalation"> A boolean value indicating whether the init process can elevate its privileges. </param>
+        /// <param name="capabilities"> The capabilities to add or drop from a container. </param>
+        /// <param name="runAsGroup"> Sets the User GID for the container. </param>
+        /// <param name="runAsUser"> Sets the User UID for the container. </param>
+        /// <param name="seccompProfile"> a base64 encoded string containing the contents of the JSON in the seccomp profile. </param>
+        /// <returns> A new <see cref="Models.ContainerSecurityContextDefinition"/> instance for mocking. </returns>
+        public static ContainerSecurityContextDefinition ContainerSecurityContextDefinition(bool? isPrivileged = default, bool? allowPrivilegeEscalation = default, ContainerSecurityContextCapabilitiesDefinition capabilities = default, int? runAsGroup = default, int? runAsUser = default, string seccompProfile = default)
+        {
+            return new ContainerSecurityContextDefinition(
+                isPrivileged,
+                allowPrivilegeEscalation,
+                capabilities,
+                runAsGroup,
+                runAsUser,
+                seccompProfile,
+                default);
+        }
+
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
         /// <returns> A new <see cref="Models.ContainerSecurityContextCapabilitiesDefinition"/> instance for mocking. </returns>
@@ -169,10 +313,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             @add ??= new ChangeTrackingList<string>();
             drop ??= new ChangeTrackingList<string>();
 
-            return new ContainerSecurityContextCapabilitiesDefinition(@add.ToList(), drop.ToList(), additionalBinaryDataProperties: null);
+            return new ContainerSecurityContextCapabilitiesDefinition((@add ?? new ChangeTrackingList<string>()).ToList(), (drop ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> IP address for the container group. </summary>
+        /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
+        /// <param name="username"> The username for the private registry. </param>
+        /// <param name="password"> The password for the private registry. </param>
+        /// <param name="passwordReference"> The reference for the private registry password. </param>
+        /// <param name="identity"> The identity for the private registry. </param>
+        /// <param name="identityUri"> The identity URL for the private registry. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupImageRegistryCredential"/> instance for mocking. </returns>
+        public static ContainerGroupImageRegistryCredential ContainerGroupImageRegistryCredential(string server = default, string username = default, string password = default, string passwordReference = default, string identity = default, Uri identityUri = default)
+        {
+            return new ContainerGroupImageRegistryCredential(
+                server,
+                username,
+                password,
+                passwordReference,
+                identity,
+                identityUri,
+                default);
+        }
+
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>
@@ -185,16 +347,23 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ports ??= new ChangeTrackingList<ContainerGroupPort>();
 
             return new ContainerGroupIPAddress(
-                ports.ToList(),
+                (ports ?? new ChangeTrackingList<ContainerGroupPort>()).ToList(),
                 addressType,
                 ip,
                 dnsNameLabel,
                 autoGeneratedDomainNameLabelScope,
                 fqdn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of the volume. </summary>
+        /// <param name="protocol"> The protocol associated with the port. </param>
+        /// <param name="port"> The port number. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupPort"/> instance for mocking. </returns>
+        public static ContainerGroupPort ContainerGroupPort(ContainerGroupNetworkProtocol? protocol = default, int port = default)
+        {
+            return new ContainerGroupPort(protocol, port, default);
+        }
+
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
@@ -211,13 +380,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 name,
                 azureFile,
                 emptyDir,
-                secret,
-                secretReference,
+                secret ?? new ChangeTrackingDictionary<string, string>(),
+                secretReference ?? new ChangeTrackingDictionary<string, string>(),
                 gitRepo,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The instance view of the container group. Only valid in response. </summary>
+        /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
+        /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
+        /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
+        /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
+        /// <param name="storageAccountKeyReference"> The reference to the storage account access key used to access the Azure File share. </param>
+        /// <returns> A new <see cref="Models.ContainerInstanceAzureFileVolume"/> instance for mocking. </returns>
+        public static ContainerInstanceAzureFileVolume ContainerInstanceAzureFileVolume(string shareName = default, bool? isReadOnly = default, string storageAccountName = default, string storageAccountKey = default, string storageAccountKeyReference = default)
+        {
+            return new ContainerInstanceAzureFileVolume(
+                shareName,
+                isReadOnly,
+                storageAccountName,
+                storageAccountKey,
+                storageAccountKeyReference,
+                default);
+        }
+
+        /// <param name="directory"> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
+        /// <param name="repository"> Repository URL. </param>
+        /// <param name="revision"> Commit hash for the specified revision. </param>
+        /// <returns> A new <see cref="Models.ContainerInstanceGitRepoVolume"/> instance for mocking. </returns>
+        public static ContainerInstanceGitRepoVolume ContainerInstanceGitRepoVolume(string directory = default, string repository = default, string revision = default)
+        {
+            return new ContainerInstanceGitRepoVolume(directory, repository, revision, default);
+        }
+
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
         /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
@@ -225,10 +419,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new ChangeTrackingList<ContainerEvent>();
 
-            return new ContainerGroupInstanceView(events.ToList(), state, additionalBinaryDataProperties: null);
+            return new ContainerGroupInstanceView((events ?? new ChangeTrackingList<ContainerEvent>()).ToList(), state, default);
         }
 
-        /// <summary> Container group log analytics information. </summary>
         /// <param name="workspaceId"> The workspace id for log analytics. </param>
         /// <param name="workspaceKey"> The workspace key for log analytics. </param>
         /// <param name="logType"> The log type to be used. </param>
@@ -243,12 +436,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 workspaceId,
                 workspaceKey,
                 logType,
-                metadata,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 workspaceResourceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> DNS configuration for the container group. </summary>
+        /// <param name="id"> Resource ID of virtual network and subnet. </param>
+        /// <param name="name"> Friendly name for the subnet. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupSubnetId"/> instance for mocking. </returns>
+        public static ContainerGroupSubnetId ContainerGroupSubnetId(ResourceIdentifier id = default, string name = default)
+        {
+            return new ContainerGroupSubnetId(id, name, default);
+        }
+
         /// <param name="nameServers"> The DNS servers for the container group. </param>
         /// <param name="searchDomains"> The DNS search domains for hostname lookup in the container group. </param>
         /// <param name="options"> The DNS options for the container group. </param>
@@ -257,10 +457,32 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             nameServers ??= new ChangeTrackingList<string>();
 
-            return new ContainerGroupDnsConfiguration(nameServers.ToList(), searchDomains, options, additionalBinaryDataProperties: null);
+            return new ContainerGroupDnsConfiguration((nameServers ?? new ChangeTrackingList<string>()).ToList(), searchDomains, options, default);
         }
 
-        /// <summary> The instance view of the init container. Only valid in response. </summary>
+        /// <param name="vaultBaseUri"> The keyvault base url. </param>
+        /// <param name="keyName"> The encryption key name. </param>
+        /// <param name="keyVersion"> The encryption key version. </param>
+        /// <param name="identity"> The keyvault managed identity. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupEncryptionProperties"/> instance for mocking. </returns>
+        public static ContainerGroupEncryptionProperties ContainerGroupEncryptionProperties(Uri vaultBaseUri = default, string keyName = default, string keyVersion = default, string identity = default)
+        {
+            return new ContainerGroupEncryptionProperties(vaultBaseUri, keyName, keyVersion, identity, default);
+        }
+
+        /// <param name="name"> The name for the init container. </param>
+        /// <param name="image"> The image of the init container. </param>
+        /// <param name="command"> The command to execute within the init container in exec form. </param>
+        /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
+        /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
+        /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
+        /// <param name="securityContext"> The container security properties. </param>
+        /// <returns> A new <see cref="Models.InitContainerDefinitionContent"/> instance for mocking. </returns>
+        public static InitContainerDefinitionContent InitContainerDefinitionContent(string name = default, string image = default, IEnumerable<string> command = default, IEnumerable<ContainerEnvironmentVariable> environmentVariables = default, InitContainerPropertiesDefinitionInstanceView instanceView = default, IEnumerable<ContainerVolumeMount> volumeMounts = default, ContainerSecurityContextDefinition securityContext = default)
+        {
+            return new InitContainerDefinitionContent(name, default, default);
+        }
+
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>
@@ -270,10 +492,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             events ??= new ChangeTrackingList<ContainerEvent>();
 
-            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events.ToList(), additionalBinaryDataProperties: null);
+            return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, (events ?? new ChangeTrackingList<ContainerEvent>()).ToList(), default);
         }
 
-        /// <summary> The access control levels of the identities. </summary>
+        /// <param name="name"> Name of the extension. </param>
+        /// <param name="extensionType"> Type of extension to be added. </param>
+        /// <param name="version"> Version of the extension being used. </param>
+        /// <param name="settings"> Settings for the extension. </param>
+        /// <param name="protectedSettings"> Protected settings for the extension. </param>
+        /// <returns> A new <see cref="Models.DeploymentExtensionSpec"/> instance for mocking. </returns>
+        public static DeploymentExtensionSpec DeploymentExtensionSpec(string name = default, string extensionType = default, string version = default, BinaryData settings = default, BinaryData protectedSettings = default)
+        {
+            return new DeploymentExtensionSpec(name, extensionType is null && version is null && settings is null && protectedSettings is null ? default : new DeploymentExtensionSpecProperties(extensionType, version, settings, protectedSettings, default), default);
+        }
+
         /// <param name="defaultAccess"> The default access level. </param>
         /// <param name="acls"> The access control levels for each identity. </param>
         /// <returns> A new <see cref="Models.ContainerGroupIdentityAccessControlLevels"/> instance for mocking. </returns>
@@ -281,10 +513,136 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             acls ??= new ChangeTrackingList<ContainerGroupIdentityAccessControl>();
 
-            return new ContainerGroupIdentityAccessControlLevels(defaultAccess, acls.ToList(), additionalBinaryDataProperties: null);
+            return new ContainerGroupIdentityAccessControlLevels(defaultAccess, (acls ?? new ChangeTrackingList<ContainerGroupIdentityAccessControl>()).ToList(), default);
         }
 
-        /// <summary> Application Gateway the CG profile will use to interact with CGs in a backend pool. </summary>
+        /// <param name="access"> The access level of the identity. </param>
+        /// <param name="identity"> An identity. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupIdentityAccessControl"/> instance for mocking. </returns>
+        public static ContainerGroupIdentityAccessControl ContainerGroupIdentityAccessControl(ContainerGroupIdentityAccessLevel? access = default, ResourceIdentifier identity = default)
+        {
+            return new ContainerGroupIdentityAccessControl(access, identity, default);
+        }
+
+        /// <param name="id"> The container group profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}'. </param>
+        /// <param name="revision"> The container group profile reference revision. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupProfileReferenceDefinition"/> instance for mocking. </returns>
+        public static ContainerGroupProfileReferenceDefinition ContainerGroupProfileReferenceDefinition(ResourceIdentifier id = default, int? revision = default)
+        {
+            return new ContainerGroupProfileReferenceDefinition(id, revision, default);
+        }
+
+        /// <param name="id"> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </param>
+        /// <param name="failContainerGroupCreateOnReuseFailure"> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyPoolProfileDefinition"/> instance for mocking. </returns>
+        public static StandbyPoolProfileDefinition StandbyPoolProfileDefinition(ResourceIdentifier id = default, bool? failContainerGroupCreateOnReuseFailure = default)
+        {
+            return new StandbyPoolProfileDefinition(id, failContainerGroupCreateOnReuseFailure, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="zones"> The zones for the container group. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
+        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ContainerGroupPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="elasticProfile"> The elastic profile. </param>
+        /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
+        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The identity of the NGroup, if configured. </param>
+        /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
+        public static NGroupData NGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupElasticProfile elasticProfile = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, int? placementFaultDomainCount = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
+                    elasticProfile,
+                    new PlacementProfile(placementFaultDomainCount, default),
+                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
+                    provisioningState,
+                    updateProfile,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                default);
+        }
+
+        /// <param name="desiredCount"></param>
+        /// <param name="maintainDesiredCount"> Flag that indicates whether desiredCount should be maintained when customer deletes SPECIFIC container groups (CGs) from the NGroups. In this case, new CGs will be created by NGroup to compensate for the specific deleted ones. </param>
+        /// <param name="guidNamingPrefix"> The prefix can be used when there are tooling limitations (e.g. on the Azure portal where CGs from multiple NGroups exist in the same RG). The prefix with the suffixed resource name must still follow Azure resource naming guidelines. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupElasticProfile"/> instance for mocking. </returns>
+        public static ContainerGroupElasticProfile ContainerGroupElasticProfile(int? desiredCount = default, bool? maintainDesiredCount = default, string guidNamingPrefix = default)
+        {
+            return new ContainerGroupElasticProfile(desiredCount, maintainDesiredCount, guidNamingPrefix is null ? default : new ElasticProfileContainerGroupNamingPolicy(new ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy(guidNamingPrefix, default), default), default);
+        }
+
+        /// <param name="resourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="revision"> The revision of the CG profile is an optional property. If customer does not to provide a revision then NGroups will pickup the latest revision of CGProfile. </param>
+        /// <param name="networkProfile"> A network profile for network settings of a ContainerGroupProfile. </param>
+        /// <param name="storageFileShares"> Gets the FileShares. </param>
+        /// <param name="containerGroupProperties"> Container Group properties which can be set while creating or updating the NGroups. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupProfileStub"/> instance for mocking. </returns>
+        public static ContainerGroupProfileStub ContainerGroupProfileStub(ResourceIdentifier resourceId = default, int? revision = default, ContainerGroupNetworkProfile networkProfile = default, IEnumerable<ContainerGroupFileShare> storageFileShares = default, NGroupContainerGroupProperties containerGroupProperties = default)
+        {
+            return new ContainerGroupProfileStub(
+                resourceId is null ? default : new ApiEntityReference(resourceId, default),
+                revision,
+                networkProfile,
+                storageFileShares is null ? default : new StorageProfile((storageFileShares ?? new ChangeTrackingList<ContainerGroupFileShare>()).ToList(), default),
+                containerGroupProperties,
+                default);
+        }
+
+        /// <param name="loadBalancerBackendAddressPools"> List of Load Balancer Backend Address Pools. </param>
+        /// <param name="applicationGateway"> Application Gateway the CG profile will use to interact with CGs in a backend pool. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupNetworkProfile"/> instance for mocking. </returns>
+        public static ContainerGroupNetworkProfile ContainerGroupNetworkProfile(IEnumerable<LoadBalancerBackendAddressPool> loadBalancerBackendAddressPools = default, ApplicationGateway applicationGateway = default)
+        {
+            return new ContainerGroupNetworkProfile(loadBalancerBackendAddressPools is null ? default : new LoadBalancer((loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPool>()).ToList(), default), applicationGateway, default);
+        }
+
+        /// <param name="resource"> The Load Balancer backend address pool ARM resource Id. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerBackendAddressPool"/> instance for mocking. </returns>
+        public static LoadBalancerBackendAddressPool LoadBalancerBackendAddressPool(string resource = default)
+        {
+            return new LoadBalancerBackendAddressPool(resource, default);
+        }
+
         /// <param name="resource"> The Application Gateway ARM resource Id. </param>
         /// <param name="backendAddressPools"> List of Application Gateway Backend Address Pools. </param>
         /// <returns> A new <see cref="Models.ApplicationGateway"/> instance for mocking. </returns>
@@ -292,10 +650,34 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             backendAddressPools ??= new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
 
-            return new ApplicationGateway(resource, backendAddressPools.ToList(), additionalBinaryDataProperties: null);
+            return new ApplicationGateway(resource, (backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>()).ToList(), default);
         }
 
-        /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
+        /// <param name="resource"> The application gateway backend address pool ARM resource Id. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayBackendAddressPool"/> instance for mocking. </returns>
+        public static ApplicationGatewayBackendAddressPool ApplicationGatewayBackendAddressPool(string resource = default)
+        {
+            return new ApplicationGatewayBackendAddressPool(resource, default);
+        }
+
+        /// <param name="name"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="storageAccountName"></param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.ContainerGroupFileShare"/> instance for mocking. </returns>
+        public static ContainerGroupFileShare ContainerGroupFileShare(string name = default, string resourceGroupName = default, string storageAccountName = default, ContainerGroupFileShareProperties properties = default)
+        {
+            return new ContainerGroupFileShare(name, resourceGroupName, storageAccountName, properties, default);
+        }
+
+        /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
+        /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupFileShareProperties"/> instance for mocking. </returns>
+        public static ContainerGroupFileShareProperties ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType = default, AzureFileShareAccessTier? shareAccessTier = default)
+        {
+            return new ContainerGroupFileShareProperties(shareAccessType, shareAccessTier, default);
+        }
+
         /// <param name="subnetIds"> Contains information about Virtual Network Subnet ARM Resource. </param>
         /// <param name="volumes"> Contains information about the volumes that can be mounted by Containers in the Container Groups. </param>
         /// <param name="containers"> Contains information about Container which can be set while creating or updating the NGroups. </param>
@@ -306,46 +688,121 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             volumes ??= new ChangeTrackingList<NGroupContainerGroupPropertyVolume>();
             containers ??= new ChangeTrackingList<NGroupContainerGroupPropertyContainer>();
 
-            return new NGroupContainerGroupProperties(subnetIds.ToList(), volumes.ToList(), containers.ToList(), additionalBinaryDataProperties: null);
+            return new NGroupContainerGroupProperties((subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(), (volumes ?? new ChangeTrackingList<NGroupContainerGroupPropertyVolume>()).ToList(), (containers ?? new ChangeTrackingList<NGroupContainerGroupPropertyContainer>()).ToList(), default);
         }
 
-        /// <summary> Properties of container group profile that need to be patched. </summary>
+        /// <param name="name"> The name of the volume. </param>
+        /// <param name="azureFile"> The Azure File volume. </param>
+        /// <returns> A new <see cref="Models.NGroupContainerGroupPropertyVolume"/> instance for mocking. </returns>
+        public static NGroupContainerGroupPropertyVolume NGroupContainerGroupPropertyVolume(string name = default, ContainerInstanceAzureFileVolume azureFile = default)
+        {
+            return new NGroupContainerGroupPropertyVolume(name, azureFile, default);
+        }
+
+        /// <param name="name"> container name. </param>
+        /// <param name="nGroupCGPropertyContainerVolumeMounts"> Gets the VolumeMounts. </param>
+        /// <returns> A new <see cref="Models.NGroupContainerGroupPropertyContainer"/> instance for mocking. </returns>
+        public static NGroupContainerGroupPropertyContainer NGroupContainerGroupPropertyContainer(string name = default, IEnumerable<ContainerVolumeMount> nGroupCGPropertyContainerVolumeMounts = default)
+        {
+            return new NGroupContainerGroupPropertyContainer(name, nGroupCGPropertyContainerVolumeMounts is null ? default : new NGroupCGPropertyContainerProperties((nGroupCGPropertyContainerVolumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(), default), default);
+        }
+
+        /// <param name="updateMode"></param>
+        /// <param name="rollingUpdateProfile"> This profile allows the customers to customize the rolling update. </param>
+        /// <returns> A new <see cref="Models.NGroupUpdateProfile"/> instance for mocking. </returns>
+        public static NGroupUpdateProfile NGroupUpdateProfile(NGroupUpdateMode? updateMode = default, NGroupRollingUpdateProfile rollingUpdateProfile = default)
+        {
+            return new NGroupUpdateProfile(updateMode, rollingUpdateProfile, default);
+        }
+
+        /// <param name="maxBatchPercent"> Maximum percentage of total Container Groups which can be updated simultaneously by rolling update in one batch. </param>
+        /// <param name="maxUnhealthyPercent"> Maximum percentage of the updated Container Groups which can be in unhealthy state after each batch is updated. </param>
+        /// <param name="pauseTimeBetweenBatches"> The wait time between batches after completing the one batch of the rolling update and starting the next batch. The time duration should be specified in ISO 8601 format for duration. </param>
+        /// <param name="inPlaceUpdate"> Default is false. If set to true, the CGs will be updated in-place instead of creating new CG and deleting old ones. </param>
+        /// <returns> A new <see cref="Models.NGroupRollingUpdateProfile"/> instance for mocking. </returns>
+        public static NGroupRollingUpdateProfile NGroupRollingUpdateProfile(int? maxBatchPercent = default, int? maxUnhealthyPercent = default, string pauseTimeBetweenBatches = default, bool? inPlaceUpdate = default)
+        {
+            return new NGroupRollingUpdateProfile(maxBatchPercent, maxUnhealthyPercent, pauseTimeBetweenBatches, inPlaceUpdate, default);
+        }
+
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="elasticProfile"> The elastic profile. </param>
+        /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
+        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
+        /// <param name="identity"> The identity of the NGroup, if configured. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="zones"> The zones for the NGroup. </param>
+        /// <returns> A new <see cref="Models.NGroupPatch"/> instance for mocking. </returns>
+        public static NGroupPatch NGroupPatch(SystemData systemData = default, ContainerGroupElasticProfile elasticProfile = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, int? placementFaultDomainCount = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NGroupPatch(
+                systemData,
+                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
+                    elasticProfile,
+                    new PlacementProfile(placementFaultDomainCount, default),
+                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
+                    provisioningState,
+                    updateProfile,
+                    default),
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ContainerGroupProfilePatch"/> instance for mocking. </returns>
         public static ContainerGroupProfilePatch ContainerGroupProfilePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContainerGroupProfilePatch(tags, additionalBinaryDataProperties: null);
+            return new ContainerGroupProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> The logs. </summary>
         /// <param name="content"> The content of the log. </param>
         /// <returns> A new <see cref="Models.ContainerLogs"/> instance for mocking. </returns>
         public static ContainerLogs ContainerLogs(string content = default)
         {
-            return new ContainerLogs(content, additionalBinaryDataProperties: null);
+            return new ContainerLogs(content, default);
         }
 
-        /// <summary> The information for the container exec command. </summary>
+        /// <param name="command"> The command to be executed. </param>
+        /// <param name="terminalSize"> The size of the terminal. </param>
+        /// <returns> A new <see cref="Models.ContainerExecContent"/> instance for mocking. </returns>
+        public static ContainerExecContent ContainerExecContent(string command = default, ContainerExecRequestTerminalSize terminalSize = default)
+        {
+            return new ContainerExecContent(command, terminalSize, default);
+        }
+
+        /// <param name="rows"> The row size of the terminal. </param>
+        /// <param name="cols"> The column size of the terminal. </param>
+        /// <returns> A new <see cref="Models.ContainerExecRequestTerminalSize"/> instance for mocking. </returns>
+        public static ContainerExecRequestTerminalSize ContainerExecRequestTerminalSize(int? rows = default, int? cols = default)
+        {
+            return new ContainerExecRequestTerminalSize(rows, cols, default);
+        }
+
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
         /// <returns> A new <see cref="Models.ContainerExecResult"/> instance for mocking. </returns>
         public static ContainerExecResult ContainerExecResult(Uri webSocketUri = default, string password = default)
         {
-            return new ContainerExecResult(webSocketUri, password, additionalBinaryDataProperties: null);
+            return new ContainerExecResult(webSocketUri, password, default);
         }
 
-        /// <summary> The information for the output stream from container attach. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
         /// <returns> A new <see cref="Models.ContainerAttachResult"/> instance for mocking. </returns>
         public static ContainerAttachResult ContainerAttachResult(Uri webSocketUri = default, string password = default)
         {
-            return new ContainerAttachResult(webSocketUri, password, additionalBinaryDataProperties: null);
+            return new ContainerAttachResult(webSocketUri, password, default);
         }
 
-        /// <summary> A single usage result. </summary>
         /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
@@ -360,28 +817,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 currentValue,
                 limit,
                 name,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The name object of the resource. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceUsageName"/> instance for mocking. </returns>
         public static ContainerInstanceUsageName ContainerInstanceUsageName(string value = default, string localizedValue = default)
         {
-            return new ContainerInstanceUsageName(value, localizedValue, additionalBinaryDataProperties: null);
+            return new ContainerInstanceUsageName(value, localizedValue, default);
         }
 
-        /// <summary> The cached image and OS type. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
         /// <returns> A new <see cref="Models.CachedImages"/> instance for mocking. </returns>
         public static CachedImages CachedImages(string osType = default, string image = default)
         {
-            return new CachedImages(osType, image, additionalBinaryDataProperties: null);
+            return new CachedImages(osType, image, default);
         }
 
-        /// <summary> The regional capabilities. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
@@ -398,17 +852,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 ipAddressType,
                 gpu,
                 capabilities,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The supported capabilities. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>
         /// <returns> A new <see cref="Models.ContainerSupportedCapabilities"/> instance for mocking. </returns>
         public static ContainerSupportedCapabilities ContainerSupportedCapabilities(float? maxMemoryInGB = default, float? maxCpu = default, float? maxGpuCount = default)
         {
-            return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, additionalBinaryDataProperties: null);
+            return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
@@ -425,9 +878,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
@@ -446,18 +899,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> zones, ManagedServiceIdentity identity, string provisioningState, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType osType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
             return new ContainerGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                tags,
-                zones.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 provisioningState is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null ? default : new ContainerGroupPropertiesProperties(
                     provisioningState,
@@ -482,7 +931,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     default,
                     default,
                     default,
-                    default));
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
@@ -499,9 +949,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
@@ -523,20 +973,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IEnumerable<ContainerGroupSecretReference> secretReferences, IEnumerable<ContainerInstanceContainer> containers, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IEnumerable<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupLogAnalytics diagnosticsLogAnalytics, IEnumerable<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IEnumerable<InitContainerDefinitionContent> initContainers, IEnumerable<DeploymentExtensionSpec> extensions, string confidentialComputeCcePolicy, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IEnumerable<string> zones)
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ContainerGroupProvisioningState? containerGroupProvisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, string confidentialComputeCcePolicy = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, IEnumerable<string> zones = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
             return new ContainerGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                tags,
-                zones.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
                 secretReferences is null && containers is null && imageRegistryCredentials is null && restartPolicy is null && ipAddress is null && containerGroupOSType is null && volumes is null && instanceView is null && diagnosticsLogAnalytics is null && subnetIds is null && dnsConfig is null && sku is null && encryptionProperties is null && initContainers is null && extensions is null && confidentialComputeCcePolicy is null && priority is null && identityAcls is null && containerGroupProfile is null && standbyPoolProfile is null && isCreatedFromStandbyPool is null ? default : new ContainerGroupPropertiesProperties(
                     default,
@@ -561,88 +1007,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     containerGroupProfile,
                     standbyPoolProfile,
                     isCreatedFromStandbyPool,
-                    default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupPatch"/> instance for mocking. </returns>
-        public static ContainerGroupPatch ContainerGroupPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ContainerGroupPatch(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                name,
-                tags,
-                zones.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
-        /// <param name="name"> The user-provided name of the container instance. </param>
-        /// <param name="image"> The name of the image used to create the container instance. </param>
-        /// <param name="command"> The commands to execute within the container instance in exec form. </param>
-        /// <param name="ports"> The exposed ports on the container instance. </param>
-        /// <param name="environmentVariables"> The environment variables to set in the container instance. </param>
-        /// <param name="instanceView"> The instance view of the container instance. Only valid in response. </param>
-        /// <param name="resources"> The resource requirements of the container instance. </param>
-        /// <param name="volumeMounts"> The volume mounts available to the container instance. </param>
-        /// <param name="livenessProbe"> The liveness probe. </param>
-        /// <param name="readinessProbe"> The readiness probe. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <param name="configMapKeyValuePairs"> The config map. </param>
-        /// <returns> A new <see cref="Models.ContainerInstanceContainer"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerInstanceContainer ContainerInstanceContainer(string name, string image, IEnumerable<string> command, IEnumerable<ContainerPort> ports, IEnumerable<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext, IDictionary<string, string> configMapKeyValuePairs)
-        {
-
-            return new ContainerInstanceContainer(name, image is null && command is null && ports is null && environmentVariables is null && instanceView is null && resources is null && volumeMounts is null && livenessProbe is null && readinessProbe is null && securityContext is null && configMapKeyValuePairs is null ? default : new ContainerProperties(
-                image,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (ports ?? new ChangeTrackingList<ContainerPort>()).ToList(),
-                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
-                instanceView,
-                resources,
-                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
-                livenessProbe,
-                readinessProbe,
-                securityContext,
-                new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
-                default), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
-        /// <param name="name"> The name for the init container. </param>
-        /// <param name="image"> The image of the init container. </param>
-        /// <param name="command"> The command to execute within the init container in exec form. </param>
-        /// <param name="environmentVariables"> The environment variables to set in the init container. </param>
-        /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
-        /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
-        /// <param name="securityContext"> The container security properties. </param>
-        /// <returns> A new <see cref="Models.InitContainerDefinitionContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InitContainerDefinitionContent InitContainerDefinitionContent(string name, string image, IEnumerable<string> command, IEnumerable<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext)
-        {
-
-            return new InitContainerDefinitionContent(name, image is null && command is null && environmentVariables is null && instanceView is null && volumeMounts is null && securityContext is null ? default : new InitContainerPropertiesDefinition(
-                image,
-                (command ?? new ChangeTrackingList<string>()).ToList(),
-                (environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>()).ToList(),
-                instanceView,
-                (volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(),
-                securityContext,
-                default), additionalBinaryDataProperties: null);
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.NGroupData"/>. </summary>
@@ -660,23 +1026,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NGroupData NGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ContainerGroupElasticProfile elasticProfile = default, int? placementFaultDomainCount = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, IEnumerable<string> zones = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            containerGroupProfiles ??= new ChangeTrackingList<ContainerGroupProfileStub>();
-            zones ??= new ChangeTrackingList<string>();
-
             return new NGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
-                tags,
-                zones.ToList(),
-                identity);
+                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
+                    elasticProfile,
+                    new PlacementProfile(placementFaultDomainCount, default),
+                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
+                    provisioningState,
+                    updateProfile,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NGroupPatch"/>. </summary>
@@ -690,19 +1059,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
         /// <returns> A new <see cref="Models.NGroupPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static NGroupPatch NGroupPatch(SystemData systemData = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, IEnumerable<string> zones = default, ContainerGroupElasticProfile elasticProfile = default, int? placementFaultDomainCount = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-            containerGroupProfiles ??= new ChangeTrackingList<ContainerGroupProfileStub>();
-
             return new NGroupPatch(
                 systemData,
-                default,
+                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
+                    elasticProfile,
+                    new PlacementProfile(placementFaultDomainCount, default),
+                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
+                    provisioningState,
+                    updateProfile,
+                    default),
                 identity,
-                tags,
-                zones.ToList(),
-                additionalBinaryDataProperties: null);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupProfileData"/>. </summary>
@@ -720,9 +1092,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///              - `Always` Always restart
-        ///              - `OnFailure` Restart on failure
-        ///              - `Never` Never restart
+        ///                          - `Always` Always restart
+        ///                          - `OnFailure` Restart on failure
+        ///                          - `Never` Never restart
         /// </param>
         /// <param name="shutdownGracePeriod"> Shutdown grace period for containers in a container group. </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
@@ -738,27 +1110,39 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupProfileData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerGroupProfileData ContainerGroupProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, DateTimeOffset? shutdownGracePeriod = default, ContainerGroupIPAddress ipAddress = default, DateTimeOffset? timeToLive = default, ContainerInstanceOperatingSystemType? osType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, ContainerGroupPriority? priority = default, string confidentialComputeCcePolicy = default, ContainerSecurityContextDefinition securityContext = default, int? revision = default, IEnumerable<int> registeredRevisions = default, bool? useKrypton = default, IEnumerable<string> zones = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            containers ??= new ChangeTrackingList<ContainerInstanceContainer>();
-            initContainers ??= new ChangeTrackingList<InitContainerDefinitionContent>();
-            extensions ??= new ChangeTrackingList<DeploymentExtensionSpec>();
-            imageRegistryCredentials ??= new ChangeTrackingList<ContainerGroupImageRegistryCredential>();
-            volumes ??= new ChangeTrackingList<ContainerVolume>();
-            registeredRevisions ??= new ChangeTrackingList<int>();
-            zones ??= new ChangeTrackingList<string>();
-
             return new ContainerGroupProfileData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
-                tags,
-                zones.ToList());
+                sku is null && encryptionProperties is null && containers is null && initContainers is null && extensions is null && imageRegistryCredentials is null && restartPolicy is null && shutdownGracePeriod is null && ipAddress is null && timeToLive is null && osType is null && volumes is null && diagnosticsLogAnalytics is null && priority is null && confidentialComputeCcePolicy is null && securityContext is null && revision is null && registeredRevisions is null && useKrypton is null ? default : new ContainerGroupProfileProperties(
+                    sku,
+                    encryptionProperties,
+                    (containers ?? new ChangeTrackingList<ContainerInstanceContainer>()).ToList(),
+                    (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
+                    (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
+                    (imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>()).ToList(),
+                    restartPolicy,
+                    shutdownGracePeriod,
+                    ipAddress,
+                    timeToLive,
+                    osType,
+                    (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
+                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    priority,
+                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    securityContext,
+                    revision,
+                    (registeredRevisions ?? new ChangeTrackingList<int>()).ToList(),
+                    useKrypton,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
@@ -777,7 +1161,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerInstanceContainer ContainerInstanceContainer(string name, string image, IEnumerable<string> command, IEnumerable<ContainerPort> ports, IEnumerable<ContainerEnvironmentVariable> environmentVariables, ContainerInstanceView instanceView, ContainerResourceRequirements resources, IEnumerable<ContainerVolumeMount> volumeMounts, ContainerProbe livenessProbe, ContainerProbe readinessProbe, ContainerSecurityContextDefinition securityContext)
         {
-
             return new ContainerInstanceContainer(name, image is null && command is null && ports is null && environmentVariables is null && instanceView is null && resources is null && volumeMounts is null && livenessProbe is null && readinessProbe is null && securityContext is null ? default : new ContainerProperties(
                 image,
                 (command ?? new ChangeTrackingList<string>()).ToList(),
@@ -790,7 +1173,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 readinessProbe,
                 securityContext,
                 default,
-                default), additionalBinaryDataProperties: null);
+                default), default);
         }
     }
 }

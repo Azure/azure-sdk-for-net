@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Hci
         {
             TryGetApiVersion(ResourceType, out string hciClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-04-01-preview");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-05-01-preview");
             _offersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-04-01-preview");
+            _offersRestClient = new Offers(_offersClientDiagnostics, Pipeline, Endpoint, hciClusterApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -396,86 +396,6 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// List Offers available across publishers for the HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_ListByCluster. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HciClusterOfferResource> GetByClusterAsync(string expand = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HciClusterOfferData, HciClusterOfferResource>(new OffersGetByClusterAsyncCollectionResultOfT(
-                _offersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                expand,
-                context,
-                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
-        }
-
-        /// <summary>
-        /// List Offers available across publishers for the HCI Cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_ListByCluster. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HciClusterOfferResource> GetByCluster(string expand = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HciClusterOfferData, HciClusterOfferResource>(new OffersGetByClusterCollectionResultOfT(
-                _offersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                expand,
-                context,
-                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
-        }
-
-        /// <summary>
         /// Changes ring of a cluster
         /// <list type="bullet">
         /// <item>
@@ -488,7 +408,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -515,7 +435,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -547,7 +467,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -574,7 +494,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateChangeRingRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChangeRingContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -606,7 +526,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -633,7 +553,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -665,7 +585,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -692,7 +612,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateConfigureRemoteSupportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoteSupportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -724,7 +644,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -779,7 +699,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -834,7 +754,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -861,7 +781,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -893,7 +813,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -920,7 +840,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateExtendSoftwareAssuranceBenefitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SoftwareAssuranceChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -940,6 +860,86 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciClusterOfferResource> GetByClusterAsync(string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HciClusterOfferData, HciClusterOfferResource>(new OffersGetByClusterAsyncCollectionResultOfT(
+                _offersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Offers available across publishers for the HCI Cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/offers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListByCluster. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HciClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="HciClusterOfferResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HciClusterOfferResource> GetByCluster(string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HciClusterOfferData, HciClusterOfferResource>(new OffersGetByClusterCollectionResultOfT(
+                _offersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                expand,
+                context,
+                "HciClusterResource.GetByCluster"), data => new HciClusterOfferResource(Client, data));
+        }
+
+        /// <summary>
         /// Trigger Log Collection on a cluster
         /// <list type="bullet">
         /// <item>
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateTriggerLogCollectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LogCollectionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1129,7 +1129,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clustersRestClient.CreateUpdateSecretsLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SecretsLocationsChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterResource> operation = new HciArmOperation<HciClusterResource>(
-                    new HciClusterOperationSource(Client),
+                    new HciClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

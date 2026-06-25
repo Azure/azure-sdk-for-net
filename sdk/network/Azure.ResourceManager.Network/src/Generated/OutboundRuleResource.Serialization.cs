@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class OutboundRuleResource : IJsonModel<OutboundRuleData>
     {
-        private static OutboundRuleData s_dataDeserializationInstance;
-        private static OutboundRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OutboundRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OutboundRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OutboundRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OutboundRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)Data).Write(writer, options);
 
-        OutboundRuleData IJsonModel<OutboundRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OutboundRuleData IJsonModel<OutboundRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OutboundRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OutboundRuleData IPersistableModel<OutboundRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<OutboundRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OutboundRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesSqlSyncTaskOutput>
+    /// <summary> Output of the task that collects user tables for the given list of databases. </summary>
+    public partial class GetUserTablesSqlSyncTaskOutput : IJsonModel<GetUserTablesSqlSyncTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesSqlSyncTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetUserTablesSqlSyncTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesSqlSyncTaskOutput IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetUserTablesSqlSyncTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetUserTablesSqlSyncTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(DatabasesToSourceTables))
             {
                 writer.WritePropertyName("databasesToSourceTables"u8);
@@ -53,21 +93,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (DataMigrationReportableException item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +116,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        GetUserTablesSqlSyncTaskOutput IJsonModel<GetUserTablesSqlSyncTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesSqlSyncTaskOutput IJsonModel<GetUserTablesSqlSyncTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetUserTablesSqlSyncTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
         }
 
-        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetUserTablesSqlSyncTaskOutput DeserializeGetUserTablesSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,33 +145,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             string databasesToTargetTables = default;
             string tableValidationErrors = default;
             IReadOnlyList<DataMigrationReportableException> validationErrors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databasesToSourceTables"u8))
+                if (prop.NameEquals("databasesToSourceTables"u8))
                 {
-                    databasesToSourceTables = property.Value.GetString();
+                    databasesToSourceTables = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databasesToTargetTables"u8))
+                if (prop.NameEquals("databasesToTargetTables"u8))
                 {
-                    databasesToTargetTables = property.Value.GetString();
+                    databasesToTargetTables = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableValidationErrors"u8))
+                if (prop.NameEquals("tableValidationErrors"u8))
                 {
-                    tableValidationErrors = property.Value.GetString();
+                    tableValidationErrors = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("validationErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
@@ -135,42 +179,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), serializedAdditionalRawData);
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GetUserTablesSqlSyncTaskOutput IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GetUserTablesSqlSyncTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudBareMetalMachineKeySetApiVersion);
             _bareMetalMachineKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _bareMetalMachineKeySetsRestClient = new BareMetalMachineKeySets(_bareMetalMachineKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBareMetalMachineKeySetApiVersion ?? "2026-01-01-preview");
+            _bareMetalMachineKeySetsRestClient = new BareMetalMachineKeySets(_bareMetalMachineKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBareMetalMachineKeySetApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
-                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
                     _bareMetalMachineKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bareMetalMachineKeySetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkCloudBareMetalMachineKeySetPatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBareMetalMachineKeySetResource>(
-                    new NetworkCloudBareMetalMachineKeySetOperationSource(Client),
+                    new NetworkCloudBareMetalMachineKeySetResourceOperationSource(Client),
                     _bareMetalMachineKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetDataConnectorCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("DataConnectors-");
-            var name2 = Recording.GenerateAssetName("DataConnectors-");
-            var name3 = Recording.GenerateAssetName("DataConnectors-");
+            var name = GenerateAssetNameFromRecording("DataConnectors-", "dataConnectors");
+            var name2 = GenerateAssetNameFromRecording("DataConnectors-", "dataConnectors");
+            var name3 = GenerateAssetNameFromRecording("DataConnectors-", "dataConnectors");
             var input = ResourceDataHelpers.GetDataConnectorData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsDataConnectorResource dataConnector1 = lro.Value;

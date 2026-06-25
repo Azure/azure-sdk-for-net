@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("targetKubernetesVersion"u8);
                 writer.WriteStringValue(TargetKubernetesVersion);
             }
-            if (Optional.IsDefined(LongTermSupport))
+            if (Optional.IsDefined(IsLongTermSupport))
             {
                 writer.WritePropertyName("longTermSupport"u8);
-                writer.WriteBooleanValue(LongTermSupport.Value);
+                writer.WriteBooleanValue(IsLongTermSupport.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             bool? disabled = default;
             AutoUpgradeProfileStatus autoUpgradeProfileStatus = default;
             string targetKubernetesVersion = default;
-            bool? longTermSupport = default;
+            bool? isLongTermSupport = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    longTermSupport = prop.Value.GetBoolean();
+                    isLongTermSupport = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 disabled,
                 autoUpgradeProfileStatus,
                 targetKubernetesVersion,
-                longTermSupport,
+                isLongTermSupport,
                 additionalBinaryDataProperties);
         }
     }

@@ -23,21 +23,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesCaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesStructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
             Outputs = outputs;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
         public ResponsesStructuredOutputDefinition Outputs { get; set; }

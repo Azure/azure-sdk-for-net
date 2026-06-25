@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterContinueUpdateVersionContent"/>. </summary>
         /// <param name="machineGroupTargetingMode"> The mode by which the cluster will target the next grouping of servers to continue the update. </param>
+        /// <param name="safeguardMode"> Specifies how safeguards are applied during the continue update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterContinueUpdateVersionContent(ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterContinueUpdateVersionContent(ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode, ClusterContinueUpdateVersionSafeguardMode? safeguardMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineGroupTargetingMode = machineGroupTargetingMode;
+            SafeguardMode = safeguardMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The mode by which the cluster will target the next grouping of servers to continue the update. </summary>
         public ClusterContinueUpdateVersionMachineGroupTargetingMode? MachineGroupTargetingMode { get; set; }
+
+        /// <summary> Specifies how safeguards are applied during the continue update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </summary>
+        public ClusterContinueUpdateVersionSafeguardMode? SafeguardMode { get; set; }
     }
 }

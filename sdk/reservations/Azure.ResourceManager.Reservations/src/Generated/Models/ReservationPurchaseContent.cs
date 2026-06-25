@@ -14,130 +14,238 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation purchase. </summary>
     public partial class ReservationPurchaseContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
         public ReservationPurchaseContent()
         {
-            AppliedScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReservationPurchaseContent"/>. </summary>
         /// <param name="sku"> The name of sku. </param>
         /// <param name="location"> The Azure region where the reserved resource lives. </param>
-        /// <param name="reservedResourceType"> The type of the resource that is being reserved. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing reservation or savings plan. </param>
-        /// <param name="term"> Represent the term of reservation. </param>
-        /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="quantity"> Quantity of the skus that are part of the reservation. </param>
-        /// <param name="displayName"> Friendly name of the reservation. </param>
-        /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
-        /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </param>
-        /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
-        /// <param name="isRenewEnabled"> Setting this to true will automatically purchase a new reservation on the expiration date time. </param>
-        /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, ReservedResourceType? reservedResourceType, ResourceIdentifier billingScopeId, ReservationTerm? term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, AppliedScopeType? appliedScopeType, IList<string> appliedScopes, AppliedScopeProperties appliedScopeProperties, bool? isRenewEnabled, PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of reservation purchase request. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationPurchaseContent(ReservationsSkuName sku, AzureLocation? location, PurchaseRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Location = location;
-            ReservedResourceType = reservedResourceType;
-            BillingScopeId = billingScopeId;
-            Term = term;
-            BillingPlan = billingPlan;
-            Quantity = quantity;
-            DisplayName = displayName;
-            AppliedScopeType = appliedScopeType;
-            AppliedScopes = appliedScopes;
-            AppliedScopeProperties = appliedScopeProperties;
-            IsRenewEnabled = isRenewEnabled;
-            ReservedResourceProperties = reservedResourceProperties;
-            ReviewOn = reviewOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of sku. </summary>
         internal ReservationsSkuName Sku { get; set; }
-        /// <summary> Gets or sets the sku name. </summary>
+
+        /// <summary> The Azure region where the reserved resource lives. </summary>
+        public AzureLocation? Location { get; set; }
+
+        /// <summary> Properties of reservation purchase request. </summary>
+        internal PurchaseRequestProperties Properties { get; set; }
+
+        /// <summary> Gets or sets the Name. </summary>
         public string SkuName
         {
-            get => Sku is null ? default : Sku.Name;
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
             set
             {
                 if (Sku is null)
+                {
                     Sku = new ReservationsSkuName();
+                }
                 Sku.Name = value;
             }
         }
 
-        /// <summary> The Azure region where the reserved resource lives. </summary>
-        public AzureLocation? Location { get; set; }
-        /// <summary> The type of the resource that is being reserved. </summary>
-        public ReservedResourceType? ReservedResourceType { get; set; }
-        /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
-        public ResourceIdentifier BillingScopeId { get; set; }
-        /// <summary> Represent the term of reservation. </summary>
-        public ReservationTerm? Term { get; set; }
-        /// <summary> Represent the billing plans. </summary>
-        public ReservationBillingPlan? BillingPlan { get; set; }
-        /// <summary> Quantity of the skus that are part of the reservation. </summary>
-        public int? Quantity { get; set; }
-        /// <summary> Friendly name of the reservation. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Type of the Applied Scope. </summary>
-        public AppliedScopeType? AppliedScopeType { get; set; }
-        /// <summary> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </summary>
-        public IList<string> AppliedScopes { get; set; }
-        /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
-        public AppliedScopeProperties AppliedScopeProperties { get; set; }
-        /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>
-        public bool? IsRenewEnabled { get; set; }
-        /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
-        internal PurchaseRequestPropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
-        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
-        public InstanceFlexibility? ReservedResourceInstanceFlexibility
+        /// <summary> The type of the resource that is being reserved. In addition to below types we have also added the following: OpenAIPTU, MDC, Sentinel. </summary>
+        public ReservedResourceType? ReservedResourceType
         {
-            get => ReservedResourceProperties is null ? default : ReservedResourceProperties.InstanceFlexibility;
+            get
+            {
+                return Properties is null ? default : Properties.ReservedResourceType;
+            }
             set
             {
-                if (ReservedResourceProperties is null)
-                    ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties();
-                ReservedResourceProperties.InstanceFlexibility = value;
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.ReservedResourceType = value;
+            }
+        }
+
+        /// <summary> Subscription that will be charged for purchasing reservation or savings plan. </summary>
+        public ResourceIdentifier BillingScopeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingScopeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.BillingScopeId = value;
+            }
+        }
+
+        /// <summary> Represent the term of reservation. </summary>
+        public ReservationTerm? Term
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Term;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.Term = value;
+            }
+        }
+
+        /// <summary> Represent the billing plans. </summary>
+        public ReservationBillingPlan? BillingPlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingPlan;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.BillingPlan = value;
+            }
+        }
+
+        /// <summary> Quantity of the skus that are part of the reservation. </summary>
+        public int? Quantity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Quantity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.Quantity = value;
+            }
+        }
+
+        /// <summary> Friendly name of the reservation. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Type of the Applied Scope. </summary>
+        public AppliedScopeType? AppliedScopeType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.AppliedScopeType = value;
+            }
+        }
+
+        /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
+        public AppliedScopeProperties AppliedScopeProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppliedScopeProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.AppliedScopeProperties = value;
+            }
+        }
+
+        /// <summary> Setting this to true will automatically purchase a new reservation on the expiration date time. </summary>
+        public bool? IsRenewEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRenewEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.IsRenewEnabled = value;
             }
         }
 
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
-        public DateTimeOffset? ReviewOn { get; set; }
+        public DateTimeOffset? ReviewOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReviewOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.ReviewOn = value;
+            }
+        }
+
+        /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
+        public InstanceFlexibility? ReservedResourceInstanceFlexibility
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedResourceInstanceFlexibility;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PurchaseRequestProperties();
+                }
+                Properties.ReservedResourceInstanceFlexibility = value;
+            }
+        }
     }
 }

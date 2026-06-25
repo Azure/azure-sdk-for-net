@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             PolicySignaturesOverridesForIdpsData data = new PolicySignaturesOverridesForIdpsData
             {
-                Name = "default",
                 Id = new ResourceIdentifier("/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/signatureOverrides/default"),
                 ResourceType = new ResourceType("Microsoft.Network/firewallPolicies/signatureOverrides"),
                 Signatures =
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["2000106"] = "Deny"
 },
             };
-            PolicySignaturesOverridesForIdpsResource result = await policySignaturesOverridesForIdps.UpdateAsync(data);
+            PolicySignaturesOverridesForIdpsResource result = await policySignaturesOverridesForIdps.UpdateAsync(data, System.Threading.CancellationToken.None);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             PolicySignaturesOverridesForIdpsData data = new PolicySignaturesOverridesForIdpsData
             {
-                Name = "default",
                 Id = new ResourceIdentifier("/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/signatureOverrides/default"),
                 ResourceType = new ResourceType("Microsoft.Network/firewallPolicies/signatureOverrides"),
                 Signatures =
@@ -118,7 +116,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["2000106"] = "Deny"
 },
             };
-            ArmOperation<PolicySignaturesOverridesForIdpsResource> lro = await policySignaturesOverridesForIdps.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<PolicySignaturesOverridesForIdpsResource> lro = await policySignaturesOverridesForIdps.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             PolicySignaturesOverridesForIdpsResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

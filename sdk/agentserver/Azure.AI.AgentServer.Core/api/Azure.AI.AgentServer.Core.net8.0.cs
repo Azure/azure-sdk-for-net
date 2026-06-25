@@ -38,9 +38,13 @@ namespace Azure.AI.AgentServer.Core
     }
     public static partial class FoundryEnvironment
     {
+        public static string? AgentBlueprintClientId { get { throw null; } }
+        public static string? AgentInstanceClientId { get { throw null; } }
         public static string? AgentName { get { throw null; } }
+        public static string? AgentTenantId { get { throw null; } }
         public static string? AgentVersion { get { throw null; } }
         public static string? AppInsightsConnectionString { get { throw null; } }
+        public static bool IsAgent365TracingEnabled { get { throw null; } }
         public static bool IsHosted { get { throw null; } }
         public static string? OtlpEndpoint { get { throw null; } }
         public static int Port { get { throw null; } }
@@ -48,6 +52,7 @@ namespace Azure.AI.AgentServer.Core
         public static string? ProjectEndpoint { get { throw null; } }
         public static string? SessionId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
+        public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
     }
     public partial class IsolationContext
     {
@@ -81,5 +86,14 @@ namespace Azure.AI.AgentServer.Core
         public static string BuildIdentityString(string sdkName, System.Reflection.Assembly assembly) { throw null; }
         public System.Collections.Generic.IReadOnlyList<string> GetSegments() { throw null; }
         public void Register(string identity) { }
+    }
+    public sealed partial class SseKeepAliveSession : System.IAsyncDisposable
+    {
+        internal SseKeepAliveSession() { }
+        public bool IsKeepAliveActive { get { throw null; } }
+        public System.IO.Stream Stream { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public void EnableKeepAlive(System.TimeSpan interval) { }
+        public static Azure.AI.AgentServer.Core.SseKeepAliveSession Start(System.IO.Stream output, System.TimeSpan interval, Microsoft.Extensions.Logging.ILogger logger, string contextName) { throw null; }
     }
 }

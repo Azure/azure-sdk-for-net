@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkTapResource virtualNetworkTap = client.GetVirtualNetworkTapResource(virtualNetworkTapResourceId);
 
             // invoke the operation
-            await virtualNetworkTap.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkTap.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CapacityPoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<CapacityPoolResource> operation = new NetAppArmOperation<CapacityPoolResource>(
-                    new CapacityPoolOperationSource(Client),
+                    new CapacityPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CapacityPoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<CapacityPoolResource> operation = new NetAppArmOperation<CapacityPoolResource>(
-                    new CapacityPoolOperationSource(Client),
+                    new CapacityPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,

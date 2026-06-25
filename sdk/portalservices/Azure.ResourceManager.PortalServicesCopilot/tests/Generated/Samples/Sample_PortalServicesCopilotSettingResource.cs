@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Samples
             // invoke the operation
             PortalServicesCopilotSettingPatch patch = new PortalServicesCopilotSettingPatch
             {
-                AccessControlEnabled = true,
+                IsAccessControlEnabled = true,
             };
             PortalServicesCopilotSettingResource result = await portalServicesCopilotSetting.UpdateAsync(patch);
 

@@ -5,6 +5,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create a conversation.
+        /// [Protocol Method] Creates a new conversation resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -40,17 +42,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CreateConversation(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult CreateConversation(BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, options);
+            using PipelineMessage message = CreateCreateConversationRequest(content, userIdentity, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
-        /// [Protocol Method] Create a conversation.
+        /// [Protocol Method] Creates a new conversation resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -58,80 +61,111 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> CreateConversationAsync(BinaryContent content, string userIdentity = default, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateConversationRequest(content, options);
+            using PipelineMessage message = CreateCreateConversationRequest(content, userIdentity, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary>
-        /// [Protocol Method] Update a conversation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="conversationId"> The id of the conversation to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update a conversation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="conversationId"> The id of the conversation to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Update a conversation. </summary>
-        /// <param name="conversationId"> The id of the conversation to update. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
+        /// <summary> Creates a new conversation resource. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="items"></param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
         {
-            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = UpdateConversation(conversationId, spreadModel, cancellationToken.ToRequestOptions());
+            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
+            ClientResult result = CreateConversation(spreadModel, userIdentity, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
-        /// <summary> Update a conversation. </summary>
+        /// <summary> Creates a new conversation resource. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="items"></param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
+        {
+            CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
+            ClientResult result = await CreateConversationAsync(spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Modifies the specified conversation's properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="conversationId"> The id of the conversation to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult UpdateConversation(string conversationId, BinaryContent content, string userIdentity = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIdentity, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Modifies the specified conversation's properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="conversationId"> The id of the conversation to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> UpdateConversationAsync(string conversationId, BinaryContent content, string userIdentity = default, RequestOptions options = null)
+        {
+            using PipelineMessage message = CreateUpdateConversationRequest(conversationId, content, userIdentity, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Modifies the specified conversation's properties. </summary>
         /// <param name="conversationId"> The id of the conversation to update. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
         ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
-            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = UpdateConversation(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+        }
+
+        /// <summary> Modifies the specified conversation's properties. </summary>
+        /// <param name="conversationId"> The id of the conversation to update. </param>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
+        {
+            UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
+            ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
     }

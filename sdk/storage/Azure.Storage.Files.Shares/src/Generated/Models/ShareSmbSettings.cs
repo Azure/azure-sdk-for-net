@@ -21,6 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Settings for SMB Multichannel. </summary>
         public SmbMultichannel Multichannel { get; set; }
+
         /// <summary> Enable or disable encryption in transit. </summary>
         public ShareSmbSettingsEncryptionInTransit EncryptionInTransit { get; set; }
     }

@@ -2,8 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
@@ -68,6 +72,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var binding = await _provider.TryCreateAsync(context);
 
             Assert.NotNull(binding);
+        }
+
+        [TestCase]
+        public void TriggerAttribute_LegacyConnection_NullOrEmpty_DoesNotPopulateConnections()
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var attributeWithNull = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent")
+            {
+                Connection = null,
+            };
+
+            var attributeWithEmpty = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent")
+            {
+                Connection = string.Empty,
+            };
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.IsNull(attributeWithNull.Connections);
+            Assert.IsNull(attributeWithEmpty.Connections);
+        }
+
+        [TestCase]
+        public void TriggerAttribute_LegacyConnection_WithValue_PopulatesConnections()
+        {
+            var attribute = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionA";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.NotNull(attribute.Connections);
+            Assert.AreEqual(1, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+        }
+
+        [TestCase]
+        public void TriggerAttribute_LegacyConnection_DoesNotOverrideConnections_WhenAlreadySet()
+        {
+            var attribute = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent", "connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionC";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.AreEqual(2, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+            Assert.AreEqual("connectionB", attribute.Connections[1]);
+        }
+
+        [TestCase]
+        public void TriggerAttribute_LegacyConnection_Getter_ReturnsFirstConnection()
+        {
+            var attribute = new WebPubSubTriggerAttribute("defaulthub", WebPubSubEventType.System, "testevent", "connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            Assert.AreEqual("connectionA", attribute.Connection);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public static void TestFunc(

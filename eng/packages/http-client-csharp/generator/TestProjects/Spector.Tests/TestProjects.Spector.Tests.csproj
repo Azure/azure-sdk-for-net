@@ -53,8 +53,8 @@
     <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
     <ProjectReference Include="..\Spector\http\client\namespace\src\Client.ClientNamespace.csproj" />
     <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
-    <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
-    <ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
+		<ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
+		<ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
     <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
     <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />
@@ -88,6 +88,7 @@
     <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
     <ProjectReference Include="..\Spector\http\service\multi-service\src\Service.MultiService.Combined.csproj" />
+    <ProjectReference Include="..\Spector\http\service\multiple-services\src\Service.MultipleServices.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />

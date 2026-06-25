@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,62 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsTablePlan : IEquatable<OperationalInsightsTablePlan>
     {
         private readonly string _value;
+        /// <summary> Medium-touch logs needed for troubleshooting and incident response. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> High-value logs used for continuous monitoring, real-time detection, and performance analytics. </summary>
+        private const string AnalyticsValue = "Analytics";
+        /// <summary> Low-touch logs, such as verbose logs, and data required for auditing and compliance. </summary>
+        private const string AuxiliaryValue = "Auxiliary";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsTablePlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsTablePlan(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BasicValue = "Basic";
-        private const string AnalyticsValue = "Analytics";
-
-        /// <summary> Logs that are adjusted to support high volume low value verbose logs. </summary>
+        /// <summary> Medium-touch logs needed for troubleshooting and incident response. </summary>
         public static OperationalInsightsTablePlan Basic { get; } = new OperationalInsightsTablePlan(BasicValue);
-        /// <summary> Logs  that allow monitoring and analytics. </summary>
+
+        /// <summary> High-value logs used for continuous monitoring, real-time detection, and performance analytics. </summary>
         public static OperationalInsightsTablePlan Analytics { get; } = new OperationalInsightsTablePlan(AnalyticsValue);
+
+        /// <summary> Low-touch logs, such as verbose logs, and data required for auditing and compliance. </summary>
+        public static OperationalInsightsTablePlan Auxiliary { get; } = new OperationalInsightsTablePlan(AuxiliaryValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTablePlan"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsTablePlan left, OperationalInsightsTablePlan right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsTablePlan"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsTablePlan left, OperationalInsightsTablePlan right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsTablePlan"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTablePlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsTablePlan(string value) => new OperationalInsightsTablePlan(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsTablePlan"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsTablePlan?(string value) => value == null ? null : new OperationalInsightsTablePlan(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsTablePlan other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsTablePlan other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

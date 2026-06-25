@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Limit settings for the AutoML job. </summary>
     public partial class ImageLimitSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
         public ImageLimitSettings()
@@ -51,26 +23,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageLimitSettings"/>. </summary>
+        /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
         /// <param name="maxTrials"> Maximum number of AutoML iterations. </param>
         /// <param name="timeout"> AutoML job timeout. </param>
-        /// <param name="maxConcurrentTrials"> Maximum number of concurrent AutoML iterations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageLimitSettings(int? maxTrials, TimeSpan? timeout, int? maxConcurrentTrials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageLimitSettings(int? maxConcurrentTrials, int? maxTrials, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            MaxConcurrentTrials = maxConcurrentTrials;
             MaxTrials = maxTrials;
             Timeout = timeout;
-            MaxConcurrentTrials = maxConcurrentTrials;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Maximum number of concurrent AutoML iterations. </summary>
+        [WirePath("maxConcurrentTrials")]
+        public int? MaxConcurrentTrials { get; set; }
 
         /// <summary> Maximum number of AutoML iterations. </summary>
         [WirePath("maxTrials")]
         public int? MaxTrials { get; set; }
+
         /// <summary> AutoML job timeout. </summary>
         [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
-        /// <summary> Maximum number of concurrent AutoML iterations. </summary>
-        [WirePath("maxConcurrentTrials")]
-        public int? MaxConcurrentTrials { get; set; }
     }
 }

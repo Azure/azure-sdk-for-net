@@ -4,11 +4,22 @@
 
 ### Features Added
 
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+
+## 1.8.1 (2026-05-20)
+
+### Features Added
+
+- Added GenAI main agent attribution support. Automatically propagates `microsoft.gen_ai.main_agent.*` attributes from parent spans to child spans and log records, enabling end-to-end tracing of AI agent orchestration.
+  ([#59368](https://github.com/Azure/azure-sdk-for-net/pull/59368))
 
 ## 1.8.0 (2026-04-29)
 

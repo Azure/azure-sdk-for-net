@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PcStatus : IEquatable<PcStatus>
     {
         private readonly string _value;
+        /// <summary> NotStarted. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="PcStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PcStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string StoppedValue = "Stopped";
-        private const string ErrorValue = "Error";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> NotStarted. </summary>
         public static PcStatus NotStarted { get; } = new PcStatus(NotStartedValue);
+
         /// <summary> Running. </summary>
         public static PcStatus Running { get; } = new PcStatus(RunningValue);
+
         /// <summary> Stopped. </summary>
         public static PcStatus Stopped { get; } = new PcStatus(StoppedValue);
+
         /// <summary> Error. </summary>
         public static PcStatus Error { get; } = new PcStatus(ErrorValue);
+
         /// <summary> Unknown. </summary>
         public static PcStatus Unknown { get; } = new PcStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="PcStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PcStatus left, PcStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PcStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PcStatus left, PcStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PcStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PcStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PcStatus(string value) => new PcStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PcStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PcStatus?(string value) => value == null ? null : new PcStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PcStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PcStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

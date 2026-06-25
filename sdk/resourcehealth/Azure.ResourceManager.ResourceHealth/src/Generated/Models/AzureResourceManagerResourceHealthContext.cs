@@ -13,16 +13,22 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EmergingIssue))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueActiveEventType))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueBannerType))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueImpact))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueImpactedRegion))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueListResult))]
     [ModelReaderWriterBuildable(typeof(EventImpactedResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(EventImpactedResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(EventProperties))]
     [ModelReaderWriterBuildable(typeof(MetadataEntityListResult))]
+    [ModelReaderWriterBuildable(typeof(MetadataEntityProperties))]
     [ModelReaderWriterBuildable(typeof(MetadataSupportedValueDetail))]
+    [ModelReaderWriterBuildable(typeof(OperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(OperationListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStateRecentlyResolved))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatus))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatusListResult))]
@@ -45,15 +51,16 @@ namespace Azure.ResourceManager.ResourceHealth
     [ModelReaderWriterBuildable(typeof(ResourceHealthKeyValueItem))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthMetadataEntityData))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthMetadataEntityResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceHealthOperationInfo))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthRecommendedAction))]
     [ModelReaderWriterBuildable(typeof(ServiceEmergingIssueData))]
     [ModelReaderWriterBuildable(typeof(ServiceEmergingIssueResource))]
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEvent))]
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEventIncidentProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEventStatus))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantResourceHealthEventImpactedResource))]
     [ModelReaderWriterBuildable(typeof(TenantResourceHealthEventResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourceHealthContext : ModelReaderWriterContext
     {
     }

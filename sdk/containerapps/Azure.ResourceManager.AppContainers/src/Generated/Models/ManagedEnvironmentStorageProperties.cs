@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
     public partial class ManagedEnvironmentStorageProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         public ManagedEnvironmentStorageProperties()
@@ -53,17 +25,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
         /// <param name="nfsAzureFile"> NFS Azure file properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ContainerAppNfsAzureFileProperties nfsAzureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ContainerAppNfsAzureFileProperties nfsAzureFile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureFile = azureFile;
             NfsAzureFile = nfsAzureFile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure file properties. </summary>
         [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
+
         /// <summary> NFS Azure file properties. </summary>
         [WirePath("nfsAzureFile")]
         public ContainerAppNfsAzureFileProperties NfsAzureFile { get; set; }

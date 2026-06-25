@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -15,10 +16,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureBlobFSSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSSink"/>. </summary>
-        public AzureBlobFSSink()
+        public AzureBlobFSSink() : base("AzureBlobFSSink")
         {
             Metadata = new ChangeTrackingList<DataFactoryMetadataItemInfo>();
-            CopySinkType = "AzureBlobFSSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSSink"/>. </summary>
@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         internal AzureBlobFSSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopyBehavior = copyBehavior;
             Metadata = metadata;
-            CopySinkType = copySinkType ?? "AzureBlobFSSink";
         }
 
         /// <summary> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> CopyBehavior { get; set; }
+
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
         public IList<DataFactoryMetadataItemInfo> Metadata { get; }
     }

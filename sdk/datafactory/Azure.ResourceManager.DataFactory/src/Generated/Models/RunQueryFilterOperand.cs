@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,68 +15,107 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct RunQueryFilterOperand : IEquatable<RunQueryFilterOperand>
     {
         private readonly string _value;
+        /// <summary> PipelineName. </summary>
+        private const string PipelineNameValue = "PipelineName";
+        /// <summary> Status. </summary>
+        private const string StatusValue = "Status";
+        /// <summary> RunStart. </summary>
+        private const string RunStartValue = "RunStart";
+        /// <summary> RunEnd. </summary>
+        private const string RunEndValue = "RunEnd";
+        /// <summary> ActivityName. </summary>
+        private const string ActivityNameValue = "ActivityName";
+        /// <summary> ActivityRunStart. </summary>
+        private const string ActivityRunStartValue = "ActivityRunStart";
+        /// <summary> ActivityRunEnd. </summary>
+        private const string ActivityRunEndValue = "ActivityRunEnd";
+        /// <summary> ActivityType. </summary>
+        private const string ActivityTypeValue = "ActivityType";
+        /// <summary> TriggerName. </summary>
+        private const string TriggerNameValue = "TriggerName";
+        /// <summary> TriggerRunTimestamp. </summary>
+        private const string TriggerRunTimestampValue = "TriggerRunTimestamp";
+        /// <summary> RunGroupId. </summary>
+        private const string RunGroupIdValue = "RunGroupId";
+        /// <summary> LatestOnly. </summary>
+        private const string LatestOnlyValue = "LatestOnly";
 
         /// <summary> Initializes a new instance of <see cref="RunQueryFilterOperand"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunQueryFilterOperand(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PipelineNameValue = "PipelineName";
-        private const string StatusValue = "Status";
-        private const string RunStartValue = "RunStart";
-        private const string RunEndValue = "RunEnd";
-        private const string ActivityNameValue = "ActivityName";
-        private const string ActivityRunStartValue = "ActivityRunStart";
-        private const string ActivityRunEndValue = "ActivityRunEnd";
-        private const string ActivityTypeValue = "ActivityType";
-        private const string TriggerNameValue = "TriggerName";
-        private const string TriggerRunTimestampValue = "TriggerRunTimestamp";
-        private const string RunGroupIdValue = "RunGroupId";
-        private const string LatestOnlyValue = "LatestOnly";
+            _value = value;
+        }
 
         /// <summary> PipelineName. </summary>
         public static RunQueryFilterOperand PipelineName { get; } = new RunQueryFilterOperand(PipelineNameValue);
+
         /// <summary> Status. </summary>
         public static RunQueryFilterOperand Status { get; } = new RunQueryFilterOperand(StatusValue);
+
         /// <summary> RunStart. </summary>
         public static RunQueryFilterOperand RunStart { get; } = new RunQueryFilterOperand(RunStartValue);
+
         /// <summary> RunEnd. </summary>
         public static RunQueryFilterOperand RunEnd { get; } = new RunQueryFilterOperand(RunEndValue);
+
         /// <summary> ActivityName. </summary>
         public static RunQueryFilterOperand ActivityName { get; } = new RunQueryFilterOperand(ActivityNameValue);
+
         /// <summary> ActivityRunStart. </summary>
         public static RunQueryFilterOperand ActivityRunStart { get; } = new RunQueryFilterOperand(ActivityRunStartValue);
+
         /// <summary> ActivityRunEnd. </summary>
         public static RunQueryFilterOperand ActivityRunEnd { get; } = new RunQueryFilterOperand(ActivityRunEndValue);
+
         /// <summary> ActivityType. </summary>
         public static RunQueryFilterOperand ActivityType { get; } = new RunQueryFilterOperand(ActivityTypeValue);
+
         /// <summary> TriggerName. </summary>
         public static RunQueryFilterOperand TriggerName { get; } = new RunQueryFilterOperand(TriggerNameValue);
+
         /// <summary> TriggerRunTimestamp. </summary>
         public static RunQueryFilterOperand TriggerRunTimestamp { get; } = new RunQueryFilterOperand(TriggerRunTimestampValue);
+
         /// <summary> RunGroupId. </summary>
         public static RunQueryFilterOperand RunGroupId { get; } = new RunQueryFilterOperand(RunGroupIdValue);
+
         /// <summary> LatestOnly. </summary>
         public static RunQueryFilterOperand LatestOnly { get; } = new RunQueryFilterOperand(LatestOnlyValue);
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperand"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunQueryFilterOperand left, RunQueryFilterOperand right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RunQueryFilterOperand"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunQueryFilterOperand left, RunQueryFilterOperand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RunQueryFilterOperand"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RunQueryFilterOperand"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RunQueryFilterOperand(string value) => new RunQueryFilterOperand(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RunQueryFilterOperand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RunQueryFilterOperand?(string value) => value == null ? null : new RunQueryFilterOperand(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RunQueryFilterOperand other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RunQueryFilterOperand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AddressPrefixType : IEquatable<AddressPrefixType>
     {
         private readonly string _value;
+        /// <summary> IPPrefix. </summary>
+        private const string IPPrefixValue = "IPPrefix";
+        /// <summary> ServiceTag. </summary>
+        private const string ServiceTagValue = "ServiceTag";
+        /// <summary> NetworkGroup. </summary>
+        private const string NetworkGroupValue = "NetworkGroup";
 
         /// <summary> Initializes a new instance of <see cref="AddressPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AddressPrefixType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IPPrefixValue = "IPPrefix";
-        private const string ServiceTagValue = "ServiceTag";
-        private const string NetworkGroupValue = "NetworkGroup";
+            _value = value;
+        }
 
         /// <summary> IPPrefix. </summary>
         public static AddressPrefixType IPPrefix { get; } = new AddressPrefixType(IPPrefixValue);
+
         /// <summary> ServiceTag. </summary>
         public static AddressPrefixType ServiceTag { get; } = new AddressPrefixType(ServiceTagValue);
+
         /// <summary> NetworkGroup. </summary>
         public static AddressPrefixType NetworkGroup { get; } = new AddressPrefixType(NetworkGroupValue);
+
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AddressPrefixType left, AddressPrefixType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AddressPrefixType left, AddressPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AddressPrefixType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AddressPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AddressPrefixType(string value) => new AddressPrefixType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AddressPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AddressPrefixType?(string value) => value == null ? null : new AddressPrefixType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AddressPrefixType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AddressPrefixType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -19,22 +19,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal ResponsesFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFunctionShellToolParamEnvironment environment, string name, string description) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesFunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesFunctionShellToolParamEnvironment environment) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
-            Name = name;
-            Description = description;
         }
 
         /// <summary> Gets or sets the Environment. </summary>
         public ResponsesFunctionShellToolParamEnvironment Environment { get; set; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
     }
 }

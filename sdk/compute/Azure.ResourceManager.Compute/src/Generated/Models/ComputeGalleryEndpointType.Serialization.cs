@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ComputeGalleryEndpointTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeGalleryEndpointType value) => value switch
         {
             ComputeGalleryEndpointType.WireServer => "WireServer",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeGalleryEndpointType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeGalleryEndpointType ToComputeGalleryEndpointType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WireServer")) return ComputeGalleryEndpointType.WireServer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IMDS")) return ComputeGalleryEndpointType.Imds;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WireServer"))
+            {
+                return ComputeGalleryEndpointType.WireServer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IMDS"))
+            {
+                return ComputeGalleryEndpointType.Imds;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeGalleryEndpointType value.");
         }
     }

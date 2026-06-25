@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
-                    new EdgeConfigTemplateOperationSource(Client),
+                    new EdgeConfigTemplateResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configTemplateName, EdgeConfigTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateResource>(
-                    new EdgeConfigTemplateOperationSource(Client),
+                    new EdgeConfigTemplateResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,

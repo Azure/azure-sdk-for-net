@@ -233,10 +233,12 @@ internal static class Program
                 info.IsTrackedResource = IsAssignableTo(dataProp.PropertyType, trackedResourceDataType);
             }
 
-            var expectedCollName = resType.Name.EndsWith("Resource")
-                ? resType.Name.Substring(0, resType.Name.Length - "Resource".Length) + "Collection"
-                : resType.Name + "Collection";
-            var collType = collectionTypes.FirstOrDefault(c => c.Name == expectedCollName);
+            var expectedCollNames = resType.Name.EndsWith("Resource")
+                ? new[] { resType.Name.Substring(0, resType.Name.Length - "Resource".Length) + "Collection", resType.Name + "Collection" }
+                : new[] { resType.Name + "Collection" };
+            var collType = expectedCollNames
+                .Select(name => collectionTypes.FirstOrDefault(c => c.Name == name))
+                .FirstOrDefault(c => c != null);
             if (collType != null) info.CollectionType = collType.Name;
             else                  info.IsSingleton    = true;
 

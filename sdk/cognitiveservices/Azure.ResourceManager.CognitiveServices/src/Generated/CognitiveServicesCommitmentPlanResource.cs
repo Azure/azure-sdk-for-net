@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesCommitmentPlanApiVersion);
             _commitmentPlanOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-01-15-preview");
+            _commitmentPlanOperationGroupRestClient = new CommitmentPlanOperationGroup(_commitmentPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, cognitiveServicesCommitmentPlanApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
-                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
                     _commitmentPlanOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
-                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
                     _commitmentPlanOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

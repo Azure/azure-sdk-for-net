@@ -1,41 +1,13 @@
 # Sample for Toolboxes Administration (create, retrieve, update and deletion) in Azure.AI.Projects.Agents
 
 In this example we will demonstrate how to create, update and delete toolboxes.
-To use toolboxes we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
 
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
-1. First, we need to create `AgentToolboxes` client and read the environment variables, which will be used in the next steps. We also will add the experimental header policy to the client.
+1. First, we need to create `AgentToolboxes` client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_ToolboxesAgentsCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("Toolboxes=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
 string toolboxName = "mcp";
 ```
@@ -44,11 +16,13 @@ string toolboxName = "mcp";
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Sync
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
     name: toolboxName,
     tools: [tool],
@@ -72,11 +46,13 @@ Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tool
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     name: toolboxName,
     tools: [tool],

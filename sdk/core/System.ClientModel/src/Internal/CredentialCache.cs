@@ -9,71 +9,126 @@ using Microsoft.Extensions.Configuration;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Process-wide cache of resolved <see cref="AuthenticationTokenProvider"/>
-/// instances keyed by a hash of the merged credential section content combined
-/// with the reference-identity hash of the resolver instance that produced
-/// the provider. Two callers with identical effective config that have the
-/// same resolver instance win for that section share one provider, so the
-/// token-layer cache inside the provider is also shared. Distinct resolver
-/// instances (even of the same type) get distinct cache entries — so a
-/// custom resolver carrying instance state (e.g., per-host secrets) cannot
-/// leak its provider into another caller's chain.
+/// Process-wide cache of resolved <see cref="CredentialSettings"/> instances
+/// keyed by a hash of the merged credential section content. Resolver-matched
+/// entries are additionally keyed by the reference-identity hash of the
+/// resolver instance that produced the provider, so two callers with
+/// identical effective config that share a resolver instance also share one
+/// settings instance (and the token-layer cache inside the provider).
+/// Distinct resolver instances (even of the same type) get distinct cache
+/// entries — a custom resolver carrying instance state (e.g., per-host
+/// secrets) cannot leak its provider into another caller's chain.
+/// Chain-owning resolvers — identified by invoking
+/// <c>resolveChild</c> during <c>TryResolve</c> — are NOT cached; each
+/// resolution builds a fresh wrapper that composes cached leaf providers via
+/// <c>resolveChild</c>, so the token-layer cache lives on the leaves where
+/// it belongs and a chain wrapper cannot leak its captured chain across
+/// callers. Inline credential sections that no resolver claims are cached
+/// under a single section-only key, so the inline-ApiKey path benefits from
+/// caching too.
 /// </summary>
 [Experimental("SCME0002")]
 internal static class CredentialCache
 {
-    private static readonly ConcurrentDictionary<string, AuthenticationTokenProvider> s_cache = new();
+    private const string InlineKeySuffix = "::inline";
+
+    private static readonly ConcurrentDictionary<string, CredentialSettings> s_cache = new();
 
     /// <summary>
-    /// Look up a cached provider for (<paramref name="mergedSection"/>, <paramref name="resolver"/>);
-    /// if absent, invoke <paramref name="factory"/> and (when the result is
-    /// non-null and non-disposable) cache it under that key.
+    /// Look up a cached <see cref="CredentialSettings"/> for
+    /// (<paramref name="mergedSection"/>, <paramref name="resolver"/>); on
+    /// miss, call <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>.
+    /// If the resolver matches and produces a non-null provider, build a
+    /// <see cref="CredentialSettings"/> for it. The result is cached only
+    /// when the provider is non-disposable and the resolver did NOT invoke
+    /// <paramref name="resolveChild"/> (i.e., is not a chain owner);
+    /// otherwise the freshly built settings are returned without caching.
+    /// Returns <see langword="null"/> when the resolver does not match
+    /// (the no-match case is handled by <see cref="GetOrCreateInline"/>).
     /// </summary>
-    public static AuthenticationTokenProvider? GetOrTryCreate(
+    /// <param name="mergedSection">The credential section to resolve (already
+    /// merged with any overrides).</param>
+    /// <param name="resolver">The resolver to invoke on cache miss.</param>
+    /// <param name="resolveChild">A callback that recursively resolves child
+    /// sections through the active engine. Passed (wrapped with a usage
+    /// tracker) to the chain-aware
+    /// <see cref="CredentialResolver.TryResolve(IConfigurationSection, Func{IConfigurationSection, AuthenticationTokenProvider?}, out AuthenticationTokenProvider?)"/>
+    /// overload so chain-owning resolvers can recurse without re-implementing
+    /// engine logic. Invoking it during <c>TryResolve</c> opts the resolver
+    /// out of caching. Required — callers without a chain pass a no-op
+    /// (<c><![CDATA[static _ => null]]></c>) to honor the resolver's non-null
+    /// contract.</param>
+    public static CredentialSettings? GetOrTryResolve(
         IConfigurationSection mergedSection,
         CredentialResolver resolver,
-        Func<IConfigurationSection, CredentialResolver, AuthenticationTokenProvider?> factory)
+        Func<IConfigurationSection, AuthenticationTokenProvider?> resolveChild)
     {
         string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
         if (sectionKey.Length == 0)
         {
-            // ComputeKey returns the empty string only for a null section.
-            // The engine guards against this before reaching the cache, but if
-            // some future caller bypasses the engine and passes null we have
-            // no meaningful cache key and no resolver could produce a useful
-            // provider from a null section. Return null instead of invoking
-            // the factory.
             return null;
         }
 
-        // Reference-identity hash bypasses any user GetHashCode override on
-        // the resolver and gives a stable identifier for the lifetime of the
-        // resolver object.
-        string key = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
+        // RuntimeHelpers.GetHashCode bypasses user GetHashCode overrides.
+        string cacheKey = sectionKey + "::" + RuntimeHelpers.GetHashCode(resolver).ToString(Globalization.CultureInfo.InvariantCulture);
 
-        if (s_cache.TryGetValue(key, out AuthenticationTokenProvider? existing))
+        if (s_cache.TryGetValue(cacheKey, out CredentialSettings? existing))
         {
             return existing;
         }
 
-        AuthenticationTokenProvider? created = factory(mergedSection, resolver);
-        if (created is null)
+        // Chain owners — resolvers that invoke resolveChild during TryResolve —
+        // are not cached because their output depends on the active chain.
+        bool isChainOwner = false;
+        Func<IConfigurationSection, AuthenticationTokenProvider?> trackedResolveChild = section =>
+        {
+            isChainOwner = true;
+            return resolveChild(section);
+        };
+
+        if (!resolver.TryResolve(mergedSection, trackedResolveChild, out AuthenticationTokenProvider? provider) || provider is null)
         {
             return null;
         }
 
-        // Defensive: if the produced provider owns disposable resources, do not
-        // cache it. A cached IDisposable provider could be disposed by one
-        // consumer (e.g., a DI host shutting down) and then handed out to
-        // another consumer from the cache, producing ObjectDisposedException.
-        // The cost is losing token-cache sharing for disposable providers,
-        // which in practice is rare (TokenCredential / AuthenticationTokenProvider
-        // base contracts are not IDisposable).
-        if (created is IDisposable || created is IAsyncDisposable)
+        CredentialSettings created = new(mergedSection)
+        {
+            TokenProvider = provider,
+        };
+
+        // Disposable providers aren't cached: a consumer disposing one would
+        // poison later cache hits with ObjectDisposedException.
+        if (provider is IDisposable || provider is IAsyncDisposable)
         {
             return created;
         }
 
-        return s_cache.GetOrAdd(key, created);
+        if (isChainOwner)
+        {
+            return created;
+        }
+
+        return s_cache.GetOrAdd(cacheKey, created);
+    }
+
+    /// <summary>
+    /// Returns a cached <see cref="CredentialSettings"/> for the inline
+    /// credential data in <paramref name="mergedSection"/> — the no-resolver
+    /// match path. The settings has <see cref="CredentialSettings.TokenProvider"/>
+    /// set to <see langword="null"/> and exposes the section's bound
+    /// metadata (<c>Key</c>, <c>CredentialSource</c>, <c>AdditionalProperties</c>,
+    /// indexer). Repeated calls for the same section content return the same
+    /// instance.
+    /// </summary>
+    public static CredentialSettings GetOrCreateInline(IConfigurationSection mergedSection)
+    {
+        string sectionKey = CredentialSectionHasher.ComputeKey(mergedSection);
+        if (sectionKey.Length == 0)
+        {
+            // No meaningful cache key — fall back to a one-shot instance.
+            return new CredentialSettings(mergedSection);
+        }
+
+        return s_cache.GetOrAdd(sectionKey + InlineKeySuffix, _ => new CredentialSettings(mergedSection));
     }
 }

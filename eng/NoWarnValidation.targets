@@ -1,0 +1,226 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    NoWarn Validation — Block new NoWarn entries in project files.
+
+    Two lists govern this:
+
+    1. eng/NoWarnSkipValidation.txt — temporary backlog. Projects listed here are excluded
+       from validation entirely. Existing <NoWarn> entries in these projects have NOT been
+       reviewed; the goal is to drive this list to empty.
+
+    2. eng/analyzerallowlist/<ProjectName>.txt — reviewed approvals. Each `nowarn:CODE` line
+       in a per-project file is an SDK-team-approved exception with a justification comment.
+
+    Per-project allow lists are read by AnalyzerAllowList.targets. Remove items from the skip
+    list one project at a time, in separate PRs, by either fixing the root cause, migrating
+    to inline #pragma / [SuppressMessage], or recording a justified approval in the allow
+    list.
+
+    See: https://github.com/Azure/azure-sdk-for-net/issues/55312
+
+    To record what a project's effective non-central NoWarn codes are (useful for
+    debugging or updating the allow list), build with:
+      dotnet build /p:NoWarnValidationMode=record
+  -->
+
+  <!--
+    Central NoWarn codes that are repo-wide suppressions owned by the SDK team.
+    These are always allowed in any shipping client library.
+
+    Sources:
+      eng/Directory.Build.Common.props  — unconditional suppressions
+      eng/Directory.Build.Common.targets — IDT001 (InheritDoc, netstandard2.0)
+
+    KEEP IN SYNC: When adding/removing codes in the .props or .targets files above,
+    update this list to match. Only include codes that apply to shipping client libraries
+    (not test/sample-only suppressions like NU1510).
+  -->
+  <PropertyGroup>
+    <_CentralNoWarnCodes>
+      NU5105;CA1812;CA1716;CA1308;CA1819;CA1710;CA1028;CA1032;CA1063;CA1066;
+      CA1815;CA2007;CA2231;CA2225;CA1714;CA1062;CA1031;CA2000;CA2012;
+      MSB3245;AZPROVISION001;IDT001
+    </_CentralNoWarnCodes>
+  </PropertyGroup>
+
+  <!-- Management libraries have additional central suppressions -->
+  <PropertyGroup Condition="'$(IsMgmtLibrary)' == 'true'">
+    <_CentralNoWarnCodes>
+      $(_CentralNoWarnCodes);AZC0012;AZC0008;SCM0005;AZC0034;AZC0035
+    </_CentralNoWarnCodes>
+  </PropertyGroup>
+
+  <!--
+    Per-project allow lists live under eng/analyzerallowlist/<ProjectName>.txt and are read
+    by the ReadAnalyzerAllowList target in AnalyzerAllowList.targets, which populates
+    _ProjectAllowedNoWarn before this target runs.
+
+    The temporary skip list lives at eng/NoWarnSkipValidation.txt and is read by the
+    ReadNoWarnSkipList target below.
+
+    See eng/analyzerallowlist/README.md for documentation on the file format.
+  -->
+
+  <PropertyGroup>
+    <_NoWarnSkipListFile Condition="'$(_NoWarnSkipListFile)' == ''">$(RepoEngPath)\NoWarnSkipValidation.txt</_NoWarnSkipListFile>
+  </PropertyGroup>
+
+  <!--
+    Read the skip-validation list. If the current project is listed, set _SkipNoWarnValidation
+    so the validator early-exits its enforcement step.
+  -->
+  <Target
+    Name="ReadNoWarnSkipList"
+    Condition="Exists('$(_NoWarnSkipListFile)')">
+
+    <ReadLinesFromFile File="$(_NoWarnSkipListFile)">
+      <Output TaskParameter="Lines" ItemName="_SkipListLine" />
+    </ReadLinesFromFile>
+
+    <!-- Filter out comments and blank lines -->
+    <ItemGroup>
+      <_SkipListLine Remove="@(_SkipListLine)"
+        Condition="'%(Identity)' == '' or $([System.String]::new('%(Identity)').TrimStart().StartsWith('#'))" />
+    </ItemGroup>
+
+    <!-- Match against this project's name -->
+    <ItemGroup>
+      <_MatchingSkipEntry Include="@(_SkipListLine)"
+        Condition="'$([System.String]::new(%(Identity)).Trim())' == '$(MSBuildProjectName)'" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <_SkipNoWarnValidation Condition="'@(_MatchingSkipEntry)' != ''">true</_SkipNoWarnValidation>
+    </PropertyGroup>
+  </Target>
+
+  <!--
+    ===================================================================
+    Validation Target
+    ===================================================================
+  -->
+  <Target
+    Name="ValidateNoWarn"
+    BeforeTargets="CoreCompile"
+    DependsOnTargets="ReadAnalyzerAllowList;ReadNoWarnSkipList"
+    Condition="'$(IsShippingClientLibrary)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+
+    <!--
+      Convert the NoWarn property to items so we can use Remove to subtract known codes.
+      MSBuild's property-to-item split (`Include="$(NoWarn)"`) tokenizes on `;` and trims
+      surrounding whitespace, so multi-line indented entries in eng/Directory.Build.Common.props
+      (e.g. CA1716, CA1308) yield clean item identities ready for comparison.
+    -->
+    <ItemGroup>
+      <_NoWarnCode Include="$(NoWarn)" />
+    </ItemGroup>
+
+    <!-- Normalize: remove empty/whitespace-only items -->
+    <ItemGroup>
+      <_NoWarnCode Remove="@(_NoWarnCode)" Condition="'%(Identity)' == '' or '%(Identity)' == ' '" />
+    </ItemGroup>
+
+    <!-- Remove centrally-defined codes (these are always allowed) -->
+    <ItemGroup>
+      <_NoWarnCode Remove="$(_CentralNoWarnCodes)" />
+    </ItemGroup>
+
+    <!-- Remove project-specific allowed codes (reviewed + approved entries) -->
+    <PropertyGroup>
+      <_AllowedCodesDelimited>;$(_ProjectAllowedNoWarn);</_AllowedCodesDelimited>
+    </PropertyGroup>
+    <ItemGroup>
+      <_NoWarnCode Remove="@(_NoWarnCode)"
+        Condition="$(_AllowedCodesDelimited.Contains(';%(Identity);'))" />
+    </ItemGroup>
+
+    <!--
+      Recording mode: prints the residual non-central, non-allow-listed codes for the project
+      — i.e. exactly the codes that would error in enforcement mode. Use this to seed or update
+      eng/analyzerallowlist/<ProjectName>.txt, or to debug a current AZSDK0002 failure. It is
+      not a full dump of the project's effective NoWarn; central codes and codes already
+      approved in the project's allow-list file are intentionally filtered out as noise.
+    -->
+    <Message
+      Condition="'$(NoWarnValidationMode)' == 'record'"
+      Importance="High"
+      Text="NoWarnAudit: $(MSBuildProjectName)|@(_NoWarnCode, ';')" />
+
+    <!--
+      Enforcement mode (default): error if unapproved codes remain — unless the project is on
+      the temporary skip list. The inline task scans the csproj for the first <NoWarn>
+      element so the IDE navigates there on double-click. If the NoWarn lives in an imported
+      props file, it falls back to csproj line 1.
+    -->
+    <ReportNoWarnError
+      Condition="'$(NoWarnValidationMode)' != 'record' and '@(_NoWarnCode)' != '' and '$(_SkipNoWarnValidation)' != 'true'"
+      ProjectFile="$(MSBuildProjectFullPath)"
+      ProjectName="$(MSBuildProjectName)"
+      UnapprovedCodes="@(_NoWarnCode, ', ')" />
+  </Target>
+
+  <!--
+    Inline task: scan the csproj for the first occurrence of "NoWarn" and log an error
+    with full file/line/column info so VS double-click jumps to the offending location.
+    If NoWarn isn't in the csproj (e.g. it's imported from a Directory.Build.props), the
+    error still points at the csproj at line 1.
+  -->
+  <UsingTask
+    TaskName="ReportNoWarnError"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ProjectFile ParameterType="System.String" Required="true" />
+      <ProjectName ParameterType="System.String" Required="true" />
+      <UnapprovedCodes ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        int line = 1;
+        int column = 1;
+        try
+        {
+          if (System.IO.File.Exists(ProjectFile))
+          {
+            var lines = System.IO.File.ReadAllLines(ProjectFile);
+            for (int i = 0; i < lines.Length; i++)
+            {
+              // Match the opening element `<NoWarn` (case-insensitive) so we don't
+              // hit unrelated property names like `_NoWarnSkipListFile` that happen
+              // to contain the substring "NoWarn".
+              int col = lines[i].IndexOf("<NoWarn", System.StringComparison.OrdinalIgnoreCase);
+              if (col >= 0)
+              {
+                line = i + 1;
+                column = col + 1;
+                break;
+              }
+            }
+          }
+        }
+        catch
+        {
+          // Fall back to line/column 1 if the csproj can't be read for any reason —
+          // we still want to surface AZSDK0002 with the project file as the navigation target.
+          line = 1;
+          column = 1;
+        }
+        string message = "Unapproved NoWarn codes in " + ProjectName + ": " + UnapprovedCodes +
+          ". Project-level <NoWarn> is blocked unless explicitly approved. Preferred fix: remove the suppression and fix the underlying warning." +
+          " If the warning truly cannot be fixed in this project, request an approved exception by adding a `nowarn:CODE` entry with a justification comment to eng/analyzerallowlist/" + ProjectName + ".txt." +
+          " See https://github.com/Azure/azure-sdk-for-net/blob/main/eng/analyzerallowlist/README.md";
+        Log.LogError(
+          subcategory: null,
+          errorCode: "AZSDK0002",
+          helpKeyword: null,
+          helpLink: "https://github.com/Azure/azure-sdk-for-net/blob/main/eng/analyzerallowlist/README.md",
+          file: ProjectFile,
+          lineNumber: line,
+          columnNumber: column,
+          endLineNumber: 0,
+          endColumnNumber: 0,
+          message: message);
+      ]]></Code>
+    </Task>
+  </UsingTask>
+</Project>

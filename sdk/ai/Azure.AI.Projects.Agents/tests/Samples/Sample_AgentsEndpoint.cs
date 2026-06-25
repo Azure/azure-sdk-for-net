@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.DataCollection;
 using NUnit.Framework;
 
 #pragma warning disable AAIP001
@@ -54,23 +51,30 @@ public class Sample_AgentsEndpoint : SamplesBase
         #endregion
 
         #region Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-        AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-            To calculate the sum  run
-            bash:
-            echo $((<first> + <second>))
-            powershell:
-            (<first> + <second>)
-            Replace <first> and <second> by the actual summation arguments.
-            """);
+        SkillInlineContent content = new(
+            description: "Calculates the sum of two numbers.",
+            instructions: """
+                To calculate the sum  run
+                bash:
+                echo $((<first> + <second>))
+                powershell:
+                (<first> + <second>)
+                Replace <first> and <second> by the actual summation arguments.
+                """
+        );
+        SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
         #endregion
 
         #region Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = {AgentEndpointProtocol.Responses}
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
-        AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+        AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -108,20 +112,26 @@ public class Sample_AgentsEndpoint : SamplesBase
             agentName: hostedAgentName,
             agentVersion: hostedAgentVersion);
         Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Version}");
-
-        AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-            To calculate the sum  run
-            bash:
-            echo $((<first> + <second>))
-            powershell:
-            (<first> + <second>)
-            Replace <first> and <second> by the actual summation arguments.
-            """);
+        SkillInlineContent content = new(
+            description: "Calculates the sum of two numbers.",
+            instructions: """
+                To calculate the sum  run
+                bash:
+                echo $((<first> + <second>))
+                powershell:
+                (<first> + <second>)
+                Replace <first> and <second> by the actual summation arguments.
+                """
+        );
+        SkillVersion simpleSkill = skillsClient.CreateSkillVersion(name: "simpleSkill", inlineContent: content);
 
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
         PatchAgentOptions patchOptions = new()

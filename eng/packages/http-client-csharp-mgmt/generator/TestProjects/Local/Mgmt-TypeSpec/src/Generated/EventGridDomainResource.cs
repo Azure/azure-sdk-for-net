@@ -338,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<EventGridDomainResource> operation = new TestsArmOperation<EventGridDomainResource>(
-                    new EventGridDomainOperationSource(Client),
+                    new EventGridDomainResourceOperationSource(Client),
                     _eventGridDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -398,7 +398,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _eventGridDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EventGridDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<EventGridDomainResource> operation = new TestsArmOperation<EventGridDomainResource>(
-                    new EventGridDomainOperationSource(Client),
+                    new EventGridDomainResourceOperationSource(Client),
                     _eventGridDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -670,11 +670,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets a collection of EventGridDomainEventGridPrivateEndpointConnections in the <see cref="EventGridDomainResource"/>. </summary>
-        /// <returns> An object representing collection of EventGridDomainEventGridPrivateEndpointConnections and their operations over a EventGridDomainEventGridPrivateEndpointConnectionResource. </returns>
-        public virtual EventGridDomainEventGridPrivateEndpointConnectionCollection GetEventGridDomainEventGridPrivateEndpointConnections()
+        /// <summary> Gets a collection of EventGridDomainPrivateEndpointConnections in the <see cref="EventGridDomainResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridDomainPrivateEndpointConnections and their operations over a EventGridDomainPrivateEndpointConnectionResource. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionCollection GetEventGridDomainPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new EventGridDomainEventGridPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new EventGridDomainPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get. </summary>
@@ -683,11 +683,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventGridDomainEventGridPrivateEndpointConnectionResource>> GetEventGridDomainEventGridPrivateEndpointConnectionAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventGridDomainPrivateEndpointConnectionResource>> GetEventGridDomainPrivateEndpointConnectionAsync(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            return await GetEventGridDomainEventGridPrivateEndpointConnections().GetAsync(eventGridPrivateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetEventGridDomainPrivateEndpointConnections().GetAsync(eventGridPrivateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get. </summary>
@@ -696,11 +696,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <exception cref="ArgumentNullException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="eventGridPrivateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventGridDomainEventGridPrivateEndpointConnectionResource> GetEventGridDomainEventGridPrivateEndpointConnection(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<EventGridDomainPrivateEndpointConnectionResource> GetEventGridDomainPrivateEndpointConnection(string eventGridPrivateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(eventGridPrivateEndpointConnectionName, nameof(eventGridPrivateEndpointConnectionName));
 
-            return GetEventGridDomainEventGridPrivateEndpointConnections().Get(eventGridPrivateEndpointConnectionName, cancellationToken);
+            return GetEventGridDomainPrivateEndpointConnections().Get(eventGridPrivateEndpointConnectionName, cancellationToken);
         }
     }
 }

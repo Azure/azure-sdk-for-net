@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsColumnType : IEquatable<OperationalInsightsColumnType>
     {
         private readonly string _value;
+        /// <summary> string. </summary>
+        private const string StringValue = "string";
+        /// <summary> int. </summary>
+        private const string IntValue = "int";
+        /// <summary> long. </summary>
+        private const string LongValue = "long";
+        /// <summary> real. </summary>
+        private const string RealValue = "real";
+        /// <summary> boolean. </summary>
+        private const string BooleanValue = "boolean";
+        /// <summary> dateTime. </summary>
+        private const string DateTimeValue = "dateTime";
+        /// <summary> guid. </summary>
+        private const string GuidValue = "guid";
+        /// <summary> dynamic. </summary>
+        private const string DynamicValue = "dynamic";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsColumnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsColumnType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "string";
-        private const string IntValue = "int";
-        private const string LongValue = "long";
-        private const string RealValue = "real";
-        private const string BooleanValue = "boolean";
-        private const string DateTimeValue = "dateTime";
-        private const string GuidValue = "guid";
-        private const string DynamicValue = "dynamic";
+            _value = value;
+        }
 
         /// <summary> string. </summary>
         public static OperationalInsightsColumnType String { get; } = new OperationalInsightsColumnType(StringValue);
+
         /// <summary> int. </summary>
         public static OperationalInsightsColumnType Int { get; } = new OperationalInsightsColumnType(IntValue);
+
         /// <summary> long. </summary>
         public static OperationalInsightsColumnType Long { get; } = new OperationalInsightsColumnType(LongValue);
+
         /// <summary> real. </summary>
         public static OperationalInsightsColumnType Real { get; } = new OperationalInsightsColumnType(RealValue);
+
         /// <summary> boolean. </summary>
         public static OperationalInsightsColumnType Boolean { get; } = new OperationalInsightsColumnType(BooleanValue);
+
         /// <summary> dateTime. </summary>
         public static OperationalInsightsColumnType DateTime { get; } = new OperationalInsightsColumnType(DateTimeValue);
+
         /// <summary> guid. </summary>
         public static OperationalInsightsColumnType Guid { get; } = new OperationalInsightsColumnType(GuidValue);
+
         /// <summary> dynamic. </summary>
         public static OperationalInsightsColumnType Dynamic { get; } = new OperationalInsightsColumnType(DynamicValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsColumnType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsColumnType left, OperationalInsightsColumnType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsColumnType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsColumnType left, OperationalInsightsColumnType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsColumnType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsColumnType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsColumnType(string value) => new OperationalInsightsColumnType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsColumnType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsColumnType?(string value) => value == null ? null : new OperationalInsightsColumnType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsColumnType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsColumnType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

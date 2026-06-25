@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <summary> Initializes a new instance of <see cref="DicomServicePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        internal DicomServicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(tags, serializedAdditionalRawData)
+        internal DicomServicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedServiceIdentity identity) : base(tags, additionalBinaryDataProperties)
         {
             Identity = identity;
         }

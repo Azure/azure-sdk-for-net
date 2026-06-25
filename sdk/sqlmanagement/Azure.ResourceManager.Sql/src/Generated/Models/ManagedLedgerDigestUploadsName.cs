@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The ManagedLedgerDigestUploadsName. </summary>
+    /// <summary></summary>
     public readonly partial struct ManagedLedgerDigestUploadsName : IEquatable<ManagedLedgerDigestUploadsName>
     {
         private readonly string _value;
+        /// <summary> current. </summary>
+        private const string CurrentValue = "current";
 
         /// <summary> Initializes a new instance of <see cref="ManagedLedgerDigestUploadsName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedLedgerDigestUploadsName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CurrentValue = "current";
+            _value = value;
+        }
 
         /// <summary> current. </summary>
         public static ManagedLedgerDigestUploadsName Current { get; } = new ManagedLedgerDigestUploadsName(CurrentValue);
+
         /// <summary> Determines if two <see cref="ManagedLedgerDigestUploadsName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedLedgerDigestUploadsName left, ManagedLedgerDigestUploadsName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedLedgerDigestUploadsName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedLedgerDigestUploadsName left, ManagedLedgerDigestUploadsName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedLedgerDigestUploadsName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedLedgerDigestUploadsName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedLedgerDigestUploadsName(string value) => new ManagedLedgerDigestUploadsName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedLedgerDigestUploadsName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedLedgerDigestUploadsName?(string value) => value == null ? null : new ManagedLedgerDigestUploadsName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedLedgerDigestUploadsName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedLedgerDigestUploadsName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

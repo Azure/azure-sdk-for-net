@@ -23,6 +23,9 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 - [Examples](#examples)
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
+    - [Hosted Agents from Docker images](#hosted-docker-based)
+    - [Hosted Agents from Code](#hosted-code-based)
+  - [External Agents](#external-agents)
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
   - [Skills](#skills)
@@ -141,36 +144,10 @@ The code above will result in creation of `ProjectsAgentVersion` object, which i
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
 
-To use hosted agent we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-To create the hosted agent, please use the `HostedAgentDefinition` while creating the AgentVersion object.
+#### Hosted Agents from Docker images<a id="hosted-docker-based"></a>
+To create the hosted agent from existing Docker image, please use the `HostedAgentDefinition` while creating the AgentVersion object.
 
 ```C# Snippet:Sample_Agents_ImageBasedHostedAgentDefinition_HostedAgent
 private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
@@ -181,43 +158,136 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage),
     };
     return agentDefinition;
 }
 ```
 
-The created agent needs to be deployed using [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli)
-
-```bash
-az login
-az cognitiveservices agent start --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+The next code will deploy the hosted Agent.
+```C# Snippet:Sample_Agents_Deployment_HostedAgent
+Uri uriEndpoint = new(projectEndpoint);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+HostedAgentDefinition agentDefinition = GetAgentDefinition(
+    dockerImage: dockerImage
+);
+ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+creationOptions.Metadata["enableVnextExperience"] = "true";
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+    agentName: hostedAgentName,
+    options: creationOptions);
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    agentVersion = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+}
+if (agentVersion.Status != AgentVersionStatus.Active)
+{
+    throw new InvalidOperationException($"Agent deployment failed, status: {agentVersion.Status}.");
+}
 ```
 
-After the deployment is complete, this Agent can be used for calling responses.
+#### Hosted Agents from Code<a id="hosted-code-based"></a>
+Hosted Agents also can be deployed using local code. To deploy the Agent from code, please prepare the folder with the Agent code and dependencies.
+In the example below, we use source code on Python.
 
-Agent deletion should be done through Azure CLI.
+1. Create a folder, containing agent code and dependencies. In our example, it should be located `Assets/AgentsCode` folder next to the sample itself (this folder is not provided).
+2. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py in the `Assets` folder.
+3. Create the `requirements.txt` in `Assets` folder with the next contents.
 
-```bash
-az cognitiveservices agent delete-deployment --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
-az cognitiveservices agent delete --account-name ACCOUNTNAME --project-name PROJECTNAME --name myHostedAgent --agent-version 1
+```
+azure-ai-agentserver-core
+azure-ai-agentserver-invocations
+azure-ai-agentserver-responses
+```
+
+Prepare the metadata for Agent:
+
+```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
+private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+{
+    HostedAgentDefinition agentDefinition = new(
+        cpu: "0.5",
+        memory: "1Gi"
+    )
+    {
+        Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
+        CodeConfiguration = new(
+            runtime: "python_3_14",
+            entryPoint: ["python", "main.py"],
+            dependencyResolution: CodeDependencyResolution.RemoteBuild
+        ),
+    };
+    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    metadata.Metadata["enableVnextExperience"] = "true";
+    return metadata;
+}
+```
+
+Deploy the Agent.
+
+```C# Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
+    agentName: "myCodeAgent",
+    filePath: GetDirectory(Path.Combine(["AgentsCode"])),
+    metadata: GetAgentMetadata()
+);
+while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+{
+    await Task.Delay(500);
+    agentVersion = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+}
+if (agentVersion.Status != AgentVersionStatus.Active)
+{
+    throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
+}
+```
+
+### External Agents
+
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents
+hosted outside Foundry (for example, on GCP or AWS). Registration is metadata-only: Foundry records the agent definition to
+light up observability experiences (traces, evaluations) over customer-emitted OpenTelemetry data.
+
+To create External Agent, we need to provide the `ExternalAgentDefinition` with `OpenTelemetry` agent identifier,
+used to attribute customer-emitted spans to this Foundry agent, in the `CreateAgentVersionAsync` or `CreateAgentVersion` method.
+
+```C# Snippet:Sample_CreateAgentVersion_ExternalAgentsCRUD_Async
+ExternalAgentDefinition agentDefinition = new()
+{
+    OtelAgentId = "sample-external-agent",
+};
+ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
+{
+    Description = "External agent registered by the azure-ai-projects sample.",
+    Metadata = {
+        { "sample", "external_agents_crud" },
+        { "status", "created" }
+    }
+};
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+    agentName: "myExternalAgent1",
+    options: agentOptions);
+Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
 ### Toolboxes
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
-The `AAIP001` warning needs to be ignored.
-
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
-As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
 In the example below we create two versions of MCP tool and save it to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     name: toolboxName,
     tools: [tool],
@@ -256,9 +326,6 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 ### Sessions
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
-The `AAIP001` warning needs to be ignored.
-
 Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
 sessions for the same agent version.
 
@@ -296,9 +363,7 @@ To use this feature we need to create the `AgentSessionFiles` client:
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
 ```
 
@@ -333,23 +398,27 @@ File.Delete(filePath);
 
 ### Skills
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Skills=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Skills=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
 to manage skills in Microsoft foundry. Skills may be created from the folder with instructions or on-the-fly.
 
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
-AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```
 
@@ -357,7 +426,7 @@ For more information on skills please see the [Microsoft learning](https://learn
 
 ### Agent endpoints
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
 The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
 because we are using three experimental features: hosted agents, skills and Agent endpoints.
 
@@ -374,26 +443,33 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 2. Create the skill.
 
 ```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-    """);
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+        """
+);
+SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
-3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+3. We will create configure hosted agent so that it will use the 74% of traffic to the endpoint and will also
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = {AgentEndpointProtocol.Responses}
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
-AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,

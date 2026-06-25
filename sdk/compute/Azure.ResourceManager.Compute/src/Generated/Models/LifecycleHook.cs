@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a lifecycle hook. </summary>
     public partial class LifecycleHook
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LifecycleHook"/>. </summary>
         public LifecycleHook()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmScaleSetLifecycleHookEventType"> Specifies the type of the lifecycle hook. </param>
         /// <param name="waitDuration"> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </param>
         /// <param name="defaultAction"> Specifies the action that will be applied to a target resource in the virtual machine scale set lifecycle hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleHook(VmScaleSetLifecycleHookEventType? vmScaleSetLifecycleHookEventType, TimeSpan? waitDuration, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LifecycleHook(VmScaleSetLifecycleHookEventType? vmScaleSetLifecycleHookEventType, TimeSpan? waitDuration, LifecycleHookAction? defaultAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmScaleSetLifecycleHookEventType = vmScaleSetLifecycleHookEventType;
             WaitDuration = waitDuration;
             DefaultAction = defaultAction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the type of the lifecycle hook. </summary>
         public VmScaleSetLifecycleHookEventType? VmScaleSetLifecycleHookEventType { get; set; }
+
         /// <summary> Specifies the time duration a virtual machine scale set lifecycle hook event sent to the customer waits for a response from the customer. It should be in ISO 8601 format. </summary>
         public TimeSpan? WaitDuration { get; set; }
+
         /// <summary> Specifies the action that will be applied to a target resource in the virtual machine scale set lifecycle hook event if the platform does not receive a response from the customer for the target resource before waitUntil. </summary>
         public LifecycleHookAction? DefaultAction { get; set; }
     }

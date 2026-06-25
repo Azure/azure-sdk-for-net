@@ -74,8 +74,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(OperationsContentProperties))]
     [ModelReaderWriterBuildable(typeof(OperationsDefinition))]
     [ModelReaderWriterBuildable(typeof(OperationsDisplayDefinition))]
-    [ModelReaderWriterBuildable(typeof(OperationsPutContentData))]
-    [ModelReaderWriterBuildable(typeof(OperationsPutContentResource))]
+    [ModelReaderWriterBuildable(typeof(OperationsPutContent))]
     [ModelReaderWriterBuildable(typeof(PrivateResourceProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderAdditionalAuthorization))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationData))]
@@ -163,7 +162,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(SubscriptionLifecycleNotificationSpecifications))]
     [ModelReaderWriterBuildable(typeof(SubscriptionStateOverrideAction))]
     [ModelReaderWriterBuildable(typeof(SwaggerSpecification))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentOptions))]
     [ModelReaderWriterBuildable(typeof(TemplateDeploymentPolicy))]
     [ModelReaderWriterBuildable(typeof(ThirdPartyExtension))]
@@ -174,6 +172,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(TrafficRegionRolloutConfiguration))]
     [ModelReaderWriterBuildable(typeof(TrafficRegions))]
     [ModelReaderWriterBuildable(typeof(TypedErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerProviderHubContext : ModelReaderWriterContext
     {
     }

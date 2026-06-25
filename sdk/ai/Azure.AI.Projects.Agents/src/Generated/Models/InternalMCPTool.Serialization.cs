@@ -179,7 +179,7 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUrl = default;
-            MCPToolConnectorId? connectorId = default;
+            MCPToolboxToolConnectorId? connectorId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
@@ -214,7 +214,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    connectorId = prop.Value.GetString().ToMCPToolConnectorId();
+                    connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))

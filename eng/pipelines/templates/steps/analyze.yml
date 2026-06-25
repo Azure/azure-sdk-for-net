@@ -11,6 +11,9 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
+  - name: ArtifactName
+    type: string
+    default: BuildPackagesArtifact
 
 steps:
   - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
@@ -27,7 +30,7 @@ steps:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     - task: DownloadPipelineArtifact@2
       inputs:
-        artifact: BuildPackagesArtifact
+        artifact: ${{ parameters.ArtifactName }}
         path: $(Build.ArtifactStagingDirectory)/PackageInfo
   - ${{ else }}:
     - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -52,10 +55,10 @@ steps:
     parameters:
       PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
-  - task: NodeTool@0
+  - task: UseNode@1
     inputs:
-      versionSpec: 20.x
-    displayName: 'Use Node 20.x'
+      version: 24.x
+    displayName: 'Use Node 24.x'
 
   # Authenticate npm to Azure Artifacts
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -70,6 +73,9 @@ steps:
       custom: 'tool'
       arguments: 'restore'
       workingDirectory: '$(Agent.BuildDirectory)'
+
+  - pwsh: ./eng/scripts/Verify-McpConfigSync.ps1
+    displayName: Verify MCP config (.mcp.json vs .vscode/mcp.json) are in sync
 
   - pwsh: |
       $failed = $false

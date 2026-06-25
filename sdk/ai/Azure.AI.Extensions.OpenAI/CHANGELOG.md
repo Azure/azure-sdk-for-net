@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 2.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,19 @@
 
 ### Bugs Fixed
 
+- Fixed issue with stateless encrypted reasoning [issue](https://github.com/Azure/azure-sdk-for-net/issues/59967).
+
 ### Other Changes
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Breaking Changes
+- **Breaking changes since version 2.0.0** `MemorySearchToolCallResponseItem` was replaced by `MemorySearchToolCall`, `MemoryCommandToolCall` and `MemoryCommandToolCallOutput`.
+- **Breaking changes since version 2.0.0** `MemoryToolSearchItem` was removed, because it is not used anymore.
+
+### Sample Updates
+- Added a sample for Fabric IQ Tool (preview).
+- Added a sample for Work IQ Tool (preview).
 
 ## 2.1.0-beta.2 (2026-05-14)
 

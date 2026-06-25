@@ -126,16 +126,6 @@ namespace OpenAI
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -176,8 +166,6 @@ namespace OpenAI
             InternalImageGenToolInputImageMask inputImageMask = default;
             long? partialImages = default;
             ImageGenActionEnum? action = default;
-            string name = default;
-            string description = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -285,16 +273,6 @@ namespace OpenAI
                     action = prop.Value.GetString().ToImageGenActionEnum();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -313,9 +291,7 @@ namespace OpenAI
                 inputFidelity,
                 inputImageMask,
                 partialImages,
-                action,
-                name,
-                description);
+                action);
         }
     }
 }

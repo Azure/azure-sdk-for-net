@@ -86,16 +86,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteStringValue(SearchContextSize.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             if (Optional.IsDefined(CustomSearchConfiguration))
             {
                 writer.WritePropertyName("custom_search_configuration"u8);
@@ -133,8 +123,6 @@ namespace Azure.AI.Projects
             WebSearchToolFilters filters = default;
             WebSearchApproximateLocation userLocation = default;
             WebSearchToolSearchContextSize? searchContextSize = default;
-            string name = default;
-            string description = default;
             WebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,16 +160,6 @@ namespace Azure.AI.Projects
                     searchContextSize = prop.Value.GetString().ToWebSearchToolSearchContextSize();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("custom_search_configuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -202,8 +180,6 @@ namespace Azure.AI.Projects
                 filters,
                 userLocation,
                 searchContextSize,
-                name,
-                description,
                 customSearchConfiguration);
         }
     }

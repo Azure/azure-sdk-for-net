@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct RoutePolicyActionType : IEquatable<RoutePolicyActionType>
     {
         private readonly string _value;
+        /// <summary> RoutePolicyActionType-Permit. </summary>
+        private const string PermitValue = "Permit";
+        /// <summary> RoutePolicyActionType-Deny. </summary>
+        private const string DenyValue = "Deny";
+        /// <summary> RoutePolicyActionType-Continue. </summary>
+        private const string ContinueValue = "Continue";
 
         /// <summary> Initializes a new instance of <see cref="RoutePolicyActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutePolicyActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PermitValue = "Permit";
-        private const string DenyValue = "Deny";
-        private const string ContinueValue = "Continue";
-
-        /// <summary> Permit. </summary>
+        /// <summary> RoutePolicyActionType-Permit. </summary>
         public static RoutePolicyActionType Permit { get; } = new RoutePolicyActionType(PermitValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> RoutePolicyActionType-Deny. </summary>
         public static RoutePolicyActionType Deny { get; } = new RoutePolicyActionType(DenyValue);
-        /// <summary> Continue. </summary>
+
+        /// <summary> RoutePolicyActionType-Continue. </summary>
         public static RoutePolicyActionType Continue { get; } = new RoutePolicyActionType(ContinueValue);
+
         /// <summary> Determines if two <see cref="RoutePolicyActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutePolicyActionType left, RoutePolicyActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutePolicyActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutePolicyActionType left, RoutePolicyActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutePolicyActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutePolicyActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutePolicyActionType(string value) => new RoutePolicyActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutePolicyActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutePolicyActionType?(string value) => value == null ? null : new RoutePolicyActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutePolicyActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutePolicyActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

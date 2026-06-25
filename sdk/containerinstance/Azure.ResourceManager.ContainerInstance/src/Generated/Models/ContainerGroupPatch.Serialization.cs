@@ -108,6 +108,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -136,13 +151,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             ResourceIdentifier id = default;
+            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation location = default;
-            string name = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             IList<string> zones = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -152,6 +167,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -170,16 +190,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         continue;
                     }
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerContainerInstanceContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -201,6 +211,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         }
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
@@ -231,13 +246,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             return new ContainerGroupPatch(
                 id,
+                name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                location,
-                name,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                zones ?? new ChangeTrackingList<string>());
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -38,25 +38,25 @@ namespace Azure.Provisioning.Batch
         public BatchAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AccountEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ActiveJobAndJobScheduleQuota { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchAuthenticationMode>> AllowedAuthenticationModes { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchAuthenticationMode> AllowedAuthenticationModes { get { throw null; } }
         public Azure.Provisioning.Batch.BatchAccountAutoStorageConfiguration AutoStorage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepValue<int>> DedicatedCoreQuota { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchVmFamilyCoreQuota>> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> DedicatedCoreQuota { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchVmFamilyCoreQuota> DedicatedCoreQuotaPerVmFamily { get { throw null; } }
         public Azure.Provisioning.Batch.BatchAccountEncryptionConfiguration Encryption { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDedicatedCoreQuotaPerVmFamilyEnforced { get { throw null; } }
         public Azure.Provisioning.Batch.BatchKeyVaultReference KeyVaultReference { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepValue<int>> LowPriorityCoreQuota { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> LowPriorityCoreQuota { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchNetworkProfile> NetworkProfile { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.BatchNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> NodeManagementEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchAccountPoolAllocationMode> PoolAllocationMode { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> PoolQuota { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchPrivateEndpointConnection>> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPublicNetworkAccess>> PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
