@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Marketplace
     [ModelReaderWriterBuildable(typeof(StopSellSubscriptions))]
     [ModelReaderWriterBuildable(typeof(SubscriptionsContextList))]
     [ModelReaderWriterBuildable(typeof(SubscriptionsResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransferOffersContent))]
     [ModelReaderWriterBuildable(typeof(TransferOffersDetails))]
     [ModelReaderWriterBuildable(typeof(TransferOffersResult))]
     [ModelReaderWriterBuildable(typeof(WithdrawDetails))]
     [ModelReaderWriterBuildable(typeof(WithdrawPlanContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerMarketplaceContext : ModelReaderWriterContext
     {
     }

@@ -137,11 +137,13 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteToolboxAsync("mcp2");
         }
         catch { }
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test mcp tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
             name: "mcp1",
@@ -203,11 +205,13 @@ public class AgentsTests : AgentsTestBase
             await toolboxClient.DeleteToolboxAsync("mcp");
         }
         catch { }
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test mcp tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
             name: "mcp",
@@ -328,28 +332,20 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.FileSearch)]
-    // [TestCase(ToolType.ImageGeneration)] Not supported in toolsets.
     [TestCase(ToolType.WebSearch)]
-    // [TestCase(ToolType.WebSearchPreview)] Not supported in toolsets.
-    // [TestCase(ToolType.Memory)] Not supported in toolsets.
     [TestCase(ToolType.AzureAISearch)]
-    // [TestCase(ToolType.BingGrounding)] Not supported in toolsets.
-    // [TestCase(ToolType.BingGroundingCustom)] Not supported in toolsets.
     [TestCase(ToolType.OpenAPI)]
-    // [TestCase(ToolType.Sharepoint)] Not supported in toolsets.
-    // [TestCase(ToolType.BrowserAutomation)] Not supported in toolsets.
-    // [TestCase(ToolType.MicrosoftFabric)] Not supported in toolsets.
     [TestCase(ToolType.A2A)]
-    // [TestCase(ToolType.AzureFunction)] Not supported in toolsets.
-    // [TestCase(ToolType.FunctionCall)] Not supported in toolsets.
     [TestCase(ToolType.MCP)]
-    // [TestCase(ToolType.ComputerUse)] Not supported in toolsets.
+    [TestCase(ToolType.BrowserAutomation)]
+    [TestCase(ToolType.WorkIQ)]
+    [TestCase(ToolType.FabricIQ)]
+    [TestCase(ToolType.ReminderPreview)]
     public async Task TestToolsetVariety(ToolType toolType)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
-        ResponseTool oaiTool = GetAgentToolDefinition(toolType);
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(oaiTool);
+        ToolboxTool tool = GetAgentToolDefinition(toolType);
         ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
             name: TOOLBOX,
             tools: [tool],
@@ -367,13 +363,13 @@ public class AgentsTests : AgentsTestBase
         // Use trhe tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
-            Tools = { toolBox.Tools[0] }
+            Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
         {
-            Assert.That(declarativeDefinition.Tools.Count(), Is.EqualTo(1));
-            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(oaiTool.GetType()));
+            Assert.That(declarativeDefinition.Tools, Has.Count.EqualTo(1));
+            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(((ResponseTool)ProjectsAgentTool.AsProjectTool(toolBox.Tools[0])).GetType()));
         }
         else
         {
@@ -388,11 +384,13 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
         int created = 0;
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         while (records.Count + created <= PAGE_SIZE)
         {
             await toolboxClient.CreateToolboxVersionAsync(
@@ -437,11 +435,13 @@ public class AgentsTests : AgentsTestBase
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         List<ToolboxVersion> records = await toolboxClient.GetToolboxVersionsAsync(name: TOOLBOX, order: AgentListOrder.Ascending).ToListAsync();
         int created = 0;
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Test MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         while (records.Count + created <= PAGE_SIZE)
         {
             await toolboxClient.CreateToolboxVersionAsync(
@@ -479,6 +479,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
+    [Ignore("Blocked by the ADO Item 5384172.")]
     [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
@@ -488,7 +489,10 @@ public class AgentsTests : AgentsTestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
@@ -513,8 +517,10 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
-        Assert.That(patchedRecord.AgentEndpoint.Protocols, Has.Count.EqualTo(1));
-        Assert.That(patchedRecord.AgentEndpoint.Protocols[0], Is.EqualTo(AgentEndpointProtocol.Responses));
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Responses, Is.Not.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Invocations, Is.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.A2a, Is.Null);
+        Assert.That(patchedRecord.AgentEndpoint.ProtocolConfiguration.Mcp, Is.Null);
         Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules, Has.Count.EqualTo(1));
         Assert.That(patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0], Is.InstanceOf(typeof(FixedRatioVersionSelectionRule)));
         Assert.That(((FixedRatioVersionSelectionRule)patchedRecord.AgentEndpoint.VersionSelector.VersionSelectionRules[0]).TrafficPercentage, Is.EqualTo(74));

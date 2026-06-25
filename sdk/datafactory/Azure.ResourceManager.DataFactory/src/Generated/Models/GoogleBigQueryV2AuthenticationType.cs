@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct GoogleBigQueryV2AuthenticationType : IEquatable<GoogleBigQueryV2AuthenticationType>
     {
         private readonly string _value;
+        /// <summary> ServiceAuthentication. </summary>
+        private const string ServiceAuthenticationValue = "ServiceAuthentication";
+        /// <summary> UserAuthentication. </summary>
+        private const string UserAuthenticationValue = "UserAuthentication";
 
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GoogleBigQueryV2AuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServiceAuthenticationValue = "ServiceAuthentication";
-        private const string UserAuthenticationValue = "UserAuthentication";
+            _value = value;
+        }
 
         /// <summary> ServiceAuthentication. </summary>
         public static GoogleBigQueryV2AuthenticationType ServiceAuthentication { get; } = new GoogleBigQueryV2AuthenticationType(ServiceAuthenticationValue);
+
         /// <summary> UserAuthentication. </summary>
         public static GoogleBigQueryV2AuthenticationType UserAuthentication { get; } = new GoogleBigQueryV2AuthenticationType(UserAuthenticationValue);
+
         /// <summary> Determines if two <see cref="GoogleBigQueryV2AuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GoogleBigQueryV2AuthenticationType left, GoogleBigQueryV2AuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GoogleBigQueryV2AuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GoogleBigQueryV2AuthenticationType left, GoogleBigQueryV2AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GoogleBigQueryV2AuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GoogleBigQueryV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GoogleBigQueryV2AuthenticationType(string value) => new GoogleBigQueryV2AuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GoogleBigQueryV2AuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GoogleBigQueryV2AuthenticationType?(string value) => value == null ? null : new GoogleBigQueryV2AuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GoogleBigQueryV2AuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GoogleBigQueryV2AuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -51,7 +51,6 @@ public partial class ProjectsAgentRecord
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
 [CodeGenType("MCPToolRequireApprovalAlways")] internal partial class InternalMCPToolRequireApprovalAlways { }
 [CodeGenType("MCPToolRequireApprovalNever")] internal partial class InternalMCPToolRequireApprovalNever { }
-[CodeGenType("RankingOptions")] internal partial class InternalRankingOptions { }
 [CodeGenType("RankingOptionsRanker")] internal readonly partial struct RankingOptionsRanker { }
 [CodeGenType("TopLogProb")] internal partial class InternalTopLogProb { }
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the AuthorizationProviderContract data model.
-    /// Authorization Provider contract.
-    /// </summary>
+    /// <summary> Authorization Provider contract. </summary>
     public partial class AuthorizationProviderContractData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderContractData"/>. </summary>
         public AuthorizationProviderContractData()
@@ -57,30 +25,74 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationProviderContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Authorization Provider name. Must be 1 to 300 characters long. </param>
-        /// <param name="identityProvider"> Identity provider name. Must be 1 to 300 characters long. </param>
-        /// <param name="oauth2"> OAuth2 settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationProviderContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string identityProvider, AuthorizationProviderOAuth2Settings oauth2, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Authorization Provider Contract. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthorizationProviderContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            IdentityProvider = identityProvider;
-            Oauth2 = oauth2;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the Authorization Provider Contract. </summary>
+        [WirePath("properties")]
+        internal AuthorizationProviderContractProperties Properties { get; set; }
 
         /// <summary> Authorization Provider name. Must be 1 to 300 characters long. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationProviderContractProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Identity provider name. Must be 1 to 300 characters long. </summary>
         [WirePath("properties.identityProvider")]
-        public string IdentityProvider { get; set; }
+        public string IdentityProvider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityProvider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationProviderContractProperties();
+                }
+                Properties.IdentityProvider = value;
+            }
+        }
+
         /// <summary> OAuth2 settings. </summary>
         [WirePath("properties.oauth2")]
-        public AuthorizationProviderOAuth2Settings Oauth2 { get; set; }
+        public AuthorizationProviderOAuth2Settings Oauth2
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Oauth2;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationProviderContractProperties();
+                }
+                Properties.Oauth2 = value;
+            }
+        }
     }
 }

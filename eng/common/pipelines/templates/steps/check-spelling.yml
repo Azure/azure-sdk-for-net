@@ -35,6 +35,7 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       condition: and(succeeded(), ne(variables['Skip.SpellCheck'],'true'))
@@ -46,9 +47,6 @@ steps:
           -CspellConfigPath ${{ parameters.CspellConfigPath }}
           -ExitWithError:(!$${{ parameters.ContinueOnError }})
         pwsh: true
-      env:
-        ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
-          npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}
     - ${{ if ne('', parameters.ScriptToValidateUpgrade) }}:
       - pwsh: |
           $changedFiles = ./eng/common/scripts/get-changedfiles.ps1

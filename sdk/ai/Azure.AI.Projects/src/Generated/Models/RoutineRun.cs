@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
@@ -16,6 +17,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
         internal RoutineRun()
         {
+            TriggerEventPayload = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
@@ -24,6 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
         /// <param name="triggerType"> The trigger type that produced the routine attempt. </param>
         /// <param name="triggerName"> The configured trigger name that produced the routine attempt. </param>
+        /// <param name="triggerEventPayload"> The event payload captured from the event that triggered the routine attempt, when available. </param>
         /// <param name="attemptSource"> The source path that created the routine attempt. </param>
         /// <param name="actionType"> The action type dispatched for the routine attempt. </param>
         /// <param name="agentId"> The project-scoped agent identifier recorded for the routine attempt. </param>
@@ -42,13 +45,14 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             StatusInternal = statusInternal;
             Phase = phase;
             TriggerType = triggerType;
             TriggerName = triggerName;
+            TriggerEventPayload = triggerEventPayload;
             AttemptSource = attemptSource;
             ActionType = actionType;
             AgentId = agentId;
@@ -80,6 +84,34 @@ namespace Azure.AI.Projects
 
         /// <summary> The configured trigger name that produced the routine attempt. </summary>
         public string TriggerName { get; }
+
+        /// <summary>
+        /// The event payload captured from the event that triggered the routine attempt, when available.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> TriggerEventPayload { get; }
 
         /// <summary> The source path that created the routine attempt. </summary>
         public RoutineAttemptSource? AttemptSource { get; }

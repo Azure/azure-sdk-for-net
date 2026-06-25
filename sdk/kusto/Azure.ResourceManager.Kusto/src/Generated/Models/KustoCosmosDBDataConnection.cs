@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -16,68 +17,172 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoCosmosDBDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
-        public KustoCosmosDBDataConnection()
+        public KustoCosmosDBDataConnection() : base(DataConnectionKind.CosmosDb)
         {
-            Kind = DataConnectionKind.CosmosDB;
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tableName"> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </param>
-        /// <param name="mappingRuleName"> The name of an existing mapping rule to use when ingesting the retrieved data. </param>
-        /// <param name="managedIdentityResourceId"> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </param>
-        /// <param name="managedIdentityObjectId"> The object ID of the managed identity resource. </param>
-        /// <param name="cosmosDBAccountResourceId"> The resource ID of the Cosmos DB account used to create the data connection. </param>
-        /// <param name="cosmosDBDatabase"> The name of an existing database in the Cosmos DB account. </param>
-        /// <param name="cosmosDBContainer"> The name of an existing container in the Cosmos DB database. </param>
-        /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDBAccountResourceId, string cosmosDBDatabase, string cosmosDBContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the CosmosDb data connection. </param>
+        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDbDataConnectionProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
         {
-            TableName = tableName;
-            MappingRuleName = mappingRuleName;
-            ManagedIdentityResourceId = managedIdentityResourceId;
-            ManagedIdentityObjectId = managedIdentityObjectId;
-            CosmosDBAccountResourceId = cosmosDBAccountResourceId;
-            CosmosDBDatabase = cosmosDBDatabase;
-            CosmosDBContainer = cosmosDBContainer;
-            RetrievalStartOn = retrievalStartOn;
-            ProvisioningState = provisioningState;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> The properties of the CosmosDb data connection. </summary>
+        [WirePath("properties")]
+        internal CosmosDbDataConnectionProperties Properties { get; set; }
 
         /// <summary> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </summary>
         [WirePath("properties.tableName")]
-        public string TableName { get; set; }
+        public string TableName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TableName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.TableName = value;
+            }
+        }
+
         /// <summary> The name of an existing mapping rule to use when ingesting the retrieved data. </summary>
         [WirePath("properties.mappingRuleName")]
-        public string MappingRuleName { get; set; }
+        public string MappingRuleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MappingRuleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.MappingRuleName = value;
+            }
+        }
+
         /// <summary> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </summary>
         [WirePath("properties.managedIdentityResourceId")]
-        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.ManagedIdentityResourceId = value;
+            }
+        }
+
         /// <summary> The object ID of the managed identity resource. </summary>
         [WirePath("properties.managedIdentityObjectId")]
-        public Guid? ManagedIdentityObjectId { get; }
+        public Guid? ManagedIdentityObjectId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedIdentityObjectId;
+            }
+        }
+
         /// <summary> The resource ID of the Cosmos DB account used to create the data connection. </summary>
         [WirePath("properties.cosmosDbAccountResourceId")]
-        public ResourceIdentifier CosmosDBAccountResourceId { get; set; }
+        public ResourceIdentifier CosmosDBAccountResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CosmosDBAccountResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.CosmosDBAccountResourceId = value;
+            }
+        }
+
         /// <summary> The name of an existing database in the Cosmos DB account. </summary>
         [WirePath("properties.cosmosDbDatabase")]
-        public string CosmosDBDatabase { get; set; }
+        public string CosmosDBDatabase
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CosmosDBDatabase;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.CosmosDBDatabase = value;
+            }
+        }
+
         /// <summary> The name of an existing container in the Cosmos DB database. </summary>
         [WirePath("properties.cosmosDbContainer")]
-        public string CosmosDBContainer { get; set; }
+        public string CosmosDBContainer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CosmosDBContainer;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.CosmosDBContainer = value;
+            }
+        }
+
         /// <summary> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </summary>
         [WirePath("properties.retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn { get; set; }
+        public DateTimeOffset? RetrievalStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetrievalStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDbDataConnectionProperties();
+                }
+                Properties.RetrievalStartOn = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LinkedIntegrationRuntimeRbacAuthorization : IUtf8JsonSerializable, IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>
+    /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
+    public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrationRuntimeType, IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/> for deserialization. </summary>
+        internal LinkedIntegrationRuntimeRbacAuthorization()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LinkedIntegrationRuntimeType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkedIntegrationRuntimeRbacAuthorization IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options) => (LinkedIntegrationRuntimeRbacAuthorization)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -44,90 +90,62 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        LinkedIntegrationRuntimeRbacAuthorization IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkedIntegrationRuntimeRbacAuthorization IJsonModel<LinkedIntegrationRuntimeRbacAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LinkedIntegrationRuntimeRbacAuthorization)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override LinkedIntegrationRuntimeType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
         }
 
-        internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LinkedIntegrationRuntimeRbacAuthorization DeserializeLinkedIntegrationRuntimeRbacAuthorization(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string authorizationType = "RBAC";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier resourceId = default;
             DataFactoryCredentialReference credential = default;
-            string authorizationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("authorizationType"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    authorizationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credential"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("credential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("authorizationType"u8))
-                {
-                    authorizationType = property.Value.GetString();
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, serializedAdditionalRawData, resourceId, credential);
+            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, additionalBinaryDataProperties, resourceId, credential);
         }
-
-        BinaryData IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LinkedIntegrationRuntimeRbacAuthorization IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

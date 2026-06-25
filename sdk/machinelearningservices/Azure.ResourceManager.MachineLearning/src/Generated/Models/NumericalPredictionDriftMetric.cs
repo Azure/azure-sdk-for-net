@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The NumericalPredictionDriftMetric. </summary>
+    /// <summary></summary>
     public readonly partial struct NumericalPredictionDriftMetric : IEquatable<NumericalPredictionDriftMetric>
     {
         private readonly string _value;
+        /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
+        private const string JensenShannonDistanceValue = "JensenShannonDistance";
+        /// <summary> The Population Stability Index (PSI) metric. </summary>
+        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
+        /// <summary> The Normalized Wasserstein Distance metric. </summary>
+        private const string NormalizedWassersteinDistanceValue = "NormalizedWassersteinDistance";
+        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample Kâ€“S) metric. </summary>
+        private const string TwoSampleKolmogorovSmirnovTestValue = "TwoSampleKolmogorovSmirnovTest";
 
         /// <summary> Initializes a new instance of <see cref="NumericalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NumericalPredictionDriftMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JensenShannonDistanceValue = "JensenShannonDistance";
-        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
-        private const string NormalizedWassersteinDistanceValue = "NormalizedWassersteinDistance";
-        private const string TwoSampleKolmogorovSmirnovTestValue = "TwoSampleKolmogorovSmirnovTest";
+            _value = value;
+        }
 
         /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
         public static NumericalPredictionDriftMetric JensenShannonDistance { get; } = new NumericalPredictionDriftMetric(JensenShannonDistanceValue);
+
         /// <summary> The Population Stability Index (PSI) metric. </summary>
         public static NumericalPredictionDriftMetric PopulationStabilityIndex { get; } = new NumericalPredictionDriftMetric(PopulationStabilityIndexValue);
+
         /// <summary> The Normalized Wasserstein Distance metric. </summary>
         public static NumericalPredictionDriftMetric NormalizedWassersteinDistance { get; } = new NumericalPredictionDriftMetric(NormalizedWassersteinDistanceValue);
-        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample K–S) metric. </summary>
+
+        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample Kâ€“S) metric. </summary>
         public static NumericalPredictionDriftMetric TwoSampleKolmogorovSmirnovTest { get; } = new NumericalPredictionDriftMetric(TwoSampleKolmogorovSmirnovTestValue);
+
         /// <summary> Determines if two <see cref="NumericalPredictionDriftMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NumericalPredictionDriftMetric left, NumericalPredictionDriftMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NumericalPredictionDriftMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NumericalPredictionDriftMetric left, NumericalPredictionDriftMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NumericalPredictionDriftMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NumericalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NumericalPredictionDriftMetric(string value) => new NumericalPredictionDriftMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NumericalPredictionDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NumericalPredictionDriftMetric?(string value) => value == null ? null : new NumericalPredictionDriftMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NumericalPredictionDriftMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NumericalPredictionDriftMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

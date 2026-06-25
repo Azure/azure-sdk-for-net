@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Backend communication protocol. </summary>
+    /// <summary> Backend communication protocol. Required when backend type is 'Single'. </summary>
     public readonly partial struct BackendProtocol : IEquatable<BackendProtocol>
     {
         private readonly string _value;
+        /// <summary> The Backend is a RESTful service. </summary>
+        private const string HttpValue = "http";
+        /// <summary> The Backend is a SOAP service. </summary>
+        private const string SoapValue = "soap";
 
         /// <summary> Initializes a new instance of <see cref="BackendProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BackendProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "http";
-        private const string SoapValue = "soap";
+            _value = value;
+        }
 
         /// <summary> The Backend is a RESTful service. </summary>
         public static BackendProtocol Http { get; } = new BackendProtocol(HttpValue);
+
         /// <summary> The Backend is a SOAP service. </summary>
         public static BackendProtocol Soap { get; } = new BackendProtocol(SoapValue);
+
         /// <summary> Determines if two <see cref="BackendProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackendProtocol left, BackendProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackendProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackendProtocol left, BackendProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackendProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackendProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackendProtocol(string value) => new BackendProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackendProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackendProtocol?(string value) => value == null ? null : new BackendProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackendProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackendProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
