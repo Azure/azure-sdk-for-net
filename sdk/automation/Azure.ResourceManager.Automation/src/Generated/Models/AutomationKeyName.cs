@@ -12,7 +12,7 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Automation key name. </summary>
-    internal readonly partial struct AutomationKeyName : IEquatable<AutomationKeyName>
+    public readonly partial struct AutomationKeyName : IEquatable<AutomationKeyName>
     {
         private readonly string _value;
         /// <summary> Primary. </summary>

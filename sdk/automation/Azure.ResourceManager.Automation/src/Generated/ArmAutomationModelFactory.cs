@@ -696,6 +696,15 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationUsageCounterName(value, localizedValue, default);
         }
 
+        /// <param name="keyName"> Automation key name. </param>
+        /// <param name="permissions"> Automation key permissions. </param>
+        /// <param name="value"> Value of the Automation Key used for registration. </param>
+        /// <returns> A new <see cref="Models.AutomationKey"/> instance for mocking. </returns>
+        public static AutomationKey AutomationKey(AutomationKeyName? keyName = default, AutomationKeyPermission? permissions = default, string value = default)
+        {
+            return new AutomationKey(keyName, permissions, value, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

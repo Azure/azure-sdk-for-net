@@ -14,7 +14,7 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Automation key which is used to register a DSC Node. </summary>
-    internal partial class AutomationKey : IJsonModel<AutomationKey>
+    public partial class AutomationKey : IJsonModel<AutomationKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
