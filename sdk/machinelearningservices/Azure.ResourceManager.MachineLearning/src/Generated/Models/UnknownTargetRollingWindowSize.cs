@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of TargetRollingWindowSize. </summary>
     internal partial class UnknownTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
-        {
-            Mode = mode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownTargetRollingWindowSize"/> for deserialization. </summary>
-        internal UnknownTargetRollingWindowSize()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode != default ? mode : "unknown", additionalBinaryDataProperties)
         {
         }
     }

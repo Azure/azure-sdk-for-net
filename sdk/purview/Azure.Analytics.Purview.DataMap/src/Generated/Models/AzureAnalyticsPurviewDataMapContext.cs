@@ -56,7 +56,6 @@ namespace Azure.Analytics.Purview.DataMap
     [ModelReaderWriterBuildable(typeof(AutoCompleteResult))]
     [ModelReaderWriterBuildable(typeof(AutoCompleteResultValue))]
     [ModelReaderWriterBuildable(typeof(BulkImportResult))]
-    [ModelReaderWriterBuildable(typeof(BusinessMetadataOptions))]
     [ModelReaderWriterBuildable(typeof(ClassificationAssociateConfig))]
     [ModelReaderWriterBuildable(typeof(ContactInfo))]
     [ModelReaderWriterBuildable(typeof(ContactSearchResultValue))]

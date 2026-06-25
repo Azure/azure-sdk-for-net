@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class P2SVpnGatewayResource : IJsonModel<P2SVpnGatewayData>
     {
-        private static P2SVpnGatewayData s_dataDeserializationInstance;
-        private static P2SVpnGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<P2SVpnGatewayData> s_dataDeserializationInstance;
 
+        private static IJsonModel<P2SVpnGatewayData> DataDeserializationInstance => s_dataDeserializationInstance ??= new P2SVpnGatewayData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<P2SVpnGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<P2SVpnGatewayData>)Data).Write(writer, options);
 
-        P2SVpnGatewayData IJsonModel<P2SVpnGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<P2SVpnGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        P2SVpnGatewayData IJsonModel<P2SVpnGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<P2SVpnGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<P2SVpnGatewayData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         P2SVpnGatewayData IPersistableModel<P2SVpnGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<P2SVpnGatewayData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<P2SVpnGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<P2SVpnGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<P2SVpnGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -64,8 +64,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="deploymentScope"> DeploymentScope type for HostPool. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
+        /// <param name="conditionalRdpProperty"> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp, DesktopVirtualizationDirectUdp? directUdp, DesktopVirtualizationPublicUdp? publicUdp, DesktopVirtualizationRelayUdp? relayUdp, DesktopVirtualizationManagementType? managementType, DesktopVirtualizationDeploymentScope? deploymentScope, string oboTenantId, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolProperties(string objectId, string friendlyName, string description, HostPoolType hostPoolType, PersonalDesktopAssignmentType? personalDesktopAssignmentType, string customRdpProperty, int? maxSessionLimit, HostPoolLoadBalancerType loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfo registrationInfo, string vmTemplate, IReadOnlyList<string> applicationGroupReferences, IReadOnlyList<string> appAttachPackageReferences, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType preferredAppGroupType, bool? startVmOnConnect, bool? isCloudPCResource, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdateProperties agentUpdate, IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp, DesktopVirtualizationDirectUdp? directUdp, DesktopVirtualizationPublicUdp? publicUdp, DesktopVirtualizationRelayUdp? relayUdp, DesktopVirtualizationManagementType? managementType, DesktopVirtualizationDeploymentScope? deploymentScope, string oboTenantId, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink, string conditionalRdpProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             FriendlyName = friendlyName;
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DeploymentScope = deploymentScope;
             OboTenantId = oboTenantId;
             AllowRdpShortPathWithPrivateLink = allowRdpShortPathWithPrivateLink;
+            ConditionalRdpProperty = conditionalRdpProperty;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -229,5 +231,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
         [WirePath("allowRDPShortPathWithPrivateLink")]
         public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink { get; set; }
+
+        /// <summary> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </summary>
+        [WirePath("conditionalRdpProperty")]
+        public string ConditionalRdpProperty { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct RegionalReplicationState : IEquatable<RegionalReplicationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RegionalReplicationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RegionalReplicationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string ReplicatingValue = "Replicating";
         private const string CompletedValue = "Completed";
         private const string FailedValue = "Failed";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RegionalReplicationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static RegionalReplicationState Unknown { get; } = new RegionalReplicationState(UnknownValue);
-        /// <summary> Replicating. </summary>
+
+        /// <summary> Gets the Replicating. </summary>
         public static RegionalReplicationState Replicating { get; } = new RegionalReplicationState(ReplicatingValue);
-        /// <summary> Completed. </summary>
+
+        /// <summary> Gets the Completed. </summary>
         public static RegionalReplicationState Completed { get; } = new RegionalReplicationState(CompletedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static RegionalReplicationState Failed { get; } = new RegionalReplicationState(FailedValue);
+
         /// <summary> Determines if two <see cref="RegionalReplicationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegionalReplicationState left, RegionalReplicationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegionalReplicationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegionalReplicationState left, RegionalReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionalReplicationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegionalReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegionalReplicationState(string value) => new RegionalReplicationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegionalReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegionalReplicationState?(string value) => value == null ? null : new RegionalReplicationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegionalReplicationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegionalReplicationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

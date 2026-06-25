@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct PfsGroup : IEquatable<PfsGroup>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> PFS1. </summary>
+        private const string PFS1Value = "PFS1";
+        /// <summary> PFS2. </summary>
+        private const string PFS2Value = "PFS2";
+        /// <summary> PFS2048. </summary>
+        private const string PFS2048Value = "PFS2048";
+        /// <summary> ECP256. </summary>
+        private const string ECP256Value = "ECP256";
+        /// <summary> ECP384. </summary>
+        private const string ECP384Value = "ECP384";
+        /// <summary> PFS24. </summary>
+        private const string PFS24Value = "PFS24";
+        /// <summary> PFS14. </summary>
+        private const string PFS14Value = "PFS14";
+        /// <summary> PFSMM. </summary>
+        private const string PFSMMValue = "PFSMM";
 
         /// <summary> Initializes a new instance of <see cref="PfsGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PfsGroup(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string Pfs1Value = "PFS1";
-        private const string Pfs2Value = "PFS2";
-        private const string Pfs2048Value = "PFS2048";
-        private const string Ecp256Value = "ECP256";
-        private const string Ecp384Value = "ECP384";
-        private const string Pfs24Value = "PFS24";
-        private const string Pfs14Value = "PFS14";
-        private const string PfsValue = "PFSMM";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static PfsGroup None { get; } = new PfsGroup(NoneValue);
+
         /// <summary> PFS1. </summary>
-        public static PfsGroup Pfs1 { get; } = new PfsGroup(Pfs1Value);
+        public static PfsGroup PFS1 { get; } = new PfsGroup(PFS1Value);
+
         /// <summary> PFS2. </summary>
-        public static PfsGroup Pfs2 { get; } = new PfsGroup(Pfs2Value);
+        public static PfsGroup PFS2 { get; } = new PfsGroup(PFS2Value);
+
         /// <summary> PFS2048. </summary>
-        public static PfsGroup Pfs2048 { get; } = new PfsGroup(Pfs2048Value);
+        public static PfsGroup PFS2048 { get; } = new PfsGroup(PFS2048Value);
+
         /// <summary> ECP256. </summary>
-        public static PfsGroup Ecp256 { get; } = new PfsGroup(Ecp256Value);
+        public static PfsGroup ECP256 { get; } = new PfsGroup(ECP256Value);
+
         /// <summary> ECP384. </summary>
-        public static PfsGroup Ecp384 { get; } = new PfsGroup(Ecp384Value);
+        public static PfsGroup ECP384 { get; } = new PfsGroup(ECP384Value);
+
         /// <summary> PFS24. </summary>
-        public static PfsGroup Pfs24 { get; } = new PfsGroup(Pfs24Value);
+        public static PfsGroup PFS24 { get; } = new PfsGroup(PFS24Value);
+
         /// <summary> PFS14. </summary>
-        public static PfsGroup Pfs14 { get; } = new PfsGroup(Pfs14Value);
+        public static PfsGroup PFS14 { get; } = new PfsGroup(PFS14Value);
+
         /// <summary> PFSMM. </summary>
-        public static PfsGroup Pfs { get; } = new PfsGroup(PfsValue);
+        public static PfsGroup PFSMM { get; } = new PfsGroup(PFSMMValue);
+
         /// <summary> Determines if two <see cref="PfsGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PfsGroup left, PfsGroup right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PfsGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PfsGroup left, PfsGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PfsGroup"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PfsGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PfsGroup(string value) => new PfsGroup(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PfsGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PfsGroup?(string value) => value == null ? null : new PfsGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PfsGroup other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PfsGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

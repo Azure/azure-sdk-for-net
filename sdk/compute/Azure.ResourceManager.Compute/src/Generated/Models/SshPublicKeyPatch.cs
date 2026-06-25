@@ -20,14 +20,31 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="SshPublicKeyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="publicKey"> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </param>
-        internal SshPublicKeyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string publicKey) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the SSH public key. </param>
+        internal SshPublicKeyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, SshPublicKeyResourceProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            PublicKey = publicKey;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the SSH public key. </summary>
+        internal SshPublicKeyResourceProperties Properties { get; set; }
+
         /// <summary> SSH public key used to authenticate to a virtual machine through ssh. If this property is not initially provided when the resource is created, the publicKey property will be populated when generateKeyPair is called. If the public key is provided upon resource creation, the provided public key needs to be at least 2048-bit and in ssh-rsa format. </summary>
-        public string PublicKey { get; set; }
+        public string PublicKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SshPublicKeyResourceProperties();
+                }
+                Properties.PublicKey = value;
+            }
+        }
     }
 }

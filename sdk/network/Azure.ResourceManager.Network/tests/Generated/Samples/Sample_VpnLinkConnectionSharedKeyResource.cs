@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
                     SharedKey = "ABCDEF123456",
                 },
             };
-            ArmOperation<VpnLinkConnectionSharedKeyResource> lro = await vpnLinkConnectionSharedKey.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VpnLinkConnectionSharedKeyResource> lro = await vpnLinkConnectionSharedKey.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnLinkConnectionSharedKeyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

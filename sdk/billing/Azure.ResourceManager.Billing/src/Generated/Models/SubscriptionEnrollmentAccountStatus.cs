@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SubscriptionEnrollmentAccountStatus : IEquatable<SubscriptionEnrollmentAccountStatus>
     {
         private readonly string _value;
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> TransferredOut. </summary>
+        private const string TransferredOutValue = "TransferredOut";
+        /// <summary> Transferring. </summary>
+        private const string TransferringValue = "Transferring";
+        /// <summary> Inactive. </summary>
+        private const string InactiveValue = "Inactive";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionEnrollmentAccountStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CancelledValue = "Cancelled";
-        private const string ExpiredValue = "Expired";
-        private const string DeletedValue = "Deleted";
-        private const string TransferredOutValue = "TransferredOut";
-        private const string TransferringValue = "Transferring";
-        private const string InactiveValue = "Inactive";
+            _value = value;
+        }
 
         /// <summary> Active. </summary>
         public static SubscriptionEnrollmentAccountStatus Active { get; } = new SubscriptionEnrollmentAccountStatus(ActiveValue);
+
         /// <summary> Cancelled. </summary>
         public static SubscriptionEnrollmentAccountStatus Cancelled { get; } = new SubscriptionEnrollmentAccountStatus(CancelledValue);
+
         /// <summary> Expired. </summary>
         public static SubscriptionEnrollmentAccountStatus Expired { get; } = new SubscriptionEnrollmentAccountStatus(ExpiredValue);
+
         /// <summary> Deleted. </summary>
         public static SubscriptionEnrollmentAccountStatus Deleted { get; } = new SubscriptionEnrollmentAccountStatus(DeletedValue);
+
         /// <summary> TransferredOut. </summary>
         public static SubscriptionEnrollmentAccountStatus TransferredOut { get; } = new SubscriptionEnrollmentAccountStatus(TransferredOutValue);
+
         /// <summary> Transferring. </summary>
         public static SubscriptionEnrollmentAccountStatus Transferring { get; } = new SubscriptionEnrollmentAccountStatus(TransferringValue);
+
         /// <summary> Inactive. </summary>
         public static SubscriptionEnrollmentAccountStatus Inactive { get; } = new SubscriptionEnrollmentAccountStatus(InactiveValue);
+
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionEnrollmentAccountStatus left, SubscriptionEnrollmentAccountStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionEnrollmentAccountStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionEnrollmentAccountStatus left, SubscriptionEnrollmentAccountStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionEnrollmentAccountStatus(string value) => new SubscriptionEnrollmentAccountStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionEnrollmentAccountStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionEnrollmentAccountStatus?(string value) => value == null ? null : new SubscriptionEnrollmentAccountStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionEnrollmentAccountStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionEnrollmentAccountStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

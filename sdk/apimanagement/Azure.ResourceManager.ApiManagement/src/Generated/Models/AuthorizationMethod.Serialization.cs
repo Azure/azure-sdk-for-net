@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class AuthorizationMethodExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AuthorizationMethod value) => value switch
         {
             AuthorizationMethod.Head => "HEAD",
@@ -24,16 +25,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationMethod value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AuthorizationMethod ToAuthorizationMethod(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD")) return AuthorizationMethod.Head;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OPTIONS")) return AuthorizationMethod.Options;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TRACE")) return AuthorizationMethod.Trace;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET")) return AuthorizationMethod.Get;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "POST")) return AuthorizationMethod.Post;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PUT")) return AuthorizationMethod.Put;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PATCH")) return AuthorizationMethod.Patch;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DELETE")) return AuthorizationMethod.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD"))
+            {
+                return AuthorizationMethod.Head;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OPTIONS"))
+            {
+                return AuthorizationMethod.Options;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TRACE"))
+            {
+                return AuthorizationMethod.Trace;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET"))
+            {
+                return AuthorizationMethod.Get;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "POST"))
+            {
+                return AuthorizationMethod.Post;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PUT"))
+            {
+                return AuthorizationMethod.Put;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PATCH"))
+            {
+                return AuthorizationMethod.Patch;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DELETE"))
+            {
+                return AuthorizationMethod.Delete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationMethod value.");
         }
     }

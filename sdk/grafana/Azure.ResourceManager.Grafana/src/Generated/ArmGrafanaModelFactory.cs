@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Name to be used when sending out emails. Default is "Azure Managed Grafana Notification"
         /// https://pkg.go.dev/net/mail#Address
         /// </param>
-        /// <param name="startTLSPolicy">
+        /// <param name="startTlsPolicy">
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
         /// <returns> A new <see cref="Models.GrafanaSmtpSettings"/> instance for mocking. </returns>
-        public static GrafanaSmtpSettings GrafanaSmtpSettings(bool? isEnabled = default, string host = default, string user = default, string password = default, string fromAddress = default, string fromName = default, GrafanaStartTlsPolicy? startTLSPolicy = default, bool? skipVerify = default)
+        public static GrafanaSmtpSettings GrafanaSmtpSettings(bool? isEnabled = default, string host = default, string user = default, string password = default, string fromAddress = default, string fromName = default, GrafanaStartTlsPolicy? startTlsPolicy = default, bool? skipVerify = default)
         {
             return new GrafanaSmtpSettings(
                 isEnabled,
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Grafana.Models
                 password,
                 fromAddress,
                 fromName,
-                startTLSPolicy,
+                startTlsPolicy,
                 skipVerify,
                 default);
         }
 
-        /// <param name="viewersCanEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
-        /// <param name="editorsCanAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
+        /// <param name="canViewersEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
+        /// <param name="canEditorsAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
         /// <returns> A new <see cref="Models.GrafanaUserSettings"/> instance for mocking. </returns>
-        public static GrafanaUserSettings GrafanaUserSettings(bool? viewersCanEdit = default, bool? editorsCanAdmin = default)
+        public static GrafanaUserSettings GrafanaUserSettings(bool? canViewersEdit = default, bool? canEditorsAdmin = default)
         {
-            return new GrafanaUserSettings(viewersCanEdit, editorsCanAdmin, default);
+            return new GrafanaUserSettings(canViewersEdit, canEditorsAdmin, default);
         }
 
         /// <param name="pluginId"> Grafana plugin id. </param>

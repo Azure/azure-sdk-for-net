@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,38 +15,56 @@ namespace Azure.ResourceManager.Dns
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DelegationSignerInfo))]
     [ModelReaderWriterBuildable(typeof(DnsAaaaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsAaaaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsARecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsARecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsCaaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsCaaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsCnameRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsCnameRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsDSRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsDSRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsMXRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsMXRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsNaptrRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsNaptrRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsNSRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsNSRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsPtrRecordInfo))]
-    [ModelReaderWriterBuildable(typeof(DnsRecordListResult))]
-    [ModelReaderWriterBuildable(typeof(DnsResourceReference))]
+    [ModelReaderWriterBuildable(typeof(DnsPtrRecordResource))]
+    [ModelReaderWriterBuildable(typeof(DnsRecordData))]
+    [ModelReaderWriterBuildable(typeof(DnsRecordSetProperties))]
+    [ModelReaderWriterBuildable(typeof(Models.DnsResourceReference))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceContent))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceRequestProperties))]
     [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResult))]
+    [ModelReaderWriterBuildable(typeof(DnsResourceReferenceResultProperties))]
     [ModelReaderWriterBuildable(typeof(DnssecConfigData))]
-    [ModelReaderWriterBuildable(typeof(DnssecConfigListResult))]
     [ModelReaderWriterBuildable(typeof(DnssecConfigResource))]
+    [ModelReaderWriterBuildable(typeof(DnssecProperties))]
     [ModelReaderWriterBuildable(typeof(DnsSigningKey))]
     [ModelReaderWriterBuildable(typeof(DnsSoaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsSoaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsSrvRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsSrvRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsTlsaRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsTlsaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsTxtRecordInfo))]
+    [ModelReaderWriterBuildable(typeof(DnsTxtRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsZoneData))]
-    [ModelReaderWriterBuildable(typeof(DnsZoneListResult))]
     [ModelReaderWriterBuildable(typeof(DnsZonePatch))]
+    [ModelReaderWriterBuildable(typeof(DnsZoneResource))]
     [ModelReaderWriterBuildable(typeof(DSRecordDigest))]
+    [ModelReaderWriterBuildable(typeof(RecordSetListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(Models.SystemData))]
-    [ModelReaderWriterBuildable(typeof(ResourceManager.Models.SystemData))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(ZoneListResult))]
+    [ModelReaderWriterBuildable(typeof(ZoneProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDnsContext : ModelReaderWriterContext
     {
     }

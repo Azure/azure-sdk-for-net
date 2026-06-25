@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    public readonly partial struct ContainerNetworkPolicyParamType : IEquatable<ContainerNetworkPolicyParamType>
+    internal readonly partial struct ContainerNetworkPolicyParamType : IEquatable<ContainerNetworkPolicyParamType>
     {
         private readonly string _value;
         private const string DisabledValue = "disabled";

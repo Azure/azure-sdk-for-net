@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("currentOrchestratorVersion"u8);
                 writer.WriteStringValue(CurrentOrchestratorVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            if (Optional.IsDefined(NodeImageVersion))
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
                 writer.WriteStringValue(NodeImageVersion);
@@ -428,10 +428,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("localDNSProfile"u8);
                 writer.WriteObjectValue(LocalDnsProfile, options);
             }
-            if (Optional.IsDefined(NodeCustomizationProfile))
+            if (Optional.IsDefined(PreparedImageSpecificationProfile))
             {
-                writer.WritePropertyName("nodeCustomizationProfile"u8);
-                writer.WriteObjectValue(NodeCustomizationProfile, options);
+                writer.WritePropertyName("preparedImageSpecificationProfile"u8);
+                writer.WriteObjectValue(PreparedImageSpecificationProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus = default;
             AgentPoolStatus status = default;
             LocalDnsProfile localDnsProfile = default;
-            NodeCustomizationProfile nodeCustomizationProfile = default;
+            PreparedImageSpecificationProfile preparedImageSpecificationProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1110,13 +1110,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                     localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("nodeCustomizationProfile"u8))
+                if (prop.NameEquals("preparedImageSpecificationProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeCustomizationProfile = NodeCustomizationProfile.DeserializeNodeCustomizationProfile(prop.Value, options);
+                    preparedImageSpecificationProfile = PreparedImageSpecificationProfile.DeserializePreparedImageSpecificationProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 virtualMachineNodesStatus ?? new ChangeTrackingList<AgentPoolVirtualMachineNodes>(),
                 status,
                 localDnsProfile,
-                nodeCustomizationProfile,
+                preparedImageSpecificationProfile,
                 additionalBinaryDataProperties);
         }
     }

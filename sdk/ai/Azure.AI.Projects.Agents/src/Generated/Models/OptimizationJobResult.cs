@@ -17,44 +17,28 @@ namespace Azure.AI.Projects.Agents
         internal OptimizationJobResult()
         {
             Candidates = new ChangeTrackingList<OptimizationCandidate>();
-            Warnings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobResult"/>. </summary>
-        /// <param name="baseline"> Evaluation scores for the original (un-optimized) agent configuration. </param>
-        /// <param name="best"> The highest-scoring candidate found during optimization. </param>
+        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
+        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
         /// <param name="candidates"> All evaluated candidates including baseline. </param>
-        /// <param name="options"> The options used for this optimization run. </param>
-        /// <param name="warnings"> Non-fatal warnings from the optimization run (e.g., target attribute failures that were skipped). </param>
-        /// <param name="allTargetAttributesFailed"> True when all target attributes failed — only the baseline was evaluated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobResult(OptimizationCandidate baseline, OptimizationCandidate best, IList<OptimizationCandidate> candidates, OptimizationOptions options, IList<string> warnings, bool? allTargetAttributesFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobResult(string baseline, string best, IList<OptimizationCandidate> candidates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Baseline = baseline;
             Best = best;
             Candidates = candidates;
-            Options = options;
-            Warnings = warnings;
-            AllTargetAttributesFailed = allTargetAttributesFailed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Evaluation scores for the original (un-optimized) agent configuration. </summary>
-        public OptimizationCandidate Baseline { get; }
+        /// <summary> Candidate ID of the original (un-optimized) baseline evaluation. </summary>
+        public string Baseline { get; }
 
-        /// <summary> The highest-scoring candidate found during optimization. </summary>
-        public OptimizationCandidate Best { get; }
+        /// <summary> Candidate ID of the highest-scoring candidate found during optimization. </summary>
+        public string Best { get; }
 
         /// <summary> All evaluated candidates including baseline. </summary>
         public IList<OptimizationCandidate> Candidates { get; }
-
-        /// <summary> The options used for this optimization run. </summary>
-        public OptimizationOptions Options { get; }
-
-        /// <summary> Non-fatal warnings from the optimization run (e.g., target attribute failures that were skipped). </summary>
-        public IList<string> Warnings { get; }
-
-        /// <summary> True when all target attributes failed — only the baseline was evaluated. </summary>
-        public bool? AllTargetAttributesFailed { get; }
     }
 }

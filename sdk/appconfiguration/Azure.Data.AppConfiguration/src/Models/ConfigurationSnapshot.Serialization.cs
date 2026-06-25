@@ -149,10 +149,8 @@ namespace Azure.Data.AppConfiguration
                 size,
                 itemsCount,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                new ETag(etag))
-            {
-                Description = description
-            };
+                description,
+                new ETag(etag));
         }
 
         /// <param name="writer"> The JSON writer. </param>

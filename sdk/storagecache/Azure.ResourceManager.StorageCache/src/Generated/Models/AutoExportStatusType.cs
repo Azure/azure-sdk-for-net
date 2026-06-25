@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct AutoExportStatusType : IEquatable<AutoExportStatusType>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> DisableFailed. </summary>
+        private const string DisableFailedValue = "DisableFailed";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AutoExportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoExportStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string DisableFailedValue = "DisableFailed";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static AutoExportStatusType InProgress { get; } = new AutoExportStatusType(InProgressValue);
+
         /// <summary> Disabling. </summary>
         public static AutoExportStatusType Disabling { get; } = new AutoExportStatusType(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static AutoExportStatusType Disabled { get; } = new AutoExportStatusType(DisabledValue);
+
         /// <summary> DisableFailed. </summary>
         public static AutoExportStatusType DisableFailed { get; } = new AutoExportStatusType(DisableFailedValue);
+
         /// <summary> Failed. </summary>
         public static AutoExportStatusType Failed { get; } = new AutoExportStatusType(FailedValue);
+
         /// <summary> Determines if two <see cref="AutoExportStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoExportStatusType left, AutoExportStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoExportStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoExportStatusType left, AutoExportStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoExportStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoExportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoExportStatusType(string value) => new AutoExportStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoExportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoExportStatusType?(string value) => value == null ? null : new AutoExportStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoExportStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoExportStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SqlServerAuthenticationType : IEquatable<SqlServerAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> SQL. </summary>
+        private const string SqlValue = "SQL";
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> UserAssignedManagedIdentity. </summary>
+        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="SqlServerAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlServerAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlValue = "SQL";
-        private const string WindowsValue = "Windows";
-        private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
+            _value = value;
+        }
 
         /// <summary> SQL. </summary>
         public static SqlServerAuthenticationType Sql { get; } = new SqlServerAuthenticationType(SqlValue);
+
         /// <summary> Windows. </summary>
         public static SqlServerAuthenticationType Windows { get; } = new SqlServerAuthenticationType(WindowsValue);
+
         /// <summary> UserAssignedManagedIdentity. </summary>
         public static SqlServerAuthenticationType UserAssignedManagedIdentity { get; } = new SqlServerAuthenticationType(UserAssignedManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="SqlServerAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServerAuthenticationType left, SqlServerAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServerAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServerAuthenticationType left, SqlServerAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServerAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServerAuthenticationType(string value) => new SqlServerAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServerAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServerAuthenticationType?(string value) => value == null ? null : new SqlServerAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServerAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServerAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

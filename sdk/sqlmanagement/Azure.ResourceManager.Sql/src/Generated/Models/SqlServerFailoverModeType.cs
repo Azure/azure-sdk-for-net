@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlServerFailoverModeType : IEquatable<SqlServerFailoverModeType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="SqlServerFailoverModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlServerFailoverModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SqlServerFailoverModeType None { get; } = new SqlServerFailoverModeType(NoneValue);
+
         /// <summary> Manual. </summary>
         public static SqlServerFailoverModeType Manual { get; } = new SqlServerFailoverModeType(ManualValue);
+
         /// <summary> Determines if two <see cref="SqlServerFailoverModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServerFailoverModeType left, SqlServerFailoverModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServerFailoverModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServerFailoverModeType left, SqlServerFailoverModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerFailoverModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServerFailoverModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServerFailoverModeType(string value) => new SqlServerFailoverModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServerFailoverModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServerFailoverModeType?(string value) => value == null ? null : new SqlServerFailoverModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServerFailoverModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServerFailoverModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

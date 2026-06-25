@@ -12,7 +12,6 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
-#pragma warning disable AAIP001
 
 public class Sample_Toolboxes_CRUD : SamplesBase
 {
@@ -40,19 +39,19 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Toolboxes=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         #endregion
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Sample MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
             name: toolboxName,
             tools: [tool],
@@ -127,18 +126,18 @@ public class Sample_Toolboxes_CRUD : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("Toolboxes=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AgentToolboxes toolboxClient = agentsClient.GetAgentToolboxes();
         string toolboxName = "mcp";
         DeleteToolboxMayBe(toolboxClient, toolboxName);
         #region Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Sync
-        ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool tool = new(serverLabel: "api-specs")
+        {
+            Name = "mcp-tool",
+            Description = "Sample MCP tool",
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
             name: toolboxName,
             tools: [tool],

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.Get
-            var incidentName = Recording.GenerateAssetName("testIncidents-");
+            var incidentName = GenerateAssetNameFromRecording("testIncidents-", "incidents");
             var incident1 = await CreateIncidentAsync(operationalInsights, incidentName);
             SecurityInsightsIncidentResource incident2 = await incident1.GetAsync();
 

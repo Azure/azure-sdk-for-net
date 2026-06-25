@@ -18,14 +18,14 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             DisconnectedEventRequest request = JsonSerializer.Deserialize<DisconnectedEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("invalid", request.Reason);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Reason, Is.EqualTo("invalid"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             DisconnectedEventRequest converted = JsonSerializer.Deserialize<DisconnectedEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("invalid", converted.Reason);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Reason, Is.EqualTo("invalid"));
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
 
-            Assert.IsTrue(serialized.Contains("\"reason\":\"Connection closed\""));
-            Assert.IsTrue(serialized.Contains("\"connectionContext\""));
+            Assert.That(serialized, Does.Contain("\"reason\":\"Connection closed\""));
+            Assert.That(serialized, Does.Contain("\"connectionContext\""));
         }
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceStartStopScheduleCollection : ArmCollection, IEnumerable<ManagedInstanceStartStopScheduleResource>, IAsyncEnumerable<ManagedInstanceStartStopScheduleResource>
     {
-        private readonly ClientDiagnostics _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics;
-        private readonly StartStopManagedInstanceSchedulesRestOperations _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient;
+        private readonly ClientDiagnostics _startStopManagedInstanceSchedulesClientDiagnostics;
+        private readonly StartStopManagedInstanceSchedules _startStopManagedInstanceSchedulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceStartStopScheduleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagedInstanceStartStopScheduleCollection for mocking. </summary>
         protected ManagedInstanceStartStopScheduleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagedInstanceStartStopScheduleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceStartStopScheduleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceStartStopScheduleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceStartStopScheduleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedInstanceStartStopScheduleResource.ResourceType, out string managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesApiVersion);
-            _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ManagedInstanceStartStopScheduleResource.ResourceType, out string managedInstanceStartStopScheduleApiVersion);
+            _startStopManagedInstanceSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceStartStopScheduleResource.ResourceType.Namespace, Diagnostics);
+            _startStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedules(_startStopManagedInstanceSchedulesClientDiagnostics, Pipeline, Endpoint, managedInstanceStartStopScheduleApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedInstanceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,16 +81,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), ManagedInstanceStartStopScheduleData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceStartStopScheduleData> response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<ManagedInstanceStartStopScheduleResource> operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +112,16 @@ namespace Azure.ResourceManager.Sql
         /// Creates or updates the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,16 +134,24 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data, cancellationToken);
-                var uri = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), ManagedInstanceStartStopScheduleData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceStartStopScheduleData> response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SqlArmOperation<ManagedInstanceStartStopScheduleResource> operation = new SqlArmOperation<ManagedInstanceStartStopScheduleResource>(Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,20 +165,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,13 +182,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagedInstanceStartStopScheduleResource>> GetAsync(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Get");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ManagedInstanceStartStopScheduleData> response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,20 +210,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets the managed instance's Start/Stop schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,13 +227,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagedInstanceStartStopScheduleResource> Get(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Get");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Get");
             scope.Start();
             try
             {
-                var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ManagedInstanceStartStopScheduleData> response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,50 +255,50 @@ namespace Azure.ResourceManager.Sql
         /// Lists the managed instance's Start/Stop schedules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceStartStopScheduleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceStartStopScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceStartStopScheduleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceAsyncCollectionResultOfT(
+                _startStopManagedInstanceSchedulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedInstanceStartStopScheduleCollection.GetAll"), data => new ManagedInstanceStartStopScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Lists the managed instance's Start/Stop schedules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_ListByInstance</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_ListByInstance. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,29 +306,33 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceStartStopScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceStartStopScheduleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceStartStopScheduleResource(Client, ManagedInstanceStartStopScheduleData.DeserializeManagedInstanceStartStopScheduleData(e)), _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics, Pipeline, "ManagedInstanceStartStopScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceCollectionResultOfT(
+                _startStopManagedInstanceSchedulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ManagedInstanceStartStopScheduleCollection.GetAll"), data => new ManagedInstanceStartStopScheduleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,11 +340,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Exists");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceStartStopScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceStartStopScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -335,20 +376,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,11 +393,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Exists");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceStartStopScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceStartStopScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -374,20 +429,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,13 +446,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ManagedInstanceStartStopScheduleResource>> GetIfExistsAsync(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ManagedInstanceStartStopScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceStartStopScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedInstanceStartStopScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -415,20 +486,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/startStopSchedules/{startStopScheduleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StartStopManagedInstanceSchedules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StartStopManagedInstanceSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedInstanceStartStopScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,13 +503,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ManagedInstanceStartStopScheduleResource> GetIfExists(ManagedInstanceStartStopScheduleName startStopScheduleName, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
+            using DiagnosticScope scope = _startStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, startStopScheduleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _startStopManagedInstanceSchedulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, startStopScheduleName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ManagedInstanceStartStopScheduleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ManagedInstanceStartStopScheduleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ManagedInstanceStartStopScheduleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ManagedInstanceStartStopScheduleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagedInstanceStartStopScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -462,6 +549,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedInstanceStartStopScheduleResource> IAsyncEnumerable<ManagedInstanceStartStopScheduleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

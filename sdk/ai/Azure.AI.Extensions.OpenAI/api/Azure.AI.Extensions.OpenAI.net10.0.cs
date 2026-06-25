@@ -188,61 +188,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static bool operator !=(Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus left, Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AnnotationType : System.IEquatable<Azure.AI.Extensions.OpenAI.AnnotationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AnnotationType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.AnnotationType ContainerFileCitation { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.AnnotationType FileCitation { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.AnnotationType FilePath { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.AnnotationType UrlCitation { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.AnnotationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.AnnotationType left, Azure.AI.Extensions.OpenAI.AnnotationType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.AnnotationType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.AnnotationType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.AnnotationType left, Azure.AI.Extensions.OpenAI.AnnotationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplyPatchFileOperationType : System.IEquatable<Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplyPatchFileOperationType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType CreateFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType DeleteFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType UpdateFile { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType left, Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType left, Azure.AI.Extensions.OpenAI.ApplyPatchFileOperationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApplyPatchOperationParamType : System.IEquatable<Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApplyPatchOperationParamType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType CreateFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType DeleteFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType UpdateFile { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType left, Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType left, Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public static partial class AzureAIExtensions
     {
         public static Azure.AI.Extensions.OpenAI.AgentResponseItem AsAgentResponseItem(this OpenAI.Responses.ResponseItem responseItem) { throw null; }
@@ -461,30 +406,6 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ChatSummaryMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputerActionType : System.IEquatable<Azure.AI.Extensions.OpenAI.ComputerActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputerActionType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Click { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType DoubleClick { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Drag { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Keypress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Move { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Screenshot { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Scroll { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Type { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ComputerActionType Wait { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ComputerActionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ComputerActionType left, Azure.AI.Extensions.OpenAI.ComputerActionType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ComputerActionType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ComputerActionType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ComputerActionType left, Azure.AI.Extensions.OpenAI.ComputerActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ComputerCallSafetyCheckParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam>
     {
         public ComputerCallSafetyCheckParam(string id) { }
@@ -517,23 +438,6 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerScreenshotImage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ComputerScreenshotImage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerNetworkPolicyParamType : System.IEquatable<Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerNetworkPolicyParamType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType Allowlist { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType Disabled { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType left, Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType left, Azure.AI.Extensions.OpenAI.ContainerNetworkPolicyParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public abstract partial class ContainerSkill : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ContainerSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ContainerSkill>
     {
         internal ContainerSkill() { }
@@ -546,23 +450,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.ContainerSkill System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ContainerSkill>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ContainerSkill>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ContainerSkill>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContainerSkillType : System.IEquatable<Azure.AI.Extensions.OpenAI.ContainerSkillType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContainerSkillType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ContainerSkillType Inline { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ContainerSkillType SkillReference { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ContainerSkillType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ContainerSkillType left, Azure.AI.Extensions.OpenAI.ContainerSkillType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ContainerSkillType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ContainerSkillType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ContainerSkillType left, Azure.AI.Extensions.OpenAI.ContainerSkillType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ContentFilterConfiguration
     {
@@ -583,23 +470,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.CustomGrammarFormatParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomToolParamFormatType : System.IEquatable<Azure.AI.Extensions.OpenAI.CustomToolParamFormatType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomToolParamFormatType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.CustomToolParamFormatType Grammar { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.CustomToolParamFormatType Text { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.CustomToolParamFormatType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.CustomToolParamFormatType left, Azure.AI.Extensions.OpenAI.CustomToolParamFormatType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.CustomToolParamFormatType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.CustomToolParamFormatType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.CustomToolParamFormatType left, Azure.AI.Extensions.OpenAI.CustomToolParamFormatType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public static partial class ExtensionsOpenAIModelFactory
     {
@@ -643,26 +513,26 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput OutputItemToolSearchOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType execution = Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType.Server, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesTool> tools = null, Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus status = Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus.InProgress, string createdBy = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ProceduralMemoryItem ProceduralMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ProjectConversation ProjectConversation(string id = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool ResponsesA2APreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, System.Uri baseUrl = null, string agentCardPath = null, string projectConnectionId = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool ResponsesA2APreviewTool(System.Uri baseUrl = null, string agentCardPath = null, string projectConnectionId = null, bool? sendCredentialsForAgentCard = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource ResponsesAISearchIndexResource(string projectConnectionId = null, string indexName = null, Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType? queryType = default(Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType?), int? topK = default(int?), string filter = null, string indexAssetId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAutoCodeInterpreterToolParam ResponsesAutoCodeInterpreterToolParam(System.Collections.Generic.IEnumerable<string> fileIds = null, Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit? memoryLimit = default(Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit?), Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyParam networkPolicy = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool ResponsesAzureAISearchTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource azureAISearch = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool ResponsesAzureAISearchTool(Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource azureAISearch = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource ResponsesAzureAISearchToolResource(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource> indexes = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding ResponsesAzureFunctionBinding(Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition ResponsesAzureFunctionDefinition(Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinitionFunction function = null, Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding inputBinding = null, Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding outputBinding = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinitionFunction ResponsesAzureFunctionDefinitionFunction(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionStorageQueue ResponsesAzureFunctionStorageQueue(string queueServiceEndpoint = null, string queueName = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool ResponsesAzureFunctionTool(Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition azureFunction = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool ResponsesAzureFunctionTool(Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition azureFunction = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration ResponsesBingCustomSearchConfiguration(string projectConnectionId = null, string instanceName = null, string market = null, string setLang = null, long? count = default(long?), string freshness = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool ResponsesBingCustomSearchPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters bingCustomSearchPreview = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchPreviewTool ResponsesBingCustomSearchPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters bingCustomSearchPreview = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters ResponsesBingCustomSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchConfiguration> searchConfigurations = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration ResponsesBingGroundingSearchConfiguration(string projectConnectionId = null, string market = null, string language = null, long? count = default(long?), string freshness = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters ResponsesBingGroundingSearchToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration> searchConfigurations = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool ResponsesBingGroundingTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters bingGrounding = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool ResponsesBrowserAutomationPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters browserAutomationPreview = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool ResponsesBingGroundingTool(Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters bingGrounding = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationPreviewTool ResponsesBrowserAutomationPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters browserAutomationPreview = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolConnectionParameters ResponsesBrowserAutomationToolConnectionParameters(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters ResponsesBrowserAutomationToolParameters(Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolConnectionParameters connection = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition outputs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool ResponsesCaptureStructuredOutputsTool(Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition outputs = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesComputerTool ResponsesComputerTool() { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam ResponsesContainerAutoParam(System.Collections.Generic.IEnumerable<string> fileIds = null, Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit? memoryLimit = default(Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit?), System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ContainerSkill> skills = null, Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyParam networkPolicy = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam ResponsesContainerNetworkPolicyAllowlistParam(System.Collections.Generic.IEnumerable<string> allowedDomains = null, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam> domainSecrets = null) { throw null; }
@@ -674,20 +544,20 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.ResponsesCustomToolParamFormat ResponsesCustomToolParamFormat(string type = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesEmptyModelParam ResponsesEmptyModelParam() { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesFabricDataAgentToolOptions ResponsesFabricDataAgentToolOptions(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection> projectConnections = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = null, string serverLabel = null, System.Uri serverUrl = null, System.BinaryData requireApproval = null, string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam ResponsesFunctionShellToolParam(Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment environment = null, string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool ResponsesFabricIQPreviewTool(string projectConnectionId = null, string serverLabel = null, System.Uri serverUrl = null, System.BinaryData requireApproval = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam ResponsesFunctionShellToolParam(Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment environment = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment ResponsesFunctionShellToolParamEnvironment(string type = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.LocalSkillParam> skills = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesFunctionToolParam ResponsesFunctionToolParam(string name = null, string description = null, Azure.AI.Extensions.OpenAI.ResponsesEmptyModelParam parameters = null, bool? isStrict = default(bool?), bool? shouldDeferLoading = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesInlineSkillParam ResponsesInlineSkillParam(string name = null, string description = null, Azure.AI.Extensions.OpenAI.ResponsesInlineSkillSourceParam source = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesInlineSkillSourceParam ResponsesInlineSkillSourceParam(string data = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam ResponsesLocalShellToolParam(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam ResponsesLocalShellToolParam() { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter ResponsesMCPToolFilter(System.Collections.Generic.IEnumerable<string> toolNames = null, bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesMCPToolRequireApproval ResponsesMCPToolRequireApproval(Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter always = null, Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter never = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesMemorySearchOptions ResponsesMemorySearchOptions(int? maxMemories = default(int?)) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool ResponsesMemorySearchPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, string memoryStoreName = null, string scope = null, Azure.AI.Extensions.OpenAI.ResponsesMemorySearchOptions searchOptions = null, int? updateDelayInSeconds = default(int?)) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool ResponsesMicrosoftFabricPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesFabricDataAgentToolOptions fabricDataagentPreview = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool ResponsesMemorySearchPreviewTool(string memoryStoreName = null, string scope = null, Azure.AI.Extensions.OpenAI.ResponsesMemorySearchOptions searchOptions = null, int? updateDelayInSeconds = default(int?)) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool ResponsesMicrosoftFabricPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesFabricDataAgentToolOptions fabricDataagentPreview = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam ResponsesNamespaceToolParam(string name = null, string description = null, System.Collections.Generic.IEnumerable<System.BinaryData> tools = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiAnonymousAuthDetails ResponsesOpenApiAnonymousAuthDetails() { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiAuthDetails ResponsesOpenApiAuthDetails(string type = null) { throw null; }
@@ -697,22 +567,21 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedSecurityScheme ResponsesOpenApiManagedSecurityScheme(string audience = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionAuthDetails ResponsesOpenApiProjectConnectionAuthDetails(Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionSecurityScheme securityScheme = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionSecurityScheme ResponsesOpenApiProjectConnectionSecurityScheme(string projectConnectionId = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool ResponsesOpenApiTool(Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition openApi = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool ResponsesOpenApiTool(Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition openApi = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool ResponsesReminderPreviewTool(string name = null, string description = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters ResponsesSharepointGroundingToolParameters(System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection> projectConnections = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool ResponsesSharepointPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters sharepointGroundingPreview = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool ResponsesSharepointPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters sharepointGroundingPreview = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesSkillReferenceParam ResponsesSkillReferenceParam(string skillId = null, string version = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition ResponsesStructuredOutputDefinition(string name = null, string description = null, System.Collections.Generic.IDictionary<string, System.BinaryData> schema = null, bool? isStrict = default(bool?)) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesTool ResponsesTool(string type = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool ResponsesToolboxSearchPreviewTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection ResponsesToolProjectConnection(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam ResponsesToolSearchToolParam(Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType? execution = default(Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType?), string description = null, Azure.AI.Extensions.OpenAI.ResponsesEmptyModelParam parameters = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation ResponsesWebSearchApproximateLocation(string country = null, string region = null, string city = null, string timezone = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.ResponsesWebSearchConfiguration ResponsesWebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool ResponsesWebSearchTool(Azure.AI.Extensions.OpenAI.WebSearchToolFilters filters = null, Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation userLocation = null, Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize? searchContextSize = default(Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize?), string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, Azure.AI.Extensions.OpenAI.ResponsesWebSearchConfiguration customSearchConfiguration = null) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool ResponsesWorkIQPreviewTool(string projectConnectionId = null, string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool ResponsesWebSearchTool(Azure.AI.Extensions.OpenAI.WebSearchToolFilters filters = null, Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation userLocation = null, Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize? searchContextSize = default(Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize?), Azure.AI.Extensions.OpenAI.ResponsesWebSearchConfiguration customSearchConfiguration = null) { throw null; }
+        public static Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool ResponsesWorkIQPreviewTool(string projectConnectionId = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.SharepointGroundingToolCall SharepointGroundingToolCall(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, string arguments = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
         public static Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(string id = null, Azure.AI.Extensions.OpenAI.AgentReference agentReference = null, string responseId = null, string callId = null, System.BinaryData output = null, Azure.AI.Extensions.OpenAI.ToolCallStatus status = Azure.AI.Extensions.OpenAI.ToolCallStatus.InProgress) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ToolConfig ToolConfig(bool? pin = default(bool?), string additionalSearchText = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.WebSearchToolFilters WebSearchToolFilters(System.Collections.Generic.IEnumerable<string> allowedDomains = null) { throw null; }
     }
@@ -748,170 +617,6 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricDataAgentToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionAndCustomToolCallOutputType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionAndCustomToolCallOutputType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType InputFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType InputImage { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType InputText { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType left, Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType left, Azure.AI.Extensions.OpenAI.FunctionAndCustomToolCallOutputType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallEnvironmentType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallEnvironmentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType ContainerReference { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType Local { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellCallEnvironmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallItemParamEnvironmentType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallItemParamEnvironmentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType ContainerReference { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType Local { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellCallItemParamEnvironmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallOutputOutcomeParamType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallOutputOutcomeParamType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType Exit { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType Timeout { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType left, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType left, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellCallOutputOutcomeType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellCallOutputOutcomeType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType Exit { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType Timeout { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType left, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType left, Azure.AI.Extensions.OpenAI.FunctionShellCallOutputOutcomeType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FunctionShellToolParamEnvironmentType : System.IEquatable<Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FunctionShellToolParamEnvironmentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType ContainerAuto { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType ContainerReference { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType Local { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType left, Azure.AI.Extensions.OpenAI.FunctionShellToolParamEnvironmentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InputContentType : System.IEquatable<Azure.AI.Extensions.OpenAI.InputContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InputContentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.InputContentType InputFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputContentType InputImage { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputContentType InputText { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.InputContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.InputContentType left, Azure.AI.Extensions.OpenAI.InputContentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.InputContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.InputContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.InputContentType left, Azure.AI.Extensions.OpenAI.InputContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InputItemType : System.IEquatable<Azure.AI.Extensions.OpenAI.InputItemType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InputItemType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ApplyPatchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ApplyPatchCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType CodeInterpreterCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType Compaction { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ComputerCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ComputerCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType CustomToolCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType CustomToolCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType FileSearchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType FunctionCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType FunctionCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ImageGenerationCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ItemReference { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType LocalShellCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType LocalShellCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType McpApprovalRequest { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType McpApprovalResponse { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType McpCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType McpListTools { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType Message { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType OutputMessage { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType Reasoning { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ShellCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ShellCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ToolSearchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType ToolSearchOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.InputItemType WebSearchCall { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.InputItemType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.InputItemType left, Azure.AI.Extensions.OpenAI.InputItemType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.InputItemType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.InputItemType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.InputItemType left, Azure.AI.Extensions.OpenAI.InputItemType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum ItemFieldComputerToolCallOutputStatus
     {
         InProgress = 0,
@@ -923,46 +628,6 @@ namespace Azure.AI.Extensions.OpenAI
         InProgress = 0,
         Completed = 1,
         Incomplete = 2,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ItemFieldType : System.IEquatable<Azure.AI.Extensions.OpenAI.ItemFieldType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ItemFieldType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ApplyPatchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ApplyPatchCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType CodeInterpreterCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType Compaction { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ComputerCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ComputerCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType CustomToolCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType CustomToolCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType FileSearchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType FunctionCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType FunctionCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ImageGenerationCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType LocalShellCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType LocalShellCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType McpApprovalRequest { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType McpApprovalResponse { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType McpCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType McpListTools { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType Message { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType Reasoning { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ShellCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ShellCallOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ToolSearchCall { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType ToolSearchOutput { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ItemFieldType WebSearchCall { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ItemFieldType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ItemFieldType left, Azure.AI.Extensions.OpenAI.ItemFieldType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ItemFieldType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ItemFieldType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ItemFieldType left, Azure.AI.Extensions.OpenAI.ItemFieldType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum ItemLocalShellToolCallOutputStatus
     {
@@ -1049,30 +714,6 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemorySearchToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.MemorySearchToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessageContentType : System.IEquatable<Azure.AI.Extensions.OpenAI.MessageContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MessageContentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType ComputerScreenshot { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType InputFile { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType InputImage { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType InputText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType OutputText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType ReasoningText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType Refusal { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType SummaryText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.MessageContentType Text { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.MessageContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.MessageContentType left, Azure.AI.Extensions.OpenAI.MessageContentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.MessageContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.MessageContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.MessageContentType left, Azure.AI.Extensions.OpenAI.MessageContentType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class OAuthConsentRequestResponseItem : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>
     {
         public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) { }
@@ -1088,24 +729,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OpenApiAuthType : System.IEquatable<Azure.AI.Extensions.OpenAI.OpenApiAuthType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OpenApiAuthType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OpenApiAuthType Anonymous { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.OpenApiAuthType ManagedIdentity { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.OpenApiAuthType ProjectConnection { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.OpenApiAuthType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.OpenApiAuthType left, Azure.AI.Extensions.OpenAI.OpenApiAuthType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OpenApiAuthType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OpenApiAuthType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.OpenApiAuthType left, Azure.AI.Extensions.OpenAI.OpenApiAuthType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OpenApiToolCall : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OpenApiToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCall>
     {
@@ -1140,24 +763,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OutputContentType : System.IEquatable<Azure.AI.Extensions.OpenAI.OutputContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OutputContentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OutputContentType OutputText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.OutputContentType ReasoningText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.OutputContentType Refusal { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.OutputContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.OutputContentType left, Azure.AI.Extensions.OpenAI.OutputContentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OutputContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OutputContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.OutputContentType left, Azure.AI.Extensions.OpenAI.OutputContentType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OutputItemComputerToolCallOutput : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>
     {
@@ -1275,23 +880,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OutputMessageContentType : System.IEquatable<Azure.AI.Extensions.OpenAI.OutputMessageContentType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OutputMessageContentType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.OutputMessageContentType OutputText { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.OutputMessageContentType Refusal { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.OutputMessageContentType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.OutputMessageContentType left, Azure.AI.Extensions.OpenAI.OutputMessageContentType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OutputMessageContentType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.OutputMessageContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.OutputMessageContentType left, Azure.AI.Extensions.OpenAI.OutputMessageContentType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ProceduralMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ProceduralMemoryItem>
     {
@@ -1448,33 +1036,13 @@ namespace Azure.AI.Extensions.OpenAI
     {
         protected ProjectVectorStoresClient() { }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RealtimeMcpErrorType : System.IEquatable<Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RealtimeMcpErrorType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType HttpError { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType ProtocolError { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType ToolExecutionError { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType left, Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType left, Azure.AI.Extensions.OpenAI.RealtimeMcpErrorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ResponsesA2APreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesA2APreviewTool>
     {
         public ResponsesA2APreviewTool() { }
         public string AgentCardPath { get { throw null; } set { } }
         public System.Uri BaseUrl { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
+        public bool? SendCredentialsForAgentCard { get { throw null; } set { } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1545,9 +1113,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesAzureAISearchTool(Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource azureAISearch) { }
         public Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource AzureAISearch { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1642,7 +1207,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesAzureFunctionTool(Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition azureFunction) { }
         public Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition AzureFunction { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1676,9 +1240,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesBingCustomSearchPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) { }
         public Azure.AI.Extensions.OpenAI.ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1739,9 +1300,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesBingGroundingTool(Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters bingGrounding) { }
         public Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters BingGrounding { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1756,9 +1314,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesBrowserAutomationPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters browserAutomationPreview) { }
         public Azure.AI.Extensions.OpenAI.ResponsesBrowserAutomationToolParameters BrowserAutomationPreview { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1800,10 +1355,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesCaptureStructuredOutputsTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool>
     {
         public ResponsesCaptureStructuredOutputsTool(Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition outputs) { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition Outputs { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1981,13 +1533,10 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesFabricIQPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesFabricIQPreviewTool>
     {
         public ResponsesFabricIQPreviewTool(string projectConnectionId) { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
         public System.BinaryData RequireApproval { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         public System.Uri ServerUrl { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2013,10 +1562,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesFunctionShellToolParam : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam>
     {
         public ResponsesFunctionShellToolParam() { }
-        public string Description { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment Environment { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2127,9 +1673,6 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesLocalShellToolParam : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam>
     {
         public ResponsesLocalShellToolParam() { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2187,12 +1730,9 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesMemorySearchPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesMemorySearchPreviewTool>
     {
         public ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) { }
-        public string Description { get { throw null; } set { } }
         public string MemoryStoreName { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesMemorySearchOptions SearchOptions { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         public int? UpdateDelayInSeconds { get { throw null; } set { } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2207,10 +1747,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesMicrosoftFabricPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesMicrosoftFabricPreviewTool>
     {
         public ResponsesMicrosoftFabricPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesFabricDataAgentToolOptions fabricDataagentPreview) { }
-        public string Description { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesFabricDataAgentToolOptions FabricDataagentPreview { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2358,7 +1895,6 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesOpenApiTool(Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition openApi) { }
         public Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition OpenApi { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2368,6 +1904,21 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResponsesReminderPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>
+    {
+        public ResponsesReminderPreviewTool() { }
+        public string Description { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesReminderPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResponsesSharepointGroundingToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters>
     {
@@ -2386,10 +1937,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesSharepointPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesSharepointPreviewTool>
     {
         public ResponsesSharepointPreviewTool(Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters sharepointGroundingPreview) { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesSharepointGroundingToolParameters SharepointGroundingPreview { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2445,22 +1993,6 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResponsesToolboxSearchPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>
-    {
-        public ResponsesToolboxSearchPreviewTool() { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
-        protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolboxSearchPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ResponsesToolProjectConnection : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection>
     {
         public ResponsesToolProjectConnection(string projectConnectionId) { }
@@ -2495,74 +2027,6 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResponseStreamEventType : System.IEquatable<Azure.AI.Extensions.OpenAI.ResponseStreamEventType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResponseStreamEventType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType Error { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseAudioDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseAudioDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseAudioTranscriptDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseAudioTranscriptDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCodeInterpreterCallCodeDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCodeInterpreterCallCodeDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCodeInterpreterCallCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCodeInterpreterCallInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCodeInterpreterCallInterpreting { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseContentPartAdded { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseContentPartDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCreated { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCustomToolCallInputDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseCustomToolCallInputDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFailed { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFileSearchCallCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFileSearchCallInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFileSearchCallSearching { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFunctionCallArgumentsDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseFunctionCallArgumentsDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseImageGenerationCallCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseImageGenerationCallGenerating { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseImageGenerationCallInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseImageGenerationCallPartialImage { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseIncomplete { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpCallArgumentsDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpCallArgumentsDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpCallCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpCallFailed { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpCallInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpListToolsCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpListToolsFailed { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseMcpListToolsInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseOutputItemAdded { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseOutputItemDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseOutputTextAnnotationAdded { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseOutputTextDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseOutputTextDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseQueued { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningSummaryPartAdded { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningSummaryPartDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningSummaryTextDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningSummaryTextDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningTextDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseReasoningTextDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseRefusalDelta { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseRefusalDone { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseWebSearchCallCompleted { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseWebSearchCallInProgress { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ResponseStreamEventType ResponseWebSearchCallSearching { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ResponseStreamEventType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ResponseStreamEventType left, Azure.AI.Extensions.OpenAI.ResponseStreamEventType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ResponseStreamEventType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ResponseStreamEventType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ResponseStreamEventType left, Azure.AI.Extensions.OpenAI.ResponseStreamEventType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ResponsesWebSearchApproximateLocation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation>
     {
@@ -2601,11 +2065,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         public ResponsesWebSearchTool() { }
         public Azure.AI.Extensions.OpenAI.ResponsesWebSearchConfiguration CustomSearchConfiguration { get { throw null; } set { } }
-        public string Description { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.WebSearchToolFilters Filters { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.AI.Extensions.OpenAI.ResponsesWebSearchToolSearchContextSize? SearchContextSize { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         public Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation UserLocation { get { throw null; } set { } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2626,10 +2087,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesWorkIQPreviewTool : Azure.AI.Extensions.OpenAI.ResponsesTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ResponsesWorkIQPreviewTool>
     {
         public ResponsesWorkIQPreviewTool(string projectConnectionId) { }
-        public string Description { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public string ProjectConnectionId { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> ToolConfigs { get { throw null; } }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Extensions.OpenAI.ResponsesTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2672,118 +2130,12 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.SharepointGroundingToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TextResponseFormatConfigurationType : System.IEquatable<Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TextResponseFormatConfigurationType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType JsonObject { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType JsonSchema { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType Text { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType left, Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType left, Azure.AI.Extensions.OpenAI.TextResponseFormatConfigurationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum ToolCallStatus
     {
         InProgress = 0,
         Completed = 1,
         Incomplete = 2,
         Failed = 3,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ToolChoiceParamType : System.IEquatable<Azure.AI.Extensions.OpenAI.ToolChoiceParamType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ToolChoiceParamType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType AllowedTools { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType ApplyPatch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType CodeInterpreter { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType Computer { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType ComputerUse { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType ComputerUsePreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType Custom { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType FileSearch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType Function { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType ImageGeneration { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType Mcp { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType Shell { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType WebSearchPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolChoiceParamType WebSearchPreview20250311 { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ToolChoiceParamType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ToolChoiceParamType left, Azure.AI.Extensions.OpenAI.ToolChoiceParamType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ToolChoiceParamType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ToolChoiceParamType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ToolChoiceParamType left, Azure.AI.Extensions.OpenAI.ToolChoiceParamType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ToolConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ToolConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ToolConfig>
-    {
-        public ToolConfig() { }
-        public string AdditionalSearchText { get { throw null; } set { } }
-        public bool? Pin { get { throw null; } set { } }
-        protected virtual Azure.AI.Extensions.OpenAI.ToolConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Extensions.OpenAI.ToolConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Extensions.OpenAI.ToolConfig System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ToolConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.ToolConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Extensions.OpenAI.ToolConfig System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ToolConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ToolConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.ToolConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ToolType : System.IEquatable<Azure.AI.Extensions.OpenAI.ToolType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ToolType(string value) { throw null; }
-        public static Azure.AI.Extensions.OpenAI.ToolType A2aPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType ApplyPatch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType AzureAiSearch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType AzureFunction { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType BingCustomSearchPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType BingGrounding { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType BrowserAutomationPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType CaptureStructuredOutputs { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType CodeInterpreter { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Computer { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType ComputerUsePreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Custom { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType FabricDataagentPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType FabricIqPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType FileSearch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Function { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType ImageGeneration { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType LocalShell { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Mcp { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType MemorySearchPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Namespace { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Openapi { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType SharepointGroundingPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType Shell { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType ToolboxSearchPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType ToolSearch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType WebSearch { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType WebSearchPreview { get { throw null; } }
-        public static Azure.AI.Extensions.OpenAI.ToolType WorkIqPreview { get { throw null; } }
-        public bool Equals(Azure.AI.Extensions.OpenAI.ToolType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Extensions.OpenAI.ToolType left, Azure.AI.Extensions.OpenAI.ToolType right) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ToolType (string value) { throw null; }
-        public static implicit operator Azure.AI.Extensions.OpenAI.ToolType? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Extensions.OpenAI.ToolType left, Azure.AI.Extensions.OpenAI.ToolType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class UserProfileMemoryItem : Azure.AI.Extensions.OpenAI.MemoryOutputItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>
     {

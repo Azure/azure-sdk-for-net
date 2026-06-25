@@ -14,13 +14,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryMappingDataFlowProperties : DataFactoryDataFlowProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryMappingDataFlowProperties"/>. </summary>
-        public DataFactoryMappingDataFlowProperties()
+        public DataFactoryMappingDataFlowProperties() : base("MappingDataFlow")
         {
-            Sources = new ChangeTrackingList<DataFlowSource>();
-            Sinks = new ChangeTrackingList<DataFlowSink>();
-            Transformations = new ChangeTrackingList<DataFlowTransformation>();
-            ScriptLines = new ChangeTrackingList<string>();
-            DataFlowType = "MappingDataFlow";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryMappingDataFlowProperties"/>. </summary>
@@ -28,31 +23,83 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sources"> List of sources in data flow. </param>
-        /// <param name="sinks"> List of sinks in data flow. </param>
-        /// <param name="transformations"> List of transformations in data flow. </param>
-        /// <param name="script"> DataFlow script. </param>
-        /// <param name="scriptLines"> Data flow script lines. </param>
-        internal DataFactoryMappingDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Mapping data flow type properties. </param>
+        internal DataFactoryMappingDataFlowProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties, MappingDataFlowTypeProperties typeProperties) : base(dataFlowType, description, annotations, folder, additionalBinaryDataProperties)
         {
-            Sources = sources;
-            Sinks = sinks;
-            Transformations = transformations;
-            Script = script;
-            ScriptLines = scriptLines;
-            DataFlowType = dataFlowType ?? "MappingDataFlow";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Mapping data flow type properties. </summary>
+        internal MappingDataFlowTypeProperties TypeProperties { get; set; }
+
         /// <summary> List of sources in data flow. </summary>
-        public IList<DataFlowSource> Sources { get; }
+        public IList<DataFlowSource> Sources
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MappingDataFlowTypeProperties();
+                }
+                return TypeProperties.Sources;
+            }
+        }
+
         /// <summary> List of sinks in data flow. </summary>
-        public IList<DataFlowSink> Sinks { get; }
+        public IList<DataFlowSink> Sinks
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MappingDataFlowTypeProperties();
+                }
+                return TypeProperties.Sinks;
+            }
+        }
+
         /// <summary> List of transformations in data flow. </summary>
-        public IList<DataFlowTransformation> Transformations { get; }
+        public IList<DataFlowTransformation> Transformations
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MappingDataFlowTypeProperties();
+                }
+                return TypeProperties.Transformations;
+            }
+        }
+
         /// <summary> DataFlow script. </summary>
-        public string Script { get; set; }
+        public string Script
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Script;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MappingDataFlowTypeProperties();
+                }
+                TypeProperties.Script = value;
+            }
+        }
+
         /// <summary> Data flow script lines. </summary>
-        public IList<string> ScriptLines { get; }
+        public IList<string> ScriptLines
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new MappingDataFlowTypeProperties();
+                }
+                return TypeProperties.ScriptLines;
+            }
+        }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,39 +23,51 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="subnet"> Reference to the subnet resource. A subnet from where application gateway gets its private address. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway IP configuration resource. </param>
-        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource subnet, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway IP configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayIPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Subnet = subnet;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway IP configuration. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayIPConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Reference to the subnet resource. A subnet from where application gateway gets its private address. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
 
         /// <summary> The provisioning state of the application gateway IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.subnet.id")]
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayIPConfigurationPropertiesFormat();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

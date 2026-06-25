@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiVersionSetCollection : ArmCollection, IEnumerable<ServiceWorkspaceApiVersionSetResource>, IAsyncEnumerable<ServiceWorkspaceApiVersionSetResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics;
-        private readonly WorkspaceApiVersionSetRestOperations _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient;
+        private readonly ClientDiagnostics _workspaceApiVersionSetClientDiagnostics;
+        private readonly WorkspaceApiVersionSet _workspaceApiVersionSetRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceApiVersionSetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceWorkspaceApiVersionSetCollection for mocking. </summary>
         protected ServiceWorkspaceApiVersionSetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceApiVersionSetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceApiVersionSetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceWorkspaceApiVersionSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiVersionSetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceWorkspaceApiVersionSetResource.ResourceType, out string serviceWorkspaceApiVersionSetWorkspaceApiVersionSetApiVersion);
-            _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient = new WorkspaceApiVersionSetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceApiVersionSetWorkspaceApiVersionSetApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ServiceWorkspaceApiVersionSetResource.ResourceType, out string serviceWorkspaceApiVersionSetApiVersion);
+            _workspaceApiVersionSetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiVersionSetResource.ResourceType.Namespace, Diagnostics);
+            _workspaceApiVersionSetRestClient = new WorkspaceApiVersionSet(_workspaceApiVersionSetClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiVersionSetApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WorkspaceContractResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceContractResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceContractResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or Updates a Api Version Set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceApiVersionSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ServiceWorkspaceApiVersionSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource>(Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource> operation = new ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource>(Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Creates or Updates a Api Version Set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="data"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceApiVersionSetResource> CreateOrUpdate(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ServiceWorkspaceApiVersionSetResource> CreateOrUpdate(WaitUntil waitUntil, string versionSetId, ApiVersionSetData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, data, ifMatch, cancellationToken);
-                var uri = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource>(Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, ApiVersionSetData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource> operation = new ApiManagementArmOperation<ServiceWorkspaceApiVersionSetResource>(Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,38 +170,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the Api Version Set specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceWorkspaceApiVersionSetResource>> GetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,38 +219,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the details of the Api Version Set specified by its identifier.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceWorkspaceApiVersionSetResource> Get(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiVersionSetData> response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,53 +268,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists a collection of API Version Sets in the specified workspace with a service instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceWorkspaceApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceWorkspaceApiVersionSetResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics, Pipeline, "ServiceWorkspaceApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists a collection of API Version Sets in the specified workspace with a service instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,47 +286,114 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceWorkspaceApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceWorkspaceApiVersionSetResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceWorkspaceApiVersionSetResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics, Pipeline, "ServiceWorkspaceApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceAsyncCollectionResultOfT(
+                _workspaceApiVersionSetRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceWorkspaceApiVersionSetCollection.GetAll"), data => new ServiceWorkspaceApiVersionSetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists a collection of API Version Sets in the specified workspace with a service instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_ListByService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceWorkspaceApiVersionSetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceWorkspaceApiVersionSetResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiVersionSetData, ServiceWorkspaceApiVersionSetResource>(new WorkspaceApiVersionSetGetByServiceCollectionResultOfT(
+                _workspaceApiVersionSetRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                top,
+                skip,
+                context,
+                "ServiceWorkspaceApiVersionSetCollection.GetAll"), data => new ServiceWorkspaceApiVersionSetResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiVersionSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiVersionSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -358,36 +407,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiVersionSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiVersionSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -401,38 +464,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ServiceWorkspaceApiVersionSetResource>> GetIfExistsAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiVersionSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiVersionSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceApiVersionSetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,38 +525,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apiVersionSets/{versionSetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiVersionSet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiVersionSet_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiVersionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ServiceWorkspaceApiVersionSetResource> GetIfExists(string versionSetId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
 
-            using var scope = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiVersionSetClientDiagnostics.CreateScope("ServiceWorkspaceApiVersionSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiVersionSetWorkspaceApiVersionSetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiVersionSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionSetId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiVersionSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiVersionSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiVersionSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceApiVersionSetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,6 +592,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceWorkspaceApiVersionSetResource> IAsyncEnumerable<ServiceWorkspaceApiVersionSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

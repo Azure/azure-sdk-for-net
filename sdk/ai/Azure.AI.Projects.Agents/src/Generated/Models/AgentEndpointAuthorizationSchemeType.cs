@@ -8,12 +8,13 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct AgentEndpointAuthorizationSchemeType : IEquatable<AgentEndpointAuthorizationSchemeType>
+    internal readonly partial struct AgentEndpointAuthorizationSchemeType : IEquatable<AgentEndpointAuthorizationSchemeType>
     {
         private readonly string _value;
         private const string EntraValue = "Entra";
         private const string BotServiceValue = "BotService";
         private const string BotServiceRbacValue = "BotServiceRbac";
+        private const string BotServiceTenantValue = "BotServiceTenant";
 
         /// <summary> Initializes a new instance of <see cref="AgentEndpointAuthorizationSchemeType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +34,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the BotServiceRbac. </summary>
         public static AgentEndpointAuthorizationSchemeType BotServiceRbac { get; } = new AgentEndpointAuthorizationSchemeType(BotServiceRbacValue);
+
+        /// <summary> Gets the BotServiceTenant. </summary>
+        public static AgentEndpointAuthorizationSchemeType BotServiceTenant { get; } = new AgentEndpointAuthorizationSchemeType(BotServiceTenantValue);
 
         /// <summary> Determines if two <see cref="AgentEndpointAuthorizationSchemeType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

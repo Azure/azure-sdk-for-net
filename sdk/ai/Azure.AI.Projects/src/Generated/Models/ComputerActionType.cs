@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public readonly partial struct ComputerActionType : IEquatable<ComputerActionType>
+    internal readonly partial struct ComputerActionType : IEquatable<ComputerActionType>
     {
         private readonly string _value;
         private const string ClickValue = "click";

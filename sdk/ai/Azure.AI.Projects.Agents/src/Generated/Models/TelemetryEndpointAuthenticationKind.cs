@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The type of authentication for a telemetry endpoint. </summary>
-    public readonly partial struct TelemetryEndpointAuthenticationKind : IEquatable<TelemetryEndpointAuthenticationKind>
+    internal readonly partial struct TelemetryEndpointAuthenticationKind : IEquatable<TelemetryEndpointAuthenticationKind>
     {
         private readonly string _value;
         /// <summary> Header-based secret authentication. </summary>

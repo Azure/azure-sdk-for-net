@@ -74,7 +74,7 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(At))
             {
                 writer.WritePropertyName("at"u8);
-                writer.WriteStringValue(At.Value, "O");
+                writer.WriteNumberValue(At.Value, "U");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    at = prop.Value.GetDateTimeOffset("O");
+                    at = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")

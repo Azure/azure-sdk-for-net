@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.4 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.NotificationHubs` AOT-compatible.
 
 ## 1.2.0-beta.3 (2026-04-28)
 

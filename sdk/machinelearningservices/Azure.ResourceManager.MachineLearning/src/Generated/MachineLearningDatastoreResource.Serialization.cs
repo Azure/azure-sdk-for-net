@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearningDatastoreResource : IJsonModel<MachineLearningDatastoreData>
     {
-        private static MachineLearningDatastoreData s_dataDeserializationInstance;
-        private static MachineLearningDatastoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningDatastoreData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningDatastoreData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningDatastoreData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningDatastoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningDatastoreData>)Data).Write(writer, options);
 
-        MachineLearningDatastoreData IJsonModel<MachineLearningDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningDatastoreData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningDatastoreData IJsonModel<MachineLearningDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningDatastoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningDatastoreData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningDatastoreData IPersistableModel<MachineLearningDatastoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningDatastoreData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningDatastoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -1170,7 +1170,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

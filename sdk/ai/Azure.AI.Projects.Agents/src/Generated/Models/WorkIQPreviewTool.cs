@@ -19,42 +19,18 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal WorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
         }
 
         /// <summary> The ID of the WorkIQ project connection. </summary>
         public string ProjectConnectionId { get; set; }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

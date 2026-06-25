@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct GatewaySkuCapacityScaleType : IEquatable<GatewaySkuCapacityScaleType>
     {
         private readonly string _value;
+        /// <summary> Supported scale type automatic. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> Supported scale type manual. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Scaling not supported. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="GatewaySkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GatewaySkuCapacityScaleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "Automatic";
-        private const string ManualValue = "Manual";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Supported scale type automatic. </summary>
         public static GatewaySkuCapacityScaleType Automatic { get; } = new GatewaySkuCapacityScaleType(AutomaticValue);
+
         /// <summary> Supported scale type manual. </summary>
         public static GatewaySkuCapacityScaleType Manual { get; } = new GatewaySkuCapacityScaleType(ManualValue);
+
         /// <summary> Scaling not supported. </summary>
         public static GatewaySkuCapacityScaleType None { get; } = new GatewaySkuCapacityScaleType(NoneValue);
+
         /// <summary> Determines if two <see cref="GatewaySkuCapacityScaleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GatewaySkuCapacityScaleType left, GatewaySkuCapacityScaleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GatewaySkuCapacityScaleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GatewaySkuCapacityScaleType left, GatewaySkuCapacityScaleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GatewaySkuCapacityScaleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GatewaySkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GatewaySkuCapacityScaleType(string value) => new GatewaySkuCapacityScaleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GatewaySkuCapacityScaleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GatewaySkuCapacityScaleType?(string value) => value == null ? null : new GatewaySkuCapacityScaleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GatewaySkuCapacityScaleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GatewaySkuCapacityScaleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

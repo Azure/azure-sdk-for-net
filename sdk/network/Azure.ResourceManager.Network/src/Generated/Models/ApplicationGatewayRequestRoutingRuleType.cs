@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayRequestRoutingRuleType : IEquatable<ApplicationGatewayRequestRoutingRuleType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> PathBasedRouting. </summary>
+        private const string PathBasedRoutingValue = "PathBasedRouting";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayRequestRoutingRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string PathBasedRoutingValue = "PathBasedRouting";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static ApplicationGatewayRequestRoutingRuleType Basic { get; } = new ApplicationGatewayRequestRoutingRuleType(BasicValue);
+
         /// <summary> PathBasedRouting. </summary>
         public static ApplicationGatewayRequestRoutingRuleType PathBasedRouting { get; } = new ApplicationGatewayRequestRoutingRuleType(PathBasedRoutingValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayRequestRoutingRuleType left, ApplicationGatewayRequestRoutingRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRequestRoutingRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayRequestRoutingRuleType left, ApplicationGatewayRequestRoutingRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayRequestRoutingRuleType(string value) => new ApplicationGatewayRequestRoutingRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRequestRoutingRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayRequestRoutingRuleType?(string value) => value == null ? null : new ApplicationGatewayRequestRoutingRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayRequestRoutingRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayRequestRoutingRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

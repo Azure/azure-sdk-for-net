@@ -4,9 +4,11 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
+    /// <summary></summary>
     internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
@@ -31,6 +33,7 @@ namespace OpenAI
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
+        private const string ReminderPreviewValue = "reminder_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
         private const string FabricIqPreviewValue = "fabric_iq_preview";
         private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
@@ -42,8 +45,11 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
         /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ToolType(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             _value = value;
         }
 
@@ -109,6 +115,9 @@ namespace OpenAI
 
         /// <summary> Gets the MemorySearchPreview. </summary>
         public static ToolType MemorySearchPreview { get; } = new ToolType(MemorySearchPreviewValue);
+
+        /// <summary> Gets the ReminderPreview. </summary>
+        public static ToolType ReminderPreview { get; } = new ToolType(ReminderPreviewValue);
 
         /// <summary> Gets the WorkIqPreview. </summary>
         public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);

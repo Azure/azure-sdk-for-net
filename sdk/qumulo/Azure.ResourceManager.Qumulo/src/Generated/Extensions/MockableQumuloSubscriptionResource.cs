@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
 
         private ClientDiagnostics FileSystemsClientDiagnostics => _fileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Qumulo.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2024-06-19");
+        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Endpoint, "2026-04-16");
 
         /// <summary>
         /// List FileSystemResource resources by subscription ID
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <description> 2026-04-16. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <description> 2026-04-16. </description>
         /// </item>
         /// </list>
         /// </summary>

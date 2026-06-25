@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsSchema : IUtf8JsonSerializable, IJsonModel<OperationalInsightsSchema>
+    /// <summary> Table's schema. </summary>
+    public partial class OperationalInsightsSchema : IJsonModel<OperationalInsightsSchema>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsSchema>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsSchema PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOperationalInsightsSchema(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OperationalInsightsSchema>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsSchema IPersistableModel<OperationalInsightsSchema>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
-                foreach (var item in Columns)
+                foreach (OperationalInsightsColumn item in Columns)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("standardColumns"u8);
                 writer.WriteStartArray();
-                foreach (var item in StandardColumns)
+                foreach (OperationalInsightsColumn item in StandardColumns)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -75,8 +113,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
-                foreach (var item in Categories)
+                foreach (string item in Categories)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -85,8 +128,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Labels)
+                foreach (string item in Labels)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -110,21 +158,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Solutions)
+                foreach (string item in Solutions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -133,22 +186,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
         }
 
-        OperationalInsightsSchema IJsonModel<OperationalInsightsSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsSchema IJsonModel<OperationalInsightsSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsSchema JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOperationalInsightsSchema(document.RootElement, options);
         }
 
-        internal static OperationalInsightsSchema DeserializeOperationalInsightsSchema(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OperationalInsightsSchema DeserializeOperationalInsightsSchema(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,128 +222,147 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OperationalInsightsTableType? tableType = default;
             OperationalInsightsTableSubType? tableSubType = default;
             IReadOnlyList<string> solutions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("displayName"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    displayName = property.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"u8))
+                if (prop.NameEquals("columns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item, options));
                     }
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("standardColumns"u8))
+                if (prop.NameEquals("standardColumns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OperationalInsightsColumn> array = new List<OperationalInsightsColumn>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OperationalInsightsColumn.DeserializeOperationalInsightsColumn(item, options));
                     }
                     standardColumns = array;
                     continue;
                 }
-                if (property.NameEquals("categories"u8))
+                if (prop.NameEquals("categories"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     categories = array;
                     continue;
                 }
-                if (property.NameEquals("labels"u8))
+                if (prop.NameEquals("labels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     labels = array;
                     continue;
                 }
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    source = new OperationalInsightsTableCreator(property.Value.GetString());
+                    source = new OperationalInsightsTableCreator(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableType"u8))
+                if (prop.NameEquals("tableType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tableType = new OperationalInsightsTableType(property.Value.GetString());
+                    tableType = new OperationalInsightsTableType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableSubType"u8))
+                if (prop.NameEquals("tableSubType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tableSubType = new OperationalInsightsTableSubType(property.Value.GetString());
+                    tableSubType = new OperationalInsightsTableSubType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("solutions"u8))
+                if (prop.NameEquals("solutions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     solutions = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsSchema(
                 name,
                 displayName,
@@ -298,323 +375,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 tableType,
                 tableSubType,
                 solutions ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("  displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  columns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Columns))
-                {
-                    if (Columns.Any())
-                    {
-                        builder.Append("  columns: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Columns)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  columns: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StandardColumns), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  standardColumns: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(StandardColumns))
-                {
-                    if (StandardColumns.Any())
-                    {
-                        builder.Append("  standardColumns: ");
-                        builder.AppendLine("[");
-                        foreach (var item in StandardColumns)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  standardColumns: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  categories: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Categories))
-                {
-                    if (Categories.Any())
-                    {
-                        builder.Append("  categories: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Categories)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Labels), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  labels: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Labels))
-                {
-                    if (Labels.Any())
-                    {
-                        builder.Append("  labels: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Labels)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("  source: ");
-                    builder.AppendLine($"'{Source.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableType))
-                {
-                    builder.Append("  tableType: ");
-                    builder.AppendLine($"'{TableType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableSubType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableSubType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableSubType))
-                {
-                    builder.Append("  tableSubType: ");
-                    builder.AppendLine($"'{TableSubType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Solutions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  solutions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Solutions))
-                {
-                    if (Solutions.Any())
-                    {
-                        builder.Append("  solutions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Solutions)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<OperationalInsightsSchema>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OperationalInsightsSchema IPersistableModel<OperationalInsightsSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSchema>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOperationalInsightsSchema(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSchema)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OperationalInsightsSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

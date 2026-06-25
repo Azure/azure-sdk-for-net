@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class OutboundFirewallRuleResource : IJsonModel<OutboundFirewallRuleData>
     {
-        private static OutboundFirewallRuleData s_dataDeserializationInstance;
-        private static OutboundFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OutboundFirewallRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OutboundFirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OutboundFirewallRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OutboundFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OutboundFirewallRuleData>)Data).Write(writer, options);
 
-        OutboundFirewallRuleData IJsonModel<OutboundFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OutboundFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OutboundFirewallRuleData IJsonModel<OutboundFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OutboundFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OutboundFirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OutboundFirewallRuleData IPersistableModel<OutboundFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OutboundFirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<OutboundFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OutboundFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OutboundFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

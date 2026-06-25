@@ -36,31 +36,31 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
-            // get the collection of this MachineRunCommandResource
-            MachineRunCommandCollection collection = hybridComputeMachine.GetMachineRunCommands();
+            // get the collection of this HybridComputeMachineRunCommandResource
+            HybridComputeMachineRunCommandCollection collection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus2"))
+            HybridComputeMachineRunCommandData data = new HybridComputeMachineRunCommandData(new AzureLocation("eastus2"))
             {
                 Source = new MachineRunCommandScriptSource
                 {
                     Script = "Write-Host Hello World!",
                 },
-                Parameters = { new RunCommandInputParameter("param1", "value1"), new RunCommandInputParameter("param2", "value2") },
-                AsyncExecution = false,
+                Parameters = { new RunCommandInputContent("param1", "value1"), new RunCommandInputContent("param2", "value2") },
+                IsAsyncExecution = false,
                 RunAsUser = "user1",
                 RunAsPassword = "<runAsPassword>",
                 TimeoutInSeconds = 3600,
                 OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
                 ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
             };
-            ArmOperation<MachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
-            MachineRunCommandResource result = lro.Value;
+            ArmOperation<HybridComputeMachineRunCommandResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
+            HybridComputeMachineRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MachineRunCommandData resourceData = result.Data;
+            HybridComputeMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -85,16 +85,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
-            // get the collection of this MachineRunCommandResource
-            MachineRunCommandCollection collection = hybridComputeMachine.GetMachineRunCommands();
+            // get the collection of this HybridComputeMachineRunCommandResource
+            HybridComputeMachineRunCommandCollection collection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
-            MachineRunCommandResource result = await collection.GetAsync(runCommandName);
+            HybridComputeMachineRunCommandResource result = await collection.GetAsync(runCommandName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            MachineRunCommandData resourceData = result.Data;
+            HybridComputeMachineRunCommandData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
-            // get the collection of this MachineRunCommandResource
-            MachineRunCommandCollection collection = hybridComputeMachine.GetMachineRunCommands();
+            // get the collection of this HybridComputeMachineRunCommandResource
+            HybridComputeMachineRunCommandCollection collection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
             // invoke the operation and iterate over the result
-            await foreach (MachineRunCommandResource item in collection.GetAllAsync())
+            await foreach (HybridComputeMachineRunCommandResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MachineRunCommandData resourceData = item.Data;
+                HybridComputeMachineRunCommandData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
-            // get the collection of this MachineRunCommandResource
-            MachineRunCommandCollection collection = hybridComputeMachine.GetMachineRunCommands();
+            // get the collection of this HybridComputeMachineRunCommandResource
+            HybridComputeMachineRunCommandCollection collection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
@@ -185,13 +185,13 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceIdentifier hybridComputeMachineResourceId = HybridComputeMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName);
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
-            // get the collection of this MachineRunCommandResource
-            MachineRunCommandCollection collection = hybridComputeMachine.GetMachineRunCommands();
+            // get the collection of this HybridComputeMachineRunCommandResource
+            HybridComputeMachineRunCommandCollection collection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
             // invoke the operation
             string runCommandName = "myRunCommand";
-            NullableResponse<MachineRunCommandResource> response = await collection.GetIfExistsAsync(runCommandName);
-            MachineRunCommandResource result = response.HasValue ? response.Value : null;
+            NullableResponse<HybridComputeMachineRunCommandResource> response = await collection.GetIfExistsAsync(runCommandName);
+            HybridComputeMachineRunCommandResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                MachineRunCommandData resourceData = result.Data;
+                HybridComputeMachineRunCommandData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
