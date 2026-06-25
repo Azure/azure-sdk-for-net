@@ -53,7 +53,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
+        SessionFileWriteResponse writeResponse = await sessionClient.UploadAsync(
                 sessionStoragePath: filePath,
                 localPath: filePath
             );
@@ -63,7 +63,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-        writeResponse = await sessionClient.UploadSessionFileAsync(
+        writeResponse = await sessionClient.UploadAsync(
             sessionStoragePath: $"{filePath}",
             localPath: filePath
         );
@@ -71,17 +71,17 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Async
-        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFilesAsync(sessionStoragePath: ".");
+        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetAllAsync(sessionStoragePath: ".");
         Console.WriteLine($"The path contains the next files:");
         await foreach (SessionDirectoryEntry entry in response)
         {
-            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
+            Console.WriteLine($"    - {entry.Name}, size {entry.SizeInBytes}");
         }
         #endregion
 
         #region Snippet:Sample_Download_SessionFiles_Async
         filePath = "saved.txt";
-        await sessionClient.DownloadSessionFileAsync(
+        await sessionClient.DownloadAsync(
             sessionStoragePath: "sample_file_for_upload1.txt",
             localPath: filePath
         );
@@ -90,8 +90,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Async
-        await sessionClient.DeleteSessionFileAsync(localPath: "sample_file_for_upload1.txt");
-        await sessionClient.DeleteSessionFileAsync(localPath: "sample_file_for_upload2.txt");
+        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload1.txt");
+        await sessionClient.DeleteAsync(localPath: "sample_file_for_upload2.txt");
         await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }
@@ -133,7 +133,7 @@ public class Sample_SessionFiles : SamplesBase
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 
-        SessionFileWriteResponse writeResponse = sessionClient.UploadSessionFile(
+        SessionFileWriteResponse writeResponse = sessionClient.Upload(
             sessionStoragePath: filePath,
             localPath: filePath
         );
@@ -143,7 +143,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-        writeResponse = sessionClient.UploadSessionFile(
+        writeResponse = sessionClient.Upload(
             sessionStoragePath: filePath,
             localPath: filePath
         );
@@ -151,17 +151,17 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFiles(sessionStoragePath: ".");
+        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetAll(sessionStoragePath: ".");
         Console.WriteLine($"The path contains the next files:");
         foreach (SessionDirectoryEntry entry in response)
         {
-            Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
+            Console.WriteLine($"    - {entry.Name}, size {entry.SizeInBytes}");
         }
         #endregion
 
         #region Snippet:Sample_Download_SessionFiles_Sync
         filePath = "saved.txt";
-        sessionClient.DownloadSessionFile(
+        sessionClient.Download(
             sessionStoragePath: "sample_file_for_upload1.txt",
             localPath: filePath
         );
@@ -170,8 +170,8 @@ public class Sample_SessionFiles : SamplesBase
         #endregion
 
         #region Snippet:Sample_DeleteFiles_SessionFiles_Sync
-        sessionClient.DeleteSessionFile(localPath: "sample_file_for_upload1.txt");
-        sessionClient.DeleteSessionFile(localPath: "sample_file_for_upload2.txt");
+        sessionClient.Delete(localPath: "sample_file_for_upload1.txt");
+        sessionClient.Delete(localPath: "sample_file_for_upload2.txt");
         agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
         #endregion
     }

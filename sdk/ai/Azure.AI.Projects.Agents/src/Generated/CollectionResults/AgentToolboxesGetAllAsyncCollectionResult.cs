@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentToolboxesGetToolboxesAsyncCollectionResult : AsyncCollectionResult
+    internal partial class AgentToolboxesGetAllAsyncCollectionResult : AsyncCollectionResult
     {
         private readonly AgentToolboxes _client;
         private readonly int? _limit;
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AgentToolboxesGetToolboxesAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AgentToolboxesGetAllAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentToolboxes client used to send requests. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentToolboxesGetToolboxesAsyncCollectionResult(AgentToolboxes client, int? limit, string order, string after, string before, RequestOptions options)
+        public AgentToolboxesGetAllAsyncCollectionResult(AgentToolboxes client, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _limit = limit;
@@ -54,7 +54,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetToolboxesRequest(_limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     yield break;
                 }
-                message = _client.CreateGetToolboxesRequest(_limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetAllRequest(_limit, _order, nextToken, _before, _options);
             }
         }
 

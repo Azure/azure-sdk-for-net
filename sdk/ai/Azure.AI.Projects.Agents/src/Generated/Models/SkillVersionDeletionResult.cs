@@ -8,17 +8,17 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A deleted skill version. </summary>
-    public partial class DeleteSkillVersionResponse
+    public partial class SkillVersionDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillVersionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkillVersionDeletionResult"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill version. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
         /// <param name="version"> The version that was deleted. </param>
-        internal DeleteSkillVersionResponse(string id, string name, bool deleted, string version)
+        internal SkillVersionDeletionResult(string id, string name, bool deleted, string version)
         {
             Id = id;
             Name = name;
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects.Agents
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillVersionResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkillVersionDeletionResult"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill version. </param>
         /// <param name="name"> The name of the skill. </param>
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
         /// <param name="version"> The version that was deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteSkillVersionResponse(string id, string name, bool deleted, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillVersionDeletionResult(string id, string name, bool deleted, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

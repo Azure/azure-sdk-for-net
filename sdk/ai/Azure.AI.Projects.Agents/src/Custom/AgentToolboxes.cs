@@ -36,13 +36,13 @@ public partial class AgentToolboxes
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ToolboxVersion> GetToolboxVersions(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ToolboxVersion> GetVersions(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         return new InternalOpenAICollectionResultOfT<ToolboxVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetToolboxVersionsRequest(
+                => CreateGetVersionsRequest(
                     localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
@@ -78,13 +78,13 @@ public partial class AgentToolboxes
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ToolboxVersion> GetToolboxVersionsAsync(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ToolboxVersion> GetVersionsAsync(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         return new InternalOpenAIAsyncCollectionResultOfT<ToolboxVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetToolboxVersionsRequest(
+                => CreateGetVersionsRequest(
                     localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
@@ -117,12 +117,12 @@ public partial class AgentToolboxes
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ToolboxRecord> GetToolboxes(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ToolboxRecord> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<ToolboxRecord>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetToolboxesRequest(
+                => CreateGetAllRequest(
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
@@ -154,12 +154,12 @@ public partial class AgentToolboxes
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ToolboxRecord> GetToolboxesAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ToolboxRecord> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<ToolboxRecord>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetToolboxesRequest(
+                => CreateGetAllRequest(
                     localCollectionOptions.Limit,
                     localCollectionOptions.Order,
                     localCollectionOptions.AfterId,
@@ -185,7 +185,7 @@ public partial class AgentToolboxes
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ToolboxRecord> UpdateToolbox(string name, string defaultVersion, RequestOptions options = null)
+    public virtual ClientResult<ToolboxRecord> UpdateDefaultVersion(string name, string defaultVersion, RequestOptions options = null)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
@@ -193,7 +193,7 @@ public partial class AgentToolboxes
         UpdateToolboxRequest request = new(name, defaultVersion);
         BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
-        ClientResult result = UpdateToolbox(name, content);
+        ClientResult result = UpdateDefaultVersion(name, content);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
     }
 
@@ -212,7 +212,7 @@ public partial class AgentToolboxes
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ToolboxRecord>> UpdateToolboxAsync(string name, string defaultVersion, RequestOptions options = null)
+    public virtual async Task<ClientResult<ToolboxRecord>> UpdateDefaultVersionAsync(string name, string defaultVersion, RequestOptions options = null)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
@@ -220,7 +220,7 @@ public partial class AgentToolboxes
         UpdateToolboxRequest request = new(name, defaultVersion);
         BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
-        ClientResult result = await UpdateToolboxAsync(name, content).ConfigureAwait(false);
+        ClientResult result = await UpdateDefaultVersionAsync(name, content).ConfigureAwait(false);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
     }
 }

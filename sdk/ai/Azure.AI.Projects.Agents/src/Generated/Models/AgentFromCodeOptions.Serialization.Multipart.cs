@@ -8,10 +8,10 @@ using System.ClientModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public partial class CreateAgentFromCodeOptions
+    public partial class AgentFromCodeOptions
     {
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/> for deserialization. </summary>
-        internal CreateAgentFromCodeOptions()
+        /// <summary> Initializes a new instance of <see cref="AgentFromCodeOptions"/> for deserialization. </summary>
+        internal AgentFromCodeOptions()
         {
         }
 
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         {
             MultiPartFormContent content = new MultiPartFormContent();
 
-            content.Add<CreateAgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
+            content.Add<AgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
             content.Add("code", new FileBinaryContent(Code));
 
             return content;

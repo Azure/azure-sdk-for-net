@@ -10,65 +10,65 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A deleted skill version. </summary>
-    public partial class DeleteSkillVersionResponse : IJsonModel<DeleteSkillVersionResponse>
+    /// <summary> A deleted skill. </summary>
+    public partial class SkillDeletionResult : IJsonModel<SkillDeletionResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillVersionResponse"/> for deserialization. </summary>
-        internal DeleteSkillVersionResponse()
+        /// <summary> Initializes a new instance of <see cref="SkillDeletionResult"/> for deserialization. </summary>
+        internal SkillDeletionResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteSkillVersionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SkillDeletionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteSkillVersionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeleteSkillVersionResponse(document.RootElement, options);
+                        return DeserializeSkillDeletionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeleteSkillVersionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkillDeletionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteSkillVersionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeleteSkillVersionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkillDeletionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeleteSkillVersionResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SkillDeletionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteSkillVersionResponse IPersistableModel<DeleteSkillVersionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SkillDeletionResult IPersistableModel<SkillDeletionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeleteSkillVersionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SkillDeletionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DeleteSkillVersionResponse"/> from. </param>
-        public static explicit operator DeleteSkillVersionResponse(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="SkillDeletionResult"/> from. </param>
+        public static explicit operator SkillDeletionResult(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeleteSkillVersionResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSkillDeletionResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeleteSkillVersionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SkillDeletionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +79,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteSkillVersionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteSkillVersionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SkillDeletionResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -90,8 +90,6 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Name);
             writer.WritePropertyName("deleted"u8);
             writer.WriteBooleanValue(Deleted);
-            writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(Version);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,24 +109,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeleteSkillVersionResponse IJsonModel<DeleteSkillVersionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SkillDeletionResult IJsonModel<SkillDeletionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeleteSkillVersionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SkillDeletionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeleteSkillVersionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkillDeletionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteSkillVersionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SkillDeletionResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeleteSkillVersionResponse(document.RootElement, options);
+            return DeserializeSkillDeletionResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeleteSkillVersionResponse DeserializeDeleteSkillVersionResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static SkillDeletionResult DeserializeSkillDeletionResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +135,6 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             bool deleted = default;
-            string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,17 +153,12 @@ namespace Azure.AI.Projects.Agents
                     deleted = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
-                {
-                    version = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeleteSkillVersionResponse(id, name, deleted, version, additionalBinaryDataProperties);
+            return new SkillDeletionResult(id, name, deleted, additionalBinaryDataProperties);
         }
     }
 }

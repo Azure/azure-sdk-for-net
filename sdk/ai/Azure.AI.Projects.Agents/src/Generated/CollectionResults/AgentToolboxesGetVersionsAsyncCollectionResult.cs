@@ -6,10 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentToolboxesGetToolboxVersionsCollectionResult : CollectionResult
+    internal partial class AgentToolboxesGetVersionsAsyncCollectionResult : AsyncCollectionResult
     {
         private readonly AgentToolboxes _client;
         private readonly string _name;
@@ -19,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AgentToolboxesGetToolboxVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AgentToolboxesGetVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentToolboxes client used to send requests. </param>
         /// <param name="name"> The name of the toolbox to list versions for. </param>
         /// <param name="limit">
@@ -41,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentToolboxesGetToolboxVersionsCollectionResult(AgentToolboxes client, string name, int? limit, string order, string after, string before, RequestOptions options)
+        public AgentToolboxesGetVersionsAsyncCollectionResult(AgentToolboxes client, string name, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _name = name;
@@ -54,13 +55,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetToolboxVersionsRequest(_name, _limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = GetNextResponse(message);
+                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
                 nextToken = ((AgentsPagedResultToolboxVersionObject)result).LastId;
@@ -68,7 +69,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     yield break;
                 }
-                message = _client.CreateGetToolboxVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -90,9 +91,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private ClientResult GetNextResponse(PipelineMessage message)
+        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
         }
     }
 }

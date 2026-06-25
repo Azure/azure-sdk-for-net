@@ -8,28 +8,28 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A deleted skill. </summary>
-    public partial class DeleteSkillResponse
+    public partial class SkillDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkillDeletionResult"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
-        internal DeleteSkillResponse(string id, string name, bool deleted)
+        internal SkillDeletionResult(string id, string name, bool deleted)
         {
             Id = id;
             Name = name;
             Deleted = deleted;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeleteSkillResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkillDeletionResult"/>. </summary>
         /// <param name="id"> The unique identifier of the deleted skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteSkillResponse(string id, string name, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillDeletionResult(string id, string name, bool deleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

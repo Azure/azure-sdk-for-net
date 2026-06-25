@@ -55,9 +55,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instanceIdentity"> The instance identity of the agent. </param>
         /// <param name="blueprint"> The blueprint for the agent. </param>
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
-        /// <param name="agentGuid"> The unique GUID identifier of the agent. </param>
+        /// <param name="agentGuidInternal"> The unique GUID identifier of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuidInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             Object = @object;
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects.Agents
             InstanceIdentity = instanceIdentity;
             Blueprint = blueprint;
             BlueprintReference = blueprintReference;
-            AgentGuid = agentGuid;
+            AgentGuidInternal = agentGuidInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -113,8 +113,5 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The blueprint for the agent. </summary>
         public AgentBlueprintReference BlueprintReference { get; }
-
-        /// <summary> The unique GUID identifier of the agent. </summary>
-        public string AgentGuid { get; }
     }
 }

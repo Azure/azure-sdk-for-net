@@ -204,7 +204,7 @@ azure-ai-agentserver-responses
 Prepare the metadata for Agent:
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
-private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
         cpu: "0.5",
@@ -218,7 +218,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
             dependencyResolution: CodeDependencyResolution.RemoteBuild
         ),
     };
-    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    AgentVersionFromCodeMetadata metadata = new(agentDefinition);
     metadata.Metadata["enableVnextExperience"] = "true";
     return metadata;
 }
@@ -288,7 +288,7 @@ MCPToolboxTool tool = new(serverLabel: "api-specs")
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
-ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -296,7 +296,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -313,14 +313,14 @@ There are two objects which help to work with the Toolboxes: `ToolboxRecord` and
 name, it contains the default version of the Toolbox.
 
 ```C# Snippet:Sample_GetToolbox_ToolboxesAgentsCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 The name of Toolbox and its version allow to get the `ToolboxVersion`, containing the tools, which can be used by Agent.
 
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesAgentsCRUD_Async
-ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
@@ -456,7 +456,7 @@ PatchAgentOptions patchOptions = new()
     AgentEndpoint = config,
     AgentCard = card
 };
-ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentObjectAsync(
+ProjectsAgentRecord patchedRecord = await agentsClient.PatchAgentAsync(
     agentName: hostedAgentName,
     patchAgentOptions: patchOptions);
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");

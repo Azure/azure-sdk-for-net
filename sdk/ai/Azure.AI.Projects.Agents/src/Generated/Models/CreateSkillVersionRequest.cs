@@ -20,12 +20,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateSkillVersionRequest"/>. </summary>
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
-        /// <param name="default"> Whether to set this version as the default. </param>
+        /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateSkillVersionRequest(SkillInlineContent inlineContent, bool? @default, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateSkillVersionRequest(SkillInlineContent inlineContent, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InlineContent = inlineContent;
-            Default = @default;
+            IsDefault = isDefault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -33,6 +33,6 @@ namespace Azure.AI.Projects.Agents
         public SkillInlineContent InlineContent { get; }
 
         /// <summary> Whether to set this version as the default. </summary>
-        public bool? Default { get; }
+        public bool? IsDefault { get; }
     }
 }

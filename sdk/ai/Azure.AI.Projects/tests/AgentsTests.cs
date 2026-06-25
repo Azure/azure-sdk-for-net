@@ -1606,7 +1606,7 @@ public class AgentsTests : AgentsTestBase
         {
             AgentEndpoint = config,
         };
-        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentObjectAsync(
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
             agentName: agentVersion.Name,
             patchAgentOptions: patchOptions);
         ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(

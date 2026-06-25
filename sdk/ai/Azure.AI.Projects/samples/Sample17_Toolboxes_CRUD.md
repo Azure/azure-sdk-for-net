@@ -21,7 +21,7 @@ MCPToolboxTool tool = new(serverLabel: "api-specs")
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
-ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
+ToolboxVersion toolBox1 = toolboxClient.CreateVersion(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -29,7 +29,7 @@ ToolboxVersion toolBox1 = toolboxClient.CreateToolboxVersion(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = toolboxClient.CreateToolboxVersion(
+ToolboxVersion toolBox2 = toolboxClient.CreateVersion(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -49,7 +49,7 @@ MCPToolboxTool tool = new(serverLabel: "api-specs")
     ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
     ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
 };
-ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Example toolbox created by the azure-ai-projects sample.",
@@ -57,7 +57,7 @@ ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
         {"team", "Engineers"}
     }
 );
-ToolboxVersion toolBox2 = await toolboxClient.CreateToolboxVersionAsync(
+ToolboxVersion toolBox2 = await toolboxClient.CreateVersionAsync(
     name: toolboxName,
     tools: [tool],
     description: "Another toolbox created by the azure-ai-projects sample.",
@@ -74,13 +74,13 @@ Console.WriteLine($"Toolbox: {toolBox1.Name}, version: {toolBox1.Version}, (tool
 
 Synchronous sample:
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Sync
-ToolboxRecord record = toolboxClient.GetToolbox(name: toolBox1.Name);
+ToolboxRecord record = toolboxClient.Get(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetToolbox_ToolboxesCRUD_Async
-ToolboxRecord record = await toolboxClient.GetToolboxAsync(name: toolBox1.Name);
+ToolboxRecord record = await toolboxClient.GetAsync(name: toolBox1.Name);
 Console.WriteLine($"The default version for a toolbox {record.Name} is {record.DefaultVersion}");
 ```
 
@@ -88,13 +88,13 @@ Console.WriteLine($"The default version for a toolbox {record.Name} is {record.D
 
 Synchronous sample:
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Sync
-ToolboxVersion toolBox = toolboxClient.GetToolboxVersion(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = toolboxClient.GetVersion(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
-ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
+ToolboxVersion toolBox = await toolboxClient.GetVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 ```
 
@@ -103,14 +103,14 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 Synchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Sync
 string newVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-record = toolboxClient.UpdateToolbox(toolboxName, newVersion);
+record = toolboxClient.UpdateDefaultVersion(toolboxName, newVersion);
 Console.WriteLine($"The default version for a toolbox {record.Name} is now {record.DefaultVersion}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_ToolboxesCRUD_Async
 string newVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-record = await toolboxClient.UpdateToolboxAsync(toolboxName, newVersion);
+record = await toolboxClient.UpdateDefaultVersionAsync(toolboxName, newVersion);
 Console.WriteLine($"The default version for a toolbox {record.Name} is now {record.DefaultVersion}");
 ```
 
@@ -118,7 +118,7 @@ Console.WriteLine($"The default version for a toolbox {record.Name} is now {reco
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Sync
-List<ToolboxVersion> toolboxes = [.. toolboxClient.GetToolboxVersions(toolBox.Name)];
+List<ToolboxVersion> toolboxes = [.. toolboxClient.GetVersions(toolBox.Name)];
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -128,7 +128,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListToolboxVersions_ToolboxesCRUD_Async
-List<ToolboxVersion> toolboxes = await toolboxClient.GetToolboxVersionsAsync(toolBox.Name).ToListAsync();
+List<ToolboxVersion> toolboxes = await toolboxClient.GetVersionsAsync(toolBox.Name).ToListAsync();
 Console.WriteLine($"Found {toolboxes.Count} toolbox version(s).");
 foreach (ToolboxVersion item in toolboxes)
 {
@@ -140,7 +140,7 @@ foreach (ToolboxVersion item in toolboxes)
 
 Synchronous sample:
 ```C# Snippet:Sample_ListToolboxes_ToolboxesCRUD_Sync
-List<ToolboxRecord> records = [.. toolboxClient.GetToolboxes()];
+List<ToolboxRecord> records = [.. toolboxClient.GetAll()];
 Console.WriteLine($"Found {records.Count} toolbox(es).");
 foreach (ToolboxRecord item in records)
 {
@@ -150,7 +150,7 @@ foreach (ToolboxRecord item in records)
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListToolboxes_ToolboxesCRUD_Async
-List<ToolboxRecord> records = await toolboxClient.GetToolboxesAsync().ToListAsync();
+List<ToolboxRecord> records = await toolboxClient.GetAllAsync().ToListAsync();
 Console.WriteLine($"Found {records.Count} toolbox(es).");
 foreach (ToolboxRecord item in records)
 {
@@ -164,14 +164,14 @@ Synchronous sample:
 ```C# Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Sync
 // We cannot delete the default version.
 string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-toolboxClient.DeleteToolboxVersion(toolBox.Name, deleteVersion);
-toolboxClient.DeleteToolbox(toolBox.Name);
+toolboxClient.DeleteVersion(toolBox.Name, deleteVersion);
+toolboxClient.Delete(toolBox.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteToolbox_ToolboxesCRUD_Async
 // We cannot delete the default version.
 string deleteVersion = string.Equals(record.DefaultVersion, toolBox1.Version) ? toolBox2.Version : toolBox1.Version;
-await toolboxClient.DeleteToolboxVersionAsync(toolBox.Name, deleteVersion);
-await toolboxClient.DeleteToolboxAsync(toolBox.Name);
+await toolboxClient.DeleteVersionAsync(toolBox.Name, deleteVersion);
+await toolboxClient.DeleteAsync(toolBox.Name);
 ```

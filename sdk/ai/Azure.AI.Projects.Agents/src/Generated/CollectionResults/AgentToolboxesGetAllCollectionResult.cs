@@ -6,23 +6,20 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentToolboxesGetToolboxVersionsAsyncCollectionResult : AsyncCollectionResult
+    internal partial class AgentToolboxesGetAllCollectionResult : CollectionResult
     {
         private readonly AgentToolboxes _client;
-        private readonly string _name;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AgentToolboxesGetToolboxVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AgentToolboxesGetAllCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentToolboxes client used to send requests. </param>
-        /// <param name="name"> The name of the toolbox to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -42,10 +39,9 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentToolboxesGetToolboxVersionsAsyncCollectionResult(AgentToolboxes client, string name, int? limit, string order, string after, string before, RequestOptions options)
+        public AgentToolboxesGetAllCollectionResult(AgentToolboxes client, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
-            _name = name;
             _limit = limit;
             _order = order;
             _after = after;
@@ -55,21 +51,21 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetToolboxVersionsRequest(_name, _limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultToolboxVersionObject)result).LastId;
+                nextToken = ((AgentsPagedResultToolboxObject)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetToolboxVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetAllRequest(_limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -78,7 +74,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultToolboxVersionObject)page).LastId;
+            string nextPage = ((AgentsPagedResultToolboxObject)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -91,9 +87,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        private ClientResult GetNextResponse(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
         }
     }
 }

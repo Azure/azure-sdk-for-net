@@ -36,7 +36,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         #endregion
         try
         {
-            toolboxClient.DeleteToolbox(name: "myToolbox");
+            toolboxClient.Delete(name: "myToolbox");
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Async
@@ -49,7 +49,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         {
             RaiConfig = new(raiPolicyName)
         };
-        ToolboxVersion toolBox = await toolboxClient.CreateToolboxVersionAsync(
+        ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "myToolbox",
             tools: [mcp],
             policies: raiPolicies,
@@ -124,7 +124,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_ToolBoxWithRAI_Async
-        await toolboxClient.DeleteToolboxAsync(name: toolBox.Name);
+        await toolboxClient.DeleteAsync(name: toolBox.Name);
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
@@ -148,7 +148,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentToolboxes();
         try
         {
-            toolboxClient.DeleteToolbox(name: "myToolbox");
+            toolboxClient.Delete(name: "myToolbox");
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Sync
@@ -161,7 +161,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         {
             RaiConfig = new(raiPolicyName)
         };
-        ToolboxVersion toolBox = toolboxClient.CreateToolboxVersion(
+        ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "myToolbox",
             tools: [mcp],
             policies: raiPolicies,
@@ -236,7 +236,7 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_Cleanup_ToolBoxWithRAI_Sync
-        toolboxClient.DeleteToolbox(name: toolBox.Name);
+        toolboxClient.Delete(name: toolBox.Name);
         projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }

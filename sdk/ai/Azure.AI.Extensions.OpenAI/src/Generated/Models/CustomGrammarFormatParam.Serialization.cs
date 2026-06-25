@@ -109,7 +109,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             CustomToolParamFormatType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResponsesGrammarSyntax syntax = default;
+            GrammarSyntax1 syntax = default;
             string definition = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("syntax"u8))
                 {
-                    syntax = prop.Value.GetString().ToResponsesGrammarSyntax();
+                    syntax = prop.Value.GetString().ToGrammarSyntax1();
                     continue;
                 }
                 if (prop.NameEquals("definition"u8))

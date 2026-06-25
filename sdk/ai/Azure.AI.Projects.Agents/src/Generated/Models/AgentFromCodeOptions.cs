@@ -7,13 +7,13 @@ using System;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
-    public partial class CreateAgentFromCodeOptions
+    public partial class AgentFromCodeOptions
     {
-        /// <summary> Initializes a new instance of <see cref="CreateAgentFromCodeOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentFromCodeOptions"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
         /// <param name="code"> The code zip file (max 250 MB). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="code"/> is null. </exception>
-        public CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata, BinaryData code)
+        public AgentFromCodeOptions(AgentVersionFromCodeMetadata metadata, BinaryData code)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(code, nameof(code));
@@ -23,6 +23,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> JSON metadata including description and hosted definition. </summary>
-        public CreateAgentVersionFromCodeMetadata Metadata { get; }
+        public AgentVersionFromCodeMetadata Metadata { get; }
     }
 }

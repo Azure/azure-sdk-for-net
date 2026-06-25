@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base(CustomToolParamFormatType.Grammar)
+        public CustomGrammarFormatParam(GrammarSyntax1 syntax, string definition) : base(CustomToolParamFormatType.Grammar)
         {
             Argument.AssertNotNull(definition, nameof(definition));
 
@@ -27,14 +27,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        internal CustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponsesGrammarSyntax syntax, string definition) : base(@type, additionalBinaryDataProperties)
+        internal CustomGrammarFormatParam(CustomToolParamFormatType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, GrammarSyntax1 syntax, string definition) : base(@type, additionalBinaryDataProperties)
         {
             Syntax = syntax;
             Definition = definition;
         }
 
         /// <summary> The syntax of the grammar definition. One of `lark` or `regex`. </summary>
-        public ResponsesGrammarSyntax Syntax { get; set; }
+        public GrammarSyntax1 Syntax { get; set; }
 
         /// <summary> The grammar definition. </summary>
         public string Definition { get; set; }

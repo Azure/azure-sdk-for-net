@@ -11,16 +11,16 @@ namespace Azure.AI.Projects.Agents
     /// Known SSE event types emitted by the hosted agent session log stream.
     /// Additional event types may be introduced in future versions.
     /// </summary>
-    public readonly partial struct SessionLogEventType : IEquatable<SessionLogEventType>
+    public readonly partial struct SessionLogEventKind : IEquatable<SessionLogEventKind>
     {
         private readonly string _value;
         /// <summary> A log line from the agent session container. </summary>
         private const string LogValue = "log";
 
-        /// <summary> Initializes a new instance of <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionLogEventKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SessionLogEventType(string value)
+        public SessionLogEventKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,32 +28,32 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> A log line from the agent session container. </summary>
-        public static SessionLogEventType Log { get; } = new SessionLogEventType(LogValue);
+        public static SessionLogEventKind Log { get; } = new SessionLogEventKind(LogValue);
 
-        /// <summary> Determines if two <see cref="SessionLogEventType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SessionLogEventKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SessionLogEventType left, SessionLogEventType right) => left.Equals(right);
+        public static bool operator ==(SessionLogEventKind left, SessionLogEventKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SessionLogEventType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SessionLogEventKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SessionLogEventType left, SessionLogEventType right) => !left.Equals(right);
+        public static bool operator !=(SessionLogEventKind left, SessionLogEventKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SessionLogEventKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionLogEventType(string value) => new SessionLogEventType(value);
+        public static implicit operator SessionLogEventKind(string value) => new SessionLogEventKind(value);
 
-        /// <summary> Converts a string to a <see cref="SessionLogEventType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SessionLogEventKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SessionLogEventType?(string value) => value == null ? null : new SessionLogEventType(value);
+        public static implicit operator SessionLogEventKind?(string value) => value == null ? null : new SessionLogEventKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SessionLogEventType other && Equals(other);
+        public override bool Equals(object obj) => obj is SessionLogEventKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SessionLogEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SessionLogEventKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

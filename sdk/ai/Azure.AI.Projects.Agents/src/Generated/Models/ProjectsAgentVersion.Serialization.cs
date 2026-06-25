@@ -141,10 +141,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("blueprint_reference"u8);
                 writer.WriteObjectValue(BlueprintReference, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentGuid))
+            if (options.Format != "W" && Optional.IsDefined(AgentGuidInternal))
             {
                 writer.WritePropertyName("agent_guid"u8);
-                writer.WriteStringValue(AgentGuid);
+                writer.WriteStringValue(AgentGuidInternal);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -200,7 +200,7 @@ namespace Azure.AI.Projects.Agents
             AgentIdentity instanceIdentity = default;
             AgentIdentity blueprint = default;
             AgentBlueprintReference blueprintReference = default;
-            string agentGuid = default;
+            string agentGuidInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -299,7 +299,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("agent_guid"u8))
                 {
-                    agentGuid = prop.Value.GetString();
+                    agentGuidInternal = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -320,7 +320,7 @@ namespace Azure.AI.Projects.Agents
                 instanceIdentity,
                 blueprint,
                 blueprintReference,
-                agentGuid,
+                agentGuidInternal,
                 additionalBinaryDataProperties);
         }
     }

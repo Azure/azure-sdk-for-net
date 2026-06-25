@@ -9,17 +9,19 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class AgentToolboxesGetToolboxesCollectionResult : CollectionResult
+    internal partial class AgentToolboxesGetVersionsCollectionResult : CollectionResult
     {
         private readonly AgentToolboxes _client;
+        private readonly string _name;
         private readonly int? _limit;
         private readonly string _order;
         private readonly string _after;
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AgentToolboxesGetToolboxesCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of AgentToolboxesGetVersionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AgentToolboxes client used to send requests. </param>
+        /// <param name="name"> The name of the toolbox to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -39,9 +41,10 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentToolboxesGetToolboxesCollectionResult(AgentToolboxes client, int? limit, string order, string after, string before, RequestOptions options)
+        public AgentToolboxesGetVersionsCollectionResult(AgentToolboxes client, string name, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
+            _name = name;
             _limit = limit;
             _order = order;
             _after = after;
@@ -53,19 +56,19 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateGetToolboxesRequest(_limit, _order, _after, _before, _options);
+            PipelineMessage message = _client.CreateGetVersionsRequest(_name, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
                 ClientResult result = GetNextResponse(message);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultToolboxObject)result).LastId;
+                nextToken = ((AgentsPagedResultToolboxVersionObject)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
                 }
-                message = _client.CreateGetToolboxesRequest(_limit, _order, nextToken, _before, _options);
+                message = _client.CreateGetVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
             }
         }
 
@@ -74,7 +77,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultToolboxObject)page).LastId;
+            string nextPage = ((AgentsPagedResultToolboxVersionObject)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));

@@ -26,8 +26,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("CreateAgentVersionFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentFromCodeOptions), typeof(CancellationToken))]
-[CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentFromCodeOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(AgentFromCodeOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(AgentFromCodeOptions), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
@@ -185,7 +185,8 @@ public partial class AgentAdministrationClient
 
         options ??= new();
 
-        ClientResult result = CreateAgentVersionFromManifest(agentName, options, cancellationToken.ToRequestOptions());
+        using BinaryContent content = BinaryContent.Create(options);
+        ClientResult result = CreateAgentVersionFromManifest(agentName, content: content, options: cancellationToken.ToRequestOptions());
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
@@ -200,7 +201,8 @@ public partial class AgentAdministrationClient
         Argument.AssertNotNullOrEmpty(manifestId, nameof(manifestId));
         Argument.AssertNotNull(options, nameof(options));
 
-        ClientResult result = await CreateAgentVersionFromManifestAsync(agentName, options, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        using BinaryContent content = BinaryContent.Create(options);
+        ClientResult result = await CreateAgentVersionFromManifestAsync(agentName, content: content, options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
@@ -743,12 +745,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ProjectsAgentRecord> PatchAgentObject(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> PatchAgent(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
 
-        ClientResult result = PatchAgentObject(
+        ClientResult result = PatchAgent(
             agentName: agentName,
             content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
             cancellationToken.ToRequestOptions());
@@ -770,12 +772,12 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentObjectAsync(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> PatchAgentAsync(string agentName, PatchAgentOptions patchAgentOptions, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNull(patchAgentOptions, nameof(patchAgentOptions));
 
-        ClientResult result = await PatchAgentObjectAsync(
+        ClientResult result = await PatchAgentAsync(
             agentName: agentName,
             content: BinaryContent.Create(((IJsonModel<PatchAgentOptions>)patchAgentOptions).Write(ModelReaderWriterOptions.Json)),
             cancellationToken.ToRequestOptions()).ConfigureAwait(false);
@@ -872,7 +874,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string filePath, AgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -906,7 +908,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, CreateAgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string filePath, AgentVersionFromCodeMetadata metadata, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));

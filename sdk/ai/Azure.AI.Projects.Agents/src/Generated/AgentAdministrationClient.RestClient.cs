@@ -337,7 +337,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreatePatchAgentObjectRequest(string agentName, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreatePatchAgentRequest(string agentName, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

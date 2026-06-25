@@ -13,15 +13,15 @@ namespace Azure.AI.Projects.Agents
     /// so it is not included in this model.
     /// The content hash (SHA-256 of the zip) is carried in the `x-ms-code-zip-sha256` header.
     /// </summary>
-    public partial class CreateAgentVersionFromCodeMetadata
+    public partial class AgentVersionFromCodeMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentVersionFromCodeMetadata"/>. </summary>
         /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public CreateAgentVersionFromCodeMetadata(HostedAgentDefinition definition)
+        public AgentVersionFromCodeMetadata(HostedAgentDefinition definition)
         {
             Argument.AssertNotNull(definition, nameof(definition));
 
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentVersionFromCodeMetadata"/>. </summary>
         /// <param name="description"> A human-readable description of the agent. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="definition"> The hosted agent definition including code_configuration (runtime, entry_point), cpu, memory, and protocol_versions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateAgentVersionFromCodeMetadata(string description, IDictionary<string, string> metadata, HostedAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentVersionFromCodeMetadata(string description, IDictionary<string, string> metadata, HostedAgentDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Metadata = metadata;

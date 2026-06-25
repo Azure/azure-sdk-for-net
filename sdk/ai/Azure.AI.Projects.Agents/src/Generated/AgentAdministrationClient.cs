@@ -95,9 +95,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, RequestOptions options = null)
+        internal virtual ClientResult PatchAgent(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, options);
+            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -114,9 +114,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, RequestOptions options = null)
+        internal virtual async Task<ClientResult> PatchAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, options);
+            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
