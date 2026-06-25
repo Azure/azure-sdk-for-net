@@ -237,7 +237,7 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
         }
 
         if ($checkPackageExitCode) {
-            LogError "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
+            Write-Host "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
             $checkPackageResponse = getCheckPackageResponse -OutputText $outputText
             $failedPackages += [PSCustomObject]@{
                 Name = $pkgProperties.Name
