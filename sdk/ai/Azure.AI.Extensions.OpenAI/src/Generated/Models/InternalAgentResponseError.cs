@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {

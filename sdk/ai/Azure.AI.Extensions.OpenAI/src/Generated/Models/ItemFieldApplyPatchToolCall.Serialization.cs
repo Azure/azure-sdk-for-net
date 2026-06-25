@@ -6,8 +6,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Apply patch tool call. </summary>
     internal partial class ItemFieldApplyPatchToolCall : ItemField, IJsonModel<ItemFieldApplyPatchToolCall>
@@ -81,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteObjectValue(Status, options);
             writer.WritePropertyName("operation"u8);
             writer.WriteObjectValue(Operation, options);
             if (Optional.IsDefined(CreatedBy))
@@ -142,7 +144,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToApplyPatchCallStatus();
+                    status = ModelReaderWriter.Read<ApplyPatchCallStatus>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("operation"u8))

@@ -6,9 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     internal partial class InternalOutputMessageContentOutputTextContent : InternalOutputMessageContent, IJsonModel<InternalOutputMessageContentOutputTextContent>
     {
@@ -80,8 +82,13 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("annotations"u8);
             writer.WriteStartArray();
-            foreach (InternalAnnotation item in Annotations)
+            foreach (ResponseMessageAnnotation item in Annotations)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -122,7 +129,7 @@ namespace Azure.AI.Extensions.OpenAI
             OutputMessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<InternalAnnotation> annotations = default;
+            IList<ResponseMessageAnnotation> annotations = default;
             IList<InternalLogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,10 +145,17 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<InternalAnnotation> array = new List<InternalAnnotation>();
+                    List<ResponseMessageAnnotation> array = new List<ResponseMessageAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternalAnnotation.DeserializeInternalAnnotation(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     annotations = array;
                     continue;

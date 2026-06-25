@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary>
     /// Configuration options for a text response from the model. Can be plain

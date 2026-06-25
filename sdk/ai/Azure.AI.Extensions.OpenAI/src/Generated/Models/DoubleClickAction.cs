@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> DoubleClick. </summary>
     internal partial class DoubleClickAction : InternalComputerAction
@@ -16,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <param name="keys"></param>
-        internal DoubleClickAction(long x, long y, IEnumerable<string> keys) : base(ComputerActionType.DoubleClick)
+        internal DoubleClickAction(long x, long y, IEnumerable<string> keys) : base("double_click")
         {
             X = x;
             Y = y;
@@ -29,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="x"> The x-coordinate where the double click occurred. </param>
         /// <param name="y"> The y-coordinate where the double click occurred. </param>
         /// <param name="keys"></param>
-        internal DoubleClickAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal DoubleClickAction(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

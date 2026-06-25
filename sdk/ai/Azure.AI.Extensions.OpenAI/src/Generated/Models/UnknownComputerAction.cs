@@ -5,15 +5,16 @@
 using System;
 using System.Collections.Generic;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     internal partial class UnknownComputerAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownComputerAction"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownComputerAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownComputerAction(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -6,9 +6,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> MCP list tools. </summary>
     internal partial class ItemFieldMcpListTools : ItemField, IJsonModel<ItemFieldMcpListTools>

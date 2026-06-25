@@ -6,9 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Drag. </summary>
     internal partial class DragParam : InternalComputerAction, IJsonModel<DragParam>
@@ -126,7 +128,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ComputerActionType @type = default;
+            ComputerCallActionKind @type = "drag";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<CoordParam> path = default;
             IList<string> keys = default;
@@ -134,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComputerActionType(prop.Value.GetString());
+                    @type = new ComputerCallActionKind(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("path"u8))

@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     internal partial class UnknownContainerNetworkPolicyParam : ResponsesContainerNetworkPolicyParam
     {

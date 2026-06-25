@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Computer tool call output. </summary>
     internal partial class InputItemComputerCallOutputItemParam : InputItem
@@ -21,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
 
             CallId = callId;
             Output = output;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheck>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputItemComputerCallOutputItemParam"/>. </summary>
@@ -32,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="output"></param>
         /// <param name="acknowledgedSafetyChecks"></param>
         /// <param name="status"></param>
-        internal InputItemComputerCallOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemComputerCallOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerScreenshotImage output, IList<ComputerCallSafetyCheck> acknowledgedSafetyChecks, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -51,7 +53,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ComputerScreenshotImage Output { get; set; }
 
         /// <summary> Gets or sets the AcknowledgedSafetyChecks. </summary>
-        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; set; }
+        public IList<ComputerCallSafetyCheck> AcknowledgedSafetyChecks { get; set; }
 
         /// <summary> Gets or sets the Status. </summary>
         public FunctionCallItemStatus? Status { get; set; }

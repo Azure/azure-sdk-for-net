@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
@@ -76,7 +77,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalAgentResponseError)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code.ToSerialString());
+            writer.WriteObjectValue(Code, options);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -128,7 +129,7 @@ namespace OpenAI
             {
                 if (prop.NameEquals("code"u8))
                 {
-                    code = prop.Value.GetString().ToResponseErrorCode();
+                    code = ModelReaderWriter.Read<ResponseErrorCode>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("message"u8))

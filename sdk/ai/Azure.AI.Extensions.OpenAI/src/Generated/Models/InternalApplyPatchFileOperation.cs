@@ -5,16 +5,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
-    internal abstract partial class InternalApplyPatchFileOperation
+    internal partial class InternalApplyPatchFileOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchFileOperation"/>. </summary>
         /// <param name="type"></param>
-        private protected InternalApplyPatchFileOperation(ApplyPatchFileOperationType @type)
+        internal InternalApplyPatchFileOperation(ApplyPatchFileOperationType @type)
         {
             Type = @type;
         }

@@ -6,9 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Type. </summary>
     internal partial class TypeParam : InternalComputerAction, IJsonModel<TypeParam>
@@ -106,14 +108,14 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ComputerActionType @type = default;
+            ComputerCallActionKind @type = "type";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComputerActionType(prop.Value.GetString());
+                    @type = new ComputerCallActionKind(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("text"u8))

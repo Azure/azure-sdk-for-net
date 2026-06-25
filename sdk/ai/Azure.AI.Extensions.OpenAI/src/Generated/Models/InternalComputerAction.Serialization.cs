@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAIExternal;
 
 namespace OpenAI
 {
@@ -76,7 +77,7 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalComputerAction)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteNumberValue(Type.ToSerialInt32());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

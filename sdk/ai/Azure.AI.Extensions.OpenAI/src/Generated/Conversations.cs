@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAIExternal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -77,11 +78,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<OpenAIExternal.ProjectConversation> CreateConversation(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
             ClientResult result = CreateConversation(spreadModel, userIdentity, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((OpenAIExternal.ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a new conversation resource. </summary>
@@ -90,11 +91,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<OpenAIExternal.ProjectConversation>> CreateConversationAsync(InternalMetadataContainer metadata = default, IEnumerable<InputItem> items = default, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             CreateConversationRequest spreadModel = new CreateConversationRequest(metadata, items?.ToList() as IList<InputItem> ?? new ChangeTrackingList<InputItem>(), default);
             ClientResult result = await CreateConversationAsync(spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((OpenAIExternal.ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,11 +147,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<OpenAIExternal.ProjectConversation> UpdateConversation(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = UpdateConversation(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((OpenAIExternal.ProjectConversation)result, result.GetRawResponse());
         }
 
         /// <summary> Modifies the specified conversation's properties. </summary>
@@ -162,11 +163,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="userIdentity"> Opaque per-user identity string used to scope endpoint-scoped data to a specific end user. The caller must have the `agents/endpoints/UserIdentityImpersonation/action` RBAC permission. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<OpenAIExternal.ProjectConversation>> UpdateConversationAsync(string conversationId, InternalMetadataContainer metadata, string userIdentity = default, CancellationToken cancellationToken = default)
         {
             UpdateConversationRequest spreadModel = new UpdateConversationRequest(metadata, default);
             ClientResult result = await UpdateConversationAsync(conversationId, spreadModel, userIdentity, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
+            return ClientResult.FromValue((OpenAIExternal.ProjectConversation)result, result.GetRawResponse());
         }
     }
 }

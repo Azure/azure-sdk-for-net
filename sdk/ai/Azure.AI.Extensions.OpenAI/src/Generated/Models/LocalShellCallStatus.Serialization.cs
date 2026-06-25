@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     internal static partial class LocalShellCallStatusExtensions
     {

@@ -5,8 +5,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     [PersistableModelProxy(typeof(UnknownInternalOutputMessageContent))]
     internal abstract partial class InternalOutputMessageContent : IJsonModel<InternalOutputMessageContent>

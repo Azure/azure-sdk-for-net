@@ -5,21 +5,22 @@
 using System;
 using System.Collections.Generic;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Wait. </summary>
     internal partial class WaitParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="WaitParam"/>. </summary>
-        internal WaitParam() : base(ComputerActionType.Wait)
+        internal WaitParam() : base("wait")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="WaitParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WaitParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal WaitParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAIExternal;
 
 namespace Azure.AI.Extensions.OpenAI
 {

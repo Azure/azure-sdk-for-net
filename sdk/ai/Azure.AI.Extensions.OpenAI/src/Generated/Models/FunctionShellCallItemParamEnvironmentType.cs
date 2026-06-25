@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary></summary>
     internal readonly partial struct FunctionShellCallItemParamEnvironmentType : IEquatable<FunctionShellCallItemParamEnvironmentType>

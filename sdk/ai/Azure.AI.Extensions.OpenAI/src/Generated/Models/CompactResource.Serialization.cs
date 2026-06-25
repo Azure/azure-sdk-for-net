@@ -7,8 +7,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> The compacted response object. </summary>
     internal partial class CompactResource : IJsonModel<CompactResource>
@@ -145,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
             string @object = default;
             IList<ItemField> output = default;
             DateTimeOffset createdAt = default;
-            ResponseUsage usage = default;
+            ResponseTokenUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +178,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> JSON object. </summary>
     internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatJsonObject>

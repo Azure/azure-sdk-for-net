@@ -6,8 +6,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Message. </summary>
     internal partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
@@ -79,9 +81,9 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToSerialString());
+            writer.WriteNumberValue(Status.ToSerialInt32());
             writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role.ToSerialString());
+            writer.WriteNumberValue(Role.ToSerialInt32());
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
             foreach (InternalMessageContent item in Content)
@@ -142,12 +144,12 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToMessageStatus();
+                    status = new MessageStatus(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = prop.Value.GetString().ToMessageRole();
+                    role = new MessageRole(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))

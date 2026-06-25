@@ -6,9 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> KeyPress. </summary>
     internal partial class KeyPressAction : InternalComputerAction, IJsonModel<KeyPressAction>
@@ -116,14 +118,14 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ComputerActionType @type = default;
+            ComputerCallActionKind @type = "keypress";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> keys = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComputerActionType(prop.Value.GetString());
+                    @type = new ComputerCallActionKind(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("keys"u8))

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> The ProjectConversation. </summary>
     public partial class ProjectConversation
@@ -20,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
         ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
         /// </param>
         /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        internal ProjectConversation(string id, IDictionary<string, string> metadata, DateTimeOffset createdAt)
+        internal ProjectConversation(string id, InternalMetadataContainer metadata, DateTimeOffset createdAt)
         {
             Id = id;
             Metadata = metadata;
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectConversation(string id, string @object, IDictionary<string, string> metadata, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectConversation(string id, string @object, InternalMetadataContainer metadata, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -47,6 +47,15 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The unique ID of the conversation. </summary>
         public string Id { get; }
+
+        /// <summary> The object type, which is always `conversation`. </summary>
+        public string Object { get; } = "conversation";
+
+        /// <summary>
+        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
+        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
+        /// </summary>
+        public InternalMetadataContainer Metadata { get; }
 
         /// <summary> The time at which the conversation was created, measured in seconds since the Unix epoch. </summary>
         public DateTimeOffset CreatedAt { get; }

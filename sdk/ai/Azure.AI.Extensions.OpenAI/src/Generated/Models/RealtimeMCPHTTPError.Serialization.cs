@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Realtime MCP HTTP error. </summary>
     internal partial class RealtimeMCPHTTPError : RealtimeMCPError, IJsonModel<RealtimeMCPHTTPError>

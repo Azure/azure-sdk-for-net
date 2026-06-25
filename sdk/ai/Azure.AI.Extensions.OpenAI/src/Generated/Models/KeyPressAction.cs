@@ -6,15 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> KeyPress. </summary>
     internal partial class KeyPressAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        internal KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
+        internal KeyPressAction(IEnumerable<string> keys) : base("keypress")
         {
             Keys = keys.ToList();
         }
@@ -23,7 +24,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        internal KeyPressAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal KeyPressAction(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             Keys = keys;
         }

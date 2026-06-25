@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Scroll. </summary>
     internal partial class ScrollParam : InternalComputerAction
@@ -16,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
+        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base("scroll")
         {
             X = x;
             Y = y;
@@ -33,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
         /// <param name="keys"></param>
-        internal ScrollParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY, IList<string> keys) : base(@type, additionalBinaryDataProperties)
+        internal ScrollParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long x, long y, long scrollX, long scrollY, IList<string> keys) : base(@type, additionalBinaryDataProperties)
         {
             X = x;
             Y = y;

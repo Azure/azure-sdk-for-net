@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> The compacted response object. </summary>
     internal partial class CompactResource
@@ -19,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="output"> The compacted list of output items. </param>
         /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
-        internal CompactResource(string id, IEnumerable<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage)
+        internal CompactResource(string id, IEnumerable<ItemField> output, DateTimeOffset createdAt, ResponseTokenUsage usage)
         {
             Id = id;
             Output = output.ToList();
@@ -34,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="createdAt"> Unix timestamp (in seconds) when the compacted conversation was created. </param>
         /// <param name="usage"> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CompactResource(string id, string @object, IList<ItemField> output, DateTimeOffset createdAt, ResponseUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CompactResource(string id, string @object, IList<ItemField> output, DateTimeOffset createdAt, ResponseTokenUsage usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -57,6 +58,6 @@ namespace Azure.AI.Extensions.OpenAI
         public DateTimeOffset CreatedAt { get; }
 
         /// <summary> Token accounting for the compaction pass, including cached, reasoning, and total tokens. </summary>
-        public ResponseUsage Usage { get; }
+        public ResponseTokenUsage Usage { get; }
     }
 }

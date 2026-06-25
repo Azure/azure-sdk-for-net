@@ -5,21 +5,22 @@
 using System;
 using System.Collections.Generic;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Screenshot. </summary>
     internal partial class ScreenshotParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScreenshotParam"/>. </summary>
-        internal ScreenshotParam() : base(ComputerActionType.Screenshot)
+        internal ScreenshotParam() : base("screenshot")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ScreenshotParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScreenshotParam(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ScreenshotParam(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

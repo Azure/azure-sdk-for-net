@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Local shell call output. </summary>
     internal partial class InputItemLocalShellToolCallOutput : InputItem, IJsonModel<InputItemLocalShellToolCallOutput>

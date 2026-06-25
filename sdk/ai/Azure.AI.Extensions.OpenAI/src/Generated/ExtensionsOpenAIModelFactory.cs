@@ -4,8 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using Azure.AI.Extensions.OpenAIExternal;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -40,7 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// The input format for the custom tool. Default is unconstrained text.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="OpenAI.CustomGrammarFormatParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesCustomTextFormatParam"/> and <see cref="OpenAIExternal.CustomGrammarFormatParam"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomToolParamFormat"/> instance for mocking. </returns>
@@ -59,7 +59,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Grammar format. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAIExternal.CustomGrammarFormatParam"/> instance for mocking. </returns>
         public static CustomGrammarFormatParam CustomGrammarFormatParam(ResponsesGrammarSyntax syntax = default, string definition = default)
         {
             return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
@@ -69,7 +69,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <returns> A new <see cref="OpenAI.LocalSkillParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAIExternal.LocalSkillParam"/> instance for mocking. </returns>
         public static LocalSkillParam LocalSkillParam(string name = default, string description = default, string path = default)
         {
             return new LocalSkillParam(name, description, path, additionalBinaryDataProperties: null);
@@ -658,44 +658,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new ResponsesContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Web search. </summary>
-        /// <param name="filters"></param>
-        /// <param name="userLocation"></param>
-        /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        /// <param name="customSearchConfiguration">
-        /// The project connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ResponsesWebSearchTool"/> instance for mocking. </returns>
-        public static ResponsesWebSearchTool ResponsesWebSearchTool(WebSearchToolFilters filters = default, ResponsesWebSearchApproximateLocation userLocation = default, ResponsesWebSearchToolSearchContextSize? searchContextSize = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, ResponsesWebSearchConfiguration customSearchConfiguration = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new ResponsesWebSearchTool(
-                "web_search",
-                filters,
-                userLocation,
-                searchContextSize,
-                name,
-                description,
-                toolConfigs,
-                customSearchConfiguration,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The WebSearchToolFilters. </summary>
-        /// <param name="allowedDomains"></param>
-        /// <returns> A new <see cref="OpenAI.WebSearchToolFilters"/> instance for mocking. </returns>
-        public static WebSearchToolFilters WebSearchToolFilters(IEnumerable<string> allowedDomains = default)
-        {
-            allowedDomains ??= new ChangeTrackingList<string>();
-
-            return new WebSearchToolFilters(allowedDomains.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Web search approximate location. </summary>
         /// <param name="country"></param>
         /// <param name="region"></param>
@@ -807,7 +769,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ResponsesSkillReferenceParam"/> and <see cref="OpenAI.ResponsesInlineSkillParam"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAIExternal.ContainerSkill"/> instance for mocking. </returns>
         public static ContainerSkill ContainerSkill(string @type = default)
         {
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
@@ -838,13 +800,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static ResponsesInlineSkillSourceParam ResponsesInlineSkillSourceParam(string data = default)
         {
             return new ResponsesInlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Computer. </summary>
-        /// <returns> A new <see cref="OpenAI.ResponsesComputerTool"/> instance for mocking. </returns>
-        public static ResponsesComputerTool ResponsesComputerTool()
-        {
-            return new ResponsesComputerTool("computer", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Namespace. </summary>
@@ -886,21 +841,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static ResponsesToolSearchToolParam ResponsesToolSearchToolParam(ToolSearchExecutionType? execution = default, string description = default, ResponsesEmptyModelParam parameters = default)
         {
             return new ResponsesToolSearchToolParam("tool_search", execution, description, parameters, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ProjectConversation. </summary>
-        /// <param name="id"> The unique ID of the conversation. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
-        ///   Keys are strings with a maximum length of 64 characters. Values are strings         with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="createdAt"> The time at which the conversation was created, measured in seconds since the Unix epoch. </param>
-        /// <returns> A new <see cref="OpenAI.ProjectConversation"/> instance for mocking. </returns>
-        public static ProjectConversation ProjectConversation(string id = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProjectConversation(id, "conversation", metadata, createdAt, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentReference. </summary>
@@ -1518,315 +1458,6 @@ namespace Azure.AI.Extensions.OpenAI
                 internalConsentLink,
                 serverLabel,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="output"> The structured output captured during the response. </param>
-        /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id, AgentReference agentReference, string responseId, BinaryData output)
-        {
-            return AgentStructuredOutputsResponseItem(@type: default, id: id, agentReference: agentReference, responseId: responseId, output: output);
-        }
-
-        /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
-        /// <param name="actionId"> Unique identifier for the action. </param>
-        /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
-        /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
-        /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-        /// <returns> A new <see cref="OpenAI.AgentWorkflowPreviewActionResponseItem"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AgentWorkflowPreviewActionResponseItem AgentWorkflowPreviewActionResponseItem(string id, AgentReference agentReference, string responseId, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status)
-        {
-            return new AgentWorkflowPreviewActionResponseItem(
-                default,
-                id,
-                agentReference,
-                responseId,
-                default,
-                actionId,
-                parentActionId,
-                previousActionId,
-                status,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request from the service for the user to perform OAuth consent. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
-        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
-        /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel)
-        {
-            return OAuthConsentRequestResponseItem(@type: default, id: id, agentReference: agentReference, responseId: responseId, internalConsentLink: internalConsentLink, serverLabel: serverLabel);
-        }
-
-        /// <summary> A Bing grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BingGroundingToolCall BingGroundingToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return BingGroundingToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of a Bing grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Bing grounding tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingGroundingToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BingGroundingToolCallOutput BingGroundingToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return BingGroundingToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> A SharePoint grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharepointGroundingToolCall SharepointGroundingToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return SharepointGroundingToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of a SharePoint grounding tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the SharePoint grounding tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.SharepointGroundingToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SharepointGroundingToolCallOutput SharepointGroundingToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return SharepointGroundingToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> An Azure AI Search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureAISearchToolCall AzureAISearchToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return AzureAISearchToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of an Azure AI Search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Azure AI Search tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureAISearchToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureAISearchToolCallOutput AzureAISearchToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return AzureAISearchToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> A Bing custom search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BingCustomSearchToolCall BingCustomSearchToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return BingCustomSearchToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of a Bing custom search tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Bing custom search tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BingCustomSearchToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BingCustomSearchToolCallOutput BingCustomSearchToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return BingCustomSearchToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> An OpenAPI tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the OpenAPI operation being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OpenApiToolCall OpenApiToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status)
-        {
-            return OpenApiToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of an OpenAPI tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the OpenAPI operation that was called. </param>
-        /// <param name="output"> The output from the OpenAPI tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.OpenApiToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OpenApiToolCallOutput OpenApiToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status)
-        {
-            return OpenApiToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, output: output, status: status);
-        }
-
-        /// <summary> A browser automation tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BrowserAutomationToolCall BrowserAutomationToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return BrowserAutomationToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of a browser automation tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the browser automation tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return BrowserAutomationToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> A Fabric data agent tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FabricDataAgentToolCall FabricDataAgentToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status)
-        {
-            return FabricDataAgentToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of a Fabric data agent tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="output"> The output from the Fabric data agent tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.FabricDataAgentToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FabricDataAgentToolCallOutput FabricDataAgentToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status)
-        {
-            return FabricDataAgentToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, output: output, status: status);
-        }
-
-        /// <summary> An Azure Function tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the Azure Function being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureFunctionToolCall AzureFunctionToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status)
-        {
-            return AzureFunctionToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of an Azure Function tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the Azure Function that was called. </param>
-        /// <param name="output"> The output from the Azure Function tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.AzureFunctionToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureFunctionToolCallOutput AzureFunctionToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status)
-        {
-            return AzureFunctionToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, output: output, status: status);
-        }
-
-        /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the A2A agent card being called. </param>
-        /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.A2AToolCall"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static A2AToolCall A2AToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status)
-        {
-            return A2AToolCall(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, arguments: arguments, status: status);
-        }
-
-        /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="callId"> The unique ID of the tool call generated by the model. </param>
-        /// <param name="name"> The name of the A2A agent card that was called. </param>
-        /// <param name="output"> The output from the A2A tool call. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <returns> A new <see cref="OpenAI.A2AToolCallOutput"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static A2AToolCallOutput A2AToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status)
-        {
-            return A2AToolCallOutput(@type: default, id: id, agentReference: agentReference, responseId: responseId, callId: callId, name: name, output: output, status: status);
         }
     }
 }

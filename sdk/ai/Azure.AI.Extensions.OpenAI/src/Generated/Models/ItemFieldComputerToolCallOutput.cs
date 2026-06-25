@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Computer tool call output. </summary>
     internal partial class ItemFieldComputerToolCallOutput : ItemField
@@ -16,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         internal ItemFieldComputerToolCallOutput(string callId, ComputerScreenshotImage output) : base(ItemFieldType.ComputerCallOutput)
         {
             CallId = callId;
-            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheckParam>();
+            AcknowledgedSafetyChecks = new ChangeTrackingList<ComputerCallSafetyCheck>();
             Output = output;
         }
 
@@ -34,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal ItemFieldComputerToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemFieldComputerToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldComputerToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheck> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemFieldComputerToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -53,7 +55,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// The safety checks reported by the API that have been acknowledged by the
         ///   developer.
         /// </summary>
-        public IList<ComputerCallSafetyCheckParam> AcknowledgedSafetyChecks { get; }
+        public IList<ComputerCallSafetyCheck> AcknowledgedSafetyChecks { get; }
 
         /// <summary> Gets the Output. </summary>
         public ComputerScreenshotImage Output { get; }

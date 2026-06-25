@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Realtime MCP HTTP error. </summary>
     internal partial class RealtimeMCPHTTPError : RealtimeMCPError

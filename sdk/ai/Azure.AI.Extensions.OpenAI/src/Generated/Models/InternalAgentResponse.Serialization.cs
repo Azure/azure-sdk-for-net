@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAIExternal;
 using OpenAI.Responses;
 
 namespace OpenAI
@@ -114,7 +115,7 @@ namespace OpenAI
             if (Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("service_tier"u8);
-                writer.WriteStringValue(ServiceTier.Value.ToSerialString());
+                writer.WriteObjectValue<ResponseServiceTier?>(ServiceTier.Value, options);
             }
             if (Optional.IsDefined(PromptCacheRetention))
             {
@@ -340,7 +341,7 @@ namespace OpenAI
             string user = default;
             string safetyIdentifier = default;
             string promptCacheKey = default;
-            Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier = default;
+            ResponseServiceTier? serviceTier = default;
             ResponsePromptCacheRetention? promptCacheRetention = default;
             string previousResponseId = default;
             string model = default;
@@ -363,7 +364,7 @@ namespace OpenAI
             IList<ResponseItem> output = default;
             BinaryData instructions = default;
             string outputText = default;
-            ResponseUsage usage = default;
+            ResponseTokenUsage usage = default;
             bool parallelToolCalls = default;
             ConversationReference conversation = default;
             AgentReference agentReference = default;
@@ -433,7 +434,7 @@ namespace OpenAI
                         serviceTier = null;
                         continue;
                     }
-                    serviceTier = prop.Value.GetString().ToResponseServiceTier();
+                    serviceTier = ModelReaderWriter.Read<ResponseServiceTier?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("prompt_cache_retention"u8))
@@ -656,7 +657,7 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<ResponseTokenUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("parallel_tool_calls"u8))

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Status values reported for shell tool calls. </summary>
     internal enum FunctionShellCallItemStatus

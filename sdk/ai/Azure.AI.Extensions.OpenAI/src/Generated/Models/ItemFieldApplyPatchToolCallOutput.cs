@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Apply patch tool call output. </summary>
     internal partial class ItemFieldApplyPatchToolCallOutput : ItemField

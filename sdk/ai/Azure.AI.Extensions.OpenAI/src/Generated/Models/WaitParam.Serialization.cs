@@ -6,9 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Wait. </summary>
     internal partial class WaitParam : InternalComputerAction, IJsonModel<WaitParam>
@@ -99,13 +101,13 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            ComputerActionType @type = default;
+            ComputerCallActionKind @type = "wait";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ComputerActionType(prop.Value.GetString());
+                    @type = new ComputerCallActionKind(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")

@@ -87,7 +87,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            InternalMetadataContainer internalMetadata = default;
+            OpenAI.InternalMetadataContainer internalMetadata = default;
             IList<ResponseItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
                         internalMetadata = null;
                         continue;
                     }
-                    internalMetadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
+                    internalMetadata = OpenAI.InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("items"u8))

@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> Function tool call output. </summary>
     internal partial class InputItemFunctionCallOutputItemParam : InputItem

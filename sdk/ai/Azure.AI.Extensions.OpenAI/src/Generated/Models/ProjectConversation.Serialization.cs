@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> The ProjectConversation. </summary>
     public partial class ProjectConversation : IJsonModel<ProjectConversation>
@@ -89,18 +90,7 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WritePropertyName("object"u8);
             writer.WriteStringValue(Object);
             writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Metadata, options);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -147,7 +137,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             string id = default;
             string @object = default;
-            IDictionary<string, string> metadata = default;
+            InternalMetadataContainer metadata = default;
             DateTimeOffset createdAt = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,19 +154,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    metadata = dictionary;
+                    metadata = InternalMetadataContainer.DeserializeInternalMetadataContainer(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))

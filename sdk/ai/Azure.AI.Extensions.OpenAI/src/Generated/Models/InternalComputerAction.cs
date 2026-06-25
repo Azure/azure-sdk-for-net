@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
@@ -15,7 +15,7 @@ namespace OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalComputerAction"/>. </summary>
         /// <param name="type"></param>
-        private protected InternalComputerAction(ComputerActionType @type)
+        private protected InternalComputerAction(ComputerCallActionKind @type)
         {
             Type = @type;
         }
@@ -23,13 +23,13 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalComputerAction"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalComputerAction(ComputerActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalComputerAction(ComputerCallActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal ComputerActionType Type { get; set; }
+        internal ComputerCallActionKind Type { get; set; }
     }
 }

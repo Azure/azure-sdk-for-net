@@ -4,12 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
-    [PersistableModelProxy(typeof(UnknownInternalApplyPatchFileOperation))]
-    internal abstract partial class InternalApplyPatchFileOperation : IJsonModel<InternalApplyPatchFileOperation>
+    internal partial class InternalApplyPatchFileOperation : IJsonModel<InternalApplyPatchFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchFileOperation"/> for deserialization. </summary>
         internal InternalApplyPatchFileOperation()
@@ -118,19 +119,21 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ApplyPatchFileOperationType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "create_file":
-                        return ApplyPatchCreateFileOperation.DeserializeApplyPatchCreateFileOperation(element, options);
-                    case "delete_file":
-                        return ApplyPatchDeleteFileOperation.DeserializeApplyPatchDeleteFileOperation(element, options);
-                    case "update_file":
-                        return ApplyPatchUpdateFileOperation.DeserializeApplyPatchUpdateFileOperation(element, options);
+                    @type = new ApplyPatchFileOperationType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownInternalApplyPatchFileOperation.DeserializeUnknownInternalApplyPatchFileOperation(element, options);
+            return new InternalApplyPatchFileOperation(@type, additionalBinaryDataProperties);
         }
     }
 }

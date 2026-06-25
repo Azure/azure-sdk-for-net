@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     internal partial class UnknownInternalFunctionAndCustomToolCallOutput : InternalFunctionAndCustomToolCallOutput
     {

@@ -5,9 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
-namespace Azure.AI.Extensions.OpenAI
+namespace Azure.AI.Extensions.OpenAIExternal
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
     internal partial class InputItemToolSearchOutputItemParam : InputItem

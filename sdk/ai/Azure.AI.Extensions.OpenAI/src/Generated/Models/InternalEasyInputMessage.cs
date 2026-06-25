@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Extensions.OpenAIExternal;
 
 namespace OpenAI
 {
