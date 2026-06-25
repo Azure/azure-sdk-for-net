@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionRuleData
@@ -11,6 +13,6 @@ namespace Azure.ResourceManager.Monitor
         public string MetadataProvisionedBy => Metadata?.ProvisionedBy;
 
         /// <summary> Resource Id of azure offering managing this resource on-behalf-of customer. </summary>
-        public string MetadataProvisionedByResourceId => Metadata?.ProvisionedByResourceId;
+        public ResourceIdentifier MetadataProvisionedByResourceId => Metadata?.ProvisionedByResourceId is null ? null : new ResourceIdentifier(Metadata.ProvisionedByResourceId);
     }
 }

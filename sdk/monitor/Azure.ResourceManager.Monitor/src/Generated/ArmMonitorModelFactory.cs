@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, string location = default)
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="lookupType"> The type of lookup to perform on the blob. </param>
         /// <param name="name"> The name of the enrichment data source used as an alias when referencing this data source in data flows. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleEnrichmentStorageBlob"/> instance for mocking. </returns>
-        public static DataCollectionRuleEnrichmentStorageBlob DataCollectionRuleEnrichmentStorageBlob(string resourceId = default, string blobUri = default, KnownStorageBlobLookupType? lookupType = default, string name = default)
+        public static DataCollectionRuleEnrichmentStorageBlob DataCollectionRuleEnrichmentStorageBlob(ResourceIdentifier resourceId = default, string blobUri = default, KnownStorageBlobLookupType? lookupType = default, string name = default)
         {
             return new DataCollectionRuleEnrichmentStorageBlob(resourceId, blobUri, lookupType, name, default);
         }
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.AdxDestination"/> instance for mocking. </returns>
-        public static AdxDestination AdxDestination(string resourceId = default, string databaseName = default, string ingestionUri = default, string name = default)
+        public static AdxDestination AdxDestination(ResourceIdentifier resourceId = default, string databaseName = default, Uri ingestionUri = default, string name = default)
         {
             return new AdxDestination(resourceId, databaseName, ingestionUri, name, default);
         }
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="subscriptionLocation"> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </param>
         /// <param name="scopedResourceProvisioningState"> State of the Azure monitor resource. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, ResourceIdentifier linkedResourceId = default, string subscriptionLocation = default, ScopedResourceProvisioningState? scopedResourceProvisioningState = default)
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, ResourceIdentifier linkedResourceId = default, AzureLocation? subscriptionLocation = default, ScopedResourceProvisioningState? scopedResourceProvisioningState = default)
         {
             return new MonitorPrivateLinkScopedResourceData(
                 id,
@@ -2013,7 +2013,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Monitor.ServiceDiagnosticSettingData"/> instance for mocking. </returns>
-        public static ServiceDiagnosticSettingData ServiceDiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, string location = default, IDictionary<string, string> tags = default)
+        public static ServiceDiagnosticSettingData ServiceDiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, AzureLocation location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

@@ -21,11 +21,8 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingData"/>. </summary>
         /// <param name="location"> Resource location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ServiceDiagnosticSettingData(string location)
+        public ServiceDiagnosticSettingData(AzureLocation location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Location = location;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -39,7 +36,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceDiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticSettingsProperties properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ServiceDiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticSettingsProperties properties, AzureLocation location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
         internal DiagnosticSettingsProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceType resourceType = default;
             SystemData systemData = default;
             DiagnosticSettingsProperties properties = default;
-            string location = default;
+            AzureLocation location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

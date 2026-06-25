@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdxDestination(string resourceId, string databaseName, string ingestionUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdxDestination(ResourceIdentifier resourceId, string databaseName, Uri ingestionUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             DatabaseName = databaseName;
@@ -40,13 +41,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The ARM resource id of the Adx resource. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The name of the database to which data will be ingested. </summary>
         public string DatabaseName { get; set; }
 
         /// <summary> The ingestion uri of the Adx resource. </summary>
-        public string IngestionUri { get; }
+        public Uri IngestionUri { get; }
 
         /// <summary>
         /// A friendly name for the destination.

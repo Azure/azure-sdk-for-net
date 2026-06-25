@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </summary>
-        public string SubscriptionLocation
+        public AzureLocation? SubscriptionLocation
         {
             get
             {

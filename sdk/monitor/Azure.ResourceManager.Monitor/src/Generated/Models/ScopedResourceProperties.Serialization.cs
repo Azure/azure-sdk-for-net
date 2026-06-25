@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(SubscriptionLocation))
             {
                 writer.WritePropertyName("subscriptionLocation"u8);
-                writer.WriteStringValue(SubscriptionLocation);
+                writer.WriteStringValue(SubscriptionLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ScopedResourceProvisioningState))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             ScopedResourceKind? kind = default;
             ResourceIdentifier linkedResourceId = default;
-            string subscriptionLocation = default;
+            AzureLocation? subscriptionLocation = default;
             ScopedResourceProvisioningState? scopedResourceProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,7 +164,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("subscriptionLocation"u8))
                 {
-                    subscriptionLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

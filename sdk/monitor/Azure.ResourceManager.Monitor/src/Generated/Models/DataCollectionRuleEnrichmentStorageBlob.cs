@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="lookupType"> The type of lookup to perform on the blob. </param>
         /// <param name="name"> The name of the enrichment data source used as an alias when referencing this data source in data flows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleEnrichmentStorageBlob(string resourceId, string blobUri, KnownStorageBlobLookupType? lookupType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleEnrichmentStorageBlob(ResourceIdentifier resourceId, string blobUri, KnownStorageBlobLookupType? lookupType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             BlobUri = blobUri;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Resource Id of the storage account that hosts the blob. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Url of the storage blob. </summary>
         public string BlobUri { get; set; }
