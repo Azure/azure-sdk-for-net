@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Automation
 namespace: Azure.ResourceManager.Automation
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a1111d6a69764d099f5f717c/specification/automation/resource-manager/readme.md
+tag: package-all
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,11 +17,27 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 # mgmt-debug:
 #   show-serialized-names: true
+```
+
+### Tag: package-all
+
+These settings apply only when `--tag=package-all` is specified on the command line.
+
+```yaml $(tag) == 'package-all'
+title: AutomationClient
+description: Automation Client
+openapi-type: arm
+
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/openapi.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/e191949499d1d3b60a1b2a979d9e35f122a94978/specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/dscCompilationJob.json
 
 rename-mapping:
+  HybridRunbookWorkerCreateParameters: HybridRunbookWorkerCreateOrUpdateContent
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
   AutomationAccount.properties.disableLocalAuth: IsLocalAuthDisabled
   DscConfiguration.properties.logVerbose: IsLogVerboseEnabled
@@ -129,7 +145,7 @@ rename-mapping:
   DscConfigurationParameter: DscConfigurationParameterDefinition
   ActivityParameter: AutomationActivityParameterDefinition
   CountType.nodeconfiguration: NodeConfiguration
-  ErrorResponse: AutomationResponseError
+  AutomationErrorResponse: AutomationResponseError
   TypeField.type: FieldType
   LinuxUpdateClasses: LinuxUpdateClassification
   WindowsUpdateClasses: WindowsUpdateClassification
@@ -137,6 +153,7 @@ rename-mapping:
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
   Certificate.properties.thumbprint: ThumbprintString
   CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
+  ModuleProvisioningState.Canceled: Cancelled
 
 prepend-rp-prefix:
   - Certificate
@@ -250,31 +267,153 @@ operation-positions:
   SoftwareUpdateConfigurations_List: collection
 
 directive:
-  - from: softwareUpdateConfigurationMachineRun.json
+  # Align dscCompilationJob.json definitions with openapi.json to eliminate duplicate schemas
+  - from: dscCompilationJob.json
+    where: $.definitions.JobStream
+    transform: >
+      $['type'] = 'object';
+  - from: dscCompilationJob.json
+    where: $.definitions.JobStreamListResult
+    transform: >
+      $['type'] = 'object';
+      $['required'] = ['value'];
+      $.properties.value.description = 'The JobStream items on this page';
+      $.properties.nextLink.description = 'The link to the next page of items';
+      $.properties.nextLink['format'] = 'uri';
+  - from: dscCompilationJob.json
+    where: $.definitions.JobStreamProperties
+    transform: >
+      $['type'] = 'object';
+      delete $['x-ms-client-flatten'];
+      $.properties.summary['x-nullable'] = true;
+      delete $.properties.time['x-nullable'];
+      $.properties.value.additionalProperties = {};
+      $.properties.streamType = {
+        '$ref': '#/definitions/JobStreamType',
+        'description': 'Gets or sets the stream type.'
+      };
+  - from: dscCompilationJob.json
+    where: $.definitions
+    transform: >
+      $['JobStreamType'] = {
+        'type': 'string',
+        'description': 'Gets or sets the stream type.',
+        'enum': ['Progress', 'Output', 'Warning', 'Error', 'Debug', 'Verbose', 'Any'],
+        'x-ms-enum': {
+          'name': 'JobStreamType',
+          'modelAsString': true
+        }
+      };
+  # New swagger shares PythonPackageCreateParameters between Python2 and Python3.
+  # Clone a dedicated definition for Python2 to preserve backward-compatible type name.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      if (!$['Python2PackageCreateParameters']) {
+        $['Python2PackageCreateParameters'] = JSON.parse(JSON.stringify($['PythonPackageCreateParameters']));
+      }
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}'].put.parameters[?(@.name=='parameters')]
+    transform: >
+      $.schema = { '$ref': '#/definitions/Python2PackageCreateParameters' };
+  # New swagger shares PythonPackageUpdateParameters between Python2 and Python3.
+  # Clone a dedicated definition for Python2 to preserve backward-compatible type name.
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      if (!$['Python2PackageUpdateParameters']) {
+        $['Python2PackageUpdateParameters'] = JSON.parse(JSON.stringify($['PythonPackageUpdateParameters']));
+      }
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}'].patch.parameters[?(@.name=='parameters')]
+    transform: >
+      $.schema = { '$ref': '#/definitions/Python2PackageUpdateParameters' };
+  - from: openapi.json
     where: $.definitions
     transform: >
         $.updateConfigurationMachineRunProperties.properties.configuredDuration['format'] = 'duration';
-  - from: softwareUpdateConfigurationRun.json
+  - from: openapi.json
     where: $.definitions
     transform: >
         $.softwareUpdateConfigurationRunProperties.properties.configuredDuration['format'] = 'duration';
-  - from: dscConfiguration.json
-    where: $
-    transform: >
-        $.consumes =  [ "application/json" ];
-        $.produces =  [ "application/json" ];
-  - from: softwareUpdateConfiguration.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations'].get
     transform: >
       $['x-ms-pageable'] = {
         'nextLinkName': null
       };
-  - from: account.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys'].post
     transform: >
       $['x-ms-pageable'] = {
             'nextLinkName': null,
             'itemName': 'keys'
           }
-
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri'].post
+    transform: >
+      $.produces = ["application/json"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content'].get
+    transform: >
+      $.produces = ["text/powershell"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/content'].get
+    transform: >
+      $.produces = ["text/powershell"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/output'].get
+    transform: >
+      $.produces = ["text/plain"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent'].get
+    transform: >
+      $.produces = ["text/powershell"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}/content'].get
+    transform: >
+      $.produces = ["text/powershell"]
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}/reports/{reportId}/content'].get
+    transform: >
+      $.produces = ["application/json"];
+      $.responses['200'].schema['type'] = 'object';
+  - from: openapi.json
+    where: $.definitions.JobProperties.properties.provisioningState
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.HybridRunbookWorkerCreateParameters.properties.name
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.ModuleUpdateParameters.properties.location
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.ModuleUpdateParameters.properties.name
+    transform: >
+      delete $['readOnly'];
+  - from: openapi.json
+    where: $.definitions.JobScheduleProperties.properties.parameters
+    transform: >
+      $['readOnly'] = true;
+  - from: openapi.json
+    where: $.definitions.RunbookProperties.properties.provisioningState
+    transform: >
+      $['x-ms-enum']['name'] = 'RunbookProvisioningState';
+  - from: openapi.json
+    where: $.definitions.DscConfigurationProperties.properties.provisioningState
+    transform: >
+      $['x-ms-enum']['name'] = 'DscConfigurationProvisioningState';
+  - from: openapi.json
+    where: $.definitions.ModuleProvisioningState
+    transform: >
+      $['x-ms-enum']['modelAsString'] = false;
+  # DscCompilationJob only appears in responses, so the generator classifies it as output-only.
+  # Marking it as input+output restores the public constructor and property setters lost in v1.1.1 → v1.2.0.
+  - from: dscCompilationJob.json
+    where: $.definitions.DscCompilationJob
+    transform: >
+      $['x-csharp-usage'] = 'model,input,output';
 ```

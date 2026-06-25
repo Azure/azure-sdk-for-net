@@ -32,112 +32,8 @@ namespace Azure.ResourceManager.Automation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-06-01";
+            _apiVersion = apiVersion ?? "2024-10-23";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateGetByIdRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/softwareUpdateConfigurationRuns/", false);
-            uri.AppendPath(softwareUpdateConfigurationRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByIdRequest(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/softwareUpdateConfigurationRuns/", false);
-            uri.AppendPath(softwareUpdateConfigurationRunId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.Add("clientRequestId", clientRequestId);
-            }
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a single software update configuration Run by Id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SoftwareUpdateConfigurationRun>> GetByIdAsync(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-
-            using var message = CreateGetByIdRequest(subscriptionId, resourceGroupName, automationAccountName, softwareUpdateConfigurationRunId, clientRequestId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SoftwareUpdateConfigurationRun value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a single software update configuration Run by Id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SoftwareUpdateConfigurationRun> GetById(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-
-            using var message = CreateGetByIdRequest(subscriptionId, resourceGroupName, automationAccountName, softwareUpdateConfigurationRunId, clientRequestId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        SoftwareUpdateConfigurationRun value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string clientRequestId, string filter, string skip, string top)
@@ -205,8 +101,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Return list of software update configuration runs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
@@ -238,8 +134,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Return list of software update configuration runs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
@@ -263,6 +159,110 @@ namespace Azure.ResourceManager.Automation
                         SoftwareUpdateConfigurationRunListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationRunListResult.DeserializeSoftwareUpdateConfigurationRunListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetByIdRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/softwareUpdateConfigurationRuns/", false);
+            uri.AppendPath(softwareUpdateConfigurationRunId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetByIdRequest(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/softwareUpdateConfigurationRuns/", false);
+            uri.AppendPath(softwareUpdateConfigurationRunId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (clientRequestId != null)
+            {
+                request.Headers.Add("clientRequestId", clientRequestId);
+            }
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get a single software update configuration Run by Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SoftwareUpdateConfigurationRun>> GetByIdAsync(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var message = CreateGetByIdRequest(subscriptionId, resourceGroupName, automationAccountName, softwareUpdateConfigurationRunId, clientRequestId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SoftwareUpdateConfigurationRun value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get a single software update configuration Run by Id. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SoftwareUpdateConfigurationRun> GetById(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var message = CreateGetByIdRequest(subscriptionId, resourceGroupName, automationAccountName, softwareUpdateConfigurationRunId, clientRequestId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SoftwareUpdateConfigurationRun value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

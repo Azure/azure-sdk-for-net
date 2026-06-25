@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve all the job streams for the compilation Job. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobId"> The job id. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve all the job streams for the compilation Job. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobId"> The job id. </param>

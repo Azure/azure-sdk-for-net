@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-01-13-preview";
+            _apiVersion = apiVersion ?? "2024-10-23";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/sourceControlSyncJobs/", false);
             uri.AppendPath(sourceControlSyncJobId, true);
             uri.AppendPath("/streams", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath("/sourceControlSyncJobs/", false);
             uri.AppendPath(sourceControlSyncJobId, true);
             uri.AppendPath("/streams", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a list of sync job streams identified by sync job id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a list of sync job streams identified by sync job id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a sync job stream identified by stream id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="streamId"> The id of the sync job stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a sync job stream identified by stream id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="streamId"> The id of the sync job stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of sync job streams identified by sync job id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -327,10 +327,10 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of sync job streams identified by sync job id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="sourceControlName"> The source control name. </param>
+        /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

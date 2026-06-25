@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeData"/>. </summary>
-        internal AutomationConnectionTypeData()
+        public AutomationConnectionTypeData()
         {
             FieldDefinitions = new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>();
         }
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>
-        public bool? IsGlobal { get; }
+        public bool? IsGlobal { get; set; }
         /// <summary> Gets the field definitions of the connection type. </summary>
         public IReadOnlyDictionary<string, AutomationConnectionFieldDefinition> FieldDefinitions { get; }
         /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn { get; set; }
         /// <summary> Gets or sets the description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
     }
 }

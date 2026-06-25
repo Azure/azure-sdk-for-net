@@ -44,8 +44,10 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = await _runbookDraftRestClient.ReplaceContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, true).Request, response, OperationFinalStateVia.Location);
+                using var reader = new StreamReader(runbookContent);
+                var content = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var response = await _runbookDraftRestClient.ReplaceContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -82,8 +84,10 @@ namespace Azure.ResourceManager.Automation
             scope.Start();
             try
             {
-                var response = _runbookDraftRestClient.ReplaceContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken);
-                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, true).Request, response, OperationFinalStateVia.Location);
+                using var reader = new StreamReader(runbookContent);
+                var content = reader.ReadToEnd();
+                var response = _runbookDraftRestClient.ReplaceContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

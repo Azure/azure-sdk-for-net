@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationContentLink"/>. </summary>
-        /// <param name="uri"> Gets or sets the uri of the runbook content. </param>
+        /// <param name="uri"> Gets or sets the uri of content. </param>
         /// <param name="contentHash"> Gets or sets the hash. </param>
         /// <param name="version"> Gets or sets the version of the content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the uri of the runbook content. </summary>
+        /// <summary> Gets or sets the uri of content. </summary>
         public Uri Uri { get; set; }
         /// <summary> Gets or sets the hash. </summary>
         public AutomationContentHash ContentHash { get; set; }

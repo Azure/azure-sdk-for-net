@@ -63,8 +63,15 @@ namespace Azure.ResourceManager.Automation.Models
             }
             if (Optional.IsDefined(Summary))
             {
-                writer.WritePropertyName("summary"u8);
-                writer.WriteStringValue(Summary);
+                if (Summary != null)
+                {
+                    writer.WritePropertyName("summary"u8);
+                    writer.WriteStringValue(Summary);
+                }
+                else
+                {
+                    writer.WriteNull("summary");
+                }
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -186,6 +193,11 @@ namespace Azure.ResourceManager.Automation.Models
                         }
                         if (property0.NameEquals("summary"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                summary = null;
+                                continue;
+                            }
                             summary = property0.Value.GetString();
                             continue;
                         }

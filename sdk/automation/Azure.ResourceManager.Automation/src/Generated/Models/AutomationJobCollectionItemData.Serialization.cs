@@ -49,6 +49,18 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            {
+                if (StartedBy != null)
+                {
+                    writer.WritePropertyName("startedBy"u8);
+                    writer.WriteStringValue(StartedBy);
+                }
+                else
+                {
+                    writer.WriteNull("startedBy");
+                }
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
@@ -100,6 +112,11 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
+            if (Optional.IsDefined(JobRuntimeEnvironment))
+            {
+                writer.WritePropertyName("jobRuntimeEnvironment"u8);
+                writer.WriteObjectValue(JobRuntimeEnvironment, options);
+            }
             if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
@@ -134,12 +151,14 @@ namespace Azure.ResourceManager.Automation.Models
             SystemData systemData = default;
             RunbookAssociationProperty runbook = default;
             Guid? jobId = default;
+            string startedBy = default;
             DateTimeOffset? creationTime = default;
             AutomationJobStatus? status = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             DateTimeOffset? lastModifiedTime = default;
             string provisioningState = default;
+            JobRuntimeEnvironment jobRuntimeEnvironment = default;
             string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -196,6 +215,16 @@ namespace Azure.ResourceManager.Automation.Models
                             jobId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("startedBy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                startedBy = null;
+                                continue;
+                            }
+                            startedBy = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("creationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -249,6 +278,15 @@ namespace Azure.ResourceManager.Automation.Models
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("jobRuntimeEnvironment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            jobRuntimeEnvironment = JobRuntimeEnvironment.DeserializeJobRuntimeEnvironment(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("runOn"u8))
                         {
                             runOn = property0.Value.GetString();
@@ -270,12 +308,14 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 runbook,
                 jobId,
+                startedBy,
                 creationTime,
                 status,
                 startTime,
                 endTime,
                 lastModifiedTime,
                 provisioningState,
+                jobRuntimeEnvironment,
                 runOn,
                 serializedAdditionalRawData);
         }

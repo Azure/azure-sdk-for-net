@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list account operation. </summary>
+    /// <summary> The response of a AutomationAccount list operation. </summary>
     internal partial class AutomationAccountListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Automation.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
-        internal AutomationAccountListResult()
+        /// <param name="value"> The AutomationAccount items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutomationAccountListResult(IEnumerable<AutomationAccountData> value)
         {
-            Value = new ChangeTrackingList<AutomationAccountData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
-        /// <param name="value"> Gets or sets list of accounts. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="value"> The AutomationAccount items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets list of accounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/> for deserialization. </summary>
+        internal AutomationAccountListResult()
+        {
+        }
+
+        /// <summary> The AutomationAccount items on this page. </summary>
         public IReadOnlyList<AutomationAccountData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

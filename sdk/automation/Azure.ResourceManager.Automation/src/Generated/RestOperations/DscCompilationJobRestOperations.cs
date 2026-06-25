@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Creates the Dsc compilation job of the configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Creates the Dsc compilation job of the configuration. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a list of dsc compilation jobs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve a list of dsc compilation jobs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the job stream identified by job stream id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobId"> The job id. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the job stream identified by job stream id. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobId"> The job id. </param>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of dsc compilation jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of dsc compilation jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>

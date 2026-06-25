@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADSCNodeConfiguration()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getDscNodeConfiguration.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/getDscNodeConfiguration.json
             // this example is just showing the usage of "DscNodeConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string nodeConfigurationName = "SetupServer.localhost";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADSCNodeConfiguration()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteDscNodeConfiguration.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/deleteDscNodeConfiguration.json
             // this example is just showing the usage of "DscNodeConfiguration_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string nodeConfigurationName = "configName.nodeConfigName";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateNodeConfiguration()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/createOrUpdateDscNodeConfiguration.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/createOrUpdateDscNodeConfiguration.json
             // this example is just showing the usage of "DscNodeConfiguration_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this DscNodeConfigurationResource created on azure
             // for more information of creating DscNodeConfigurationResource, please refer to the document of DscNodeConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount20";
             string nodeConfigurationName = "configName.nodeConfigName";

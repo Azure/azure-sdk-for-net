@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The response model for the list variables operation. </summary>
+    /// <summary> The response of a Variable list operation. </summary>
     internal partial class AutomationVariableListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Automation.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AutomationVariableListResult"/>. </summary>
-        internal AutomationVariableListResult()
+        /// <param name="value"> The Variable items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AutomationVariableListResult(IEnumerable<AutomationVariableData> value)
         {
-            Value = new ChangeTrackingList<AutomationVariableData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationVariableListResult"/>. </summary>
-        /// <param name="value"> Gets or sets a list of variables. </param>
-        /// <param name="nextLink"> Gets or sets the next link. </param>
+        /// <param name="value"> The Variable items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationVariableListResult(IReadOnlyList<AutomationVariableData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutomationVariableListResult(IReadOnlyList<AutomationVariableData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets a list of variables. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationVariableListResult"/> for deserialization. </summary>
+        internal AutomationVariableListResult()
+        {
+        }
+
+        /// <summary> The Variable items on this page. </summary>
         public IReadOnlyList<AutomationVariableData> Value { get; }
-        /// <summary> Gets or sets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

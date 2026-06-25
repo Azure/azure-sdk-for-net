@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,6 +351,130 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
+        /// Retrieve a list of source control sync jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of source control sync jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobs(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve the source control sync job identified by job id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlSyncJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SourceControlSyncJobResult>> GetSourceControlSyncJobAsync(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
+            scope.Start();
+            try
+            {
+                var response = await _sourceControlSyncJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the source control sync job identified by job id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SourceControlSyncJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SourceControlSyncJobResult> GetSourceControlSyncJob(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
+            scope.Start();
+            try
+            {
+                var response = _sourceControlSyncJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates the sync job for a source control.
         /// <list type="bullet">
         /// <item>
@@ -363,7 +487,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +526,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,130 +553,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the source control sync job identified by job id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControlSyncJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SourceControlSyncJobResult>> GetSourceControlSyncJobAsync(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
-            scope.Start();
-            try
-            {
-                var response = await _sourceControlSyncJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the source control sync job identified by job id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs/{sourceControlSyncJobId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControlSyncJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SourceControlSyncJobResult> GetSourceControlSyncJob(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
-        {
-            using var scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
-            scope.Start();
-            try
-            {
-                var response = _sourceControlSyncJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve a list of source control sync jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of source control sync jobs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}/sourceControlSyncJobs</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobs(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Retrieve a list of sync job streams identified by sync job id.
         /// <list type="bullet">
         /// <item>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>

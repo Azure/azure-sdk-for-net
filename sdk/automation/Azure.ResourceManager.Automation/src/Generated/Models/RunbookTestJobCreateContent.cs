@@ -54,11 +54,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="RunbookTestJobCreateContent"/>. </summary>
         /// <param name="parameters"> Gets or sets the parameters of the test job. </param>
         /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
+        /// <param name="runtimeEnvironment"> The runtime Environment Name on which job needs to be tested. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RunbookTestJobCreateContent(IDictionary<string, string> parameters, string runOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunbookTestJobCreateContent(IDictionary<string, string> parameters, string runOn, string runtimeEnvironment, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             RunOn = runOn;
+            RuntimeEnvironment = runtimeEnvironment;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -66,5 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
         public string RunOn { get; set; }
+        /// <summary> The runtime Environment Name on which job needs to be tested. </summary>
+        public string RuntimeEnvironment { get; set; }
     }
 }

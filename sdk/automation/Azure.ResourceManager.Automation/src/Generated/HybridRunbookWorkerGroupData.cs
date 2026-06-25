@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
     /// A class representing the HybridRunbookWorkerGroup data model.
     /// Definition of hybrid runbook worker group.
     /// </summary>
-    public partial class HybridRunbookWorkerGroupData : ResourceData
+    public partial class HybridRunbookWorkerGroupData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,7 +52,8 @@ namespace Azure.ResourceManager.Automation
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerGroupData"/>. </summary>
-        public HybridRunbookWorkerGroupData()
+        /// <param name="location"> The location. </param>
+        public HybridRunbookWorkerGroupData(AzureLocation location) : base(location)
         {
         }
 
@@ -61,10 +62,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="groupType"> Type of the HybridWorkerGroup. </param>
         /// <param name="credential"> Sets the credential of a worker group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridRunbookWorkerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridWorkerGroup? groupType, RunAsCredentialAssociationProperty credential, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridRunbookWorkerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridWorkerGroup? groupType, RunAsCredentialAssociationProperty credential, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupType = groupType;
             Credential = credential;

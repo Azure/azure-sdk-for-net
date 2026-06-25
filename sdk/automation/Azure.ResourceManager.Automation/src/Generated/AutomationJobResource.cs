@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,240 +353,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the runbook content of the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_GetRunbookContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> GetRunbookContentAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.GetRunbookContent");
-            scope.Start();
-            try
-            {
-                var response = await _automationJobJobRestClient.GetRunbookContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the runbook content of the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_GetRunbookContent</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> GetRunbookContent(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.GetRunbookContent");
-            scope.Start();
-            try
-            {
-                var response = _automationJobJobRestClient.GetRunbookContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Suspend the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SuspendAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Suspend");
-            scope.Start();
-            try
-            {
-                var response = await _automationJobJobRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Suspend the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Suspend(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Suspend");
-            scope.Start();
-            try
-            {
-                var response = _automationJobJobRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop the job identified by jobName.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StopAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = await _automationJobJobRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop the job identified by jobName.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Stop(string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Stop");
-            scope.Start();
-            try
-            {
-                var response = _automationJobJobRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Resume the job identified by jobName.
         /// <list type="bullet">
         /// <item>
@@ -599,7 +365,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -638,7 +404,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -665,6 +431,296 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
+        /// Retrieve the runbook content of the job identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetRunbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> GetRunbookContentAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.GetRunbookContent");
+            scope.Start();
+            try
+            {
+                var response = await _automationJobJobRestClient.GetRunbookContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the runbook content of the job identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/runbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_GetRunbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> GetRunbookContent(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.GetRunbookContent");
+            scope.Start();
+            try
+            {
+                var response = _automationJobJobRestClient.GetRunbookContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop the job identified by jobName.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StopAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = await _automationJobJobRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop the job identified by jobName.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Stop(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = _automationJobJobRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend the job identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SuspendAsync(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Suspend");
+            scope.Start();
+            try
+            {
+                var response = await _automationJobJobRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend the job identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Job_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Suspend(string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _automationJobJobClientDiagnostics.CreateScope("AutomationJobResource.Suspend");
+            scope.Start();
+            try
+            {
+                var response = _automationJobJobRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, clientRequestId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve a list of jobs streams identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_ListByJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationJobStream> GetJobStreamsAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of jobs streams identified by job name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobStream_ListByJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationJobStream> GetJobStreams(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Retrieve the job stream identified by job stream id.
         /// <list type="bullet">
         /// <item>
@@ -677,7 +733,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -717,7 +773,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -742,62 +798,6 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Retrieve a list of jobs streams identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobStream_ListByJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobStream> GetJobStreamsAsync(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of jobs streams identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobStream_ListByJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobStream> GetJobStreams(string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobStreamRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, clientRequestId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _jobStreamClientDiagnostics, Pipeline, "AutomationJobResource.GetJobStreams", "value", "nextLink", cancellationToken);
         }
     }
 }

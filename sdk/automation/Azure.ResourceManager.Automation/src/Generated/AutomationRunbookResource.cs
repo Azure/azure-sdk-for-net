@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -41,10 +40,10 @@ namespace Azure.ResourceManager.Automation
         private readonly RunbookRestOperations _automationRunbookRunbookRestClient;
         private readonly ClientDiagnostics _runbookDraftClientDiagnostics;
         private readonly RunbookDraftRestOperations _runbookDraftRestClient;
-        private readonly ClientDiagnostics _testJobStreamsClientDiagnostics;
-        private readonly TestJobStreamsRestOperations _testJobStreamsRestClient;
         private readonly ClientDiagnostics _testJobClientDiagnostics;
         private readonly TestJobRestOperations _testJobRestClient;
+        private readonly ClientDiagnostics _testJobStreamsClientDiagnostics;
+        private readonly TestJobStreamsRestOperations _testJobStreamsRestClient;
         private readonly AutomationRunbookData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -74,10 +73,10 @@ namespace Azure.ResourceManager.Automation
             _automationRunbookRunbookRestClient = new RunbookRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationRunbookRunbookApiVersion);
             _runbookDraftClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _runbookDraftRestClient = new RunbookDraftRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _testJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _testJobStreamsRestClient = new TestJobStreamsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _testJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _testJobRestClient = new TestJobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _testJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _testJobStreamsRestClient = new TestJobStreamsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,30 +356,34 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the content of runbook draft identified by runbook name.
+        /// Retrieve the content of runbook identified by runbook name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/content</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RunbookDraft_GetContent</description>
+        /// <description>Runbook_GetContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationRunbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> GetContentRunbookDraftAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GetContentAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetContentRunbookDraft");
+            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.GetContent");
             scope.Start();
             try
             {
-                var response = await _runbookDraftRestClient.GetContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _automationRunbookRunbookRestClient.GetContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -391,166 +394,34 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the content of runbook draft identified by runbook name.
+        /// Retrieve the content of runbook identified by runbook name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/content</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RunbookDraft_GetContent</description>
+        /// <description>Runbook_GetContent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationRunbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> GetContentRunbookDraft(CancellationToken cancellationToken = default)
+        public virtual Response<string> GetContent(CancellationToken cancellationToken = default)
         {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetContentRunbookDraft");
+            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.GetContent");
             scope.Start();
             try
             {
-                var response = _runbookDraftRestClient.GetContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the runbook draft identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RunbookDraft_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutomationRunbookDraft>> GetRunbookDraftAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetRunbookDraft");
-            scope.Start();
-            try
-            {
-                var response = await _runbookDraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the runbook draft identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RunbookDraft_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutomationRunbookDraft> GetRunbookDraft(CancellationToken cancellationToken = default)
-        {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetRunbookDraft");
-            scope.Start();
-            try
-            {
-                var response = _runbookDraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Undo draft edit to last known published state identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/undoEdit</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RunbookDraft_UndoEdit</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunbookDraftUndoEditResult>> UndoEditRunbookDraftAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.UndoEditRunbookDraft");
-            scope.Start();
-            try
-            {
-                var response = await _runbookDraftRestClient.UndoEditAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Undo draft edit to last known published state identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/undoEdit</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RunbookDraft_UndoEdit</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunbookDraftUndoEditResult> UndoEditRunbookDraft(CancellationToken cancellationToken = default)
-        {
-            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.UndoEditRunbookDraft");
-            scope.Start();
-            try
-            {
-                var response = _runbookDraftRestClient.UndoEdit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _automationRunbookRunbookRestClient.GetContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -573,7 +444,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -615,7 +486,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -645,34 +516,30 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the content of runbook identified by runbook name.
+        /// Retrieve the runbook draft identified by runbook name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/content</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Runbook_GetContent</description>
+        /// <description>RunbookDraft_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationRunbookResource"/></description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> GetContentAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationRunbookDraft>> GetRunbookDraftAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.GetContent");
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetRunbookDraft");
             scope.Start();
             try
             {
-                var response = await _automationRunbookRunbookRestClient.GetContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _runbookDraftRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -683,34 +550,30 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve the content of runbook identified by runbook name.
+        /// Retrieve the runbook draft identified by runbook name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/content</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Runbook_GetContent</description>
+        /// <description>RunbookDraft_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationRunbookResource"/></description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> GetContent(CancellationToken cancellationToken = default)
+        public virtual Response<AutomationRunbookDraft> GetRunbookDraft(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationRunbookRunbookClientDiagnostics.CreateScope("AutomationRunbookResource.GetContent");
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetRunbookDraft");
             scope.Start();
             try
             {
-                var response = _automationRunbookRunbookRestClient.GetContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _runbookDraftRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -718,6 +581,630 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Retrieve the content of runbook draft identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_GetContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> GetContentRunbookDraftAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetContentRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = await _runbookDraftRestClient.GetContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the content of runbook draft identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_GetContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> GetContentRunbookDraft(CancellationToken cancellationToken = default)
+        {
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.GetContentRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = _runbookDraftRestClient.GetContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replaces the runbook draft content.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_ReplaceContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="runbookContent"> The runbook draft content. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runbookContent"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
+        public virtual async Task<ArmOperation> ReplaceContentRunbookDraftAsync(WaitUntil waitUntil, string runbookContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookContent, nameof(runbookContent));
+
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.ReplaceContentRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = await _runbookDraftRestClient.ReplaceContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken).ConfigureAwait(false);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Replaces the runbook draft content.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/content</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_ReplaceContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="runbookContent"> The runbook draft content. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runbookContent"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookContent"/> is null. </exception>
+        public virtual ArmOperation ReplaceContentRunbookDraft(WaitUntil waitUntil, string runbookContent, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookContent, nameof(runbookContent));
+
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.ReplaceContentRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = _runbookDraftRestClient.ReplaceContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent, cancellationToken);
+                var operation = new AutomationArmOperation(_runbookDraftClientDiagnostics, Pipeline, _runbookDraftRestClient.CreateReplaceContentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runbookContent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Undo draft edit to last known published state identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/undoEdit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_UndoEdit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RunbookDraftUndoEditResult>> UndoEditRunbookDraftAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.UndoEditRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = await _runbookDraftRestClient.UndoEditAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Undo draft edit to last known published state identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/undoEdit</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RunbookDraft_UndoEdit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RunbookDraftUndoEditResult> UndoEditRunbookDraft(CancellationToken cancellationToken = default)
+        {
+            using var scope = _runbookDraftClientDiagnostics.CreateScope("AutomationRunbookResource.UndoEditRunbookDraft");
+            scope.Start();
+            try
+            {
+                var response = _runbookDraftRestClient.UndoEdit(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the test job for the specified runbook.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RunbookTestJob>> GetTestJobAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJob");
+            scope.Start();
+            try
+            {
+                var response = await _testJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the test job for the specified runbook.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RunbookTestJob> GetTestJob(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJob");
+            scope.Start();
+            try
+            {
+                var response = _testJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a test job of the runbook.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters supplied to the create test job operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<RunbookTestJob>> CreateTestJobAsync(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
+            scope.Start();
+            try
+            {
+                var response = await _testJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a test job of the runbook.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters supplied to the create test job operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<RunbookTestJob> CreateTestJob(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
+            scope.Start();
+            try
+            {
+                var response = _testJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resume the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> ResumeTestJobAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.ResumeTestJob");
+            scope.Start();
+            try
+            {
+                var response = await _testJobRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resume the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response ResumeTestJob(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.ResumeTestJob");
+            scope.Start();
+            try
+            {
+                var response = _testJobRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StopTestJobAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.StopTestJob");
+            scope.Start();
+            try
+            {
+                var response = await _testJobRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response StopTestJob(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.StopTestJob");
+            scope.Start();
+            try
+            {
+                var response = _testJobRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SuspendTestJobAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.SuspendTestJob");
+            scope.Start();
+            try
+            {
+                var response = await _testJobRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Suspend the test job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJob_Suspend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SuspendTestJob(CancellationToken cancellationToken = default)
+        {
+            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.SuspendTestJob");
+            scope.Start();
+            try
+            {
+                var response = _testJobRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve a list of test job streams identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJobStreams_ListByTestJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve a list of test job streams identified by runbook name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/streams</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestJobStreams_ListByTestJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-10-23</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationJobStream> GetTestJobStreams(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -733,7 +1220,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -772,7 +1259,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -799,408 +1286,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Retrieve a list of test job streams identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJobStreams_ListByTestJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of test job streams identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJobStreams_ListByTestJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobStream> GetTestJobStreams(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationJobStream.DeserializeAutomationJobStream(e), _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Create a test job of the runbook.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters supplied to the create test job operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RunbookTestJob>> CreateTestJobAsync(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
-            scope.Start();
-            try
-            {
-                var response = await _testJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a test job of the runbook.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Create</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters supplied to the create test job operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RunbookTestJob> CreateTestJob(RunbookTestJobCreateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.CreateTestJob");
-            scope.Start();
-            try
-            {
-                var response = _testJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the test job for the specified runbook.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RunbookTestJob>> GetTestJobAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJob");
-            scope.Start();
-            try
-            {
-                var response = await _testJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the test job for the specified runbook.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RunbookTestJob> GetTestJob(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJob");
-            scope.Start();
-            try
-            {
-                var response = _testJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resume the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/resume</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Resume</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResumeTestJobAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.ResumeTestJob");
-            scope.Start();
-            try
-            {
-                var response = await _testJobRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Resume the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/resume</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Resume</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ResumeTestJob(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.ResumeTestJob");
-            scope.Start();
-            try
-            {
-                var response = _testJobRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StopTestJobAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.StopTestJob");
-            scope.Start();
-            try
-            {
-                var response = await _testJobRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stop the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response StopTestJob(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.StopTestJob");
-            scope.Start();
-            try
-            {
-                var response = _testJobRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Suspend the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SuspendTestJobAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.SuspendTestJob");
-            scope.Start();
-            try
-            {
-                var response = await _testJobRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Suspend the test job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}/draft/testJob/suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TestJob_Suspend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SuspendTestJob(CancellationToken cancellationToken = default)
-        {
-            using var scope = _testJobClientDiagnostics.CreateScope("AutomationRunbookResource.SuspendTestJob");
-            scope.Start();
-            try
-            {
-                var response = _testJobRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -1213,7 +1298,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1275,7 +1360,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1337,7 +1422,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1394,7 +1479,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1451,7 +1536,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1511,7 +1596,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

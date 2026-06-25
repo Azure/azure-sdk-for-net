@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
+            if (Optional.IsDefined(RuntimeEnvironment))
+            {
+                writer.WritePropertyName("runtimeEnvironment"u8);
+                writer.WriteStringValue(RuntimeEnvironment);
+            }
             writer.WritePropertyName("runbookType"u8);
             writer.WriteStringValue(RunbookType.ToString());
             if (Optional.IsDefined(Draft))
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
             IDictionary<string, string> tags = default;
             bool? logVerbose = default;
             bool? logProgress = default;
+            string runtimeEnvironment = default;
             AutomationRunbookType runbookType = default;
             AutomationRunbookDraft draft = default;
             AutomationContentLink publishContentLink = default;
@@ -196,6 +202,11 @@ namespace Azure.ResourceManager.Automation.Models
                             logProgress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("runtimeEnvironment"u8))
+                        {
+                            runtimeEnvironment = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("runbookType"u8))
                         {
                             runbookType = new AutomationRunbookType(property0.Value.GetString());
@@ -248,6 +259,7 @@ namespace Azure.ResourceManager.Automation.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 logVerbose,
                 logProgress,
+                runtimeEnvironment,
                 runbookType,
                 draft,
                 publishContentLink,

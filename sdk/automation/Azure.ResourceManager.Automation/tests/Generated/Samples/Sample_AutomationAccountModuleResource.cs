@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAModule()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getModule.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/getModule.json
             // this example is just showing the usage of "Module_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAModule()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteModule.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/deleteModule.json
             // this example is just showing the usage of "Module_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAModule()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/updateModule.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/updateModule.json
             // this example is just showing the usage of "Module_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";
@@ -116,37 +116,9 @@ namespace Azure.ResourceManager.Automation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetActivity_GetActivityInAModule()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getActivityInAModule.json
-            // this example is just showing the usage of "Activity_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountModuleResource created on azure
-            // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount33";
-            string moduleName = "OmsCompositeResources";
-            ResourceIdentifier automationAccountModuleResourceId = AutomationAccountModuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, moduleName);
-            AutomationAccountModuleResource automationAccountModule = client.GetAutomationAccountModuleResource(automationAccountModuleResourceId);
-
-            // invoke the operation
-            string activityName = "Add-AzureRmAccount";
-            AutomationActivity result = await automationAccountModule.GetActivityAsync(activityName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetActivities_ListActivitiesByAModule()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/listActivitiesByModule.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/listActivitiesByModule.json
             // this example is just showing the usage of "Activity_ListByModule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "myAutomationAccount33";
             string moduleName = "OmsCompositeResources";
@@ -174,9 +146,37 @@ namespace Azure.ResourceManager.Automation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetActivity_GetActivityInAModule()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/getActivityInAModule.json
+            // this example is just showing the usage of "Activity_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountModuleResource created on azure
+            // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount33";
+            string moduleName = "OmsCompositeResources";
+            ResourceIdentifier automationAccountModuleResourceId = AutomationAccountModuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, moduleName);
+            AutomationAccountModuleResource automationAccountModule = client.GetAutomationAccountModuleResource(automationAccountModuleResourceId);
+
+            // invoke the operation
+            string activityName = "Add-AzureRmAccount";
+            AutomationActivity result = await automationAccountModule.GetActivityAsync(activityName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFieldsByModuleAndType_GetAListOfFieldsOfAGivenType()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/listFieldsByModuleAndType.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/ObjectDataTypeslistFieldsByModuleAndType.json
             // this example is just showing the usage of "ObjectDataTypes_ListFieldsByModuleAndType" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFieldsByType_GetAListOfFieldsOfAGivenType()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/listFieldsByModuleAndType.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/listFieldsByModuleAndType.json
             // this example is just showing the usage of "Fields_ListByType" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Automation.Samples
 
             // this example assumes you already have this AutomationAccountModuleResource created on azure
             // for more information of creating AutomationAccountModuleResource, please refer to the document of AutomationAccountModuleResource
-            string subscriptionId = "subid";
+            string subscriptionId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee";
             string resourceGroupName = "rg";
             string automationAccountName = "MyAutomationAccount";
             string moduleName = "MyModule";

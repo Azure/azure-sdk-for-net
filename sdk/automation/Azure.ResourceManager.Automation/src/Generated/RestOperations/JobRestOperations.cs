@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Automation
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-06-01";
+            _apiVersion = apiVersion ?? "2024-10-23";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetOutputRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        internal RequestUriBuilder CreateListByAutomationAccountRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string filter, string clientRequestId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,14 +47,16 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/output", false);
+            uri.AppendPath("/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateGetOutputRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        internal HttpMessage CreateListByAutomationAccountRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string filter, string clientRequestId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,222 +69,12 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/output", false);
+            uri.AppendPath("/jobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (clientRequestId != null)
+            if (filter != null)
             {
-                request.Headers.Add("clientRequestId", clientRequestId);
+                uri.AppendQuery("$filter", filter, true);
             }
-            request.Headers.Add("Accept", "text/plain");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieve the job output identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The name of the job to be created. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<string>> GetOutputAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetOutputRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        string value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieve the job output identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The name of the job to be created. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<string> GetOutput(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetOutputRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        string value = streamReader.ReadToEnd();
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRunbookContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/runbookContent", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRunbookContentRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/runbookContent", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.Add("clientRequestId", clientRequestId);
-            }
-            request.Headers.Add("Accept", "text/powershell");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieve the runbook content of the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<string>> GetRunbookContentAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        string value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieve the runbook content of the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<string> GetRunbookContent(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateGetRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
-                        string value = streamReader.ReadToEnd();
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateSuspendRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/suspend", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateSuspendRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/suspend", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (clientRequestId != null)
             {
@@ -293,153 +85,63 @@ namespace Azure.ResourceManager.Automation
             return message;
         }
 
-        /// <summary> Suspend the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <summary> Retrieve a list of jobs. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SuspendAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AutomationJobListResultV2>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter, clientRequestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
+                    {
+                        AutomationJobListResultV2 value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = AutomationJobListResultV2.DeserializeAutomationJobListResultV2(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Suspend the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <summary> Retrieve a list of jobs. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Suspend(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AutomationJobListResultV2> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter, clientRequestId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
-            uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs/", false);
-            uri.AppendPath(jobName, true);
-            uri.AppendPath("/stop", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            if (clientRequestId != null)
-            {
-                request.Headers.Add("clientRequestId", clientRequestId);
-            }
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Stop the job identified by jobName. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Stop the job identified by jobName. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
-        /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Stop(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
-            using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
+                    {
+                        AutomationJobListResultV2 value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = AutomationJobListResultV2.DeserializeAutomationJobListResultV2(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -488,8 +190,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -522,8 +224,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Retrieve the job identified by job name. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -602,8 +304,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Create a job of the runbook. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="content"> The parameters supplied to the create job operation. </param>
@@ -636,8 +338,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Create a job of the runbook. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="content"> The parameters supplied to the create job operation. </param>
@@ -669,7 +371,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        internal RequestUriBuilder CreateListByAutomationAccountRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string filter, string clientRequestId)
+        internal RequestUriBuilder CreateGetOutputRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -679,16 +381,14 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/output", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByAutomationAccountRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string filter, string clientRequestId)
+        internal HttpMessage CreateGetOutputRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -701,46 +401,44 @@ namespace Azure.ResourceManager.Automation
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
             uri.AppendPath(automationAccountName, true);
-            uri.AppendPath("/jobs", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/output", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (clientRequestId != null)
             {
                 request.Headers.Add("clientRequestId", clientRequestId);
             }
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "text/plain");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Retrieve a list of jobs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <summary> Retrieve the job output identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AutomationJobListResultV2>> ListByAutomationAccountAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<string>> GetOutputAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter, clientRequestId);
+            using var message = CreateGetOutputRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AutomationJobListResultV2 value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AutomationJobListResultV2.DeserializeAutomationJobListResultV2(document.RootElement);
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
+                        string value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -748,30 +446,30 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Retrieve a list of jobs. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <summary> Retrieve the job output identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AutomationJobListResultV2> ListByAutomationAccount(string subscriptionId, string resourceGroupName, string automationAccountName, string filter = null, string clientRequestId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<string> GetOutput(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var message = CreateListByAutomationAccountRequest(subscriptionId, resourceGroupName, automationAccountName, filter, clientRequestId);
+            using var message = CreateGetOutputRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AutomationJobListResultV2 value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AutomationJobListResultV2.DeserializeAutomationJobListResultV2(document.RootElement);
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
+                        string value = streamReader.ReadToEnd();
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -824,8 +522,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Resume the job identified by jobName. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -851,8 +549,8 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Resume the job identified by jobName. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -867,6 +565,308 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateResumeRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRunbookContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/runbookContent", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRunbookContentRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/runbookContent", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (clientRequestId != null)
+            {
+                request.Headers.Add("clientRequestId", clientRequestId);
+            }
+            request.Headers.Add("Accept", "text/powershell");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Retrieve the runbook content of the job identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<string>> GetRunbookContentAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateGetRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
+                        string value = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieve the runbook content of the job identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<string> GetRunbookContent(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateGetRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        StreamReader streamReader = new StreamReader(message.Response.ContentStream);
+                        string value = streamReader.ReadToEnd();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (clientRequestId != null)
+            {
+                request.Headers.Add("clientRequestId", clientRequestId);
+            }
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Stop the job identified by jobName. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Stop the job identified by jobName. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Stop(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateStopRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateSuspendRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/suspend", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateSuspendRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/suspend", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (clientRequestId != null)
+            {
+                request.Headers.Add("clientRequestId", clientRequestId);
+            }
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Suspend the job identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> SuspendAsync(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Suspend the job identified by job name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="automationAccountName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Suspend(string subscriptionId, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var message = CreateSuspendRequest(subscriptionId, resourceGroupName, automationAccountName, jobName, clientRequestId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -905,8 +905,8 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -938,8 +938,8 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Retrieve a list of jobs. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of an Azure Resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionGet.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/privateEndpointConnection/PrivateEndpointConnectionGet.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Samples
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "rg1";
-            string automationAccountName = "ddb1";
+            string automationAccountName = "automationAccountName";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
             ResourceIdentifier automationPrivateEndpointConnectionResourceId = AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, privateEndpointConnectionName);
             AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionDelete.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/privateEndpointConnection/PrivateEndpointConnectionDelete.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Samples
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "rg1";
-            string automationAccountName = "ddb1";
+            string automationAccountName = "automationAccountName";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
             ResourceIdentifier automationPrivateEndpointConnectionResourceId = AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, privateEndpointConnectionName);
             AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/PrivateEndpointConnectionUpdate.json
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2024-10-23/examples/privateEndpointConnection/PrivateEndpointConnectionUpdate.json
             // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Samples
             // for more information of creating AutomationPrivateEndpointConnectionResource, please refer to the document of AutomationPrivateEndpointConnectionResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "rg1";
-            string automationAccountName = "ddb1";
+            string automationAccountName = "automationAccountName";
             string privateEndpointConnectionName = "privateEndpointConnectionName";
             ResourceIdentifier automationPrivateEndpointConnectionResourceId = AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, privateEndpointConnectionName);
             AutomationPrivateEndpointConnectionResource automationPrivateEndpointConnection = client.GetAutomationPrivateEndpointConnectionResource(automationPrivateEndpointConnectionResourceId);

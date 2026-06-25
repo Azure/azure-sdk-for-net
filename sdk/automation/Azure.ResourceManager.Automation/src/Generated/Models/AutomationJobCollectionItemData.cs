@@ -59,24 +59,28 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="runbook"> The runbook association. </param>
         /// <param name="jobId"> The id of the job. </param>
+        /// <param name="startedBy"> Gets or sets the job started by. </param>
         /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="status"> The status of the job. </param>
         /// <param name="startOn"> The start time of the job. </param>
         /// <param name="endOn"> The end time of the job. </param>
         /// <param name="lastModifiedOn"> The last modified time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of a resource. </param>
+        /// <param name="jobRuntimeEnvironment"> Runtime Environment Property. </param>
         /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, string runOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AutomationJobCollectionItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RunbookAssociationProperty runbook, Guid? jobId, string startedBy, DateTimeOffset? createdOn, AutomationJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, string provisioningState, JobRuntimeEnvironment jobRuntimeEnvironment, string runOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Runbook = runbook;
             JobId = jobId;
+            StartedBy = startedBy;
             CreatedOn = createdOn;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             LastModifiedOn = lastModifiedOn;
             ProvisioningState = provisioningState;
+            JobRuntimeEnvironment = jobRuntimeEnvironment;
             RunOn = runOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -91,6 +95,8 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> The id of the job. </summary>
         public Guid? JobId { get; }
+        /// <summary> Gets or sets the job started by. </summary>
+        public string StartedBy { get; }
         /// <summary> The creation time of the job. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The status of the job. </summary>
@@ -103,6 +109,20 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The provisioning state of a resource. </summary>
         public string ProvisioningState { get; }
+        /// <summary> Runtime Environment Property. </summary>
+        internal JobRuntimeEnvironment JobRuntimeEnvironment { get; set; }
+        /// <summary> Name of Runtime Environment. </summary>
+        public string RuntimeEnvironmentName
+        {
+            get => JobRuntimeEnvironment is null ? default : JobRuntimeEnvironment.RuntimeEnvironmentName;
+            set
+            {
+                if (JobRuntimeEnvironment is null)
+                    JobRuntimeEnvironment = new JobRuntimeEnvironment();
+                JobRuntimeEnvironment.RuntimeEnvironmentName = value;
+            }
+        }
+
         /// <summary> Specifies the runOn group name where the job was executed. </summary>
         public string RunOn { get; set; }
     }

@@ -34,139 +34,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource"/> object. </returns>
-        public static AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationAccountPython2PackageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationAccountPython2PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython2PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountPython2PackageResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource"/> object. </returns>
-        public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationAccountPython2PackageResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationAccountModuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationAccountModuleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountModuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationAccountModuleResource"/> object. </returns>
-        public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationAccountModuleResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DscNodeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DscNodeResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DscNodeResource"/> object. </returns>
-        public static DscNodeResource GetDscNodeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetDscNodeResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DscNodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DscNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DscNodeConfigurationResource"/> object. </returns>
-        public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetDscNodeConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DscCompilationJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DscCompilationJobResource.CreateResourceIdentifier" /> to create a <see cref="DscCompilationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscCompilationJobResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DscCompilationJobResource"/> object. </returns>
-        public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetDscCompilationJobResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AutomationSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationSourceControlResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationSourceControlResource"/> object. </returns>
-        public static AutomationSourceControlResource GetAutomationSourceControlResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationSourceControlResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="AutomationAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AutomationAccountResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -205,22 +72,22 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomationConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DscConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationConnectionResource"/> object. </returns>
-        public static AutomationConnectionResource GetAutomationConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DscConfigurationResource"/> object. </returns>
+        public static DscConfigurationResource GetDscConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAutomationArmClient(client).GetAutomationConnectionResource(id);
+            return GetMockableAutomationArmClient(client).GetDscConfigurationResource(id);
         }
 
         /// <summary>
@@ -243,6 +110,25 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AutomationConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationConnectionResource"/> object. </returns>
+        public static AutomationConnectionResource GetAutomationConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="AutomationCredentialResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AutomationCredentialResource.CreateResourceIdentifier" /> to create an <see cref="AutomationCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -259,6 +145,44 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomationArmClient(client).GetAutomationCredentialResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridRunbookWorkerGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridRunbookWorkerGroupResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource"/> object. </returns>
+        public static HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridRunbookWorkerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridRunbookWorkerResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridRunbookWorkerResource"/> object. </returns>
+        public static HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerResource(id);
         }
 
         /// <summary>
@@ -281,6 +205,196 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AutomationJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationJobResource.CreateResourceIdentifier" /> to create an <see cref="AutomationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationJobResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationJobResource"/> object. </returns>
+        public static AutomationJobResource GetAutomationJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountModuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountModuleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountModuleResource"/> object. </returns>
+        public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationAccountModuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountPython2PackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountPython2PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython2PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountPython2PackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource"/> object. </returns>
+        public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationAccountPython2PackageResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationAccountPython3PackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationAccountPython3PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython3PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountPython3PackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationAccountPython3PackageResource"/> object. </returns>
+        public static AutomationAccountPython3PackageResource GetAutomationAccountPython3PackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationAccountPython3PackageResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DscNodeConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscNodeConfigurationResource"/> object. </returns>
+        public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetDscNodeConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DscNodeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscNodeResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DscNodeResource"/> object. </returns>
+        public static DscNodeResource GetDscNodeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetDscNodeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource"/> object. </returns>
+        public static AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationRunbookResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationRunbookResource.CreateResourceIdentifier" /> to create an <see cref="AutomationRunbookResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationRunbookResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationRunbookResource"/> object. </returns>
+        public static AutomationRunbookResource GetAutomationRunbookResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationRunbookResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RuntimeEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RuntimeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="RuntimeEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetRuntimeEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RuntimeEnvironmentResource"/> object. </returns>
+        public static RuntimeEnvironmentResource GetRuntimeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetRuntimeEnvironmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PackageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PackageResource.CreateResourceIdentifier" /> to create a <see cref="PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PackageResource"/> object. </returns>
+        public static PackageResource GetPackageResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetPackageResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="AutomationScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AutomationScheduleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -297,6 +411,44 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAutomationArmClient(client).GetAutomationScheduleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SoftwareUpdateConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SoftwareUpdateConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareUpdateConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetSoftwareUpdateConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource"/> object. </returns>
+        public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetSoftwareUpdateConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AutomationSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomationSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AutomationSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AutomationSourceControlResource"/> object. </returns>
+        public static AutomationSourceControlResource GetAutomationSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAutomationArmClient(client).GetAutomationSourceControlResource(id);
         }
 
         /// <summary>
@@ -338,82 +490,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DscConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DscConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DscConfigurationResource"/> object. </returns>
-        public static DscConfigurationResource GetDscConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetDscConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationJobResource.CreateResourceIdentifier" /> to create an <see cref="AutomationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationJobResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationJobResource"/> object. </returns>
-        public static AutomationJobResource GetAutomationJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationJobResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SoftwareUpdateConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SoftwareUpdateConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareUpdateConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetSoftwareUpdateConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource"/> object. </returns>
-        public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetSoftwareUpdateConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AutomationRunbookResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomationRunbookResource.CreateResourceIdentifier" /> to create an <see cref="AutomationRunbookResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationRunbookResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AutomationRunbookResource"/> object. </returns>
-        public static AutomationRunbookResource GetAutomationRunbookResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetAutomationRunbookResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="AutomationWebhookResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AutomationWebhookResource.CreateResourceIdentifier" /> to create an <see cref="AutomationWebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -433,41 +509,22 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HybridRunbookWorkerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridRunbookWorkerResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DscCompilationJobResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DscCompilationJobResource.CreateResourceIdentifier" /> to create a <see cref="DscCompilationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscCompilationJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HybridRunbookWorkerResource"/> object. </returns>
-        public static HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DscCompilationJobResource"/> object. </returns>
+        public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HybridRunbookWorkerGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HybridRunbookWorkerGroupResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerGroupResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource"/> object. </returns>
-        public static HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerGroupResource(id);
+            return GetMockableAutomationArmClient(client).GetDscCompilationJobResource(id);
         }
 
         /// <summary>
@@ -500,7 +557,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -538,7 +595,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -576,7 +633,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +669,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -648,7 +705,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-31</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// <item>
@@ -680,7 +737,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-31</description>
+        /// <description>2024-10-23</description>
         /// </item>
         /// </list>
         /// <item>
