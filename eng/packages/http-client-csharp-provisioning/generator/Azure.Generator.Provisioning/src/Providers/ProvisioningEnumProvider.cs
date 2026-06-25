@@ -3,7 +3,6 @@
 
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -23,14 +22,14 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
-        private readonly InputEnumType _inputEnum;
+        private readonly EnumProvider _baseEnumProvider;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
-            _inputEnum = inputEnum;
+            _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
-        protected override string BuildName() => _inputEnum.Name.ToIdentifierName();
+        protected override string BuildName() => _baseEnumProvider.Name;
 
         protected override string BuildNamespace()
             => ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace;
@@ -41,21 +40,30 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Enum;
 
+        protected override bool GetIsEnum() => true;
+
         protected override FieldProvider[] BuildFields()
         {
-            var fields = new List<FieldProvider>();
+            var baseEnumValues = _baseEnumProvider.EnumValues;
+            var fields = new FieldProvider[baseEnumValues.Count];
 
-            foreach (var value in _inputEnum.Values)
+            for (int i = 0; i < baseEnumValues.Count; i++)
             {
-                var memberName = value.Name.ToIdentifierName();
-                var serializedValue = value.Value?.ToString();
+                var baseEnumValue = baseEnumValues[i];
+                var baseField = baseEnumValue.Field;
+                var memberName = baseEnumValue.Name;
+                var serializedValue = baseEnumValue.Value?.ToString();
+                var description = string.IsNullOrEmpty(baseField.Description?.ToString())
+                    ? (FormattableString)$"{memberName}."
+                    : baseField.Description;
 
-                // Add [DataMember(Name = "...")] when the serialized value differs from the member name
-                List<AttributeStatement>? attributes = null;
+                // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
+                IEnumerable<AttributeStatement>? attributes = baseField.Attributes;
                 if (serializedValue != null && serializedValue != memberName)
                 {
                     attributes =
                     [
+                        .. baseField.Attributes,
                         new AttributeStatement(typeof(DataMemberAttribute),
                             [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))])
                     ];
@@ -66,13 +74,13 @@ namespace Azure.Generator.Provisioning.Providers
                     typeof(int), // placeholder — enum members don't need an explicit type
                     memberName,
                     this,
-                    description: (FormattableString)$"{value.Doc ?? $"{memberName}."}",
+                    description: description,
                     attributes: attributes);
 
-                fields.Add(field);
+                fields[i] = field;
             }
 
-            return [.. fields];
+            return fields;
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
@@ -80,11 +88,11 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override IReadOnlyList<EnumTypeMember> BuildEnumValues()
         {
-            var members = new List<EnumTypeMember>(_inputEnum.Values.Count);
-            for (int i = 0; i < _inputEnum.Values.Count; i++)
+            var baseEnumValues = _baseEnumProvider.EnumValues;
+            var members = new EnumTypeMember[baseEnumValues.Count];
+            for (int i = 0; i < baseEnumValues.Count; i++)
             {
-                var value = _inputEnum.Values[i];
-                members.Add(new EnumTypeMember(value.Name.ToIdentifierName(), Fields[i], value.Value));
+                members[i] = new EnumTypeMember(Fields[i].Name, Fields[i], baseEnumValues[i].Value);
             }
             return members;
         }

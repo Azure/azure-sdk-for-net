@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerSecurityAlertPolicyResource : IJsonModel<SqlServerSecurityAlertPolicyData>
     {
-        private static SqlServerSecurityAlertPolicyData s_dataDeserializationInstance;
-        private static SqlServerSecurityAlertPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerSecurityAlertPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerSecurityAlertPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerSecurityAlertPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerSecurityAlertPolicyData>)Data).Write(writer, options);
 
-        SqlServerSecurityAlertPolicyData IJsonModel<SqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerSecurityAlertPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerSecurityAlertPolicyData IJsonModel<SqlServerSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerSecurityAlertPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerSecurityAlertPolicyData IPersistableModel<SqlServerSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerSecurityAlertPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerSecurityAlertPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerSecurityAlertPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

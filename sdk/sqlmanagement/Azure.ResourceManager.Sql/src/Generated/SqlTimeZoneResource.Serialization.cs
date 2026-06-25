@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlTimeZoneResource : IJsonModel<SqlTimeZoneData>
     {
-        private static SqlTimeZoneData s_dataDeserializationInstance;
-        private static SqlTimeZoneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlTimeZoneData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlTimeZoneData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlTimeZoneData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlTimeZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)Data).Write(writer, options);
 
-        SqlTimeZoneData IJsonModel<SqlTimeZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlTimeZoneData IJsonModel<SqlTimeZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlTimeZoneData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlTimeZoneData IPersistableModel<SqlTimeZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlTimeZoneData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlTimeZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlTimeZoneData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlTimeZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

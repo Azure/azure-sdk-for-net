@@ -13,187 +13,66 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlDatabaseBlobAuditingPolicy data model.
-    /// A database blob auditing policy.
-    /// </summary>
+    /// <summary> A database blob auditing policy. </summary>
     public partial class SqlDatabaseBlobAuditingPolicyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseBlobAuditingPolicyData"/>. </summary>
         public SqlDatabaseBlobAuditingPolicyData()
         {
-            AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseBlobAuditingPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> Resource kind. </param>
-        /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
-        /// <param name="auditActionsAndGroups">
-        /// Specifies the Actions-Groups and Actions to audit.
-        ///
-        /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        ///
-        /// BATCH_COMPLETED_GROUP,
-        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
-        /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        ///
-        /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        ///
-        /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        ///
-        /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
-        /// BACKUP_RESTORE_GROUP
-        /// DATABASE_LOGOUT_GROUP
-        /// DATABASE_OBJECT_CHANGE_GROUP
-        /// DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP
-        /// DATABASE_OBJECT_PERMISSION_CHANGE_GROUP
-        /// DATABASE_OPERATION_GROUP
-        /// DATABASE_PERMISSION_CHANGE_GROUP
-        /// DATABASE_PRINCIPAL_CHANGE_GROUP
-        /// DATABASE_PRINCIPAL_IMPERSONATION_GROUP
-        /// DATABASE_ROLE_MEMBER_CHANGE_GROUP
-        /// FAILED_DATABASE_AUTHENTICATION_GROUP
-        /// SCHEMA_OBJECT_ACCESS_GROUP
-        /// SCHEMA_OBJECT_CHANGE_GROUP
-        /// SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP
-        /// SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP
-        /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP
-        /// USER_CHANGE_PASSWORD_GROUP
-        /// BATCH_STARTED_GROUP
-        /// BATCH_COMPLETED_GROUP
-        /// DBCC_GROUP
-        /// DATABASE_OWNERSHIP_CHANGE_GROUP
-        /// DATABASE_CHANGE_GROUP
-        /// LEDGER_OPERATION_GROUP
-        ///
-        /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        ///
-        /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        ///
-        /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
-        /// SELECT
-        /// UPDATE
-        /// INSERT
-        /// DELETE
-        /// EXECUTE
-        /// RECEIVE
-        /// REFERENCES
-        ///
-        /// The general form for defining an action to be audited is:
-        /// {action} ON {object} BY {principal}
-        ///
-        /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        ///
-        /// For example:
-        /// SELECT on dbo.myTable by public
-        /// SELECT on DATABASE::myDatabase by public
-        /// SELECT on SCHEMA::mySchema by public
-        ///
-        /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-        /// </param>
-        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage's secondary key. </param>
-        /// <param name="isAzureMonitorTargetEnabled">
-        /// Specifies whether audit events are sent to Azure Monitor.
-        /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
-        ///
-        /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
-        /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        ///
-        /// Diagnostic Settings URI format:
-        /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        ///
-        /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
-        /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        ///
-        /// </param>
-        /// <param name="queueDelayMs">
-        /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
-        /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
-        /// </param>
-        /// <param name="isManagedIdentityInUse"> Specifies whether Managed Identity is used to access blob storage. </param>
-        /// <param name="state"> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
-        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
-        /// <param name="storageAccountAccessKey">
-        /// Specifies the identifier key of the auditing storage account.
-        /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
-        /// Prerequisites for using managed identity authentication:
-        /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
-        /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-        /// </param>
-        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseBlobAuditingPolicyProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            RetentionDays = retentionDays;
-            AuditActionsAndGroups = auditActionsAndGroups;
-            IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
-            IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
-            QueueDelayMs = queueDelayMs;
-            IsManagedIdentityInUse = isManagedIdentityInUse;
-            State = state;
-            StorageEndpoint = storageEndpoint;
-            StorageAccountAccessKey = storageAccountAccessKey;
-            StorageAccountSubscriptionId = storageAccountSubscriptionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseBlobAuditingPolicyProperties Properties { get; set; }
 
         /// <summary> Resource kind. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> Specifies the number of days to keep in the audit logs in the storage account. </summary>
         [WirePath("properties.retentionDays")]
-        public int? RetentionDays { get; set; }
+        public int? RetentionDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.RetentionDays = value;
+            }
+        }
+
         /// <summary>
         /// Specifies the Actions-Groups and Actions to audit.
-        ///
         /// The recommended set of action groups to use is the following combination - this will audit all the queries and stored procedures executed against the database, as well as successful and failed logins:
-        ///
         /// BATCH_COMPLETED_GROUP,
         /// SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,
         /// FAILED_DATABASE_AUTHENTICATION_GROUP.
-        ///
         /// This above combination is also the set that is configured by default when enabling auditing from the Azure portal.
-        ///
         /// The supported action groups to audit are (note: choose only specific groups that cover your auditing needs. Using unnecessary groups could lead to very large quantities of audit records):
-        ///
         /// APPLICATION_ROLE_CHANGE_PASSWORD_GROUP
         /// BACKUP_RESTORE_GROUP
         /// DATABASE_LOGOUT_GROUP
@@ -218,11 +97,8 @@ namespace Azure.ResourceManager.Sql
         /// DATABASE_OWNERSHIP_CHANGE_GROUP
         /// DATABASE_CHANGE_GROUP
         /// LEDGER_OPERATION_GROUP
-        ///
         /// These are groups that cover all sql statements and stored procedures executed against the database, and should not be used in combination with other groups as this will result in duplicate audit logs.
-        ///
         /// For more information, see [Database-Level Audit Action Groups](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-action-groups).
-        ///
         /// For Database auditing policy, specific Actions can also be specified (note that Actions cannot be specified for Server auditing policy). The supported actions to audit are:
         /// SELECT
         /// UPDATE
@@ -231,67 +107,191 @@ namespace Azure.ResourceManager.Sql
         /// EXECUTE
         /// RECEIVE
         /// REFERENCES
-        ///
         /// The general form for defining an action to be audited is:
         /// {action} ON {object} BY {principal}
-        ///
         /// Note that &lt;object&gt; in the above format can refer to an object like a table, view, or stored procedure, or an entire database or schema. For the latter cases, the forms DATABASE::{db_name} and SCHEMA::{schema_name} are used, respectively.
-        ///
         /// For example:
         /// SELECT on dbo.myTable by public
         /// SELECT on DATABASE::myDatabase by public
         /// SELECT on SCHEMA::mySchema by public
-        ///
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
         /// </summary>
         [WirePath("properties.auditActionsAndGroups")]
-        public IList<string> AuditActionsAndGroups { get; }
+        public IList<string> AuditActionsAndGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                return Properties.AuditActionsAndGroups;
+            }
+        }
+
         /// <summary> Specifies whether storageAccountAccessKey value is the storage's secondary key. </summary>
         [WirePath("properties.isStorageSecondaryKeyInUse")]
-        public bool? IsStorageSecondaryKeyInUse { get; set; }
+        public bool? IsStorageSecondaryKeyInUse
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsStorageSecondaryKeyInUse;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.IsStorageSecondaryKeyInUse = value;
+            }
+        }
+
         /// <summary>
         /// Specifies whether audit events are sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled' and 'IsAzureMonitorTargetEnabled' as true.
-        ///
         /// When using REST API to configure auditing, Diagnostic Settings with 'SQLSecurityAuditEvents' diagnostic logs category on the database should be also created.
         /// Note that for server level audit you should use the 'master' database as {databaseName}.
-        ///
         /// Diagnostic Settings URI format:
         /// PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/providers/microsoft.insights/diagnosticSettings/{settingsName}?api-version=2017-05-01-preview
-        ///
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
-        ///
         /// </summary>
         [WirePath("properties.isAzureMonitorTargetEnabled")]
-        public bool? IsAzureMonitorTargetEnabled { get; set; }
+        public bool? IsAzureMonitorTargetEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAzureMonitorTargetEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.IsAzureMonitorTargetEnabled = value;
+            }
+        }
+
         /// <summary>
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// </summary>
         [WirePath("properties.queueDelayMs")]
-        public int? QueueDelayMs { get; set; }
+        public int? QueueDelayMs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueueDelayMs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.QueueDelayMs = value;
+            }
+        }
+
         /// <summary> Specifies whether Managed Identity is used to access blob storage. </summary>
         [WirePath("properties.isManagedIdentityInUse")]
-        public bool? IsManagedIdentityInUse { get; set; }
+        public bool? IsManagedIdentityInUse
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsManagedIdentityInUse;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.IsManagedIdentityInUse = value;
+            }
+        }
+
         /// <summary> Specifies the state of the audit. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         [WirePath("properties.state")]
-        public BlobAuditingPolicyState? State { get; set; }
+        public BlobAuditingPolicyState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DatabaseBlobAuditingPolicyProperties();
+                    }
+                    Properties.State = value.Value;
+                }
+            }
+        }
+
         /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
         [WirePath("properties.storageEndpoint")]
-        public string StorageEndpoint { get; set; }
+        public string StorageEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageEndpoint;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.StorageEndpoint = value;
+            }
+        }
+
         /// <summary>
         /// Specifies the identifier key of the auditing storage account.
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
         /// Prerequisites for using managed identity authentication:
-        /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
-        /// 2. Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.
+        /// <list type="number"><item><description>Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).</description></item><item><description>Grant SQL Server identity access to the storage account by adding 'Storage Blob Data Contributor' RBAC role to the server identity.</description></item></list>
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </summary>
         [WirePath("properties.storageAccountAccessKey")]
-        public string StorageAccountAccessKey { get; set; }
+        public string StorageAccountAccessKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountAccessKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.StorageAccountAccessKey = value;
+            }
+        }
+
         /// <summary> Specifies the blob storage subscription Id. </summary>
         [WirePath("properties.storageAccountSubscriptionId")]
-        public Guid? StorageAccountSubscriptionId { get; set; }
+        public Guid? StorageAccountSubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountSubscriptionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseBlobAuditingPolicyProperties();
+                }
+                Properties.StorageAccountSubscriptionId = value;
+            }
+        }
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
             writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (ProjectsAgentTool item in Tools)
+            foreach (ToolboxTool item in Tools)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -187,7 +187,7 @@ namespace Azure.AI.Projects.Agents
             string version = default;
             string description = default;
             DateTimeOffset createdAt = default;
-            IList<ProjectsAgentTool> tools = default;
+            IList<ToolboxTool> tools = default;
             IList<ToolboxSkill> skills = default;
             ToolboxPolicies policies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -242,10 +242,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
+                    List<ToolboxTool> array = new List<ToolboxTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
+                        array.Add(ToolboxTool.DeserializeToolboxTool(item, options));
                     }
                     tools = array;
                     continue;

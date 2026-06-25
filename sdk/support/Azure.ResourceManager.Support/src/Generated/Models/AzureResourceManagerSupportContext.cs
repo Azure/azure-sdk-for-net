@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Support
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubCommunicationResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketNoSubFileResource))]
     [ModelReaderWriterBuildable(typeof(SupportTicketsListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TechnicalTicketDetails))]
     [ModelReaderWriterBuildable(typeof(TenantFileWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(TenantSupportTicketResource))]
     [ModelReaderWriterBuildable(typeof(UpdateSupportTicket))]
     [ModelReaderWriterBuildable(typeof(UploadFileContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerSupportContext : ModelReaderWriterContext
     {
     }

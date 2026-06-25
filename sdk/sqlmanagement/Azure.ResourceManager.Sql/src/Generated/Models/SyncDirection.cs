@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SyncDirection : IEquatable<SyncDirection>
     {
         private readonly string _value;
+        /// <summary> Bidirectional. </summary>
+        private const string BidirectionalValue = "Bidirectional";
+        /// <summary> OneWayMemberToHub. </summary>
+        private const string OneWayMemberToHubValue = "OneWayMemberToHub";
+        /// <summary> OneWayHubToMember. </summary>
+        private const string OneWayHubToMemberValue = "OneWayHubToMember";
 
         /// <summary> Initializes a new instance of <see cref="SyncDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BidirectionalValue = "Bidirectional";
-        private const string OneWayMemberToHubValue = "OneWayMemberToHub";
-        private const string OneWayHubToMemberValue = "OneWayHubToMember";
+            _value = value;
+        }
 
         /// <summary> Bidirectional. </summary>
         public static SyncDirection Bidirectional { get; } = new SyncDirection(BidirectionalValue);
+
         /// <summary> OneWayMemberToHub. </summary>
         public static SyncDirection OneWayMemberToHub { get; } = new SyncDirection(OneWayMemberToHubValue);
+
         /// <summary> OneWayHubToMember. </summary>
         public static SyncDirection OneWayHubToMember { get; } = new SyncDirection(OneWayHubToMemberValue);
+
         /// <summary> Determines if two <see cref="SyncDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncDirection left, SyncDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncDirection left, SyncDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncDirection(string value) => new SyncDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncDirection?(string value) => value == null ? null : new SyncDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

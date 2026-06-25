@@ -12,10 +12,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the IPv6FirewallRule data model.
-    /// An IPv6 server firewall rule.
-    /// </summary>
+    /// <summary> An IPv6 server firewall rule. </summary>
     public partial class IPv6FirewallRuleData : ProxyResourceWithWritableName
     {
         /// <summary> Initializes a new instance of <see cref="IPv6FirewallRuleData"/>. </summary>
@@ -27,20 +24,51 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
-        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
-        internal IPv6FirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string startIPv6Address, string endIPv6Address) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal IPv6FirewallRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPv6ServerFirewallRuleProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
-            StartIPv6Address = startIPv6Address;
-            EndIPv6Address = endIPv6Address;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal IPv6ServerFirewallRuleProperties Properties { get; set; }
 
         /// <summary> The start IP address of the firewall rule. Must be IPv6 format. </summary>
         [WirePath("properties.startIPv6Address")]
-        public string StartIPv6Address { get; set; }
+        public string StartIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartIPv6Address;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPv6ServerFirewallRuleProperties();
+                }
+                Properties.StartIPv6Address = value;
+            }
+        }
+
         /// <summary> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </summary>
         [WirePath("properties.endIPv6Address")]
-        public string EndIPv6Address { get; set; }
+        public string EndIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndIPv6Address;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPv6ServerFirewallRuleProperties();
+                }
+                Properties.EndIPv6Address = value;
+            }
+        }
     }
 }
