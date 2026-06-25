@@ -66,13 +66,19 @@ export function runShard({ evalArgs, shardName, outputDir, skillEvalPrefix, thre
 
   if (verdict.passed) {
     if (verdict.hadExecutionErrors) {
+      // Not a build warning: vally flags hadExecutionErrors on the same teardown/shutdown
+      // path that forces the non-zero exit below, so it's the same expected agent-kill
+      // noise rather than a mid-eval tool failure. The verdict already passed; just log it.
       console.log(
-        `##vso[task.logissue type=warning]Shard '${shardName}' passed the pass-rate threshold but Vally reported execution errors during the run — worth a look, not blocking.`
+        `Shard '${shardName}' passed the pass-rate threshold; vally flagged execution errors (post-run teardown noise, not blocking).`
       );
     }
     if (vallyExit !== 0) {
+      // Expected: vally exits non-zero when its executor teardown (agent shutdown) times
+      // out, which happens AFTER the verdict is computed and written. The exit code says
+      // nothing about the eval, so this is a plain log line, not a build warning.
       console.log(
-        `##vso[task.logissue type=warning]vally exited ${vallyExit} after a passing verdict (post-run executor shutdown timeout); shard '${shardName}' is PASSED per results.jsonl.`
+        `vally exited ${vallyExit} during post-run shutdown; shard '${shardName}' is PASSED per results.jsonl (exit code ignored).`
       );
     }
     console.log(`##[section]Shard '${shardName}' PASSED (verdict from results.jsonl).`);
@@ -80,7 +86,7 @@ export function runShard({ evalArgs, shardName, outputDir, skillEvalPrefix, thre
   }
 
   console.log(
-    `##vso[task.logissue type=error]Shard '${shardName}' FAILED — one or more evals are below the pass-rate threshold.`
+    `##vso[task.logissue type=error]Shard '${shardName}' FAILED - one or more evals are below the pass-rate threshold.`
   );
   return 1;
 }

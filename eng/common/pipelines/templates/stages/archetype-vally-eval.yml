@@ -74,87 +74,115 @@ parameters:
   - name: failOnFailedTests
     type: boolean
     default: false
+  - name: Use1ESOfficial
+    # Official template on the internal project (full SDL), Unofficial elsewhere. The
+    # 1es-redirect template picks the right one; consumers rarely need to override this.
+    type: boolean
+    default: true
 
-stages:
-  - stage: Prepare
-    displayName: 'Build MCP + detect shards'
-    jobs:
-      - job: BuildMcp
-        displayName: 'Build + publish MCP server(s)'
-        pool:
-          name: $(LINUXPOOL)
-          image: $(LINUXVMIMAGE)
-          os: linux
-        steps:
-          - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
-            parameters:
-              mcpBuilds: ${{ parameters.mcpBuilds }}
-              stageRoot: ${{ parameters.mcpStageRoot }}
-              artifactName: ${{ parameters.mcpArtifact }}
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  parameters:
+    Use1ESOfficial: ${{ parameters.Use1ESOfficial }}
+    stages:
+      - stage: Prepare
+        displayName: 'Build MCP + detect shards'
+        jobs:
+          - job: BuildMcp
+            displayName: 'Build + publish MCP server(s)'
+            pool:
+              name: $(LINUXPOOL)
+              image: $(LINUXVMIMAGE)
+              os: linux
+            # 1ES publishes artifacts via templateContext.outputs, not the `publish` shortcut.
+            templateContext:
+              outputs:
+                - output: pipelineArtifact
+                  displayName: 'Publish MCP server artifact'
+                  artifactName: ${{ parameters.mcpArtifact }}
+                  targetPath: $(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}
+            steps:
+              - template: /eng/common/pipelines/templates/steps/vally-build-mcp.yml
+                parameters:
+                  mcpBuilds: ${{ parameters.mcpBuilds }}
 
-      - job: Detect
-        displayName: 'Glob eval files -> matrix'
-        pool:
-          name: $(LINUXPOOL)
-          image: $(LINUXVMIMAGE)
-          os: linux
-        steps:
-          - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
-            parameters:
-              evalRoots: ${{ parameters.evalRoots }}
-              pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
-              evalGlobs: ${{ parameters.evalGlobs }}
-              shardBy: ${{ parameters.shardBy }}
-              scriptDir: ${{ parameters.evalScriptDir }}
-              outputVariableName: matrix
-              stepName: detect
-              nodeVersion: ${{ parameters.nodeVersion }}
+          - job: Detect
+            displayName: 'Glob eval files -> matrix'
+            pool:
+              name: $(LINUXPOOL)
+              image: $(LINUXVMIMAGE)
+              os: linux
+            steps:
+              - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
+                parameters:
+                  evalRoots: ${{ parameters.evalRoots }}
+                  pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
+                  evalGlobs: ${{ parameters.evalGlobs }}
+                  shardBy: ${{ parameters.shardBy }}
+                  scriptDir: ${{ parameters.evalScriptDir }}
+                  outputVariableName: matrix
+                  stepName: detect
+                  nodeVersion: ${{ parameters.nodeVersion }}
 
-  - stage: Eval
-    displayName: 'Run eval shards'
-    dependsOn: Prepare
-    jobs:
-      - job: RunShard
-        displayName: 'Eval'
-        pool:
-          name: $(LINUXPOOL)
-          image: $(LINUXVMIMAGE)
-          os: linux
-        # continueOnError lets a single red shard finish without aborting the others —
-        # the pass/fail rollup happens in Summary.
-        continueOnError: true
-        timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
-        strategy:
-          matrix: $[ stageDependencies.Prepare.Detect.outputs['detect.matrix'] ]
-          maxParallel: ${{ parameters.maxParallel }}
-        steps:
-          - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
-            parameters:
-              vallyRoot: ${{ parameters.vallyRoot }}
-              scriptDir: ${{ parameters.evalScriptDir }}
-              skillEvalDir: ${{ parameters.skillEvalDir }}
-              mcpArtifact: ${{ parameters.mcpArtifact }}
-              mcpStageRoot: ${{ parameters.mcpStageRoot }}
-              azureServiceConnection: ${{ parameters.azureServiceConnection }}
-              threshold: ${{ parameters.threshold }}
-              nodeVersion: ${{ parameters.nodeVersion }}
-              githubTokenVariable: ${{ parameters.githubTokenVariable }}
+      - stage: Eval
+        displayName: 'Run eval shards'
+        dependsOn: Prepare
+        jobs:
+          - job: RunShard
+            displayName: 'Eval'
+            pool:
+              name: $(LINUXPOOL)
+              image: $(LINUXVMIMAGE)
+              os: linux
+            # continueOnError lets a single red shard finish without aborting the others —
+            # the pass/fail rollup happens in Summary.
+            continueOnError: true
+            timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+            strategy:
+              matrix: $[ stageDependencies.Prepare.Detect.outputs['detect.matrix'] ]
+              maxParallel: ${{ parameters.maxParallel }}
+            # Per-leg artifacts (matrix injects $(shardName)). JUnit always; transcripts
+            # only on a genuine failure. Both staged by the vally-run-shard.yml steps.
+            templateContext:
+              outputs:
+                - output: pipelineArtifact
+                  displayName: 'Publish $(shardName) JUnit'
+                  artifactName: 'eval-result-$(shardName)'
+                  targetPath: $(Build.ArtifactStagingDirectory)/junit
+                  condition: always()
+                - output: pipelineArtifact
+                  displayName: 'Publish $(shardName) transcripts (on failure)'
+                  artifactName: 'eval-debug-$(shardName)'
+                  targetPath: $(Build.ArtifactStagingDirectory)/debug
+                  condition: failed()
+            steps:
+              - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
+                parameters:
+                  vallyRoot: ${{ parameters.vallyRoot }}
+                  scriptDir: ${{ parameters.evalScriptDir }}
+                  skillEvalDir: ${{ parameters.skillEvalDir }}
+                  mcpArtifact: ${{ parameters.mcpArtifact }}
+                  mcpStageRoot: ${{ parameters.mcpStageRoot }}
+                  azureServiceConnection: ${{ parameters.azureServiceConnection }}
+                  threshold: ${{ parameters.threshold }}
+                  nodeVersion: ${{ parameters.nodeVersion }}
+                  githubTokenVariable: ${{ parameters.githubTokenVariable }}
 
-  - stage: Summary
-    displayName: 'Summarize results'
-    dependsOn: Eval
-    condition: always()
-    jobs:
-      - job: Summarize
-        displayName: 'Publish + gate rollup'
-        pool:
-          name: $(LINUXPOOL)
-          image: $(LINUXVMIMAGE)
-          os: linux
-        steps:
-          - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
-            parameters:
-              scriptDir: ${{ parameters.evalScriptDir }}
-              nodeVersion: ${{ parameters.nodeVersion }}
-              testRunTitle: ${{ parameters.testRunTitle }}
-              failOnFailedTests: ${{ parameters.failOnFailedTests }}
+      - stage: Summary
+        displayName: 'Summarize results'
+        dependsOn: Eval
+        condition: always()
+        jobs:
+          - job: Summarize
+            displayName: 'Publish + gate rollup'
+            pool:
+              name: $(LINUXPOOL)
+              image: $(LINUXVMIMAGE)
+              os: linux
+            steps:
+              - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
+                parameters:
+                  scriptDir: ${{ parameters.evalScriptDir }}
+                  nodeVersion: ${{ parameters.nodeVersion }}
+                  testRunTitle: ${{ parameters.testRunTitle }}
+                  failOnFailedTests: ${{ parameters.failOnFailedTests }}
