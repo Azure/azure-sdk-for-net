@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the SDK generator from Swagger/AutoRest to TypeSpec.
+
 ## 1.3.2 (2026-04-24)
 
 ### Other Changes

@@ -96,7 +96,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ToolboxVersion> CreateToolboxVersion(string name, IEnumerable<ToolboxTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
@@ -104,7 +104,7 @@ namespace Azure.AI.Projects.Agents
             CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
                 description,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                tools?.ToList() as IList<ToolboxTool> ?? new ChangeTrackingList<ToolboxTool>(),
                 skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 default);
@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="tools"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<ProjectsAgentTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ToolboxVersion>> CreateToolboxVersionAsync(string name, IEnumerable<ToolboxTool> tools, string description = default, IDictionary<string, string> metadata = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
                 description,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                tools?.ToList() as IList<ProjectsAgentTool> ?? new ChangeTrackingList<ProjectsAgentTool>(),
+                tools?.ToList() as IList<ToolboxTool> ?? new ChangeTrackingList<ToolboxTool>(),
                 skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 default);

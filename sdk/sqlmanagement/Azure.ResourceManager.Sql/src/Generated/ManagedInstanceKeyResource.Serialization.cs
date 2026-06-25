@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceKeyResource : IJsonModel<ManagedInstanceKeyData>
     {
-        private static ManagedInstanceKeyData s_dataDeserializationInstance;
-        private static ManagedInstanceKeyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceKeyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceKeyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceKeyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceKeyData>)Data).Write(writer, options);
 
-        ManagedInstanceKeyData IJsonModel<ManagedInstanceKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceKeyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceKeyData IJsonModel<ManagedInstanceKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceKeyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceKeyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceKeyData IPersistableModel<ManagedInstanceKeyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceKeyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceKeyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

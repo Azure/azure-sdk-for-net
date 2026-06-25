@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A Class representing a MachineLearningRegistryDataVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryDataVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningRegistryDataVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryDataContainerResource"/> using the GetMachineLearningRegistryDataVersion method.
+    /// A class representing a RegistryDataVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryDataVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryDataContainerResource"/> using the GetRegistryDataVersions method.
     /// </summary>
     public partial class MachineLearningRegistryDataVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MachineLearningRegistryDataVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="registryName"> The registryName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics;
-        private readonly RegistryDataVersionsRestOperations _machineLearningRegistryDataVersionRegistryDataVersionsRestClient;
+        private readonly ClientDiagnostics _registryDataVersionsClientDiagnostics;
+        private readonly RegistryDataVersions _registryDataVersionsRestClient;
         private readonly MachineLearningDataVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/registries/data/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryDataVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningRegistryDataVersionResource for mocking. </summary>
         protected MachineLearningRegistryDataVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryDataVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryDataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningRegistryDataVersionResource(ArmClient client, MachineLearningDataVersionData data) : this(client, data.Id)
@@ -56,71 +44,94 @@ namespace Azure.ResourceManager.MachineLearning
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningRegistryDataVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningRegistryDataVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryDataVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string machineLearningRegistryDataVersionRegistryDataVersionsApiVersion);
-            _machineLearningRegistryDataVersionRegistryDataVersionsRestClient = new RegistryDataVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningRegistryDataVersionRegistryDataVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string registryDataVersionApiVersion);
+            _registryDataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
+            _registryDataVersionsRestClient = new RegistryDataVersions(_registryDataVersionsClientDiagnostics, Pipeline, Endpoint, registryDataVersionApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MachineLearningDataVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="version"> The version. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MachineLearningRegistryDataVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Get");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MachineLearningRegistryDataVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Get");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDataVersionData> response = Response.FromValue(MachineLearningDataVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningRegistryDataVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +193,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,14 +214,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Delete");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics, Pipeline, _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryDataVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +242,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,14 +263,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Delete");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics, Pipeline, _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryDataVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,23 +288,127 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update version.
+        /// Generate a storage location and credential for the client to upload a data asset to.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}/startPendingUpload. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_CreateOrGetStartPendingUpload. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Pending upload request object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual async Task<Response<PendingUploadResponseDto>> CreateOrGetStartPendingUploadAsync(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateCreateOrGetStartPendingUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PendingUploadRequestDto.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PendingUploadResponseDto> response = Response.FromValue(PendingUploadResponseDto.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate a storage location and credential for the client to upload a data asset to.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}/startPendingUpload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_CreateOrGetStartPendingUpload. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Pending upload request object. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public virtual Response<PendingUploadResponseDto> CreateOrGetStartPendingUpload(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateCreateOrGetStartPendingUploadRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PendingUploadRequestDto.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PendingUploadResponseDto> response = Response.FromValue(PendingUploadResponseDto.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a RegistryDataVersion.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,14 +420,27 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
             scope.Start();
             try
             {
-                var response = await _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryDataVersionResource>(new MachineLearningRegistryDataVersionOperationSource(Client), _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics, Pipeline, _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningDataVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningRegistryDataVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryDataVersionResource>(
+                    new MachineLearningRegistryDataVersionResourceOperationSource(Client),
+                    _registryDataVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,23 +451,23 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update version.
+        /// Update a RegistryDataVersion.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataVersionBases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningRegistryDataVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,99 +479,28 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
+            using DiagnosticScope scope = _registryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.Update");
             scope.Start();
             try
             {
-                var response = _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningRegistryDataVersionResource>(new MachineLearningRegistryDataVersionOperationSource(Client), _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics, Pipeline, _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registryDataVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningDataVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningRegistryDataVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryDataVersionResource>(
+                    new MachineLearningRegistryDataVersionResourceOperationSource(Client),
+                    _registryDataVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generate a storage location and credential for the client to upload a data asset to.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}/startPendingUpload</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_CreateOrGetStartPendingUpload</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Pending upload request object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<PendingUploadResponseDto>> CreateOrGetStartPendingUploadAsync(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
-            scope.Start();
-            try
-            {
-                var response = await _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateOrGetStartPendingUploadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Generate a storage location and credential for the client to upload a data asset to.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/data/{name}/versions/{version}/startPendingUpload</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegistryDataVersions_CreateOrGetStartPendingUpload</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningRegistryDataVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="body"> Pending upload request object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<PendingUploadResponseDto> CreateOrGetStartPendingUpload(PendingUploadRequestDto body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _machineLearningRegistryDataVersionRegistryDataVersionsClientDiagnostics.CreateScope("MachineLearningRegistryDataVersionResource.CreateOrGetStartPendingUpload");
-            scope.Start();
-            try
-            {
-                var response = _machineLearningRegistryDataVersionRegistryDataVersionsRestClient.CreateOrGetStartPendingUpload(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, body, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

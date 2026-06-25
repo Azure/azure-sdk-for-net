@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Web search approximate location. </summary>
-    internal partial class WebSearchApproximateLocation : IJsonModel<WebSearchApproximateLocation>
+    public partial class WebSearchApproximateLocation : IJsonModel<WebSearchApproximateLocation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

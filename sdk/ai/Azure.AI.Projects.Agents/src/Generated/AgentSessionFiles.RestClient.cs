@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
-        internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string agentSessionId, string path, BinaryContent content, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateUploadSessionFileRequest(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -37,17 +37,13 @@ namespace Azure.AI.Projects.Agents
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "PUT", PipelineMessageClassifier201);
             PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/octet-stream");
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDownloadSessionFileRequest(string agentName, string agentSessionId, string path, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateDownloadSessionFileRequest(string agentName, string agentSessionId, string path, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -63,16 +59,12 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Accept", "application/octet-stream");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string agentSessionId, string path, string userIsolationKey, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetSessionFilesRequest(string agentName, string agentSessionId, string path, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -107,16 +99,12 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }
 
-        internal PipelineMessage CreateDeleteSessionFileRequest(string agentName, string agentSessionId, string path, bool? recursive, string userIsolationKey, RequestOptions options)
+        internal PipelineMessage CreateDeleteSessionFileRequest(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -136,10 +124,6 @@ namespace Azure.AI.Projects.Agents
             }
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
             PipelineRequest request = message.Request;
-            if (userIsolationKey != null)
-            {
-                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
-            }
             message.Apply(options);
             return message;
         }

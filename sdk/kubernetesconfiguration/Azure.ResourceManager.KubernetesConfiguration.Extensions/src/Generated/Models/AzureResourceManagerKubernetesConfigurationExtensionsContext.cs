@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
     [ModelReaderWriterBuildable(typeof(KubernetesClusterManagementDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKubernetesConfigurationExtensionsContext : ModelReaderWriterContext
     {
     }

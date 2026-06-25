@@ -60,6 +60,7 @@ namespace Azure.Generator.Management.Providers
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
         private readonly ResourceMethod _readMethod;
+        internal string? TagPatchHookMethodName { get; }
 
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
@@ -70,6 +71,8 @@ namespace Azure.Generator.Management.Providers
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
             ResourceName = resourceName.ToIdentifierName();
+            var resourceTypeName = ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
+            TagPatchHookMethodName = ManagementClientGenerator.Instance.TagPatchHookCustomizationResolver.GetMethodName(resourceTypeName);
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;

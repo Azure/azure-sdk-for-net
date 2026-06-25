@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotHubCertificateDescriptionResource"/> and their operations.
     /// Each <see cref="IotHubCertificateDescriptionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
-    /// To get an <see cref="IotHubCertificateDescriptionCollection"/> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource"/>.
+    /// To get a <see cref="IotHubCertificateDescriptionCollection"/> instance call the GetIotHubCertificateDescriptions method from an instance of <see cref="IotHubDescriptionResource"/>.
     /// </summary>
     public partial class IotHubCertificateDescriptionCollection : ArmCollection, IEnumerable<IotHubCertificateDescriptionResource>, IAsyncEnumerable<IotHubCertificateDescriptionResource>
     {
-        private readonly ClientDiagnostics _iotHubCertificateDescriptionCertificatesClientDiagnostics;
-        private readonly CertificatesRestOperations _iotHubCertificateDescriptionCertificatesRestClient;
+        private readonly ClientDiagnostics _certificatesClientDiagnostics;
+        private readonly Certificates _certificatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IotHubCertificateDescriptionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of IotHubCertificateDescriptionCollection for mocking. </summary>
         protected IotHubCertificateDescriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IotHubCertificateDescriptionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateDescriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotHubCertificateDescriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _iotHubCertificateDescriptionCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubCertificateDescriptionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IotHubCertificateDescriptionResource.ResourceType, out string iotHubCertificateDescriptionCertificatesApiVersion);
-            _iotHubCertificateDescriptionCertificatesRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubCertificateDescriptionCertificatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(IotHubCertificateDescriptionResource.ResourceType, out string iotHubCertificateDescriptionApiVersion);
+            _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", IotHubCertificateDescriptionResource.ResourceType.Namespace, Diagnostics);
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, iotHubCertificateDescriptionApiVersion ?? "2026-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != IotHubDescriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotHubDescriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotHubDescriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Adds new or replaces existing certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the Certificate. Do not specify for creating a brand new certificate. Required to update an existing certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _iotHubCertificateDescriptionCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotHubArmOperation<IotHubCertificateDescriptionResource> operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.IotHub
         /// Adds new or replaces existing certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +132,31 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The certificate body. </param>
         /// <param name="ifMatch"> ETag of the Certificate. Do not specify for creating a brand new certificate. Required to update an existing certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IotHubCertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<IotHubCertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _iotHubCertificateDescriptionCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch, cancellationToken);
-                var uri = _iotHubCertificateDescriptionCertificatesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, IotHubCertificateDescriptionData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotHubArmOperation<IotHubCertificateDescriptionResource> operation = new IotHubArmOperation<IotHubCertificateDescriptionResource>(Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,38 +170,42 @@ namespace Azure.ResourceManager.IotHub
         /// Returns the certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<IotHubCertificateDescriptionResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _iotHubCertificateDescriptionCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,38 +219,42 @@ namespace Azure.ResourceManager.IotHub
         /// Returns the certificate.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<IotHubCertificateDescriptionResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Get");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _iotHubCertificateDescriptionCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IotHubCertificateDescriptionData> response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,49 +268,50 @@ namespace Azure.ResourceManager.IotHub
         /// Returns the list of certificates.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_ListByIotHub</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_ListByIotHub. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotHubCertificateDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotHubCertificateDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotHubCertificateDescriptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new IotHubCertificateDescriptionResource(Client, IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(e)), _iotHubCertificateDescriptionCertificatesClientDiagnostics, Pipeline, "IotHubCertificateDescriptionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new CertificatesGetByIotHubAsyncCollectionResultOfT(
+                _certificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotHubCertificateDescriptionCollection.GetAll"), data => new IotHubCertificateDescriptionResource(Client, data));
         }
 
         /// <summary>
         /// Returns the list of certificates.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_ListByIotHub</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_ListByIotHub. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,44 +319,67 @@ namespace Azure.ResourceManager.IotHub
         /// <returns> A collection of <see cref="IotHubCertificateDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotHubCertificateDescriptionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotHubCertificateDescriptionCertificatesRestClient.CreateListByIotHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new IotHubCertificateDescriptionResource(Client, IotHubCertificateDescriptionData.DeserializeIotHubCertificateDescriptionData(e)), _iotHubCertificateDescriptionCertificatesClientDiagnostics, Pipeline, "IotHubCertificateDescriptionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IotHubCertificateDescriptionData, IotHubCertificateDescriptionResource>(new CertificatesGetByIotHubCollectionResultOfT(
+                _certificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotHubCertificateDescriptionCollection.GetAll"), data => new IotHubCertificateDescriptionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Exists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _iotHubCertificateDescriptionCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotHubCertificateDescriptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotHubCertificateDescriptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +393,50 @@ namespace Azure.ResourceManager.IotHub
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Exists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _iotHubCertificateDescriptionCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotHubCertificateDescriptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotHubCertificateDescriptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +450,54 @@ namespace Azure.ResourceManager.IotHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<IotHubCertificateDescriptionResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetIfExists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _iotHubCertificateDescriptionCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IotHubCertificateDescriptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotHubCertificateDescriptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotHubCertificateDescriptionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +511,54 @@ namespace Azure.ResourceManager.IotHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/certificates/{certificateName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CertificateDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubCertificateDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of the certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<IotHubCertificateDescriptionResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _iotHubCertificateDescriptionCertificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetIfExists");
+            using DiagnosticScope scope = _certificatesClientDiagnostics.CreateScope("IotHubCertificateDescriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _iotHubCertificateDescriptionCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IotHubCertificateDescriptionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IotHubCertificateDescriptionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IotHubCertificateDescriptionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<IotHubCertificateDescriptionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new IotHubCertificateDescriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +578,7 @@ namespace Azure.ResourceManager.IotHub
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotHubCertificateDescriptionResource> IAsyncEnumerable<IotHubCertificateDescriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
