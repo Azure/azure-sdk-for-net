@@ -1,34 +1,32 @@
-# Reusable orchestrator for the Vally eval CI. Two stages (D8):
-#   Eval    - BuildMcp + Detect run in parallel, then RunShard fans out one job per
-#             shard from the Detect matrix. An optional custom-MCP build job hook (D6)
-#             lets a consuming repo build an extra MCP alongside the default set.
-#   Summary - depends on Eval; merges every shard's JUnit into one rollup.
+# Reusable orchestrator for the eval CI. Three stages:
+#   Prepare - BuildMcp + Detect run in parallel (build the MCP server(s); glob eval
+#             files into a shard matrix).
+#   Eval    - RunShard fans out one job per shard from the Prepare matrix.
+#   Summary - merges every shard's JUnit into one rollup and gates.
 #
 # The consuming repo supplies a thin entrypoint (trigger + params + extends this).
-# No variable group is named here — secrets come from the DevOps-linked group by
-# variable name (D5).
 
 parameters:
   - name: vallyRoot
+    # The single dir each shard runs `vally eval` from (where .vally.yaml lives) and the
+    # anchor the matrix's `-e` paths are relative to. Defaults to the Vally project.
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
-  - name: scriptDir
+  - name: evalScriptDir
     type: string
     default: eng/common/scripts/eval
   - name: skillEvalDir
     type: string
     default: eng/skill-eval
-  - name: evalRoot
-    # Repo-specific eval root. Defaults to the Vally project's evals.
-    type: string
-    default: $(Build.SourcesDirectory)/tools/azsdk-cli/Azure.Sdk.Tools.Vally
-  - name: commonEvalRoot
-    # Optional shared eval root (synced via eng/common). Empty = skip.
-    type: string
-    default: ''
-  - name: patterns
-    # Optional list of forward-slashed eval globs (per root). Empty = collect-stimuli.js
-    # uses its built-in default (the Vally mock vertical).
+  - name: evalRoots
+    # Dirs to glob for eval files (each absolute or relative to $(Build.SourcesDirectory)).
+    # Empty = just vallyRoot. List several to collect evals scattered across folders.
+    type: object
+    default: []
+  - name: evalGlobs
+    # File globs that select the *.eval.yaml files *under* each evalRoots dir (the "which
+    # files", vs evalRoots' "which dirs"). Forward-slashed, supports * ? **. Empty =
+    # collect-stimuli.js uses its built-in default (the mock tool-scenario globs).
     type: object
     default: []
   - name: shardBy
@@ -76,15 +74,10 @@ parameters:
   - name: failOnFailedTests
     type: boolean
     default: false
-  # Custom MCP build hook (D6): a jobList a consuming repo can pass to build a live
-  # MCP server in the Eval stage. Empty by default — the mock vertical needs nothing.
-  - name: customMcpBuildJobs
-    type: jobList
-    default: []
 
 stages:
-  - stage: Eval
-    displayName: 'Build MCP + run eval shards'
+  - stage: Prepare
+    displayName: 'Build MCP + detect shards'
     jobs:
       - job: BuildMcp
         displayName: 'Build + publish MCP server(s)'
@@ -108,24 +101,21 @@ stages:
         steps:
           - template: /eng/common/pipelines/templates/steps/vally-collect-stimuli.yml
             parameters:
-              evalRoot: ${{ parameters.evalRoot }}
-              commonEvalRoot: ${{ parameters.commonEvalRoot }}
-              patterns: ${{ parameters.patterns }}
+              evalRoots: ${{ parameters.evalRoots }}
+              pathBase: $(Build.SourcesDirectory)/${{ parameters.vallyRoot }}
+              evalGlobs: ${{ parameters.evalGlobs }}
               shardBy: ${{ parameters.shardBy }}
-              scriptDir: ${{ parameters.scriptDir }}
+              scriptDir: ${{ parameters.evalScriptDir }}
               outputVariableName: matrix
               stepName: detect
               nodeVersion: ${{ parameters.nodeVersion }}
 
-      # Optional consumer-supplied jobs (e.g. build a live MCP). No-op when empty.
-      - ${{ each job in parameters.customMcpBuildJobs }}:
-        - ${{ job }}
-
+  - stage: Eval
+    displayName: 'Run eval shards'
+    dependsOn: Prepare
+    jobs:
       - job: RunShard
         displayName: 'Eval'
-        dependsOn:
-          - BuildMcp
-          - Detect
         pool:
           name: $(LINUXPOOL)
           image: $(LINUXVMIMAGE)
@@ -135,13 +125,13 @@ stages:
         continueOnError: true
         timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
         strategy:
-          matrix: $[ dependencies.Detect.outputs['detect.matrix'] ]
+          matrix: $[ stageDependencies.Prepare.Detect.outputs['detect.matrix'] ]
           maxParallel: ${{ parameters.maxParallel }}
         steps:
           - template: /eng/common/pipelines/templates/steps/vally-run-shard.yml
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
-              scriptDir: ${{ parameters.scriptDir }}
+              scriptDir: ${{ parameters.evalScriptDir }}
               skillEvalDir: ${{ parameters.skillEvalDir }}
               mcpArtifact: ${{ parameters.mcpArtifact }}
               mcpStageRoot: ${{ parameters.mcpStageRoot }}
@@ -164,7 +154,7 @@ stages:
         steps:
           - template: /eng/common/pipelines/templates/steps/vally-summarize.yml
             parameters:
-              scriptDir: ${{ parameters.scriptDir }}
+              scriptDir: ${{ parameters.evalScriptDir }}
               nodeVersion: ${{ parameters.nodeVersion }}
               testRunTitle: ${{ parameters.testRunTitle }}
               failOnFailedTests: ${{ parameters.failOnFailedTests }}

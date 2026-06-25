@@ -282,3 +282,51 @@ describe("collect-stimuli (multiple eval roots: repo + common)", () => {
     );
   });
 });
+
+describe("collect-stimuli (pathBase anchors scattered roots to one run root)", () => {
+  let parent;
+  let runRoot;
+  let scatteredRoot;
+
+  before(() => {
+    // A common parent so the scattered root is a sibling of the run root, yielding a
+    // clean `../` relative path.
+    parent = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-base-"));
+    runRoot = path.join(parent, "project");
+    scatteredRoot = path.join(parent, "extra");
+    writeFile(path.join(runRoot, "evals/tools/in-project.eval.yaml"), "x");
+    writeFile(path.join(scatteredRoot, "evals/out-of-tree.eval.yaml"), "x");
+  });
+
+  after(() => fs.rmSync(parent, { recursive: true, force: true }));
+
+  it("anchors every -e path to pathBase, including roots outside it", () => {
+    const matrix = buildMatrix({
+      roots: [runRoot, scatteredRoot],
+      pathBase: runRoot,
+      patterns: ["evals/**/*.eval.yaml", "evals/*.eval.yaml"],
+    });
+    // The in-project file stays a simple relative path; the scattered one walks up.
+    assert.equal(
+      matrix.evals_tools_in_project.evalArgs,
+      "-e evals/tools/in-project.eval.yaml"
+    );
+    assert.equal(
+      matrix.___extra_evals_out_of_tree.evalArgs,
+      "-e ../extra/evals/out-of-tree.eval.yaml"
+    );
+  });
+
+  it("falls back to per-root relative paths when no pathBase is given", () => {
+    const matrix = buildMatrix({
+      roots: [scatteredRoot],
+      patterns: ["evals/*.eval.yaml"],
+    });
+    // Without a base, the path is relative to the root it was found under (no `../`).
+    assert.equal(
+      matrix.evals_out_of_tree.evalArgs,
+      "-e evals/out-of-tree.eval.yaml"
+    );
+  });
+});
+
