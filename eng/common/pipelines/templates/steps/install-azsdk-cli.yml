@@ -45,7 +45,7 @@ steps:
         git -C $toolsRepoPath sparse-checkout init --no-cone
         Set-Content -Path $sparseCheckoutPath -Value $sparsePaths
         git -C $toolsRepoPath checkout --force HEAD
-        dotnet publish $cliProjectPath -c Release -o $publishDir -p:CopilotSkipCliDownload=true
+        dotnet publish $cliProjectPath -c Debug -o $publishDir -p:CopilotSkipCliDownload=true
 
         $azsdkPath = Join-Path $publishDir "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
         $env:AZSDK = $azsdkPath
