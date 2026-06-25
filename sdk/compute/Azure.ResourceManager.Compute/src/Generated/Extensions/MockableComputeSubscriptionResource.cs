@@ -79,6 +79,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         private CommunityGalleryImages _communityGalleryImagesRestClient;
         private ClientDiagnostics _communityGalleryImageVersionsClientDiagnostics;
         private CommunityGalleryImageVersions _communityGalleryImageVersionsRestClient;
+        private ClientDiagnostics _sharedGalleryInvitesClientDiagnostics;
+        private SharedGalleryInvites _sharedGalleryInvitesRestClient;
         private ClientDiagnostics _resourceSkusClientDiagnostics;
         private ResourceSkus _resourceSkusRestClient;
 
@@ -136,23 +138,23 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics DisksClientDiagnostics => _disksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Disks DisksRestClient => _disksRestClient ??= new Disks(DisksClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
+        private Disks DisksRestClient => _disksRestClient ??= new Disks(DisksClientDiagnostics, Pipeline, Endpoint, "2026-03-02");
 
         private ClientDiagnostics DiskAccessesClientDiagnostics => _diskAccessesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiskAccesses DiskAccessesRestClient => _diskAccessesRestClient ??= new DiskAccesses(DiskAccessesClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
+        private DiskAccesses DiskAccessesRestClient => _diskAccessesRestClient ??= new DiskAccesses(DiskAccessesClientDiagnostics, Pipeline, Endpoint, "2026-03-02");
 
         private ClientDiagnostics DiskEncryptionSetsClientDiagnostics => _diskEncryptionSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiskEncryptionSets DiskEncryptionSetsRestClient => _diskEncryptionSetsRestClient ??= new DiskEncryptionSets(DiskEncryptionSetsClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
+        private DiskEncryptionSets DiskEncryptionSetsRestClient => _diskEncryptionSetsRestClient ??= new DiskEncryptionSets(DiskEncryptionSetsClientDiagnostics, Pipeline, Endpoint, "2026-03-02");
 
         private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Endpoint, "2025-01-02");
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Endpoint, "2026-03-02");
 
         private ClientDiagnostics GalleriesClientDiagnostics => _galleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Galleries GalleriesRestClient => _galleriesRestClient ??= new Galleries(GalleriesClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private Galleries GalleriesRestClient => _galleriesRestClient ??= new Galleries(GalleriesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics UsageOperationGroupClientDiagnostics => _usageOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -188,27 +190,31 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics SharedGalleriesClientDiagnostics => _sharedGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleries SharedGalleriesRestClient => _sharedGalleriesRestClient ??= new SharedGalleries(SharedGalleriesClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private SharedGalleries SharedGalleriesRestClient => _sharedGalleriesRestClient ??= new SharedGalleries(SharedGalleriesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics SharedGalleryImagesClientDiagnostics => _sharedGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleryImages SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImages(SharedGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private SharedGalleryImages SharedGalleryImagesRestClient => _sharedGalleryImagesRestClient ??= new SharedGalleryImages(SharedGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics SharedGalleryImageVersionsClientDiagnostics => _sharedGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SharedGalleryImageVersions SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersions(SharedGalleryImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private SharedGalleryImageVersions SharedGalleryImageVersionsRestClient => _sharedGalleryImageVersionsRestClient ??= new SharedGalleryImageVersions(SharedGalleryImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics CommunityGalleriesClientDiagnostics => _communityGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleries CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleries(CommunityGalleriesClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private CommunityGalleries CommunityGalleriesRestClient => _communityGalleriesRestClient ??= new CommunityGalleries(CommunityGalleriesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics CommunityGalleryImagesClientDiagnostics => _communityGalleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleryImages CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImages(CommunityGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private CommunityGalleryImages CommunityGalleryImagesRestClient => _communityGalleryImagesRestClient ??= new CommunityGalleryImages(CommunityGalleryImagesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics CommunityGalleryImageVersionsClientDiagnostics => _communityGalleryImageVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunityGalleryImageVersions CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersions(CommunityGalleryImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-03-03");
+        private CommunityGalleryImageVersions CommunityGalleryImageVersionsRestClient => _communityGalleryImageVersionsRestClient ??= new CommunityGalleryImageVersions(CommunityGalleryImageVersionsClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
+
+        private ClientDiagnostics SharedGalleryInvitesClientDiagnostics => _sharedGalleryInvitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SharedGalleryInvites SharedGalleryInvitesRestClient => _sharedGalleryInvitesRestClient ??= new SharedGalleryInvites(SharedGalleryInvitesClientDiagnostics, Pipeline, Endpoint, "2025-12-03");
 
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -900,7 +906,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -928,7 +934,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -956,7 +962,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -984,7 +990,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1012,7 +1018,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1040,7 +1046,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1068,7 +1074,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1096,7 +1102,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1124,7 +1130,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1152,7 +1158,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2690,7 +2696,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2740,7 +2746,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2790,7 +2796,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2826,7 +2832,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2862,7 +2868,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2914,7 +2920,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2966,7 +2972,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3008,7 +3014,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3050,7 +3056,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3104,7 +3110,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3158,7 +3164,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3203,7 +3209,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3248,7 +3254,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3298,7 +3304,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3348,7 +3354,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3400,7 +3406,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3452,7 +3458,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3492,7 +3498,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3532,7 +3538,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3586,7 +3592,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3640,7 +3646,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3683,7 +3689,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-03. </description>
+        /// <description> 2025-12-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3711,6 +3717,218 @@ namespace Azure.ResourceManager.Compute.Mocking
                 galleryImageName,
                 context,
                 "MockableComputeSubscriptionResource.GetCommunityGalleryImageVersions");
+        }
+
+        /// <summary>
+        /// Accept sharing of a subscription-level shared gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGallerySubscriptions/{sharedGallerySubscriptionId}/sharedGalleries/{sharedGalleryName}/accept. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleryInvites_GallerySharingAccept. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> GallerySharingAcceptAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
+            Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
+
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingAccept");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingAcceptRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Accept sharing of a subscription-level shared gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGallerySubscriptions/{sharedGallerySubscriptionId}/sharedGalleries/{sharedGalleryName}/accept. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleryInvites_GallerySharingAccept. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation GallerySharingAccept(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
+            Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
+
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingAccept");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingAcceptRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reject sharing of a subscription-level shared gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGallerySubscriptions/{sharedGallerySubscriptionId}/sharedGalleries/{sharedGalleryName}/reject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleryInvites_GallerySharingReject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> GallerySharingRejectAsync(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
+            Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
+
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingReject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingRejectRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reject sharing of a subscription-level shared gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGallerySubscriptions/{sharedGallerySubscriptionId}/sharedGalleries/{sharedGalleryName}/reject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SharedGalleryInvites_GallerySharingReject. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-03. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedGallerySubscriptionId"/> or <paramref name="sharedGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation GallerySharingReject(WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedGallerySubscriptionId, nameof(sharedGallerySubscriptionId));
+            Argument.AssertNotNullOrEmpty(sharedGalleryName, nameof(sharedGalleryName));
+
+            using DiagnosticScope scope = SharedGalleryInvitesClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GallerySharingReject");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SharedGalleryInvitesRestClient.CreateGallerySharingRejectRequest(Id.SubscriptionId, location, sharedGallerySubscriptionId, sharedGalleryName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeArmOperation operation = new ComputeArmOperation(SharedGalleryInvitesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

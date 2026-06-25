@@ -38,6 +38,12 @@ namespace Azure.ResourceManager.Compute
             return subscriptionResource.GetCachedClient(client => new MockableComputeSubscriptionResource(client, subscriptionResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableComputeTenantResource GetMockableComputeTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableComputeTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineScaleSetResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -3347,6 +3353,90 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+        /// Accept sharing of a subscription-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingAcceptAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<ArmOperation> GallerySharingAcceptAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingAcceptAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Accept sharing of a subscription-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingAccept(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static ArmOperation GallerySharingAccept(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingAccept(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reject sharing of a subscription-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingRejectAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<ArmOperation> GallerySharingRejectAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingRejectAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reject sharing of a subscription-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GallerySharingReject(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the SharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static ArmOperation GallerySharingReject(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GallerySharingReject(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets the list of Microsoft.Compute SKUs available for your Subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -3384,6 +3474,90 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetComputeResourceSkus(filter, includeExtendedLocations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Accept sharing of a tenant-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingAcceptAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation> TenantLevelGallerySharingAcceptAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingAcceptAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Accept sharing of a tenant-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingAccept(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation TenantLevelGallerySharingAccept(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingAccept(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reject sharing of a tenant-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingRejectAsync(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation> TenantLevelGallerySharingRejectAsync(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingRejectAsync(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reject sharing of a tenant-level shared gallery.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeTenantResource.TenantLevelGallerySharingReject(WaitUntil, AzureLocation, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="sharedGallerySubscriptionId"> The name of the SharedGallerySubscription. </param>
+        /// <param name="sharedGalleryName"> The name of the TenantLevelSharedGallerySubscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation TenantLevelGallerySharingReject(this TenantResource tenantResource, WaitUntil waitUntil, AzureLocation location, string sharedGallerySubscriptionId, string sharedGalleryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableComputeTenantResource(tenantResource).TenantLevelGallerySharingReject(waitUntil, location, sharedGallerySubscriptionId, sharedGalleryName, cancellationToken);
         }
     }
 }

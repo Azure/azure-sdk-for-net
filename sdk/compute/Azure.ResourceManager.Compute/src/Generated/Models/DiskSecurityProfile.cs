@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DiskSecurityProfile"/>. </summary>
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
+        /// <param name="confidentialVMVersion"> Indicates the version of Confidential VM for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskSecurityProfile(DiskSecurityType? securityType, ResourceIdentifier secureVmDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskSecurityProfile(DiskSecurityType? securityType, ResourceIdentifier secureVmDiskEncryptionSetId, ConfidentialVMVersion? confidentialVMVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityType = securityType;
             SecureVmDiskEncryptionSetId = secureVmDiskEncryptionSetId;
+            ConfidentialVMVersion = confidentialVMVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,5 +40,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </summary>
         public ResourceIdentifier SecureVmDiskEncryptionSetId { get; set; }
+
+        /// <summary> Indicates the version of Confidential VM for the resource. </summary>
+        public ConfidentialVMVersion? ConfidentialVMVersion { get; }
     }
 }

@@ -4401,10 +4401,11 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
+        /// <param name="confidentialVMVersion"> Indicates the version of Confidential VM for the resource. </param>
         /// <returns> A new <see cref="Models.DiskSecurityProfile"/> instance for mocking. </returns>
-        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = default, ResourceIdentifier secureVmDiskEncryptionSetId = default)
+        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = default, ResourceIdentifier secureVmDiskEncryptionSetId = default, ConfidentialVMVersion? confidentialVMVersion = default)
         {
-            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, default);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, confidentialVMVersion, default);
         }
 
         /// <param name="name"> The sku name. </param>
@@ -4655,15 +4656,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
         /// <param name="securityProfile"> Contains the security related information for the resource. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
+        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
-        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default, SnapshotAccessState? snapshotAccessState = default)
         {
             return new DiskRestorePointData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null ? default : new DiskRestorePointProperties(
+                timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null && snapshotAccessState is null ? default : new DiskRestorePointProperties(
                     timeCreated,
                     sourceResourceId,
                     osType,
@@ -4682,6 +4684,7 @@ namespace Azure.ResourceManager.Compute.Models
                     sourceResourceLocation,
                     securityProfile,
                     logicalSectorSize,
+                    snapshotAccessState,
                     default),
                 default);
         }
@@ -4716,11 +4719,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="copyCompletionError"> Indicates the error details if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
+        /// <param name="immutabilityPolicy"> The immutability policy currently applied to this snapshot. Present only when an immutability policy has been configured. </param>
         /// <param name="managedBy"> Unused. Always Null. </param>
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
         /// <param name="extendedLocation"> The extended location where the snapshot will be created. Extended location cannot be changed. </param>
         /// <returns> A new <see cref="Compute.SnapshotData"/> instance for mocking. </returns>
-        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, DiskState? diskState = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsGroup = default, string provisioningState = default, bool? incremental = default, string incrementalSnapshotFamilyId = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DiskSecurityProfile securityProfile = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, float? completionPercent = default, CopyCompletionError copyCompletionError = default, DataAccessAuthMode? dataAccessAuthMode = default, SnapshotAccessState? snapshotAccessState = default, string managedBy = default, SnapshotSku sku = default, ExtendedLocation extendedLocation = default)
+        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? timeCreated = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, DiskCreationData creationData = default, int? diskSizeGB = default, long? diskSizeBytes = default, DiskState? diskState = default, string uniqueId = default, EncryptionSettingsGroup encryptionSettingsGroup = default, string provisioningState = default, bool? incremental = default, string incrementalSnapshotFamilyId = default, DiskEncryption encryption = default, NetworkAccessPolicy? networkAccessPolicy = default, ResourceIdentifier diskAccessId = default, DiskSecurityProfile securityProfile = default, bool? supportsHibernation = default, DiskPublicNetworkAccess? publicNetworkAccess = default, float? completionPercent = default, CopyCompletionError copyCompletionError = default, DataAccessAuthMode? dataAccessAuthMode = default, SnapshotAccessState? snapshotAccessState = default, ImmutabilityPolicy immutabilityPolicy = default, string managedBy = default, SnapshotSku sku = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4731,7 +4735,7 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                timeCreated is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && creationData is null && diskSizeGB is null && diskSizeBytes is null && diskState is null && uniqueId is null && encryptionSettingsGroup is null && provisioningState is null && incremental is null && incrementalSnapshotFamilyId is null && encryption is null && networkAccessPolicy is null && diskAccessId is null && securityProfile is null && supportsHibernation is null && publicNetworkAccess is null && completionPercent is null && copyCompletionError is null && dataAccessAuthMode is null && snapshotAccessState is null ? default : new SnapshotProperties(
+                timeCreated is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && creationData is null && diskSizeGB is null && diskSizeBytes is null && diskState is null && uniqueId is null && encryptionSettingsGroup is null && provisioningState is null && incremental is null && incrementalSnapshotFamilyId is null && encryption is null && networkAccessPolicy is null && diskAccessId is null && securityProfile is null && supportsHibernation is null && publicNetworkAccess is null && completionPercent is null && copyCompletionError is null && dataAccessAuthMode is null && snapshotAccessState is null && immutabilityPolicy is null ? default : new SnapshotProperties(
                     timeCreated,
                     osType,
                     hyperVGeneration,
@@ -4756,6 +4760,7 @@ namespace Azure.ResourceManager.Compute.Models
                     copyCompletionError,
                     dataAccessAuthMode,
                     snapshotAccessState,
+                    immutabilityPolicy,
                     default),
                 managedBy,
                 sku,
@@ -4769,6 +4774,23 @@ namespace Azure.ResourceManager.Compute.Models
         public static CopyCompletionError CopyCompletionError(CopyCompletionErrorReason errorCode = default, string errorMessage = default)
         {
             return new CopyCompletionError(errorCode, errorMessage, default);
+        }
+
+        /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
+        /// <param name="type"> The type of the immutability policy. </param>
+        /// <param name="policyStartOn"> The time when the immutability policy was set on the snapshot. </param>
+        /// <param name="policyExpirationOn"> The time when the immutability policy will expire on the snapshot. </param>
+        /// <param name="isPolicyExpired"> Indicates whether the immutability policy has expired. </param>
+        /// <returns> A new <see cref="Models.ImmutabilityPolicy"/> instance for mocking. </returns>
+        public static ImmutabilityPolicy ImmutabilityPolicy(int? immutabilityDurationDays = default, ImmutabilityPolicyType? @type = default, DateTimeOffset? policyStartOn = default, DateTimeOffset? policyExpirationOn = default, bool? isPolicyExpired = default)
+        {
+            return new ImmutabilityPolicy(
+                immutabilityDurationDays,
+                @type,
+                policyStartOn,
+                policyExpirationOn,
+                isPolicyExpired,
+                default);
         }
 
         /// <param name="name"> The sku name. </param>
@@ -4810,6 +4832,22 @@ namespace Azure.ResourceManager.Compute.Models
                 supportedCapabilities,
                 snapshotAccessState,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), sku, default);
+        }
+
+        /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
+        /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
+        /// <returns> A new <see cref="Models.ImmutabilityPolicyData"/> instance for mocking. </returns>
+        public static ImmutabilityPolicyData ImmutabilityPolicyData(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
+        {
+            return new ImmutabilityPolicyData(immutabilityDurationDays, @type, default);
+        }
+
+        /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
+        /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
+        /// <returns> A new <see cref="Models.ImmutabilityPolicyLockData"/> instance for mocking. </returns>
+        public static ImmutabilityPolicyLockData ImmutabilityPolicyLockData(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
+        {
+            return new ImmutabilityPolicyLockData(immutabilityDurationDays, @type, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -8457,6 +8495,7 @@ namespace Azure.ResourceManager.Compute.Models
                     copyCompletionError,
                     dataAccessAuthMode,
                     snapshotAccessState,
+                    default,
                     default),
                 managedBy,
                 sku,
@@ -8515,6 +8554,62 @@ namespace Azure.ResourceManager.Compute.Models
                 isOptimizedForFrequentAttach,
                 new AvailabilityPolicy(availabilityActionOnDiskDelay, default),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), sku, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.DiskRestorePointData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
+        /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
+        /// <param name="osType"> The Operating System type. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
+        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
+        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
+        /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
+        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
+        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
+        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
+        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
+        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
+        /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
+        /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
+        /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
+        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
+        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
+        /// <returns> A new <see cref="Compute.DiskRestorePointData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiskRestorePointData DiskRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeCreated = default, ResourceIdentifier sourceResourceId = default, SupportedOperatingSystemType? osType = default, HyperVGeneration? hyperVGeneration = default, DiskPurchasePlan purchasePlan = default, SupportedCapabilities supportedCapabilities = default, string familyId = default, string sourceUniqueId = default, DiskEncryption encryption = default, bool? supportsHibernation = default, NetworkAccessPolicy? networkAccessPolicy = default, DiskPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier diskAccessId = default, float? completionPercent = default, string replicationState = default, AzureLocation? sourceResourceLocation = default, DiskSecurityProfile securityProfile = default, int? logicalSectorSize = default)
+        {
+            return new DiskRestorePointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                timeCreated is null && sourceResourceId is null && osType is null && hyperVGeneration is null && purchasePlan is null && supportedCapabilities is null && familyId is null && sourceUniqueId is null && encryption is null && supportsHibernation is null && networkAccessPolicy is null && publicNetworkAccess is null && diskAccessId is null && completionPercent is null && replicationState is null && sourceResourceLocation is null && securityProfile is null && logicalSectorSize is null ? default : new DiskRestorePointProperties(
+                    timeCreated,
+                    sourceResourceId,
+                    osType,
+                    hyperVGeneration,
+                    purchasePlan,
+                    supportedCapabilities,
+                    familyId,
+                    sourceUniqueId,
+                    encryption,
+                    supportsHibernation,
+                    networkAccessPolicy,
+                    publicNetworkAccess,
+                    diskAccessId,
+                    completionPercent,
+                    replicationState,
+                    sourceResourceLocation,
+                    securityProfile,
+                    logicalSectorSize,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotPatch"/>. </summary>
@@ -9716,6 +9811,7 @@ namespace Azure.ResourceManager.Compute.Models
                     copyCompletionError,
                     dataAccessAuthMode,
                     default,
+                    default,
                     default),
                 managedBy,
                 sku,
@@ -10560,6 +10656,7 @@ namespace Azure.ResourceManager.Compute.Models
                     replicationState,
                     sourceResourceLocation,
                     securityProfile,
+                    default,
                     default,
                     default),
                 default);
