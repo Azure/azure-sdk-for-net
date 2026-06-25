@@ -19,25 +19,21 @@ namespace Azure.Provisioning.CostManagement
     {
         /// <summary>
         /// Notification will be triggered if the evaluated cost is the same as threshold value. Note: It’s not recommended to use this OperatorType as there’s low chance of cost being exactly the same as threshold value, leading to missing of your alert. This OperatorType will be deprecated in future.
-        /// 
         /// Supported for CategoryType(s): Cost.
         /// </summary>
         EqualTo,
         /// <summary>
         /// Notification will be triggered if the evaluated cost is greater than the threshold value. Note: This is the recommended OperatorType while configuring Budget Alert.
-        /// 
         /// Supported for CategoryType(s): Cost.
         /// </summary>
         GreaterThan,
         /// <summary>
         /// Notification will be triggered if the evaluated cost is greater than or equal to the threshold value.
-        /// 
         /// Supported for CategoryType(s): Cost.
         /// </summary>
         GreaterThanOrEqualTo,
         /// <summary>
         /// Notification will be triggered if any Reservations in the scope of the Reservation Utilization Alert Rule have a utilization less than the threshold percentage.
-        /// 
         /// Supported for CategoryType(s): ReservationUtilization.
         /// </summary>
         LessThan

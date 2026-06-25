@@ -22,6 +22,7 @@ namespace Azure.Provisioning.CostManagement
         private SystemData _systemData;
         private AlertProperties _properties;
         private BicepValue<ETag> _eTag;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -92,6 +93,21 @@ namespace Azure.Provisioning.CostManagement
             {
                 Initialize();
                 _eTag.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
             }
         }
 
@@ -291,6 +307,7 @@ namespace Azure.Provisioning.CostManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AlertProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

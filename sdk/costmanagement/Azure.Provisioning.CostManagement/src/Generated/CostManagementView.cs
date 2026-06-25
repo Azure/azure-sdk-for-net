@@ -15,18 +15,19 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.CostManagement
 {
     /// <summary> States and configurations of Cost Analysis. </summary>
-    public partial class CostManagementViews : ProvisionableResource
+    public partial class CostManagementView : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ViewProperties _properties;
         private BicepValue<ETag> _eTag;
+        private ResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new CostManagementViews. </summary>
+        /// <summary> Creates a new CostManagementView. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CostManagementViews(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/views", resourceVersion ?? "2025-03-01")
+        public CostManagementView(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/views", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -109,23 +110,6 @@ namespace Azure.Provisioning.CostManagement
                     Properties = new ViewProperties();
                 }
                 Properties.DisplayName = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Scope. </summary>
-        public BicepValue<ResourceIdentifier> Scope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Scope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ViewProperties();
-                }
-                Properties.Scope = value;
             }
         }
 
@@ -359,7 +343,7 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Define all the provisionable properties for CostManagementViews. </summary>
+        /// <summary> Define all the provisionable properties for CostManagementView. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -368,20 +352,21 @@ namespace Azure.Provisioning.CostManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ViewProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CostManagementViews. </summary>
+        /// <summary> Creates a reference to an existing CostManagementView. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CostManagementViews FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static CostManagementView FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CostManagementViews result = new CostManagementViews(bicepIdentifier, resourceVersion);
+            CostManagementView result = new CostManagementView(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CostManagementViews that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CostManagementView that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

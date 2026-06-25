@@ -21,6 +21,7 @@ namespace Azure.Provisioning.CostManagement
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementSetting. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -64,6 +65,21 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CostManagementSetting. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -71,6 +87,7 @@ namespace Azure.Provisioning.CostManagement
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

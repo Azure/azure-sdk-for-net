@@ -21,49 +21,41 @@ namespace Azure.Provisioning.CostManagement
     {
         /// <summary>
         /// The budget will track costs in the current calendar month against the amount.
-        /// 
         /// Supported for CategoryType: Cost only.
         /// </summary>
         Monthly,
         /// <summary>
         /// The budget will track costs in the current calendar quarter against the amount.
-        /// 
         /// Supported for CategoryType: Cost only.
         /// </summary>
         Quarterly,
         /// <summary>
         /// The budget will track costs in the current calendar year against the amount.
-        /// 
         /// Supported for CategoryType: Cost only.
         /// </summary>
         Annually,
         /// <summary>
         /// The budget will track costs in the current billing month against the amount.
-        /// 
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
         BillingMonth,
         /// <summary>
         /// The budget will track costs in the current billing quarter against the amount.
-        /// 
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
         BillingQuarter,
         /// <summary>
         /// The budget will track costs in the current billing year against the amount.
-        /// 
         /// Supported for CategoryType: Cost and Web Direct customers only.
         /// </summary>
         BillingAnnual,
         /// <summary>
         /// The Reservation Utilization Alert Rule will evaluate reservations based on their 7-Day utilization percentage.
-        /// 
         /// Supported for CategoryType: ReservationUtilization only.
         /// </summary>
         Last7Days,
         /// <summary>
         /// The Reservation Utilization Alert Rule will evaluate reservations based on their 30-Day utilization percentage.
-        /// 
         /// Supported for CategoryType: ReservationUtilization only.
         /// </summary>
         Last30Days

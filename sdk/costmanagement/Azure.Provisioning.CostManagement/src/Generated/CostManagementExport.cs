@@ -24,6 +24,7 @@ namespace Azure.Provisioning.CostManagement
         private ManagedServiceIdentity _identity;
         private BicepValue<AzureLocation> _location;
         private BicepValue<ETag> _eTag;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementExport. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -124,6 +125,21 @@ namespace Azure.Provisioning.CostManagement
             {
                 Initialize();
                 _eTag.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
             }
         }
 
@@ -309,6 +325,7 @@ namespace Azure.Provisioning.CostManagement
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
