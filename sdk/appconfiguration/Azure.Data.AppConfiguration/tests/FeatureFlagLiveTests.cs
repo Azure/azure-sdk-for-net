@@ -18,16 +18,25 @@ namespace Azure.Data.AppConfiguration.Tests
             _serviceVersion = serviceVersion;
         }
 
-        private string GenerateName(string prefix = "ff-") => prefix + Recording.GenerateId();
+        private string GenerateName(string prefix = "ff-")
+            => prefix + (Mode == RecordedTestMode.Playback ? Guid.NewGuid().ToString("N") : Recording.GenerateId());
 
         private ConfigurationClient GetClient()
         {
-            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
+            ConfigurationClientOptions clientOptions = new ConfigurationClientOptions(_serviceVersion);
+            ConfigurationClientOptions options = InstrumentClientOptions(clientOptions);
+            // Set audience AFTER InstrumentClientOptions, as it might reset the options
+            options.Audience = TestEnvironment.GetAudience();
             return InstrumentClient(new ConfigurationClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options));
         }
 
         private async Task<ConfigurationClient> GetClientOrSkipIfApiVersionUnsupportedAsync()
         {
+            if (Mode != RecordedTestMode.Live)
+            {
+                Assert.Ignore("Feature flag preview tests run in Live mode only.");
+            }
+
             ConfigurationClient service = GetClient();
 
             try

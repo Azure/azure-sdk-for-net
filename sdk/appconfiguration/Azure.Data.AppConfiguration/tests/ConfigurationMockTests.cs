@@ -854,6 +854,37 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [Test]
+        public async Task GetLabelsWithResourceType()
+        {
+            var response = new MockResponse(200);
+            var responseLabels = new[]
+            {
+                CreateLabel(0),
+                CreateLabel(1)
+            };
+            response.SetContent(SerializationHelpers.Serialize((Items: responseLabels, NextLink: (string)null), SerializeLabels));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            var query = new SettingLabelSelector
+            {
+                ResourceType = SettingLabelResourceType.FeatureFlag
+            };
+
+            await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
+            {
+            }
+
+            Assert.That(mockTransport.Requests.Count, Is.EqualTo(1));
+
+            MockRequest request = mockTransport.Requests[0];
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}&resource-type=ff"));
+            AssertRequestCommon(request);
+        }
+
+        [Test]
         public async Task CustomHeadersAreAdded()
         {
             var response = new MockResponse(200);

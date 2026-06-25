@@ -30,6 +30,12 @@ namespace Azure.Data.AppConfiguration
         public IList<SettingLabelFields> Fields { get; }
 
         /// <summary>
+        /// A filter used to indicate the resource type of the labels to retrieve.
+        /// If not set, labels for all resource types are returned.
+        /// </summary>
+        public SettingLabelResourceType? ResourceType { get; set; }
+
+        /// <summary>
         /// Indicates the point in time in the revision history of the selected <see cref="SettingLabel"/> entities to retrieve.
         /// If set, all properties of the <see cref="SettingLabel"/> entities in the returned group will be exactly what they
         /// were at this time.
