@@ -52,6 +52,7 @@ steps:
       $testResultsFiles | ForEach-Object { Write-Host $_.FullName }
       Write-Host "================="
 
+      $stagedCount = 0
       foreach ($testResultsFile in $testResultsFiles)
       {
         $fileFullName = $testResultsFile.FullName
@@ -73,8 +74,23 @@ steps:
         }
         $fileName = $relativePath -replace "^[\\/]+", "" -replace "[\\/]+", "-"
 
-        Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$fileName" -ErrorAction Continue
+        $destination = "$artifactsDirectory/$fileName"
+        Move-Item -Path $fileFullName -Destination $destination -ErrorAction Continue
+        if (Test-Path -Path $destination)
+        {
+          $stagedCount++
+        }
+      }
+
+      # Only signal an upload when test result files were actually staged.
+      if ($stagedCount -gt 0)
+      {
+        Write-Host "Staged $stagedCount test result file(s) into '$artifactsDirectory'."
         Write-Host "##vso[task.setvariable variable=uploadLlmArtifacts]true"
+      }
+      else
+      {
+        Write-Host "No test result files were staged; skipping llm-artifacts upload."
       }
     condition: succeededOrFailed()
     displayName: Copy test result files to llm artifacts staging directory
