@@ -2085,23 +2085,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default), default);
         }
 
-        /// <param name="name"> Incident name. </param>
-        /// <param name="ruleName"> Rule name that is associated with the incident. </param>
-        /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
-        /// <param name="activatedOn"> The time at which the incident was activated in ISO8601 format. </param>
-        /// <param name="resolvedOn"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
-        /// <returns> A new <see cref="Models.MonitorAlertRuleIncident"/> instance for mocking. </returns>
-        public static MonitorAlertRuleIncident MonitorAlertRuleIncident(string name = default, string ruleName = default, bool? isActive = default, DateTimeOffset? activatedOn = default, DateTimeOffset? resolvedOn = default)
-        {
-            return new MonitorAlertRuleIncident(
-                name,
-                ruleName,
-                isActive,
-                activatedOn,
-                resolvedOn,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

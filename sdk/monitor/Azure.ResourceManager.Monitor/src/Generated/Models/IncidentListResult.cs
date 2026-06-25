@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         internal IncidentListResult()
         {
-            Value = new ChangeTrackingList<MonitorAlertRuleIncident>();
+            Value = new ChangeTrackingList<MonitorIncident>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentListResult"/>. </summary>
         /// <param name="value"> the incident collection. </param>
         /// <param name="nextLink"> the URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentListResult(IList<MonitorAlertRuleIncident> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncidentListResult(IList<MonitorIncident> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the incident collection. </summary>
-        public IList<MonitorAlertRuleIncident> Value { get; }
+        public IList<MonitorIncident> Value { get; }
 
         /// <summary> the URL to get the next set of results. </summary>
         public string NextLink { get; }

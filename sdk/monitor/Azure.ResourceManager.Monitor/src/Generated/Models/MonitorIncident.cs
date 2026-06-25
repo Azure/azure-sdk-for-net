@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An alert incident indicates the activation status of an alert rule. </summary>
-    public partial class MonitorAlertRuleIncident
+    public partial class MonitorIncident
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorAlertRuleIncident"/>. </summary>
-        internal MonitorAlertRuleIncident()
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
+        internal MonitorIncident()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorAlertRuleIncident"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
         /// <param name="name"> Incident name. </param>
         /// <param name="ruleName"> Rule name that is associated with the incident. </param>
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
         /// <param name="activatedOn"> The time at which the incident was activated in ISO8601 format. </param>
         /// <param name="resolvedOn"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorAlertRuleIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RuleName = ruleName;

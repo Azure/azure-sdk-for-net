@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MonitorAlertRuleIncident item in Value)
+                foreach (MonitorIncident item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<MonitorAlertRuleIncident> value = default;
+            IList<MonitorIncident> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<MonitorAlertRuleIncident> array = new List<MonitorAlertRuleIncident>();
+                    List<MonitorIncident> array = new List<MonitorIncident>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MonitorAlertRuleIncident.DeserializeMonitorAlertRuleIncident(item, options));
+                        array.Add(MonitorIncident.DeserializeMonitorIncident(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IncidentListResult(value ?? new ChangeTrackingList<MonitorAlertRuleIncident>(), nextLink, additionalBinaryDataProperties);
+            return new IncidentListResult(value ?? new ChangeTrackingList<MonitorIncident>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<MonitorAlertRuleIncident>> GetAsync(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorIncident>> GetAsync(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<MonitorAlertRuleIncident> Get(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static Response<MonitorIncident> Get(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1083,8 +1083,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorAlertRuleIncident"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MonitorAlertRuleIncident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorIncident"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorIncident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1102,8 +1102,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="MonitorAlertRuleIncident"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MonitorAlertRuleIncident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorIncident"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorIncident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
