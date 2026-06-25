@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningWorkspaceConnectionDeploymentData> array = new List<MachineLearningWorkspaceConnectionDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
+                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeMachineLearningWorkspaceConnectionDeploymentData(item, options));
                     }
                     value = array;
                     continue;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class ComponentContainersGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningComponentContainerData>
     {
         private readonly ComponentContainers _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _skip;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentContainersGetAllAsyncCollectionResultOfT(ComponentContainers client, Guid subscriptionId, string resourceGroupName, string workspaceName, string skip, string listViewType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ComponentContainersGetAllAsyncCollectionResultOfT(ComponentContainers client, string subscriptionId, string resourceGroupName, string workspaceName, string skip, string listViewType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

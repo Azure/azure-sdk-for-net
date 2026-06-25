@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetMachineLearningVmSizesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetMachineLearningVmSizesRequest(string subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/vmSizes", false);
             if (_apiVersion != null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class RaiPoliciesGetAllAsyncCollectionResultOfT : AsyncPageable<RaiPolicyData>
     {
         private readonly RaiPolicies _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _endpointName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="endpointName"> Name of the endpoint resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RaiPoliciesGetAllAsyncCollectionResultOfT(RaiPolicies client, Guid subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RaiPoliciesGetAllAsyncCollectionResultOfT(RaiPolicies client, string subscriptionId, string resourceGroupName, string workspaceName, string endpointName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

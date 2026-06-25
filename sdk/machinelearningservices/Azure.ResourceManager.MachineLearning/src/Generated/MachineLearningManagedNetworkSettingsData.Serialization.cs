@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary> MachineLearningManagedNetworkSettingsResource is a preview-only resource. </summary>
+    /// <summary> ManagedNetworkSettingsPropertiesBasicResource is a preview-only resource. </summary>
     public partial class MachineLearningManagedNetworkSettingsData : ResourceData, IJsonModel<MachineLearningManagedNetworkSettingsData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MachineLearningManagedNetworkSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="managedNetworkSettingsPropertiesBasicData"> The <see cref="MachineLearningManagedNetworkSettingsData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MachineLearningManagedNetworkSettingsData managedNetworkSettingsPropertiesBasicData)
+        /// <param name="machineLearningManagedNetworkSettingsData"> The <see cref="MachineLearningManagedNetworkSettingsData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MachineLearningManagedNetworkSettingsData machineLearningManagedNetworkSettingsData)
         {
-            if (managedNetworkSettingsPropertiesBasicData == null)
+            if (machineLearningManagedNetworkSettingsData == null)
             {
                 return null;
             }
-            return RequestContent.Create(managedNetworkSettingsPropertiesBasicData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(machineLearningManagedNetworkSettingsData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineLearningManagedNetworkSettingsData"/> from. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
@@ -153,7 +153,11 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             return new MachineLearningManagedNetworkSettingsData(
-                new ResourceIdentifier(id),
+                id,
                 name,
                 resourceType,
                 systemData,

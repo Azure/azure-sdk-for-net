@@ -13,7 +13,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Customer Key vault properties. </summary>
-    public partial class KeyVaultProperties
+    internal partial class KeyVaultProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

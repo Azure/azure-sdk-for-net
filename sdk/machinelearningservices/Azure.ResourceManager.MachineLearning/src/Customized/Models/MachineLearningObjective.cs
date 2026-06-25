@@ -8,12 +8,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore shipped constructors/properties that latest TypeSpec generation normalized but cannot remove from the GA API surface.
     public partial class MachineLearningObjective
     {
+        // The current generated constructor order follows TypeSpec, but GA exposed the Swagger-era primaryMetric-first overload.
+        // TypeSpec decorators do not control constructor overload ordering, so keep the old overload and delegate to the generated shape.
         /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
         public MachineLearningObjective(MachineLearningGoal goal, string primaryMetric)
-            : this(primaryMetric, goal)
+            : this(goal, primaryMetric, additionalBinaryDataProperties: null)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningObjective"/>. </summary>
+        public MachineLearningObjective(string primaryMetric, MachineLearningGoal goal)
+            : this(goal, primaryMetric)
         {
         }
     }

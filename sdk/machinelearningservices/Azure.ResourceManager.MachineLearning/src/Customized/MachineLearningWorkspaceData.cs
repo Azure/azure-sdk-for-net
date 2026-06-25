@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     IdentityClientId = keyVaultProperties.IdentityClientId
                 };
-                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, Properties.Encryption.UserAssignedIdentity is null ? null : new MachineLearningCmkIdentity(new ResourceIdentifier(Properties.Encryption.UserAssignedIdentity), serializedAdditionalRawData: null), legacyKeyVaultProperties, serializedAdditionalRawData: null);
+                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, legacyKeyVaultProperties);
             }
             set
             {

@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Paged collection of MachineLearningEndpointResource items. </summary>
+    /// <summary> Paged collection of EndpointResourcePropertiesBasicResource items. </summary>
     internal partial class EndpointResourcePropertiesBasicResourceArmPaginatedResult : IJsonModel<EndpointResourcePropertiesBasicResourceArmPaginatedResult>
     {
         /// <summary> Initializes a new instance of <see cref="EndpointResourcePropertiesBasicResourceArmPaginatedResult"/> for deserialization. </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary>
     /// A class representing a collection of <see cref="MachineLearningManagedNetworkSettingsResource"/> and their operations.
     /// Each <see cref="MachineLearningManagedNetworkSettingsResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
-    /// To get a <see cref="MachineLearningManagedNetworkSettingsCollection"/> instance call the GetMachineLearningManagedNetworkSettingsResources method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningManagedNetworkSettingsCollection"/> instance call the GetMachineLearningManagedNetworkSettings method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningManagedNetworkSettingsCollection : ArmCollection, IEnumerable<MachineLearningManagedNetworkSettingsResource>, IAsyncEnumerable<MachineLearningManagedNetworkSettingsResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningManagedNetworkSettingsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningManagedNetworkSettingsResource.ResourceType, out string managedNetworkSettingsPropertiesBasicApiVersion);
+            TryGetApiVersion(MachineLearningManagedNetworkSettingsResource.ResourceType, out string machineLearningManagedNetworkSettingsApiVersion);
             _managedNetworkSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningManagedNetworkSettingsResource.ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, managedNetworkSettingsPropertiesBasicApiVersion ?? "2026-03-15-preview");
+            _managedNetworkSettingsRestClient = new ManagedNetworkSettings(_managedNetworkSettingsClientDiagnostics, Pipeline, Endpoint, machineLearningManagedNetworkSettingsApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Put. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Put. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource> operation = new MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource>(
                     new MachineLearningManagedNetworkSettingsResourceOperationSource(Client),
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Put. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Put. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, MachineLearningManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource> operation = new MachineLearningArmOperation<MachineLearningManagedNetworkSettingsResource>(
                     new MachineLearningManagedNetworkSettingsResourceOperationSource(Client),
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningManagedNetworkSettingsData> response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningManagedNetworkSettingsData> response = Response.FromValue(MachineLearningManagedNetworkSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_List. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<MachineLearningManagedNetworkSettingsData, MachineLearningManagedNetworkSettingsResource>(new ManagedNetworkSettingsGetAllAsyncCollectionResultOfT(
                 _managedNetworkSettingsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_List. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<MachineLearningManagedNetworkSettingsData, MachineLearningManagedNetworkSettingsResource>(new ManagedNetworkSettingsGetAllCollectionResultOfT(
                 _managedNetworkSettingsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningManagedNetworkSettingsData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningManagedNetworkSettingsData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningManagedNetworkSettingsData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningManagedNetworkSettingsResources_Get. </description>
+        /// <description> ManagedNetworkSettingsPropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNetworkName, context);
+                HttpMessage message = _managedNetworkSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningManagedNetworkSettingsData> response = default;
