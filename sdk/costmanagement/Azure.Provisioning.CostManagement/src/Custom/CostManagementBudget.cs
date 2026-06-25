@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CostManagement
 {
-    /// <summary> A budget resource. </summary>
     [CodeGenType("Budget")]
     public partial class CostManagementBudget { }
 }
