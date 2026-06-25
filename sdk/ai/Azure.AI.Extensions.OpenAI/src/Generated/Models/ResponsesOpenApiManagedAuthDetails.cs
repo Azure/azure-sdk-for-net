@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiManagedAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>
-        internal ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base("managed_identity")
+        internal ResponsesOpenApiManagedAuthDetails(ResponsesOpenApiManagedSecurityScheme securityScheme) : base(OpenApiAuthType.ManagedIdentity)
         {
             SecurityScheme = securityScheme;
         }

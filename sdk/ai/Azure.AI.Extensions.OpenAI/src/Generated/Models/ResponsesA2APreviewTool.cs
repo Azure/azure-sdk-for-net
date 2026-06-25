@@ -30,12 +30,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUrl, string agentCardPath, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesA2APreviewTool(ResponseToolKind @type, Uri baseUrl, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BaseUrl = baseUrl;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
+            SendCredentialsForAgentCard = sendCredentialsForAgentCard;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,5 +59,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
         public string ProjectConnectionId { get; }
+
+        /// <summary>
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </summary>
+        public bool? SendCredentialsForAgentCard { get; }
     }
 }

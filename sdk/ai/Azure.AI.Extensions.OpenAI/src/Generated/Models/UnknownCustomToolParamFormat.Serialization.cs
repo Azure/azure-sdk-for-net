@@ -4,25 +4,21 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// The input format for the custom tool. Default is unconstrained text.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesCustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownCustomToolParamFormat))]
-    public abstract partial class ResponsesCustomToolParamFormat : IJsonModel<ResponsesCustomToolParamFormat>
+    internal partial class UnknownCustomToolParamFormat : ResponsesCustomToolParamFormat, IJsonModel<ResponsesCustomToolParamFormat>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesCustomToolParamFormat"/> for deserialization. </summary>
-        internal ResponsesCustomToolParamFormat()
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomToolParamFormat"/> for deserialization. </summary>
+        internal UnknownCustomToolParamFormat()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponsesCustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponsesCustomToolParamFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesCustomToolParamFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesCustomToolParamFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -71,30 +67,14 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesCustomToolParamFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponsesCustomToolParamFormat)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -103,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponsesCustomToolParamFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponsesCustomToolParamFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesCustomToolParamFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -116,23 +96,27 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponsesCustomToolParamFormat DeserializeResponsesCustomToolParamFormat(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownCustomToolParamFormat DeserializeUnknownCustomToolParamFormat(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            CustomToolParamFormatType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "text":
-                        return ResponsesCustomTextFormatParam.DeserializeResponsesCustomTextFormatParam(element, options);
-                    case "grammar":
-                        return CustomGrammarFormatParam.DeserializeCustomGrammarFormatParam(element, options);
+                    @type = new CustomToolParamFormatType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownCustomToolParamFormat.DeserializeUnknownCustomToolParamFormat(element, options);
+            return new UnknownCustomToolParamFormat(@type, additionalBinaryDataProperties);
         }
     }
 }

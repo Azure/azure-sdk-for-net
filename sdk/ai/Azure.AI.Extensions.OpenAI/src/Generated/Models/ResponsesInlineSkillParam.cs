@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        internal ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base("inline")
+        internal ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base(ContainerSkillType.Inline)
         {
             Name = name;
             Description = description;

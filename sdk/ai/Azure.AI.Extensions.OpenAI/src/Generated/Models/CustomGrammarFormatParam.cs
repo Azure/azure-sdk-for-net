@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
         /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
         /// <param name="definition"> The grammar definition. </param>
-        internal CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base("grammar")
+        internal CustomGrammarFormatParam(ResponsesGrammarSyntax syntax, string definition) : base(CustomToolParamFormatType.Grammar)
         {
             Syntax = syntax;
             Definition = definition;

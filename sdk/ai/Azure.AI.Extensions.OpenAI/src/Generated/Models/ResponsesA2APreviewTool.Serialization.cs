@@ -87,6 +87,11 @@ namespace Azure.AI.Extensions.OpenAI
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
+            if (Optional.IsDefined(SendCredentialsForAgentCard))
+            {
+                writer.WritePropertyName("send_credentials_for_agent_card"u8);
+                writer.WriteBooleanValue(SendCredentialsForAgentCard.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.AI.Extensions.OpenAI
             Uri baseUrl = default;
             string agentCardPath = default;
             string projectConnectionId = default;
+            bool? sendCredentialsForAgentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +166,27 @@ namespace Azure.AI.Extensions.OpenAI
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("send_credentials_for_agent_card"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sendCredentialsForAgentCard = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesA2APreviewTool(@type, baseUrl, agentCardPath, projectConnectionId, additionalBinaryDataProperties);
+            return new ResponsesA2APreviewTool(
+                @type,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                additionalBinaryDataProperties);
         }
     }
 }

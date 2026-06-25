@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesSkillReferenceParam"/>. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
-        internal ResponsesSkillReferenceParam(string skillId) : base("skill_reference")
+        internal ResponsesSkillReferenceParam(string skillId) : base(ContainerSkillType.SkillReference)
         {
             SkillId = skillId;
         }

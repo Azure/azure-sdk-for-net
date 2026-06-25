@@ -17,6 +17,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         internal InternalImageGenTool() : base("image_generation")
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
@@ -47,8 +48,11 @@ namespace OpenAI
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
         /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalImageGenTool(ResponseToolKind @type, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal InternalImageGenTool(ResponseToolKind @type, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Model = model;
             Quality = quality;
@@ -61,6 +65,9 @@ namespace OpenAI
             InputImageMask = inputImageMask;
             PartialImages = partialImages;
             Action = action;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -111,5 +118,14 @@ namespace OpenAI
 
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
         public ImageGenActionEnum? Action { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

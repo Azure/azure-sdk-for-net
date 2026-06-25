@@ -17,19 +17,35 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParam"/>. </summary>
         internal ResponsesFunctionShellToolParam() : base("shell")
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="environment"></param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesFunctionShellToolParam(ResponseToolKind @type, ResponsesFunctionShellToolParamEnvironment environment, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesFunctionShellToolParam(ResponseToolKind @type, ResponsesFunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Environment = environment;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Environment. </summary>
         public ResponsesFunctionShellToolParamEnvironment Environment { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

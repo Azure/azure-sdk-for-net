@@ -8,9 +8,7 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Foundry OpenAI .NET Extensions</AssemblyTitle>
-    <Version>2.1.0-beta.4</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>2.0.0</ApiCompatVersion>
+    <Version>3.0.0-beta.1</Version>
     <PackageTags>Azure.AI.Extensions.OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>

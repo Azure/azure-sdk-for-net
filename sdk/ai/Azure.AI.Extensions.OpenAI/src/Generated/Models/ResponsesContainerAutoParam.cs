@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesContainerAutoParam : ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerAutoParam"/>. </summary>
-        internal ResponsesContainerAutoParam() : base("container_auto")
+        internal ResponsesContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)
         {
             FileIds = new ChangeTrackingList<string>();
             Skills = new ChangeTrackingList<ContainerSkill>();

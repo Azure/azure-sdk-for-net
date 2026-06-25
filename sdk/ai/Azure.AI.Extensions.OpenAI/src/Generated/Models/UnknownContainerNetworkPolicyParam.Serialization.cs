@@ -4,25 +4,21 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary>
-    /// Network access policy for the container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesContainerNetworkPolicyDisabledParam"/> and <see cref="ResponsesContainerNetworkPolicyAllowlistParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownContainerNetworkPolicyParam))]
-    public abstract partial class ResponsesContainerNetworkPolicyParam : IJsonModel<ResponsesContainerNetworkPolicyParam>
+    internal partial class UnknownContainerNetworkPolicyParam : ResponsesContainerNetworkPolicyParam, IJsonModel<ResponsesContainerNetworkPolicyParam>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyParam"/> for deserialization. </summary>
-        internal ResponsesContainerNetworkPolicyParam()
+        /// <summary> Initializes a new instance of <see cref="UnknownContainerNetworkPolicyParam"/> for deserialization. </summary>
+        internal UnknownContainerNetworkPolicyParam()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponsesContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponsesContainerNetworkPolicyParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -71,30 +67,14 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponsesContainerNetworkPolicyParam)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -103,7 +83,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponsesContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponsesContainerNetworkPolicyParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponsesContainerNetworkPolicyParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -116,23 +96,27 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponsesContainerNetworkPolicyParam DeserializeResponsesContainerNetworkPolicyParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownContainerNetworkPolicyParam DeserializeUnknownContainerNetworkPolicyParam(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            ContainerNetworkPolicyParamType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "disabled":
-                        return ResponsesContainerNetworkPolicyDisabledParam.DeserializeResponsesContainerNetworkPolicyDisabledParam(element, options);
-                    case "allowlist":
-                        return ResponsesContainerNetworkPolicyAllowlistParam.DeserializeResponsesContainerNetworkPolicyAllowlistParam(element, options);
+                    @type = new ContainerNetworkPolicyParamType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownContainerNetworkPolicyParam.DeserializeUnknownContainerNetworkPolicyParam(element, options);
+            return new UnknownContainerNetworkPolicyParam(@type, additionalBinaryDataProperties);
         }
     }
 }

@@ -14,4 +14,4 @@ additionalDirectories:
 - specification/ai-foundry/data-plane/Foundry/src/agents
 - specification/ai-foundry/data-plane/Foundry/src/skills
 
-emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
+emitterPackageJsonPath: sdk/ai/Azure.AI.Extensions.OpenAI/emitter-package.json

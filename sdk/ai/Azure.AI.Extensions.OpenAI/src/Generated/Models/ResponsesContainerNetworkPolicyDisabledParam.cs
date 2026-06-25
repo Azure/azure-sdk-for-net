@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesContainerNetworkPolicyDisabledParam : ResponsesContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerNetworkPolicyDisabledParam"/>. </summary>
-        internal ResponsesContainerNetworkPolicyDisabledParam() : base("disabled")
+        internal ResponsesContainerNetworkPolicyDisabledParam() : base(ContainerNetworkPolicyParamType.Disabled)
         {
         }
 

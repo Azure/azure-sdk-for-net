@@ -7,7 +7,10 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
+    /// <summary>
+    /// The input format for the custom tool. Default is unconstrained text.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponsesCustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
+    /// </summary>
     public abstract partial class ResponsesCustomToolParamFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
