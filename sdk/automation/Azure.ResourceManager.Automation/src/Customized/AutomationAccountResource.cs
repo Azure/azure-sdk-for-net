@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,70 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class representing an Automation account resource. </summary>
     public partial class AutomationAccountResource
     {
+        /// <summary>
+        /// Retrieve the automation keys for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateGetAutomationAccountKeysInternalRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ParseAutomationKeys, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", context);
+        }
+
+        /// <summary>
+        /// Retrieve the automation keys for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Keys_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateGetAutomationAccountKeysInternalRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ParseAutomationKeys, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", context);
+        }
+
+        private static (List<AutomationKey> Values, string NextLink) ParseAutomationKeys(Response response)
+        {
+            AutomationKeyListResult result = AutomationKeyListResult.FromResponse(response);
+            return (new List<AutomationKey>(result.Keys), null);
+        }
+
         /// <summary>
         /// Retrieve the Dsc configuration compilation job identified by job id.
         /// <list type="bullet">
