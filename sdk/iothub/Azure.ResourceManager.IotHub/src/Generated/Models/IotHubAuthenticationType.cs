@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubAuthenticationType : IEquatable<IotHubAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> keyBased. </summary>
+        private const string KeyBasedValue = "keyBased";
+        /// <summary> identityBased. </summary>
+        private const string IdentityBasedValue = "identityBased";
 
         /// <summary> Initializes a new instance of <see cref="IotHubAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string KeyBasedValue = "keyBased";
-        private const string IdentityBasedValue = "identityBased";
+            _value = value;
+        }
 
         /// <summary> keyBased. </summary>
         public static IotHubAuthenticationType KeyBased { get; } = new IotHubAuthenticationType(KeyBasedValue);
+
         /// <summary> identityBased. </summary>
         public static IotHubAuthenticationType IdentityBased { get; } = new IotHubAuthenticationType(IdentityBasedValue);
+
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubAuthenticationType left, IotHubAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubAuthenticationType left, IotHubAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubAuthenticationType(string value) => new IotHubAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubAuthenticationType?(string value) => value == null ? null : new IotHubAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
