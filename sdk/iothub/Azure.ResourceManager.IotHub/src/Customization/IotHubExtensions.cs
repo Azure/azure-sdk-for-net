@@ -10,9 +10,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotHub
 {
     // Customization justification:
-    // GroupIdInformation remains a plain TypeSpec model to avoid swagger drift, so the generator no
-    // longer emits the previous child-resource ArmClient extension. This partial restores that stable
-    // SDK entry point and delegates to the custom mockable client wrapper.
+    // GroupIdInformation is defined in TypeSpec, but its operations are scoped out of C# generation to
+    // avoid duplicate data-returning methods on IotHubDescriptionResource. This partial restores the
+    // stable child-resource ArmClient entry point and delegates to the custom mockable client wrapper.
     public static partial class IotHubExtensions
     {
         /// <summary> Gets an object representing a <see cref="IotHubPrivateEndpointGroupInformationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             var iotHub = await CreateIotHub(_resourceGroup, Recording.GenerateAssetName("iothub"));
-            _iotSecuritySolutionResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, GetRecordedAssetName("solutionName", "solution"));
+            _iotSecuritySolutionResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
             _iotSecurityAggregatedRecommendationCollection = _iotSecuritySolutionResource.GetIotSecuritySolutionAnalyticsModel().GetIotSecurityAggregatedRecommendations();
         }
 
         [RecordedTest]
-        [Ignore("The SDK doesn't support create a IotSecurityAggregatedRecommendationResource")]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Get()
         {
             string aggregatedRecommendationName = "";
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task GetAll()
         {
             var list = await _iotSecurityAggregatedRecommendationCollection.GetAllAsync().ToEnumerableAsync();

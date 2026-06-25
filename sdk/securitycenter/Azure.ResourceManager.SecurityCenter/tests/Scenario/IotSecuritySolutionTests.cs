@@ -33,35 +33,39 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task CreateOrUpdate()
         {
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             ValidateIotSecuritySolutionResource(solution, solutionName);
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Exist()
         {
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             bool flag = await _iotSecuritySolutionCollection.ExistsAsync(solutionName);
             Assert.IsTrue(flag);
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Get()
         {
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             var solution = await _iotSecuritySolutionCollection.GetAsync(solutionName);
             ValidateIotSecuritySolutionResource(solution, solutionName);
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task GetAll()
         {
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             var list = await _iotSecuritySolutionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
@@ -69,9 +73,10 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         public async Task Delete()
         {
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
             bool flag = await _iotSecuritySolutionCollection.ExistsAsync(solutionName);
             Assert.IsTrue(flag);
@@ -81,13 +86,14 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
+        [Ignore("Temporarily ignored until the new IoT Hub SDK is released. Tracked by https://github.com/Azure/azure-sdk-for-net/issues/60235.")]
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
-            string solutionName = GetRecordedAssetName("solutionName", "solution");
+            string solutionName = Recording.GenerateAssetName("solution");
             var solution = await CreateIotSecuritySolution(_resourceGroup, _iotHub.Data.Id, solutionName);
 
             if (useTagResource == true || useTagResource == null)

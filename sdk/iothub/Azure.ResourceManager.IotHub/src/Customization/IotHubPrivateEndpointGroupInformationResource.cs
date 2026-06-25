@@ -18,9 +18,9 @@ using Azure.ResourceManager.IotHub.Models;
 namespace Azure.ResourceManager.IotHub
 {
     // Customization justification:
-    // GroupIdInformation is intentionally kept as a plain TypeSpec model for swagger compatibility. This
-    // resource wrapper restores the previous C# child-resource API surface over the generated ResourceData
-    // model without changing generated code.
+    // GroupIdInformation is defined in TypeSpec, but its operations are scoped out of C# generation to
+    // avoid duplicate data-returning methods on IotHubDescriptionResource. This wrapper restores the
+    // previous C# child-resource API surface over the generated ResourceData model.
     /// <summary>
     /// A class representing a IotHubPrivateEndpointGroupInformation along with the instance operations that can be performed on it.
     /// </summary>

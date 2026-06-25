@@ -57,12 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             return lro.Value;
         }
 
-        protected string GetRecordedAssetName(string variableName, string prefix)
-        {
-            string generatedName = Mode == RecordedTestMode.Playback ? null : Recording.GenerateAssetName(prefix);
-            return Recording.GetVariable(variableName, generatedName);
-        }
-
         protected async Task<NetworkInterfaceResource> CreateNetworkInterface(ResourceGroupResource resourceGroup, string interfaceName, string nsgName = null)
         {
             // Create NSG
