@@ -1,20 +1,23 @@
 # Discover the eval files and emit the fan-out matrix the Eval stage shards over.
-# Vally has no `list` command, so collect-stimuli.js globs the filesystem. It reads
-# TWO sources (D7): the consuming repo's eval folder and an optional shared/common
-# folder synced under eng/common — each file's shard args are computed against its
-# own root. The matrix is published as an output variable: <stepName>.<outputVariable>.
+# The eval CLI has no `list` command, so collect-stimuli.js globs the filesystem. It can
+# read evals from several roots in one pass (evals scattered across folders) and anchors
+# every emitted `-e` path to `pathBase` (the single dir the shard runs from) so the paths
+# resolve at run time. The matrix is published as an output variable: <stepName>.<outputVariable>.
 
 parameters:
-  - name: evalRoot
-    # Repo-specific eval root (absolute or relative to $(Build.SourcesDirectory)).
-    type: string
-  - name: commonEvalRoot
-    # Optional shared eval root synced via eng/common. Empty string = skip.
+  - name: evalRoots
+    # Dirs to glob for eval files (each absolute or relative to $(Build.SourcesDirectory)).
+    # Empty = fall back to pathBase (the run root).
+    type: object
+    default: []
+  - name: pathBase
+    # Anchor for the emitted `-e` paths (the single dir the shard runs `vally eval` from),
+    # so paths resolve even when a root sits outside it. Empty = paths relative to each root.
     type: string
     default: ''
-  - name: patterns
-    # Optional list of forward-slashed globs (relative to each root). Empty = let
-    # collect-stimuli.js use its built-in default (the Vally mock vertical).
+  - name: evalGlobs
+    # File globs selecting *.eval.yaml under each root (relative, forward-slashed, * ? **).
+    # Empty = let collect-stimuli.js use its built-in default (the mock tool-scenario globs).
     type: object
     default: []
   - name: shardBy
@@ -47,13 +50,23 @@ steps:
       version: ${{ parameters.nodeVersion }}
 
   - script: |
-      roots=(--eval-root "${{ parameters.evalRoot }}")
-      if [ -n "${{ parameters.commonEvalRoot }}" ]; then
-        roots+=(--eval-root "${{ parameters.commonEvalRoot }}")
+      # EVAL_ROOTS / EVAL_PATTERNS are space-joined lists passed via env so they survive as
+      # real bash vars. set -f stops the shell glob-expanding the patterns' `*` before they
+      # reach the script. With no explicit roots, fall back to pathBase (the run root).
+      roots=()
+      if [ -n "$EVAL_ROOTS" ]; then
+        set -f
+        for r in $EVAL_ROOTS; do
+          roots+=(--eval-root "$r")
+        done
+        set +f
+      elif [ -n "${{ parameters.pathBase }}" ]; then
+        roots+=(--eval-root "${{ parameters.pathBase }}")
       fi
-      # EVAL_PATTERNS is a space-joined list (env, so it survives as a real bash var).
-      # set -f stops the shell from glob-expanding the `*` in each pattern before it
-      # reaches collect-stimuli.js. Empty list -> skip -> the script uses its default.
+      base=()
+      if [ -n "${{ parameters.pathBase }}" ]; then
+        base=(--path-base "${{ parameters.pathBase }}")
+      fi
       patterns=()
       if [ -n "$EVAL_PATTERNS" ]; then
         set -f
@@ -64,10 +77,12 @@ steps:
       fi
       node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/collect-stimuli.js" \
         "${roots[@]}" \
+        "${base[@]}" \
         "${patterns[@]}" \
         --shard-by ${{ parameters.shardBy }} \
         --output-variable ${{ parameters.outputVariableName }}
     name: ${{ parameters.stepName }}
     displayName: 'Build fan-out matrix'
     env:
-      EVAL_PATTERNS: ${{ join(' ', parameters.patterns) }}
+      EVAL_ROOTS: ${{ join(' ', parameters.evalRoots) }}
+      EVAL_PATTERNS: ${{ join(' ', parameters.evalGlobs) }}

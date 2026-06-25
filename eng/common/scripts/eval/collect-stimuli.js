@@ -6,9 +6,11 @@
 // Azure Pipelines matrix object on an output variable so a downstream stage can fan out
 // one job per shard.
 //
-// Two eval roots are supported so the pipeline can collect BOTH the repo-specific eval
-// folder AND a shared "common" folder (synced via eng/common) in a single matrix — pass
-// `--eval-root` once per root. Custom suites are selected via repeated `--pattern`.
+// Multiple eval roots are supported so the pipeline can collect evals scattered across
+// several folders in a single matrix — pass `--eval-root` once per root. Pass `--path-base`
+// to anchor every emitted `-e` path to one base (the run root the shard executes from), so
+// the paths resolve even when a root sits outside that base. Custom suites are selected via
+// repeated `--pattern`.
 //
 // Granularity is a dial controlled by --shard-by:
 //   - file : one shard per eval file (finest; default).
@@ -37,11 +39,16 @@ const SANITIZE = /[^A-Za-z0-9]/g;
 // Discover eval files across every root, de-duplicated. Overlapping globs (a broad and a
 // narrow pattern that both match a file) would otherwise yield the same eval twice, which
 // in 'area' mode emits a duplicate `-e <file>` and in 'file' mode collides on shard name.
-// Each file's `relative` is computed against the root it was found under, so paths stay
-// forward-slashed and valid for `vally eval -e` regardless of which root supplied them.
-export function getEvalFiles(roots, patterns) {
+//
+// Each file's `relative` (the value handed to `vally eval -e`) is computed against
+// `pathBase` when supplied, otherwise against the root it was found under. The shard runs
+// `vally eval` from a single working directory, so anchoring every path to that one base
+// (the run root) keeps `-e` resolvable even when evals are scattered across roots that are
+// NOT the working dir — the path may then legitimately start with `../`.
+export function getEvalFiles(roots, patterns, pathBase = null) {
   const seen = new Set(); // case-insensitive, matching the PowerShell OrdinalIgnoreCase set
   const files = [];
+  const base = pathBase ? path.resolve(pathBase) : null;
 
   for (const root of roots) {
     const resolvedRoot = path.resolve(root);
@@ -54,7 +61,7 @@ export function getEvalFiles(roots, patterns) {
         seen.add(key);
         files.push({
           fullName: full,
-          relative: path.relative(resolvedRoot, full).split(path.sep).join("/"),
+          relative: path.relative(base ?? resolvedRoot, full).split(path.sep).join("/"),
           leaf: path.basename(full).replace(/\.eval\.yaml$/, ""),
           parent: path.basename(path.dirname(full)),
         });
@@ -79,8 +86,10 @@ export function getEvalArea(filePath) {
  * Builds the Azure Pipelines matrix object from the discovered eval files.
  *
  * @param {object} options
- * @param {string[]} options.roots Eval roots to glob from (repo-specific and/or common).
+ * @param {string[]} options.roots Eval roots to glob from (repo-specific and/or scattered).
  * @param {string[]} [options.patterns] Forward-slashed globs relative to each root.
+ * @param {string|null} [options.pathBase] Anchor for emitted `-e` paths (the run root). When
+ *   null, each file's path is relative to the root it was found under.
  * @param {"file"|"area"} [options.shardBy] Sharding granularity.
  * @param {(message: string) => void} [options.warn] Sink for non-fatal warnings.
  * @returns {Record<string, {shardName: string, evalArgs: string}>}
@@ -88,10 +97,11 @@ export function getEvalArea(filePath) {
 export function buildMatrix({
   roots,
   patterns = DEFAULT_PATTERNS,
+  pathBase = null,
   shardBy = "file",
   warn = (message) => console.warn(message),
 } = {}) {
-  const files = getEvalFiles(roots, patterns);
+  const files = getEvalFiles(roots, patterns, pathBase);
   if (files.length === 0) {
     throw new Error(
       `No eval files matched any of: ${patterns.join(", ")} under ${roots.join(", ")}.`
@@ -153,6 +163,7 @@ function parseArgs(argv) {
   const options = {
     roots: [],
     patterns: [],
+    pathBase: null,
     shardBy: "file",
     outputVariable: "matrix",
   };
@@ -163,6 +174,9 @@ function parseArgs(argv) {
     switch (arg) {
       case "--eval-root":
         options.roots.push(next());
+        break;
+      case "--path-base":
+        options.pathBase = next();
         break;
       case "--pattern":
         options.patterns.push(next());
@@ -196,6 +210,7 @@ function main(argv) {
   const matrix = buildMatrix({
     roots: options.roots,
     patterns: options.patterns,
+    pathBase: options.pathBase,
     shardBy: options.shardBy,
   });
   const json = JSON.stringify(matrix);

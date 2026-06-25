@@ -7,6 +7,8 @@
 
 parameters:
   - name: vallyRoot
+    # The single dir the shard runs `vally eval` from (where .vally.yaml lives) and the
+    # anchor the matrix's `-e` paths are relative to.
     type: string
     default: tools/azsdk-cli/Azure.Sdk.Tools.Vally
   - name: scriptDir
