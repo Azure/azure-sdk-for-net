@@ -52,6 +52,12 @@ namespace Azure.Storage
     {
         public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
     }
+    public enum StorageResponseFormat
+    {
+        Auto = 0,
+        Xml = 1,
+        Arrow = 2,
+    }
     public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
