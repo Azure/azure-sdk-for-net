@@ -14,6 +14,12 @@ Trigger phrases: "mitigate breaking changes", "fix breaking change", "customizat
 
 Use **Custom/*.cs** or **Customization/*.cs** partial classes (follow the package's existing structure) for .NET-side fixes.
 
+### Custom code file organization
+Keep custom code types split into separate files:
+- Put each custom type/partial type in its own `.cs` file.
+- Name the file after the class it contains, for example `src/Custom/Models/MyModel.cs` for `public partial class MyModel`.
+- Do not group multiple compatibility types in a single broad file such as `Compatibility.cs`; split them so each file name aligns with the class name.
+
 ### Partial class (add members, suppress generated members)
 ```csharp
 // src/Custom/MyModel.cs (or src/Customization/MyModel.cs — follow the package's existing convention)
