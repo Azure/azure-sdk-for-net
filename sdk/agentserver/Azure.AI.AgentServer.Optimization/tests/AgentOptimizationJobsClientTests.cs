@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Optimization.Tests;
 public class AgentOptimizationJobsClientTests
 {
     [Test]
-    public void ProjectsClient_CanInstantiate()
+    public void AgentOptimizationClientOptions_CanInstantiate()
     {
         var options = new AgentOptimizationClientOptions();
         Assert.That(options, Is.Not.Null);

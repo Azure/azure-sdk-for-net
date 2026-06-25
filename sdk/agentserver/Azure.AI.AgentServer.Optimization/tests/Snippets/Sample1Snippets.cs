@@ -18,7 +18,8 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         public async Task UseOptions()
         {
             #region Snippet:Optimization_Sample1_UseOptions
-            OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync();
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            OptimizationOptions options = await client.ResolveOptionsAsync();
 
             string instructions = options?.Instructions ?? "You are a helpful assistant.";
             string model = options?.Model ?? "gpt-4o-mini";
@@ -28,6 +29,15 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
             #endregion
 
             Assert.That(instructions, Is.Not.Null);
+        }
+
+        private sealed class StubCredential : Azure.Core.TokenCredential
+        {
+            public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
+
+            public override ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) =>
+                throw new NotImplementedException();
         }
     }
 }

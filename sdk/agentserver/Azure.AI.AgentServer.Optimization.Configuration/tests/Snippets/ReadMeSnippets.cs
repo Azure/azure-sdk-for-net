@@ -118,10 +118,11 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
         public void DirectLoader()
         {
             #region Snippet:Configuration_ReadMe_DirectLoader
-            // Skip Microsoft.Extensions.Configuration entirely and call the loader
+            // Skip Microsoft.Extensions.Configuration entirely and call the client
             // directly. Useful for console apps, AWS Lambdas, or anywhere you do
             // not have an IConfiguration pipeline.
-            OptimizationOptions options = OptimizationOptionsLoader.Load();
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), ResolveMyCredential());
+            OptimizationOptions options = client.ResolveOptions();
 
             if (options is not null)
             {

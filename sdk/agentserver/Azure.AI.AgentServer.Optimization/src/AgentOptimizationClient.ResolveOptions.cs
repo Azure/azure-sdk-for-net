@@ -2,48 +2,33 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
+using Azure;
 
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Loads <see cref="OptimizationOptions"/> with graceful fallback using a 4-priority
-/// resolution waterfall.
+/// Extends <see cref="AgentOptimizationClient"/> with a public config resolution
+/// method that wraps the internal REST call with env-var and local-file fallback.
 /// </summary>
-/// <remarks>
-/// Resolution order (first match wins):
-/// <list type="number">
-/// <item><description><b>Resolver API</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> are both set.</description></item>
-/// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config as JSON.</description></item>
-/// <item><description><b>Local candidate directory</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> is set and <c>OPTIMIZATION_LOCAL_DIR/&lt;candidate_id&gt;/</c> exists on disk. This is what <c>azd ai agent optimize apply --candidate</c> writes.</description></item>
-/// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR/baseline/</c> exists on disk.</description></item>
-/// <item><description>When none of the above match, returns <c>null</c>.</description></item>
-/// </list>
-/// </remarks>
-public static class OptimizationOptionsLoader
+public partial class AgentOptimizationClient
 {
     private static readonly TimeSpan s_defaultResolverTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Loads <see cref="OptimizationOptions"/> synchronously using the resolution
-    /// waterfall.
+    /// Resolves <see cref="OptimizationOptions"/> using a priority waterfall:
+    /// <list type="number">
+    /// <item><description><b>Resolver API</b> — calls the optimization service when
+    /// <c>OPTIMIZATION_CANDIDATE_ID</c> and <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> (or a configured endpoint) are set.</description></item>
+    /// <item><description><b>Inline JSON</b> — <c>OPTIMIZATION_CONFIG</c> env var contains the full config.</description></item>
+    /// <item><description><b>Local candidate directory</b> — <c>OPTIMIZATION_CANDIDATE_ID</c> set and local dir exists.</description></item>
+    /// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR/baseline/</c> exists.</description></item>
+    /// </list>
+    /// Returns <c>null</c> when no source matches.
     /// </summary>
-    /// <param name="options">Optional resolution options; when <c>null</c>, defaults are used.</param>
-    /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
-    public static OptimizationOptions Load(LoadOptions options = null)
-    {
-#pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadAsync(options, default).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
-    }
-
-    /// <summary>
-    /// Loads <see cref="OptimizationOptions"/> asynchronously using the resolution
-    /// waterfall.
-    /// </summary>
-    /// <param name="options">Optional resolution options; when <c>null</c>, defaults are used.</param>
+    /// <param name="options">Optional resolution options.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
-    public static async Task<OptimizationOptions> LoadAsync(
+    public virtual async Task<OptimizationOptions> ResolveOptionsAsync(
         LoadOptions options = null,
         CancellationToken cancellationToken = default)
     {
@@ -59,33 +44,52 @@ public static class OptimizationOptionsLoader
 
         string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
         string endpoint = ResolveEnvVar(OptimizationOptions.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
+        string configuredEndpoint = _endpoint?.ToString().TrimEnd('/');
+        string effectiveEndpoint = endpoint ?? configuredEndpoint;
 
         // ── Priority 1: Resolver API ────────────────────────────────
-        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
+        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(effectiveEndpoint))
         {
             using var linked = CreateResolverCancellation(cancellationToken, options.ResolverTimeout ?? s_defaultResolverTimeout);
             try
             {
-                var deployConfig = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, options.Credential, linked.Token).ConfigureAwait(false);
+                CandidateIdValidator.ThrowIfInvalid(candidateId, nameof(candidateId));
 
-                if (deployConfig != null)
+                Response<CandidateDeployConfig> response;
+                if (string.Equals(effectiveEndpoint, configuredEndpoint, StringComparison.OrdinalIgnoreCase))
+                {
+                    response = await GetCandidateConfigFlatAsync(
+                        candidateId,
+                        cancellationToken: linked.Token).ConfigureAwait(false);
+                }
+                else
+                {
+                    if (options.Credential is null)
+                    {
+                        throw new InvalidOperationException(
+                            "A credential must be provided when OPTIMIZATION_RESOLVE_ENDPOINT overrides the client's configured endpoint.");
+                    }
+
+                    var resolverClient = new AgentOptimizationClient(new Uri(effectiveEndpoint), options.Credential);
+                    response = await resolverClient.GetCandidateConfigFlatAsync(
+                        candidateId,
+                        cancellationToken: linked.Token).ConfigureAwait(false);
+                }
+
+                if (response.Value != null)
                 {
                     string source = $"api:candidate:{candidateId}";
-                    return MapFromDeployConfig(deployConfig, source, candidateId);
+                    return MapFromDeployConfig(response.Value, source, candidateId);
                 }
             }
-            catch (Exception ex) when (!options.StrictMode)
+            catch (Exception ex) when (!options.StrictMode && !linked.Token.IsCancellationRequested)
             {
-                Console.Error.WriteLine(
-                    $"[AgentServer.Optimization] Warning: Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
-                // Resolver failure is non-fatal in non-strict mode — fall through to next priority.
+                System.Console.Error.WriteLine(
+                    $"[AgentServer.Optimization] Warning: Failed to resolve config for candidate '{candidateId}': {ex.Message}");
             }
         }
 
         // ── Priority 2: Inline JSON env var ─────────────────────────
-        // Inline JSON in OPTIMIZATION_CONFIG is an explicit signal — parse errors
-        // always throw regardless of StrictMode (preserves back-compat).
         string rawConfig = ResolveEnvVar(OptimizationOptions.EnvironmentVariableConfig, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(rawConfig))
         {
@@ -93,12 +97,6 @@ public static class OptimizationOptionsLoader
         }
 
         // ── Priority 3: Local candidate directory ───────────────────
-        // When `azd ai agent optimize apply --candidate <id>` runs, it writes the
-        // candidate config to `<OPTIMIZATION_LOCAL_DIR>/<candidate_id>/` and sets
-        // OPTIMIZATION_CANDIDATE_ID on the agent. If the candidate directory exists
-        // on disk, prefer it over baseline so the deployed container actually exercises
-        // the optimized config when the resolver API endpoint is not configured (the
-        // common offline / preview case).
         string localDir = ResolveEnvVar(OptimizationOptions.EnvironmentVariableLocalDirectory, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(localDir))
         {
@@ -109,7 +107,8 @@ public static class OptimizationOptionsLoader
                 {
                     throw new InvalidOperationException(msg);
                 }
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
+
+                System.Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
             }
             else
             {
@@ -131,16 +130,56 @@ public static class OptimizationOptionsLoader
             }
         }
 
-        // ── No config found ─────────────────────────────────────────
         return null;
     }
 
     /// <summary>
-    /// Resolves an environment variable, preferring the per-agent suffixed form
-    /// (<c>&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c>) when <paramref name="canonicalKey"/>
-    /// is non-null. Falls back to the un-suffixed form only when
-    /// <paramref name="allowUnsuffixedFallback"/> is <c>true</c>.
+    /// Synchronous version of <see cref="ResolveOptionsAsync"/>.
     /// </summary>
+    /// <param name="options">Optional resolution options.</param>
+    /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
+    public virtual OptimizationOptions ResolveOptions(LoadOptions options = null)
+    {
+#pragma warning disable AZC0102
+        return ResolveOptionsAsync(options, default).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+    }
+
+    /// <summary>
+    /// Loads skills from a directory of skill folders. Each subfolder should contain
+    /// a <c>SKILL.md</c> file with optional YAML frontmatter.
+    /// </summary>
+    public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
+    {
+        if (string.IsNullOrEmpty(skillsDirectory) || !Directory.Exists(skillsDirectory))
+        {
+            return Array.Empty<OptimizationSkill>();
+        }
+
+        var skills = new List<OptimizationSkill>();
+        foreach (var skillFolder in Directory.GetDirectories(skillsDirectory).OrderBy(d => d))
+        {
+            string skillFile = Path.Combine(skillFolder, "SKILL.md");
+            if (!File.Exists(skillFile))
+            {
+                continue;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(skillFile).Trim();
+                ParseSkillFile(content, Path.GetFileName(skillFolder), out string name, out string description, out string body);
+                skills.Add(new OptimizationSkill(name, description, body));
+            }
+            catch (IOException ex)
+            {
+                System.Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to read skill file '{skillFile}': {ex.Message}");
+            }
+        }
+
+        return skills;
+    }
+
     private static string ResolveEnvVar(string varName, string canonicalKey, bool allowUnsuffixedFallback)
     {
         if (canonicalKey is not null)
@@ -167,42 +206,103 @@ public static class OptimizationOptionsLoader
         return cts;
     }
 
-    /// <summary>
-    /// Loads skills from a directory of skill folders. Each subfolder should contain
-    /// a <c>SKILL.md</c> file with optional YAML frontmatter (name, description) and
-    /// a body.
-    /// </summary>
-    /// <param name="skillsDirectory">Path to the skills directory.</param>
-    /// <returns>A list of parsed skills.</returns>
-    public static IReadOnlyList<OptimizationSkill> LoadSkillsFromDirectory(string skillsDirectory)
+    private static OptimizationOptions LoadFromEnvVar(string rawConfig)
     {
-        if (string.IsNullOrEmpty(skillsDirectory) || !Directory.Exists(skillsDirectory))
+        try
         {
-            return Array.Empty<OptimizationSkill>();
+            using var doc = JsonDocument.Parse(rawConfig);
+            return OptimizationOptions.FromJson(
+                doc.RootElement,
+                source: $"env:{OptimizationOptions.EnvironmentVariableConfig}");
         }
-
-        var skills = new List<OptimizationSkill>();
-        foreach (var skillFolder in Directory.GetDirectories(skillsDirectory).OrderBy(d => d))
+        catch (JsonException ex)
         {
-            string skillFile = Path.Combine(skillFolder, "SKILL.md");
-            if (!File.Exists(skillFile))
-            {
-                continue;
-            }
+            throw new InvalidOperationException($"Bad {OptimizationOptions.EnvironmentVariableConfig} env var: {ex.Message}", ex);
+        }
+    }
 
+    private static OptimizationOptions LoadFromLocalDirectory(
+        string localDir,
+        string candidateId = null,
+        bool strict = false)
+    {
+        string instructionsPath = Path.Combine(localDir, "instructions.md");
+        string instructions = File.Exists(instructionsPath)
+            ? File.ReadAllText(instructionsPath).Trim()
+            : null;
+
+        string toolsPath = Path.Combine(localDir, "tools.json");
+        var tools = new List<ToolDefinition>();
+        if (File.Exists(toolsPath))
+        {
             try
             {
-                string content = File.ReadAllText(skillFile).Trim();
-                ParseSkillFile(content, Path.GetFileName(skillFolder), out string name, out string description, out string body);
-                skills.Add(new OptimizationSkill(name, description, body));
+                using var doc = JsonDocument.Parse(File.ReadAllText(toolsPath));
+                if (doc.RootElement.ValueKind == JsonValueKind.Array)
+                {
+                    string wrapped = $"{{\"tools\":{doc.RootElement.GetRawText()}}}";
+                    using var wrappedDoc = JsonDocument.Parse(wrapped);
+                    var parsed = OptimizationOptions.FromJson(wrappedDoc.RootElement);
+                    foreach (var t in parsed.ToolDefinitions)
+                    {
+                        tools.Add(t);
+                    }
+                }
             }
-            catch (IOException ex)
+            catch (JsonException ex)
             {
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to read skill file '{skillFile}': {ex.Message}");
+                string msg = $"Failed to parse tools.json at '{toolsPath}': {ex.Message}";
+                if (strict)
+                {
+                    throw new InvalidOperationException(msg, ex);
+                }
+
+                System.Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
             }
         }
 
-        return skills;
+        string skillsDir = Path.Combine(localDir, "skills");
+        IReadOnlyList<OptimizationSkill> skills = LoadSkillsFromDirectory(skillsDir);
+
+        var result = new OptimizationOptions
+        {
+            Instructions = instructions,
+            SkillsDirectory = Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
+            ToolDefinitions = tools,
+            Source = $"local:{localDir}",
+            CandidateId = candidateId,
+        };
+        foreach (var skill in skills)
+        {
+            result.Skills.Add(skill);
+        }
+
+        return result;
+    }
+
+    private static OptimizationOptions MapFromDeployConfig(CandidateDeployConfig config, string source, string candidateId)
+    {
+        var opts = new OptimizationOptions
+        {
+            Instructions = config.Instructions,
+            Model = config.Model,
+            Temperature = config.Temperature.HasValue ? (double)config.Temperature.Value : (double?)null,
+            Source = source,
+            CandidateId = candidateId,
+        };
+
+        if (config.Skills != null)
+        {
+            foreach (var skill in config.Skills)
+            {
+                if (skill?.Name != null)
+                {
+                    opts.Skills.Add(new OptimizationSkill(skill.Name, skill.Description ?? "", ""));
+                }
+            }
+        }
+
+        return opts;
     }
 
     private static void ParseSkillFile(string content, string folderName, out string name, out string description, out string body)
@@ -211,7 +311,6 @@ public static class OptimizationOptionsLoader
         description = "";
         body = content;
 
-        // Check for YAML frontmatter (--- delimited)
         if (content.StartsWith("---", StringComparison.Ordinal))
         {
             int end = content.IndexOf("---", 3, StringComparison.Ordinal);
@@ -220,7 +319,6 @@ public static class OptimizationOptionsLoader
                 string frontmatter = content.Substring(3, end - 3).Trim();
                 body = content.Substring(end + 3).Trim();
 
-                // Simple key: value parsing for name and description
                 foreach (string line in frontmatter.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     int sep = line.IndexOf(':');
@@ -246,117 +344,11 @@ public static class OptimizationOptionsLoader
             }
         }
 
-        // No frontmatter — first line is description, rest is body
         if (!string.IsNullOrEmpty(content))
         {
             string[] lines = content.Split(new[] { '\n' }, 2);
             description = lines[0].TrimStart('#').Trim();
             body = lines.Length > 1 ? lines[1].Trim() : "";
         }
-    }
-
-    private static OptimizationOptions LoadFromEnvVar(string rawConfig)
-    {
-        try
-        {
-            using var doc = JsonDocument.Parse(rawConfig);
-            return OptimizationOptions.FromJson(
-                doc.RootElement,
-                source: $"env:{OptimizationOptions.EnvironmentVariableConfig}");
-        }
-        catch (JsonException ex)
-        {
-            throw new InvalidOperationException($"Bad {OptimizationOptions.EnvironmentVariableConfig} env var: {ex.Message}", ex);
-        }
-    }
-
-    private static OptimizationOptions LoadFromLocalDirectory(
-        string localDir,
-        string candidateId = null,
-        bool strict = false)
-    {
-        // Read instructions.md
-        string instructionsPath = Path.Combine(localDir, "instructions.md");
-        string instructions = File.Exists(instructionsPath)
-            ? File.ReadAllText(instructionsPath).Trim()
-            : null;
-
-        // Read tools.json
-        string toolsPath = Path.Combine(localDir, "tools.json");
-        var tools = new List<ToolDefinition>();
-        if (File.Exists(toolsPath))
-        {
-            try
-            {
-                using var doc = JsonDocument.Parse(File.ReadAllText(toolsPath));
-                if (doc.RootElement.ValueKind == JsonValueKind.Array)
-                {
-                    // Wrap in {"tools": [...]} so FromJson can parse it.
-                    string wrapped = $"{{\"tools\":{doc.RootElement.GetRawText()}}}";
-                    using var wrappedDoc = JsonDocument.Parse(wrapped);
-                    var parsed = OptimizationOptions.FromJson(wrappedDoc.RootElement);
-                    foreach (var t in parsed.ToolDefinitions)
-                    {
-                        tools.Add(t);
-                    }
-                }
-            }
-            catch (JsonException ex)
-            {
-                string msg = $"Failed to parse tools.json at '{toolsPath}': {ex.Message}";
-                if (strict)
-                {
-                    throw new InvalidOperationException(msg, ex);
-                }
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
-            }
-        }
-
-        // Load skills from skills/ subdirectory
-        string skillsDir = Path.Combine(localDir, "skills");
-        IReadOnlyList<OptimizationSkill> skills = LoadSkillsFromDirectory(skillsDir);
-
-        var result = new OptimizationOptions
-        {
-            Instructions = instructions,
-            SkillsDirectory = Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
-            ToolDefinitions = tools,
-            Source = $"local:{localDir}",
-            CandidateId = candidateId,
-        };
-        foreach (var s in skills)
-        {
-            result.Skills.Add(s);
-        }
-        return result;
-    }
-
-    /// <summary>
-    /// Maps a generated <see cref="CandidateDeployConfig"/> to the hand-written
-    /// <see cref="OptimizationOptions"/> returned by the loader.
-    /// </summary>
-    private static OptimizationOptions MapFromDeployConfig(CandidateDeployConfig config, string source, string candidateId)
-    {
-        var opts = new OptimizationOptions
-        {
-            Instructions = config.Instructions,
-            Model = config.Model,
-            Temperature = config.Temperature.HasValue ? (double)config.Temperature.Value : (double?)null,
-            Source = source,
-            CandidateId = candidateId,
-        };
-
-        if (config.Skills != null)
-        {
-            foreach (var skill in config.Skills)
-            {
-                if (skill?.Name != null)
-                {
-                    opts.Skills.Add(new OptimizationSkill(skill.Name, skill.Description ?? "", ""));
-                }
-            }
-        }
-
-        return opts;
     }
 }

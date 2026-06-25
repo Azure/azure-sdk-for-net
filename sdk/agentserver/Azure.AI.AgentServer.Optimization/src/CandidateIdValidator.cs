@@ -6,8 +6,8 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <summary>
 /// Validates candidate IDs used to construct file-system paths and URIs.
 /// Defends against path traversal, separator injection, and accidental ID malformation.
-/// Shared by <see cref="CandidateResolver"/> (Priority 1) and
-/// <see cref="OptimizationOptionsLoader"/> (Priority 3 local candidate directory).
+/// Shared by <see cref="AgentOptimizationClient.ResolveOptionsAsync(LoadOptions, System.Threading.CancellationToken)"/>
+/// for resolver API and local candidate-directory resolution.
 /// </summary>
 internal static class CandidateIdValidator
 {

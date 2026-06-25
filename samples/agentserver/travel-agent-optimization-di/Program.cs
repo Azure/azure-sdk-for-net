@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 // This sample demonstrates the DI / IConfiguration integration provided
 // by Azure.AI.AgentServer.Optimization.Configuration.
 //
-// Instead of calling OptimizationOptionsLoader.LoadAsync() procedurally,
+// Instead of calling AgentOptimizationClient.ResolveOptionsAsync() procedurally,
 // it registers AddOptimizationConfigSource() on the IConfigurationBuilder
 // and reads the bound OptimizationOptions from IConfiguration. This gives
 // you first-class integration with ASP.NET's configuration pipeline:

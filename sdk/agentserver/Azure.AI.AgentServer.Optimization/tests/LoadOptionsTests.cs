@@ -51,7 +51,7 @@ public class LoadOptionsTests
     [Test]
     public async Task LoadAsync_WithOptions_ReturnsNull_WhenNoSourceAvailable()
     {
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions());
 
         Assert.That(options, Is.Null);
     }
@@ -60,7 +60,7 @@ public class LoadOptionsTests
     public async Task LoadAsync_NullLoadOptions_UsesDefaults()
     {
         // Passing null is equivalent to `new LoadOptions()` — should not throw.
-        var options = await OptimizationOptionsLoader.LoadAsync(options: null);
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(options: null);
 
         Assert.That(options, Is.Null);
     }
@@ -71,7 +71,7 @@ public class LoadOptionsTests
         string json = "{\"instructions\":\"hi\"}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions());
 
         Assert.That(options, Is.Not.Null);
         Assert.That(options!.Source, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
@@ -89,7 +89,7 @@ public class LoadOptionsTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", tempDir);
 
-            var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+            var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions());
 
             Assert.That(options, Is.Not.Null);
             Assert.That(options!.Instructions, Is.EqualTo("from local candidate dir"));
@@ -113,7 +113,7 @@ public class LoadOptionsTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG__TRIAGE_AGENT", "{\"instructions\":\"triage-specific\"}");
 
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "triage-agent" });
 
         Assert.That(options, Is.Not.Null);
         Assert.That(options!.Instructions, Is.EqualTo("triage-specific"));
@@ -126,7 +126,7 @@ public class LoadOptionsTests
         // load is to NOT fall back to unsuffixed (FallbackToUnsuffixedEnvVars=false).
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
 
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "triage-agent" });
 
         Assert.That(options, Is.Null);
     }
@@ -136,7 +136,7 @@ public class LoadOptionsTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
 
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions
         {
             AgentKey = "triage-agent",
             FallbackToUnsuffixedEnvVars = true,
@@ -152,8 +152,8 @@ public class LoadOptionsTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG__TRIAGE_AGENT", "{\"instructions\":\"triage\"}");
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG__BOOKING_AGENT", "{\"instructions\":\"booking\"}");
 
-        var triage = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
-        var booking = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "booking-agent" });
+        var triage = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var booking = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "booking-agent" });
 
         Assert.That(triage!.Instructions, Is.EqualTo("triage"));
         Assert.That(booking!.Instructions, Is.EqualTo("booking"));
@@ -165,8 +165,8 @@ public class LoadOptionsTests
         // Both "triage-agent" and "triage_agent" canonicalize to "TRIAGE_AGENT" → same env var.
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG__TRIAGE_AGENT", "{\"instructions\":\"shared\"}");
 
-        var withHyphen = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
-        var withUnderscore = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage_agent" });
+        var withHyphen = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var withUnderscore = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { AgentKey = "triage_agent" });
 
         Assert.That(withHyphen!.Instructions, Is.EqualTo("shared"));
         Assert.That(withUnderscore!.Instructions, Is.EqualTo("shared"));
@@ -178,7 +178,7 @@ public class LoadOptionsTests
         // AgentKey containing spaces or punctuation is rejected.
         await Task.CompletedTask;
         Assert.Throws<ArgumentException>(
-            () => OptimizationOptionsLoader.Load(new LoadOptions { AgentKey = "triage agent!" }));
+            () => new TestAgentOptimizationClient().ResolveOptions(new LoadOptions { AgentKey = "triage agent!" }));
     }
 
     // ─────────────────────────────────────────────────────────────────
@@ -197,7 +197,7 @@ public class LoadOptionsTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "../escape");
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", tempDir);
 
-            var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+            var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions());
 
             Assert.That(options, Is.Not.Null);
             Assert.That(options!.Instructions, Is.EqualTo("from baseline"));
@@ -219,7 +219,7 @@ public class LoadOptionsTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", tempDir);
 
             Assert.ThrowsAsync<InvalidOperationException>(
-                async () => await OptimizationOptionsLoader.LoadAsync(new LoadOptions { StrictMode = true }));
+                async () => await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions { StrictMode = true }));
         }
         finally
         {
@@ -241,7 +241,7 @@ public class LoadOptionsTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
         Environment.SetEnvironmentVariable("OPTIMIZATION_RESOLVE_ENDPOINT", "http://127.0.0.1:1/never-listens");
 
-        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+        var options = await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions
         {
             ResolverTimeout = TimeSpan.FromMilliseconds(500),
         });
@@ -256,7 +256,7 @@ public class LoadOptionsTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_RESOLVE_ENDPOINT", "http://127.0.0.1:1/never-listens");
 
         Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+            async () => await new TestAgentOptimizationClient().ResolveOptionsAsync(new LoadOptions
             {
                 StrictMode = true,
                 ResolverTimeout = TimeSpan.FromMilliseconds(500),

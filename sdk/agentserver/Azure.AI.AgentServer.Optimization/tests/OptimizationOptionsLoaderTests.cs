@@ -40,7 +40,7 @@ public class OptimizationOptionsLoaderTests
     [Test]
     public async Task LoadAsync_ReturnsNull_WhenNoSourceAvailable()
     {
-        var result = await OptimizationOptionsLoader.LoadAsync();
+        var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
         Assert.That(result, Is.Null);
     }
@@ -51,7 +51,7 @@ public class OptimizationOptionsLoaderTests
         string json = "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = await OptimizationOptionsLoader.LoadAsync();
+        var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Instructions, Is.EqualTo("Be helpful."));
@@ -70,7 +70,7 @@ public class OptimizationOptionsLoaderTests
         }";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = await OptimizationOptionsLoader.LoadAsync();
+        var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Skills.Count, Is.EqualTo(1));
@@ -86,7 +86,7 @@ public class OptimizationOptionsLoaderTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "not valid json{{{");
 
         Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await OptimizationOptionsLoader.LoadAsync());
+            async () => await new TestAgentOptimizationClient().ResolveOptionsAsync());
     }
 
     [Test]
@@ -95,7 +95,7 @@ public class OptimizationOptionsLoaderTests
         string json = "{\"model\":\"sync-model\"}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = OptimizationOptionsLoader.Load();
+        var result = new TestAgentOptimizationClient().ResolveOptions();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Model, Is.EqualTo("sync-model"));
@@ -106,7 +106,7 @@ public class OptimizationOptionsLoaderTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "   ");
 
-        var result = await OptimizationOptionsLoader.LoadAsync();
+        var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
         Assert.That(result, Is.Null);
     }
@@ -132,7 +132,7 @@ public class OptimizationOptionsLoaderTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_abc123");
 
-            var result = await OptimizationOptionsLoader.LoadAsync();
+            var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("optimized instructions"));
@@ -158,7 +158,7 @@ public class OptimizationOptionsLoaderTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_does_not_exist");
 
-            var result = await OptimizationOptionsLoader.LoadAsync();
+            var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("baseline instructions"));
@@ -183,7 +183,7 @@ public class OptimizationOptionsLoaderTests
 
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
 
-            var result = await OptimizationOptionsLoader.LoadAsync();
+            var result = await new TestAgentOptimizationClient().ResolveOptionsAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("baseline only"));

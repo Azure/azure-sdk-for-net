@@ -67,7 +67,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
             FallbackToUnsuffixedEnvVars = _options.FallbackToUnsuffixedEnvVars,
         };
 
-        OptimizationOptions? options = OptimizationOptionsLoader.Load(loadOptions);
+        OptimizationOptions? options = new LocalFallbackAgentOptimizationClient().ResolveOptions(loadOptions);
 
         if (options is null)
         {
@@ -190,5 +190,10 @@ public class AgentConfigurationProvider : ConfigurationProvider
         }
 
         data[ConfigurationPath.Combine(prefix, key)] = value;
+    }
+
+
+    private sealed class LocalFallbackAgentOptimizationClient : AgentOptimizationClient
+    {
     }
 }

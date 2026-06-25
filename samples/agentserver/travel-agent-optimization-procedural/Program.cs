@@ -10,13 +10,15 @@ using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 
-// ──────────────────────────────────────────────────────────────────────
-// 1. Load optimization config at startup. The resolver API path (Priority 1)
-//    uses the generated AgentOptimizationClient under the hood.
-// ──────────────────────────────────────────────────────────────────────
 var credential = new DefaultAzureCredential();
+string? projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
+    ?? Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
 
-OptimizationOptions? config = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+AgentOptimizationClient optimizationClient = !string.IsNullOrEmpty(projectEndpoint)
+    ? new AgentOptimizationClient(new Uri(projectEndpoint), credential)
+    : new LocalFallbackAgentOptimizationClient();
+
+OptimizationOptions? config = await optimizationClient.ResolveOptionsAsync(new LoadOptions
 {
     Credential = credential,
 }).ConfigureAwait(false);
@@ -26,49 +28,14 @@ LogStartupConfig(config);
 IReadOnlyList<OptimizationSkill>? loadedSkills = null;
 if (config?.SkillsDirectory is not null)
 {
-    loadedSkills = OptimizationOptionsLoader.LoadSkillsFromDirectory(config.SkillsDirectory);
+    loadedSkills = AgentOptimizationClient.LoadSkillsFromDirectory(config.SkillsDirectory);
     Console.WriteLine($"[Startup] Loaded {loadedSkills.Count} skill(s) from {config.SkillsDirectory}");
 }
 
-// ──────────────────────────────────────────────────────────────────────
-// 2. (Optional) Use the generated AgentOptimizationClient directly to manage
-//    optimization jobs — create, list, get status, list candidates.
-// ──────────────────────────────────────────────────────────────────────
-string? projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
-    ?? Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
-
-if (!string.IsNullOrEmpty(projectEndpoint))
-{
-    var jobsClient = new AgentOptimizationClient(new Uri(projectEndpoint), credential);
-
-    Console.Error.WriteLine("[Startup] ── Optimization Jobs (via generated client) ──");
-    try
-    {
-        await foreach (OptimizationJob job in jobsClient.GetAllAsync())
-        {
-            Console.Error.WriteLine($"[Startup]   Job: {job.Id} | Status: {job.Status} | Agent: {job.Inputs?.Agent?.AgentName ?? "?"}");
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.Error.WriteLine($"[Startup]   (Could not list jobs: {ex.Message})");
-    }
-    Console.Error.WriteLine("[Startup] ──────────────────────────────────────────────");
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// 3. Build the Azure OpenAI client (singleton) — endpoint comes from env.
-// ──────────────────────────────────────────────────────────────────────
 string aoaiEndpoint = ResolveAzureOpenAIEndpoint();
 Console.Error.WriteLine($"[Startup] AzureOpenAI endpoint: {aoaiEndpoint}");
 var aoaiClient = new AzureOpenAIClient(new Uri(aoaiEndpoint), credential);
 
-// ──────────────────────────────────────────────────────────────────────
-// 4. Build the Microsoft Agent Framework AIAgent from the optimized
-//    config. The agent's `instructions` and chat deployment name come
-//    from the optimization waterfall — change them by rolling out a new
-//    candidate, not by rebuilding the container.
-// ──────────────────────────────────────────────────────────────────────
 string instructions = config?.ComposeInstructions() ?? "You are a helpful travel assistant.";
 string model = config?.Model ?? "gpt-4.1-mini";
 Console.Error.WriteLine($"[Startup] Building MAF agent — model={model}, instructionsLen={instructions.Length}");
@@ -86,10 +53,6 @@ AIAgent agent = aoaiClient
             AIFunctionFactory.Create((Func<string, string, string, string>)TravelTools.GetHotelPrices),
         ]);
 
-// ──────────────────────────────────────────────────────────────────────
-// 5. Run the Foundry-hosted agent server. The TravelHandler resolves the
-//    AIAgent and the OptimizationOptions from DI per request.
-// ──────────────────────────────────────────────────────────────────────
 ResponsesServer.Run<TravelHandler>(args, builder =>
 {
     builder.Services.AddSingleton(aoaiClient);
@@ -106,8 +69,6 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
 
 static string ResolveAzureOpenAIEndpoint()
 {
-    // Try explicit OpenAI endpoint first, then fall back to project endpoint.
-    // Always strip to host-only — AzureOpenAIClient appends /openai/... itself.
     var explicitEndpoint = Environment.GetEnvironmentVariable("AZURE_AI_OPENAI_ENDPOINT");
     if (!string.IsNullOrWhiteSpace(explicitEndpoint))
     {
@@ -157,4 +118,8 @@ static void LogStartupConfig(OptimizationOptions? config)
     Console.Error.WriteLine("[Startup] ── Composed Instructions (with skills) ─────");
     Console.Error.WriteLine(config.ComposeInstructions());
     Console.Error.WriteLine("[Startup] ────────────────────────────────────────────");
+}
+
+file sealed class LocalFallbackAgentOptimizationClient : AgentOptimizationClient
+{
 }

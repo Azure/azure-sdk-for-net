@@ -20,7 +20,8 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         public async Task LoadOptionsWithDefaults()
         {
             #region Snippet:Optimization_ReadMe_Load
-            OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync();
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            OptimizationOptions options = await client.ResolveOptionsAsync();
 
             if (options is not null)
             {
@@ -40,7 +41,8 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
                 Credential = new StubCredential(),
             };
 
-            OptimizationOptions options = await OptimizationOptionsLoader.LoadAsync(loadOptions);
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), loadOptions.Credential);
+            OptimizationOptions options = await client.ResolveOptionsAsync(loadOptions);
             #endregion
 
             Assert.That(loadOptions.Credential, Is.Not.Null);

@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 /// <remarks>
 /// <para>
 /// At <see cref="AgentConfigurationProvider.Load"/> time the source runs the same
-/// 4-priority waterfall as <see cref="OptimizationOptionsLoader.Load(LoadOptions)"/>
+/// 4-priority waterfall as <see cref="AgentOptimizationClient.ResolveOptions(LoadOptions)"/>
 /// (resolver API → inline JSON → local candidate directory → local baseline directory)
 /// and flattens the resulting <see cref="OptimizationOptions"/> into the configuration
 /// dictionary under <see cref="SectionName"/>.
@@ -51,10 +51,11 @@ public class AgentConfigurationOptions
     public string? SectionName { get; set; }
 
     /// <summary>
-    /// Azure credential used to authenticate the resolver API request (Priority 1).
-    /// When <c>null</c>, the resolver API is skipped unless both OPTIMIZATION_CANDIDATE_ID
-    /// and OPTIMIZATION_RESOLVE_ENDPOINT are set (in which case the resolver will fail
-    /// and fall through or throw depending on <see cref="StrictMode"/>).
+    /// Azure credential used to authenticate the resolver API request (Priority 1)
+    /// when <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> is used. When <c>null</c>, the
+    /// provider can still resolve inline JSON and local-directory fallbacks, but
+    /// resolver endpoint overrides will fail or fall through depending on
+    /// <see cref="StrictMode"/>.
     /// </summary>
     public TokenCredential? Credential { get; set; }
 

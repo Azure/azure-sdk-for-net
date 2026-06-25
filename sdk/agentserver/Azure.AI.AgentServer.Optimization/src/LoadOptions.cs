@@ -6,18 +6,18 @@ using Azure.Core;
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Options that control how <see cref="OptimizationOptionsLoader.Load(LoadOptions)"/>
+/// Options that control how <see cref="AgentOptimizationClient.ResolveOptions(LoadOptions)"/>
 /// resolves an <see cref="OptimizationOptions"/> from the environment.
 /// </summary>
 /// <remarks>
 /// <para>
-/// The loader executes a 4-priority waterfall (resolver API → inline JSON → local
+/// The resolver executes a 4-priority waterfall (resolver API → inline JSON → local
 /// candidate dir → local baseline dir). These options expose knobs for each priority
 /// and control diagnostics (strict mode vs. log-and-continue), agent-key scoping
 /// (multi-agent env-var suffixes), and timeouts.
 /// </para>
 /// <para>
-/// Backwards compatibility: when no <see cref="AgentKey"/> is set the loader behaves
+/// Backwards compatibility: when no <see cref="AgentKey"/> is set the resolver behaves
 /// identically to the legacy zero-arg overloads — all four priorities are evaluated
 /// against the un-suffixed environment variables.
 /// </para>
@@ -33,9 +33,10 @@ public class LoadOptions
     public string AgentKey { get; set; }
 
     /// <summary>
-    /// Credential for authenticating to the resolver API (Priority 1).
-    /// When <c>null</c>, the resolver API is skipped unless both OPTIMIZATION_CANDIDATE_ID
-    /// and OPTIMIZATION_RESOLVE_ENDPOINT are set with a valid credential.
+    /// Credential for authenticating to the resolver API (Priority 1) when
+    /// <c>OPTIMIZATION_RESOLVE_ENDPOINT</c> overrides the client's configured endpoint.
+    /// When calling <see cref="AgentOptimizationClient.ResolveOptionsAsync(LoadOptions, CancellationToken)"/>
+    /// on a client that already has an authenticated pipeline, this can be left <c>null</c>.
     /// </summary>
     public TokenCredential Credential { get; set; }
 

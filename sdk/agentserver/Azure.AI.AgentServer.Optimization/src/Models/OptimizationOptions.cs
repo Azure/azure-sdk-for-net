@@ -7,20 +7,20 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Resolved optimization options returned by <see cref="OptimizationOptionsLoader.LoadAsync(LoadOptions, System.Threading.CancellationToken)"/>.
+/// Resolved optimization options returned by <see cref="AgentOptimizationClient.ResolveOptionsAsync(LoadOptions, System.Threading.CancellationToken)"/>.
 /// Contains the optimized instructions, model, temperature, skills, and tool definitions.
 /// </summary>
 /// <remarks>
 /// <para>
 /// This type is the single canonical shape for optimization data — it is both the
-/// loader's return value and the binding target for <c>Microsoft.Extensions.Configuration</c>
+/// resolver's return value and the binding target for <c>Microsoft.Extensions.Configuration</c>
 /// (via the <c>Azure.AI.AgentServer.Optimization.Configuration</c> package). Properties
 /// have public setters and collections are mutable so the configuration binder can
 /// populate them.
 /// </para>
 /// <para>
 /// Callers who want a defensively-immutable view should copy the relevant fields into
-/// their own type; the loader does not freeze instances after handing them out.
+/// their own type; the resolver does not freeze instances after handing them out.
 /// </para>
 /// </remarks>
 public partial class OptimizationOptions
@@ -51,7 +51,7 @@ public partial class OptimizationOptions
 
     /// <summary>
     /// Path to a directory containing skill files for on-demand loading via
-    /// <see cref="OptimizationOptionsLoader.LoadSkillsFromDirectory"/>.
+    /// <see cref="AgentOptimizationClient.LoadSkillsFromDirectory"/>.
     /// </summary>
     public string SkillsDirectory { get; set; }
 
