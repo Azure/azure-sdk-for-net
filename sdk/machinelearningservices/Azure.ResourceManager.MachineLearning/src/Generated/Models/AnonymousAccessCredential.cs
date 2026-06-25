@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AnonymousAccessCredential : DataReferenceCredential
     {
         /// <summary> Initializes a new instance of <see cref="AnonymousAccessCredential"/>. </summary>
-        internal AnonymousAccessCredential()
+        internal AnonymousAccessCredential() : base(DataReferenceCredentialType.NoCredentials)
         {
-            CredentialType = DataReferenceCredentialType.NoCredentials;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnonymousAccessCredential"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnonymousAccessCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnonymousAccessCredential(DataReferenceCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(credentialType, additionalBinaryDataProperties)
         {
-            CredentialType = credentialType;
         }
     }
 }

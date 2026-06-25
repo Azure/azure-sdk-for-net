@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    /// <summary>
+    /// Azure data factory nested object which contains information about creating pipeline run
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MultiplePipelineTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="TumblingWindowTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="ChainingTrigger"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownTrigger))]
-    public partial class DataFactoryTriggerProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryTriggerProperties>
+    public abstract partial class DataFactoryTriggerProperties : IJsonModel<DataFactoryTriggerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryTriggerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryTriggerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryTriggerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryTriggerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryTriggerProperties IPersistableModel<DataFactoryTriggerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryTriggerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryTriggerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
@@ -50,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Annotations)
+                foreach (BinaryData item in Annotations)
                 {
                     if (item == null)
                     {
@@ -58,9 +101,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,9 +115,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -82,72 +125,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        DataFactoryTriggerProperties IJsonModel<DataFactoryTriggerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryTriggerProperties IJsonModel<DataFactoryTriggerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryTriggerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryTriggerProperties(document.RootElement, options);
         }
 
-        internal static DataFactoryTriggerProperties DeserializeDataFactoryTriggerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataFactoryTriggerProperties DeserializeDataFactoryTriggerProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
-                    case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
-                    case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element, options);
-                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
-                    case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element, options);
-                    case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element, options);
-                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
-                    case "TumblingWindowTrigger": return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element, options);
+                    case "MultiplePipelineTrigger":
+                        return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element, options);
+                    case "ScheduleTrigger":
+                        return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element, options);
+                    case "BlobTrigger":
+                        return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element, options);
+                    case "BlobEventsTrigger":
+                        return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element, options);
+                    case "CustomEventsTrigger":
+                        return CustomEventsTrigger.DeserializeCustomEventsTrigger(element, options);
+                    case "TumblingWindowTrigger":
+                        return TumblingWindowTrigger.DeserializeTumblingWindowTrigger(element, options);
+                    case "RerunTumblingWindowTrigger":
+                        return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element, options);
+                    case "ChainingTrigger":
+                        return ChainingTrigger.DeserializeChainingTrigger(element, options);
                 }
             }
             return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
-
-        BinaryData IPersistableModel<DataFactoryTriggerProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryTriggerProperties IPersistableModel<DataFactoryTriggerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryTriggerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryTriggerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryTriggerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

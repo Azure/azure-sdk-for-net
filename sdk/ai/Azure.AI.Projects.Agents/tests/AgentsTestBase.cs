@@ -206,25 +206,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         CodeInterpreter,
         CodeInterpreterGen,
         FileSearch,
-        FunctionCall,
-        ComputerUse,
-        ImageGeneration,
         WebSearch,
-        WebSearchPreview,
         AzureAISearch,
-        Memory,
-        AzureFunction,
-        BingGrounding,
-        BingGroundingCustom,
         MCP,
         OpenAPI,
         A2A,
         BrowserAutomation,
-        MicrosoftFabric,
-        Sharepoint,
-        ConnectedAgent,
-        DeepResearch,
-        AzureFunctionTool,
+        ReminderPreview,
+        WorkIQ,
+        FabricIQ
     }
 
     private AzureAISearchToolIndex GetAISearchIndex()
@@ -240,48 +230,14 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         return index;
     }
 
-    private AzureFunctionTool GetFunctionTool()
-    {
-        AzureFunctionDefinitionFunction functionDefinition = new(
-            name: "foo",
-            parameters: BinaryData.FromObjectAsJson(
-                new
-                {
-                    Type = "object",
-                    Properties = new
-                    {
-                        query = new
-                        {
-                            Type = "string",
-                            Description = "The question to ask.",
-                        }
-                    }
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-            )
-        )
-        {
-            Description = "Get answers from the foo bot.",
-        };
-        return new AzureFunctionTool(
-            new AzureFunctionDefinition(
-                function: functionDefinition,
-                inputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-foo-input")),
-                outputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(queueServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI, queueName: "azure-function-tool-output"))
-                )
-            );
-    }
-
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
     /// <param name="toolType"></param>
     /// <returns></returns>
-    protected ResponseTool GetAgentToolDefinition(ToolType toolType)
+    protected ToolboxTool GetAgentToolDefinition(ToolType toolType)
     {
-        ResponseTool tool = toolType switch
+        ToolboxTool tool = toolType switch
         {
             // To run the Code interpreter and file search sample, please upload the file using code below.
             // This code cannot be run during tests as recordings are not properly handled by the file upload.
@@ -293,87 +249,92 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             // OpenAIFileClient fileClient = projectClient.OpenAI.GetOpenAIFileClient();
             // OpenAIFile uploadedFile = fileClient.UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
             // Console.WriteLine(uploadedFile.id)
-            ToolType.CodeInterpreter => ResponseTool.CreateCodeInterpreterTool(
-                    new CodeInterpreterToolContainer(
-                        CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
-                            fileIds: [TestEnvironment.OPENAI_FILE_ID]
-                        )
-                    )
-                ),
-            ToolType.CodeInterpreterGen => ResponseTool.CreateCodeInterpreterTool(
-                    new CodeInterpreterToolContainer(
+            ToolType.CodeInterpreter => new CodeInterpreterToolboxTool()
+            {
+                Name = "code-interpreter-file",
+                Description = "Test code interpreter with file ID",
+                Container = new CodeInterpreterToolContainer(
+                    CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
+                        fileIds: [TestEnvironment.OPENAI_FILE_ID]
+                    ))
+            },
+            ToolType.CodeInterpreterGen => new CodeInterpreterToolboxTool()
+            {
+                Name = "code-interpreter",
+                Description = "Test code interpreter",
+                Container = new CodeInterpreterToolContainer(
                         CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
                             fileIds: []
-                        )
-                    )
-                ),
-            ToolType.FileSearch => ResponseTool.CreateFileSearchTool(vectorStoreIds: [TestEnvironment.OPENAI_VECTOR_STORE_ID]),
-            ToolType.FunctionCall => ResponseTool.CreateFunctionTool(
-                functionName: "GetCityNicknameForTest",
-                functionDescription: "Gets the nickname of a city, e.g. 'LA' for 'Los Angeles, CA'.",
-                functionParameters: BinaryData.FromObjectAsJson(
-                    new
-                    {
-                        Type = "object",
-                        Properties = new
-                        {
-                            Location = new
-                            {
-                                Type = "string",
-                                Description = "The city and state, e.g. San Francisco, CA",
-                            },
-                        },
-                        Required = new[] { "location" },
-                    },
-                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-                ),
-                strictModeEnabled: false
-            ),
-            ToolType.ComputerUse => ResponseTool.CreateComputerTool(environment: new ComputerToolEnvironment("windows"), displayWidth: 1026, displayHeight: 769),
-            ToolType.ImageGeneration => ResponseTool.CreateImageGenerationTool(
-                model: TestEnvironment.IMAGE_GENERATION_DEPLOYMENT_NAME,
-                quality: ImageGenerationToolQuality.Low,
-                size: ImageGenerationToolSize.W1024xH1024
-            ),
-            ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
-            ToolType.WebSearchPreview => ResponseTool.CreateWebSearchPreviewTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
-            ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: "test-memory-store", scope: MEMORY_STORE_SCOPE),
-            ToolType.AzureAISearch => new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
-            ToolType.BingGrounding => new BingGroundingTool(new BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
-            )),
-            ToolType.BingGroundingCustom => new BingCustomSearchPreviewTool(new BingCustomSearchToolOptions(
-                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
-            )),
-            ToolType.MCP => ResponseTool.CreateMcpTool(
-                serverLabel: "api-specs",
-                serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
-            )),
-            ToolType.OpenAPI => new OpenAPITool(new OpenApiFunctionDefinition(
+                    ))
+            },
+            ToolType.FileSearch =>new FileSearchToolboxTool()
+            {
+                Name = "file-search",
+                Description = "Test file search",
+                VectorStoreIds = { TestEnvironment.OPENAI_VECTOR_STORE_ID }
+            },
+            ToolType.WebSearch => new WebSearchToolboxTool()
+            {
+                Name = "web-search",
+                Description = "Test web search",
+                UserLocation = new OpenAI.WebSearchApproximateLocation()
+                {
+                    Country = "US",
+                    Region = "Pennsylvania",
+                    City = "Centralia"
+                },
+            },
+            ToolType.AzureAISearch => new AzureAISearchToolboxTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()]))
+            {
+                Name = "azure-ai-search",
+                Description = "Test Azure AI search"
+            },
+            ToolType.MCP => new MCPToolboxTool(serverLabel: "api-specs")
+            {
+                Name = "mcp-tool",
+                Description = "Test mcp tool",
+                ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            },
+            ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
                 specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
                 authentication: new OpenAPIAnonymousAuthenticationDetails()
-            )),
-            ToolType.Sharepoint => new SharepointPreviewTool(new SharePointGroundingToolOptions()
+            ))
             {
-                ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
-            }),
-            ToolType.BrowserAutomation => new BrowserAutomationPreviewTool(
+                Name = "open-api",
+                Description = "Test Open API"
+            },
+            ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            )),
-            ToolType.MicrosoftFabric => new MicrosoftFabricPreviewTool(
-                new FabricDataAgentToolOptions()
-                {
-                    ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
-                }
-            ),
-            ToolType.A2A => new A2APreviewTool()
+            ))
             {
+                Name = "browser-automation",
+                Description = "Test browser automation"
+            },
+            ToolType.A2A => new A2APreviewToolboxTool()
+            {
+                Name = "a2a-preview",
+                Description = "Test A2A",
                 ProjectConnectionId = TestEnvironment.A2A_CONNECTION_ID
             },
-            ToolType.AzureFunction => GetFunctionTool(),
+            ToolType.WorkIQ => new WorkIQPreviewToolboxTool(TestEnvironment.WORKIQ_CONNECTION_ID)
+            {
+                Name = "work-iq",
+                Description = "Test Work IQ"
+            },
+            ToolType.FabricIQ => new FabricIQPreviewToolboxTool(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
+            {
+                Name = "fabric-iq",
+                Description = "Test Fabric IQ",
+                RequireApproval = BinaryData.FromObjectAsJson("never"),
+            },
+            ToolType.ReminderPreview => new ReminderPreviewToolboxTool()
+            {
+                Name = "reminder-preview",
+                Description = "Test reminder preview"
+            },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return tool;
@@ -407,7 +368,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), TestEnvironment.Credential, options);
+        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), options);
 
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +19,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="deploymentType"> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Common Data Service for Apps server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario. 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
-        public CommonDataServiceForAppsLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType)
+        public CommonDataServiceForAppsLinkedService(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType) : base("CommonDataServiceForApps")
         {
             Argument.AssertNotNull(deploymentType, nameof(deploymentType));
             Argument.AssertNotNull(authenticationType, nameof(authenticationType));
 
-            DeploymentType = deploymentType;
-            AuthenticationType = authenticationType;
-            LinkedServiceType = "CommonDataServiceForApps";
+            TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties(deploymentType, authenticationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/>. </summary>
@@ -35,68 +34,203 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="deploymentType"> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </param>
-        /// <param name="hostName"> The host name of the on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </param>
-        /// <param name="port"> The port of on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <param name="serviceUri"> The URL to the Microsoft Common Data Service for Apps server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </param>
-        /// <param name="organizationName"> The organization name of the Common Data Service for Apps instance. The property is required for on-prem and required for online when there are more than one Common Data Service for Apps instances associated with the user. Type: string (or Expression with resultType string). </param>
-        /// <param name="authenticationType"> The authentication type to connect to Common Data Service for Apps server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario. 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </param>
-        /// <param name="domain"> The Active Directory domain that will verify user credentials. Type: string (or Expression with resultType string). </param>
-        /// <param name="username"> User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the Common Data Service for Apps instance. </param>
-        /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal CommonDataServiceForAppsLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> deploymentType, DataFactoryElement<string> hostName, DataFactoryElement<int> port, DataFactoryElement<string> serviceUri, DataFactoryElement<string> organizationName, DataFactoryElement<string> authenticationType, DataFactoryElement<string> domain, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Common Data Service for Apps linked service properties. </param>
+        /// <param name="password"></param>
+        internal CommonDataServiceForAppsLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, CommonDataServiceForAppsLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            DeploymentType = deploymentType;
-            HostName = hostName;
-            Port = port;
-            ServiceUri = serviceUri;
-            OrganizationName = organizationName;
-            AuthenticationType = authenticationType;
-            Domain = domain;
-            Username = username;
+            TypeProperties = typeProperties;
             Password = password;
-            ServicePrincipalId = servicePrincipalId;
-            ServicePrincipalCredentialType = servicePrincipalCredentialType;
-            ServicePrincipalCredential = servicePrincipalCredential;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "CommonDataServiceForApps";
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedService"/> for deserialization. </summary>
-        internal CommonDataServiceForAppsLinkedService()
-        {
-        }
+        /// <summary> Common Data Service for Apps linked service properties. </summary>
+        internal CommonDataServiceForAppsLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The deployment type of the Common Data Service for Apps instance. 'Online' for Common Data Service for Apps Online and 'OnPremisesWithIfd' for Common Data Service for Apps on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> DeploymentType { get; set; }
+        public DataFactoryElement<string> DeploymentType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DeploymentType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.DeploymentType = value;
+            }
+        }
+
         /// <summary> The host name of the on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> HostName { get; set; }
+        public DataFactoryElement<string> HostName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.HostName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.HostName = value;
+            }
+        }
+
         /// <summary> The port of on-premises Common Data Service for Apps server. The property is required for on-prem and not allowed for online. Default is 443. Type: integer (or Expression with resultType integer), minimum: 0. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> The URL to the Microsoft Common Data Service for Apps server. The property is required for on-line and not allowed for on-prem. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServiceUri { get; set; }
+        public DataFactoryElement<string> ServiceUri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServiceUri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServiceUri = value;
+            }
+        }
+
         /// <summary> The organization name of the Common Data Service for Apps instance. The property is required for on-prem and required for online when there are more than one Common Data Service for Apps instances associated with the user. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> OrganizationName { get; set; }
+        public DataFactoryElement<string> OrganizationName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.OrganizationName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.OrganizationName = value;
+            }
+        }
+
         /// <summary> The authentication type to connect to Common Data Service for Apps server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario. 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AuthenticationType { get; set; }
+        public DataFactoryElement<string> AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The Active Directory domain that will verify user credentials. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Domain { get; set; }
+        public DataFactoryElement<string> Domain
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Domain;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Domain = value;
+            }
+        }
+
         /// <summary> User name to access the Common Data Service for Apps instance. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Username { get; set; }
-        /// <summary> Password to access the Common Data Service for Apps instance. </summary>
-        public DataFactorySecret Password { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> The client ID of the application in Azure Active Directory used for Server-To-Server authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
-        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
-        public DataFactorySecret ServicePrincipalCredential { get; set; }
+        public DataFactoryElement<string> ServicePrincipalCredentialType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalCredentialType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalCredentialType = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

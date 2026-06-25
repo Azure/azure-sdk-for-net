@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class AutoSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of <see cref="AutoSeasonality"/>. </summary>
-        public AutoSeasonality()
+        public AutoSeasonality() : base(SeasonalityMode.Auto)
         {
-            Mode = SeasonalityMode.Auto;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(mode, additionalBinaryDataProperties)
         {
-            Mode = mode;
         }
     }
 }

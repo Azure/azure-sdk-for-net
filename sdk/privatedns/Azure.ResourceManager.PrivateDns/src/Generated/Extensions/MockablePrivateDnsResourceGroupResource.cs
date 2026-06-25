@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PrivateDns;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePrivateDnsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePrivateDnsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePrivateDnsResourceGroupResource for mocking. </summary>
         protected MockablePrivateDnsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePrivateDnsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePrivateDnsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePrivateDnsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PrivateDnsZoneResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
+        /// <summary> Gets a collection of PrivateDnsZones in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateDnsZones and their operations over a PrivateDnsZoneResource. </returns>
         public virtual PrivateDnsZoneCollection GetPrivateDnsZones()
         {
             return GetCachedClient(client => new PrivateDnsZoneCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// Gets a Private DNS zone. Retrieves the zone properties, but not the virtual networks links or the record sets within the zone.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateZones_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateZones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PrivateDnsZoneResource>> GetPrivateDnsZoneAsync(string privateZoneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+
             return await GetPrivateDnsZones().GetAsync(privateZoneName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// Gets a Private DNS zone. Retrieves the zone properties, but not the virtual networks links or the record sets within the zone.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateZones_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateZones_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         [ForwardsClientCalls]
         public virtual Response<PrivateDnsZoneResource> GetPrivateDnsZone(string privateZoneName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateZoneName, nameof(privateZoneName));
+
             return GetPrivateDnsZones().Get(privateZoneName, cancellationToken);
         }
     }
