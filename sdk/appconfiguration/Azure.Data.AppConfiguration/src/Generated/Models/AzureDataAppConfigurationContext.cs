@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(FeatureFlag))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagAllocation))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagConditions))]
-    [ModelReaderWriterBuildable(typeof(FeatureFlagFilter))]
+    [ModelReaderWriterBuildable(typeof(FeatureFilter))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagListResult))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetryConfiguration))]
     [ModelReaderWriterBuildable(typeof(FeatureFlagVariantDefinition))]

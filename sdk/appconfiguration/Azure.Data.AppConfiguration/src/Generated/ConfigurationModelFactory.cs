@@ -54,9 +54,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="requirementType"> The requirement type for the conditions. </param>
         /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>
         /// <returns> A new <see cref="AppConfiguration.FeatureFlagConditions"/> instance for mocking. </returns>
-        public static FeatureFlagConditions FeatureFlagConditions(RequirementType? requirementType = default, IEnumerable<FeatureFlagFilter> filters = default)
+        public static FeatureFlagConditions FeatureFlagConditions(RequirementType? requirementType = default, IEnumerable<FeatureFilter> filters = default)
         {
-            filters ??= new ChangeTrackingList<FeatureFlagFilter>();
+            filters ??= new ChangeTrackingList<FeatureFilter>();
 
             return new FeatureFlagConditions(requirementType, filters.ToList(), additionalBinaryDataProperties: null);
         }
@@ -64,12 +64,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Feature Flag Filter object. </summary>
         /// <param name="name"> The name of the filter. </param>
         /// <param name="parameters"> The parameters used by the filter. </param>
-        /// <returns> A new <see cref="AppConfiguration.FeatureFlagFilter"/> instance for mocking. </returns>
-        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, string> parameters = default)
+        /// <returns> A new <see cref="AppConfiguration.FeatureFilter"/> instance for mocking. </returns>
+        public static FeatureFilter FeatureFilter(string name = default, IDictionary<string, string> parameters = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
+            return new FeatureFilter(name, parameters, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Feature Flag Variants object. </summary>

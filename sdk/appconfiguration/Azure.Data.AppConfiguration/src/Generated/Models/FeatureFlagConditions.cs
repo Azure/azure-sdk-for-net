@@ -19,14 +19,14 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of <see cref="FeatureFlagConditions"/>. </summary>
         public FeatureFlagConditions()
         {
-            Filters = new ChangeTrackingList<FeatureFlagFilter>();
+            Filters = new ChangeTrackingList<FeatureFilter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FeatureFlagConditions"/>. </summary>
         /// <param name="requirementType"> The requirement type for the conditions. </param>
         /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlagConditions(RequirementType? requirementType, IList<FeatureFlagFilter> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlagConditions(RequirementType? requirementType, IList<FeatureFilter> filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequirementType = requirementType;
             Filters = filters;
@@ -37,6 +37,6 @@ namespace Azure.Data.AppConfiguration
         public RequirementType? RequirementType { get; set; }
 
         /// <summary> The filters that will conditionally enable or disable the flag. </summary>
-        public IList<FeatureFlagFilter> Filters { get; }
+        public IList<FeatureFilter> Filters { get; }
     }
 }

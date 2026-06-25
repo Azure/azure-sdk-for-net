@@ -82,7 +82,7 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
-                foreach (FeatureFlagFilter item in Filters)
+                foreach (FeatureFilter item in Filters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,7 +131,7 @@ namespace Azure.Data.AppConfiguration
                 return null;
             }
             RequirementType? requirementType = default;
-            IList<FeatureFlagFilter> filters = default;
+            IList<FeatureFilter> filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,10 +150,10 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    List<FeatureFlagFilter> array = new List<FeatureFlagFilter>();
+                    List<FeatureFilter> array = new List<FeatureFilter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FeatureFlagFilter.DeserializeFeatureFlagFilter(item, options));
+                        array.Add(FeatureFilter.DeserializeFeatureFilter(item, options));
                     }
                     filters = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FeatureFlagConditions(requirementType, filters ?? new ChangeTrackingList<FeatureFlagFilter>(), additionalBinaryDataProperties);
+            return new FeatureFlagConditions(requirementType, filters ?? new ChangeTrackingList<FeatureFilter>(), additionalBinaryDataProperties);
         }
     }
 }

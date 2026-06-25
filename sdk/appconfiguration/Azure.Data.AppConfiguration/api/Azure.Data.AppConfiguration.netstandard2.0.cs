@@ -151,11 +151,11 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = null, string label = null, System.Collections.Generic.IEnumerable<string> tags = null) { throw null; }
         public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition, System.DateTimeOffset? createdOn, System.DateTimeOffset? expiresOn, System.TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, System.Collections.Generic.IDictionary<string, string> tags, Azure.ETag eTag) { throw null; }
         public static Azure.Data.AppConfiguration.ConfigurationSnapshot ConfigurationSnapshot(string name = null, Azure.Data.AppConfiguration.ConfigurationSnapshotStatus? status = default(Azure.Data.AppConfiguration.ConfigurationSnapshotStatus?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.ConfigurationSettingsFilter> filters = null, Azure.Data.AppConfiguration.SnapshotComposition? snapshotComposition = default(Azure.Data.AppConfiguration.SnapshotComposition?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.TimeSpan? retentionPeriod = default(System.TimeSpan?), long? sizeInBytes = default(long?), long? itemCount = default(long?), System.Collections.Generic.IDictionary<string, string> tags = null, string description = null, Azure.ETag eTag = default(Azure.ETag)) { throw null; }
+        public static Azure.Data.AppConfiguration.FeatureFilter FeatureFilter(string name = null, System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlag FeatureFlag(string name = null, bool? enabled = default(bool?), string label = null, string description = null, Azure.Data.AppConfiguration.FeatureFlagConditions conditions = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.FeatureFlagVariantDefinition> variants = null, Azure.Data.AppConfiguration.FeatureFlagAllocation allocation = null, Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration telemetry = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string etag = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagAllocation FeatureFlagAllocation(string defaultWhenDisabled = null, string defaultWhenEnabled = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.PercentileAllocation> percentile = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.UserAllocation> user = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.GroupAllocation> group = null, string seed = null) { throw null; }
-        public static Azure.Data.AppConfiguration.FeatureFlagConditions FeatureFlagConditions(Azure.Data.AppConfiguration.RequirementType? requirementType = default(Azure.Data.AppConfiguration.RequirementType?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.FeatureFlagFilter> filters = null) { throw null; }
+        public static Azure.Data.AppConfiguration.FeatureFlagConditions FeatureFlagConditions(Azure.Data.AppConfiguration.RequirementType? requirementType = default(Azure.Data.AppConfiguration.RequirementType?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.FeatureFilter> filters = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
-        public static Azure.Data.AppConfiguration.FeatureFlagFilter FeatureFlagFilter(string name = null, System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = false, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = null, string value = null, string contentType = null, Azure.Data.AppConfiguration.StatusOverride? statusOverride = default(Azure.Data.AppConfiguration.StatusOverride?)) { throw null; }
         public static Azure.Data.AppConfiguration.GroupAllocation GroupAllocation(string variant = null, System.Collections.Generic.IEnumerable<string> groups = null) { throw null; }
@@ -267,6 +267,22 @@ namespace Azure.Data.AppConfiguration
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public partial class FeatureFilter : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFilter>
+    {
+        public FeatureFilter(string name) { }
+        public FeatureFilter(string name, System.Collections.Generic.IDictionary<string, string> parameters) { }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        protected virtual Azure.Data.AppConfiguration.FeatureFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AppConfiguration.FeatureFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AppConfiguration.FeatureFilter System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AppConfiguration.FeatureFilter System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FeatureFlag : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlag>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlag>
     {
         public FeatureFlag() { }
@@ -315,7 +331,7 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagConditions : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagConditions>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagConditions>
     {
         public FeatureFlagConditions() { }
-        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> Filters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFilter> Filters { get { throw null; } }
         public Azure.Data.AppConfiguration.RequirementType? RequirementType { get { throw null; } set { } }
         protected virtual Azure.Data.AppConfiguration.FeatureFlagConditions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -364,21 +380,12 @@ namespace Azure.Data.AppConfiguration
         public static bool operator !=(Azure.Data.AppConfiguration.FeatureFlagFields left, Azure.Data.AppConfiguration.FeatureFlagFields right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FeatureFlagFilter : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>
+    public partial class FeatureFlagFilter
     {
         public FeatureFlagFilter(string name) { }
         public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, string> parameters) { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
-        protected virtual Azure.Data.AppConfiguration.FeatureFlagFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Data.AppConfiguration.FeatureFlagFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Data.AppConfiguration.FeatureFlagFilter System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Data.AppConfiguration.FeatureFlagFilter System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FeatureFlagSelector
     {

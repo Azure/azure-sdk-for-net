@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Feature Flag Filter object. </summary>
-    public partial class FeatureFlagFilter
+    public partial class FeatureFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FeatureFlagFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureFilter"/>. </summary>
         /// <param name="name"> The name of the filter. </param>
         /// <param name="parameters"> The parameters used by the filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlagFilter(string name, IDictionary<string, string> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFilter(string name, IDictionary<string, string> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Parameters = parameters;
