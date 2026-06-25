@@ -7,16 +7,65 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeConnectionInfo : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeConnectionInfo>
+    /// <summary> Connection information for encrypting the on-premises data source credentials. </summary>
+    public partial class IntegrationRuntimeConnectionInfo : IJsonModel<IntegrationRuntimeConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeConnectionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIntegrationRuntimeConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeConnectionInfo IPersistableModel<IntegrationRuntimeConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IntegrationRuntimeConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IntegrationRuntimeConnectionInfo"/> from. </param>
+        internal static IntegrationRuntimeConnectionInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIntegrationRuntimeConnectionInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IntegrationRuntimeConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ServiceToken))
             {
                 writer.WritePropertyName("serviceToken"u8);
@@ -68,9 +116,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -78,22 +126,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        IntegrationRuntimeConnectionInfo IJsonModel<IntegrationRuntimeConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeConnectionInfo IJsonModel<IntegrationRuntimeConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeConnectionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIntegrationRuntimeConnectionInfo(document.RootElement, options);
         }
 
-        internal static IntegrationRuntimeConnectionInfo DeserializeIntegrationRuntimeConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IntegrationRuntimeConnectionInfo DeserializeIntegrationRuntimeConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,51 +157,49 @@ namespace Azure.ResourceManager.DataFactory.Models
             string version = default;
             string publicKey = default;
             bool? isIdentityCertExprired = default;
-            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceToken"u8))
+                if (prop.NameEquals("serviceToken"u8))
                 {
-                    serviceToken = property.Value.GetString();
+                    serviceToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityCertThumbprint"u8))
+                if (prop.NameEquals("identityCertThumbprint"u8))
                 {
-                    identityCertThumbprint = property.Value.GetString();
+                    identityCertThumbprint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostServiceUri"u8))
+                if (prop.NameEquals("hostServiceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostServiceUri = new Uri(property.Value.GetString());
+                    hostServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicKey"u8))
+                if (prop.NameEquals("publicKey"u8))
                 {
-                    publicKey = property.Value.GetString();
+                    publicKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isIdentityCertExprired"u8))
+                if (prop.NameEquals("isIdentityCertExprired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isIdentityCertExprired = property.Value.GetBoolean();
+                    isIdentityCertExprired = prop.Value.GetBoolean();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeConnectionInfo(
                 serviceToken,
                 identityCertThumbprint,
@@ -156,38 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 version,
                 publicKey,
                 isIdentityCertExprired,
-                additionalProperties);
+                new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
-
-        BinaryData IPersistableModel<IntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IntegrationRuntimeConnectionInfo IPersistableModel<IntegrationRuntimeConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIntegrationRuntimeConnectionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeConnectionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IntegrationRuntimeConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

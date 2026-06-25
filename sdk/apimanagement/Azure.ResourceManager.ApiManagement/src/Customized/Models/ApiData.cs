@@ -8,7 +8,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> Summary of revision metadata. </summary>
+    // Old SDK exposed both string (TermsOfServiceLink/ServiceLink) and Uri (TermsOfServiceUri/ServiceUri).
+    // The string versions are generated natively. These provide Uri wrappers for backward compat.
+    // Not spec-fixable: @@alternateType replaces the property type entirely.
     public partial class ApiData
     {
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                TermsOfServiceLink = value.AbsoluteUri;
+                TermsOfServiceLink = value?.AbsoluteUri;
             }
         }
 
@@ -35,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                ServiceLink = value.AbsoluteUri;
+                ServiceLink = value?.AbsoluteUri;
             }
         }
     }

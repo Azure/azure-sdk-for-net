@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningSharedPrivateLinkResource. </summary>
     public partial class MachineLearningSharedPrivateLinkResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         public MachineLearningSharedPrivateLinkResource()
@@ -53,35 +25,75 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSharedPrivateLinkResource"/>. </summary>
         /// <param name="name"> Unique name of the private link. </param>
-        /// <param name="privateLinkResourceId"> The resource id that private link links to. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requestMessage"> Request message. </param>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningSharedPrivateLinkResource(string name, ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, MachineLearningPrivateEndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of a shared private link resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSharedPrivateLinkResource(string name, SharedPrivateLinkResourceProperty properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            PrivateLinkResourceId = privateLinkResourceId;
-            GroupId = groupId;
-            RequestMessage = requestMessage;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique name of the private link. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The resource id that private link links to. </summary>
-        [WirePath("properties.privateLinkResourceId")]
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The private link resource group id. </summary>
+
+        /// <summary> Properties of a shared private link resource. </summary>
+        [WirePath("properties")]
+        internal SharedPrivateLinkResourceProperty Properties { get; set; }
+
+        /// <summary> group id of the private link. </summary>
         [WirePath("properties.groupId")]
-        public string GroupId { get; set; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperty();
+                }
+                Properties.GroupId = value;
+            }
+        }
+
+        /// <summary> the resource id that private link links to. </summary>
+        [WirePath("properties.privateLinkResourceId")]
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperty();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
         /// <summary> Request message. </summary>
         [WirePath("properties.requestMessage")]
-        public string RequestMessage { get; set; }
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        [WirePath("properties.status")]
-        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        public string RequestMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SharedPrivateLinkResourceProperty();
+                }
+                Properties.RequestMessage = value;
+            }
+        }
     }
 }

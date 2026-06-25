@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreSettings))]
     [ModelReaderWriterBuildable(typeof(SourceScanConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceCertificateDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VaultCertificateResult))]
@@ -82,6 +81,7 @@ namespace Azure.ResourceManager.RecoveryServices
     [ModelReaderWriterBuildable(typeof(VaultUsage))]
     [ModelReaderWriterBuildable(typeof(VaultUsageList))]
     [ModelReaderWriterBuildable(typeof(VaultUsageNameInfo))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRecoveryServicesContext : ModelReaderWriterContext
     {
     }

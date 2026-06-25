@@ -2,13 +2,9 @@
 
 ## 1.7.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Migrated the library to TypeSpec-based code generation.
 
 ## 1.6.3 (2026-06-13)
 

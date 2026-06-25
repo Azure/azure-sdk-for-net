@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SqlServerDatabaseReplicationRoleExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SqlServerDatabaseReplicationRole value) => value switch
         {
             SqlServerDatabaseReplicationRole.Primary => "Primary",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerDatabaseReplicationRole value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SqlServerDatabaseReplicationRole ToSqlServerDatabaseReplicationRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return SqlServerDatabaseReplicationRole.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return SqlServerDatabaseReplicationRole.Secondary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonReadableSecondary")) return SqlServerDatabaseReplicationRole.NonReadableSecondary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Source")) return SqlServerDatabaseReplicationRole.Source;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Copy")) return SqlServerDatabaseReplicationRole.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return SqlServerDatabaseReplicationRole.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return SqlServerDatabaseReplicationRole.Secondary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NonReadableSecondary"))
+            {
+                return SqlServerDatabaseReplicationRole.NonReadableSecondary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Source"))
+            {
+                return SqlServerDatabaseReplicationRole.Source;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Copy"))
+            {
+                return SqlServerDatabaseReplicationRole.Copy;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SqlServerDatabaseReplicationRole value.");
         }
     }

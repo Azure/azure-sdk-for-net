@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
+    /// <summary> Whether or not to restrict outbound network access for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct ServerNetworkAccessFlag : IEquatable<ServerNetworkAccessFlag>
     {
         private readonly string _value;
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> SecuredByPerimeter. </summary>
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Initializes a new instance of <see cref="ServerNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerNetworkAccessFlag(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
+            _value = value;
+        }
 
         /// <summary> Enabled. </summary>
         public static ServerNetworkAccessFlag Enabled { get; } = new ServerNetworkAccessFlag(EnabledValue);
+
         /// <summary> Disabled. </summary>
         public static ServerNetworkAccessFlag Disabled { get; } = new ServerNetworkAccessFlag(DisabledValue);
+
         /// <summary> SecuredByPerimeter. </summary>
         public static ServerNetworkAccessFlag SecuredByPerimeter { get; } = new ServerNetworkAccessFlag(SecuredByPerimeterValue);
+
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerNetworkAccessFlag left, ServerNetworkAccessFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerNetworkAccessFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerNetworkAccessFlag left, ServerNetworkAccessFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerNetworkAccessFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerNetworkAccessFlag(string value) => new ServerNetworkAccessFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerNetworkAccessFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerNetworkAccessFlag?(string value) => value == null ? null : new ServerNetworkAccessFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerNetworkAccessFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerNetworkAccessFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

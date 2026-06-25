@@ -55,13 +55,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual ClientResult UploadSessionFile(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, userIsolationKey, options);
+            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -78,13 +77,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, userIsolationKey, options);
+            using PipelineMessage message = CreateUploadSessionFileRequest(agentName, agentSessionId, path, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -96,12 +94,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"></param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
-            ClientResult result = UploadSessionFile(agentName, agentSessionId, path, BinaryContent.Create(content), userIsolationKey, cancellationToken.ToRequestOptions());
+            ClientResult result = UploadSessionFile(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -113,12 +110,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The destination file path within the sandbox, relative to the session home directory. </param>
         /// <param name="content"></param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string agentSessionId, string path, BinaryData content, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await UploadSessionFileAsync(agentName, agentSessionId, path, BinaryContent.Create(content), userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await UploadSessionFileAsync(agentName, agentSessionId, path, BinaryContent.Create(content), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((SessionFileWriteResponse)result, result.GetRawResponse());
         }
 
@@ -134,13 +130,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, string userIsolationKey, RequestOptions options)
+        internal virtual ClientResult DownloadSessionFile(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, userIsolationKey, options);
+            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -156,13 +151,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<ClientResult> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, RequestOptions options)
         {
-            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, userIsolationKey, options);
+            using PipelineMessage message = CreateDownloadSessionFileRequest(agentName, agentSessionId, path, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -173,12 +167,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<BinaryData> DownloadSessionFile(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
         {
-            ClientResult result = DownloadSessionFile(agentName, agentSessionId, path, userIsolationKey, cancellationToken.ToRequestOptions());
+            ClientResult result = DownloadSessionFile(agentName, agentSessionId, path, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -189,12 +182,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file path to download from the sandbox, relative to the session home directory. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<BinaryData>> DownloadSessionFileAsync(string agentName, string agentSessionId, string path, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await DownloadSessionFileAsync(agentName, agentSessionId, path, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await DownloadSessionFileAsync(agentName, agentSessionId, path, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -211,13 +203,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, bool? recursive, string userIsolationKey, RequestOptions options)
+        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, userIsolationKey, options);
+            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -234,13 +225,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session ID. </param>
         /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
         /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, bool? recursive, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, bool? recursive, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, userIsolationKey, options);
+            using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
     }

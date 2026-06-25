@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A Class representing a MachineLearningDatastore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningDatastoreResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMachineLearningDatastoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningDatastore method.
+    /// A class representing a MachineLearningDatastore along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningDatastoreResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource"/> using the GetMachineLearningDatastores method.
     /// </summary>
     public partial class MachineLearningDatastoreResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MachineLearningDatastoreResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _machineLearningDatastoreDatastoresClientDiagnostics;
-        private readonly DatastoresRestOperations _machineLearningDatastoreDatastoresRestClient;
+        private readonly ClientDiagnostics _datastoresClientDiagnostics;
+        private readonly Datastores _datastoresRestClient;
         private readonly MachineLearningDatastoreData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/datastores";
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningDatastoreResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningDatastoreResource for mocking. </summary>
         protected MachineLearningDatastoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningDatastoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MachineLearningDatastoreResource(ArmClient client, MachineLearningDatastoreData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.MachineLearning
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningDatastoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDatastoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningDatastoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningDatastoreDatastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string machineLearningDatastoreDatastoresApiVersion);
-            _machineLearningDatastoreDatastoresRestClient = new DatastoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningDatastoreDatastoresApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string machineLearningDatastoreApiVersion);
+            _datastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
+            _datastoresRestClient = new Datastores(_datastoresClientDiagnostics, Pipeline, Endpoint, machineLearningDatastoreApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MachineLearningDatastoreData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get datastore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MachineLearningDatastoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Get");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get datastore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MachineLearningDatastoreResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Get");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete datastore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +213,23 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Delete");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Delete");
             scope.Start();
             try
             {
-                var response = await _machineLearningDatastoreDatastoresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _machineLearningDatastoreDatastoresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +243,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Delete datastore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,16 +264,23 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Delete");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Delete");
             scope.Start();
             try
             {
-                var response = _machineLearningDatastoreDatastoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _machineLearningDatastoreDatastoresRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation operation = new MachineLearningArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -258,23 +291,121 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update datastore.
+        /// Get datastore secrets.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}/listSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_ListSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Secret expiry information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MachineLearningDatastoreSecrets>> GetSecretsAsync(SecretExpiry body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.GetSecrets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecretExpiry.ToRequestContent(body), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDatastoreSecrets> response = Response.FromValue(MachineLearningDatastoreSecrets.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get datastore secrets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}/listSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_ListSecrets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="body"> Secret expiry information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MachineLearningDatastoreSecrets> GetSecrets(SecretExpiry body = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.GetSecrets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecretExpiry.ToRequestContent(body), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDatastoreSecrets> response = Response.FromValue(MachineLearningDatastoreSecrets.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a MachineLearningDatastore.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,20 +414,28 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineLearningDatastoreResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningDatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningDatastoreResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningDatastoreData data, bool? skipValidation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Update");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Update");
             scope.Start();
             try
             {
-                var response = await _machineLearningDatastoreDatastoresRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation, cancellationToken).ConfigureAwait(false);
-                var uri = _machineLearningDatastoreDatastoresRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningDatastoreResource> operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -307,23 +446,23 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create or update datastore.
+        /// Update a MachineLearningDatastore.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Datastores_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MachineLearningDatastoreResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,97 +471,29 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="skipValidation"> Flag to skip validation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MachineLearningDatastoreResource> Update(WaitUntil waitUntil, MachineLearningDatastoreData data, bool? skipValidation = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningDatastoreResource> Update(WaitUntil waitUntil, MachineLearningDatastoreData data, bool? skipValidation = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Update");
+            using DiagnosticScope scope = _datastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.Update");
             scope.Start();
             try
             {
-                var response = _machineLearningDatastoreDatastoresRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation, cancellationToken);
-                var uri = _machineLearningDatastoreDatastoresRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, skipValidation);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningDatastoreData.ToRequestContent(data), skipValidation, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningDatastoreData> response = Response.FromValue(MachineLearningDatastoreData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MachineLearningArmOperation<MachineLearningDatastoreResource> operation = new MachineLearningArmOperation<MachineLearningDatastoreResource>(Response.FromValue(new MachineLearningDatastoreResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get datastore secrets.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}/listSecrets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_ListSecrets</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MachineLearningDatastoreSecrets>> GetSecretsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.GetSecrets");
-            scope.Start();
-            try
-            {
-                var response = await _machineLearningDatastoreDatastoresRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get datastore secrets.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores/{name}/listSecrets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Datastores_ListSecrets</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningDatastoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MachineLearningDatastoreSecrets> GetSecrets(CancellationToken cancellationToken = default)
-        {
-            using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreResource.GetSecrets");
-            scope.Start();
-            try
-            {
-                var response = _machineLearningDatastoreDatastoresRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

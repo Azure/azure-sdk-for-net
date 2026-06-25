@@ -6,29 +6,34 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptedAudience))]
     [ModelReaderWriterBuildable(typeof(AttachedDatabaseConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(AttachedDatabaseConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(CalloutPoliciesList))]
     [ModelReaderWriterBuildable(typeof(CalloutPolicyToRemove))]
     [ModelReaderWriterBuildable(typeof(ClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterMigrateContent))]
     [ModelReaderWriterBuildable(typeof(ClusterPrincipalAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(ClusterPrincipalProperties))]
+    [ModelReaderWriterBuildable(typeof(ClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(CosmosDbDataConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerContent))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(DatabasePrincipalAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(DatabasePrincipalList))]
     [ModelReaderWriterBuildable(typeof(DatabasePrincipalListResult))]
+    [ModelReaderWriterBuildable(typeof(DatabasePrincipalProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseStatistics))]
     [ModelReaderWriterBuildable(typeof(DataConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(DataConnectionValidationContent))]
@@ -37,8 +42,16 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(DiagnoseVirtualNetworkResult))]
     [ModelReaderWriterBuildable(typeof(EndpointDependency))]
     [ModelReaderWriterBuildable(typeof(EndpointDetail))]
+    [ModelReaderWriterBuildable(typeof(EventGridConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(EventGridConnectionWithManagedIdentityProperties))]
+    [ModelReaderWriterBuildable(typeof(EventGridDataConnectionWithManagedIdentity))]
+    [ModelReaderWriterBuildable(typeof(EventHubConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(EventHubConnectionWithManagedIdentityProperties))]
+    [ModelReaderWriterBuildable(typeof(EventHubDataConnectionWithManagedIdentity))]
     [ModelReaderWriterBuildable(typeof(FollowerDatabaseListResult))]
     [ModelReaderWriterBuildable(typeof(FollowerDatabaseListResultGet))]
+    [ModelReaderWriterBuildable(typeof(FollowerDatabaseProperties))]
+    [ModelReaderWriterBuildable(typeof(IotHubConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(KustoAttachedDatabaseConfigurationData))]
     [ModelReaderWriterBuildable(typeof(KustoAttachedDatabaseConfigurationNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(KustoAttachedDatabaseConfigurationResource))]
@@ -84,6 +97,7 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(KustoPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(KustoPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(KustoPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(KustoPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(KustoPrivateLinkServiceConnectionStateProperty))]
     [ModelReaderWriterBuildable(typeof(KustoReadOnlyFollowingDatabase))]
     [ModelReaderWriterBuildable(typeof(KustoReadWriteDatabase))]
@@ -98,23 +112,33 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(KustoSkuLocationInfoItem))]
     [ModelReaderWriterBuildable(typeof(ListResourceSkusResult))]
     [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedPrivateEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MigrationClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(Models.OperationResult))]
+    [ModelReaderWriterBuildable(typeof(OperationResultErrorProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationResultProperties))]
     [ModelReaderWriterBuildable(typeof(OptimizedAutoscale))]
     [ModelReaderWriterBuildable(typeof(OutboundNetworkDependenciesEndpoint))]
     [ModelReaderWriterBuildable(typeof(OutboundNetworkDependenciesEndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(OutboundNetworkDependenciesEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointProperty))]
+    [ModelReaderWriterBuildable(typeof(ReadOnlyFollowingDatabaseProperties))]
+    [ModelReaderWriterBuildable(typeof(ReadWriteDatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageData))]
+    [ModelReaderWriterBuildable(typeof(SandboxCustomImageProperties))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImageResource))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImagesCheckNameContent))]
     [ModelReaderWriterBuildable(typeof(SandboxCustomImagesListResult))]
     [ModelReaderWriterBuildable(typeof(ScriptListResult))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(ScriptProperties))]
     [ModelReaderWriterBuildable(typeof(SuspensionDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownDatabase))]
-    [ModelReaderWriterBuildable(typeof(UnknownDataConnection))]
+    [ModelReaderWriterBuildable(typeof(UnknownKustoDatabase))]
+    [ModelReaderWriterBuildable(typeof(UnknownKustoDataConnection))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKustoContext : ModelReaderWriterContext
     {
     }

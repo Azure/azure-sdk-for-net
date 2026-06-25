@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>
+    /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints for one category. </summary>
+    public partial class IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint : IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
@@ -43,21 +83,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (var item in Endpoints)
+                foreach (IntegrationRuntimeOutboundNetworkDependenciesEndpoint item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,45 +106,49 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IJsonModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(document.RootElement, options);
         }
 
-        internal static IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string category = default;
             IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> endpoints = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString();
+                    category = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endpoints"u8))
+                if (prop.NameEquals("endpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint> array = new List<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item, options));
                     }
@@ -113,42 +157,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>(), serializedAdditionalRawData);
+            return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

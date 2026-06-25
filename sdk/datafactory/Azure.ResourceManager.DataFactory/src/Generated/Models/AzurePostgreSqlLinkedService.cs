@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzurePostgreSqlLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlLinkedService"/>. </summary>
-        public AzurePostgreSqlLinkedService()
+        public AzurePostgreSqlLinkedService() : base("AzurePostgreSql")
         {
-            LinkedServiceType = "AzurePostgreSql";
+
         }
 
         /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlLinkedService"/>. </summary>
@@ -27,99 +27,322 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
-        /// <param name="server"> Server name for connection. Type: string. </param>
-        /// <param name="port"> The port for the connection. Type: integer. </param>
-        /// <param name="username"> Username for authentication. Type: string. </param>
-        /// <param name="database"> Database name for connection. Type: string. </param>
-        /// <param name="sslMode"> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </param>
-        /// <param name="timeout"> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </param>
-        /// <param name="commandTimeout"> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </param>
-        /// <param name="trustServerCertificate"> Whether to trust the server certificate without validating it. Type: boolean. </param>
-        /// <param name="readBufferSize"> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </param>
-        /// <param name="timezone"> Gets or sets the session timezone. Type: string. </param>
-        /// <param name="encoding"> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </param>
-        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. </param>
-        /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
-        /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzurePostgreSqlLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> sslMode, DataFactoryElement<int> timeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<int> readBufferSize, DataFactoryElement<string> timezone, DataFactoryElement<string> encoding, DataFactoryKeyVaultSecret password, string encryptedCredential, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Azure PostgreSQL linked service properties. </param>
+        /// <param name="servicePrincipalKey"></param>
+        internal AzurePostgreSqlLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, AzurePostgreSqlLinkedServiceTypeProperties typeProperties, DataFactorySecret servicePrincipalKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            ConnectionString = connectionString;
-            Server = server;
-            Port = port;
-            Username = username;
-            Database = database;
-            SslMode = sslMode;
-            Timeout = timeout;
-            CommandTimeout = commandTimeout;
-            TrustServerCertificate = trustServerCertificate;
-            ReadBufferSize = readBufferSize;
-            Timezone = timezone;
-            Encoding = encoding;
-            Password = password;
-            EncryptedCredential = encryptedCredential;
-            ServicePrincipalId = servicePrincipalId;
+            TypeProperties = typeProperties;
             ServicePrincipalKey = servicePrincipalKey;
-            ServicePrincipalCredentialType = servicePrincipalCredentialType;
-            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
-            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
-            Tenant = tenant;
-            AzureCloudType = azureCloudType;
-            Credential = credential;
-            LinkedServiceType = linkedServiceType ?? "AzurePostgreSql";
         }
 
+        /// <summary> Azure PostgreSQL linked service properties. </summary>
+        internal AzurePostgreSqlLinkedServiceTypeProperties TypeProperties { get; set; }
+
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
-        public DataFactoryElement<string> ConnectionString { get; set; }
+        public DataFactoryElement<string> ConnectionString
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ConnectionString;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.ConnectionString = value;
+            }
+        }
+
         /// <summary> Server name for connection. Type: string. </summary>
-        public DataFactoryElement<string> Server { get; set; }
+        public DataFactoryElement<string> Server
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Server;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Server = value;
+            }
+        }
+
         /// <summary> The port for the connection. Type: integer. </summary>
-        public DataFactoryElement<int> Port { get; set; }
+        public DataFactoryElement<int> Port
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Port;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Port = value;
+            }
+        }
+
         /// <summary> Username for authentication. Type: string. </summary>
-        public DataFactoryElement<string> Username { get; set; }
+        public DataFactoryElement<string> Username
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Username;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Username = value;
+            }
+        }
+
         /// <summary> Database name for connection. Type: string. </summary>
-        public DataFactoryElement<string> Database { get; set; }
+        public DataFactoryElement<string> Database
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Database;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Database = value;
+            }
+        }
+
         /// <summary> SSL mode for connection. Type: integer. 0: disable, 1:allow, 2: prefer, 3: require, 4: verify-ca, 5: verify-full. Type: integer. </summary>
-        public DataFactoryElement<int> SslMode { get; set; }
+        public DataFactoryElement<int> SslMode
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SslMode;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.SslMode = value;
+            }
+        }
+
         /// <summary> The time to wait (in seconds) while trying to establish a connection before terminating the attempt and generating an error. Type: integer. </summary>
-        public DataFactoryElement<int> Timeout { get; set; }
+        public DataFactoryElement<int> Timeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Timeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Timeout = value;
+            }
+        }
+
         /// <summary> The time to wait (in seconds) while trying to execute a command before terminating the attempt and generating an error. Set to zero for infinity. Type: integer. </summary>
-        public DataFactoryElement<int> CommandTimeout { get; set; }
+        public DataFactoryElement<int> CommandTimeout
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.CommandTimeout;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.CommandTimeout = value;
+            }
+        }
+
         /// <summary> Whether to trust the server certificate without validating it. Type: boolean. </summary>
-        public DataFactoryElement<bool> TrustServerCertificate { get; set; }
+        public DataFactoryElement<bool> TrustServerCertificate
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TrustServerCertificate;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.TrustServerCertificate = value;
+            }
+        }
+
         /// <summary> Determines the size of the internal buffer uses when reading. Increasing may improve performance if transferring large values from the database. Type: integer. </summary>
-        public DataFactoryElement<int> ReadBufferSize { get; set; }
+        public DataFactoryElement<int> ReadBufferSize
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ReadBufferSize;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.ReadBufferSize = value;
+            }
+        }
+
         /// <summary> Gets or sets the session timezone. Type: string. </summary>
-        public DataFactoryElement<string> Timezone { get; set; }
+        public DataFactoryElement<string> Timezone
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Timezone;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Timezone = value;
+            }
+        }
+
         /// <summary> Gets or sets the .NET encoding that will be used to encode/decode PostgreSQL string data. Type: string. </summary>
-        public DataFactoryElement<string> Encoding { get; set; }
-        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
-        public DataFactoryKeyVaultSecret Password { get; set; }
+        public DataFactoryElement<string> Encoding
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Encoding;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Encoding = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
+
         /// <summary> The ID of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The key of the service principal used to authenticate against Azure Database for PostgreSQL Flexible server. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
+        public DataFactoryElement<string> ServicePrincipalId
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalId;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalId = value;
+            }
+        }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
-        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
-        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
+        public DataFactoryElement<string> ServicePrincipalCredentialType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalCredentialType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalCredentialType = value;
+            }
+        }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Tenant { get; set; }
+        public DataFactoryElement<string> Tenant
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Tenant;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Tenant = value;
+            }
+        }
+
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> AzureCloudType { get; set; }
+        public DataFactoryElement<string> AzureCloudType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AzureCloudType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.AzureCloudType = value;
+            }
+        }
+
         /// <summary> The credential reference containing authentication information. </summary>
-        public DataFactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Credential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzurePostgreSqlLinkedServiceTypeProperties();
+                }
+                TypeProperties.Credential = value;
+            }
+        }
     }
 }

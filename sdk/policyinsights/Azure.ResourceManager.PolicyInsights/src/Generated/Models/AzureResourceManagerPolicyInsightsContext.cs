@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.PolicyInsights
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SlimPolicyMetadata))]
     [ModelReaderWriterBuildable(typeof(SummarizeResults))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrackedResourceModificationDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPolicyInsightsContext : ModelReaderWriterContext
     {
     }

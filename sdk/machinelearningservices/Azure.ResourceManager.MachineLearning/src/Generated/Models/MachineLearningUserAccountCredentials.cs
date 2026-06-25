@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Settings for user account that gets created on each on the nodes of a compute. </summary>
     public partial class MachineLearningUserAccountCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningUserAccountCredentials"/>. </summary>
         /// <param name="adminUserName"> Name of the administrator user account which can be used to SSH to nodes. </param>
@@ -59,26 +31,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="adminUserName"> Name of the administrator user account which can be used to SSH to nodes. </param>
         /// <param name="adminUserSshPublicKey"> SSH public key of the administrator user account. </param>
         /// <param name="adminUserPassword"> Password of the administrator user account. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningUserAccountCredentials(string adminUserName, string adminUserSshPublicKey, string adminUserPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUserAccountCredentials(string adminUserName, string adminUserSshPublicKey, string adminUserPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdminUserName = adminUserName;
             AdminUserSshPublicKey = adminUserSshPublicKey;
             AdminUserPassword = adminUserPassword;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningUserAccountCredentials"/> for deserialization. </summary>
-        internal MachineLearningUserAccountCredentials()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the administrator user account which can be used to SSH to nodes. </summary>
         [WirePath("adminUserName")]
         public string AdminUserName { get; set; }
+
         /// <summary> SSH public key of the administrator user account. </summary>
         [WirePath("adminUserSshPublicKey")]
         public string AdminUserSshPublicKey { get; set; }
+
         /// <summary> Password of the administrator user account. </summary>
         [WirePath("adminUserPassword")]
         public string AdminUserPassword { get; set; }

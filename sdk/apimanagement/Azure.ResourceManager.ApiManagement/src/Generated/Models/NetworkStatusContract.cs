@@ -8,53 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Network Status details. </summary>
     public partial class NetworkStatusContract
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsServers"/> or <paramref name="connectivityStatus"/> is null. </exception>
         internal NetworkStatusContract(IEnumerable<string> dnsServers, IEnumerable<ConnectivityStatusContract> connectivityStatus)
         {
-            Argument.AssertNotNull(dnsServers, nameof(dnsServers));
-            Argument.AssertNotNull(connectivityStatus, nameof(connectivityStatus));
-
             DnsServers = dnsServers.ToList();
             ConnectivityStatus = connectivityStatus.ToList();
         }
@@ -62,22 +30,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/>. </summary>
         /// <param name="dnsServers"> Gets the list of DNS servers IPV4 addresses. </param>
         /// <param name="connectivityStatus"> Gets the list of Connectivity Status to the Resources on which the service depends upon. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkStatusContract(IReadOnlyList<string> dnsServers, IReadOnlyList<ConnectivityStatusContract> connectivityStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsServers = dnsServers;
             ConnectivityStatus = connectivityStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkStatusContract"/> for deserialization. </summary>
-        internal NetworkStatusContract()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the list of DNS servers IPV4 addresses. </summary>
         [WirePath("dnsServers")]
         public IReadOnlyList<string> DnsServers { get; }
+
         /// <summary> Gets the list of Connectivity Status to the Resources on which the service depends upon. </summary>
         [WirePath("connectivityStatus")]
         public IReadOnlyList<ConnectivityStatusContract> ConnectivityStatus { get; }
