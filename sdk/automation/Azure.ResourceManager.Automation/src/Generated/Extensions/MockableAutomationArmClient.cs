@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.Automation.Mocking
             return new AutomationAccountPython2PackageResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="Python3PackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AutomationPython3PackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="Python3PackageResource"/> object. </returns>
-        public virtual Python3PackageResource GetPython3PackageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomationPython3PackageResource"/> object. </returns>
+        public virtual AutomationPython3PackageResource GetAutomationPython3PackageResource(ResourceIdentifier id)
         {
-            Python3PackageResource.ValidateResourceId(id);
-            return new Python3PackageResource(Client, id);
+            AutomationPython3PackageResource.ValidateResourceId(id);
+            return new AutomationPython3PackageResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RuntimeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AutomationRuntimeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RuntimeEnvironmentResource"/> object. </returns>
-        public virtual RuntimeEnvironmentResource GetRuntimeEnvironmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomationRuntimeEnvironmentResource"/> object. </returns>
+        public virtual AutomationRuntimeEnvironmentResource GetAutomationRuntimeEnvironmentResource(ResourceIdentifier id)
         {
-            RuntimeEnvironmentResource.ValidateResourceId(id);
-            return new RuntimeEnvironmentResource(Client, id);
+            AutomationRuntimeEnvironmentResource.ValidateResourceId(id);
+            return new AutomationRuntimeEnvironmentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AutomationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

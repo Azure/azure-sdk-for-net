@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RuntimeEnvironmentResource"/> and their operations.
-    /// Each <see cref="RuntimeEnvironmentResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
-    /// To get a <see cref="RuntimeEnvironmentCollection"/> instance call the GetRuntimeEnvironments method from an instance of <see cref="AutomationAccountResource"/>.
+    /// A class representing a collection of <see cref="AutomationRuntimeEnvironmentResource"/> and their operations.
+    /// Each <see cref="AutomationRuntimeEnvironmentResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="AutomationRuntimeEnvironmentCollection"/> instance call the GetAutomationRuntimeEnvironments method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
-    public partial class RuntimeEnvironmentCollection : ArmCollection, IEnumerable<RuntimeEnvironmentResource>, IAsyncEnumerable<RuntimeEnvironmentResource>
+    public partial class AutomationRuntimeEnvironmentCollection : ArmCollection, IEnumerable<AutomationRuntimeEnvironmentResource>, IAsyncEnumerable<AutomationRuntimeEnvironmentResource>
     {
         private readonly ClientDiagnostics _runtimeEnvironmentsClientDiagnostics;
         private readonly RuntimeEnvironments _runtimeEnvironmentsRestClient;
 
-        /// <summary> Initializes a new instance of RuntimeEnvironmentCollection for mocking. </summary>
-        protected RuntimeEnvironmentCollection()
+        /// <summary> Initializes a new instance of AutomationRuntimeEnvironmentCollection for mocking. </summary>
+        protected AutomationRuntimeEnvironmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RuntimeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomationRuntimeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RuntimeEnvironmentResource.ResourceType, out string runtimeEnvironmentApiVersion);
-            _runtimeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", RuntimeEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _runtimeEnvironmentsRestClient = new RuntimeEnvironments(_runtimeEnvironmentsClientDiagnostics, Pipeline, Endpoint, runtimeEnvironmentApiVersion ?? "2024-10-23");
+            TryGetApiVersion(AutomationRuntimeEnvironmentResource.ResourceType, out string automationRuntimeEnvironmentApiVersion);
+            _runtimeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationRuntimeEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            _runtimeEnvironmentsRestClient = new RuntimeEnvironments(_runtimeEnvironmentsClientDiagnostics, Pipeline, Endpoint, automationRuntimeEnvironmentApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RuntimeEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runtimeEnvironmentName, RuntimeEnvironmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutomationRuntimeEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string runtimeEnvironmentName, AutomationRuntimeEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeEnvironmentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, RuntimeEnvironmentData.ToRequestContent(data), context);
+                HttpMessage message = _runtimeEnvironmentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, AutomationRuntimeEnvironmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RuntimeEnvironmentData> response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                Response<AutomationRuntimeEnvironmentData> response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<RuntimeEnvironmentResource> operation = new AutomationArmOperation<RuntimeEnvironmentResource>(Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationRuntimeEnvironmentResource> operation = new AutomationArmOperation<AutomationRuntimeEnvironmentResource>(Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RuntimeEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string runtimeEnvironmentName, RuntimeEnvironmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutomationRuntimeEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string runtimeEnvironmentName, AutomationRuntimeEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _runtimeEnvironmentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, RuntimeEnvironmentData.ToRequestContent(data), context);
+                HttpMessage message = _runtimeEnvironmentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, AutomationRuntimeEnvironmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RuntimeEnvironmentData> response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                Response<AutomationRuntimeEnvironmentData> response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<RuntimeEnvironmentResource> operation = new AutomationArmOperation<RuntimeEnvironmentResource>(Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationRuntimeEnvironmentResource> operation = new AutomationArmOperation<AutomationRuntimeEnvironmentResource>(Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RuntimeEnvironmentResource>> GetAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationRuntimeEnvironmentResource>> GetAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.Get");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.Get");
             scope.Start();
             try
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RuntimeEnvironmentData> response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                Response<AutomationRuntimeEnvironmentData> response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RuntimeEnvironmentResource> Get(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationRuntimeEnvironmentResource> Get(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.Get");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.Get");
             scope.Start();
             try
             {
@@ -248,12 +248,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RuntimeEnvironmentData> response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                Response<AutomationRuntimeEnvironmentData> response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,20 +280,20 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RuntimeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationRuntimeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationRuntimeEnvironmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RuntimeEnvironmentData, RuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountAsyncCollectionResultOfT(
                 _runtimeEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "RuntimeEnvironmentCollection.GetAll"), data => new RuntimeEnvironmentResource(Client, data));
+                "AutomationRuntimeEnvironmentCollection.GetAll"), data => new AutomationRuntimeEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -314,20 +314,20 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuntimeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RuntimeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationRuntimeEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationRuntimeEnvironmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RuntimeEnvironmentData, RuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationRuntimeEnvironmentData, AutomationRuntimeEnvironmentResource>(new RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT(
                 _runtimeEnvironmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "RuntimeEnvironmentCollection.GetAll"), data => new RuntimeEnvironmentResource(Client, data));
+                "AutomationRuntimeEnvironmentCollection.GetAll"), data => new AutomationRuntimeEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.Exists");
             scope.Start();
             try
             {
@@ -366,14 +366,14 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RuntimeEnvironmentData> response = default;
+                Response<AutomationRuntimeEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuntimeEnvironmentData)null, result);
+                        response = Response.FromValue((AutomationRuntimeEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.Exists");
             scope.Start();
             try
             {
@@ -423,14 +423,14 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RuntimeEnvironmentData> response = default;
+                Response<AutomationRuntimeEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuntimeEnvironmentData)null, result);
+                        response = Response.FromValue((AutomationRuntimeEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -465,11 +465,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RuntimeEnvironmentResource>> GetIfExistsAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AutomationRuntimeEnvironmentResource>> GetIfExistsAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -480,23 +480,23 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RuntimeEnvironmentData> response = default;
+                Response<AutomationRuntimeEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuntimeEnvironmentData)null, result);
+                        response = Response.FromValue((AutomationRuntimeEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RuntimeEnvironmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationRuntimeEnvironmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -526,11 +526,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RuntimeEnvironmentResource> GetIfExists(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AutomationRuntimeEnvironmentResource> GetIfExists(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("RuntimeEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _runtimeEnvironmentsClientDiagnostics.CreateScope("AutomationRuntimeEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -541,23 +541,23 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _runtimeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeEnvironmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RuntimeEnvironmentData> response = default;
+                Response<AutomationRuntimeEnvironmentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuntimeEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationRuntimeEnvironmentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuntimeEnvironmentData)null, result);
+                        response = Response.FromValue((AutomationRuntimeEnvironmentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RuntimeEnvironmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationRuntimeEnvironmentResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationRuntimeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        IEnumerator<RuntimeEnvironmentResource> IEnumerable<RuntimeEnvironmentResource>.GetEnumerator()
+        IEnumerator<AutomationRuntimeEnvironmentResource> IEnumerable<AutomationRuntimeEnvironmentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<RuntimeEnvironmentResource> IAsyncEnumerable<RuntimeEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomationRuntimeEnvironmentResource> IAsyncEnumerable<AutomationRuntimeEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

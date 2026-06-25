@@ -14,7 +14,7 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal partial class RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT : Pageable<RuntimeEnvironmentData>
+    internal partial class RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT : Pageable<AutomationRuntimeEnvironmentData>
     {
         private readonly RuntimeEnvironments _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RuntimeEnvironmentsGetByAutomationAccountCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RuntimeEnvironmentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AutomationRuntimeEnvironmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 RuntimeEnvironmentListResult result = RuntimeEnvironmentListResult.FromResponse(response);
-                yield return Page<RuntimeEnvironmentData>.FromValues((IReadOnlyList<RuntimeEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AutomationRuntimeEnvironmentData>.FromValues((IReadOnlyList<AutomationRuntimeEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

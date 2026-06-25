@@ -12,23 +12,23 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Runtime Environment properties. </summary>
-    internal partial class RuntimeEnvironmentProperties
+    internal partial class AutomationRuntimeEnvironmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentProperties"/>. </summary>
-        public RuntimeEnvironmentProperties()
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentProperties"/>. </summary>
+        public AutomationRuntimeEnvironmentProperties()
         {
             DefaultPackages = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentProperties"/>. </summary>
         /// <param name="runtime"> Runtime properties. </param>
         /// <param name="defaultPackages"> List of Default packages for Environment. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeEnvironmentProperties(RuntimeProperties runtime, IDictionary<string, string> defaultPackages, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationRuntimeEnvironmentProperties(RuntimeProperties runtime, IDictionary<string, string> defaultPackages, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Runtime = runtime;
             DefaultPackages = defaultPackages;

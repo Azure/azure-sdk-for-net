@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation
     /// <summary>
     /// A class representing a AutomationPackage along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutomationPackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RuntimeEnvironmentResource"/> using the GetAutomationPackages method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationRuntimeEnvironmentResource"/> using the GetAutomationPackages method.
     /// </summary>
     public partial class AutomationPackageResource : ArmResource
     {

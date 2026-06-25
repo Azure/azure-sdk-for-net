@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary> Definition of the Runtime Environment type. </summary>
-    public partial class RuntimeEnvironmentData : TrackedResourceData, IJsonModel<RuntimeEnvironmentData>
+    public partial class AutomationRuntimeEnvironmentData : TrackedResourceData, IJsonModel<AutomationRuntimeEnvironmentData>
     {
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentData"/> for deserialization. </summary>
-        internal RuntimeEnvironmentData()
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentData"/> for deserialization. </summary>
+        internal AutomationRuntimeEnvironmentData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Automation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuntimeEnvironmentData(document.RootElement, options);
+                        return DeserializeAutomationRuntimeEnvironmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeEnvironmentData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuntimeEnvironmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeEnvironmentData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRuntimeEnvironmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuntimeEnvironmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AutomationRuntimeEnvironmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeEnvironmentData IPersistableModel<RuntimeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RuntimeEnvironmentData)PersistableModelCreateCore(data, options);
+        AutomationRuntimeEnvironmentData IPersistableModel<AutomationRuntimeEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutomationRuntimeEnvironmentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuntimeEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutomationRuntimeEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="runtimeEnvironmentData"> The <see cref="RuntimeEnvironmentData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RuntimeEnvironmentData runtimeEnvironmentData)
+        /// <param name="automationRuntimeEnvironmentData"> The <see cref="AutomationRuntimeEnvironmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AutomationRuntimeEnvironmentData automationRuntimeEnvironmentData)
         {
-            if (runtimeEnvironmentData == null)
+            if (automationRuntimeEnvironmentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(runtimeEnvironmentData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(automationRuntimeEnvironmentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RuntimeEnvironmentData"/> from. </param>
-        internal static RuntimeEnvironmentData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutomationRuntimeEnvironmentData"/> from. </param>
+        internal static AutomationRuntimeEnvironmentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRuntimeEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAutomationRuntimeEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuntimeEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutomationRuntimeEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeEnvironmentData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuntimeEnvironmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Automation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeEnvironmentData IJsonModel<RuntimeEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RuntimeEnvironmentData)JsonModelCreateCore(ref reader, options);
+        AutomationRuntimeEnvironmentData IJsonModel<AutomationRuntimeEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AutomationRuntimeEnvironmentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuntimeEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeEnvironmentData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRuntimeEnvironmentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuntimeEnvironmentData(document.RootElement, options);
+            return DeserializeAutomationRuntimeEnvironmentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuntimeEnvironmentData DeserializeRuntimeEnvironmentData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutomationRuntimeEnvironmentData DeserializeAutomationRuntimeEnvironmentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            RuntimeEnvironmentProperties properties = default;
+            AutomationRuntimeEnvironmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         continue;
                     }
-                    properties = RuntimeEnvironmentProperties.DeserializeRuntimeEnvironmentProperties(prop.Value, options);
+                    properties = AutomationRuntimeEnvironmentProperties.DeserializeAutomationRuntimeEnvironmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuntimeEnvironmentData(
+            return new AutomationRuntimeEnvironmentData(
                 id,
                 name,
                 resourceType,

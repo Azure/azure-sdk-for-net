@@ -2414,11 +2414,11 @@ namespace Azure.ResourceManager.Automation
             return GetAutomationAccountPython2Packages().Get(packageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Python3Packages in the <see cref="AutomationAccountResource"/>. </summary>
-        /// <returns> An object representing collection of Python3Packages and their operations over a Python3PackageResource. </returns>
-        public virtual Python3PackageCollection GetPython3Packages()
+        /// <summary> Gets a collection of AutomationPython3Packages in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationPython3Packages and their operations over a AutomationPython3PackageResource. </returns>
+        public virtual AutomationPython3PackageCollection GetAutomationPython3Packages()
         {
-            return GetCachedClient(client => new Python3PackageCollection(client, Id));
+            return GetCachedClient(client => new AutomationPython3PackageCollection(client, Id));
         }
 
         /// <summary> Retrieve the python 3 package identified by package name. </summary>
@@ -2427,11 +2427,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<Python3PackageResource>> GetPython3PackageAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> GetAutomationPython3PackageAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            return await GetPython3Packages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
+            return await GetAutomationPython3Packages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieve the python 3 package identified by package name. </summary>
@@ -2440,31 +2440,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<Python3PackageResource> GetPython3Package(string packageName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> GetAutomationPython3Package(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            return GetPython3Packages().Get(packageName, cancellationToken);
+            return GetAutomationPython3Packages().Get(packageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RuntimeEnvironments in the <see cref="AutomationAccountResource"/>. </summary>
-        /// <returns> An object representing collection of RuntimeEnvironments and their operations over a RuntimeEnvironmentResource. </returns>
-        public virtual RuntimeEnvironmentCollection GetRuntimeEnvironments()
+        /// <summary> Gets a collection of AutomationRuntimeEnvironments in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationRuntimeEnvironments and their operations over a AutomationRuntimeEnvironmentResource. </returns>
+        public virtual AutomationRuntimeEnvironmentCollection GetAutomationRuntimeEnvironments()
         {
-            return GetCachedClient(client => new RuntimeEnvironmentCollection(client, Id));
-        }
-
-        /// <summary> Get information about the Runtime Environment. </summary>
-        /// <param name="runtimeEnvironmentName"> The name of the Runtime Environment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RuntimeEnvironmentResource>> GetRuntimeEnvironmentAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
-
-            return await GetRuntimeEnvironments().GetAsync(runtimeEnvironmentName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new AutomationRuntimeEnvironmentCollection(client, Id));
         }
 
         /// <summary> Get information about the Runtime Environment. </summary>
@@ -2473,11 +2460,24 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RuntimeEnvironmentResource> GetRuntimeEnvironment(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationRuntimeEnvironmentResource>> GetAutomationRuntimeEnvironmentAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
 
-            return GetRuntimeEnvironments().Get(runtimeEnvironmentName, cancellationToken);
+            return await GetAutomationRuntimeEnvironments().GetAsync(runtimeEnvironmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get information about the Runtime Environment. </summary>
+        /// <param name="runtimeEnvironmentName"> The name of the Runtime Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationRuntimeEnvironmentResource> GetAutomationRuntimeEnvironment(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
+
+            return GetAutomationRuntimeEnvironments().Get(runtimeEnvironmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AutomationPrivateEndpointConnections in the <see cref="AutomationAccountResource"/>. </summary>

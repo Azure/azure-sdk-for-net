@@ -12,21 +12,21 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update automation account operation. </summary>
-    public partial class RuntimeEnvironmentPatch
+    public partial class AutomationRuntimeEnvironmentPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentPatch"/>. </summary>
-        public RuntimeEnvironmentPatch()
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentPatch"/>. </summary>
+        public AutomationRuntimeEnvironmentPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentPatch"/>. </summary>
         /// <param name="properties"> Gets or sets Runtime update properties. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeEnvironmentPatch(RuntimeEnvironmentUpdateProperties properties, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationRuntimeEnvironmentPatch(RuntimeEnvironmentUpdateProperties properties, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             SystemData = systemData;

@@ -93,39 +93,39 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="Python3PackageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AutomationPython3PackageResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAutomationArmClient.GetPython3PackageResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationPython3PackageResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="Python3PackageResource"/> object. </returns>
-        public static Python3PackageResource GetPython3PackageResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomationPython3PackageResource"/> object. </returns>
+        public static AutomationPython3PackageResource GetAutomationPython3PackageResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAutomationArmClient(client).GetPython3PackageResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationPython3PackageResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RuntimeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AutomationRuntimeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAutomationArmClient.GetRuntimeEnvironmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationRuntimeEnvironmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RuntimeEnvironmentResource"/> object. </returns>
-        public static RuntimeEnvironmentResource GetRuntimeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomationRuntimeEnvironmentResource"/> object. </returns>
+        public static AutomationRuntimeEnvironmentResource GetAutomationRuntimeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAutomationArmClient(client).GetRuntimeEnvironmentResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationRuntimeEnvironmentResource(id);
         }
 
         /// <summary>

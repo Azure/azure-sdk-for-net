@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Automation
 {
     /// <summary>
     /// A class representing a collection of <see cref="AutomationPackageResource"/> and their operations.
-    /// Each <see cref="AutomationPackageResource"/> in the collection will belong to the same instance of <see cref="RuntimeEnvironmentResource"/>.
-    /// To get a <see cref="AutomationPackageCollection"/> instance call the GetAutomationPackages method from an instance of <see cref="RuntimeEnvironmentResource"/>.
+    /// Each <see cref="AutomationPackageResource"/> in the collection will belong to the same instance of <see cref="AutomationRuntimeEnvironmentResource"/>.
+    /// To get a <see cref="AutomationPackageCollection"/> instance call the GetAutomationPackages method from an instance of <see cref="AutomationRuntimeEnvironmentResource"/>.
     /// </summary>
     public partial class AutomationPackageCollection : ArmCollection, IEnumerable<AutomationPackageResource>, IAsyncEnumerable<AutomationPackageResource>
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Automation
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RuntimeEnvironmentResource.ResourceType)
+            if (id.ResourceType != AutomationRuntimeEnvironmentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RuntimeEnvironmentResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AutomationRuntimeEnvironmentResource.ResourceType), nameof(id));
             }
         }
 

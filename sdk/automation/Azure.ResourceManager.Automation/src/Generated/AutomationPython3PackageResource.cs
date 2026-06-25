@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a Python3Package along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="Python3PackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetPython3Packages method.
+    /// A class representing a AutomationPython3Package along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutomationPython3PackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetAutomationPython3Packages method.
     /// </summary>
-    public partial class Python3PackageResource : ArmResource
+    public partial class AutomationPython3PackageResource : ArmResource
     {
         private readonly ClientDiagnostics _python3PackageClientDiagnostics;
         private readonly Python3Package _python3PackageRestClient;
@@ -32,28 +32,28 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/python3Packages";
 
-        /// <summary> Initializes a new instance of Python3PackageResource for mocking. </summary>
-        protected Python3PackageResource()
+        /// <summary> Initializes a new instance of AutomationPython3PackageResource for mocking. </summary>
+        protected AutomationPython3PackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Python3PackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPython3PackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal Python3PackageResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
+        internal AutomationPython3PackageResource(ArmClient client, AutomationModuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Python3PackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPython3PackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Python3PackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomationPython3PackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string python3PackageApiVersion);
+            TryGetApiVersion(ResourceType, out string automationPython3PackageApiVersion);
             _python3PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, python3PackageApiVersion ?? "2024-10-23");
+            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Python3PackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Get");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Get");
             scope.Start();
             try
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Python3PackageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Get");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Get");
             scope.Start();
             try
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,18 +207,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<Python3PackageResource>> UpdateAsync(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> UpdateAsync(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Update");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Update");
             scope.Start();
             try
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -259,18 +259,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<Python3PackageResource> Update(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> Update(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Update");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Update");
             scope.Start();
             try
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Delete");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Delete");
             scope.Start();
             try
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="Python3PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPython3PackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.Delete");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.Delete");
             scope.Start();
             try
             {
@@ -401,12 +401,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<Python3PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.AddTag");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.AddTag");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Automation
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<Python3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AutomationPython3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -449,12 +449,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<Python3PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.AddTag");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.AddTag");
             scope.Start();
             try
             {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Automation
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<Python3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AutomationPython3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -496,11 +496,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<Python3PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.SetTags");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.SetTags");
             scope.Start();
             try
             {
@@ -517,14 +517,14 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<Python3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AutomationPython3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -539,11 +539,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<Python3PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.SetTags");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.SetTags");
             scope.Start();
             try
             {
@@ -560,14 +560,14 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<Python3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AutomationPython3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -582,11 +582,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<Python3PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.RemoveTag");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.RemoveTag");
             scope.Start();
             try
             {
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Automation
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<Python3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<AutomationPython3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -628,11 +628,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<Python3PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageResource.RemoveTag");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageResource.RemoveTag");
             scope.Start();
             try
             {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Automation
                     HttpMessage message = _python3PackageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
-                    return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Automation
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<Python3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<AutomationPython3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

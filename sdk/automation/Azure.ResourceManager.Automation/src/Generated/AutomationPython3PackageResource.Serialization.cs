@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary></summary>
-    public partial class Python3PackageResource : IJsonModel<AutomationModuleData>
+    public partial class AutomationPython3PackageResource : IJsonModel<AutomationModuleData>
     {
         private static IJsonModel<AutomationModuleData> s_dataDeserializationInstance;
 

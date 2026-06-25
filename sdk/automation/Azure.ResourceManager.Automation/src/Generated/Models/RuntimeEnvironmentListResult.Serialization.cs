@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RuntimeEnvironmentData item in Value)
+            foreach (AutomationRuntimeEnvironmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            IList<RuntimeEnvironmentData> value = default;
+            IList<AutomationRuntimeEnvironmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RuntimeEnvironmentData> array = new List<RuntimeEnvironmentData>();
+                    List<AutomationRuntimeEnvironmentData> array = new List<AutomationRuntimeEnvironmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeEnvironmentData.DeserializeRuntimeEnvironmentData(item, options));
+                        array.Add(AutomationRuntimeEnvironmentData.DeserializeAutomationRuntimeEnvironmentData(item, options));
                     }
                     value = array;
                     continue;

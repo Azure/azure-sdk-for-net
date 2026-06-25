@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary> Definition of the Runtime Environment type. </summary>
-    public partial class RuntimeEnvironmentData : TrackedResourceData
+    public partial class AutomationRuntimeEnvironmentData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public RuntimeEnvironmentData(AzureLocation location) : base(location)
+        public AutomationRuntimeEnvironmentData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuntimeEnvironmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuntimeEnvironmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Gets or sets the Runtime Environment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RuntimeEnvironmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomationRuntimeEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutomationRuntimeEnvironmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Runtime Environment properties. </summary>
-        internal RuntimeEnvironmentProperties Properties { get; set; }
+        internal AutomationRuntimeEnvironmentProperties Properties { get; set; }
 
         /// <summary> List of Default packages for Environment. </summary>
         public IDictionary<string, string> DefaultPackages
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation
             {
                 if (Properties is null)
                 {
-                    Properties = new RuntimeEnvironmentProperties();
+                    Properties = new AutomationRuntimeEnvironmentProperties();
                 }
                 return Properties.DefaultPackages;
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Automation
             {
                 if (Properties is null)
                 {
-                    Properties = new RuntimeEnvironmentProperties();
+                    Properties = new AutomationRuntimeEnvironmentProperties();
                 }
                 Properties.Description = value;
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
             {
                 if (Properties is null)
                 {
-                    Properties = new RuntimeEnvironmentProperties();
+                    Properties = new AutomationRuntimeEnvironmentProperties();
                 }
                 Properties.Language = value;
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation
             {
                 if (Properties is null)
                 {
-                    Properties = new RuntimeEnvironmentProperties();
+                    Properties = new AutomationRuntimeEnvironmentProperties();
                 }
                 Properties.Version = value;
             }

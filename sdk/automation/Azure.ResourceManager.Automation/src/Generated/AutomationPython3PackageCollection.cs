@@ -20,28 +20,28 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="Python3PackageResource"/> and their operations.
-    /// Each <see cref="Python3PackageResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
-    /// To get a <see cref="Python3PackageCollection"/> instance call the GetPython3Packages method from an instance of <see cref="AutomationAccountResource"/>.
+    /// A class representing a collection of <see cref="AutomationPython3PackageResource"/> and their operations.
+    /// Each <see cref="AutomationPython3PackageResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="AutomationPython3PackageCollection"/> instance call the GetAutomationPython3Packages method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
-    public partial class Python3PackageCollection : ArmCollection, IEnumerable<Python3PackageResource>, IAsyncEnumerable<Python3PackageResource>
+    public partial class AutomationPython3PackageCollection : ArmCollection, IEnumerable<AutomationPython3PackageResource>, IAsyncEnumerable<AutomationPython3PackageResource>
     {
         private readonly ClientDiagnostics _python3PackageClientDiagnostics;
         private readonly Python3Package _python3PackageRestClient;
 
-        /// <summary> Initializes a new instance of Python3PackageCollection for mocking. </summary>
-        protected Python3PackageCollection()
+        /// <summary> Initializes a new instance of AutomationPython3PackageCollection for mocking. </summary>
+        protected AutomationPython3PackageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Python3PackageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPython3PackageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal Python3PackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomationPython3PackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(Python3PackageResource.ResourceType, out string python3PackageApiVersion);
-            _python3PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", Python3PackageResource.ResourceType.Namespace, Diagnostics);
-            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, python3PackageApiVersion ?? "2024-10-23");
+            TryGetApiVersion(AutomationPython3PackageResource.ResourceType, out string automationPython3PackageApiVersion);
+            _python3PackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationPython3PackageResource.ResourceType.Namespace, Diagnostics);
+            _python3PackageRestClient = new Python3Package(_python3PackageClientDiagnostics, Pipeline, Endpoint, automationPython3PackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<Python3PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, AutomationPythonPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutomationPython3PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, AutomationPythonPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<Python3PackageResource> operation = new AutomationArmOperation<Python3PackageResource>(Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationPython3PackageResource> operation = new AutomationArmOperation<AutomationPython3PackageResource>(Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<Python3PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, AutomationPythonPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutomationPython3PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, AutomationPythonPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Automation
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<Python3PackageResource> operation = new AutomationArmOperation<Python3PackageResource>(Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationPython3PackageResource> operation = new AutomationArmOperation<AutomationPython3PackageResource>(Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Python3PackageResource>> GetAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPython3PackageResource>> GetAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.Get");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Python3PackageResource> Get(string packageName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPython3PackageResource> Get(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.Get");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,20 +281,20 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Python3PackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Python3PackageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationPython3PackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationPython3PackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationModuleData, Python3PackageResource>(new Python3PackageGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new Python3PackageGetByAutomationAccountAsyncCollectionResultOfT(
                 _python3PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "Python3PackageCollection.GetAll"), data => new Python3PackageResource(Client, data));
+                "AutomationPython3PackageCollection.GetAll"), data => new AutomationPython3PackageResource(Client, data));
         }
 
         /// <summary>
@@ -315,20 +315,20 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Python3PackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Python3PackageResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationPython3PackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationPython3PackageResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationModuleData, Python3PackageResource>(new Python3PackageGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationModuleData, AutomationPython3PackageResource>(new Python3PackageGetByAutomationAccountCollectionResultOfT(
                 _python3PackageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "Python3PackageCollection.GetAll"), data => new Python3PackageResource(Client, data));
+                "AutomationPython3PackageCollection.GetAll"), data => new AutomationPython3PackageResource(Client, data));
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.Exists");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.Exists");
             scope.Start();
             try
             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.Exists");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.Exists");
             scope.Start();
             try
             {
@@ -466,11 +466,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<Python3PackageResource>> GetIfExistsAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AutomationPython3PackageResource>> GetIfExistsAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.GetIfExists");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -495,9 +495,9 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<Python3PackageResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationPython3PackageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -527,11 +527,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<Python3PackageResource> GetIfExists(string packageName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AutomationPython3PackageResource> GetIfExists(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("Python3PackageCollection.GetIfExists");
+            using DiagnosticScope scope = _python3PackageClientDiagnostics.CreateScope("AutomationPython3PackageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -556,9 +556,9 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<Python3PackageResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationPython3PackageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new Python3PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPython3PackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        IEnumerator<Python3PackageResource> IEnumerable<Python3PackageResource>.GetEnumerator()
+        IEnumerator<AutomationPython3PackageResource> IEnumerable<AutomationPython3PackageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<Python3PackageResource> IAsyncEnumerable<Python3PackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomationPython3PackageResource> IAsyncEnumerable<AutomationPython3PackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

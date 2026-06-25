@@ -407,28 +407,28 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="language"> Language of Runtime Environment. </param>
         /// <param name="version"> Version of Language. </param>
-        /// <returns> A new <see cref="Automation.RuntimeEnvironmentData"/> instance for mocking. </returns>
-        public static RuntimeEnvironmentData RuntimeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, string> defaultPackages = default, string description = default, string language = default, string version = default)
+        /// <returns> A new <see cref="Automation.AutomationRuntimeEnvironmentData"/> instance for mocking. </returns>
+        public static AutomationRuntimeEnvironmentData AutomationRuntimeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IDictionary<string, string> defaultPackages = default, string description = default, string language = default, string version = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RuntimeEnvironmentData(
+            return new AutomationRuntimeEnvironmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                language is null && version is null && defaultPackages is null && description is null ? default : new RuntimeEnvironmentProperties(new RuntimeProperties(language, version, default), defaultPackages ?? new ChangeTrackingDictionary<string, string>(), description, default),
+                language is null && version is null && defaultPackages is null && description is null ? default : new AutomationRuntimeEnvironmentProperties(new RuntimeProperties(language, version, default), defaultPackages ?? new ChangeTrackingDictionary<string, string>(), description, default),
                 default);
         }
 
         /// <param name="defaultPackages"> List of Default packages for Environment. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.RuntimeEnvironmentPatch"/> instance for mocking. </returns>
-        public static RuntimeEnvironmentPatch RuntimeEnvironmentPatch(IDictionary<string, string> defaultPackages = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Models.AutomationRuntimeEnvironmentPatch"/> instance for mocking. </returns>
+        public static AutomationRuntimeEnvironmentPatch AutomationRuntimeEnvironmentPatch(IDictionary<string, string> defaultPackages = default, SystemData systemData = default)
         {
-            return new RuntimeEnvironmentPatch(defaultPackages is null ? default : new RuntimeEnvironmentUpdateProperties(defaultPackages ?? new ChangeTrackingDictionary<string, string>(), default), systemData, default);
+            return new AutomationRuntimeEnvironmentPatch(defaultPackages is null ? default : new RuntimeEnvironmentUpdateProperties(defaultPackages ?? new ChangeTrackingDictionary<string, string>(), default), systemData, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
