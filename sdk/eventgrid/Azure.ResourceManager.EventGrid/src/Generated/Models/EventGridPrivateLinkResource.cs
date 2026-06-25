@@ -13,7 +13,7 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information of the private link resource. </summary>
-    public partial class EventGridPrivateLinkResource
+    internal partial class EventGridPrivateLinkResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

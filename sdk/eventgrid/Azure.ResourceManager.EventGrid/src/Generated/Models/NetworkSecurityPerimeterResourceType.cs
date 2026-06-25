@@ -12,7 +12,7 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary></summary>
-    public readonly partial struct NetworkSecurityPerimeterResourceType : IEquatable<NetworkSecurityPerimeterResourceType>
+    internal readonly partial struct NetworkSecurityPerimeterResourceType : IEquatable<NetworkSecurityPerimeterResourceType>
     {
         private readonly string _value;
         /// <summary> topics. </summary>

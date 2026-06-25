@@ -3,14 +3,18 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    [CodeGenSuppress("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
     public partial class DomainNetworkSecurityPerimeterConfigurationResource
     {
         /// <summary> Creates a resource identifier for a domain network security perimeter configuration resource. </summary>
@@ -22,7 +26,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> The resource identifier. </returns>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string perimeterGuid, string associationName)
         {
-            return CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, $"{perimeterGuid}.{associationName}");
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{resourceName}/networkSecurityPerimeterConfigurations/{perimeterGuid}.{associationName}";
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <summary> Gets this network security perimeter configuration resource. </summary>
@@ -50,9 +55,38 @@ namespace Azure.ResourceManager.EventGrid
         public virtual async Task<ArmOperation<DomainNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
-            ArmOperation<NetworkSecurityPerimeterConfigurationData> operation = await NetworkSecurityPerimeterConfigurationCompat.GetResourceGroup(Client, Id)
-                .ReconcileAsync(waitUntil, NetworkSecurityPerimeterResourceType.Domains, Id.Parent.Name, perimeterGuid, associationName, cancellationToken)
-                .ConfigureAwait(false);
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Reconcile");
+            scope.Start();
+            ArmOperation<NetworkSecurityPerimeterConfigurationData> operation;
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    NetworkSecurityPerimeterResourceType.Domains.ToString(),
+                    Id.Parent.Name,
+                    perimeterGuid,
+                    associationName,
+                    context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                operation = new EventGridArmOperation<NetworkSecurityPerimeterConfigurationData>(
+                    new NetworkSecurityPerimeterConfigurationDataOperationSource(),
+                    _networkSecurityPerimeterConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
             return new NetworkSecurityPerimeterConfigurationCompatOperation<DomainNetworkSecurityPerimeterConfigurationResource>(operation, data => new DomainNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
@@ -63,8 +97,38 @@ namespace Azure.ResourceManager.EventGrid
         public virtual ArmOperation<DomainNetworkSecurityPerimeterConfigurationResource> Reconcile(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
-            ArmOperation<NetworkSecurityPerimeterConfigurationData> operation = NetworkSecurityPerimeterConfigurationCompat.GetResourceGroup(Client, Id)
-                .Reconcile(waitUntil, NetworkSecurityPerimeterResourceType.Domains, Id.Parent.Name, perimeterGuid, associationName, cancellationToken);
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Reconcile");
+            scope.Start();
+            ArmOperation<NetworkSecurityPerimeterConfigurationData> operation;
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    NetworkSecurityPerimeterResourceType.Domains.ToString(),
+                    Id.Parent.Name,
+                    perimeterGuid,
+                    associationName,
+                    context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                operation = new EventGridArmOperation<NetworkSecurityPerimeterConfigurationData>(
+                    new NetworkSecurityPerimeterConfigurationDataOperationSource(),
+                    _networkSecurityPerimeterConfigurationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
             return new NetworkSecurityPerimeterConfigurationCompatOperation<DomainNetworkSecurityPerimeterConfigurationResource>(operation, data => new DomainNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
     }

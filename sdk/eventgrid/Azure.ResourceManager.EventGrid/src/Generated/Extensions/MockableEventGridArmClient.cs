@@ -377,15 +377,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             return new EventGridPartnerNamespacePrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EventGridNamespacePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventGridNamespacePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual EventGridNamespacePrivateEndpointConnectionResource GetEventGridNamespacePrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            EventGridNamespacePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new EventGridNamespacePrivateEndpointConnectionResource(Client, id);
-        }
-
         /// <summary>
         /// List all event subscriptions that have been created for a specific resource.
         /// <list type="bullet">

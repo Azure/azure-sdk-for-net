@@ -1808,19 +1808,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="groupId"> Gets the GroupId. </param>
-        /// <param name="displayName"> Gets the DisplayName. </param>
-        /// <param name="requiredMembers"> Gets the RequiredMembers. </param>
-        /// <param name="requiredZoneNames"> Gets the RequiredZoneNames. </param>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <returns> A new <see cref="Models.EventGridPrivateLinkResource"/> instance for mocking. </returns>
-        public static EventGridPrivateLinkResource EventGridPrivateLinkResource(string groupId = default, string displayName = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ResourceIdentifier id = default, string name = default, ResourceType? @type = default)
-        {
-            return new EventGridPrivateLinkResource(groupId is null && displayName is null && requiredMembers is null && requiredZoneNames is null ? default : new EventGridPrivateLinkResourceProperties(groupId, displayName, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default), id, name, @type, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

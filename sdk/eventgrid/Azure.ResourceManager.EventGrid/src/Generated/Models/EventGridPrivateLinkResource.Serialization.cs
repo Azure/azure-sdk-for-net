@@ -16,7 +16,7 @@ using Azure.ResourceManager.EventGrid;
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information of the private link resource. </summary>
-    public partial class EventGridPrivateLinkResource : IJsonModel<EventGridPrivateLinkResource>
+    internal partial class EventGridPrivateLinkResource : IJsonModel<EventGridPrivateLinkResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.EventGrid
     [ModelReaderWriterBuildable(typeof(EventGridNamespacePatch))]
     [ModelReaderWriterBuildable(typeof(EventGridNamespacePermissionBindingData))]
     [ModelReaderWriterBuildable(typeof(EventGridNamespacePermissionBindingResource))]
-    [ModelReaderWriterBuildable(typeof(EventGridNamespacePrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(EventGridNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(EventGridPartnerContent))]
     [ModelReaderWriterBuildable(typeof(EventGridPartnerNamespacePrivateEndpointConnectionResource))]

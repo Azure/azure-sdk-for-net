@@ -6,10 +6,28 @@
 using System.Threading;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    [CodeGenSuppress("GetByResource", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByResourceAsync", typeof(ArmClient), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("Get", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByResource", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByResourceAsync", typeof(ResourceGroupResource), typeof(PrivateEndpointConnectionsParentTypeCsharp), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByResource", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetByResourceAsync", typeof(ResourceGroupResource), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventSubscriptions", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(ResourceGroupResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventSubscriptions", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(SubscriptionResource), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAll", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAllAsync", typeof(ResourceGroupResource), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("Reconcile", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("ReconcileAsync", typeof(ResourceGroupResource), typeof(WaitUntil), typeof(NetworkSecurityPerimeterResourceType), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public static partial class EventGridExtensions
     {
         /// <summary> List global event subscriptions under a resource group for a topic type. </summary>

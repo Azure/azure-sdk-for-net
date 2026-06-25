@@ -39,8 +39,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         private SystemTopics _systemTopicsRestClient;
         private ClientDiagnostics _topicsClientDiagnostics;
         private Topics _topicsRestClient;
-        private ClientDiagnostics _eventSubscriptionsSubscriptionScopeClientDiagnostics;
-        private EventSubscriptionsSubscriptionScope _eventSubscriptionsSubscriptionScopeRestClient;
 
         /// <summary> Initializes a new instance of MockableEventGridSubscriptionResource for mocking. </summary>
         protected MockableEventGridSubscriptionResource()
@@ -93,10 +91,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         private ClientDiagnostics TopicsClientDiagnostics => _topicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Endpoint, "2025-07-15-preview");
-
-        private ClientDiagnostics EventSubscriptionsSubscriptionScopeClientDiagnostics => _eventSubscriptionsSubscriptionScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private EventSubscriptionsSubscriptionScope EventSubscriptionsSubscriptionScopeRestClient => _eventSubscriptionsSubscriptionScopeRestClient ??= new EventSubscriptionsSubscriptionScope(EventSubscriptionsSubscriptionScopeClientDiagnostics, Pipeline, Endpoint, "2025-07-15-preview");
 
         /// <summary>
         /// List all the namespaces under an Azure subscription.
@@ -312,78 +306,6 @@ namespace Azure.ResourceManager.EventGrid.Mocking
                 top,
                 context,
                 "MockableEventGridSubscriptionResource.GetEventGridDomains"), data => new EventGridDomainResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EventSubscriptionOperationGroup_ListGlobalBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventSubscriptionResource> GetEventSubscriptionsAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(new EventSubscriptionsGetGlobalBySubscriptionAsyncCollectionResultOfT(
-                EventSubscriptionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                filter,
-                top,
-                context,
-                "MockableEventGridSubscriptionResource.GetEventSubscriptions"), data => new EventSubscriptionResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all aggregated global event subscriptions under a specific Azure subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.EventGrid/eventSubscriptions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EventSubscriptionOperationGroup_ListGlobalBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventSubscriptionResource> GetEventSubscriptions(string filter = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(new EventSubscriptionsGetGlobalBySubscriptionCollectionResultOfT(
-                EventSubscriptionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                filter,
-                top,
-                context,
-                "MockableEventGridSubscriptionResource.GetEventSubscriptions"), data => new EventSubscriptionResource(Client, data));
         }
 
         /// <summary>

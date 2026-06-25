@@ -10,6 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -17,6 +18,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
     // that call into MockableEventGridSubscriptionResource. The current generated mockable class
     // does not emit these specific methods, so we provide them here to preserve the existing
     // extension surface and mockable/virtual behavior.
+    [CodeGenSuppress("GetEventSubscriptions", typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventSubscriptionsAsync", typeof(string), typeof(int?), typeof(CancellationToken))]
     public partial class MockableEventGridSubscriptionResource
     {
         /// <summary> List global event subscriptions under a subscription for a topic type. </summary>
@@ -27,12 +30,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetGlobalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetGlobalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -46,12 +49,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetGlobalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetGlobalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -73,12 +76,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetGlobalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetGlobalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -92,12 +95,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetGlobalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetGlobalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -117,12 +120,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetRegionalEventSubscriptionsDataRequest(Guid.Parse(Id.SubscriptionId), location, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetRegionalEventSubscriptionsDataRequest(Guid.Parse(Id.SubscriptionId), location, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -136,12 +139,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetRegionalEventSubscriptionsDataRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetRegionalEventSubscriptionsDataRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -161,12 +164,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetRegionalEventSubscriptionsDataRequest(Guid.Parse(Id.SubscriptionId), location, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetRegionalEventSubscriptionsDataRequest(Guid.Parse(Id.SubscriptionId), location, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -180,12 +183,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetRegionalEventSubscriptionsDataRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetRegionalEventSubscriptionsDataRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsData");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -207,12 +210,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetRegionalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetRegionalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -226,12 +229,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             async Task<Page<EventGridSubscriptionData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetRegionalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetRegionalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = await EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response response = await EventSubscriptionsRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -253,12 +256,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateGetRegionalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateGetRegionalEventSubscriptionsDataForTopicTypeRequest(Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
@@ -272,12 +275,12 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             Page<EventGridSubscriptionData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = EventSubscriptionsSubscriptionScopeRestClient.CreateNextGetRegionalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
-                using DiagnosticScope scope = EventSubscriptionsSubscriptionScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
+                HttpMessage message = EventSubscriptionsRestClient.CreateNextGetRegionalEventSubscriptionsDataForTopicTypeRequest(new Uri(nextLink), Guid.Parse(Id.SubscriptionId), location, topicTypeName, filter, top, context);
+                using DiagnosticScope scope = EventSubscriptionsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
                 scope.Start();
                 try
                 {
-                    Response response = EventSubscriptionsSubscriptionScopeRestClient.Pipeline.ProcessMessage(message, context);
+                    Response response = EventSubscriptionsRestClient.Pipeline.ProcessMessage(message, context);
                     EventSubscriptionsListResult result = EventSubscriptionsListResult.FromResponse(response);
                     return Page.FromValues(result.Value, result.NextLink?.OriginalString, response);
                 }
