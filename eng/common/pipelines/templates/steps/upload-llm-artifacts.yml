@@ -1,25 +1,80 @@
-# This template serves as a place to upload artifacts intended to be used by LLMs
-# that handle data from the pipeline (for example github copilot).
+# This template stages test result files into an "llm-artifacts" directory so they can be
+# uploaded as a pipeline artifact and consumed by LLM tooling (for example GitHub Copilot)
+# to analyze a test run.
+#
+# It is language agnostic. Every Azure SDK language repo emits test results in a different
+# format (.NET produces TRX, the other languages produce JUnit XML) and with a different
+# file name, so callers pass the appropriate leaf-name glob via TestResultsGlob:
+#
+#   .NET    (TRX):       TestResultsGlob: '$(TestTargetFramework)*.trx'
+#   Python  (JUnit XML): TestResultsGlob: '*test*.xml'
+#   JS      (JUnit XML): TestResultsGlob: 'test-results*.xml', SearchFolder: '$(System.DefaultWorkingDirectory)/sdk'
+#   Java    (JUnit XML): TestResultsGlob: 'TEST-*.xml',        SearchFolder: '$(System.DefaultWorkingDirectory)/sdk'
+#   Go      (JUnit XML): TestResultsGlob: 'report.xml'
+#
+# The staging step does not care about the file format; it only moves files. Each file is
+# renamed using its location relative to the repo's "sdk" directory so results from different
+# services/packages do not collide once flattened into a single directory.
+#
+# Example template usage, see above for per language values:
+#
+#  - template: /eng/common/pipelines/templates/steps/upload-llm-artifacts.yml
+#    parameters:
+#      TestResultsGlob: '*test*.xml'  # e.g. Python
+#      SearchFolder: '$(System.DefaultWorkingDirectory)/sdk'
+#  - output: pipelineArtifact
+#    condition: eq(variables['uploadLlmArtifacts'], 'true')
+
+
+parameters:
+  # One or more comma separated leaf-name globs used to locate test result files.
+  - name: TestResultsGlob
+    type: string
+  # Root directory to search recursively. Scope this (for example to ".../sdk") to avoid
+  # scanning large unrelated trees such as node_modules.
+  - name: SearchFolder
+    type: string
+    default: '$(Build.SourcesDirectory)'
 
 steps:
   - pwsh: |
       $artifactsDirectory = "$(Build.ArtifactStagingDirectory)/llm-artifacts"
-      New-Item $artifactsDirectory -ItemType directory -Force
+      New-Item $artifactsDirectory -ItemType Directory -Force | Out-Null
+
+      $searchFolder = "${{ parameters.SearchFolder }}"
+      $patterns = "${{ parameters.TestResultsGlob }}".Split(",", [StringSplitOptions]::RemoveEmptyEntries) `
+        | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+
+      $testResultsFiles = @(Get-ChildItem -Path $searchFolder -Include $patterns -Recurse -File -ErrorAction SilentlyContinue)
+
       Write-Host "================="
-      Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File
+      Write-Host "Found $($testResultsFiles.Count) test result file(s) under '$searchFolder' matching: $($patterns -join ', ')"
+      $testResultsFiles | ForEach-Object { Write-Host $_.FullName }
       Write-Host "================="
-      foreach($testResultsFile in (Get-ChildItem -Path $(TestTargetFramework)*.trx -Recurse -File))
+
+      foreach ($testResultsFile in $testResultsFiles)
       {
         $fileFullName = $testResultsFile.FullName
-        # Convert a path like
-        #   /mnt/vss/_work/1/s/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
-        # to
-        #   template-Azure.Template-net8.0.trx
-        $serviceAndPackage = ($fileFullName -split 'sdk[\\/]|[\\/]tests')[1] -replace '[\\/]', '-'
-        $trxFile     = Split-Path $fileFullName -Leaf
-        $fileName  = "$serviceAndPackage-$trxFile"
+
+        # Build a unique, traceable artifact name from the file's location. Prefer the path
+        # relative to the language repo's "sdk" directory, for example:
+        #   <sources>/sdk/template/Azure.Template/tests/TestResults/net8.0.trx
+        #     -> template-Azure.Template-tests-TestResults-net8.0.trx
+        #   <sources>/sdk/storage/report.xml
+        #     -> storage-report.xml
+        # Fall back to a sources-relative path for repos without an "sdk" directory.
+        if ($fileFullName -match "[\\/]sdk[\\/]")
+        {
+          $relativePath = ($fileFullName -split "[\\/]sdk[\\/]", 2)[-1]
+        }
+        else
+        {
+          $relativePath = [System.IO.Path]::GetRelativePath("$(Build.SourcesDirectory)", $fileFullName)
+        }
+        $fileName = $relativePath -replace "^[\\/]+", "" -replace "[\\/]+", "-"
+
         Move-Item -Path $fileFullName -Destination "$artifactsDirectory/$fileName" -ErrorAction Continue
-        Write-Host "##vso[task.setvariable variable=uploadTestResults]true"
+        Write-Host "##vso[task.setvariable variable=uploadLlmArtifacts]true"
       }
     condition: succeededOrFailed()
-    displayName: Copy test results files to llm artifacts staging directory
+    displayName: Copy test result files to llm artifacts staging directory
