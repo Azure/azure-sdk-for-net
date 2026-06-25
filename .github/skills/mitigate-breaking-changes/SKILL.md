@@ -23,7 +23,7 @@ Keep custom code types split into separate files:
 
 ### Partial class (add members, suppress generated members)
 ```csharp
-// src/Custom/MyModel.cs (or src/Customization/MyModel.cs — follow the package's existing convention)
+// src/Custom/Models/MyModel.cs (or src/Customization/Models/MyModel.cs — follow the package's existing convention)
 namespace Azure.ResourceManager.<Service>.Models
 {
     public partial class MyModel
