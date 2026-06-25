@@ -8,7 +8,7 @@ using Azure.AI.AgentServer.Optimization;
 using Azure.Identity;
 
 const string ProjectEndpoint = "https://e2e-tests-westus2-account.services.ai.azure.com/api/projects/faos-e2e-tests";
-const string AgentName = "faos-e2e-hosted";
+const string AgentName = "travel-agent-sample";
 const string EvalModel = "gpt-5";
 const int MaxIterations = 3; // Force multiple candidates
 

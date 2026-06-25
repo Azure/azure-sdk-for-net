@@ -6,12 +6,11 @@
 # OPTIMIZATION_CANDIDATE_ID env var (see Program.cs).
 name: smoke-core
 agent:
-    # Must match the service key in azure.yaml. The optimize CLI uses the
-    # azure.yaml `services.<name>` lookup to locate the baseline config dir
-    # (./.agent_configs/baseline/). It does NOT honor a path field in this file.
     name: travel-agent-sample
     kind: hosted
     model: gpt-4.1-mini
+    config: .agent_configs/baseline
+    instruction_file: .agent_configs/baseline/instructions.md
 dataset:
     name: smoke-core
     version: "1.0"
