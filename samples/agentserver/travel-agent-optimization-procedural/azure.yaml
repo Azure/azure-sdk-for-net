@@ -1,31 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
-#
-# azd manifest for the TravelAgent SDK sample.
-#
-# `azd up` will provision the Foundry resources (via infra/, if present) and
-# then call the postup hook which runs deploy-foundry-agent.ps1:
-#   1. dotnet publish (Release) -> ./publish
-#   2. az acr build using ./Dockerfile -> push image to AZURE_ACR_NAME
-#   3. POST a new version on the Foundry agent pointing at the new image
-#
-# Required environment variables (set via `azd env set <name> <value>`):
-#   AZURE_ACR_NAME        - target Azure Container Registry name
-#   FOUNDRY_ENDPOINT      - https://<resource>.services.ai.azure.com
-#   FOUNDRY_PROJECT       - Foundry project name
-#   FOUNDRY_AGENT         - Foundry hosted-agent name (e.g. travel-agent-sample)
-#
-# Optional:
-#   AZURE_IMAGE_NAME      - image repository name (default: travel-agent)
-#   AZURE_IMAGE_TAG       - image tag (default: latest)
-#   VERSION_DESCRIPTION   - human description recorded on the new agent version
 
 name: travel-agent-sample
 metadata:
     template: azure-ai-agentserver-optimization-configuration-samples@1.0.0
 services:
-    # IMPORTANT: this service key must match `agent.name` in eval.yaml. The
-    # `azd ai agent optimize` extension uses the azure.yaml service name to
-    # locate the baseline config directory (./.agent_configs/baseline/).
     travel-agent-sample:
         project: .
         host: azure.ai.agent
@@ -38,17 +16,10 @@ services:
                     cpu: "0.5"
                     memory: 1Gi
 hooks:
-    postup:
-        windows:
-            shell: pwsh
-            run: ./scripts/deploy-foundry-agent.ps1
-            interactive: true
-        posix:
-            shell: pwsh
-            run: ./scripts/deploy-foundry-agent.ps1
-            interactive: true
     postdeploy:
         windows:
+            name: postdeploy
+            kind: pwsh
             shell: pwsh
             run: ./scripts/deploy-foundry-agent.ps1
             interactive: true
@@ -56,4 +27,14 @@ hooks:
             shell: pwsh
             run: ./scripts/deploy-foundry-agent.ps1
             interactive: true
-
+    postup:
+        windows:
+            name: postup
+            kind: pwsh
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true
+        posix:
+            shell: pwsh
+            run: ./scripts/deploy-foundry-agent.ps1
+            interactive: true

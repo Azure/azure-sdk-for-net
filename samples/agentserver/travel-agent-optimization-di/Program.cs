@@ -71,10 +71,13 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
 
 static string ResolveAzureOpenAIEndpoint()
 {
+    // Try explicit OpenAI endpoint first, then fall back to project endpoint.
+    // Always strip to host-only — AzureOpenAIClient appends /openai/... itself.
     var explicitEndpoint = Environment.GetEnvironmentVariable("AZURE_AI_OPENAI_ENDPOINT");
     if (!string.IsNullOrWhiteSpace(explicitEndpoint))
     {
-        return explicitEndpoint.TrimEnd('/') + "/";
+        var uri = new Uri(explicitEndpoint);
+        return $"{uri.Scheme}://{uri.Host}/";
     }
 
     var projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")

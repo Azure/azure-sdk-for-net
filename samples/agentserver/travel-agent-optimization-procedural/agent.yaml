@@ -6,8 +6,6 @@ protocols:
 environment_variables:
     - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
       value: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
-    - name: AZURE_AI_OPENAI_ENDPOINT
-      value: ${AZURE_AI_OPENAI_ENDPOINT}
     - name: OPTIMIZATION_LOCAL_DIR
       value: .agent_configs
     # After running `azd ai agent optimize`, set these on the deployed agent's
