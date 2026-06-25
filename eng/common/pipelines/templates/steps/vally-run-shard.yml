@@ -53,9 +53,18 @@ steps:
     inputs:
       version: ${{ parameters.nodeVersion }}
 
+  # Point npm at the azure-sdk Azure Artifacts npm mirror. The 1ES Official managed
+  # image blocks direct egress to registry.npmjs.org (npm ci fails EPERM/"rejected by
+  # your operating system"), so packages must be restored through this allowlisted feed
+  # (it proxies+caches public npm server-side). Auth uses the build's own credentials.
+  - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+    parameters:
+      npmrcPath: $(Build.SourcesDirectory)/.npmrc
+      registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
+
   # npm ci installs @microsoft/vally-cli AND its locked transitive @github/copilot-sdk
   # (the executor) into eng/skill-eval/node_modules — no global install needed (D9).
-  - script: npm ci
+  - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
     displayName: 'Install Vally CLI + copilot-sdk (pinned via lockfile)'
     workingDirectory: ${{ parameters.skillEvalDir }}
 
