@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Tests
         [RecordedTest]
         [TestCase(null)]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Recording needs to be refreshed after restoring GalleryImage tag PATCH required-copy behavior. See #59095.")]
+        [TestCase(false)]
         public async Task SetTags(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
