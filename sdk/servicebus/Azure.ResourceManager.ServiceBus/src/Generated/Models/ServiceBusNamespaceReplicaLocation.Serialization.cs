@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("roleType"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
             }
-            if (Optional.IsDefined(ClusterArmId))
-            {
-                writer.WritePropertyName("clusterArmId"u8);
-                writer.WriteStringValue(ClusterArmId);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +128,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             string locationName = default;
             GeoDRRoleType? roleType = default;
-            string clusterArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,17 +145,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     roleType = new GeoDRRoleType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("clusterArmId"u8))
-                {
-                    clusterArmId = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, clusterArmId, additionalBinaryDataProperties);
+            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, additionalBinaryDataProperties);
         }
     }
 }
