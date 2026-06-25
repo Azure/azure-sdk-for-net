@@ -15,10 +15,10 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class OutboundRuleGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningOutboundRuleBasicData>
+    internal partial class OutboundRuleGetAllAsyncCollectionResultOfT : AsyncPageable<ManagedNetworkOutboundRuleBasicResourceData>
     {
         private readonly OutboundRule _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _managedNetworkName;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="managedNetworkName"> Name of the managedNetwork associated with the workspace. Only 'default' is supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OutboundRuleGetAllAsyncCollectionResultOfT(OutboundRule client, Guid subscriptionId, string resourceGroupName, string workspaceName, string managedNetworkName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OutboundRuleGetAllAsyncCollectionResultOfT(OutboundRule client, string subscriptionId, string resourceGroupName, string workspaceName, string managedNetworkName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OutboundRuleGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MachineLearningOutboundRuleBasicData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ManagedNetworkOutboundRuleBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     yield break;
                 }
-                OutboundRuleListResult result = OutboundRuleListResult.FromResponse(response);
-                yield return Page<MachineLearningOutboundRuleBasicData>.FromValues((IReadOnlyList<MachineLearningOutboundRuleBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ManagedNetworkOutboundRuleListResult result = ManagedNetworkOutboundRuleListResult.FromResponse(response);
+                yield return Page<ManagedNetworkOutboundRuleBasicResourceData>.FromValues((IReadOnlyList<ManagedNetworkOutboundRuleBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

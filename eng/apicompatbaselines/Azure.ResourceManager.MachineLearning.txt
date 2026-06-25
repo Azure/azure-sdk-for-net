@@ -1,5 +1,10 @@
-# WirePathAttribute on synthesized additional-properties bags is codegen metadata and not part of the service contract.
+# The TypeSpec config already enables enable-wire-path-attribute, but these members are synthesized additional-properties bags rather than
+# declared TypeSpec properties. The emitter does not currently attach WirePathAttribute to that synthetic bag property, so keep only these
+# generated metadata diffs in the baseline.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.CustomService.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.DockerSetting.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.EnvironmentVariable.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.ImageSetting.AdditionalProperties' in the contract but not the implementation.
+
+# WirePathAttribute value changed because the current service wire name is userStorageArmId; the public C# property name is preserved by clientName.
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' on 'Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspaceGetKeysResult.UserStorageResourceId' changed from '[WirePathAttribute("userStorageResourceId")]' in the contract to '[WirePathAttribute("userStorageArmId")]' in the implementation.

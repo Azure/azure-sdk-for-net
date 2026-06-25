@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_CreateOrUpdate. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, MachineLearningEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningEndpointResource> operation = new MachineLearningArmOperation<MachineLearningEndpointResource>(
                     new MachineLearningEndpointResourceOperationSource(Client),
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_CreateOrUpdate. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, MachineLearningEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, MachineLearningEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningEndpointResource> operation = new MachineLearningArmOperation<MachineLearningEndpointResource>(
                     new MachineLearningEndpointResourceOperationSource(Client),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningEndpointData> response = Response.FromValue(MachineLearningEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningEndpointData> response = Response.FromValue(MachineLearningEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_List. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<MachineLearningEndpointData, MachineLearningEndpointResource>(new EndpointGetAllAsyncCollectionResultOfT(
                 _endpointRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 endpointType?.ToString(),
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_List. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<MachineLearningEndpointData, MachineLearningEndpointResource>(new EndpointGetAllCollectionResultOfT(
                 _endpointRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 endpointType?.ToString(),
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningEndpointData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningEndpointData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningEndpointData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MachineLearningEndpoints_Get. </description>
+        /// <description> EndpointResourcePropertiesBasicResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                HttpMessage message = _endpointRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningEndpointData> response = default;

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMachineLearningModelFactory
     {
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -147,174 +148,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 raiPolicyName,
                 sku,
                 versionUpgradeOption);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="agentsEndpointUri"> The URI of agents endpoint associated with this workspace. </param>
-        /// <param name="allowPublicAccessWhenBehindVnet"> The flag to indicate whether to allow public access when behind VNet. </param>
-        /// <param name="allowRoleAssignmentOnRG"> The flag to indicate whether we will do role assignment for the workspace MSI on resource group level. </param>
-        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
-        /// <param name="associatedWorkspaces"> Gets the AssociatedWorkspaces. </param>
-        /// <param name="containerRegistries"> Gets the ContainerRegistries. </param>
-        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
-        /// <param name="description"> The description of this workspace. </param>
-        /// <param name="discoveryUri"> Url for the discovery service to identify regional endpoints for machine learning experimentation services. </param>
-        /// <param name="enableDataIsolation"> Gets or sets the EnableDataIsolation. </param>
-        /// <param name="enableServiceSideCMKEncryption"> Gets or sets the EnableServiceSideCMKEncryption. </param>
-        /// <param name="enableSimplifiedCmk"> Flag to tell if simplified CMK should be enabled for this workspace. </param>
-        /// <param name="enableSoftwareBillOfMaterials"> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </param>
-        /// <param name="encryption"> Gets or sets the Encryption. </param>
-        /// <param name="existingWorkspaces"> Gets the ExistingWorkspaces. </param>
-        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
-        /// <param name="friendlyName"> The friendly name for this workspace. This name in mutable. </param>
-        /// <param name="isHbiWorkspace"> The flag to signal HBI data in the workspace and reduce diagnostic data collected by the service. </param>
-        /// <param name="hubResourceId"> Gets or sets the HubResourceId. </param>
-        /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="ipAllowlist"> The list of IPv4  addresses that are allowed to access the workspace. </param>
-        /// <param name="keyVault"> ARM id of the key vault associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="keyVaults"> Gets the KeyVaults. </param>
-        /// <param name="managedNetwork"> Gets or sets the ManagedNetwork. </param>
-        /// <param name="mlFlowTrackingUri"> The URI associated with this workspace that machine learning flow must point at to set up tracking. </param>
-        /// <param name="networkAcls"> A set of rules governing the network accessibility of the workspace. </param>
-        /// <param name="notebookInfo"> The notebook info of Azure ML workspace. </param>
-        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections in the workspace. </param>
-        /// <param name="privateLinkCount"> Count of private connections in the workspace. </param>
-        /// <param name="isProvisionNetworkNow"> Set to trigger the provisioning of the managed VNet with the default Options when creating a Workspace with the managed VNet enabled, or else it does nothing. </param>
-        /// <param name="provisioningState"> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="serverlessComputeSettings"> Settings for serverless compute in a workspace. </param>
-        /// <param name="serviceProvisionedResourceGroup"> The name of the managed resource group created by workspace RP in customer subscription if the workspace is CMK workspace. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources in this workspace. </param>
-        /// <param name="softDeleteRetentionInDays"> Retention time in days after workspace get soft deleted. </param>
-        /// <param name="storageAccount"> ARM id of the storage account associated with this workspace. This cannot be changed once the workspace has been created. </param>
-        /// <param name="storageAccounts"> Gets the StorageAccounts. </param>
-        /// <param name="isStorageHnsEnabled"> If the storage associated with the workspace has hierarchical namespace(HNS) enabled. </param>
-        /// <param name="systemDatastoresAuthMode"> The auth mode used for accessing the system datastores of the workspace. </param>
-        /// <param name="tenantId"> The tenant id associated with this workspace. </param>
-        /// <param name="isV1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <param name="workspaceHubConfig"> WorkspaceHub's configuration object. </param>
-        /// <param name="workspaceId"> The immutable id associated with this workspace. </param>
-        /// <param name="serviceManagedResourcesCosmosDbCollectionsThroughput"> Gets or sets the CollectionsThroughput. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="kind"></param>
-        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
-        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceData"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceData MachineLearningWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri agentsEndpointUri = default, bool? allowPublicAccessWhenBehindVnet = default, bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, IEnumerable<string> associatedWorkspaces = default, IEnumerable<string> containerRegistries = default, string containerRegistry = default, string description = default, Uri discoveryUri = default, bool? enableDataIsolation = default, bool? enableServiceSideCMKEncryption = default, bool? enableSimplifiedCmk = default, bool? enableSoftwareBillOfMaterials = default, EncryptionProperty encryption = default, IEnumerable<string> existingWorkspaces = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, bool? isHbiWorkspace = default, ResourceIdentifier hubResourceId = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, string keyVault = default, IEnumerable<string> keyVaults = default, ManagedNetworkSettings managedNetwork = default, Uri mlFlowTrackingUri = default, NetworkAcls networkAcls = default, MachineLearningNotebookResourceInfo notebookInfo = default, string primaryUserAssignedIdentity = default, IEnumerable<MachineLearningPrivateEndpointConnectionData> privateEndpointConnections = default, int? privateLinkCount = default, bool? isProvisionNetworkNow = default, MachineLearningProvisioningState? provisioningState = default, PublicNetworkAccess? publicNetworkAccess = default, ServerlessComputeSettings serverlessComputeSettings = default, string serviceProvisionedResourceGroup = default, IEnumerable<MachineLearningSharedPrivateLinkResource> sharedPrivateLinkResources = default, int? softDeleteRetentionInDays = default, string storageAccount = default, IEnumerable<string> storageAccounts = default, bool? isStorageHnsEnabled = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, Guid? tenantId = default, bool? isV1LegacyMode = default, WorkspaceHubConfig workspaceHubConfig = default, string workspaceId = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, ManagedServiceIdentity identity = default, string kind = default, MachineLearningSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MachineLearningWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                allowPublicAccessWhenBehindVnet is null && allowRoleAssignmentOnRG is null && enableDataIsolation is null && enableServiceSideCMKEncryption is null && enableSimplifiedCmk is null && enableSoftwareBillOfMaterials is null && primaryUserAssignedIdentity is null && isHbiWorkspace is null && isProvisionNetworkNow is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && isStorageHnsEnabled is null && isV1LegacyMode is null && workspaceHubConfig is null && workspaceId is null ? default : new WorkspaceProperties(
-                    default,
-                    allowPublicAccessWhenBehindVnet,
-                    allowRoleAssignmentOnRG,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    enableDataIsolation,
-                    enableServiceSideCMKEncryption,
-                    enableSimplifiedCmk,
-                    enableSoftwareBillOfMaterials,
-                    new EncryptionProperty(
-                        default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
-                        default,
-                        default,
-                        default,
-                        default,
-                        default),
-                    default,
-                    default,
-                    default,
-                    isHbiWorkspace,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    isProvisionNetworkNow,
-                    default,
-                    default,
-                    default,
-                    new ServiceManagedResourcesSettings(new CosmosDbSettings(serviceManagedResourcesCosmosDbCollectionsThroughput, default), default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    isStorageHnsEnabled,
-                    default,
-                    default,
-                    isV1LegacyMode,
-                    workspaceHubConfig,
-                    workspaceId,
-                    default),
-                identity,
-                kind,
-                sku,
-                default);
-        }
-
-        /// <param name="cosmosDbResourceId">
-        /// The byok cosmosdb account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
-        /// <param name="userAssignedIdentity"> UserAssignedIdentity to be used to fetch the encryption key from keyVault. </param>
-        /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
-        /// <param name="searchAccountResourceId">
-        /// The byok search account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
-        /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
-        /// <param name="storageAccountResourceId">
-        /// The byok storage account that customer brings to store customer's data
-        /// with encryption
-        /// </param>
-        /// <returns> A new <see cref="Models.EncryptionProperty"/> instance for mocking. </returns>
-        public static EncryptionProperty EncryptionProperty(ResourceIdentifier cosmosDbResourceId = default, string userAssignedIdentity = default, KeyVaultProperties keyVaultProperties = default, ResourceIdentifier searchAccountResourceId = default, MachineLearningEncryptionStatus status = default, ResourceIdentifier storageAccountResourceId = default)
-        {
-            return new EncryptionProperty(
-                cosmosDbResourceId,
-                userAssignedIdentity is null ? default : new IdentityForCmk(userAssignedIdentity, default),
-                keyVaultProperties,
-                searchAccountResourceId,
-                status,
-                storageAccountResourceId,
-                default);
-        }
-
-        /// <param name="identityClientId">
-        /// Currently, we support only SystemAssigned MSI.
-        /// We need this when we support UserAssignedIdentities
-        /// </param>
-        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
-        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
-        /// <returns> A new <see cref="Models.KeyVaultProperties"/> instance for mocking. </returns>
-        public static KeyVaultProperties KeyVaultProperties(string identityClientId = default, string keyIdentifier = default, ResourceIdentifier keyVaultArmId = default)
-        {
-            return new KeyVaultProperties(identityClientId, keyIdentifier, keyVaultArmId, default);
         }
 
         /// <param name="sparkRuntimeVersion"> Gets or sets the SparkRuntimeVersion. </param>
@@ -789,17 +622,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="location"> The location of the workspace ACR. </param>
-        /// <param name="passwords"></param>
-        /// <param name="username"> The username of the workspace ACR. </param>
-        /// <returns> A new <see cref="Models.RegistryListCredentialsResult"/> instance for mocking. </returns>
-        public static RegistryListCredentialsResult RegistryListCredentialsResult(string location = default, IEnumerable<MachineLearningPasswordDetail> passwords = default, string username = default)
-        {
-            passwords ??= new ChangeTrackingList<MachineLearningPasswordDetail>();
-
-            return new RegistryListCredentialsResult(location, (passwords ?? new ChangeTrackingList<MachineLearningPasswordDetail>()).ToList(), username, default);
-        }
-
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.MachineLearningPasswordDetail"/> instance for mocking. </returns>
@@ -844,13 +666,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningWorkspaceGetStorageAccountKeysResult MachineLearningWorkspaceGetStorageAccountKeysResult(string userStorageKey = default)
         {
             return new MachineLearningWorkspaceGetStorageAccountKeysResult(userStorageKey, default);
-        }
-
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.MachineLearningFqdnEndpointGroup"/> instance for mocking. </returns>
-        public static MachineLearningFqdnEndpointGroup MachineLearningFqdnEndpointGroup(MachineLearningFqdnEndpoints properties = default)
-        {
-            return new MachineLearningFqdnEndpointGroup(properties, default);
         }
 
         /// <param name="category"></param>
@@ -1028,14 +843,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RegistryPrivateEndpointConnection(id, location, groupIds is null && privateEndpoint is null && registryPrivateLinkServiceConnectionState is null && provisioningState is null ? default : new RegistryPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, registryPrivateLinkServiceConnectionState, provisioningState, default), default);
         }
 
-        /// <param name="id"> The resource identifier of the private endpoint. </param>
-        /// <param name="subnetArmId"> The subnetId that the private endpoint is connected to. </param>
-        /// <returns> A new <see cref="Models.MachineLearningPrivateEndpoint"/> instance for mocking. </returns>
-        public static MachineLearningPrivateEndpoint MachineLearningPrivateEndpoint(ResourceIdentifier id = default, ResourceIdentifier subnetArmId = default)
-        {
-            return new MachineLearningPrivateEndpoint(id, subnetArmId, default);
-        }
-
         /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>
@@ -1046,7 +853,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="acrDetails"> List of ACR accounts. </param>
-        /// <param name="location"> The location where the registry doesExist. </param>
+        /// <param name="location"> The location where the registry exists. </param>
         /// <param name="storageAccountDetails"> List of storage accounts. </param>
         /// <returns> A new <see cref="Models.RegistryRegionArmDetails"/> instance for mocking. </returns>
         public static RegistryRegionArmDetails RegistryRegionArmDetails(IEnumerable<RegistryAcrDetails> acrDetails = default, AzureLocation? location = default, IEnumerable<StorageAccountDetails> storageAccountDetails = default)
@@ -1614,7 +1421,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningBuildContext(contextUri, dockerfilePath, default);
         }
 
-        /// <param name="doesExist"> Indicates if image doesExist. </param>
+        /// <param name="doesExist"> Indicates if image exists. </param>
         /// <param name="image"> Container image details. </param>
         /// <param name="vulnerabilityFindings"> Vulnerability findings details. </param>
         /// <returns> A new <see cref="Models.ImageDetails"/> instance for mocking. </returns>
@@ -2320,11 +2127,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 default,
                 authorityUri,
-                resourceUri,
-                tenantId,
                 clientId,
-                thumbprint,
-                secrets);
+                resourceUri,
+                secrets,
+                tenantId,
+                thumbprint);
         }
 
         /// <returns> A new <see cref="Models.MachineLearningNoneDatastoreCredentials"/> instance for mocking. </returns>
@@ -2352,10 +2159,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default,
                 default,
                 authorityUri,
-                resourceUri,
-                tenantId,
                 clientId,
-                secrets);
+                resourceUri,
+                secrets,
+                tenantId);
         }
 
         /// <param name="description"> The asset description text. </param>
@@ -3370,7 +3177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
         /// <param name="compute">
-        /// ARM resource ID of the compute if it doesExist.
+        /// ARM resource ID of the compute if it exists.
         /// optional
         /// </param>
         /// <param name="mirrorTraffic"> Percentage of traffic to be mirrored to each deployment without using returned scoring. Traffic values need to sum to utmost 50. </param>
@@ -6654,28 +6461,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             return new MachineLearningSweepJob(
                 description,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                default,
-                displayName,
-                status,
-                experimentName,
-                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
-                computeId,
-                isArchived,
-                identity,
                 componentId,
+                computeId,
+                displayName,
+                experimentName,
+                identity,
+                isArchived,
+                default,
                 notificationSetting,
-                searchSpace,
-                samplingAlgorithm,
-                limits,
+                parentJobName,
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                status,
                 earlyTermination,
-                objective,
-                trial,
                 inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                limits,
+                objective,
                 outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
-                queueJobTier is null ? default : new JobQueueSettings(queueJobTier, default));
+                queueJobTier is null ? default : new QueueSettings(queueJobTier, default),
+                samplingAlgorithm,
+                searchSpace,
+                trial);
         }
 
         /// <param name="goal"> [Required] Defines supported metric goals for hyperparameter tuning. </param>
@@ -6683,7 +6491,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningObjective"/> instance for mocking. </returns>
         public static MachineLearningObjective MachineLearningObjective(MachineLearningGoal goal = default, string primaryMetric = default)
         {
-            return new MachineLearningObjective(primaryMetric, goal, default);
+            return new MachineLearningObjective(goal, primaryMetric, default);
         }
 
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
@@ -6842,7 +6650,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="isBlocking"> If isBlocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
         /// <returns> A new <see cref="Models.RaiBlocklistConfig"/> instance for mocking. </returns>
         public static RaiBlocklistConfig RaiBlocklistConfig(bool? isBlocking = default, string blocklistName = default)
@@ -6851,7 +6659,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="allowedContentLevel"> Level at which content is filtered. </param>
-        /// <param name="isBlocking"> If isBlocking would occur. </param>
+        /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="enabled"> If the ContentFilter is enabled. </param>
         /// <param name="name"> Name of ContentFilter. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
@@ -7226,8 +7034,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, default);
         }
 
-        /// <param name="objectId"> User’s Aad Object Id. </param>
-        /// <param name="tenantId"> User’s Aad Tenant Id. </param>
+        /// <param name="objectId"> User’s AAD Object Id. </param>
+        /// <param name="tenantId"> User’s AAD Tenant Id. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeInstanceAssignedUser"/> instance for mocking. </returns>
         public static MachineLearningComputeInstanceAssignedUser MachineLearningComputeInstanceAssignedUser(string objectId = default, Guid tenantId = default)
         {
@@ -7260,29 +7068,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningComputeInstanceLastOperation MachineLearningComputeInstanceLastOperation(MachineLearningOperationName? operationName = default, DateTimeOffset? operationOn = default, MachineLearningOperationStatus? operationStatus = default, MachineLearningOperationTrigger? operationTrigger = default)
         {
             return new MachineLearningComputeInstanceLastOperation(operationName, operationOn, operationStatus, operationTrigger, default);
-        }
-
-        /// <param name="id"> A system assigned id for the schedule. </param>
-        /// <param name="provisioningStatus"> The current deployment state of schedule. </param>
-        /// <param name="status"> Is the schedule enabled or disabled?. </param>
-        /// <param name="action"> [Required] The compute power action. </param>
-        /// <param name="triggerType"> [Required] The schedule trigger type. </param>
-        /// <param name="recurrence"> Required if triggerType is Recurrence. </param>
-        /// <param name="cron"> Required if triggerType is Cron. </param>
-        /// <param name="schedule"> [Deprecated] Not used any more. </param>
-        /// <returns> A new <see cref="Models.ComputeStartStopSchedule"/> instance for mocking. </returns>
-        public static ComputeStartStopSchedule ComputeStartStopSchedule(string id = default, MachineLearningComputeProvisioningStatus? provisioningStatus = default, MachineLearningScheduleStatus? status = default, MachineLearningComputePowerAction? action = default, ComputeTriggerType? triggerType = default, ComputeStartStopRecurrenceSchedule recurrence = default, ComputeStartStopCronSchedule cron = default, MachineLearningScheduleBase schedule = default)
-        {
-            return new ComputeStartStopSchedule(
-                id,
-                provisioningStatus,
-                status,
-                action,
-                triggerType,
-                recurrence,
-                cron,
-                schedule,
-                default);
         }
 
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
@@ -7508,18 +7293,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIpAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIpAddress"> Public IP address of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
         /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
-        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, string privateIpAddress = default, string publicIpAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
+        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
         {
             return new AmlComputeNodeInformation(
                 nodeId,
-                privateIpAddress is null ? null : IPAddress.Parse(privateIpAddress),
-                publicIpAddress is null ? null : IPAddress.Parse(publicIpAddress),
+                privateIPAddress,
+                publicIPAddress,
                 port,
                 nodeState,
                 runId,
@@ -7682,12 +7467,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="fineTune"> The datetime of deprecation of the fineTune Model. </param>
-        /// <param name="inference"> The datetime of deprecation of the inference Model. </param>
+        /// <param name="fineTuneOn"> The datetime of deprecation of the fineTune Model. </param>
+        /// <param name="inferenceOn"> The datetime of deprecation of the inference Model. </param>
         /// <returns> A new <see cref="Models.EndpointModelDeprecationProperties"/> instance for mocking. </returns>
-        public static EndpointModelDeprecationProperties EndpointModelDeprecationProperties(DateTimeOffset? fineTune = default, DateTimeOffset? inference = default)
+        public static EndpointModelDeprecationProperties EndpointModelDeprecationProperties(DateTimeOffset? fineTuneOn = default, DateTimeOffset? inferenceOn = default)
         {
-            return new EndpointModelDeprecationProperties(fineTune, inference, default);
+            return new EndpointModelDeprecationProperties(fineTuneOn, inferenceOn, default);
         }
 
         /// <param name="capacity"></param>
@@ -8440,10 +8225,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <param name="properties"> The properties that the machine learning workspace connection will be updated with. </param>
-        /// <returns> A new <see cref="Models.WorkspaceConnectionPropertiesV2BasicResourcePatch"/> instance for mocking. </returns>
-        public static WorkspaceConnectionPropertiesV2BasicResourcePatch WorkspaceConnectionPropertiesV2BasicResourcePatch(MachineLearningWorkspaceConnectionProperties properties = default)
+        /// <returns> A new <see cref="Models.MachineLearningWorkspaceConnectionPatch"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionPatch MachineLearningWorkspaceConnectionPatch(MachineLearningWorkspaceConnectionProperties properties = default)
         {
-            return new WorkspaceConnectionPropertiesV2BasicResourcePatch(properties, default);
+            return new MachineLearningWorkspaceConnectionPatch(properties, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -8528,7 +8313,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.EndpointResourceProperties"/> instance for mocking. </returns>
-        public static EndpointResourceProperties EndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, string endpointType = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static EndpointResourceProperties EndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, string endpointType = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
@@ -8559,7 +8344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.ContentSafetyEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ContentSafetyEndpointResourceProperties ContentSafetyEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static ContentSafetyEndpointResourceProperties ContentSafetyEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
@@ -8596,7 +8381,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="scoringUri"></param>
         /// <param name="traffic"></param>
         /// <returns> A new <see cref="Models.ManagedOnlineEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ManagedOnlineEndpointResourceProperties ManagedOnlineEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, MachineLearningEndpointAuthMode? authMode = default, string compute = default, string description = default, IDictionary<string, int> mirrorTraffic = default, Uri scoringUri = default, IDictionary<string, int> traffic = default)
+        public static ManagedOnlineEndpointResourceProperties ManagedOnlineEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, MachineLearningEndpointAuthMode? authMode = default, string compute = default, string description = default, IDictionary<string, int> mirrorTraffic = default, Uri scoringUri = default, IDictionary<string, int> traffic = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
             mirrorTraffic ??= new ChangeTrackingDictionary<string, int>();
@@ -8635,7 +8420,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.OpenAIEndpointResourceProperties"/> instance for mocking. </returns>
-        public static OpenAIEndpointResourceProperties OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static OpenAIEndpointResourceProperties OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
@@ -8675,7 +8460,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelId"> Gets or sets the ModelId. </param>
         /// <param name="offer"></param>
         /// <returns> A new <see cref="Models.ServerlessEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ServerlessEndpointResourceProperties ServerlessEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, ServerlessInferenceEndpointAuthMode? authMode = default, ServerlessEndpointCapacityReservation capacityReservation = default, ContentSafetyStatus? contentSafetyStatus = default, ServerlessEndpointState? endpointState = default, ServerlessEndpointInferenceEndpoint inferenceEndpoint = default, string marketplaceSubscriptionId = default, BinaryData metadata = default, string modelId = default, ServerlessOffer offer = default)
+        public static ServerlessEndpointResourceProperties ServerlessEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, ServerlessInferenceEndpointAuthMode? authMode = default, ServerlessEndpointCapacityReservation capacityReservation = default, ContentSafetyStatus? contentSafetyStatus = default, ServerlessEndpointState? endpointState = default, ServerlessEndpointInferenceEndpoint inferenceEndpoint = default, string marketplaceSubscriptionId = default, BinaryData metadata = default, string modelId = default, ServerlessOffer offer = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
@@ -8741,7 +8526,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.SpeechEndpointResourceProperties"/> instance for mocking. </returns>
-        public static SpeechEndpointResourceProperties SpeechEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static SpeechEndpointResourceProperties SpeechEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, AzureLocation? location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
             deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
@@ -8789,6 +8574,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningOutboundRuleBasicData MachineLearningOutboundRuleBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MachineLearningOutboundRule properties = default)
         {
             return new MachineLearningOutboundRuleBasicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Outbound Rule for the managed network of a machine learning workspace. </param>
+        /// <returns> A new <see cref="MachineLearning.ManagedNetworkOutboundRuleBasicResourceData"/> instance for mocking. </returns>
+        public static ManagedNetworkOutboundRuleBasicResourceData ManagedNetworkOutboundRuleBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MachineLearningOutboundRule properties = default)
+        {
+            return new ManagedNetworkOutboundRuleBasicResourceData(
                 id,
                 name,
                 resourceType,
@@ -8919,7 +8721,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new MachineLearningWorkspaceQuotaUpdate(
                 id,
-                default,
+                updateWorkspaceQuotasType,
                 limit,
                 unit,
                 status,
@@ -9181,7 +8983,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsInstrumentationKey,
                 containerRegistryCredentials,
                 notebookAccessKeys,
-                default,
+                userStorageResourceId,
                 userStorageKey,
                 default);
         }
@@ -9214,27 +9016,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties,
                 sku,
                 identity,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AmlComputeNodeInformation"/>. </summary>
-        /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
-        /// <param name="port"> SSH port number of the node. </param>
-        /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
-        /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
-        /// <returns> A new <see cref="Models.AmlComputeNodeInformation"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AmlComputeNodeInformation AmlComputeNodeInformation(string nodeId = default, IPAddress privateIPAddress = default, IPAddress publicIPAddress = default, int? port = default, MachineLearningNodeState? nodeState = default, string runId = default)
-        {
-            return new AmlComputeNodeInformation(
-                nodeId,
-                privateIPAddress,
-                publicIPAddress,
-                port,
-                nodeState,
-                runId,
                 default);
         }
 
@@ -9794,7 +9575,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="compute">
-        /// ARM resource ID of the compute if it doesExist.
+        /// ARM resource ID of the compute if it exists.
         ///             optional
         /// </param>
         /// <param name="publicNetworkAccess"> Set to "Enabled" for endpoints that should allow public access when Private Link is enabled. </param>

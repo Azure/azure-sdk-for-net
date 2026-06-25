@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     internal partial class InferenceGroupsGetDeltaModelsAsyncCollectionResultOfT : Pageable<string>
     {
         private readonly InferenceGroups _client;
-        private readonly Guid _subscriptionId;
+        private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _poolName;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public InferenceGroupsGetDeltaModelsAsyncCollectionResultOfT(InferenceGroups client, Guid subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public InferenceGroupsGetDeltaModelsAsyncCollectionResultOfT(InferenceGroups client, string subscriptionId, string resourceGroupName, string workspaceName, string poolName, string groupName, RequestContent content, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

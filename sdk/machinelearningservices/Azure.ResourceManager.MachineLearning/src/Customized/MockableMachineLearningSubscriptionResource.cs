@@ -40,18 +40,12 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <summary> Returns supported VM Sizes in a location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(AzureLocation location, CancellationToken cancellationToken)
-            => new MachineLearningVmSizesAsyncPageable(this, location.ToString(), cancellationToken);
+            => GetMachineLearningVmSizesAsync(location.ToString(), cancellationToken);
 
         /// <summary> Returns supported VM Sizes in a location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(AzureLocation location, CancellationToken cancellationToken)
-        {
-            Response<VirtualMachineSizeListResult> response = GetMachineLearningVmSizes(location.ToString(), cancellationToken);
-            return Pageable<MachineLearningVmSize>.FromPages(new[]
-            {
-                Page<MachineLearningVmSize>.FromValues((IReadOnlyList<MachineLearningVmSize>)response.Value.Value, null, response.GetRawResponse())
-            });
-        }
+            => GetMachineLearningVmSizes(location.ToString(), cancellationToken);
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -77,25 +71,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             {
                 Page<MachineLearningWorkspaceQuotaUpdate>.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse())
             });
-        }
-
-        private sealed class MachineLearningVmSizesAsyncPageable : AsyncPageable<MachineLearningVmSize>
-        {
-            private readonly MockableMachineLearningSubscriptionResource _resource;
-            private readonly string _location;
-
-            public MachineLearningVmSizesAsyncPageable(MockableMachineLearningSubscriptionResource resource, string location, CancellationToken cancellationToken)
-                : base(cancellationToken)
-            {
-                _resource = resource;
-                _location = location;
-            }
-
-            public override async IAsyncEnumerable<Page<MachineLearningVmSize>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                Response<VirtualMachineSizeListResult> response = await _resource.GetMachineLearningVmSizesAsync(_location, CancellationToken).ConfigureAwait(false);
-                yield return Page<MachineLearningVmSize>.FromValues((IReadOnlyList<MachineLearningVmSize>)response.Value.Value, null, response.GetRawResponse());
-            }
         }
 
         private sealed class MachineLearningQuotaUpdatesAsyncPageable : AsyncPageable<MachineLearningWorkspaceQuotaUpdate>

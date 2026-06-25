@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary>
     /// A class representing a collection of <see cref="MachineLearningModelVersionResource"/> and their operations.
     /// Each <see cref="MachineLearningModelVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningModelContainerResource"/>.
-    /// To get a <see cref="MachineLearningModelVersionCollection"/> instance call the GetModelVersions method from an instance of <see cref="MachineLearningModelContainerResource"/>.
+    /// To get a <see cref="MachineLearningModelVersionCollection"/> instance call the GetMachineLearningModelVersions method from an instance of <see cref="MachineLearningModelContainerResource"/>.
     /// </summary>
     public partial class MachineLearningModelVersionCollection : ArmCollection, IEnumerable<MachineLearningModelVersionResource>, IAsyncEnumerable<MachineLearningModelVersionResource>
     {
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningModelVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningModelVersionResource.ResourceType, out string modelVersionApiVersion);
+            TryGetApiVersion(MachineLearningModelVersionResource.ResourceType, out string machineLearningModelVersionApiVersion);
             _modelVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningModelVersionResource.ResourceType.Namespace, Diagnostics);
-            _modelVersionsRestClient = new ModelVersions(_modelVersionsClientDiagnostics, Pipeline, Endpoint, modelVersionApiVersion ?? "2026-03-15-preview");
+            _modelVersionsRestClient = new ModelVersions(_modelVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningModelVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningModelVersionData.ToRequestContent(data), context);
+                HttpMessage message = _modelVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningModelVersionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningModelVersionData> response = Response.FromValue(MachineLearningModelVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningModelVersionData.ToRequestContent(data), context);
+                HttpMessage message = _modelVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningModelVersionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningModelVersionData> response = Response.FromValue(MachineLearningModelVersionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningModelVersionData> response = Response.FromValue(MachineLearningModelVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningModelVersionData> response = Response.FromValue(MachineLearningModelVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<MachineLearningModelVersionData, MachineLearningModelVersionResource>(new ModelVersionsGetAllAsyncCollectionResultOfT(
                 _modelVersionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<MachineLearningModelVersionData, MachineLearningModelVersionResource>(new ModelVersionsGetAllCollectionResultOfT(
                 _modelVersionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningModelVersionData> response = default;
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningModelVersionData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningModelVersionData> response = default;
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                HttpMessage message = _modelVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningModelVersionData> response = default;

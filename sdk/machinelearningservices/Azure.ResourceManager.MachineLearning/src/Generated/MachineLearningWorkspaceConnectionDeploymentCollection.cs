@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary>
     /// A class representing a collection of <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> and their operations.
     /// Each <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceConnectionResource"/>.
-    /// To get a <see cref="MachineLearningWorkspaceConnectionDeploymentCollection"/> instance call the GetConnections method from an instance of <see cref="MachineLearningWorkspaceConnectionResource"/>.
+    /// To get a <see cref="MachineLearningWorkspaceConnectionDeploymentCollection"/> instance call the GetMachineLearningWorkspaceConnectionDeployments method from an instance of <see cref="MachineLearningWorkspaceConnectionResource"/>.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionDeploymentCollection : ArmCollection, IEnumerable<MachineLearningWorkspaceConnectionDeploymentResource>, IAsyncEnumerable<MachineLearningWorkspaceConnectionDeploymentResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningWorkspaceConnectionDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningWorkspaceConnectionDeploymentResource.ResourceType, out string connectionApiVersion);
+            TryGetApiVersion(MachineLearningWorkspaceConnectionDeploymentResource.ResourceType, out string machineLearningWorkspaceConnectionDeploymentApiVersion);
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceConnectionDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, connectionApiVersion ?? "2026-03-15-preview");
+            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Endpoint, machineLearningWorkspaceConnectionDeploymentApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource>(
                     new MachineLearningWorkspaceConnectionDeploymentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource>(
                     new MachineLearningWorkspaceConnectionDeploymentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new AsyncPageableWrapper<MachineLearningWorkspaceConnectionDeploymentData, MachineLearningWorkspaceConnectionDeploymentResource>(new ConnectionGetDeploymentsAsyncCollectionResultOfT(
                 _connectionRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.MachineLearning
             };
             return new PageableWrapper<MachineLearningWorkspaceConnectionDeploymentData, MachineLearningWorkspaceConnectionDeploymentResource>(new ConnectionGetDeploymentsCollectionResultOfT(
                 _connectionRestClient,
-                Guid.Parse(Id.SubscriptionId),
+                Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
+                HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;

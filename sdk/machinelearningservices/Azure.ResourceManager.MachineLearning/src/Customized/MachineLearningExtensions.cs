@@ -11,10 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     // Customized: preserve legacy subscription extension overloads that accepted AzureLocation.
+    [CodeGenSuppress("GetMachineLearningOutboundRuleBasicResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class MachineLearningExtensions
     {
         /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
@@ -67,6 +69,22 @@ namespace Azure.ResourceManager.MachineLearning
         public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(resourceGroupName, cancellationToken);
 
+        // The service now has both workspace-level and managed-network outbound rule routes. TypeSpec resource hierarchy fixes preserve the
+        // workspace-level resource type, but the generator only emits ArmClient extension methods for the active route selected from the
+        // provider schema. A scoped decorator cannot add this extension-only convenience member, so keep the shipped GA method as a shim.
+        /// <summary>
+        /// Gets an object representing a <see cref="MachineLearningOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MachineLearningOutboundRuleBasicResource"/> object. </returns>
+        public static MachineLearningOutboundRuleBasicResource GetMachineLearningOutboundRuleBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetMachineLearningOutboundRuleBasicResource(id);
+        }
+
         private sealed class MachineLearningVmSizesAsyncPageable : AsyncPageable<MachineLearningVmSize>
         {
             private readonly SubscriptionResource _subscriptionResource;
@@ -81,8 +99,10 @@ namespace Azure.ResourceManager.MachineLearning
 
             public override async IAsyncEnumerable<Page<MachineLearningVmSize>> AsPages(string continuationToken = null, int? pageSizeHint = null)
             {
-                Response<VirtualMachineSizeListResult> response = await GetMachineLearningVmSizesAsync(_subscriptionResource, _location, CancellationToken).ConfigureAwait(false);
-                yield return Page<MachineLearningVmSize>.FromValues((IReadOnlyList<MachineLearningVmSize>)response.Value.Value, null, response.GetRawResponse());
+                await foreach (Page<MachineLearningVmSize> page in GetMachineLearningVmSizesAsync(_subscriptionResource, _location, CancellationToken).AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                {
+                    yield return page;
+                }
             }
         }
 

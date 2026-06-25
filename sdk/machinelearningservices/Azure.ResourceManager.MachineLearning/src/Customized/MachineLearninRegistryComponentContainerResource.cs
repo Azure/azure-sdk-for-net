@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearninRegistryComponentContainerResource
     {
         // Customized: keep the historical MachineLearnin* typo in method names for source compatibility.
-        public virtual MachineLearninRegistryComponentVersionCollection GetMachineLearninRegistryComponentVersions() => GetRegistryComponentVersions();
+        public virtual MachineLearninRegistryComponentVersionCollection GetMachineLearninRegistryComponentVersions() => new MachineLearninRegistryComponentVersionCollection(Client, Id);
         /// <summary> Gets a registry component version. </summary>
         [ForwardsClientCalls]
-        public virtual Task<Response<MachineLearninRegistryComponentVersionResource>> GetMachineLearninRegistryComponentVersionAsync(string version, CancellationToken cancellationToken = default) => GetRegistryComponentVersionAsync(version, cancellationToken);
+        public virtual Task<Response<MachineLearninRegistryComponentVersionResource>> GetMachineLearninRegistryComponentVersionAsync(string version, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentVersions().GetAsync(version, cancellationToken);
         /// <summary> Gets a registry component version. </summary>
         [ForwardsClientCalls]
-        public virtual Response<MachineLearninRegistryComponentVersionResource> GetMachineLearninRegistryComponentVersion(string version, CancellationToken cancellationToken = default) => GetRegistryComponentVersion(version, cancellationToken);
+        public virtual Response<MachineLearninRegistryComponentVersionResource> GetMachineLearninRegistryComponentVersion(string version, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentVersions().Get(version, cancellationToken);
     }
 }

@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a RegistryEnvironmentVersion along with the instance operations that can be performed on it.
+    /// A class representing a MachineLearningRegistryEnvironmentVersion along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningRegistryEnvironmentVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryEnvironmentContainerResource"/> using the GetRegistryEnvironmentVersions method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningRegistryEnvironmentContainerResource"/> using the GetMachineLearningRegistryEnvironmentVersions method.
     /// </summary>
     public partial class MachineLearningRegistryEnvironmentVersionResource : ArmResource
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningRegistryEnvironmentVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string registryEnvironmentVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string machineLearningRegistryEnvironmentVersionApiVersion);
             _registryEnvironmentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _registryEnvironmentVersionsRestClient = new RegistryEnvironmentVersions(_registryEnvironmentVersionsClientDiagnostics, Pipeline, Endpoint, registryEnvironmentVersionApiVersion ?? "2026-03-15-preview");
+            _registryEnvironmentVersionsRestClient = new RegistryEnvironmentVersions(_registryEnvironmentVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningRegistryEnvironmentVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningEnvironmentVersionData> response = Response.FromValue(MachineLearningEnvironmentVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningEnvironmentVersionData> response = Response.FromValue(MachineLearningEnvironmentVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryEnvironmentVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registryEnvironmentVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RegistryEnvironmentVersion.
+        /// Update a MachineLearningRegistryEnvironmentVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningEnvironmentVersionData.ToRequestContent(data), context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningEnvironmentVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryEnvironmentVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentVersionResource>(
                     new MachineLearningRegistryEnvironmentVersionResourceOperationSource(Client),
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Update a RegistryEnvironmentVersion.
+        /// Update a MachineLearningRegistryEnvironmentVersion.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningEnvironmentVersionData.ToRequestContent(data), context);
+                HttpMessage message = _registryEnvironmentVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningEnvironmentVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryEnvironmentVersionResource> operation = new MachineLearningArmOperation<MachineLearningRegistryEnvironmentVersionResource>(
                     new MachineLearningRegistryEnvironmentVersionResourceOperationSource(Client),
