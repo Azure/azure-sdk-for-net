@@ -8,6 +8,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: preserves the GA extensible enum used by compatibility shims for private link service connection state.
+    // A TypeSpec rename cannot restore this member because the public surface is now supplied by SDK-side custom models.
     public readonly partial struct MachineLearningPrivateEndpointServiceConnectionStatus : IEquatable<MachineLearningPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
