@@ -2801,9 +2801,6 @@ namespace Azure.Storage.Blobs
                             // Parse using Apache Arrow
                             listblobFlatResponse = await ParseArrowListBlobsFlatResponse(
                                 arrowResponse.Value,
-                                prefix,
-                                marker,
-                                pageSizeHint,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
                         }
@@ -2884,9 +2881,6 @@ namespace Azure.Storage.Blobs
 
         private async Task<ListBlobsFlatSegmentResponse> ParseArrowListBlobsFlatResponse(
             Stream arrowStream,
-            string prefix,
-            string marker,
-            int? maxResults,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2895,12 +2889,13 @@ namespace Azure.Storage.Blobs
                 async,
                 cancellationToken).ConfigureAwait(false);
 
+            // Apache Arrow responses only carry the blob segment and next marker.
             return new ListBlobsFlatSegmentResponse(
-                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
-                containerName: Name,
-                prefix: prefix,
-                marker: marker,
-                maxResults: maxResults,
+                serviceEndpoint: null,
+                containerName: null,
+                prefix: null,
+                marker: null,
+                maxResults: null,
                 segment: new BlobFlatListSegment(blobItems),
                 nextMarker: nextMarker);
         }
@@ -3511,10 +3506,6 @@ namespace Azure.Storage.Blobs
                             // Parse using Apache Arrow
                             listblobHierachyResponse = await ParseArrowListBlobsHierarchyResponse(
                                 arrowResponse.Value,
-                                prefix,
-                                marker,
-                                pageSizeHint,
-                                delimiter,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
                         }
@@ -3597,10 +3588,6 @@ namespace Azure.Storage.Blobs
 
         private async Task<ListBlobsHierarchySegmentResponse> ParseArrowListBlobsHierarchyResponse(
             Stream arrowStream,
-            string prefix,
-            string marker,
-            int? maxResults,
-            string delimiter,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3609,13 +3596,14 @@ namespace Azure.Storage.Blobs
                 async,
                 cancellationToken).ConfigureAwait(false);
 
+            // Apache Arrow responses only carry the blob segment and next marker.
             return new ListBlobsHierarchySegmentResponse(
-                serviceEndpoint: Uri.GetLeftPart(UriPartial.Authority),
-                containerName: Name,
-                prefix: prefix,
-                marker: marker,
-                maxResults: maxResults,
-                delimiter: delimiter,
+                serviceEndpoint: null,
+                containerName: null,
+                prefix: null,
+                marker: null,
+                maxResults: null,
+                delimiter: null,
                 segment: new BlobHierarchyListSegment(blobPrefixes, blobItems),
                 nextMarker: nextMarker);
         }
