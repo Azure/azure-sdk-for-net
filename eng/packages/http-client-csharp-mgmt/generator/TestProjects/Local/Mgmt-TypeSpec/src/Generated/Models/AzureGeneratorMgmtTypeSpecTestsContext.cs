@@ -220,6 +220,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaAllocationsListResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetData))]
     [ModelReaderWriterBuildable(typeof(TargetListResult))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
@@ -270,7 +271,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
     {
     }
