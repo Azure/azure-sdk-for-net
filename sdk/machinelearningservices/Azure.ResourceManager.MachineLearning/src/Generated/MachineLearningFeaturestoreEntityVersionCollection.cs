@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningFeaturestoreEntityVersionCollection : ArmCollection, IEnumerable<MachineLearningFeaturestoreEntityVersionResource>, IAsyncEnumerable<MachineLearningFeaturestoreEntityVersionResource>
     {
-        private readonly ClientDiagnostics _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics;
-        private readonly FeaturestoreEntityVersionsRestOperations _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient;
+        private readonly ClientDiagnostics _featurestoreEntityVersionsClientDiagnostics;
+        private readonly FeaturestoreEntityVersions _featurestoreEntityVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeaturestoreEntityVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MachineLearningFeaturestoreEntityVersionCollection for mocking. </summary>
         protected MachineLearningFeaturestoreEntityVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineLearningFeaturestoreEntityVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFeaturestoreEntityVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningFeaturestoreEntityVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningFeaturestoreEntityVersionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineLearningFeaturestoreEntityVersionResource.ResourceType, out string machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsApiVersion);
-            _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient = new FeaturestoreEntityVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MachineLearningFeaturestoreEntityVersionResource.ResourceType, out string machineLearningFeaturestoreEntityVersionApiVersion);
+            _featurestoreEntityVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningFeaturestoreEntityVersionResource.ResourceType.Namespace, Diagnostics);
+            _featurestoreEntityVersionsRestClient = new FeaturestoreEntityVersions(_featurestoreEntityVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningFeaturestoreEntityVersionApiVersion ?? "2026-03-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MachineLearningFeatureStoreEntityContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningFeatureStoreEntityContainerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MachineLearningFeatureStoreEntityContainerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MachineLearningFeaturestoreEntityVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, MachineLearningFeaturestoreEntityVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource>(new MachineLearningFeaturestoreEntityVersionOperationSource(Client), _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics, Pipeline, _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningFeaturestoreEntityVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource> operation = new MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource>(
+                    new MachineLearningFeaturestoreEntityVersionResourceOperationSource(Client),
+                    _featurestoreEntityVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Create or update version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="data"> Version entity to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MachineLearningFeaturestoreEntityVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, MachineLearningFeaturestoreEntityVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource>(new MachineLearningFeaturestoreEntityVersionOperationSource(Client), _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics, Pipeline, _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, MachineLearningFeaturestoreEntityVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource> operation = new MachineLearningArmOperation<MachineLearningFeaturestoreEntityVersionResource>(
+                    new MachineLearningFeaturestoreEntityVersionResourceOperationSource(Client),
+                    _featurestoreEntityVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MachineLearningFeaturestoreEntityVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Get");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MachineLearningFeaturestoreEntityVersionData> response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeaturestoreEntityVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.MachineLearning
         /// Get version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MachineLearningFeaturestoreEntityVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Get");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MachineLearningFeaturestoreEntityVersionData> response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeaturestoreEntityVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,102 +273,156 @@ namespace Azure.ResourceManager.MachineLearning
         /// List versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> page size. </param>
+        /// <param name="versionName"> name for the featurestore entity version. </param>
+        /// <param name="version"> featurestore entity version. </param>
+        /// <param name="description"> description for the feature entity version. </param>
+        /// <param name="createdBy"> createdBy user name. </param>
+        /// <param name="stage"> Specifies the featurestore stage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningFeaturestoreEntityVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningFeaturestoreEntityVersionResource> GetAllAsync(MachineLearningFeaturestoreEntityVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningFeaturestoreEntityVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningFeaturestoreEntityVersionResource> GetAllAsync(string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, int? pageSize = default, string versionName = default, string version = default, string description = default, string createdBy = default, string stage = default, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningFeaturestoreEntityVersionCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeaturestoreEntityVersionResource(Client, MachineLearningFeaturestoreEntityVersionData.DeserializeMachineLearningFeaturestoreEntityVersionData(e)), _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics, Pipeline, "MachineLearningFeaturestoreEntityVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MachineLearningFeaturestoreEntityVersionData, MachineLearningFeaturestoreEntityVersionResource>(new FeaturestoreEntityVersionsGetAllAsyncCollectionResultOfT(
+                _featurestoreEntityVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                pageSize,
+                versionName,
+                version,
+                description,
+                createdBy,
+                stage,
+                context,
+                "MachineLearningFeaturestoreEntityVersionCollection.GetAll"), data => new MachineLearningFeaturestoreEntityVersionResource(Client, data));
         }
 
         /// <summary>
         /// List versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="pageSize"> page size. </param>
+        /// <param name="versionName"> name for the featurestore entity version. </param>
+        /// <param name="version"> featurestore entity version. </param>
+        /// <param name="description"> description for the feature entity version. </param>
+        /// <param name="createdBy"> createdBy user name. </param>
+        /// <param name="stage"> Specifies the featurestore stage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningFeaturestoreEntityVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningFeaturestoreEntityVersionResource> GetAll(MachineLearningFeaturestoreEntityVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningFeaturestoreEntityVersionResource> GetAll(string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, int? pageSize = default, string versionName = default, string version = default, string description = default, string createdBy = default, string stage = default, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningFeaturestoreEntityVersionCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeaturestoreEntityVersionResource(Client, MachineLearningFeaturestoreEntityVersionData.DeserializeMachineLearningFeaturestoreEntityVersionData(e)), _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics, Pipeline, "MachineLearningFeaturestoreEntityVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MachineLearningFeaturestoreEntityVersionData, MachineLearningFeaturestoreEntityVersionResource>(new FeaturestoreEntityVersionsGetAllCollectionResultOfT(
+                _featurestoreEntityVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                skip,
+                tags,
+                listViewType?.ToString(),
+                pageSize,
+                versionName,
+                version,
+                description,
+                createdBy,
+                stage,
+                context,
+                "MachineLearningFeaturestoreEntityVersionCollection.GetAll"), data => new MachineLearningFeaturestoreEntityVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Exists");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningFeaturestoreEntityVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeaturestoreEntityVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +436,50 @@ namespace Azure.ResourceManager.MachineLearning
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Exists");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningFeaturestoreEntityVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeaturestoreEntityVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +493,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MachineLearningFeaturestoreEntityVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MachineLearningFeaturestoreEntityVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeaturestoreEntityVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningFeaturestoreEntityVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeaturestoreEntityVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +554,54 @@ namespace Azure.ResourceManager.MachineLearning
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/featurestoreEntities/{name}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FeaturestoreEntityVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FeaturestoreEntityVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningFeaturestoreEntityVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MachineLearningFeaturestoreEntityVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _featurestoreEntityVersionsClientDiagnostics.CreateScope("MachineLearningFeaturestoreEntityVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _machineLearningFeaturestoreEntityVersionFeaturestoreEntityVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _featurestoreEntityVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MachineLearningFeaturestoreEntityVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MachineLearningFeaturestoreEntityVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MachineLearningFeaturestoreEntityVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MachineLearningFeaturestoreEntityVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MachineLearningFeaturestoreEntityVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,17 +613,18 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningFeaturestoreEntityVersionResource> IEnumerable<MachineLearningFeaturestoreEntityVersionResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MachineLearningFeaturestoreEntityVersionResource> IAsyncEnumerable<MachineLearningFeaturestoreEntityVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
