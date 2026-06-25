@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StatusMessage))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
     [ModelReaderWriterBuildable(typeof(TemplateHashResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
@@ -64,7 +65,6 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(WhatIfOperationResult))]
     [ModelReaderWriterBuildable(typeof(WhatIfPropertyChange))]
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourcesContext : ModelReaderWriterContext
     {
     }
