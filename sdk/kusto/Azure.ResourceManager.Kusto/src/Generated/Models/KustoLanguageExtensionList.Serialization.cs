@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 throw new FormatException($"The model {nameof(KustoLanguageExtensionList)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(LanguageExtensionsValue))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (KustoLanguageExtension item in LanguageExtensionsValue)
+                foreach (KustoLanguageExtension item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            IList<KustoLanguageExtension> languageExtensionsValue = default;
+            IList<KustoLanguageExtension> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         array.Add(KustoLanguageExtension.DeserializeKustoLanguageExtension(item, options));
                     }
-                    languageExtensionsValue = array;
+                    value = array;
                     continue;
                 }
                 if (prop.NameEquals("nextLink"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KustoLanguageExtensionList(languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>(), nextLink, additionalBinaryDataProperties);
+            return new KustoLanguageExtensionList(value ?? new ChangeTrackingList<KustoLanguageExtension>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

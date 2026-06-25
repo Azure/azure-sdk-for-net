@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(ScriptListResult))]
     [ModelReaderWriterBuildable(typeof(ScriptProperties))]
     [ModelReaderWriterBuildable(typeof(SuspensionDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownKustoDatabase))]
     [ModelReaderWriterBuildable(typeof(UnknownKustoDataConnection))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerKustoContext : ModelReaderWriterContext
     {
     }

@@ -791,14 +791,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
-        /// <param name="languageExtensionsValue"> The list of language extensions. </param>
+        /// <param name="value"> The list of language extensions. </param>
         /// <param name="nextLink"> The link to the next page of resources. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="Kusto.KustoClusterData"/> instance for mocking. </returns>
-        public static KustoClusterData KustoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, string nextLink = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static KustoClusterData KustoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> value = default, string nextLink = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && value is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
                     state,
                     provisioningState,
                     clusterUri,
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -873,14 +873,14 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoClusterVirtualNetworkConfiguration(subnetId, enginePublicIPId, dataManagementPublicIPId, state, default);
         }
 
-        /// <param name="languageExtensionsValue"> The list of language extensions. </param>
+        /// <param name="value"> The list of language extensions. </param>
         /// <param name="nextLink"> The link to the next page of resources. </param>
         /// <returns> A new <see cref="Models.KustoLanguageExtensionList"/> instance for mocking. </returns>
-        public static KustoLanguageExtensionList KustoLanguageExtensionList(IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, string nextLink = default)
+        public static KustoLanguageExtensionList KustoLanguageExtensionList(IEnumerable<KustoLanguageExtension> value = default, string nextLink = default)
         {
-            languageExtensionsValue ??= new ChangeTrackingList<KustoLanguageExtension>();
+            value ??= new ChangeTrackingList<KustoLanguageExtension>();
 
-            return new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default);
+            return new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default);
         }
 
         /// <param name="languageExtensionName"> The language extension name. </param>
@@ -992,10 +992,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
-        /// <param name="languageExtensionsValue"> The list of language extensions. </param>
+        /// <param name="value"> The list of language extensions. </param>
         /// <param name="nextLink"> The link to the next page of resources. </param>
         /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> languageExtensionsValue = default, string nextLink = default)
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, KustoSku sku = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, KustoClusterState? state = default, KustoProvisioningState? provisioningState = default, Uri clusterUri = default, Uri dataIngestionUri = default, string stateReason = default, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = default, OptimizedAutoscale optimizedAutoscale = default, bool? isDiskEncryptionEnabled = default, bool? isStreamingIngestEnabled = default, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = default, KustoKeyVaultProperties keyVaultProperties = default, bool? isPurgeEnabled = default, bool? isDoubleEncryptionEnabled = default, KustoClusterPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<string> allowedIPRangeList = default, KustoClusterEngineType? engineType = default, IEnumerable<AcceptedAudience> acceptedAudiences = default, bool? isAutoStopEnabled = default, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, IEnumerable<KustoCalloutPolicy> calloutPolicies = default, KustoClusterPublicIPType? publicIPType = default, string virtualClusterGraduationProperties = default, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = default, MigrationClusterProperties migrationCluster = default, KustoClusterZoneStatus? zoneStatus = default, IEnumerable<KustoLanguageExtension> value = default, string nextLink = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 sku,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 identity,
-                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && languageExtensionsValue is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
+                state is null && provisioningState is null && clusterUri is null && dataIngestionUri is null && stateReason is null && trustedExternalTenants is null && optimizedAutoscale is null && isDiskEncryptionEnabled is null && isStreamingIngestEnabled is null && virtualNetworkConfiguration is null && keyVaultProperties is null && isPurgeEnabled is null && value is null && nextLink is null && isDoubleEncryptionEnabled is null && publicNetworkAccess is null && allowedIPRangeList is null && engineType is null && acceptedAudiences is null && isAutoStopEnabled is null && restrictOutboundNetworkAccess is null && allowedFqdnList is null && calloutPolicies is null && publicIPType is null && virtualClusterGraduationProperties is null && privateEndpointConnections is null && migrationCluster is null && zoneStatus is null ? default : new ClusterProperties(
                     state,
                     provisioningState,
                     clusterUri,
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),

@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of language extensions. </summary>
-        public IList<KustoLanguageExtension> LanguageExtensionsValue
+        public IList<KustoLanguageExtension> Value
         {
             get
             {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new ClusterProperties();
                 }
-                return Properties.LanguageExtensionsValue;
+                return Properties.Value;
             }
         }
 
