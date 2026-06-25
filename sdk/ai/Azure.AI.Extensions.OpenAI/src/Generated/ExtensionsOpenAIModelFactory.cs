@@ -1037,17 +1037,6 @@ namespace Azure.AI.Extensions.OpenAI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ResponseItem. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <returns> A new <see cref="global::OpenAI.Responses.ResponseItem"/> instance for mocking. </returns>
-        public static ResponseItem ResponseItem(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default)
-        {
-            return new ResponseItem(@type, id, agentReference, responseId);
-        }
-
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
