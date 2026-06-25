@@ -131,6 +131,11 @@ namespace Azure.Generator.Providers
                 Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
+            // Determine the next page link/token from the current response BEFORE yielding, so that the
+            // page's continuation token points to the NEXT page rather than the page just returned.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60274.
+            whileStatement.Add(AssignNextPageVariable(responseVariable, resultVariable, nextPageVariable));
+
             ValueExpression nextPageExpression = _paging.NextLink != null
                 ? new TernaryConditionalExpression(
                     nextPageVariable.NullConditional().Property(nameof(Uri.IsAbsoluteUri)).Equal(True),
@@ -151,11 +156,66 @@ namespace Azure.Generator.Providers
                 whileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
             }
 
-            // Extract next page
-            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), resultVariable, nextPageVariable));
+            // Stop paging once there is no next page. Checked AFTER the yield so the final page is still returned.
+            whileStatement.Add(CheckNextPageVariable(nextPageVariable));
 
             statements.Add(whileStatement);
             return [.. statements];
+        }
+
+        // Assigns the next page link/token from the current response into <paramref name="nextPageVariable"/>
+        // without breaking out of the paging loop. This mirrors the assignment portion of the base
+        // AssignAndCheckNextPageVariable, but the null check is performed separately (after the yield) by
+        // CheckNextPageVariable so that the continuation token of the current page reflects the next page.
+        private MethodBodyStatement[] AssignNextPageVariable(VariableExpression responseVariable, VariableExpression resultVariable, VariableExpression nextPageVariable)
+        {
+            switch (NextPageLocation)
+            {
+                case InputResponseLocation.Body:
+                    var resultExpression = BuildGetPropertyExpression(NextPagePropertySegments, resultVariable);
+                    if (Paging.ContinuationToken != null || NextPagePropertyType.Equals(typeof(Uri)))
+                    {
+                        // The next link (Uri) or continuation token can be assigned directly.
+                        return [nextPageVariable.Assign(resultExpression).Terminate()];
+                    }
+
+                    // The next link is a string property; materialize it into a Uri (or null when empty).
+                    return
+                    [
+                        Declare("nextPageString", resultExpression.As<string>(), out ScopedApi<string> nextPageString),
+                        nextPageVariable.Assign(
+                            new TernaryConditionalExpression(
+                                Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextPageString),
+                                Null,
+                                New.Instance<Uri>(nextPageString, FrameworkEnumValue(UriKind.RelativeOrAbsolute)))).Terminate()
+                    ];
+                case InputResponseLocation.Header:
+                    return
+                    [
+                        new IfElseStatement(
+                            new IfStatement(responseVariable.ToApi<ClientResponseApi>().GetRawResponse()
+                                .TryGetHeader(NextPagePropertySegments[0], out var nextLinkHeader)
+                                .And(Not(Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextLinkHeader!))))
+                            {
+                                nextPageVariable.Type.Equals(typeof(Uri))
+                                    ? nextPageVariable.Assign(New.Instance<Uri>(nextLinkHeader!, FrameworkEnumValue(UriKind.RelativeOrAbsolute))).Terminate()
+                                    : nextPageVariable.Assign(nextLinkHeader!).Terminate(),
+                            },
+                            nextPageVariable.Assign(Null).Terminate())
+                    ];
+                default:
+                    // Invalid location is logged by the emitter.
+                    return [];
+            }
+        }
+
+        // Breaks out of the paging loop when there is no next page. Performed after the page has been yielded.
+        private MethodBodyStatement CheckNextPageVariable(VariableExpression nextPageVariable)
+        {
+            ValueExpression condition = nextPageVariable.Type.Equals(typeof(Uri))
+                ? nextPageVariable.Equal(Null)
+                : Static<string>().Invoke(nameof(string.IsNullOrEmpty), nextPageVariable);
+            return new IfStatement(condition) { new YieldBreakStatement() };
         }
 
         private MethodBodyStatement[] ConvertItemsToListOfBinaryData(VariableExpression responseVariable, out VariableExpression itemsVariable)
