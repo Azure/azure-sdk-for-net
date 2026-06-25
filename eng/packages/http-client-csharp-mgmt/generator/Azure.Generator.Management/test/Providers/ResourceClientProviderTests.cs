@@ -6,10 +6,12 @@ using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
 {
@@ -27,6 +29,93 @@ namespace Azure.Generator.Management.Tests.Providers
 
             Assert.That(resourceProvider!.ResourceName, Is.EqualTo("DeploymentStackWhatIfResult"));
             Assert.That(resourceProvider.Name, Is.EqualTo("DeploymentStackWhatIfResultResource"));
+        }
+
+        [TestCase]
+        public void Verify_CodeGenResourceDataAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenResourceDataAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenResourceDataAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenResourceDataAttribute(global::System.Type dataType)"));
+            Assert.That(content, Does.Contain("public global::System.Type DataType"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenResourceDataAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenTagPatchHookAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenTagPatchHookAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenTagPatchHookAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenTagPatchHookAttribute(string methodName)"));
+            Assert.That(content, Does.Contain("public string MethodName"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenTagPatchHookAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenResourceDataChangesResourceDataType()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            var customDataModel = InputFactory.Model(
+                "CustomResponseTypeData",
+                properties: resourceModel.Properties,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var customization = """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    internal class CodeGenResourceDataAttribute : System.Attribute
+                    {
+                        public CodeGenResourceDataAttribute(System.Type dataType) { }
+                    }
+                }
+
+                namespace Samples
+                {
+                    using Microsoft.TypeSpec.Generator.Customizations;
+
+                    [CodeGenResourceData(typeof(CustomResponseTypeData))]
+                    public partial class ResponseTypeResource { }
+
+                    public partial class CustomResponseTypeData { }
+                }
+                """;
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, customDataModel],
+                clients: () => [client],
+                customizationSources: [customization]);
+
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .Single();
+
+            Assert.That(resourceProvider.ResourceData.Name, Is.EqualTo("CustomResponseTypeData"));
+            var dataProperty = resourceProvider.Properties.Single(p => p.Name == "Data");
+            Assert.That(dataProperty.Type.Name, Is.EqualTo("CustomResponseTypeData"));
         }
 
         [TestCase]

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManagerSecurityUserRule.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManagerSecurityUserRule.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -121,7 +121,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
                 DestinationPortRanges = { "22" },
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await networkManagerSecurityUserRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await networkManagerSecurityUserRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

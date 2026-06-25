@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,7 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            ActivityType = "AppendVariable";
         }
 
         /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/>. </summary>
@@ -32,24 +32,48 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="variableName"> Name of the variable whose value needs to be appended to. </param>
-        /// <param name="value"> Value to be appended. Type: could be a static value matching type of the variable item or Expression with resultType matching type of the variable item. </param>
-        internal AppendVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, DataFactoryElement<BinaryData> value) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Append Variable activity properties. </param>
+        internal AppendVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, AppendVariableActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
-            VariableName = variableName;
-            Value = value;
-            ActivityType = activityType ?? "AppendVariable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/> for deserialization. </summary>
-        internal AppendVariableActivity()
-        {
-        }
+        /// <summary> Append Variable activity properties. </summary>
+        internal AppendVariableActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
-        public string VariableName { get; set; }
+        public string VariableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.VariableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AppendVariableActivityTypeProperties();
+                }
+                TypeProperties.VariableName = value;
+            }
+        }
+
         /// <summary> Value to be appended. Type: could be a static value matching type of the variable item or Expression with resultType matching type of the variable item. </summary>
-        public DataFactoryElement<BinaryData> Value { get; set; }
+        public DataFactoryElement<BinaryData> Value
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Value;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AppendVariableActivityTypeProperties();
+                }
+                TypeProperties.Value = value;
+            }
+        }
     }
 }

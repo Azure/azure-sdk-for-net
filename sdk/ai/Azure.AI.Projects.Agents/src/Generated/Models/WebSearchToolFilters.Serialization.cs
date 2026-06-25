@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The WebSearchToolFilters. </summary>
-    internal partial class WebSearchToolFilters : IJsonModel<WebSearchToolFilters>
+    public partial class WebSearchToolFilters : IJsonModel<WebSearchToolFilters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

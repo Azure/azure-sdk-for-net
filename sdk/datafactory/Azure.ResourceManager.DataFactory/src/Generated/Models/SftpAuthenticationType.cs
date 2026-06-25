@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct SftpAuthenticationType : IEquatable<SftpAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> SshPublicKey. </summary>
+        private const string SshPublicKeyValue = "SshPublicKey";
+        /// <summary> MultiFactor. </summary>
+        private const string MultiFactorValue = "MultiFactor";
 
         /// <summary> Initializes a new instance of <see cref="SftpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SftpAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string SshPublicKeyValue = "SshPublicKey";
-        private const string MultiFactorValue = "MultiFactor";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static SftpAuthenticationType Basic { get; } = new SftpAuthenticationType(BasicValue);
+
         /// <summary> SshPublicKey. </summary>
         public static SftpAuthenticationType SshPublicKey { get; } = new SftpAuthenticationType(SshPublicKeyValue);
+
         /// <summary> MultiFactor. </summary>
         public static SftpAuthenticationType MultiFactor { get; } = new SftpAuthenticationType(MultiFactorValue);
+
         /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SftpAuthenticationType left, SftpAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SftpAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SftpAuthenticationType left, SftpAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SftpAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SftpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SftpAuthenticationType(string value) => new SftpAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SftpAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SftpAuthenticationType?(string value) => value == null ? null : new SftpAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SftpAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SftpAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

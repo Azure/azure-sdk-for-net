@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallMatchVariable : IEquatable<WebApplicationFirewallMatchVariable>
     {
         private readonly string _value;
+        /// <summary> RemoteAddr. </summary>
+        private const string RemoteAddrValue = "RemoteAddr";
+        /// <summary> RequestMethod. </summary>
+        private const string RequestMethodValue = "RequestMethod";
+        /// <summary> QueryString. </summary>
+        private const string QueryStringValue = "QueryString";
+        /// <summary> PostArgs. </summary>
+        private const string PostArgsValue = "PostArgs";
+        /// <summary> RequestUri. </summary>
+        private const string RequestUriValue = "RequestUri";
+        /// <summary> RequestHeaders. </summary>
+        private const string RequestHeadersValue = "RequestHeaders";
+        /// <summary> RequestBody. </summary>
+        private const string RequestBodyValue = "RequestBody";
+        /// <summary> RequestCookies. </summary>
+        private const string RequestCookiesValue = "RequestCookies";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallMatchVariable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RemoteAddrValue = "RemoteAddr";
-        private const string RequestMethodValue = "RequestMethod";
-        private const string QueryStringValue = "QueryString";
-        private const string PostArgsValue = "PostArgs";
-        private const string RequestUriValue = "RequestUri";
-        private const string RequestHeadersValue = "RequestHeaders";
-        private const string RequestBodyValue = "RequestBody";
-        private const string RequestCookiesValue = "RequestCookies";
+            _value = value;
+        }
 
         /// <summary> RemoteAddr. </summary>
         public static WebApplicationFirewallMatchVariable RemoteAddr { get; } = new WebApplicationFirewallMatchVariable(RemoteAddrValue);
+
         /// <summary> RequestMethod. </summary>
         public static WebApplicationFirewallMatchVariable RequestMethod { get; } = new WebApplicationFirewallMatchVariable(RequestMethodValue);
+
         /// <summary> QueryString. </summary>
         public static WebApplicationFirewallMatchVariable QueryString { get; } = new WebApplicationFirewallMatchVariable(QueryStringValue);
+
         /// <summary> PostArgs. </summary>
         public static WebApplicationFirewallMatchVariable PostArgs { get; } = new WebApplicationFirewallMatchVariable(PostArgsValue);
+
         /// <summary> RequestUri. </summary>
         public static WebApplicationFirewallMatchVariable RequestUri { get; } = new WebApplicationFirewallMatchVariable(RequestUriValue);
+
         /// <summary> RequestHeaders. </summary>
         public static WebApplicationFirewallMatchVariable RequestHeaders { get; } = new WebApplicationFirewallMatchVariable(RequestHeadersValue);
+
         /// <summary> RequestBody. </summary>
         public static WebApplicationFirewallMatchVariable RequestBody { get; } = new WebApplicationFirewallMatchVariable(RequestBodyValue);
+
         /// <summary> RequestCookies. </summary>
         public static WebApplicationFirewallMatchVariable RequestCookies { get; } = new WebApplicationFirewallMatchVariable(RequestCookiesValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallMatchVariable left, WebApplicationFirewallMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallMatchVariable left, WebApplicationFirewallMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallMatchVariable(string value) => new WebApplicationFirewallMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallMatchVariable?(string value) => value == null ? null : new WebApplicationFirewallMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

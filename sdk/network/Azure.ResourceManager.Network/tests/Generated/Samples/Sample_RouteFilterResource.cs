@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             RouteFilterResource routeFilter = client.GetRouteFilterResource(routeFilterResourceId);
 
             // invoke the operation
-            await routeFilter.DeleteAsync(WaitUntil.Completed);
+            await routeFilter.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

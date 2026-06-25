@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string ExpandingVolumeValue = "ExpandingVolume";
         /// <summary> The expansion of the storage allocation has failed. </summary>
         private const string ExpansionFailedValue = "ExpansionFailed";
+        /// <summary> The storage allocation is initializing. </summary>
+        private const string InitializingValue = "Initializing";
+        /// <summary> The storage allocation has no status. </summary>
+        private const string NoneValue = "None";
+        /// <summary> The storage allocation is being repaired. </summary>
+        private const string RepairingValue = "Repairing";
 
         /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkStorageStatusStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +46,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The expansion of the storage allocation has failed. </summary>
         public static CloudServicesNetworkStorageStatusStatus ExpansionFailed { get; } = new CloudServicesNetworkStorageStatusStatus(ExpansionFailedValue);
+
+        /// <summary> The storage allocation is initializing. </summary>
+        public static CloudServicesNetworkStorageStatusStatus Initializing { get; } = new CloudServicesNetworkStorageStatusStatus(InitializingValue);
+
+        /// <summary> The storage allocation has no status. </summary>
+        public static CloudServicesNetworkStorageStatusStatus None { get; } = new CloudServicesNetworkStorageStatusStatus(NoneValue);
+
+        /// <summary> The storage allocation is being repaired. </summary>
+        public static CloudServicesNetworkStorageStatusStatus Repairing { get; } = new CloudServicesNetworkStorageStatusStatus(RepairingValue);
 
         /// <summary> Determines if two <see cref="CloudServicesNetworkStorageStatusStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

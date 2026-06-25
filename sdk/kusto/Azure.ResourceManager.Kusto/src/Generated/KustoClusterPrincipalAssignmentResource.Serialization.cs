@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Kusto
 {
+    /// <summary></summary>
     public partial class KustoClusterPrincipalAssignmentResource : IJsonModel<KustoClusterPrincipalAssignmentData>
     {
-        private static KustoClusterPrincipalAssignmentData s_dataDeserializationInstance;
-        private static KustoClusterPrincipalAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KustoClusterPrincipalAssignmentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KustoClusterPrincipalAssignmentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KustoClusterPrincipalAssignmentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoClusterPrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)Data).Write(writer, options);
 
-        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoClusterPrincipalAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoClusterPrincipalAssignmentData IJsonModel<KustoClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KustoClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoClusterPrincipalAssignmentData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KustoClusterPrincipalAssignmentData IPersistableModel<KustoClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoClusterPrincipalAssignmentData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoClusterPrincipalAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

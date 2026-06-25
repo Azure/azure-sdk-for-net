@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The PolicyTrackedResourceType. </summary>
+    /// <summary></summary>
     public readonly partial struct PolicyTrackedResourceType : IEquatable<PolicyTrackedResourceType>
     {
         private readonly string _value;
+        /// <summary> default. </summary>
+        private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="PolicyTrackedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyTrackedResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
+            _value = value;
+        }
 
         /// <summary> default. </summary>
         public static PolicyTrackedResourceType Default { get; } = new PolicyTrackedResourceType(DefaultValue);
+
         /// <summary> Determines if two <see cref="PolicyTrackedResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyTrackedResourceType left, PolicyTrackedResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyTrackedResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyTrackedResourceType left, PolicyTrackedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyTrackedResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyTrackedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyTrackedResourceType(string value) => new PolicyTrackedResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyTrackedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyTrackedResourceType?(string value) => value == null ? null : new PolicyTrackedResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyTrackedResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyTrackedResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

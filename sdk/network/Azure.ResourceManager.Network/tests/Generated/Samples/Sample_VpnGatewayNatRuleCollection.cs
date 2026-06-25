@@ -55,7 +55,7 @@ AddressSpace = "192.168.21.0/24",
 }},
                 IPConfigurationId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/cloudnet1-VNG/ipConfigurations/default",
             };
-            ArmOperation<VpnGatewayNatRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, natRuleName, data);
+            ArmOperation<VpnGatewayNatRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, natRuleName, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnGatewayNatRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RouteNextHopType : IEquatable<RouteNextHopType>
     {
         private readonly string _value;
+        /// <summary> VirtualNetworkGateway. </summary>
+        private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
+        /// <summary> VnetLocal. </summary>
+        private const string VnetLocalValue = "VnetLocal";
+        /// <summary> Internet. </summary>
+        private const string InternetValue = "Internet";
+        /// <summary> VirtualAppliance. </summary>
+        private const string VirtualApplianceValue = "VirtualAppliance";
+        /// <summary> Routes traffic to virtual appliances using Equal-Cost Multi-Path (ECMP) routing with multiple next hop IP addresses. </summary>
+        private const string VirtualApplianceEcmpValue = "VirtualApplianceEcmp";
+        /// <summary> No next hop type. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="RouteNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RouteNextHopType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
-        private const string VnetLocalValue = "VnetLocal";
-        private const string InternetValue = "Internet";
-        private const string VirtualApplianceValue = "VirtualAppliance";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> VirtualNetworkGateway. </summary>
         public static RouteNextHopType VirtualNetworkGateway { get; } = new RouteNextHopType(VirtualNetworkGatewayValue);
+
         /// <summary> VnetLocal. </summary>
         public static RouteNextHopType VnetLocal { get; } = new RouteNextHopType(VnetLocalValue);
+
         /// <summary> Internet. </summary>
         public static RouteNextHopType Internet { get; } = new RouteNextHopType(InternetValue);
+
         /// <summary> VirtualAppliance. </summary>
         public static RouteNextHopType VirtualAppliance { get; } = new RouteNextHopType(VirtualApplianceValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Routes traffic to virtual appliances using Equal-Cost Multi-Path (ECMP) routing with multiple next hop IP addresses. </summary>
+        public static RouteNextHopType VirtualApplianceEcmp { get; } = new RouteNextHopType(VirtualApplianceEcmpValue);
+
+        /// <summary> No next hop type. </summary>
         public static RouteNextHopType None { get; } = new RouteNextHopType(NoneValue);
+
         /// <summary> Determines if two <see cref="RouteNextHopType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RouteNextHopType left, RouteNextHopType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RouteNextHopType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RouteNextHopType left, RouteNextHopType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RouteNextHopType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RouteNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RouteNextHopType(string value) => new RouteNextHopType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RouteNextHopType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RouteNextHopType?(string value) => value == null ? null : new RouteNextHopType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RouteNextHopType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RouteNextHopType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

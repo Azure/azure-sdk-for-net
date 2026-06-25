@@ -6,6 +6,12 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
+    // Customization justification:
+    // Earlier releases exposed Thumbprint as BinaryData because the Swagger schema represented the value
+    // as an untyped payload. The TypeSpec migration now exposes the strongly typed ThumbprintString member,
+    // which is the preferred API going forward, but removing Thumbprint would be a source-level breaking
+    // change. This obsolete hidden shim keeps existing callers compiling while steering new code to
+    // ThumbprintString.
     public partial class IotHubCertificatePropertiesWithNonce
     {
         /// <summary>

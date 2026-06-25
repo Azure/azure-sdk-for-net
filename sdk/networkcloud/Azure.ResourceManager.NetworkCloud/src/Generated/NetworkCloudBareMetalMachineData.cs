@@ -425,6 +425,15 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The monitoring configuration status of the bare metal machine. </summary>
+        public BareMetalMachineMonitoringConfigurationStatus MonitoringConfigurationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringConfigurationStatus;
+            }
+        }
+
         /// <summary> The IPv4 address that is assigned to the bare metal machine during the cluster deployment. </summary>
         public IPAddress OamIPv4Address
         {

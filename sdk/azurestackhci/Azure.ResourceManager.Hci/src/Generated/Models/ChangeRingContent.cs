@@ -11,19 +11,24 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The ChangeRingContent. </summary>
+    /// <summary> Request body for the change-ring action on a cluster. </summary>
     public partial class ChangeRingContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChangeRingContent"/>. </summary>
-        public ChangeRingContent()
+        /// <param name="targetRing"> The target ring for the cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetRing"/> is null. </exception>
+        public ChangeRingContent(string targetRing)
         {
+            Argument.AssertNotNull(targetRing, nameof(targetRing));
+
+            Properties = new ChangeRingRequestProperties(targetRing);
         }
 
         /// <summary> Initializes a new instance of <see cref="ChangeRingContent"/>. </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the change-ring request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ChangeRingContent(ChangeRingRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -31,9 +36,9 @@ namespace Azure.ResourceManager.Hci.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Properties of the change-ring request. </summary>
         [WirePath("properties")]
-        internal ChangeRingRequestProperties Properties { get; set; }
+        internal ChangeRingRequestProperties Properties { get; }
 
         /// <summary> The target ring for the cluster. </summary>
         [WirePath("properties.targetRing")]
@@ -41,15 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TargetRing;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ChangeRingRequestProperties();
-                }
-                Properties.TargetRing = value;
+                return Properties.TargetRing;
             }
         }
     }

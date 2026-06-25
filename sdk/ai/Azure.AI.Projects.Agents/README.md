@@ -144,34 +144,7 @@ The code above will result in creation of `ProjectsAgentVersion` object, which i
 
 ### Hosted Agents
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
 Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents).
-
-To use hosted agent we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
 
 #### Hosted Agents from Docker images<a id="hosted-docker-based"></a>
 To create the hosted agent from existing Docker image, please use the `HostedAgentDefinition` while creating the AgentVersion object.
@@ -194,9 +167,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
 The next code will deploy the hosted Agent.
 ```C# Snippet:Sample_Agents_Deployment_HostedAgent
 Uri uriEndpoint = new(projectEndpoint);
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 HostedAgentDefinition agentDefinition = GetAgentDefinition(
     dockerImage: dockerImage
 );
@@ -253,12 +224,10 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
 }
 ```
 
-Deployment of the agent from code requires `Foundry-Features` header to be `HostedAgents=V1Preview,CodeAgents=V1Preview`.
+Deploy the Agent.
 
 ```C# Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,CodeAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgent",
     filePath: GetDirectory(Path.Combine(["AgentsCode"])),
@@ -308,19 +277,17 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 
 ### Toolboxes
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
-The `AAIP001` warning needs to be ignored.
-
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
-As for the Hosted Agent we will need to set the experimental header, but in this scenario the header is `Toolboxes=V1Preview`,  we also need to disable the `AAIP001` warning.
 
 In the example below we create two versions of MCP tool and save it to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     name: toolboxName,
     tools: [tool],
@@ -359,9 +326,6 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 ### Sessions
 
-**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
-The `AAIP001` warning needs to be ignored.
-
 Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
 sessions for the same agent version.
 
@@ -399,9 +363,7 @@ To use this feature we need to create the `AgentSessionFiles` client:
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
 ```
 
@@ -495,14 +457,17 @@ SkillInlineContent content = new(
 SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
-3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+3. We will create configure hosted agent so that it will use the 74% of traffic to the endpoint and will also
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = {AgentEndpointProtocol.Responses}
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()

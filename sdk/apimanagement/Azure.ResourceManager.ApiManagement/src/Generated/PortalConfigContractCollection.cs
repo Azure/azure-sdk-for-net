@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class PortalConfigContractCollection : ArmCollection, IEnumerable<PortalConfigContractResource>, IAsyncEnumerable<PortalConfigContractResource>
     {
-        private readonly ClientDiagnostics _portalConfigContractPortalConfigClientDiagnostics;
-        private readonly PortalConfigRestOperations _portalConfigContractPortalConfigRestClient;
+        private readonly ClientDiagnostics _portalConfigClientDiagnostics;
+        private readonly PortalConfig _portalConfigRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PortalConfigContractCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PortalConfigContractCollection for mocking. </summary>
         protected PortalConfigContractCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PortalConfigContractCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortalConfigContractCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PortalConfigContractCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _portalConfigContractPortalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PortalConfigContractResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PortalConfigContractResource.ResourceType, out string portalConfigContractPortalConfigApiVersion);
-            _portalConfigContractPortalConfigRestClient = new PortalConfigRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, portalConfigContractPortalConfigApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PortalConfigContractResource.ResourceType, out string portalConfigContractApiVersion);
+            _portalConfigClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", PortalConfigContractResource.ResourceType.Namespace, Diagnostics);
+            _portalConfigRestClient = new PortalConfig(_portalConfigClientDiagnostics, Pipeline, Endpoint, portalConfigContractApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiManagementServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementServiceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,32 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PortalConfigContractResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalConfigId, string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, data, cancellationToken).ConfigureAwait(false);
-                var uri = _portalConfigContractPortalConfigRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<PortalConfigContractResource>(Response.FromValue(new PortalConfigContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<PortalConfigContractResource> operation = new ApiManagementArmOperation<PortalConfigContractResource>(Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +115,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Create or update the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,23 +133,32 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update the developer portal configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string portalConfigId, ETag ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/>, <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PortalConfigContractResource> CreateOrUpdate(WaitUntil waitUntil, string portalConfigId, string ifMatch, PortalConfigContractData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, data, cancellationToken);
-                var uri = _portalConfigContractPortalConfigRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<PortalConfigContractResource>(Response.FromValue(new PortalConfigContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, ifMatch, PortalConfigContractData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<PortalConfigContractResource> operation = new ApiManagementArmOperation<PortalConfigContractResource>(Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,38 +172,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PortalConfigContractResource>> GetAsync(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,38 +221,42 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the developer portal configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PortalConfigContractResource> Get(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Get");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PortalConfigContractData> response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,50 +270,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists the developer portal configurations.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PortalConfigContractResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _portalConfigContractPortalConfigRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _portalConfigContractPortalConfigRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PortalConfigContractResource(Client, PortalConfigContractData.DeserializePortalConfigContractData(e)), _portalConfigContractPortalConfigClientDiagnostics, Pipeline, "PortalConfigContractCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceAsyncCollectionResultOfT(
+                _portalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
         }
 
         /// <summary>
         /// Lists the developer portal configurations.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_ListByService</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_ListByService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,45 +321,67 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="PortalConfigContractResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PortalConfigContractResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _portalConfigContractPortalConfigRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _portalConfigContractPortalConfigRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PortalConfigContractResource(Client, PortalConfigContractData.DeserializePortalConfigContractData(e)), _portalConfigContractPortalConfigClientDiagnostics, Pipeline, "PortalConfigContractCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PortalConfigContractData, PortalConfigContractResource>(new PortalConfigGetByServiceCollectionResultOfT(
+                _portalConfigRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PortalConfigContractCollection.GetAll"), data => new PortalConfigContractResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PortalConfigContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PortalConfigContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +395,50 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PortalConfigContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PortalConfigContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +452,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PortalConfigContractResource>> GetIfExistsAsync(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _portalConfigContractPortalConfigRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PortalConfigContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PortalConfigContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PortalConfigContractResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +513,54 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalconfigs/{portalConfigId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PortalConfig_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PortalConfigContracts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PortalConfigContractResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="portalConfigId"> Portal configuration identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="portalConfigId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="portalConfigId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PortalConfigContractResource> GetIfExists(string portalConfigId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(portalConfigId, nameof(portalConfigId));
 
-            using var scope = _portalConfigContractPortalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
+            using DiagnosticScope scope = _portalConfigClientDiagnostics.CreateScope("PortalConfigContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _portalConfigContractPortalConfigRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portalConfigId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _portalConfigRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, portalConfigId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PortalConfigContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PortalConfigContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PortalConfigContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PortalConfigContractResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PortalConfigContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +580,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PortalConfigContractResource> IAsyncEnumerable<PortalConfigContractResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

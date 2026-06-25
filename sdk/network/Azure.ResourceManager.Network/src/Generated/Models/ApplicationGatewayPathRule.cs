@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,132 +19,158 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         public ApplicationGatewayPathRule()
         {
-            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPathRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="paths"> Path rules of URL path map. </param>
-        /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
-        /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
-        /// <param name="redirectConfiguration"> Redirect configuration resource of URL path map path rule. </param>
-        /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
-        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
-        /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
-        /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway path rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayPathRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Paths = paths;
-            BackendAddressPool = backendAddressPool;
-            BackendHttpSettings = backendHttpSettings;
-            RedirectConfiguration = redirectConfiguration;
-            RewriteRuleSet = rewriteRuleSet;
-            LoadDistributionPolicy = loadDistributionPolicy;
-            ProvisioningState = provisioningState;
-            FirewallPolicy = firewallPolicy;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway path rule. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayPathRulePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Path rules of URL path map. </summary>
         [WirePath("properties.paths")]
-        public IList<string> Paths { get; }
-        /// <summary> Backend address pool resource of URL path map path rule. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public IList<string> Paths
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
-            set
+            get
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
-            }
-        }
-
-        /// <summary> Backend http settings resource of URL path map path rule. </summary>
-        internal WritableSubResource BackendHttpSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendHttpSettings.id")]
-        public ResourceIdentifier BackendHttpSettingsId
-        {
-            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
-            set
-            {
-                if (BackendHttpSettings is null)
-                    BackendHttpSettings = new WritableSubResource();
-                BackendHttpSettings.Id = value;
-            }
-        }
-
-        /// <summary> Redirect configuration resource of URL path map path rule. </summary>
-        internal WritableSubResource RedirectConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.redirectConfiguration.id")]
-        public ResourceIdentifier RedirectConfigurationId
-        {
-            get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
-            set
-            {
-                if (RedirectConfiguration is null)
-                    RedirectConfiguration = new WritableSubResource();
-                RedirectConfiguration.Id = value;
-            }
-        }
-
-        /// <summary> Rewrite rule set resource of URL path map path rule. </summary>
-        internal WritableSubResource RewriteRuleSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.rewriteRuleSet.id")]
-        public ResourceIdentifier RewriteRuleSetId
-        {
-            get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
-            set
-            {
-                if (RewriteRuleSet is null)
-                    RewriteRuleSet = new WritableSubResource();
-                RewriteRuleSet.Id = value;
-            }
-        }
-
-        /// <summary> Load Distribution Policy resource of URL path map path rule. </summary>
-        internal WritableSubResource LoadDistributionPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadDistributionPolicy.id")]
-        public ResourceIdentifier LoadDistributionPolicyId
-        {
-            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
-            set
-            {
-                if (LoadDistributionPolicy is null)
-                    LoadDistributionPolicy = new WritableSubResource();
-                LoadDistributionPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                return Properties.Paths;
             }
         }
 
         /// <summary> The provisioning state of the path rule resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Reference to the FirewallPolicy resource. </summary>
-        internal WritableSubResource FirewallPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendAddressPool.id")]
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendHttpSettings.id")]
+        public ResourceIdentifier BackendHttpSettingsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendHttpSettingsId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.BackendHttpSettingsId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.redirectConfiguration.id")]
+        public ResourceIdentifier RedirectConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedirectConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.RedirectConfigurationId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.rewriteRuleSet.id")]
+        public ResourceIdentifier RewriteRuleSetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RewriteRuleSetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.RewriteRuleSetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadDistributionPolicy.id")]
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadDistributionPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.LoadDistributionPolicyId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.firewallPolicy.id")]
         public ResourceIdentifier FirewallPolicyId
         {
-            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            get
+            {
+                return Properties is null ? default : Properties.FirewallPolicyId;
+            }
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPathRulePropertiesFormat();
+                }
+                Properties.FirewallPolicyId = value;
             }
         }
     }

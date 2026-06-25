@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningDayOfWeek : IEquatable<MachineLearningDayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Monday weekday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday weekday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday weekday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday weekday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday weekday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday weekday. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday weekday. </summary>
+        private const string SundayValue = "Sunday";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningDayOfWeek(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
-        private const string SundayValue = "Sunday";
+            _value = value;
+        }
 
         /// <summary> Monday weekday. </summary>
         public static MachineLearningDayOfWeek Monday { get; } = new MachineLearningDayOfWeek(MondayValue);
+
         /// <summary> Tuesday weekday. </summary>
         public static MachineLearningDayOfWeek Tuesday { get; } = new MachineLearningDayOfWeek(TuesdayValue);
+
         /// <summary> Wednesday weekday. </summary>
         public static MachineLearningDayOfWeek Wednesday { get; } = new MachineLearningDayOfWeek(WednesdayValue);
+
         /// <summary> Thursday weekday. </summary>
         public static MachineLearningDayOfWeek Thursday { get; } = new MachineLearningDayOfWeek(ThursdayValue);
+
         /// <summary> Friday weekday. </summary>
         public static MachineLearningDayOfWeek Friday { get; } = new MachineLearningDayOfWeek(FridayValue);
+
         /// <summary> Saturday weekday. </summary>
         public static MachineLearningDayOfWeek Saturday { get; } = new MachineLearningDayOfWeek(SaturdayValue);
+
         /// <summary> Sunday weekday. </summary>
         public static MachineLearningDayOfWeek Sunday { get; } = new MachineLearningDayOfWeek(SundayValue);
+
         /// <summary> Determines if two <see cref="MachineLearningDayOfWeek"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningDayOfWeek left, MachineLearningDayOfWeek right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningDayOfWeek"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningDayOfWeek left, MachineLearningDayOfWeek right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningDayOfWeek"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningDayOfWeek(string value) => new MachineLearningDayOfWeek(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningDayOfWeek"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningDayOfWeek?(string value) => value == null ? null : new MachineLearningDayOfWeek(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningDayOfWeek other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

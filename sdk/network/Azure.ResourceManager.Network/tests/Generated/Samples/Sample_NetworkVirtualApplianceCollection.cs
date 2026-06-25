@@ -65,12 +65,10 @@ namespace Azure.ResourceManager.Network.Samples
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
 PropertiesType = {NvaNicType.PrivateNic},
-Name = "dataInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet2"),
 PropertiesType = {NvaNicType.PublicNic},
-Name = "managementInterface",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -78,7 +76,7 @@ Name = "managementInterface",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -138,12 +136,10 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
 PropertiesType = {NvaNicType.PrivateNic},
-Name = "dataInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet2"),
 PropertiesType = {NvaNicType.PublicNic},
-Name = "managementInterface",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -151,7 +147,7 @@ Name = "managementInterface",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -208,11 +204,9 @@ Name = "managementInterface",
 NicType = NicTypeInRequest.PublicNic,
 VirtualApplianceNetworkInterfaceIPConfigurations = {new VirtualApplianceIPConfiguration
 {
-Name = "myPrimaryPublicIpConfig",
 IsPrimary = true,
 }, new VirtualApplianceIPConfiguration
 {
-Name = "myNonPrimaryPublicIpConfig",
 IsPrimary = false,
 }},
 }, new VirtualApplianceNetworkInterfaceConfiguration
@@ -220,11 +214,9 @@ IsPrimary = false,
 NicType = NicTypeInRequest.PrivateNic,
 VirtualApplianceNetworkInterfaceIPConfigurations = {new VirtualApplianceIPConfiguration
 {
-Name = "myPrimaryPrivateIpConfig",
 IsPrimary = true,
 }, new VirtualApplianceIPConfiguration
 {
-Name = "myNonPrimaryPrivateIpConfig",
 IsPrimary = false,
 }},
 }},
@@ -232,12 +224,10 @@ IsPrimary = false,
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
 PropertiesType = {NvaNicType.PrivateNic},
-Name = "dataInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet2"),
 PropertiesType = {NvaNicType.PublicNic},
-Name = "managementInterface",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -245,7 +235,7 @@ Name = "managementInterface",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -301,17 +291,14 @@ Name = "managementInterface",
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
 PropertiesType = {NvaNicType.PrivateNic},
-Name = "dataInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet2"),
 PropertiesType = {NvaNicType.PublicNic},
-Name = "managementInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet3"),
 PropertiesType = {NvaNicType.AdditionalPrivateNic},
-Name = "myAdditionalInterface",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -319,7 +306,7 @@ Name = "myAdditionalInterface",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -375,17 +362,14 @@ Name = "myAdditionalInterface",
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
 PropertiesType = {NvaNicType.PrivateNic},
-Name = "dataInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet2"),
 PropertiesType = {NvaNicType.PublicNic},
-Name = "managementInterface",
 }, new NvaInterfaceConfigurationsProperties
 {
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet3"),
 PropertiesType = {NvaNicType.AdditionalPublicNic},
-Name = "myAdditionalPublicInterface",
 }},
                 Location = new AzureLocation("West US"),
                 Tags =
@@ -393,7 +377,7 @@ Name = "myAdditionalPublicInterface",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -451,11 +435,9 @@ Name = "myAdditionalPublicInterface",
 NicType = NicTypeInRequest.PublicNic,
 VirtualApplianceNetworkInterfaceIPConfigurations = {new VirtualApplianceIPConfiguration
 {
-Name = "publicnicipconfig",
 IsPrimary = true,
 }, new VirtualApplianceIPConfiguration
 {
-Name = "publicnicipconfig-2",
 IsPrimary = false,
 }},
 }, new VirtualApplianceNetworkInterfaceConfiguration
@@ -463,17 +445,14 @@ IsPrimary = false,
 NicType = NicTypeInRequest.PrivateNic,
 VirtualApplianceNetworkInterfaceIPConfigurations = {new VirtualApplianceIPConfiguration
 {
-Name = "privatenicipconfig",
 IsPrimary = true,
 }, new VirtualApplianceIPConfiguration
 {
-Name = "privatenicipconfig-2",
 IsPrimary = false,
 }},
 }},
                 AdditionalNics = {new VirtualApplianceAdditionalNicProperties
 {
-Name = "exrsdwan",
 HasPublicIP = true,
 }},
                 InternetIngressPublicIPs = {new WritableSubResource
@@ -486,7 +465,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -533,7 +512,7 @@ Id = new ResourceIdentifier("/subscriptions/{{subscriptionId}}/resourceGroups/{{
 ["key1"] = "value1"
 },
             };
-            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data);
+            ArmOperation<NetworkVirtualApplianceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkVirtualApplianceName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

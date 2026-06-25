@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class BaseAdminRuleResource : IJsonModel<BaseAdminRuleData>
     {
-        private static BaseAdminRuleData s_dataDeserializationInstance;
-        private static BaseAdminRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BaseAdminRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BaseAdminRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BaseAdminRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BaseAdminRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BaseAdminRuleData>)Data).Write(writer, options);
 
-        BaseAdminRuleData IJsonModel<BaseAdminRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BaseAdminRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BaseAdminRuleData IJsonModel<BaseAdminRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BaseAdminRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BaseAdminRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BaseAdminRuleData IPersistableModel<BaseAdminRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BaseAdminRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<BaseAdminRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BaseAdminRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BaseAdminRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

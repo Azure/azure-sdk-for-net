@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArmResourceDefinitionResourceElementTemplate))]
     [ModelReaderWriterBuildable(typeof(ArmResourceDefinitionResourceElementTemplateDetails))]
@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(ArtifactProfile))]
     [ModelReaderWriterBuildable(typeof(ArtifactStoreData))]
     [ModelReaderWriterBuildable(typeof(ArtifactStoreListResult))]
+    [ModelReaderWriterBuildable(typeof(ArtifactStoreNetworkFabricControllerEndPoints))]
+    [ModelReaderWriterBuildable(typeof(ArtifactStoreNetworkFabricControllerEndPointsList))]
+    [ModelReaderWriterBuildable(typeof(ArtifactStorePrivateEndPointsFormat))]
+    [ModelReaderWriterBuildable(typeof(ArtifactStorePrivateEndPointsListResult))]
     [ModelReaderWriterBuildable(typeof(ArtifactStorePropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(ArtifactStorePropertiesFormatManagedResourceGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(ArtifactStoreResource))]
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(AzureOperatorNexusNetworkFunctionTemplate))]
     [ModelReaderWriterBuildable(typeof(AzureStorageAccountContainerCredential))]
     [ModelReaderWriterBuildable(typeof(AzureStorageAccountCredential))]
+    [ModelReaderWriterBuildable(typeof(CancelInformation))]
     [ModelReaderWriterBuildable(typeof(ComponentData))]
     [ModelReaderWriterBuildable(typeof(ComponentKubernetesResources))]
     [ModelReaderWriterBuildable(typeof(ComponentListResult))]
@@ -127,8 +132,8 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(NetworkServiceDesignVersionResource))]
     [ModelReaderWriterBuildable(typeof(NetworkServiceDesignVersionUpdateState))]
     [ModelReaderWriterBuildable(typeof(NfviDetails))]
-    [ModelReaderWriterBuildable(typeof(NFVIs))]
-    [ModelReaderWriterBuildable(typeof(NSDArtifactProfile))]
+    [ModelReaderWriterBuildable(typeof(NfviSiteDetails))]
+    [ModelReaderWriterBuildable(typeof(NsdArtifactProfile))]
     [ModelReaderWriterBuildable(typeof(OpenDeploymentResourceReference))]
     [ModelReaderWriterBuildable(typeof(PodEvent))]
     [ModelReaderWriterBuildable(typeof(ProxyArtifactListOverview))]
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(PublisherListResult))]
     [ModelReaderWriterBuildable(typeof(PublisherPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(PublisherResource))]
+    [ModelReaderWriterBuildable(typeof(ReferencedResourceById))]
     [ModelReaderWriterBuildable(typeof(RequestMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceElementTemplate))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(UnknownDeploymentResourceIdReference))]
     [ModelReaderWriterBuildable(typeof(UnknownNetworkFunctionDefinitionVersionPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(UnknownNetworkFunctionPropertiesFormat))]
-    [ModelReaderWriterBuildable(typeof(UnknownNFVIs))]
+    [ModelReaderWriterBuildable(typeof(UnknownNfviDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownResourceElementTemplate))]
     [ModelReaderWriterBuildable(typeof(UnknownVirtualNetworkFunctionTemplate))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
@@ -171,7 +177,6 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(VhdImageMappingRuleProfile))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionDefinitionVersion))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkFunctionTemplate))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerHybridNetworkContext : ModelReaderWriterContext
     {
     }

@@ -7,48 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary>
-    /// Data version base definition
-    /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
-    /// </summary>
+    /// <summary> Data version base definition. </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
+        /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public MachineLearningDataVersionProperties(Uri dataUri)
+        public MachineLearningDataVersionProperties(MachineLearningDataType dataType, Uri dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
+            DataType = dataType;
             DataUri = dataUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="dataType"> [Required] Specifies the type of data. </param>
         /// <param name="dataUri"> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
-        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, MachineLearningDataType dataType, Uri dataUri) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
+        internal MachineLearningDataVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, MachineLearningDataType dataType, Uri dataUri) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
             DataType = dataType;
             DataUri = dataUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/> for deserialization. </summary>
-        internal MachineLearningDataVersionProperties()
-        {
-        }
-
         /// <summary> [Required] Specifies the type of data. </summary>
+        [WirePath("dataType")]
         internal MachineLearningDataType DataType { get; set; }
+
         /// <summary> [Required] Uri of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </summary>
         [WirePath("dataUri")]
         public Uri DataUri { get; set; }

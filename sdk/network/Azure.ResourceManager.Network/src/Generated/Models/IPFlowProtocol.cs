@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct IPFlowProtocol : IEquatable<IPFlowProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
 
         /// <summary> Initializes a new instance of <see cref="IPFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IPFlowProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-
         /// <summary> TCP. </summary>
-        public static IPFlowProtocol Tcp { get; } = new IPFlowProtocol(TcpValue);
+        public static IPFlowProtocol TCP { get; } = new IPFlowProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static IPFlowProtocol Udp { get; } = new IPFlowProtocol(UdpValue);
+        public static IPFlowProtocol UDP { get; } = new IPFlowProtocol(UDPValue);
+
         /// <summary> Determines if two <see cref="IPFlowProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IPFlowProtocol left, IPFlowProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IPFlowProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IPFlowProtocol left, IPFlowProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPFlowProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IPFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IPFlowProtocol(string value) => new IPFlowProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IPFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IPFlowProtocol?(string value) => value == null ? null : new IPFlowProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IPFlowProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IPFlowProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

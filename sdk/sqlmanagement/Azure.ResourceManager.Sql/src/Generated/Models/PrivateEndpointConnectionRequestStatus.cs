@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Contains the private endpoint connection requests status. </summary>
     public partial class PrivateEndpointConnectionRequestStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionRequestStatus"/>. </summary>
         internal PrivateEndpointConnectionRequestStatus()
@@ -55,21 +27,23 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateLinkServiceId"> Resource id for which the private endpoint is created. </param>
         /// <param name="privateEndpointConnectionName"> The connection name for the private endpoint. </param>
         /// <param name="status"> Status of this private endpoint connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointConnectionRequestStatus(ResourceIdentifier privateLinkServiceId, string privateEndpointConnectionName, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionRequestStatus(ResourceIdentifier privateLinkServiceId, string privateEndpointConnectionName, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLinkServiceId = privateLinkServiceId;
             PrivateEndpointConnectionName = privateEndpointConnectionName;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource id for which the private endpoint is created. </summary>
         [WirePath("privateLinkServiceId")]
         public ResourceIdentifier PrivateLinkServiceId { get; }
+
         /// <summary> The connection name for the private endpoint. </summary>
         [WirePath("privateEndpointConnectionName")]
         public string PrivateEndpointConnectionName { get; }
+
         /// <summary> Status of this private endpoint connection. </summary>
         [WirePath("status")]
         public string Status { get; }

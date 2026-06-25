@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent : IUtf8JsonSerializable, IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>
+    /// <summary> Validate azure key vault encryption key. </summary>
+    public partial class ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent : IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent"/> for deserialization. </summary>
+        internal ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="managedInstanceValidateAzureKeyVaultEncryptionKeyContent"> The <see cref="ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent managedInstanceValidateAzureKeyVaultEncryptionKeyContent)
+        {
+            if (managedInstanceValidateAzureKeyVaultEncryptionKeyContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(managedInstanceValidateAzureKeyVaultEncryptionKeyContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +85,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("tdeKeyUri"u8);
             writer.WriteStringValue(TdeKeyUri.AbsoluteUri);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,74 +109,46 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent IJsonModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(document.RootElement, options);
         }
 
-        internal static ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent DeserializeManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent DeserializeManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri tdeKeyUri = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tdeKeyUri"u8))
+                if (prop.NameEquals("tdeKeyUri"u8))
                 {
-                    tdeKeyUri = new Uri(property.Value.GetString());
+                    tdeKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(tdeKeyUri, serializedAdditionalRawData);
+            return new ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(tdeKeyUri, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeManagedInstanceValidateAzureKeyVaultEncryptionKeyContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ManagedInstanceValidateAzureKeyVaultEncryptionKeyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

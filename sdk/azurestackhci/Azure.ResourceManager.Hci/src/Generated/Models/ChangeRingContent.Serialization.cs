@@ -14,9 +14,14 @@ using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The ChangeRingContent. </summary>
+    /// <summary> Request body for the change-ring action on a cluster. </summary>
     public partial class ChangeRingContent : IJsonModel<ChangeRingContent>
     {
+        /// <summary> Initializes a new instance of <see cref="ChangeRingContent"/> for deserialization. </summary>
+        internal ChangeRingContent()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ChangeRingContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -85,11 +90,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 throw new FormatException($"The model {nameof(ChangeRingContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,10 +140,6 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = ChangeRingRequestProperties.DeserializeChangeRingRequestProperties(prop.Value, options);
                     continue;
                 }

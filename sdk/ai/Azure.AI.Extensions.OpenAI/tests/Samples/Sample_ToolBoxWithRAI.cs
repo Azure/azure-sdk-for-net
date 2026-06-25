@@ -11,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-# pragma warning disable AAIP001
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
@@ -41,11 +40,11 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Async
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         ToolboxPolicies raiPolicies = new()
         {
             RaiConfig = new(raiPolicyName)
@@ -153,11 +152,11 @@ public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxWithRAI_Sync
-        ProjectsAgentTool mcp = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-            serverLabel: "api-specs",
-            serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-        ));
+        MCPToolboxTool mcp = new(serverLabel: "api-specs")
+        {
+            ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+        };
         ToolboxPolicies raiPolicies = new()
         {
             RaiConfig = new(raiPolicyName)

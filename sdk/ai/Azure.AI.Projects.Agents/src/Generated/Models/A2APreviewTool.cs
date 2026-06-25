@@ -14,19 +14,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
         public A2APreviewTool() : base(ToolType.A2aPreview)
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="baseUri"> Base URL of the agent. </param>
         /// <param name="agentCardPath">
         /// The path to the agent card relative to the `base_url`.
@@ -36,33 +28,30 @@ namespace Azure.AI.Projects.Agents
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
-        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, ToolConfig> toolConfigs, Uri baseUri, string agentCardPath, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        internal A2APreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard) : base(@type, additionalBinaryDataProperties)
         {
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
             BaseUri = baseUri;
             AgentCardPath = agentCardPath;
             ProjectConnectionId = projectConnectionId;
+            SendCredentialsForAgentCard = sendCredentialsForAgentCard;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary>
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </summary>
+        public bool? SendCredentialsForAgentCard { get; set; }
     }
 }
