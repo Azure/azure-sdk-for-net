@@ -154,6 +154,7 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(ScriptStringExecutionParameterDetails))]
     [ModelReaderWriterBuildable(typeof(SingleSignOnIdentitySource))]
     [ModelReaderWriterBuildable(typeof(SpecializedAvsHostProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownAddonProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownAvsHostProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownAvsLicenseProperties))]
@@ -215,7 +216,6 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupResource))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkVmGroupsListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAvsContext : ModelReaderWriterContext
     {
     }
