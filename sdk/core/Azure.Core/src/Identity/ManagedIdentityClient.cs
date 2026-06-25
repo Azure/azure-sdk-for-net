@@ -84,7 +84,7 @@ namespace Azure.Identity
             {
                 throw;
             }
-            catch (Exception e) when (_isChainedCredential && e is not OperationCanceledException && !cancellationToken.IsCancellationRequested)
+            catch (Exception e) when (_isChainedCredential && e is not OperationCanceledException)
             {
                 // IMDS probing can fail on hosts without a managed identity. When chained, surface a CredentialUnavailableException so the chain continues.
                 AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(ImdsManagedIdentityProbeSource.GetImdsUri(), e);
