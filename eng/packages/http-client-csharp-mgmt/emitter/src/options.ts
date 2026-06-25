@@ -7,6 +7,8 @@ import {
 } from "@azure-typespec/http-client-csharp";
 import { Diagnostic, JSONSchemaType } from "@typespec/compiler";
 
+export type ApiVersionOption = string | Record<string, string>;
+
 /**
  * Upstream diagnostic codes that are not meaningful for management plane code generation
  * and should be suppressed to avoid noisy output.
@@ -41,6 +43,18 @@ export const AzureMgmtEmitterOptionsSchema: JSONSchemaType<AzureMgmtEmitterOptio
     additionalProperties: false,
     properties: {
       ...AzureEmitterOptionsSchema.properties,
+      "api-version": {
+        oneOf: [
+          { type: "string", nullable: true },
+          {
+            type: "object",
+            nullable: true,
+            additionalProperties: { type: "string" }
+          }
+        ],
+        description:
+          "Use this flag if you would like to generate the sdk only for a specific version. Default value is the latest version. Also accepts values `latest` and `all`. For multi-service packages, provide a map from each service namespace's full name to its desired version; services not listed default to their latest version."
+      } as any,
       "enable-wire-path-attribute": {
         type: "boolean",
         nullable: true,
