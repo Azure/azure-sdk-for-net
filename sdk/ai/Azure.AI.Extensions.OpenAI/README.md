@@ -542,7 +542,10 @@ Configure an Agent endpoint for Responses protocol.
 AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = { AgentEndpointProtocol.Responses }
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 PatchAgentOptions patchOptions = new()
 {

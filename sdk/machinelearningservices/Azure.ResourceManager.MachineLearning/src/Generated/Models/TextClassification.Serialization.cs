@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TextClassification : IUtf8JsonSerializable, IJsonModel<TextClassification>
+    /// <summary>
+    /// Text Classification task in AutoML NLP vertical.
+    /// NLP - Natural Language Processing.
+    /// </summary>
+    public partial class TextClassification : AutoMLVertical, IJsonModel<TextClassification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextClassification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/> for deserialization. </summary>
+        internal TextClassification()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AutoMLVertical PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTextClassification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TextClassification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TextClassification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TextClassification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextClassification IPersistableModel<TextClassification>.Create(BinaryData data, ModelReaderWriterOptions options) => (TextClassification)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TextClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TextClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,348 +77,153 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextClassification)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(FeaturizationSettings))
+            {
+                writer.WritePropertyName("featurizationSettings"u8);
+                writer.WriteObjectValue(FeaturizationSettings, options);
+            }
+            if (Optional.IsDefined(LimitSettings))
+            {
+                writer.WritePropertyName("limitSettings"u8);
+                writer.WriteObjectValue(LimitSettings, options);
+            }
+            if (Optional.IsDefined(ValidationData))
+            {
+                writer.WritePropertyName("validationData"u8);
+                writer.WriteObjectValue(ValidationData, options);
+            }
             if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(LimitSettings))
-            {
-                if (LimitSettings != null)
-                {
-                    writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("limitSettings");
-                }
-            }
-            if (Optional.IsDefined(FeaturizationSettings))
-            {
-                if (FeaturizationSettings != null)
-                {
-                    writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("featurizationSettings");
-                }
-            }
-            if (Optional.IsDefined(ValidationData))
-            {
-                if (ValidationData != null)
-                {
-                    writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData, options);
-                }
-                else
-                {
-                    writer.WriteNull("validationData");
-                }
-            }
         }
 
-        TextClassification IJsonModel<TextClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TextClassification IJsonModel<TextClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TextClassification)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AutoMLVertical JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TextClassification)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTextClassification(document.RootElement, options);
         }
 
-        internal static TextClassification DeserializeTextClassification(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TextClassification DeserializeTextClassification(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ClassificationPrimaryMetric? primaryMetric = default;
-            NlpVerticalLimitSettings limitSettings = default;
-            NlpVerticalFeaturizationSettings featurizationSettings = default;
-            MachineLearningTableJobInput validationData = default;
-            TaskType taskType = default;
             MachineLearningLogVerbosity? logVerbosity = default;
-            MachineLearningTableJobInput trainingData = default;
             string targetColumnName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            TaskType taskType = default;
+            MachineLearningTableJobInput trainingData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NlpVerticalFeaturizationSettings featurizationSettings = default;
+            NlpVerticalLimitSettings limitSettings = default;
+            MachineLearningTableJobInput validationData = default;
+            ClassificationPrimaryMetric? primaryMetric = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryMetric"u8))
+                if (prop.NameEquals("logVerbosity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryMetric = new ClassificationPrimaryMetric(property.Value.GetString());
+                    logVerbosity = new MachineLearningLogVerbosity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("limitSettings"u8))
+                if (prop.NameEquals("targetColumnName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        limitSettings = null;
-                        continue;
-                    }
-                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("featurizationSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        featurizationSettings = null;
-                        continue;
-                    }
-                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("validationData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        validationData = null;
-                        continue;
-                    }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new TaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("logVerbosity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    logVerbosity = new MachineLearningLogVerbosity(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("trainingData"u8))
-                {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("targetColumnName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumnName = null;
                         continue;
                     }
-                    targetColumnName = property.Value.GetString();
+                    targetColumnName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("taskType"u8))
+                {
+                    taskType = new TaskType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("trainingData"u8))
+                {
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("featurizationSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featurizationSettings = null;
+                        continue;
+                    }
+                    featurizationSettings = NlpVerticalFeaturizationSettings.DeserializeNlpVerticalFeaturizationSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("limitSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        limitSettings = null;
+                        continue;
+                    }
+                    limitSettings = NlpVerticalLimitSettings.DeserializeNlpVerticalLimitSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("validationData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        validationData = null;
+                        continue;
+                    }
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("primaryMetric"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryMetric = new ClassificationPrimaryMetric(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TextClassification(
-                taskType,
                 logVerbosity,
-                trainingData,
                 targetColumnName,
-                serializedAdditionalRawData,
-                primaryMetric,
-                limitSettings,
+                taskType,
+                trainingData,
+                additionalBinaryDataProperties,
                 featurizationSettings,
-                validationData);
+                limitSettings,
+                validationData,
+                primaryMetric);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMetric), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  primaryMetric: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryMetric))
-                {
-                    builder.Append("  primaryMetric: ");
-                    builder.AppendLine($"'{PrimaryMetric.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LimitSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  limitSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LimitSettings))
-                {
-                    builder.Append("  limitSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LimitSettings, options, 2, false, "  limitSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FeaturizationDatasetLanguage", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  featurizationSettings: ");
-                builder.AppendLine("{");
-                builder.Append("    datasetLanguage: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(FeaturizationSettings))
-                {
-                    builder.Append("  featurizationSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, FeaturizationSettings, options, 2, false, "  featurizationSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  validationData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ValidationData))
-                {
-                    builder.Append("  validationData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ValidationData, options, 2, false, "  validationData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  taskType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  taskType: ");
-                builder.AppendLine($"'{TaskType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogVerbosity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  logVerbosity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LogVerbosity))
-                {
-                    builder.Append("  logVerbosity: ");
-                    builder.AppendLine($"'{LogVerbosity.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrainingData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  trainingData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TrainingData))
-                {
-                    builder.Append("  trainingData: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TrainingData, options, 2, false, "  trainingData: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetColumnName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  targetColumnName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TargetColumnName))
-                {
-                    builder.Append("  targetColumnName: ");
-                    if (TargetColumnName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TargetColumnName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TargetColumnName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TextClassification>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TextClassification)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TextClassification IPersistableModel<TextClassification>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TextClassification>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTextClassification(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TextClassification)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TextClassification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

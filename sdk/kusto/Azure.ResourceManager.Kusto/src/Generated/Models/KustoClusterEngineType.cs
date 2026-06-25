@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterEngineType : IEquatable<KustoClusterEngineType>
     {
         private readonly string _value;
+        /// <summary> V2. </summary>
+        private const string V2Value = "V2";
+        /// <summary> V3. </summary>
+        private const string V3Value = "V3";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterEngineType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string V2Value = "V2";
-        private const string V3Value = "V3";
+            _value = value;
+        }
 
         /// <summary> V2. </summary>
         public static KustoClusterEngineType V2 { get; } = new KustoClusterEngineType(V2Value);
+
         /// <summary> V3. </summary>
         public static KustoClusterEngineType V3 { get; } = new KustoClusterEngineType(V3Value);
+
         /// <summary> Determines if two <see cref="KustoClusterEngineType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterEngineType left, KustoClusterEngineType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterEngineType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterEngineType left, KustoClusterEngineType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterEngineType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterEngineType(string value) => new KustoClusterEngineType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterEngineType?(string value) => value == null ? null : new KustoClusterEngineType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterEngineType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterEngineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

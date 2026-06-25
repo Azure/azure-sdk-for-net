@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The NlpVerticalFeaturizationSettings. </summary>
-    internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
+    public partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         /// <summary> Initializes a new instance of <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
         public NlpVerticalFeaturizationSettings()
@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="NlpVerticalFeaturizationSettings"/>. </summary>
         /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NlpVerticalFeaturizationSettings(string datasetLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(datasetLanguage, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NlpVerticalFeaturizationSettings(string datasetLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(datasetLanguage, additionalBinaryDataProperties)
         {
         }
     }

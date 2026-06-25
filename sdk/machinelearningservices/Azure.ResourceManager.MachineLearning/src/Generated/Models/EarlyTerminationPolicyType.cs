@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The EarlyTerminationPolicyType. </summary>
+    /// <summary></summary>
     internal readonly partial struct EarlyTerminationPolicyType : IEquatable<EarlyTerminationPolicyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EarlyTerminationPolicyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EarlyTerminationPolicyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BanditValue = "Bandit";
         private const string MedianStoppingValue = "MedianStopping";
         private const string TruncationSelectionValue = "TruncationSelection";
 
-        /// <summary> Bandit. </summary>
+        /// <summary> Initializes a new instance of <see cref="EarlyTerminationPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EarlyTerminationPolicyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Bandit. </summary>
         public static EarlyTerminationPolicyType Bandit { get; } = new EarlyTerminationPolicyType(BanditValue);
-        /// <summary> MedianStopping. </summary>
+
+        /// <summary> Gets the MedianStopping. </summary>
         public static EarlyTerminationPolicyType MedianStopping { get; } = new EarlyTerminationPolicyType(MedianStoppingValue);
-        /// <summary> TruncationSelection. </summary>
+
+        /// <summary> Gets the TruncationSelection. </summary>
         public static EarlyTerminationPolicyType TruncationSelection { get; } = new EarlyTerminationPolicyType(TruncationSelectionValue);
+
         /// <summary> Determines if two <see cref="EarlyTerminationPolicyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EarlyTerminationPolicyType left, EarlyTerminationPolicyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EarlyTerminationPolicyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EarlyTerminationPolicyType left, EarlyTerminationPolicyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EarlyTerminationPolicyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EarlyTerminationPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EarlyTerminationPolicyType(string value) => new EarlyTerminationPolicyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EarlyTerminationPolicyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EarlyTerminationPolicyType?(string value) => value == null ? null : new EarlyTerminationPolicyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EarlyTerminationPolicyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EarlyTerminationPolicyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

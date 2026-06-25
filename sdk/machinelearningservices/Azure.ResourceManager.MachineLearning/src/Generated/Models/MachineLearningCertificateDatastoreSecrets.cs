@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
-        public MachineLearningCertificateDatastoreSecrets()
+        public MachineLearningCertificateDatastoreSecrets() : base(SecretsType.Certificate)
         {
-            SecretsType = SecretsType.Certificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCertificateDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificate"> Service principal certificate. </param>
-        internal MachineLearningCertificateDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string certificate) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningCertificateDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string certificate) : base(secretsType, additionalBinaryDataProperties)
         {
             Certificate = certificate;
-            SecretsType = secretsType;
         }
 
         /// <summary> Service principal certificate. </summary>

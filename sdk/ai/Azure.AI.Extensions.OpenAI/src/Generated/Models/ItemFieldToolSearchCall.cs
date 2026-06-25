@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
-        internal ItemFieldToolSearchCall(string id, string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status) : base(ItemFieldType.ToolSearchCall)
+        internal ItemFieldToolSearchCall(string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status) : base(ItemFieldType.ToolSearchCall)
         {
             Id = id;
             CallId = callId;
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"> Arguments used for the tool search call. </param>
         /// <param name="status"> The status of the tool search call item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal ItemFieldToolSearchCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status, string createdBy) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldToolSearchCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, BinaryData arguments, ResponsesFunctionCallStatus status, string createdBy) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -52,7 +52,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ResponsesToolSearchExecutionType Execution { get; }
+        public ToolSearchExecutionType Execution { get; }
 
         /// <summary>
         /// Arguments used for the tool search call.

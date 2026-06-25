@@ -30,7 +30,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by the tool search output. </param>
         /// <param name="status"></param>
-        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType? execution, IList<ResponseTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InputItemToolSearchOutputItemParam(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType? execution, IList<ResponseTool> tools, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -46,7 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string CallId { get; set; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ResponsesToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; set; }
 
         /// <summary> The loaded tool definitions returned by the tool search output. </summary>
         public IList<ResponseTool> Tools { get; }

@@ -17,38 +17,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesLocalShellToolParam"/>. </summary>
         internal ResponsesLocalShellToolParam() : base("local_shell")
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesLocalShellToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesLocalShellToolParam(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesLocalShellToolParam(ResponseToolKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

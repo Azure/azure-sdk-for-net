@@ -18,7 +18,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
-        internal ItemFieldToolSearchOutput(string id, string callId, ResponsesToolSearchExecutionType execution, IEnumerable<ResponseTool> tools, ResponsesFunctionCallOutputStatus status) : base(ItemFieldType.ToolSearchOutput)
+        internal ItemFieldToolSearchOutput(string id, string callId, ToolSearchExecutionType execution, IEnumerable<ResponseTool> tools, ResponsesFunctionCallOutputStatus status) : base(ItemFieldType.ToolSearchOutput)
         {
             Id = id;
             CallId = callId;
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="tools"> The loaded tool definitions returned by tool search. </param>
         /// <param name="status"> The status of the tool search output item that was recorded. </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
-        internal ItemFieldToolSearchOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ResponsesToolSearchExecutionType execution, IList<ResponseTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldToolSearchOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType execution, IList<ResponseTool> tools, ResponsesFunctionCallOutputStatus status, string createdBy) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -53,7 +53,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ResponsesToolSearchExecutionType Execution { get; }
+        public ToolSearchExecutionType Execution { get; }
 
         /// <summary> The loaded tool definitions returned by tool search. </summary>
         public IList<ResponseTool> Tools { get; }

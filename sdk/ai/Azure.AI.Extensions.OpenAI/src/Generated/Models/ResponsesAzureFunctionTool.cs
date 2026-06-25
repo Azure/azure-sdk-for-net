@@ -19,33 +19,19 @@ namespace Azure.AI.Extensions.OpenAI
         internal ResponsesAzureFunctionTool(ResponsesAzureFunctionDefinition azureFunction) : base("azure_function")
         {
             AzureFunction = azureFunction;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureFunctionTool(ResponseToolKind @type, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesAzureFunctionTool(ResponseToolKind @type, ResponsesAzureFunctionDefinition azureFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             AzureFunction = azureFunction;
-            ToolConfigs = toolConfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Function Tool definition. </summary>
         public ResponsesAzureFunctionDefinition AzureFunction { get; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct ApiManagementUserState : IEquatable<ApiManagementUserState>
     {
         private readonly string _value;
+        /// <summary> User state is active. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> User is blocked. Blocked users cannot authenticate at developer portal or call API. </summary>
+        private const string BlockedValue = "blocked";
+        /// <summary> User account is pending. Requires identity confirmation before it can be made active. </summary>
+        private const string PendingValue = "pending";
+        /// <summary> User account is closed. All identities and related entities are removed. </summary>
+        private const string DeletedValue = "deleted";
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementUserState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApiManagementUserState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string BlockedValue = "blocked";
-        private const string PendingValue = "pending";
-        private const string DeletedValue = "deleted";
+            _value = value;
+        }
 
         /// <summary> User state is active. </summary>
         public static ApiManagementUserState Active { get; } = new ApiManagementUserState(ActiveValue);
+
         /// <summary> User is blocked. Blocked users cannot authenticate at developer portal or call API. </summary>
         public static ApiManagementUserState Blocked { get; } = new ApiManagementUserState(BlockedValue);
+
         /// <summary> User account is pending. Requires identity confirmation before it can be made active. </summary>
         public static ApiManagementUserState Pending { get; } = new ApiManagementUserState(PendingValue);
+
         /// <summary> User account is closed. All identities and related entities are removed. </summary>
         public static ApiManagementUserState Deleted { get; } = new ApiManagementUserState(DeletedValue);
+
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApiManagementUserState left, ApiManagementUserState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApiManagementUserState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApiManagementUserState left, ApiManagementUserState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementUserState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApiManagementUserState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApiManagementUserState(string value) => new ApiManagementUserState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApiManagementUserState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApiManagementUserState?(string value) => value == null ? null : new ApiManagementUserState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApiManagementUserState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApiManagementUserState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

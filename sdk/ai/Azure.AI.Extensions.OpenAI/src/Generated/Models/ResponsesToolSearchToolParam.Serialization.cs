@@ -130,7 +130,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "tool_search";
-            ResponsesToolSearchExecutionType? execution = default;
+            ToolSearchExecutionType? execution = default;
             string description = default;
             ResponsesEmptyModelParam parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -147,7 +147,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = prop.Value.GetString().ToToolSearchExecutionType();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

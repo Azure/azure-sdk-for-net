@@ -72,27 +72,6 @@ namespace Azure.AI.Extensions.OpenAI
                 throw new FormatException($"The model {nameof(ResponsesMemorySearchPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
             writer.WritePropertyName("memory_store_name"u8);
             writer.WriteStringValue(MemoryStoreName);
             writer.WritePropertyName("scope"u8);
@@ -150,9 +129,6 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseToolKind @type = "memory_search_preview";
-            string name = default;
-            string description = default;
-            IDictionary<string, ToolConfig> toolConfigs = default;
             string memoryStoreName = default;
             string scope = default;
             ResponsesMemorySearchOptions searchOptions = default;
@@ -163,30 +139,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tool_configs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
-                    }
-                    toolConfigs = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("memory_store_name"u8))
@@ -224,9 +176,6 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new ResponsesMemorySearchPreviewTool(
                 @type,
-                name,
-                description,
-                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 memoryStoreName,
                 scope,
                 searchOptions,

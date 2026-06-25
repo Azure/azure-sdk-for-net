@@ -18,42 +18,18 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         internal ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base("azure_ai_search")
         {
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAISearch = azureAISearch;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesAzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, ResponsesAzureAISearchToolResource azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal ResponsesAzureAISearchTool(ResponseToolKind @type, ResponsesAzureAISearchToolResource azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            Name = name;
-            Description = description;
-            ToolConfigs = toolConfigs;
             AzureAISearch = azureAISearch;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; }
-
-        /// <summary>
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
         public ResponsesAzureAISearchToolResource AzureAISearch { get; }

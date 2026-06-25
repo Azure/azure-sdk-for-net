@@ -140,7 +140,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ResponsesToolSearchExecutionType? execution = default;
+            ToolSearchExecutionType? execution = default;
             IList<ResponseTool> tools = default;
             FunctionCallItemStatus? status = default;
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.AI.Extensions.OpenAI
                     {
                         continue;
                     }
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = prop.Value.GetString().ToToolSearchExecutionType();
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))

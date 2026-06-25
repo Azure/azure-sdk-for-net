@@ -136,7 +136,7 @@ namespace Azure.AI.Extensions.OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
-            ResponsesToolSearchExecutionType execution = default;
+            ToolSearchExecutionType execution = default;
             BinaryData arguments = default;
             ResponsesFunctionCallStatus status = default;
             string createdBy = default;
@@ -164,7 +164,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("execution"u8))
                 {
-                    execution = prop.Value.GetString().ToResponsesToolSearchExecutionType();
+                    execution = prop.Value.GetString().ToToolSearchExecutionType();
                     continue;
                 }
                 if (prop.NameEquals("arguments"u8))
