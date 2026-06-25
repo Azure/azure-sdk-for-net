@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionKeyword : IUtf8JsonSerializable, IJsonModel<InformationProtectionKeyword>
+    /// <summary> The information type keyword. </summary>
+    public partial class InformationProtectionKeyword : IJsonModel<InformationProtectionKeyword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionKeyword>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformationProtectionKeyword PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInformationProtectionKeyword(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformationProtectionKeyword IPersistableModel<InformationProtectionKeyword>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InformationProtectionKeyword>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InformationProtectionKeyword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,41 +69,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(Custom))
+            if (Optional.IsDefined(IsCustom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteBooleanValue(Custom.Value);
+                writer.WriteBooleanValue(IsCustom.Value);
             }
             if (Optional.IsDefined(CanBeNumeric))
             {
                 writer.WritePropertyName("canBeNumeric"u8);
                 writer.WriteBooleanValue(CanBeNumeric.Value);
             }
-            if (Optional.IsDefined(Excluded))
+            if (Optional.IsDefined(IsExcluded))
             {
                 writer.WritePropertyName("excluded"u8);
-                writer.WriteBooleanValue(Excluded.Value);
+                writer.WriteBooleanValue(IsExcluded.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,104 +111,76 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        InformationProtectionKeyword IJsonModel<InformationProtectionKeyword>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InformationProtectionKeyword IJsonModel<InformationProtectionKeyword>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InformationProtectionKeyword JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInformationProtectionKeyword(document.RootElement, options);
         }
 
-        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string pattern = default;
-            bool? custom = default;
+            bool? isCustom = default;
             bool? canBeNumeric = default;
-            bool? excluded = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isExcluded = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("pattern"u8))
+                if (prop.NameEquals("pattern"u8))
                 {
-                    pattern = property.Value.GetString();
+                    pattern = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("custom"u8))
+                if (prop.NameEquals("custom"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    custom = property.Value.GetBoolean();
+                    isCustom = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("canBeNumeric"u8))
+                if (prop.NameEquals("canBeNumeric"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    canBeNumeric = property.Value.GetBoolean();
+                    canBeNumeric = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("excluded"u8))
+                if (prop.NameEquals("excluded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    excluded = property.Value.GetBoolean();
+                    isExcluded = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new InformationProtectionKeyword(pattern, custom, canBeNumeric, excluded, serializedAdditionalRawData);
+            return new InformationProtectionKeyword(pattern, isCustom, canBeNumeric, isExcluded, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InformationProtectionKeyword IPersistableModel<InformationProtectionKeyword>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInformationProtectionKeyword(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InformationProtectionKeyword>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Wdatp;
+            SettingName settingName = SettingName.WDATP;
             SecuritySettingData data = new DataExportSettings
             {
                 IsEnabled = true,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Wdatp;
+            SettingName settingName = SettingName.WDATP;
             SecuritySettingResource result = await collection.GetAsync(settingName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Wdatp;
+            SettingName settingName = SettingName.WDATP;
             bool result = await collection.ExistsAsync(settingName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingCollection collection = subscriptionResource.GetSecuritySettings();
 
             // invoke the operation
-            SecuritySettingName settingName = SecuritySettingName.Wdatp;
+            SettingName settingName = SettingName.WDATP;
             NullableResponse<SecuritySettingResource> response = await collection.GetIfExistsAsync(settingName);
             SecuritySettingResource result = response.HasValue ? response.Value : null;
 

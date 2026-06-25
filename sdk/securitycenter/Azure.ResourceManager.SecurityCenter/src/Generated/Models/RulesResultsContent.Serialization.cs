@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class RulesResultsContent : IUtf8JsonSerializable, IJsonModel<RulesResultsContent>
+    /// <summary> Rules results input. </summary>
+    public partial class RulesResultsContent : IJsonModel<RulesResultsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesResultsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RulesResultsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRulesResultsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RulesResultsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RulesResultsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RulesResultsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RulesResultsContent IPersistableModel<RulesResultsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RulesResultsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="rulesResultsContent"> The <see cref="RulesResultsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RulesResultsContent rulesResultsContent)
+        {
+            if (rulesResultsContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(rulesResultsContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RulesResultsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,16 +80,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RulesResultsContent)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(LatestScan))
+            if (Optional.IsDefined(IsLatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
-                writer.WriteBooleanValue(LatestScan.Value);
+                writer.WriteBooleanValue(IsLatestScan.Value);
             }
             if (Optional.IsCollectionDefined(Results))
             {
@@ -52,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
+                    foreach (IList<string> item0 in item.Value)
                     {
                         if (item0 == null)
                         {
@@ -60,8 +111,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             continue;
                         }
                         writer.WriteStartArray();
-                        foreach (var item1 in item0)
+                        foreach (string item1 in item0)
                         {
+                            if (item1 == null)
+                            {
+                                writer.WriteNullValue();
+                                continue;
+                            }
                             writer.WriteStringValue(item1);
                         }
                         writer.WriteEndArray();
@@ -70,15 +126,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,58 +143,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        RulesResultsContent IJsonModel<RulesResultsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RulesResultsContent IJsonModel<RulesResultsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RulesResultsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RulesResultsContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRulesResultsContent(document.RootElement, options);
         }
 
-        internal static RulesResultsContent DeserializeRulesResultsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RulesResultsContent DeserializeRulesResultsContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? latestScan = default;
+            bool? isLatestScan = default;
             IDictionary<string, IList<IList<string>>> results = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("latestScan"u8))
+                if (prop.NameEquals("latestScan"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    latestScan = property.Value.GetBoolean();
+                    isLatestScan = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("results"u8))
+                if (prop.NameEquals("results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IList<IList<string>>> dictionary = new Dictionary<string, IList<IList<string>>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<IList<string>> array = new List<IList<string>>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
                                 if (item.ValueKind == JsonValueKind.Null)
                                 {
@@ -149,12 +209,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                                     List<string> array0 = new List<string>();
                                     foreach (var item0 in item.EnumerateArray())
                                     {
-                                        array0.Add(item0.GetString());
+                                        if (item0.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array0.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array0.Add(item0.GetString());
+                                        }
                                     }
                                     array.Add(array0);
                                 }
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
                     results = dictionary;
@@ -162,42 +229,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RulesResultsContent(latestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), serializedAdditionalRawData);
+            return new RulesResultsContent(isLatestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RulesResultsContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RulesResultsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RulesResultsContent IPersistableModel<RulesResultsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesResultsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRulesResultsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RulesResultsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RulesResultsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

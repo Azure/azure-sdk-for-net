@@ -3,33 +3,30 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.ComponentModel;
+using System.Text.Json;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // GA exposed GetRuleExecutionStatus as ArmOperation<ExecuteRuleStatus> where ExecuteRuleStatus only carried OperationId. Current TypeSpec splits the governance rule flow into Execute, which returns a non-generic ArmOperation, and OperationResults, which returns SecurityCenterOperationResult with Status. This is unrelated to the SQL vulnerability assessment scan operation result models. Keep the old type as a hidden ApiCompat shim and fail unsupported wire operations explicitly because there is no generated model with matching semantics.
     /// <summary>
-    /// Execute status of Security GovernanceRule over a given scope
-    /// Serialized Name: ExecuteRuleStatus
+    /// Provides a compatibility shim for the ExecuteRuleStatus class.
     /// </summary>
-    public partial class ExecuteRuleStatus
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [System.Obsolete("This API is no longer supported by the service. No direct replacement is available.")]
+    public partial class ExecuteRuleStatus : IJsonModel<ExecuteRuleStatus>, IPersistableModel<ExecuteRuleStatus>
     {
-        /// <summary> Initializes a new instance of ExecuteRuleStatus. </summary>
-        internal ExecuteRuleStatus()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ExecuteRuleStatus. </summary>
-        /// <param name="operationId">
-        /// Unique key for the execution of GovernanceRule
-        /// Serialized Name: ExecuteRuleStatus.operationId
-        /// </param>
-        internal ExecuteRuleStatus(string operationId)
-        {
-            OperationId = operationId;
-        }
-
+        internal ExecuteRuleStatus() { }
         /// <summary>
-        /// Unique key for the execution of GovernanceRule
-        /// Serialized Name: ExecuteRuleStatus.operationId
+        /// Gets the OperationId value preserved from the previous public API surface.
         /// </summary>
         public string OperationId { get; }
+        ExecuteRuleStatus IJsonModel<ExecuteRuleStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<ExecuteRuleStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ExecuteRuleStatus IPersistableModel<ExecuteRuleStatus>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<ExecuteRuleStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<ExecuteRuleStatus>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

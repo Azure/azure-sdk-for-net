@@ -6,125 +6,66 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class GovernanceAssignmentsRestOperations
+    internal partial class GovernanceAssignments
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentsRestOperations. </summary>
+        /// <summary> Initializes a new instance of GovernanceAssignments for mocking. </summary>
+        protected GovernanceAssignments()
+        {
+        }
+
+        /// <summary> Initializes a new instance of GovernanceAssignments. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public GovernanceAssignmentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal GovernanceAssignments(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-01-preview";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string scope, string assessmentName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string scope, string assessmentName, string assignmentKey, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
             uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string scope, string assessmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
-            uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/governanceAssignments/", false);
+            uri.AppendPath(assignmentKey, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GovernanceAssignmentsList>> ListAsync(string scope, string assessmentName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string assessmentName, string assignmentKey, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using var message = CreateListRequest(scope, assessmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GovernanceAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GovernanceAssignmentsList> List(string scope, string assessmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using var message = CreateListRequest(scope, assessmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GovernanceAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string scope, string assessmentName, string assignmentKey)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
@@ -132,197 +73,23 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(assessmentName, true);
             uri.AppendPath("/governanceAssignments/", false);
             uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string scope, string assessmentName, string assignmentKey)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
-            uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments/", false);
-            uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GovernanceAssignmentData>> GetAsync(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-
-            using var message = CreateGetRequest(scope, assessmentName, assignmentKey);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GovernanceAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GovernanceAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a specific governanceAssignment for the requested scope by AssignmentKey. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GovernanceAssignmentData> Get(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-
-            using var message = CreateGetRequest(scope, assessmentName, assignmentKey);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GovernanceAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((GovernanceAssignmentData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
-            uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments/", false);
-            uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
-            uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments/", false);
-            uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> Governance assignment over a subscription scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/>, <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GovernanceAssignmentData>> CreateOrUpdateAsync(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteRequest(string scope, string assessmentName, string assignmentKey, RequestContext context)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(scope, assessmentName, assignmentKey, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        GovernanceAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates a governance assignment on the given subscription. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="data"> Governance assignment over a subscription scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/>, <paramref name="assignmentKey"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GovernanceAssignmentData> CreateOrUpdate(string scope, string assessmentName, string assignmentKey, GovernanceAssignmentData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(scope, assessmentName, assignmentKey, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    {
-                        GovernanceAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GovernanceAssignmentData.DeserializeGovernanceAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string scope, string assessmentName, string assignmentKey)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
@@ -330,157 +97,59 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath(assessmentName, true);
             uri.AppendPath("/governanceAssignments/", false);
             uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string scope, string assessmentName, string assignmentKey)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
+            return message;
+        }
+
+        internal HttpMessage CreateGetAllRequest(string scope, string assessmentName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Security/assessments/", false);
             uri.AppendPath(assessmentName, true);
-            uri.AppendPath("/governanceAssignments/", false);
-            uri.AppendPath(assignmentKey, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/governanceAssignments", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-
-            using var message = CreateDeleteRequest(scope, assessmentName, assignmentKey);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Delete a GovernanceAssignment over a given scope. </summary>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> or <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string scope, string assessmentName, string assignmentKey, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(assignmentKey, nameof(assignmentKey));
-
-            using var message = CreateDeleteRequest(scope, assessmentName, assignmentKey);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string assessmentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string assessmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GovernanceAssignmentsList>> ListNextPageAsync(string nextLink, string scope, string assessmentName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string scope, string assessmentName, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using var message = CreateListNextPageRequest(nextLink, scope, assessmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        GovernanceAssignmentsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Get governance assignments on all of your resources inside a scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope of the Governance assignments. Valid scopes are: subscription (format: 'subscriptions/{subscriptionId}'), or security connector (format: 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName})'. </param>
-        /// <param name="assessmentName"> The Assessment Key - A unique key for the assessment type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="scope"/> or <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GovernanceAssignmentsList> ListNextPage(string nextLink, string scope, string assessmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using var message = CreateListNextPageRequest(nextLink, scope, assessmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        GovernanceAssignmentsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = GovernanceAssignmentsList.DeserializeGovernanceAssignmentsList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

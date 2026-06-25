@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class AutoProvisioningSettingResource : IJsonModel<AutoProvisioningSettingData>
     {
-        private static AutoProvisioningSettingData s_dataDeserializationInstance;
-        private static AutoProvisioningSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutoProvisioningSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutoProvisioningSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutoProvisioningSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoProvisioningSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)Data).Write(writer, options);
 
-        AutoProvisioningSettingData IJsonModel<AutoProvisioningSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutoProvisioningSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoProvisioningSettingData IJsonModel<AutoProvisioningSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutoProvisioningSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutoProvisioningSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutoProvisioningSettingData IPersistableModel<AutoProvisioningSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutoProvisioningSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<AutoProvisioningSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutoProvisioningSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoProvisioningSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
