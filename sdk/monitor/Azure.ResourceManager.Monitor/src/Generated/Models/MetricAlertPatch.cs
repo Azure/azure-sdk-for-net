@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> The alert rule properties of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertPatch(IDictionary<string, string> tags, Identity identity, MetricAlertPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, MetricAlertPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The identity of the resource. </summary>
-        public Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The alert rule properties of the resource. </summary>
         internal MetricAlertPropertiesPatch Properties { get; set; }

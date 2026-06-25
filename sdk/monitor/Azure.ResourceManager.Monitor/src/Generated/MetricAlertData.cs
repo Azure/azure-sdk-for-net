@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="properties"> The alert rule properties of the resource. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MetricAlertProperties properties, Models.Identity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MetricAlertProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         internal MetricAlertProperties Properties { get; set; }
 
         /// <summary> The identity of the resource. </summary>
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The description of the metric alert that will be included in the alert email. </summary>
         public string Description

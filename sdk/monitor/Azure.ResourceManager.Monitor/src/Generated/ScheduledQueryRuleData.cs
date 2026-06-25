@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleProperties properties, Models.Identity identity, ScheduledQueryRuleKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleProperties properties, ManagedServiceIdentity identity, ScheduledQueryRuleKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         internal ScheduledQueryRuleProperties Properties { get; set; }
 
         /// <summary> The identity of the resource. </summary>
-        public Models.Identity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
         public ScheduledQueryRuleKind? Kind { get; set; }

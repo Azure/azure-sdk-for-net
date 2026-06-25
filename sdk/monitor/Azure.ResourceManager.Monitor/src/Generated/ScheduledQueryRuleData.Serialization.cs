@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ScheduledQueryRuleProperties properties = default;
-            Models.Identity identity = default;
+            ManagedServiceIdentity identity = default;
             ScheduledQueryRuleKind? kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    identity = Models.Identity.DeserializeIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerMonitorContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

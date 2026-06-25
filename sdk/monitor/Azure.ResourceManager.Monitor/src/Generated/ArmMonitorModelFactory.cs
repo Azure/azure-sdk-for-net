@@ -2262,7 +2262,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = default, TimeSpan evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, Identity identity = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, int severity = default, bool isEnabled = default, IEnumerable<string> scopes = default, TimeSpan evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2508,26 +2508,6 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertAction(actionGroupId, webHookProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <param name="type"> Type of managed service identity. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.Identity"/> instance for mocking. </returns>
-        public static Identity Identity(string principalId = default, string tenantId = default, IdentityType @type = default, IDictionary<string, UserIdentityProperties> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserIdentityProperties>();
-
-            return new Identity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserIdentityProperties>(), default);
-        }
-
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="clientId"> The client ID of resource identity. </param>
-        /// <returns> A new <see cref="Models.UserIdentityProperties"/> instance for mocking. </returns>
-        public static UserIdentityProperties UserIdentityProperties(string principalId = default, string clientId = default)
-        {
-            return new UserIdentityProperties(principalId, clientId, default);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
@@ -2547,7 +2527,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
-        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, Identity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2628,7 +2608,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
-        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, Identity identity = default, ScheduledQueryRuleKind? kind = default, ETag? eTag = default)
+        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, ManagedServiceIdentity identity = default, ScheduledQueryRuleKind? kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2763,7 +2743,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="criteriaAllOf"> A list of conditions to evaluate against the specified scopes. </param>
         /// <returns> A new <see cref="Models.ScheduledQueryRulePatch"/> instance for mocking. </returns>
-        public static ScheduledQueryRulePatch ScheduledQueryRulePatch(Identity identity = default, IDictionary<string, string> tags = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default)
+        public static ScheduledQueryRulePatch ScheduledQueryRulePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
