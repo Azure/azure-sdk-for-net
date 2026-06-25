@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.ResourceHealth
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEvent))]
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEventIncidentProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceImpactingEventStatus))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TenantResourceHealthEventImpactedResource))]
     [ModelReaderWriterBuildable(typeof(TenantResourceHealthEventResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourceHealthContext : ModelReaderWriterContext
     {
     }

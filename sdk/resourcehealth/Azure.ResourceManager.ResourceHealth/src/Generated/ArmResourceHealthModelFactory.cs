@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     {
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="properties"> Properties of availability state. </param>
+        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <returns> A new <see cref="Models.ResourceHealthAvailabilityStatus"/> instance for mocking. </returns>
-        public static ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceHealthAvailabilityStatusProperties properties = default)
+        public static ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthAvailabilityStatusProperties properties = default, AzureLocation? location = default)
         {
             return new ResourceHealthAvailabilityStatus(
                 id,
                 name,
                 resourceType,
                 systemData,
-                location,
                 properties,
+                location,
                 default);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The display name. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eventType"> Type of event. </param>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>

@@ -25,23 +25,23 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatus"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="properties"> Properties of availability state. </param>
+        /// <param name="location"> Azure Resource Manager geo location of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceHealthAvailabilityStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ResourceHealthAvailabilityStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthAvailabilityStatusProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             Properties = properties;
+            Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Azure Resource Manager geo location of the resource. </summary>
-        public AzureLocation? Location { get; }
-
         /// <summary> Properties of availability state. </summary>
         public ResourceHealthAvailabilityStatusProperties Properties { get; }
+
+        /// <summary> Azure Resource Manager geo location of the resource. </summary>
+        public AzureLocation? Location { get; }
     }
 }

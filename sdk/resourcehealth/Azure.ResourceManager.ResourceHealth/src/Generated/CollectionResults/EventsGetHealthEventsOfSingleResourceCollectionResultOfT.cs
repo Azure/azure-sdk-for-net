@@ -14,37 +14,34 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT : Pageable<ResourceHealthAvailabilityStatus>
+    internal partial class EventsGetHealthEventsOfSingleResourceCollectionResultOfT : Pageable<ResourceHealthEventData>
     {
-        private readonly ChildAvailabilityStatuses _client;
+        private readonly Events _client;
         private readonly string _resourceUri;
         private readonly string _filter;
-        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ChildAvailabilityStatuses client used to send requests. </param>
-        /// <param name="resourceUri"> undefined. </param>
+        /// <summary> Initializes a new instance of EventsGetHealthEventsOfSingleResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Events client used to send requests. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
-        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT(ChildAvailabilityStatuses client, string resourceUri, string filter, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EventsGetHealthEventsOfSingleResourceCollectionResultOfT(Events client, string resourceUri, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
             _filter = filter;
-            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventsGetHealthEventsOfSingleResourceCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ResourceHealthAvailabilityStatus>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EventsGetHealthEventsOfSingleResourceCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,14 +51,13 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     yield break;
                 }
-                ResourceHealthAvailabilityStatusListResult result = ResourceHealthAvailabilityStatusListResult.FromResponse(response);
-                yield return Page<ResourceHealthAvailabilityStatus>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatus>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                ResourceHealthEventListResult result = ResourceHealthEventListResult.FromResponse(response);
+                yield return Page<ResourceHealthEventData>.FromValues((IReadOnlyList<ResourceHealthEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetHistoricalAvailabilityStatusesOfChildResourceRequest(nextLink, _resourceUri, _filter, _expand, _context) : _client.CreateGetHistoricalAvailabilityStatusesOfChildResourceRequest(_resourceUri, _filter, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetHealthEventsOfSingleResourceRequest(nextLink, _resourceUri, _filter, _context) : _client.CreateGetHealthEventsOfSingleResourceRequest(_resourceUri, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
