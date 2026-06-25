@@ -528,6 +528,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(SwitchProviderContent))]
     [ModelReaderWriterBuildable(typeof(SwitchProviderProperties))]
     [ModelReaderWriterBuildable(typeof(SwitchProviderSpecificContent))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetComputeSize))]
     [ModelReaderWriterBuildable(typeof(TargetComputeSizeListResult))]
     [ModelReaderWriterBuildable(typeof(TargetComputeSizeProperties))]
@@ -660,7 +661,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(VMwareV2FabricCreationContent))]
     [ModelReaderWriterBuildable(typeof(VMwareV2FabricSpecificDetails))]
     [ModelReaderWriterBuildable(typeof(VMwareVmDetails))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerRecoveryServicesSiteRecoveryContext : ModelReaderWriterContext
     {
     }
