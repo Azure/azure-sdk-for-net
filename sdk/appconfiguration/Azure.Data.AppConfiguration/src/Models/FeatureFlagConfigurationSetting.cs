@@ -327,13 +327,7 @@ namespace Azure.Data.AppConfiguration
                             writer.WriteStartObject();
                             writer.WriteString("name", featureFlagFilter.Name);
                             writer.WritePropertyName("parameters");
-                            writer.WriteStartObject();
-                            foreach (KeyValuePair<string, string> pair in featureFlagFilter.Parameters)
-                            {
-                                writer.WritePropertyName(pair.Key);
-                                writer.WriteStringValue(pair.Value);
-                            }
-                            writer.WriteEndObject();
+                            WriteParameterValue(writer, featureFlagFilter.Parameters);
                             writer.WriteEndObject();
                         }
                         writer.WriteEndArray();
@@ -360,6 +354,54 @@ namespace Azure.Data.AppConfiguration
             return true;
         }
 
+        private static void WriteParameterValue(Utf8JsonWriter writer, object value)
+        {
+            switch (value)
+            {
+                case null:
+                    writer.WriteNullValue();
+                    break;
+                case int i:
+                    writer.WriteNumberValue(i);
+                    break;
+                case double d:
+                    writer.WriteNumberValue(d);
+                    break;
+                case float f:
+                    writer.WriteNumberValue(f);
+                    break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
+                case string s:
+                    writer.WriteStringValue(s);
+                    break;
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    break;
+                case IEnumerable<KeyValuePair<string, object>> enumerable:
+                    writer.WriteStartObject();
+                    foreach (KeyValuePair<string, object> pair in enumerable)
+                    {
+                        writer.WritePropertyName(pair.Key);
+                        WriteParameterValue(writer, pair.Value);
+                    }
+                    writer.WriteEndObject();
+                    break;
+                case IEnumerable<object> objectEnumerable:
+                    writer.WriteStartArray();
+                    foreach (object item in objectEnumerable)
+                    {
+                        WriteParameterValue(writer, item);
+                    }
+                    writer.WriteEndArray();
+                    break;
+
+                default:
+                    throw new NotSupportedException("Not supported type " + value.GetType());
+            }
+        }
+
         private static IList<FeatureFlagFilter> ParseFilters(JsonElement filters)
         {
             var newFilters = new ObservableCollection<FeatureFlagFilter>();
@@ -373,21 +415,59 @@ namespace Azure.Data.AppConfiguration
                         return newFilters;
                     }
 
-                    Dictionary<string, string> value = null;
+                    Dictionary<string, object> value = null;
                     if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
                     {
-                        value = new Dictionary<string, string>();
-                        foreach (JsonProperty parameter in parametersProperty.EnumerateObject())
-                        {
-                            value[parameter.Name] = parameter.Value.ValueKind == JsonValueKind.Null ? null : parameter.Value.GetString();
-                        }
+                        value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
                     }
 
-                    newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, string>()));
+                    newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
                 }
             }
 
             return newFilters;
+        }
+
+        private static object ReadParameterValue(in JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
+                    return null;
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
+                    var list = new List<object>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(ReadParameterValue(item));
+                    }
+                    return list;
+                default:
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
+            }
         }
 
         private void CheckValid()

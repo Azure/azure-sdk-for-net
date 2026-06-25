@@ -386,9 +386,9 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagFilter
     {
         public FeatureFlagFilter(string name) { }
-        public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, string> parameters) { }
+        public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, object> parameters) { }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
     }
     public partial class FeatureFlagSelector
     {

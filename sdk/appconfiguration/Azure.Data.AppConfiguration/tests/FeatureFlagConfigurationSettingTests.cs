@@ -22,9 +22,22 @@ namespace Azure.Data.AppConfiguration.Tests
                                                             "{\"name\":\"Flag1\",\"parameters\":{}}," +
                                                             "{\"name\":\"Flag2\",\"parameters\":{" +
                                                                 "\"p1\":\"s\"," +
-                                                                "\"p2\":\"1\"," +
-                                                                "\"p3\":\"true\"," +
-                                                                "\"p4\":null" +
+                                                                "\"p2\":1," +
+                                                                "\"p3\":true," +
+                                                                "\"p4\":null," +
+                                                                "\"p5\":[" +
+                                                                    "\"s\"," +
+                                                                    "1," +
+                                                                    "true," +
+                                                                    "null," +
+                                                                    "[1]," +
+                                                                    "{" +
+                                                                        "\"p6\":\"s\"," +
+                                                                        "\"p7\":1," +
+                                                                        "\"p8\":true," +
+                                                                        "\"p9\":null" +
+                                                                    "}" +
+                                                                "]" +
                                                             "}}" +
                                                         "]" +
                                                     "}" +
@@ -46,12 +59,27 @@ namespace Azure.Data.AppConfiguration.Tests
                   },
                   {
                     ""name"": ""Flag2"",
-                                        ""parameters"": {
-                                            ""p1"": ""s"",
-                                            ""p2"": ""1"",
-                                            ""p3"": ""true"",
-                                            ""p4"": null
-                                        }
+                    ""parameters"": {
+                      ""p1"": ""s"",
+                      ""p2"": 1,
+                      ""p3"": true,
+                      ""p4"": null,
+                      ""p5"": [
+                        ""s"",
+                        1,
+                        true,
+                        null,
+                        [
+                          1
+                        ],
+                        {
+                          ""p6"": ""s"",
+                          ""p7"": 1,
+                          ""p8"": true,
+                          ""p9"": null
+                        }
+                      ]
+                    }
                   }
                 ],
                 ""condition_val"":1
@@ -113,12 +141,27 @@ namespace Azure.Data.AppConfiguration.Tests
             feature.DisplayName = "Display name";
             feature.FeatureId = "Feature Id";
             feature.ClientFilters.Add(new FeatureFlagFilter("Flag1"));
-            feature.ClientFilters.Add(new FeatureFlagFilter("Flag2", new Dictionary<string, string>()
+            feature.ClientFilters.Add(new FeatureFlagFilter("Flag2", new Dictionary<string, object>()
             {
                 {"p1", "s"},
-                {"p2", "1"},
-                {"p3", "true"},
+                {"p2", 1},
+                {"p3", true},
                 {"p4", null},
+                {"p5", new object[]
+                {
+                    "s",
+                    1,
+                    true,
+                    null,
+                    new object[] { 1 },
+                    new Dictionary<string, object>()
+                    {
+                        {"p6", "s"},
+                        {"p7", 1},
+                        {"p8", true},
+                        {"p9", null},
+                    }
+                }}
             }));
 
             using var expected = JsonDocument.Parse(FullFeatureValue);
@@ -142,13 +185,27 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(feature.ClientFilters[0].Parameters.Count, Is.EqualTo(0));
 
             Assert.That(feature.ClientFilters[1].Name, Is.EqualTo("Flag2"));
-            Assert.That(feature.ClientFilters[1].Parameters, Is.EqualTo(new Dictionary<string, string>()
+            Assert.That(feature.ClientFilters[1].Parameters, Is.EqualTo(new Dictionary<string, object>()
                 {
                     {"p1", "s"},
-                    {"p2", "1"},
-                    {"p3", "true"},
+                    {"p2", 1},
+                    {"p3", true},
                     {"p4", null},
-                }));
+                    {"p5", new object[]
+                    {
+                        "s",
+                        1,
+                        true,
+                        null,
+                        new object[] { 1 },
+                        new Dictionary<string, object>()
+                        {
+                            {"p6", "s"},
+                            {"p7", 1},
+                            {"p8", true},
+                            {"p9", null},
+                        }
+                    }}}));
         }
 
         [Test]
@@ -208,12 +265,12 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var feature = new FeatureFlagConfigurationSetting();
             feature.Value = MinimalFeatureValueWithFormatting;
-            feature.ClientFilters.Add(new FeatureFlagFilter("file", new Dictionary<string, string>()
+            feature.ClientFilters.Add(new FeatureFlagFilter("file", new Dictionary<string, object>()
             {
-                {"p1", "1"}
+                {"p1", 1}
             }));
 
-            using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":\"1\"}}]}}");
+            using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
             Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
@@ -224,20 +281,20 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var feature = new FeatureFlagConfigurationSetting();
             feature.Value = MinimalFeatureValueWithFormatting;
-            feature.ClientFilters.Add(new FeatureFlagFilter("file", new Dictionary<string, string>()
+            feature.ClientFilters.Add(new FeatureFlagFilter("file", new Dictionary<string, object>()
             {
-                {"p1", "1"}
+                {"p1", 1}
             }));
 
-            using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":\"1\"}}]}}"))
+            using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}"))
             using (var actual = JsonDocument.Parse(feature.Value))
             {
                 Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
             }
 
-            feature.ClientFilters[0].Parameters["p1"] = "2";
+            feature.ClientFilters[0].Parameters["p1"] = 2;
 
-            using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":\"2\"}}]}}"))
+            using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":2}}]}}"))
             using (var actual = JsonDocument.Parse(feature.Value))
             {
                 Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
@@ -333,9 +390,9 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.Throws<InvalidOperationException>(() =>
                 featureFlag.ClientFilters.Add(new FeatureFlagFilter(
                     "file",
-                    new Dictionary<string, string>()
+                    new Dictionary<string, object>()
                     {
-                        {"p1", "1"}
+                        {"p1", 1}
                     })));
 
             using var expected = JsonDocument.Parse(MinimalFeatureValueWithInvalidConditions);
