@@ -22,13 +22,29 @@ steps:
         $ErrorActionPreference = 'Stop'
         $PSNativeCommandUseErrorActionPreference = $true
 
+        $branchName = 'djurek/codeowners-ux-improvements'
+        $repoUrl = 'https://github.com/Azure/azure-sdk-tools.git'
         $toolsRepoPath = Join-Path "$(Agent.TempDirectory)" ("azure-sdk-tools-" + [Guid]::NewGuid())
         $publishDir = Join-Path "${{ parameters.InstallDirectory }}" "azsdk-cli"
         $cliProjectPath = Join-Path $toolsRepoPath "tools/azsdk-cli/Azure.Sdk.Tools.Cli/Azure.Sdk.Tools.Cli.csproj"
+        $sparseCheckoutPath = Join-Path $toolsRepoPath ".git/info/sparse-checkout"
+        $sparsePaths = @(
+          '/Directory.Build.props'
+          '/Directory.Build.targets'
+          '/eng/'
+          '/eng/**'
+          '/tools/azsdk-cli/'
+          '/tools/azsdk-cli/**'
+          '/tools/codeowners-utils/'
+          '/tools/codeowners-utils/**'
+        )
 
         New-Item -ItemType Directory -Force -Path "${{ parameters.InstallDirectory }}" | Out-Null
 
-        git clone --depth 1 --branch djurek/codeowners-ux-improvements https://github.com/Azure/azure-sdk-tools.git $toolsRepoPath
+        git clone --depth 1 --branch $branchName --filter=blob:none --no-checkout $repoUrl $toolsRepoPath
+        git -C $toolsRepoPath sparse-checkout init --no-cone
+        Set-Content -Path $sparseCheckoutPath -Value $sparsePaths
+        git -C $toolsRepoPath checkout --force HEAD
         dotnet publish $cliProjectPath -c Release -o $publishDir -p:CopilotSkipCliDownload=true
 
         $azsdkPath = Join-Path $publishDir "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
