@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Alert rule patch parameters. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class AlertRulePatch : IJsonModel<AlertRulePatch>, IPersistableModel<AlertRulePatch>
     {
         /// <summary> Initializes a new instance of <see cref="AlertRulePatch"/>. </summary>

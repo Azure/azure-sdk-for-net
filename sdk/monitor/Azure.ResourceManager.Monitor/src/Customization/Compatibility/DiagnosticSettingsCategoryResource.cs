@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing a DiagnosticSettingsCategory resource and its operations. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class DiagnosticSettingsCategoryResource : ArmResource, IJsonModel<DiagnosticSettingsCategoryData>, IPersistableModel<DiagnosticSettingsCategoryData>
     {
         /// <summary> The resource type for diagnostic settings category resources. </summary>

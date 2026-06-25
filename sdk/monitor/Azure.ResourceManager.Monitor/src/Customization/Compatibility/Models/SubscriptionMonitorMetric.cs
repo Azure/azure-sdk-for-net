@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy subscription monitor metric. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class SubscriptionMonitorMetric : IJsonModel<SubscriptionMonitorMetric>, IPersistableModel<SubscriptionMonitorMetric>
     {
         /// <summary> The display description. </summary>

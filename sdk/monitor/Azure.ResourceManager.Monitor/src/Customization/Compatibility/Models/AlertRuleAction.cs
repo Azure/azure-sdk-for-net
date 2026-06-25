@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep the obsolete base and its model interfaces so old derived action types remain compatible.
     /// <summary> An alert rule action. </summary>
     [PersistableModelProxy(typeof(UnknownRuleAction))]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public abstract partial class AlertRuleAction : IJsonModel<AlertRuleAction>, IPersistableModel<AlertRuleAction>
     {
         /// <summary> Initializes a new instance of <see cref="AlertRuleAction"/>. </summary>

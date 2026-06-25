@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> An Azure Monitor Workspace resource data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [Obsolete("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResourceData : TrackedResourceData, IJsonModel<MonitorWorkspaceResourceData>, IPersistableModel<MonitorWorkspaceResourceData>
     {
         private const string MovedMessage = "This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.";

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing an AlertRule resource and its operations. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class AlertRuleResource : ArmResource, IJsonModel<AlertRuleData>, IPersistableModel<AlertRuleData>
     {
         /// <summary> The resource type for AlertRule resources. </summary>

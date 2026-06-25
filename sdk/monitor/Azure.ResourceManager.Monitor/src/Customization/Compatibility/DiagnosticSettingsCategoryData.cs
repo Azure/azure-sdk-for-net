@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing diagnostic settings category data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class DiagnosticSettingsCategoryData : ResourceData, IJsonModel<DiagnosticSettingsCategoryData>, IPersistableModel<DiagnosticSettingsCategoryData>
     {
         /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>. </summary>

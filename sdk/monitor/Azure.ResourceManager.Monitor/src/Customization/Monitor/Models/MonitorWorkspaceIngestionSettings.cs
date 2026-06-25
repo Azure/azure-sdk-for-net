@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy Azure Monitor workspace ingestion settings. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [Obsolete("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceIngestionSettings : IJsonModel<MonitorWorkspaceIngestionSettings>, IPersistableModel<MonitorWorkspaceIngestionSettings>
     {
         internal MonitorWorkspaceIngestionSettings()

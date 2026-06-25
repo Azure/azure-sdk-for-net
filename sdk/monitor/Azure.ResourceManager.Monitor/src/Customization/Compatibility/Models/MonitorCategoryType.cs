@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The type of diagnostic settings category. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public readonly partial struct MonitorCategoryType : IEquatable<MonitorCategoryType>
     {
         private readonly string _value;

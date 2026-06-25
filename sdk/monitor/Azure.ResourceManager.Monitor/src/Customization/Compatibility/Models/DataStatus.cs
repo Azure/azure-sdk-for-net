@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy VM Insights data status. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public readonly partial struct DataStatus : IEquatable<DataStatus>
     {
         private readonly string _value;

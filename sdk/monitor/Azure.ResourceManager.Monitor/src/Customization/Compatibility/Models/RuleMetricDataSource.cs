@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete derived type so the stable RuleDataSource polymorphic API remains loadable.
     /// <summary> A metric alert rule data source. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class RuleMetricDataSource : RuleDataSource, IJsonModel<RuleMetricDataSource>, IPersistableModel<RuleMetricDataSource>
     {
         /// <summary> Initializes a new instance of <see cref="RuleMetricDataSource"/>. </summary>

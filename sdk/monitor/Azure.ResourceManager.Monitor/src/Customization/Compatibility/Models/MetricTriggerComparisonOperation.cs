@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // The generated comparison enum is intentionally renamed to MetricTriggerComparisonOperator.
     // Keep this legacy enum with stable numeric values because enum numeric values are binary-compatible API.
     /// <summary> The operator that is used to compare the metric data and the threshold. </summary>
-    [Obsolete("This API is no longer supported. Use MetricTriggerComparisonOperator instead.", false)]
+    [Obsolete("This type is no longer supported. Use MetricTriggerComparisonOperator instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MetricTriggerComparisonOperation
     {

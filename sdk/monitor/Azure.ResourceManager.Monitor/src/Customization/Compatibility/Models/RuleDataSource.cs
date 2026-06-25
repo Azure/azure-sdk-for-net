@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep the obsolete base and its model interfaces so old derived data-source types remain compatible.
     /// <summary> The alert rule data source. </summary>
     [PersistableModelProxy(typeof(UnknownRuleDataSource))]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public abstract partial class RuleDataSource : IJsonModel<RuleDataSource>, IPersistableModel<RuleDataSource>
     {
         /// <summary> Initializes a new instance of <see cref="RuleDataSource"/>. </summary>

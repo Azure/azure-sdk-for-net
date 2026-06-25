@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete derived type so the stable AlertRuleCondition polymorphic API remains loadable.
     /// <summary> A management event rule condition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class ManagementEventRuleCondition : AlertRuleCondition, IJsonModel<ManagementEventRuleCondition>, IPersistableModel<ManagementEventRuleCondition>
     {
         /// <summary> Initializes a new instance of <see cref="ManagementEventRuleCondition"/>. </summary>

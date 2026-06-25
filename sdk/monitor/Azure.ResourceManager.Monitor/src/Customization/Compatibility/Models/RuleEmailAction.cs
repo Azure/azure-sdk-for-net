@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete derived type so the stable AlertRuleAction polymorphic API remains loadable.
     /// <summary> An alert rule email action. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class RuleEmailAction : AlertRuleAction, IJsonModel<RuleEmailAction>, IPersistableModel<RuleEmailAction>
     {
         /// <summary> Initializes a new instance of <see cref="RuleEmailAction"/>. </summary>

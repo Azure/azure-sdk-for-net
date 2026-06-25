@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy monitor private link scope operation status. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class MonitorPrivateLinkScopeOperationStatus : IUtf8JsonSerializable, IJsonModel<MonitorPrivateLinkScopeOperationStatus>, IPersistableModel<MonitorPrivateLinkScopeOperationStatus>
     {
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>. </summary>

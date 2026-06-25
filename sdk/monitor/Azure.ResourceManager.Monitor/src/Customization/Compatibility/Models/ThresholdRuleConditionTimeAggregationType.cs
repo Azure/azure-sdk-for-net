@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete enum because ThresholdRuleCondition exposed it in the stable API.
     /// <summary> The threshold rule condition time aggregation type. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public enum ThresholdRuleConditionTimeAggregationType
     {
         /// <summary> Average. </summary>

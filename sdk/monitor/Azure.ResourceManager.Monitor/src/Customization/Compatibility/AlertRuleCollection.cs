@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A collection of <see cref="AlertRuleResource"/> resources. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class AlertRuleCollection : ArmCollection, IEnumerable<AlertRuleResource>, IAsyncEnumerable<AlertRuleResource>
     {
         /// <summary> Initializes a new instance of the <see cref="AlertRuleCollection"/> class for mocking. </summary>

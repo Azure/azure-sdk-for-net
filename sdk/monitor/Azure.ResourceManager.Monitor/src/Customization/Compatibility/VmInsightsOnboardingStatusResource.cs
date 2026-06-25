@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A class representing a VM Insights onboarding status resource and its operations. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class VmInsightsOnboardingStatusResource : ArmResource, IJsonModel<VmInsightsOnboardingStatusData>, IPersistableModel<VmInsightsOnboardingStatusData>
     {
         /// <summary> The resource type for VM Insights onboarding status resources. </summary>

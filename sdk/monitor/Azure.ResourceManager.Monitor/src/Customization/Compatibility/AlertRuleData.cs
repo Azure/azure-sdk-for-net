@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> An alert rule resource data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class AlertRuleData : TrackedResourceData, IJsonModel<AlertRuleData>, IPersistableModel<AlertRuleData>
     {
         /// <summary> Initializes a new instance of <see cref="AlertRuleData"/>. </summary>

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy Azure Monitor workspace public network access value. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [Obsolete("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public readonly partial struct MonitorWorkspacePublicNetworkAccess : IEquatable<MonitorWorkspacePublicNetworkAccess>
     {
         private readonly string _value;

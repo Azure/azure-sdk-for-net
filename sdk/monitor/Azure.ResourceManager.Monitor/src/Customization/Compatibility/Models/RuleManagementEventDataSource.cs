@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete derived type so the stable RuleDataSource polymorphic API remains loadable.
     /// <summary> A management event alert rule data source. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class RuleManagementEventDataSource : RuleDataSource, IJsonModel<RuleManagementEventDataSource>, IPersistableModel<RuleManagementEventDataSource>
     {
         /// <summary> Initializes a new instance of <see cref="RuleManagementEventDataSource"/>. </summary>

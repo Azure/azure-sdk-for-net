@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> VM Insights onboarding status data. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class VmInsightsOnboardingStatusData : ResourceData, IJsonModel<VmInsightsOnboardingStatusData>, IPersistableModel<VmInsightsOnboardingStatusData>
     {
         internal VmInsightsOnboardingStatusData()

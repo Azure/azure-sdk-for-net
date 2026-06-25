@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy Azure Monitor workspace metric properties. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [Obsolete("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceMetricProperties : IJsonModel<MonitorWorkspaceMetricProperties>, IPersistableModel<MonitorWorkspaceMetricProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceMetricProperties"/>. </summary>

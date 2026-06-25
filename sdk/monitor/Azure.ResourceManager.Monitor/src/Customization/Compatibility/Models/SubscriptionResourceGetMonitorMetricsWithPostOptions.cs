@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy options for getting monitor metrics for a subscription with POST. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsWithPostOptions
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostOptions"/>. </summary>

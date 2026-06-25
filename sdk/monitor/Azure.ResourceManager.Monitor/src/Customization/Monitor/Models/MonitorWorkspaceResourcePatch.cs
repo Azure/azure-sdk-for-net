@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy Azure Monitor workspace patch model. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [Obsolete("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResourcePatch : IJsonModel<MonitorWorkspaceResourcePatch>, IPersistableModel<MonitorWorkspaceResourcePatch>
     {
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourcePatch"/>. </summary>

@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.ActivityLogAlertResource> Update(Azure.ResourceManager.Monitor.Models.ActivityLogAlertPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ActivityLogAlertResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.ActivityLogAlertPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class AlertRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.AlertRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.AlertRuleResource>, System.Collections.IEnumerable
     {
         protected AlertRuleCollection() { }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.AlertRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.AlertRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class AlertRuleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.AlertRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.AlertRuleData>
     {
         public AlertRuleData(Azure.Core.AzureLocation location, string alertRuleName, bool isEnabled, Azure.ResourceManager.Monitor.Models.AlertRuleCondition condition) { }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Monitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.AlertRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.AlertRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class AlertRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.AlertRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.AlertRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.DataCollectionRuleResource> Update(Azure.ResourceManager.Monitor.Models.ResourceForUpdate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.DataCollectionRuleResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.ResourceForUpdate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingResource>, System.Collections.IEnumerable
     {
         protected DiagnosticSettingCollection() { }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.DiagnosticSettingResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>
     {
         public DiagnosticSettingData() { }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Monitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.DiagnosticSettingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.DiagnosticSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Monitor.DiagnosticSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Monitor.DiagnosticSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingsCategoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource>, System.Collections.IEnumerable
     {
         protected DiagnosticSettingsCategoryCollection() { }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingsCategoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>
     {
         public DiagnosticSettingsCategoryData() { }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Monitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DiagnosticSettingsCategoryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1122,7 +1122,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource> Update(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1150,7 +1150,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> UpdateAsync(System.BinaryData patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>, System.Collections.IEnumerable
     {
         protected MonitorWorkspaceResourceCollection() { }
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.Monitor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>
     {
         public MonitorWorkspaceResourceData(Azure.Core.AzureLocation location) { }
@@ -1315,7 +1315,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Response<Azure.ResourceManager.Monitor.ServiceDiagnosticSettingResource> Update(Azure.ResourceManager.Monitor.Models.ServiceDiagnosticSettingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ServiceDiagnosticSettingResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.ServiceDiagnosticSettingPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class VmInsightsOnboardingStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>
     {
         internal VmInsightsOnboardingStatusData() { }
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.Monitor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class VmInsightsOnboardingStatusResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -1636,7 +1636,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AgentSetting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AgentSetting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public abstract partial class AlertRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>
     {
         protected AlertRuleAction() { }
@@ -1647,7 +1647,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public abstract partial class AlertRuleCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleCondition>
     {
         protected AlertRuleCondition() { }
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleLeafCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleLeafCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class AlertRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRulePatch>
     {
         public AlertRulePatch() { }
@@ -2559,7 +2559,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType left, Azure.ResourceManager.Monitor.Models.DataColumnDefinitionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DataContainer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>
     {
         internal DataContainer() { }
@@ -2571,7 +2571,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class DataContainerWorkspace : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>
     {
         internal DataContainerWorkspace() { }
@@ -2665,7 +2665,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataSourcesSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataSourcesSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataStatus>
     {
@@ -3214,7 +3214,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownWindowsFirewallLogsDataSourceProfileFilter left, Azure.ResourceManager.Monitor.Models.KnownWindowsFirewallLogsDataSourceProfileFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class LocationThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>
     {
         public LocationThresholdRuleCondition(int failedLocationCount) { }
@@ -3354,7 +3354,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogsQuotaSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogsQuotaSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class ManagementEventAggregationCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>
     {
         public ManagementEventAggregationCondition() { }
@@ -3368,7 +3368,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class ManagementEventRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>
     {
         public ManagementEventRuleCondition() { }
@@ -3623,7 +3623,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported. Use MetricTriggerComparisonOperator instead.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported. Use MetricTriggerComparisonOperator instead.", false)]
     public enum MetricTriggerComparisonOperation
     {
         EqualsValue = 0,
@@ -3690,7 +3690,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorAggregationKind left, Azure.ResourceManager.Monitor.Models.MonitorAggregationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
     public enum MonitorAggregationType
     {
         None = 0,
@@ -3819,7 +3819,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity left, Azure.ResourceManager.Monitor.Models.MonitorBaselineSensitivity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorCategoryType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorCategoryType>
     {
@@ -4614,7 +4614,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettingsExclusion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettingsExclusion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class MonitorPrivateLinkScopeOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopeOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopeOperationStatus>
     {
         internal MonitorPrivateLinkScopeOperationStatus() { }
@@ -4661,7 +4661,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorProvisioningState>
     {
@@ -4968,7 +4968,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>
     {
         internal MonitorWorkspaceDefaultIngestionSettings() { }
@@ -4979,7 +4979,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceIngestionSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>
     {
         internal MonitorWorkspaceIngestionSettings() { }
@@ -4992,7 +4992,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceMetricProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>
     {
         public MonitorWorkspaceMetricProperties() { }
@@ -5005,7 +5005,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>
     {
         public MonitorWorkspaceMetrics() { }
@@ -5016,7 +5016,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspacePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>
     {
         public MonitorWorkspacePrivateEndpointConnection() { }
@@ -5031,7 +5031,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorWorkspacePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess>
     {
@@ -5048,7 +5048,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.ObsoleteAttribute("This type has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
     public partial class MonitorWorkspaceResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>
     {
         public MonitorWorkspaceResourcePatch() { }
@@ -5189,7 +5189,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OnboardingStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.OnboardingStatus>
     {
@@ -5612,7 +5612,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RetentionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RetentionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public abstract partial class RuleDataSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>
     {
         protected RuleDataSource() { }
@@ -5627,7 +5627,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class RuleEmailAction : Azure.ResourceManager.Monitor.Models.AlertRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>
     {
         public RuleEmailAction() { }
@@ -5640,7 +5640,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class RuleManagementEventDataSource : Azure.ResourceManager.Monitor.Models.RuleDataSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>
     {
         public RuleManagementEventDataSource() { }
@@ -5660,7 +5660,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class RuleMetricDataSource : Azure.ResourceManager.Monitor.Models.RuleDataSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>
     {
         public RuleMetricDataSource() { }
@@ -5687,7 +5687,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class RuleWebhookAction : Azure.ResourceManager.Monitor.Models.AlertRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>
     {
         public RuleWebhookAction() { }
@@ -5897,7 +5897,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StaticPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class SubscriptionMonitorMetric : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric>
     {
         public SubscriptionMonitorMetric() { }
@@ -5916,7 +5916,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionMonitorMetric>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsOptions
     {
         public SubscriptionResourceGetMonitorMetricsOptions(string region) { }
@@ -5933,7 +5933,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public int? Top { get { throw null; } set { } }
         public bool? ValidateDimensions { get { throw null; } set { } }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostContent>
     {
         public SubscriptionResourceGetMonitorMetricsWithPostContent() { }
@@ -5956,7 +5956,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SubscriptionResourceGetMonitorMetricsWithPostContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsWithPostOptions
     {
         public SubscriptionResourceGetMonitorMetricsWithPostOptions(string region) { }
@@ -6129,7 +6129,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream left, Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public partial class ThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>
     {
         public ThresholdRuleCondition(Azure.ResourceManager.Monitor.Models.MonitorConditionOperator @operator, double threshold) { }
@@ -6144,7 +6144,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.ObsoleteAttribute("This type is no longer supported.", false)]
     public enum ThresholdRuleConditionTimeAggregationType
     {
         Average = 0,

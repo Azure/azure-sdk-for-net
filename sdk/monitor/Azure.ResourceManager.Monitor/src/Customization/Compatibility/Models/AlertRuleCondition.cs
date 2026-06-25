@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep the obsolete base and its model interfaces so old derived condition types remain compatible.
     /// <summary> An alert rule condition. </summary>
     [PersistableModelProxy(typeof(UnknownRuleCondition))]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public abstract partial class AlertRuleCondition : IJsonModel<AlertRuleCondition>, IPersistableModel<AlertRuleCondition>
     {
         /// <summary> Initializes a new instance of <see cref="AlertRuleCondition"/>. </summary>

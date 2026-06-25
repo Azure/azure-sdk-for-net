@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A collection of <see cref="DiagnosticSettingResource"/> resources. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class DiagnosticSettingCollection : ArmCollection, IEnumerable<DiagnosticSettingResource>, IAsyncEnumerable<DiagnosticSettingResource>
     {
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingCollection"/> class for mocking. </summary>

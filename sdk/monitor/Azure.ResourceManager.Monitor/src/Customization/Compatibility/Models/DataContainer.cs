@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy VM Insights data container. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class DataContainer : IJsonModel<DataContainer>, IPersistableModel<DataContainer>
     {
         internal DataContainer()

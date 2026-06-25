@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Legacy POST content for getting monitor metrics for a subscription. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent : IJsonModel<SubscriptionResourceGetMonitorMetricsWithPostContent>, IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostContent"/>. </summary>

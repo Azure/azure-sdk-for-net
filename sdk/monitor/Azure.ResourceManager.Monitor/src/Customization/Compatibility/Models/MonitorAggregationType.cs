@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
 #pragma warning disable CS0618 // This file intentionally restores and bridges the obsolete enum surface.
     /// <summary> The aggregation type of the metric. </summary>
-    [Obsolete("This API is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
+    [Obsolete("This type is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MonitorAggregationType
     {

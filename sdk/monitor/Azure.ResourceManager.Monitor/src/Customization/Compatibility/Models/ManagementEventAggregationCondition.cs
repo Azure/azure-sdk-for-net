@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
     // Keep this obsolete aggregation payload for ManagementEventRuleCondition compatibility.
     /// <summary> A management event aggregation condition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This API is no longer supported.", false)]
+    [Obsolete("This type is no longer supported.", false)]
     public partial class ManagementEventAggregationCondition : IJsonModel<ManagementEventAggregationCondition>, IPersistableModel<ManagementEventAggregationCondition>
     {
         /// <summary> Initializes a new instance of <see cref="ManagementEventAggregationCondition"/>. </summary>
