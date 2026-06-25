@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCommandJobLimits : MachineLearningJobLimits
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJobLimits"/>. </summary>
-        public MachineLearningCommandJobLimits()
+        public MachineLearningCommandJobLimits() : base(JobLimitsType.Command)
         {
-            JobLimitsType = JobLimitsType.Command;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJobLimits"/>. </summary>
         /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
         /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningCommandJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(jobLimitsType, timeout, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningCommandJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(jobLimitsType, timeout, additionalBinaryDataProperties)
         {
-            JobLimitsType = jobLimitsType;
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        internal UnknownJobBase(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, JobType jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting) : base(description, tags, properties, serializedAdditionalRawData, jobType, displayName, status, experimentName, services, computeId, isArchived, identity, componentId, notificationSetting)
+        internal UnknownJobBase(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, JobType jobType, string displayName, MachineLearningJobStatus? status, string experimentName, IDictionary<string, MachineLearningJobService> services, ResourceIdentifier computeId, bool? isArchived, MachineLearningIdentityConfiguration identity, ResourceIdentifier componentId, NotificationSetting notificationSetting) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, parentJobName: null, services, status)
         {
             JobType = jobType;
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningSslConfigStatus : IEquatable<MachineLearningSslConfigStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfigStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningSslConfigStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
         private const string AutoValue = "Auto";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningSslConfigStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningSslConfigStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Disabled. </summary>
         public static MachineLearningSslConfigStatus Disabled { get; } = new MachineLearningSslConfigStatus(DisabledValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static MachineLearningSslConfigStatus Enabled { get; } = new MachineLearningSslConfigStatus(EnabledValue);
-        /// <summary> Auto. </summary>
+
+        /// <summary> Gets the Auto. </summary>
         public static MachineLearningSslConfigStatus Auto { get; } = new MachineLearningSslConfigStatus(AutoValue);
+
         /// <summary> Determines if two <see cref="MachineLearningSslConfigStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningSslConfigStatus left, MachineLearningSslConfigStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningSslConfigStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningSslConfigStatus left, MachineLearningSslConfigStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningSslConfigStatus(string value) => new MachineLearningSslConfigStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningSslConfigStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningSslConfigStatus?(string value) => value == null ? null : new MachineLearningSslConfigStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningSslConfigStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningSslConfigStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
