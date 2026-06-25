@@ -21,11 +21,11 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         {
             #region Snippet:Optimization_ReadMe_Load
             AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
-            OptimizationOptions options = await client.ResolveOptionsAsync();
+            string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+            CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
             if (options is not null)
             {
-                Console.WriteLine($"Source: {options.Source}");
                 Console.WriteLine($"Instructions: {options.Instructions}");
                 Console.WriteLine($"Model: {options.Model}");
             }
@@ -33,19 +33,15 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         }
 
         [Test]
-        public async Task LoadOptionsWithCredential()
+        public async Task LoadOptionsWithCandidateId()
         {
-            #region Snippet:Optimization_ReadMe_LoadWithCredential
-            LoadOptions loadOptions = new LoadOptions
-            {
-                Credential = new StubCredential(),
-            };
-
-            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), loadOptions.Credential);
-            OptimizationOptions options = await client.ResolveOptionsAsync(loadOptions);
+            #region Snippet:Optimization_ReadMe_LoadWithCandidateId
+            string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+            AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
+            CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
             #endregion
 
-            Assert.That(loadOptions.Credential, Is.Not.Null);
+            Assert.That(candidateId, Is.Not.Null);
         }
 
         /// <summary>Stub credential for snippet compilation.</summary>

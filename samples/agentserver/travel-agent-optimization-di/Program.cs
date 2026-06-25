@@ -17,9 +17,9 @@ using Microsoft.Extensions.DependencyInjection;
 //
 // Instead of calling AgentOptimizationClient.ResolveOptionsAsync() procedurally,
 // it registers AddOptimizationConfigSource() on the IConfigurationBuilder
-// and reads the bound OptimizationOptions from IConfiguration. This gives
+// and reads the resolved CandidateDeployConfig from IConfiguration. This gives
 // you first-class integration with ASP.NET's configuration pipeline:
-//   - Reload semantics (via IOptionsMonitor<OptimizationOptions>)
+//   - Reload semantics via IConfiguration source reloads
 //   - Layering with other configuration sources (appsettings, env, etc.)
 //   - Consistent with the rest of the DI container
 // ──────────────────────────────────────────────────────────────────────
@@ -32,8 +32,8 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
     // which implements both IConfiguration and IConfigurationBuilder.
     builder.WebApplicationBuilder.Configuration.AddOptimizationConfigSource();
 
-    // ── 2. Read the bound options from IConfiguration ───────────
-    OptimizationOptions config = builder.Configuration.GetOptimizationOptions();
+    // ── 2. Read the resolved config from IConfiguration ─────────
+    CandidateDeployConfig? config = builder.Configuration.GetOptimizationConfig();
 
     LogStartupConfig(config);
 
@@ -43,11 +43,8 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
     var aoaiClient = new AzureOpenAIClient(new Uri(aoaiEndpoint), new DefaultAzureCredential());
 
     // ── 4. Build the Microsoft Agent Framework AIAgent ──────────
-    string instructions = config.ComposeInstructions()
-        is { Length: > 0 } composed
-            ? composed
-            : "You are a helpful travel assistant.";
-    string model = config.Model ?? "gpt-4.1-mini";
+    string instructions = config?.Instructions ?? "You are a helpful travel assistant.";
+    string model = config?.Model ?? "gpt-4.1-mini";
     Console.Error.WriteLine($"[Startup] Building MAF agent — model={model}, instructionsLen={instructions.Length}");
 
     AIAgent agent = aoaiClient
@@ -66,7 +63,10 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
     // ── 5. Register services in DI ──────────────────────────────
     builder.Services.AddSingleton(aoaiClient);
     builder.Services.AddSingleton(agent);
-    builder.Services.AddSingleton(config);
+    if (config is not null)
+    {
+        builder.Services.AddSingleton(config);
+    }
 });
 
 static string ResolveAzureOpenAIEndpoint()
@@ -92,29 +92,21 @@ static string ResolveAzureOpenAIEndpoint()
         "Cannot resolve Azure OpenAI endpoint. Set AZURE_AI_OPENAI_ENDPOINT or FOUNDRY_PROJECT_ENDPOINT.");
 }
 
-static void LogStartupConfig(OptimizationOptions config)
+static void LogStartupConfig(CandidateDeployConfig? config)
 {
-    if (string.IsNullOrEmpty(config.Instructions) && string.IsNullOrEmpty(config.Model))
+    if (config is null)
     {
         Console.Error.WriteLine("[Startup] No optimization config found — using defaults.");
         return;
     }
 
     Console.Error.WriteLine("[Startup] ── Optimization Config (via IConfiguration) ──");
-    Console.Error.WriteLine($"[Startup] Source:       {config.Source ?? "(bound via config)"}");
     Console.Error.WriteLine($"[Startup] Model:        {config.Model ?? "(not set)"}");
     Console.Error.WriteLine($"[Startup] Temperature:  {config.Temperature?.ToString() ?? "(not set)"}");
-    Console.Error.WriteLine($"[Startup] CandidateId:  {config.CandidateId ?? "(none)"}");
-    Console.Error.WriteLine($"[Startup] HasSkills:    {config.HasSkills}");
     Console.Error.WriteLine($"[Startup] Skills:       {config.Skills.Count}");
     foreach (var skill in config.Skills)
     {
         Console.Error.WriteLine($"[Startup]   • {skill.Name}: {skill.Description}");
-    }
-    Console.Error.WriteLine($"[Startup] Tools:        {config.ToolDefinitions.Count}");
-    foreach (var tool in config.ToolDefinitions)
-    {
-        Console.Error.WriteLine($"[Startup]   🔧 {tool.Name}: {(string.IsNullOrEmpty(tool.Description) ? "(no desc)" : tool.Description)}");
     }
     Console.Error.WriteLine("[Startup] ──────────────────────────────────────────────");
 }

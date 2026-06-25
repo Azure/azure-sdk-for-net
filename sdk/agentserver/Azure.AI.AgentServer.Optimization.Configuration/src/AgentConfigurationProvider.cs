@@ -10,7 +10,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 
 /// <summary>
 /// Runs the optimization config waterfall at <see cref="Load"/> time and projects the
-/// resulting <see cref="OptimizationOptions"/> into the <see cref="IConfiguration"/> tree.
+/// resulting <see cref="CandidateDeployConfig"/> into the <see cref="IConfiguration"/> tree.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -25,7 +25,6 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 /// Agent:Temperature              = "0.7"
 /// Agent:Skills:0:Name            = "..."
 /// Agent:Skills:0:Description     = "..."
-/// Agent:ToolDefinitions:0:Name   = "..."
 /// </code>
 /// <para>
 /// Reload is supported via <see cref="ConfigurationProvider.Load"/>. The provider
@@ -36,6 +35,10 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 public class AgentConfigurationProvider : ConfigurationProvider
 {
     private readonly AgentConfigurationOptions _options;
+
+    internal CandidateDeployConfig? ResolvedConfig { get; private set; }
+
+    internal string SectionName => ResolveSectionName(_options);
 
     /// <summary>
     /// Creates a new <see cref="AgentConfigurationProvider"/>.
@@ -56,18 +59,9 @@ public class AgentConfigurationProvider : ConfigurationProvider
     /// </exception>
     public override void Load()
     {
-        string section = ResolveSectionName(_options);
-
-        var loadOptions = new LoadOptions
-        {
-            AgentKey = _options.AgentKey,
-            Credential = _options.Credential,
-            ResolverTimeout = _options.ResolverTimeout,
-            StrictMode = _options.StrictMode,
-            FallbackToUnsuffixedEnvVars = _options.FallbackToUnsuffixedEnvVars,
-        };
-
-        OptimizationOptions? options = new LocalFallbackAgentOptimizationClient().ResolveOptions(loadOptions);
+        string section = SectionName;
+        string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+        CandidateDeployConfig? options = new LocalFallbackAgentOptimizationClient().ResolveOptions(candidateId);
 
         if (options is null)
         {
@@ -79,12 +73,13 @@ public class AgentConfigurationProvider : ConfigurationProvider
 
                 throw new InvalidOperationException(
                     $"AgentConfigurationProvider could not resolve an optimization config{agentScope}. " +
-                    "No source matched (resolver API, OPTIMIZATION_CONFIG, local candidate dir, local baseline dir).");
+                    "No source matched (GetCandidateConfigFlat, OPTIMIZATION_CONFIG).");
             }
 
             // Non-failing empty result: clear any previously-loaded data so a stale
             // reload does not keep zombie values around.
             Data = CreateEmptyDataDictionary();
+            ResolvedConfig = null;
             return;
         }
 
@@ -93,6 +88,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
         var newData = CreateEmptyDataDictionary();
         Flatten(options, section, newData);
         Data = newData;
+        ResolvedConfig = options;
     }
 
     /// <summary>
@@ -140,20 +136,16 @@ public class AgentConfigurationProvider : ConfigurationProvider
     /// <paramref name="section"/> using the standard <see cref="ConfigurationPath.KeyDelimiter"/>
     /// for nested sections and indexed array element notation for collections.
     /// </summary>
-    private static void Flatten(OptimizationOptions options, string section, IDictionary<string, string?> data)
+    private static void Flatten(CandidateDeployConfig options, string section, IDictionary<string, string?> data)
     {
-        Set(data, section, nameof(OptimizationOptions.Instructions), options.Instructions);
-        Set(data, section, nameof(OptimizationOptions.Model), options.Model);
+        Set(data, section, nameof(CandidateDeployConfig.Instructions), options.Instructions);
+        Set(data, section, nameof(CandidateDeployConfig.Model), options.Model);
 
         if (options.Temperature.HasValue)
         {
-            Set(data, section, nameof(OptimizationOptions.Temperature),
+            Set(data, section, nameof(CandidateDeployConfig.Temperature),
                 options.Temperature.Value.ToString(CultureInfo.InvariantCulture));
         }
-
-        Set(data, section, nameof(OptimizationOptions.SkillsDirectory), options.SkillsDirectory);
-        Set(data, section, nameof(OptimizationOptions.Source), options.Source);
-        Set(data, section, nameof(OptimizationOptions.CandidateId), options.CandidateId);
 
         for (int i = 0; i < options.Skills.Count; i++)
         {
@@ -162,23 +154,9 @@ public class AgentConfigurationProvider : ConfigurationProvider
             {
                 continue;
             }
-            string skillPrefix = ConfigurationPath.Combine(section, nameof(OptimizationOptions.Skills), i.ToString(CultureInfo.InvariantCulture));
-            Set(data, skillPrefix, nameof(OptimizationSkill.Name), skill.Name);
-            Set(data, skillPrefix, nameof(OptimizationSkill.Description), skill.Description);
-            Set(data, skillPrefix, nameof(OptimizationSkill.Body), skill.Body);
-        }
-
-        for (int i = 0; i < options.ToolDefinitions.Count; i++)
-        {
-            var tool = options.ToolDefinitions[i];
-            if (tool is null)
-            {
-                continue;
-            }
-            string toolPrefix = ConfigurationPath.Combine(section, nameof(OptimizationOptions.ToolDefinitions), i.ToString(CultureInfo.InvariantCulture));
-            Set(data, toolPrefix, nameof(ToolDefinition.Type), tool.Type);
-            Set(data, toolPrefix, nameof(ToolDefinition.Name), tool.Name);
-            Set(data, toolPrefix, nameof(ToolDefinition.Description), tool.Description);
+            string skillPrefix = ConfigurationPath.Combine(section, nameof(CandidateDeployConfig.Skills), i.ToString(CultureInfo.InvariantCulture));
+            Set(data, skillPrefix, nameof(OptimizationAgentSkill.Name), skill.Name);
+            Set(data, skillPrefix, nameof(OptimizationAgentSkill.Description), skill.Description);
         }
     }
 
@@ -191,8 +169,6 @@ public class AgentConfigurationProvider : ConfigurationProvider
 
         data[ConfigurationPath.Combine(prefix, key)] = value;
     }
-
-
     private sealed class LocalFallbackAgentOptimizationClient : AgentOptimizationClient
     {
     }

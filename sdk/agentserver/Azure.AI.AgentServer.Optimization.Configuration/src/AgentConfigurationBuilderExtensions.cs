@@ -25,8 +25,7 @@ public static class AgentConfigurationBuilderExtensions
 
     /// <summary>
     /// Adds an optimization configuration source for the given agent key.
-    /// Resolves a per-agent config into the <c>Agents:&lt;agentKey&gt;</c> section using
-    /// the per-agent <c>OPTIMIZATION_&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c> env var convention.
+    /// Projects the resolved config into the <c>Agents:&lt;agentKey&gt;</c> section.
     /// </summary>
     /// <param name="builder">The configuration builder to add to. Required.</param>
     /// <param name="agentKey">The logical agent key. Must be ASCII letters / digits / hyphen / underscore.</param>

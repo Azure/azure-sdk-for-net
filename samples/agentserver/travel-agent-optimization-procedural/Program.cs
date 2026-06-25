@@ -18,25 +18,16 @@ AgentOptimizationClient optimizationClient = !string.IsNullOrEmpty(projectEndpoi
     ? new AgentOptimizationClient(new Uri(projectEndpoint), credential)
     : new LocalFallbackAgentOptimizationClient();
 
-OptimizationOptions? config = await optimizationClient.ResolveOptionsAsync(new LoadOptions
-{
-    Credential = credential,
-}).ConfigureAwait(false);
+string? candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+CandidateDeployConfig? config = await optimizationClient.ResolveOptionsAsync(candidateId).ConfigureAwait(false);
 
 LogStartupConfig(config);
-
-IReadOnlyList<OptimizationSkill>? loadedSkills = null;
-if (config?.SkillsDirectory is not null)
-{
-    loadedSkills = AgentOptimizationClient.LoadSkillsFromDirectory(config.SkillsDirectory);
-    Console.WriteLine($"[Startup] Loaded {loadedSkills.Count} skill(s) from {config.SkillsDirectory}");
-}
 
 string aoaiEndpoint = ResolveAzureOpenAIEndpoint();
 Console.Error.WriteLine($"[Startup] AzureOpenAI endpoint: {aoaiEndpoint}");
 var aoaiClient = new AzureOpenAIClient(new Uri(aoaiEndpoint), credential);
 
-string instructions = config?.ComposeInstructions() ?? "You are a helpful travel assistant.";
+string instructions = config?.Instructions ?? "You are a helpful travel assistant.";
 string model = config?.Model ?? "gpt-4.1-mini";
 Console.Error.WriteLine($"[Startup] Building MAF agent — model={model}, instructionsLen={instructions.Length}");
 
@@ -61,10 +52,6 @@ ResponsesServer.Run<TravelHandler>(args, builder =>
     {
         builder.Services.AddSingleton(config);
     }
-    if (loadedSkills is not null)
-    {
-        builder.Services.AddSingleton(loadedSkills);
-    }
 });
 
 static string ResolveAzureOpenAIEndpoint()
@@ -88,7 +75,7 @@ static string ResolveAzureOpenAIEndpoint()
         "Cannot resolve Azure OpenAI endpoint. Set AZURE_AI_OPENAI_ENDPOINT or FOUNDRY_PROJECT_ENDPOINT.");
 }
 
-static void LogStartupConfig(OptimizationOptions? config)
+static void LogStartupConfig(CandidateDeployConfig? config)
 {
     if (config is null)
     {
@@ -97,26 +84,15 @@ static void LogStartupConfig(OptimizationOptions? config)
     }
 
     Console.Error.WriteLine("[Startup] ── Optimization Config ──────────────────────");
-    Console.Error.WriteLine($"[Startup] Source:       {config.Source}");
     Console.Error.WriteLine($"[Startup] Model:        {config.Model ?? "(not set)"}");
     Console.Error.WriteLine($"[Startup] Temperature:  {config.Temperature?.ToString() ?? "(not set)"}");
-    Console.Error.WriteLine($"[Startup] CandidateId:  {config.CandidateId ?? "(none)"}");
-    Console.Error.WriteLine($"[Startup] HasSkills:    {config.HasSkills}");
     Console.Error.WriteLine($"[Startup] Skills:       {config.Skills.Count}");
     foreach (var skill in config.Skills)
     {
         Console.Error.WriteLine($"[Startup]   • {skill.Name}: {skill.Description}");
     }
-    Console.Error.WriteLine($"[Startup] Tools:        {config.ToolDefinitions.Count}");
-    foreach (var tool in config.ToolDefinitions)
-    {
-        Console.Error.WriteLine($"[Startup]   🔧 {tool.Name}: {(string.IsNullOrEmpty(tool.Description) ? "(no desc)" : tool.Description)}");
-    }
-    Console.Error.WriteLine($"[Startup] SkillsDir:    {config.SkillsDirectory ?? "(none)"}");
     Console.Error.WriteLine("[Startup] ── Instructions ─────────────────────────────");
     Console.Error.WriteLine(config.Instructions ?? "(no instructions)");
-    Console.Error.WriteLine("[Startup] ── Composed Instructions (with skills) ─────");
-    Console.Error.WriteLine(config.ComposeInstructions());
     Console.Error.WriteLine("[Startup] ────────────────────────────────────────────");
 }
 

@@ -19,7 +19,8 @@ namespace Azure.AI.AgentServer.Optimization.Tests.Snippets
         {
             #region Snippet:Optimization_Sample1_UseOptions
             AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), new StubCredential());
-            OptimizationOptions options = await client.ResolveOptionsAsync();
+            string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+            CandidateDeployConfig? options = await client.ResolveOptionsAsync(candidateId);
 
             string instructions = options?.Instructions ?? "You are a helpful assistant.";
             string model = options?.Model ?? "gpt-4o-mini";

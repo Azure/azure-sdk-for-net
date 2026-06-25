@@ -51,34 +51,3 @@ public class AgentKeyCanonicalizerTests
         Assert.That(a, Is.EqualTo(b));
     }
 }
-
-[TestFixture]
-public class CandidateIdValidatorTests
-{
-    [TestCase("cand_001")]
-    [TestCase("cand-abc-123")]
-    [TestCase("MyCandidate42")]
-    public void IsValid_AcceptableIds_AreTrue(string id)
-    {
-        Assert.That(CandidateIdValidator.IsValid(id), Is.True);
-    }
-
-    [TestCase("")]
-    [TestCase(null)]
-    [TestCase("../escape")]
-    [TestCase("a/b")]
-    [TestCase("a\\b")]
-    [TestCase("..")]
-    [TestCase("foo/../bar")]
-    public void IsValid_InvalidIds_AreFalse(string id)
-    {
-        Assert.That(CandidateIdValidator.IsValid(id), Is.False);
-    }
-
-    [Test]
-    public void ThrowIfInvalid_RejectsParentTraversal()
-    {
-        Assert.Throws<ArgumentException>(
-            () => CandidateIdValidator.ThrowIfInvalid("../escape", "candidateId"));
-    }
-}

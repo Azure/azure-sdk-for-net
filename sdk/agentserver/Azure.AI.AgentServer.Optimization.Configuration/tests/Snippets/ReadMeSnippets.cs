@@ -8,7 +8,6 @@ using Azure.AI.AgentServer.Optimization;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
@@ -28,17 +27,20 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
                 .AddOptimizationConfigSource()
                 .Build();
 
+            CandidateDeployConfig? config = configuration.GetOptimizationConfig();
+
             IServiceCollection services = new ServiceCollection();
             services.AddSingleton(configuration);
-            services.Configure<OptimizationOptions>(opts =>
-                configuration.GetSection("Agent").Bind(opts));
+            if (config is not null)
+            {
+                services.AddSingleton(config);
+            }
 
             using ServiceProvider provider = services.BuildServiceProvider();
-            OptimizationOptions options = provider.GetRequiredService<IOptions<OptimizationOptions>>().Value;
+            CandidateDeployConfig? options = provider.GetService<CandidateDeployConfig>();
 
-            Console.WriteLine($"Source: {options.Source}");
-            Console.WriteLine($"Model: {options.Model}");
-            Console.WriteLine($"Instructions: {options.Instructions}");
+            Console.WriteLine($"Model: {options?.Model}");
+            Console.WriteLine($"Instructions: {options?.Instructions}");
             #endregion
         }
 
@@ -53,24 +55,11 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
 
             IServiceCollection services = new ServiceCollection();
             services.AddSingleton(configuration);
-
-            // Named-options registrations — one per agent key.
-            services.Configure<OptimizationOptions>("triage-agent", opts =>
-                configuration.GetSection("Agents:triage-agent").Bind(opts));
-            services.Configure<OptimizationOptions>("billing-agent", opts =>
-                configuration.GetSection("Agents:billing-agent").Bind(opts));
-
-            using ServiceProvider provider = services.BuildServiceProvider();
-            IOptionsSnapshot<OptimizationOptions> snapshot =
-                provider.CreateScope().ServiceProvider
-                    .GetRequiredService<IOptionsSnapshot<OptimizationOptions>>();
-
-            OptimizationOptions triage = snapshot.Get("triage-agent");
-            OptimizationOptions billing = snapshot.Get("billing-agent");
+            CandidateDeployConfig? triage = configuration.GetOptimizationConfig("triage-agent");
+            CandidateDeployConfig? billing = configuration.GetOptimizationConfig("billing-agent");
             #endregion
 
-            Assert.That(triage, Is.Not.Null);
-            Assert.That(billing, Is.Not.Null);
+            Assert.That(services, Is.Not.Null);
         }
 
         [Test]
@@ -80,13 +69,8 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddOptimizationConfigSource(options =>
                 {
-                    // Authenticate the resolver API call with any Azure.Core
-                    // TokenCredential (e.g. DefaultAzureCredential).
-                    options.Credential = ResolveMyCredential();
-
-                    options.ResolverTimeout = TimeSpan.FromSeconds(10);
-                    options.StrictMode = true;    // rethrow resolver/parse errors
-                    options.FailOnEmpty = true;   // throw when no source matches
+                    options.SectionName = "MyAgent";
+                    options.FailOnEmpty = true;
                 })
                 .Build();
             #endregion
@@ -103,11 +87,11 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
                 .AddOptimizationConfigSource()
                 .Build();
 
-            OptimizationOptions options = configuration.GetOptimizationOptions();
+            CandidateDeployConfig? options = configuration.GetOptimizationConfig();
 
-            if (options.Source is not null)
+            if (options is not null)
             {
-                Console.WriteLine($"Loaded from: {options.Source}");
+                Console.WriteLine($"Loaded model: {options.Model}");
             }
             #endregion
 
@@ -122,11 +106,12 @@ namespace Azure.AI.AgentServer.Optimization.Configuration.Tests.Snippets
             // directly. Useful for console apps, AWS Lambdas, or anywhere you do
             // not have an IConfiguration pipeline.
             AgentOptimizationClient client = new(new Uri("https://my-project.services.ai.azure.com/api/projects/my-project"), ResolveMyCredential());
-            OptimizationOptions options = client.ResolveOptions();
+            string candidateId = Environment.GetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID");
+            CandidateDeployConfig? options = client.ResolveOptions(candidateId);
 
             if (options is not null)
             {
-                Console.WriteLine($"Source: {options.Source}");
+                Console.WriteLine($"Model: {options.Model}");
             }
             #endregion
         }

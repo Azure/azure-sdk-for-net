@@ -8,47 +8,38 @@ using Azure.AI.AgentServer.Optimization.Configuration;
 namespace Microsoft.Extensions.Configuration;
 
 /// <summary>
-/// Extension methods on <see cref="IConfiguration"/> for reading bound
-/// <see cref="OptimizationOptions"/> back out of the configuration tree.
+/// Extension methods on <see cref="IConfiguration"/> for retrieving resolved
+/// <see cref="CandidateDeployConfig"/> instances from <see cref="AgentConfigurationProvider"/>.
 /// </summary>
-/// <remarks>
-/// These are convenience methods over <see cref="ConfigurationBinder"/>: each call
-/// resolves the section that <see cref="AgentConfigurationProvider"/> writes into
-/// (<c>Agent</c> for single-agent or <c>Agents:&lt;key&gt;</c> for multi-agent) and
-/// returns a freshly bound POCO. Use the standard
-/// <c>builder.Services.Configure&lt;OptimizationOptions&gt;(config.GetSection("Agent"))</c>
-/// pattern if you need <see cref="Microsoft.Extensions.Options.IOptions{TOptions}"/>
-/// integration with reload notifications.
-/// </remarks>
 public static class OptimizationConfigurationExtensions
 {
     private const string SingleAgentSection = "Agent";
     private const string MultiAgentSectionPrefix = "Agents";
 
     /// <summary>
-    /// Reads the single-agent <c>Agent</c> section as an <see cref="OptimizationOptions"/>.
-    /// Returns a fresh, empty <see cref="OptimizationOptions"/> if no values are bound.
+    /// Gets the single-agent <see cref="CandidateDeployConfig"/> resolved for the
+    /// <c>Agent</c> section, if present.
     /// </summary>
     /// <param name="configuration">The configuration to read from. Required.</param>
-    /// <returns>A bound <see cref="OptimizationOptions"/> (never <c>null</c>).</returns>
-    public static OptimizationOptions GetOptimizationOptions(this IConfiguration configuration)
+    /// <returns>The resolved config, or <c>null</c> when none is available.</returns>
+    public static CandidateDeployConfig? GetOptimizationConfig(this IConfiguration configuration)
     {
         if (configuration is null)
         {
             throw new ArgumentNullException(nameof(configuration));
         }
 
-        return GetOptimizationOptionsForSection(configuration, SingleAgentSection);
+        return GetOptimizationConfigForSection(configuration, SingleAgentSection);
     }
 
     /// <summary>
-    /// Reads the multi-agent <c>Agents:&lt;agentKey&gt;</c> section as an <see cref="OptimizationOptions"/>.
-    /// Returns a fresh, empty <see cref="OptimizationOptions"/> if no values are bound.
+    /// Gets the multi-agent <see cref="CandidateDeployConfig"/> resolved for the
+    /// <c>Agents:&lt;agentKey&gt;</c> section, if present.
     /// </summary>
     /// <param name="configuration">The configuration to read from. Required.</param>
     /// <param name="agentKey">The agent key. Required, non-empty.</param>
-    /// <returns>A bound <see cref="OptimizationOptions"/> (never <c>null</c>).</returns>
-    public static OptimizationOptions GetOptimizationOptions(this IConfiguration configuration, string agentKey)
+    /// <returns>The resolved config, or <c>null</c> when none is available.</returns>
+    public static CandidateDeployConfig? GetOptimizationConfig(this IConfiguration configuration, string agentKey)
     {
         if (configuration is null)
         {
@@ -60,13 +51,24 @@ public static class OptimizationConfigurationExtensions
         }
 
         string section = ConfigurationPath.Combine(MultiAgentSectionPrefix, agentKey);
-        return GetOptimizationOptionsForSection(configuration, section);
+        return GetOptimizationConfigForSection(configuration, section);
     }
 
-    private static OptimizationOptions GetOptimizationOptionsForSection(IConfiguration configuration, string section)
+    private static CandidateDeployConfig? GetOptimizationConfigForSection(IConfiguration configuration, string section)
     {
-        var opts = new OptimizationOptions();
-        configuration.GetSection(section).Bind(opts);
-        return opts;
+        if (configuration is IConfigurationRoot root)
+        {
+            foreach (var provider in root.Providers)
+            {
+                if (provider is AgentConfigurationProvider p &&
+                    p.ResolvedConfig != null &&
+                    string.Equals(p.SectionName, section, StringComparison.OrdinalIgnoreCase))
+                {
+                    return p.ResolvedConfig;
+                }
+            }
+        }
+
+        return null;
     }
 }
