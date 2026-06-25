@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.IotHub
     [ModelReaderWriterBuildable(typeof(RoutingTwinProperties))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRule))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserSubscriptionQuotaListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerIotHubContext : ModelReaderWriterContext
     {
     }
