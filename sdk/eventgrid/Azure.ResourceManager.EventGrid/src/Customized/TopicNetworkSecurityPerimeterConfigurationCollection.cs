@@ -1,9 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// GA API compatibility: The old SDK collection exposed GetAll/GetEnumerator returning
-// NetworkSecurityPerimeterConfigurationData directly. The generated collection uses a different
-// scope pattern, so these partial methods provide the legacy enumeration surface.
+// SDK customization: data-returning GetAll + IEnumerable for the NSP config collection.
+//
+// WHY THIS CUSTOMIZATION EXISTS:
+// On main, this collection's GetAll/GetAllAsync return NetworkSecurityPerimeterConfigurationData
+// (the DATA model) directly, NOT the TopicNetworkSecurityPerimeterConfigurationResource. The new
+// mgmt generator only emits a GetAll that wraps data into the collection's resource type, so it
+// produces NO GetAll here (the generated collection is just ": ArmCollection" with Get/Exists/
+// GetIfExists). This file supplies the data-returning GetAll (using the GENERATED
+// NetworkSecurityPerimeterConfigurationsGetAll*CollectionResultOfT plumbing) plus the
+// IEnumerable<...Data>/IAsyncEnumerable<...Data> implementation so the public surface matches main.
+//
+// The enumerators are EXPLICIT interface implementations (not public virtual) to exactly match
+// main's generated shape; emitting them as public virtual would add extra public methods absent on main.
 
 #nullable disable
 
@@ -54,21 +64,21 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets an async enumerator for the collection. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The requested resource. </returns>
-        public virtual IAsyncEnumerator<NetworkSecurityPerimeterConfigurationData> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        IAsyncEnumerator<NetworkSecurityPerimeterConfigurationData> IAsyncEnumerable<NetworkSecurityPerimeterConfigurationData>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
         /// <summary> Gets an enumerator for the collection. </summary>
         /// <returns> The requested resource. </returns>
-        public virtual IEnumerator<NetworkSecurityPerimeterConfigurationData> GetEnumerator()
+        IEnumerator<NetworkSecurityPerimeterConfigurationData> IEnumerable<NetworkSecurityPerimeterConfigurationData>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return GetAll().GetEnumerator();
         }
     }
 }

@@ -14,7 +14,15 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    // CodeGenSuppress the generated parameterless-id surface that does not match GA/main:
+    // - CreateResourceIdentifier(4-arg): main exposes a 5-arg form (perimeterGuid + associationName).
+    // - Get/GetAsync(perimeterGuid, associationName): the new generator emits these 2-param overloads on
+    //   the RESOURCE because the resource id is a composite "{perimeterGuid}.{associationName}"; main's
+    //   resource exposes only the parameterless Get()/GetAsync(). These 2-param overloads are extra public
+    //   methods absent on main, so they are suppressed here and replaced with parameterless versions below.
     [CodeGenSuppress("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("Get", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class DomainNetworkSecurityPerimeterConfigurationResource
     {
         /// <summary> Creates a resource identifier for a domain network security perimeter configuration resource. </summary>
@@ -33,19 +41,75 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets this network security perimeter configuration resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The requested resource. </returns>
-        public virtual Task<Response<DomainNetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        // Self-contained (calls the REST client directly) because the generated 2-param
+        // Get(perimeterGuid, associationName, ...) overload it would otherwise delegate to is suppressed
+        // above. The composite resource id is split to recover the two path segments.
+        public virtual async Task<Response<DomainNetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
-            return GetAsync(perimeterGuid, associationName, cancellationToken);
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    NetworkSecurityPerimeterResourceType.Domains.ToString(),
+                    Id.Parent.Name,
+                    perimeterGuid,
+                    associationName,
+                    context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DomainNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Gets this network security perimeter configuration resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The requested resource. </returns>
+        // Self-contained (calls the REST client directly) because the generated 2-param
+        // Get(perimeterGuid, associationName, ...) overload it would otherwise delegate to is suppressed
+        // above. The composite resource id is split to recover the two path segments.
         public virtual Response<DomainNetworkSecurityPerimeterConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
-            return Get(perimeterGuid, associationName, cancellationToken);
+            using DiagnosticScope scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("DomainNetworkSecurityPerimeterConfigurationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    NetworkSecurityPerimeterResourceType.Domains.ToString(),
+                    Id.Parent.Name,
+                    perimeterGuid,
+                    associationName,
+                    context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DomainNetworkSecurityPerimeterConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Reconciles this network security perimeter configuration resource. </summary>

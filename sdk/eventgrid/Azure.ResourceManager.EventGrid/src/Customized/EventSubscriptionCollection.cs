@@ -1,6 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// SDK customization: scope-dispatched EventSubscriptionCollection.GetAll(...).
+//
+// WHY THIS CUSTOMIZATION EXISTS:
+// On main, the (old) generator collapses FOUR event-subscription list routes into one
+// scope-dispatched EventSubscriptionCollection.GetAll that branches on the parent resource
+// type (SubscriptionResource -> ListGlobalBySubscription, ResourceGroupResource ->
+// ListGlobalByResourceGroup, DomainTopicResource -> ListByDomainTopic, any other scope ->
+// ListByResource). The new mgmt generator does NOT support that multi-route "scope
+// collection" collapse: the generated EventSubscriptionCollection only emits
+// Get/Exists/CreateOrUpdate/GetIfExists and no GetAll. This file hand-builds the same
+// scope-dispatch GetAll so the public API matches main (no regression).
+//
+// Paired spec-side changes in csharp-customizations.tsp keep the rest of the surface aligned:
+//   - EventSubscriptions.listByDomainTopic is scoped out of C# (@@scope "!csharp") because
+//     the DomainTopicResource branch below delegates to the GENERATED
+//     DomainTopicEventSubscriptionCollection.GetAll instead of that op's plumbing.
+//   - EventSubscriptionOperationGroup.listByResource is internalized (@@access internal)
+//     because the default scope branch below reuses its GENERATED
+//     EventSubscriptionsGetByResource*CollectionResultOfT plumbing; internalizing it only
+//     removes the duplicate public MockableEventGridArmClient.GetByResource* method.
+// Both ops would otherwise generate EXTRA public methods that do not exist on main.
+
 #nullable disable
 
 using System;
@@ -23,6 +45,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<EventSubscriptionResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
+            if (Id.ResourceType == DomainTopicResource.ResourceType)
+            {
+                DomainTopicEventSubscriptionCollection domainTopicCollection = new DomainTopicEventSubscriptionCollection(Client, Id);
+                return new AsyncPageableWrapper<DomainTopicEventSubscriptionResource, EventSubscriptionResource>(
+                    domainTopicCollection.GetAllAsync(filter, top, cancellationToken),
+                    resource => new EventSubscriptionResource(Client, resource.Data));
+            }
+
             return new AsyncPageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(
                 GetAllDataAsync(filter, top, cancellationToken),
                 data => new EventSubscriptionResource(Client, data));
@@ -36,6 +66,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<EventSubscriptionResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
+            if (Id.ResourceType == DomainTopicResource.ResourceType)
+            {
+                DomainTopicEventSubscriptionCollection domainTopicCollection = new DomainTopicEventSubscriptionCollection(Client, Id);
+                return new PageableWrapper<DomainTopicEventSubscriptionResource, EventSubscriptionResource>(
+                    domainTopicCollection.GetAll(filter, top, cancellationToken),
+                    resource => new EventSubscriptionResource(Client, resource.Data));
+            }
+
             return new PageableWrapper<EventGridSubscriptionData, EventSubscriptionResource>(
                 GetAllData(filter, top, cancellationToken),
                 data => new EventSubscriptionResource(Client, data));
@@ -72,20 +110,6 @@ namespace Azure.ResourceManager.EventGrid
                     _eventSubscriptionsRestClient,
                     Guid.Parse(Id.SubscriptionId),
                     Id.ResourceGroupName,
-                    filter,
-                    top,
-                    context,
-                    "EventSubscriptionCollection.GetAll");
-            }
-
-            if (Id.ResourceType == DomainTopicResource.ResourceType)
-            {
-                return new EventSubscriptionsGetByDomainTopicAsyncCollectionResultOfT(
-                    _eventSubscriptionsRestClient,
-                    Guid.Parse(Id.SubscriptionId),
-                    Id.ResourceGroupName,
-                    Id.Parent.Name,
-                    Id.Name,
                     filter,
                     top,
                     context,
@@ -129,20 +153,6 @@ namespace Azure.ResourceManager.EventGrid
                     _eventSubscriptionsRestClient,
                     Guid.Parse(Id.SubscriptionId),
                     Id.ResourceGroupName,
-                    filter,
-                    top,
-                    context,
-                    "EventSubscriptionCollection.GetAll");
-            }
-
-            if (Id.ResourceType == DomainTopicResource.ResourceType)
-            {
-                return new EventSubscriptionsGetByDomainTopicCollectionResultOfT(
-                    _eventSubscriptionsRestClient,
-                    Guid.Parse(Id.SubscriptionId),
-                    Id.ResourceGroupName,
-                    Id.Parent.Name,
-                    Id.Name,
                     filter,
                     top,
                     context,

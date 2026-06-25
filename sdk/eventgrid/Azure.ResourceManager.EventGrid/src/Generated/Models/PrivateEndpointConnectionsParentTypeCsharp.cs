@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.EventGrid.Models
     internal readonly partial struct PrivateEndpointConnectionsParentTypeCsharp : IEquatable<PrivateEndpointConnectionsParentTypeCsharp>
     {
         private readonly string _value;
+        /// <summary> topics. </summary>
         private const string TopicsValue = "topics";
+        /// <summary> domains. </summary>
         private const string DomainsValue = "domains";
+        /// <summary> partnerNamespaces. </summary>
         private const string PartnerNamespacesValue = "partnerNamespaces";
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionsParentTypeCsharp"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             _value = value;
         }
 
-        /// <summary> Gets the Topics. </summary>
+        /// <summary> topics. </summary>
         public static PrivateEndpointConnectionsParentTypeCsharp Topics { get; } = new PrivateEndpointConnectionsParentTypeCsharp(TopicsValue);
 
-        /// <summary> Gets the Domains. </summary>
+        /// <summary> domains. </summary>
         public static PrivateEndpointConnectionsParentTypeCsharp Domains { get; } = new PrivateEndpointConnectionsParentTypeCsharp(DomainsValue);
 
-        /// <summary> Gets the PartnerNamespaces. </summary>
+        /// <summary> partnerNamespaces. </summary>
         public static PrivateEndpointConnectionsParentTypeCsharp PartnerNamespaces { get; } = new PrivateEndpointConnectionsParentTypeCsharp(PartnerNamespacesValue);
 
         /// <summary> Determines if two <see cref="PrivateEndpointConnectionsParentTypeCsharp"/> values are the same. </summary>
