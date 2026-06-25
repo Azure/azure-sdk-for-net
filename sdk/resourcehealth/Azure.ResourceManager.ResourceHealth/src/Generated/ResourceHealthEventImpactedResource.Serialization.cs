@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    /// <summary></summary>
     public partial class ResourceHealthEventImpactedResource : IJsonModel<ResourceHealthEventImpactedResourceData>
     {
-        private static ResourceHealthEventImpactedResourceData s_dataDeserializationInstance;
-        private static ResourceHealthEventImpactedResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ResourceHealthEventImpactedResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ResourceHealthEventImpactedResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ResourceHealthEventImpactedResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceHealthEventImpactedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)Data).Write(writer, options);
 
-        ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceHealthEventImpactedResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthEventImpactedResourceData IJsonModel<ResourceHealthEventImpactedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthEventImpactedResourceData>(Data, options, AzureResourceManagerResourceHealthContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ResourceHealthEventImpactedResourceData IPersistableModel<ResourceHealthEventImpactedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthEventImpactedResourceData>(data, options, AzureResourceManagerResourceHealthContext.Default);
 
-        string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceHealthEventImpactedResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceHealthEventImpactedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

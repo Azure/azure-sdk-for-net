@@ -18,11 +18,11 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a WebSitePremierAddOn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSitePremierAddOnResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSitePremierAddOns method.
+    /// A class representing a WebSitePremierAddon along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSitePremierAddonResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSitePremierAddons method.
     /// </summary>
-    public partial class WebSitePremierAddOnResource : ArmResource
+    public partial class WebSitePremierAddonResource : ArmResource
     {
         private readonly ClientDiagnostics _webAppsClientDiagnostics;
         private readonly WebApps _webAppsRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/premieraddons";
 
-        /// <summary> Initializes a new instance of WebSitePremierAddOnResource for mocking. </summary>
-        protected WebSitePremierAddOnResource()
+        /// <summary> Initializes a new instance of WebSitePremierAddonResource for mocking. </summary>
+        protected WebSitePremierAddonResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebSitePremierAddOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSitePremierAddonResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSitePremierAddOnResource(ArmClient client, PremierAddOnData data) : this(client, data.Id)
+        internal WebSitePremierAddonResource(ArmClient client, PremierAddOnData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebSitePremierAddOnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSitePremierAddonResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal WebSitePremierAddOnResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebSitePremierAddonResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string webSitePremierAddOnApiVersion);
+            TryGetApiVersion(ResourceType, out string webSitePremierAddonApiVersion);
             _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webSitePremierAddOnApiVersion ?? "2026-03-15");
+            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webSitePremierAddonApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSitePremierAddOnResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSitePremierAddonResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Get");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WebSitePremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSitePremierAddOnResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebSitePremierAddonResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Get");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WebSitePremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual async Task<Response<WebSitePremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Update");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Update");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WebSitePremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="premierAddOn"> A JSON representation of the edited premier add-on. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
-        public virtual Response<WebSitePremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public virtual Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Update");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Update");
             scope.Start();
             try
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new WebSitePremierAddOnResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebSitePremierAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Delete");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Delete");
             scope.Start();
             try
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="WebSitePremierAddOnResource"/>. </description>
+        /// <description> <see cref="WebSitePremierAddonResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddOnResource.Delete");
+            using DiagnosticScope scope = _webAppsClientDiagnostics.CreateScope("WebSitePremierAddonResource.Delete");
             scope.Start();
             try
             {

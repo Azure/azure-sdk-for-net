@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new AppServiceSourceControlResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AppServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HostingEnvironmentWorkerPoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResource"/> object. </returns>
-        public virtual AppServiceEnvironmentResource GetAppServiceEnvironmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource"/> object. </returns>
+        public virtual HostingEnvironmentWorkerPoolResource GetHostingEnvironmentWorkerPoolResource(ResourceIdentifier id)
         {
-            AppServiceEnvironmentResource.ValidateResourceId(id);
-            return new AppServiceEnvironmentResource(Client, id);
+            HostingEnvironmentWorkerPoolResource.ValidateResourceId(id);
+            return new HostingEnvironmentWorkerPoolResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AppServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -89,13 +89,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new AseV3NetworkingConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AppServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HostingEnvironmentMultiRolePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResource"/> object. </returns>
-        public virtual AppServiceEnvironmentResource GetAppServiceEnvironmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource"/> object. </returns>
+        public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier id)
         {
-            AppServiceEnvironmentResource.ValidateResourceId(id);
-            return new AppServiceEnvironmentResource(Client, id);
+            HostingEnvironmentMultiRolePoolResource.ValidateResourceId(id);
+            return new HostingEnvironmentMultiRolePoolResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HostingEnvironmentPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new HostingEnvironmentPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendationResource"/> object. </returns>
-        public virtual RecommendationResource GetRecommendationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
+        public virtual SiteRecommendationResource GetSiteRecommendationResource(ResourceIdentifier id)
         {
-            RecommendationResource.ValidateResourceId(id);
-            return new RecommendationResource(Client, id);
+            SiteRecommendationResource.ValidateResourceId(id);
+            return new SiteRecommendationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HostingEnvironmentRecommendationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendationResource"/> object. </returns>
-        public virtual RecommendationResource GetRecommendationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
+        public virtual HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(ResourceIdentifier id)
         {
-            RecommendationResource.ValidateResourceId(id);
-            return new RecommendationResource(Client, id);
+            HostingEnvironmentRecommendationResource.ValidateResourceId(id);
+            return new HostingEnvironmentRecommendationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="StaticSitePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -251,40 +251,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new SiteSlotPrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public virtual SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+            return new SiteHybridConnectionNamespaceRelayResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public virtual SiteSlotHybridConnectionNamespaceRelayResource GetSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
-        {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
-        {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+            return new SiteSlotHybridConnectionNamespaceRelayResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SiteSlotVirtualNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -305,6 +287,24 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new SiteVirtualNetworkConnectionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public virtual SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
+        {
+            SiteSlotVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+            return new SiteSlotVirtualNetworkConnectionGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public virtual SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
+        {
+            SiteVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+            return new SiteVirtualNetworkConnectionGatewayResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="WebSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WebSiteResource"/> object. </returns>
@@ -314,22 +314,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteBackupResource"/> object. </returns>
+        public virtual SiteBackupResource GetSiteBackupResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteBackupResource.ValidateResourceId(id);
+            return new SiteBackupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotBackupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotBackupResource"/> object. </returns>
+        public virtual SiteSlotBackupResource GetSiteSlotBackupResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotBackupResource.ValidateResourceId(id);
+            return new SiteSlotBackupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteFtpPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -341,13 +341,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> object. </returns>
+        public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -359,40 +359,40 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
+        public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
+            return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebSiteAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteAuthSettingsV2Resource"/> object. </returns>
+        public virtual WebSiteAuthSettingsV2Resource GetWebSiteAuthSettingsV2Resource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            WebSiteAuthSettingsV2Resource.ValidateResourceId(id);
+            return new WebSiteAuthSettingsV2Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebSiteSlotAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotAuthSettingsV2Resource"/> object. </returns>
+        public virtual WebSiteSlotAuthSettingsV2Resource GetWebSiteSlotAuthSettingsV2Resource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            WebSiteSlotAuthSettingsV2Resource.ValidateResourceId(id);
+            return new WebSiteSlotAuthSettingsV2Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebSiteConfigAppSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteConfigAppsettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteConfigAppSettingResource"/> object. </returns>
-        public virtual WebSiteConfigAppSettingResource GetWebSiteConfigAppSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigAppsettingResource"/> object. </returns>
+        public virtual SiteConfigAppsettingResource GetSiteConfigAppsettingResource(ResourceIdentifier id)
         {
-            WebSiteConfigAppSettingResource.ValidateResourceId(id);
-            return new WebSiteConfigAppSettingResource(Client, id);
+            SiteConfigAppsettingResource.ValidateResourceId(id);
+            return new SiteConfigAppsettingResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteConfigConnectionStringResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -422,22 +422,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotConfigConnectionStringResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="LogsSiteConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteConfigResource"/> object. </returns>
+        public virtual LogsSiteConfigResource GetLogsSiteConfigResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            LogsSiteConfigResource.ValidateResourceId(id);
+            return new LogsSiteConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="LogsSiteSlotConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
+        public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            LogsSiteSlotConfigResource.ValidateResourceId(id);
+            return new LogsSiteSlotConfigResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SlotConfigNamesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -458,13 +458,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteConfigSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigSnapshotResource"/> object. </returns>
+        public virtual SiteConfigSnapshotResource GetSiteConfigSnapshotResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteConfigSnapshotResource.ValidateResourceId(id);
+            return new SiteConfigSnapshotResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteSlotConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -476,13 +476,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotConfigSnapshotResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource"/> object. </returns>
+        public virtual SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotConfigSnapshotResource.ValidateResourceId(id);
+            return new SiteSlotConfigSnapshotResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteContinuousWebJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -503,130 +503,130 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotContinuousWebJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDeploymentStatusResource"/> object. </returns>
+        public virtual SiteDeploymentStatusResource GetSiteDeploymentStatusResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteDeploymentStatusResource.ValidateResourceId(id);
+            return new SiteDeploymentStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDeploymentStatusResource"/> object. </returns>
+        public virtual SiteSlotDeploymentStatusResource GetSiteSlotDeploymentStatusResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotDeploymentStatusResource.ValidateResourceId(id);
+            return new SiteSlotDeploymentStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDeploymentResource"/> object. </returns>
+        public virtual SiteDeploymentResource GetSiteDeploymentResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteDeploymentResource.ValidateResourceId(id);
+            return new SiteDeploymentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDeploymentResource"/> object. </returns>
+        public virtual SiteSlotDeploymentResource GetSiteSlotDeploymentResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotDeploymentResource.ValidateResourceId(id);
+            return new SiteSlotDeploymentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource"/> object. </returns>
+        public virtual SiteDomainOwnershipIdentifierResource GetSiteDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteDomainOwnershipIdentifierResource.ValidateResourceId(id);
+            return new SiteDomainOwnershipIdentifierResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> object. </returns>
+        public virtual SiteSlotDomainOwnershipIdentifierResource GetSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotDomainOwnershipIdentifierResource.ValidateResourceId(id);
+            return new SiteSlotDomainOwnershipIdentifierResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteExtensionResource"/> object. </returns>
+        public virtual SiteExtensionResource GetSiteExtensionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteExtensionResource.ValidateResourceId(id);
+            return new SiteExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteInstanceExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceExtensionResource"/> object. </returns>
+        public virtual SiteInstanceExtensionResource GetSiteInstanceExtensionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteInstanceExtensionResource.ValidateResourceId(id);
+            return new SiteInstanceExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
+        public virtual SiteSlotExtensionResource GetSiteSlotExtensionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotExtensionResource.ValidateResourceId(id);
+            return new SiteSlotExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotInstanceExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource"/> object. </returns>
+        public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotInstanceExtensionResource.ValidateResourceId(id);
+            return new SiteSlotInstanceExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteFunctionResource"/> object. </returns>
+        public virtual SiteFunctionResource GetSiteFunctionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteFunctionResource.ValidateResourceId(id);
+            return new SiteFunctionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotFunctionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotFunctionResource"/> object. </returns>
+        public virtual SiteSlotFunctionResource GetSiteSlotFunctionResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotFunctionResource.ValidateResourceId(id);
+            return new SiteSlotFunctionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteHostNameBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHostNameBindingResource"/> object. </returns>
+        public virtual SiteHostNameBindingResource GetSiteHostNameBindingResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteHostNameBindingResource.ValidateResourceId(id);
+            return new SiteHostNameBindingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotHostNameBindingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource"/> object. </returns>
+        public virtual SiteSlotHostNameBindingResource GetSiteSlotHostNameBindingResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotHostNameBindingResource.ValidateResourceId(id);
+            return new SiteSlotHostNameBindingResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteHybridConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -647,22 +647,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotHybridConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceResource"/> object. </returns>
+        public virtual SiteInstanceResource GetSiteInstanceResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteInstanceResource.ValidateResourceId(id);
+            return new SiteInstanceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceResource"/> object. </returns>
+        public virtual SiteSlotInstanceResource GetSiteSlotInstanceResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotInstanceResource.ValidateResourceId(id);
+            return new SiteSlotInstanceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SiteInstanceProcessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -737,67 +737,67 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new SiteSlotProcessModuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteMigrateMySqlStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteMigrateMySqlStatusResource"/> object. </returns>
+        public virtual SiteMigrateMySqlStatusResource GetSiteMigrateMySqlStatusResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteMigrateMySqlStatusResource.ValidateResourceId(id);
+            return new SiteMigrateMySqlStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MigrateMySqlStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
+        public virtual MigrateMySqlStatusResource GetMigrateMySqlStatusResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            MigrateMySqlStatusResource.ValidateResourceId(id);
+            return new MigrateMySqlStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteNetworkConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkConfigResource"/> object. </returns>
+        public virtual SiteNetworkConfigResource GetSiteNetworkConfigResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteNetworkConfigResource.ValidateResourceId(id);
+            return new SiteNetworkConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotNetworkConfigResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
+        public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteSlotNetworkConfigResource.ValidateResourceId(id);
+            return new SiteSlotNetworkConfigResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteNetworkFeatureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkFeatureResource"/> object. </returns>
+        public virtual SiteNetworkFeatureResource GetSiteNetworkFeatureResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            SiteNetworkFeatureResource.ValidateResourceId(id);
+            return new SiteNetworkFeatureResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkFeatureResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public virtual WebAppResource GetWebAppResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFeatureResource"/> object. </returns>
+        public virtual NetworkFeatureResource GetNetworkFeatureResource(ResourceIdentifier id)
         {
-            WebAppResource.ValidateResourceId(id);
-            return new WebAppResource(Client, id);
+            NetworkFeatureResource.ValidateResourceId(id);
+            return new NetworkFeatureResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebSitePremierAddOnResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WebSitePremierAddonResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSitePremierAddOnResource"/> object. </returns>
-        public virtual WebSitePremierAddOnResource GetWebSitePremierAddOnResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSitePremierAddonResource"/> object. </returns>
+        public virtual WebSitePremierAddonResource GetWebSitePremierAddonResource(ResourceIdentifier id)
         {
-            WebSitePremierAddOnResource.ValidateResourceId(id);
-            return new WebSitePremierAddOnResource(Client, id);
+            WebSitePremierAddonResource.ValidateResourceId(id);
+            return new WebSitePremierAddonResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteSlotPremierAddOnResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -827,13 +827,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new WebSiteSlotPrivateAccessResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="WebSitePublicCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SitePublicCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSitePublicCertificateResource"/> object. </returns>
-        public virtual WebSitePublicCertificateResource GetWebSitePublicCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePublicCertificateResource"/> object. </returns>
+        public virtual SitePublicCertificateResource GetSitePublicCertificateResource(ResourceIdentifier id)
         {
-            WebSitePublicCertificateResource.ValidateResourceId(id);
-            return new WebSitePublicCertificateResource(Client, id);
+            SitePublicCertificateResource.ValidateResourceId(id);
+            return new SitePublicCertificateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="WebSiteSlotPublicCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -980,13 +980,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new AppServicePlanResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AppServicePlanResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServicePlanResource"/> object. </returns>
-        public virtual AppServicePlanResource GetAppServicePlanResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public virtual AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
-            AppServicePlanResource.ValidateResourceId(id);
-            return new AppServicePlanResource(Client, id);
+            AppServicePlanHybridConnectionNamespaceRelayResource.ValidateResourceId(id);
+            return new AppServicePlanHybridConnectionNamespaceRelayResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HybridConnectionLimitsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -998,15 +998,6 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new HybridConnectionLimitsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AppServicePlanResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AppServicePlanResource"/> object. </returns>
-        public virtual AppServicePlanResource GetAppServicePlanResource(ResourceIdentifier id)
-        {
-            AppServicePlanResource.ValidateResourceId(id);
-            return new AppServicePlanResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="AppServicePlanVirtualNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionResource"/> object. </returns>
@@ -1016,13 +1007,22 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new AppServicePlanVirtualNetworkConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
-        public virtual CertificateResource GetCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public virtual AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(ResourceIdentifier id)
         {
-            CertificateResource.ValidateResourceId(id);
-            return new CertificateResource(Client, id);
+            AppServicePlanVirtualNetworkConnectionGatewayResource.ValidateResourceId(id);
+            return new AppServicePlanVirtualNetworkConnectionGatewayResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AppCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public virtual AppCertificateResource GetAppCertificateResource(ResourceIdentifier id)
+        {
+            AppCertificateResource.ValidateResourceId(id);
+            return new AppCertificateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1034,13 +1034,13 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new SiteCertificateResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
-        public virtual SiteCertificateResource GetSiteCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
+        public virtual SiteSlotCertificateResource GetSiteSlotCertificateResource(ResourceIdentifier id)
         {
-            SiteCertificateResource.ValidateResourceId(id);
-            return new SiteCertificateResource(Client, id);
+            SiteSlotCertificateResource.ValidateResourceId(id);
+            return new SiteSlotCertificateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="GlobalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1052,85 +1052,85 @@ namespace Azure.ResourceManager.AppService.Mocking
             return new GlobalResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
+        public virtual SiteDetectorResource GetSiteDetectorResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteDetectorResource.ValidateResourceId(id);
+            return new SiteDetectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HostingEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
+        public virtual HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            HostingEnvironmentDetectorResource.ValidateResourceId(id);
+            return new HostingEnvironmentDetectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
+        public virtual SiteSlotDetectorResource GetSiteSlotDetectorResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteSlotDetectorResource.ValidateResourceId(id);
+            return new SiteSlotDetectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
+        public virtual SiteDiagnosticResource GetSiteDiagnosticResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteDiagnosticResource.ValidateResourceId(id);
+            return new SiteDiagnosticResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteSlotDiagnosticResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
+        public virtual SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteDiagnosticAnalysisResource.ValidateResourceId(id);
+            return new SiteDiagnosticAnalysisResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteSlotDiagnosticAnalysisResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticAnalysisResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
+        public virtual SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteDiagnosticDetectorResource.ValidateResourceId(id);
+            return new SiteDiagnosticDetectorResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public virtual DiagnosticResource GetDiagnosticResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
+        public virtual SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier id)
         {
-            DiagnosticResource.ValidateResourceId(id);
-            return new DiagnosticResource(Client, id);
+            SiteSlotDiagnosticDetectorResource.ValidateResourceId(id);
+            return new SiteSlotDiagnosticDetectorResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="KubeEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>

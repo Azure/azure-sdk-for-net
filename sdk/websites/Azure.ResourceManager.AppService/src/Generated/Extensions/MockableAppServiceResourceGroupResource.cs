@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServiceEnvironments and their operations over a AppServiceEnvironmentResource. </returns>
         public virtual AppServiceEnvironmentCollection GetAppServiceEnvironments()
         {
-            return this.GetCachedClient(client => new AppServiceEnvironmentCollection(client, Id));
+            return GetCachedClient(client => new AppServiceEnvironmentCollection(client, Id));
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> An object representing collection of AppServicePlans and their operations over a AppServicePlanResource. </returns>
         public virtual AppServicePlanCollection GetAppServicePlans()
         {
-            return this.GetCachedClient(client => new AppServicePlanCollection(client, Id));
+            return GetCachedClient(client => new AppServicePlanCollection(client, Id));
         }
 
         /// <summary>
@@ -306,11 +306,11 @@ namespace Azure.ResourceManager.AppService.Mocking
             return GetAppServicePlans().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Certificates in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Certificates and their operations over a CertificateResource. </returns>
-        public virtual CertificateCollection GetCertificates()
+        /// <summary> Gets a collection of AppCertificates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppCertificates and their operations over a AppCertificateResource. </returns>
+        public virtual AppCertificateCollection GetAppCertificates()
         {
-            return GetCachedClient(client => new CertificateCollection(client, Id));
+            return GetCachedClient(client => new AppCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateResource>> GetCertificateAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppCertificateResource>> GetAppCertificateAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAppCertificates().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateResource> GetCertificate(string name, CancellationToken cancellationToken = default)
+        public virtual Response<AppCertificateResource> GetAppCertificate(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetCertificates().Get(name, cancellationToken);
+            return GetAppCertificates().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of KubeEnvironments in the <see cref="ResourceGroupResource"/>. </summary>

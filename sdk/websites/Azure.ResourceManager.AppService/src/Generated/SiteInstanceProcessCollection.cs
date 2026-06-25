@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SiteInstanceProcessResource"/> and their operations.
-    /// Each <see cref="SiteInstanceProcessResource"/> in the collection will belong to the same instance of <see cref="WebAppResource"/>.
-    /// To get a <see cref="SiteInstanceProcessCollection"/> instance call the GetSiteInstanceProcesses method from an instance of <see cref="WebAppResource"/>.
+    /// Each <see cref="SiteInstanceProcessResource"/> in the collection will belong to the same instance of <see cref="SiteInstanceResource"/>.
+    /// To get a <see cref="SiteInstanceProcessCollection"/> instance call the GetSiteInstanceProcesses method from an instance of <see cref="SiteInstanceResource"/>.
     /// </summary>
     public partial class SiteInstanceProcessCollection : ArmCollection, IEnumerable<SiteInstanceProcessResource>, IAsyncEnumerable<SiteInstanceProcessResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.AppService
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WebAppResource.ResourceType)
+            if (id.ResourceType != SiteInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebAppResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SiteInstanceResource.ResourceType), nameof(id));
             }
         }
 

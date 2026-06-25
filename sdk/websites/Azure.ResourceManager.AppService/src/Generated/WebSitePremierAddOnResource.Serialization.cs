@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
-    public partial class WebSitePremierAddOnResource : IJsonModel<PremierAddOnData>
+    public partial class WebSitePremierAddonResource : IJsonModel<PremierAddOnData>
     {
         private static IJsonModel<PremierAddOnData> s_dataDeserializationInstance;
 

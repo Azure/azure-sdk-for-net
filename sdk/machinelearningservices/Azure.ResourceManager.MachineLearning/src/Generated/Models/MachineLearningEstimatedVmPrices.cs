@@ -8,53 +8,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The estimated price info for using a VM. </summary>
     public partial class MachineLearningEstimatedVmPrices
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/>. </summary>
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IEnumerable<MachineLearningEstimatedVmPrice> values)
         {
-            Argument.AssertNotNull(values, nameof(values));
-
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;
             Values = values.ToList();
@@ -64,26 +33,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="billingCurrency"> Three lettered code specifying the currency of the VM price. Example: USD. </param>
         /// <param name="unitOfMeasure"> The unit of time measurement for the specified VM price. Example: OneHour. </param>
         /// <param name="values"> The list of estimated prices for using a VM of a particular OS type, tier, etc. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IReadOnlyList<MachineLearningEstimatedVmPrice> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IReadOnlyList<MachineLearningEstimatedVmPrice> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;
             Values = values;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningEstimatedVmPrices"/> for deserialization. </summary>
-        internal MachineLearningEstimatedVmPrices()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Three lettered code specifying the currency of the VM price. Example: USD. </summary>
         [WirePath("billingCurrency")]
         public MachineLearningBillingCurrency BillingCurrency { get; }
+
         /// <summary> The unit of time measurement for the specified VM price. Example: OneHour. </summary>
         [WirePath("unitOfMeasure")]
         public MachineLearningUnitOfMeasure UnitOfMeasure { get; }
+
         /// <summary> The list of estimated prices for using a VM of a particular OS type, tier, etc. </summary>
         [WirePath("values")]
         public IReadOnlyList<MachineLearningEstimatedVmPrice> Values { get; }

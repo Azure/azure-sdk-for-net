@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rackId"/>, <paramref name="storageApplianceSkuId"/>, <paramref name="serialNumber"/>, <paramref name="administratorCredentials"/> or <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber, AdministrativeCredentials administratorCredentials, ExtendedLocation extendedLocation) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/>, <paramref name="storageApplianceSkuId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudStorageApplianceData(AzureLocation location, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(rackId, nameof(rackId));
-            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
+            Argument.AssertNotNull(rackId, nameof(rackId));
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            Properties = new StorageApplianceProperties(rackId, storageApplianceSkuId, rackSlot, serialNumber, administratorCredentials);
+            Properties = new StorageApplianceProperties(administratorCredentials, rackId, rackSlot, serialNumber, storageApplianceSkuId);
             ExtendedLocation = extendedLocation;
         }
 
@@ -67,6 +67,23 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
 
+        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
+        public AdministrativeCredentials AdministratorCredentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorCredentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageApplianceProperties();
+                }
+                Properties.AdministratorCredentials = value;
+            }
+        }
+
         /// <summary> The resource ID of the rack where this storage appliance resides. </summary>
         public ResourceIdentifier RackId
         {
@@ -81,23 +98,6 @@ namespace Azure.ResourceManager.NetworkCloud
                     Properties = new StorageApplianceProperties();
                 }
                 Properties.RackId = value;
-            }
-        }
-
-        /// <summary> The SKU for the storage appliance. </summary>
-        public string StorageApplianceSkuId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageApplianceSkuId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageApplianceProperties();
-                }
-                Properties.StorageApplianceSkuId = value;
             }
         }
 
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
-        public AdministrativeCredentials AdministratorCredentials
+        /// <summary> The SKU for the storage appliance. </summary>
+        public string StorageApplianceSkuId
         {
             get
             {
-                return Properties is null ? default : Properties.AdministratorCredentials;
+                return Properties is null ? default : Properties.StorageApplianceSkuId;
             }
             set
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new StorageApplianceProperties();
                 }
-                Properties.AdministratorCredentials = value;
+                Properties.StorageApplianceSkuId = value;
             }
         }
 
@@ -243,6 +243,15 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 return Properties is null ? default : Properties.Model;
+            }
+        }
+
+        /// <summary> The monitoring configuration status of the storage appliance. </summary>
+        public StorageApplianceMonitoringConfigurationStatus MonitoringConfigurationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MonitoringConfigurationStatus;
             }
         }
 

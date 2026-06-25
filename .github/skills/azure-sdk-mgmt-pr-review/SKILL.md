@@ -92,6 +92,7 @@ Operation/model/property rules:
 - Integer interval/duration properties include units, e.g. `MonitoringIntervalInSeconds`.
 - TTL properties use `TimeToLiveIn<Unit>`.
 - Enums use singular names unless flags; numeric version members use underscore, e.g. `Tls1_0`, `Ver5_6`.
+- Enum member renames that preserve shipped names should be expressed in TypeSpec when possible. If a member target is defined in TypeSpec and needs an exact C# name (especially underscores), prefer `@@clientName(Enum.Member, Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")` over SDK-side `[CodeGenMember]`.
 - CheckNameAvailability method: `Check[Resource/RP name]NameAvailability`; model/response: `[Resource/RP name]NameAvailabilityXXX`; unavailable reason enum: `[Resource/RP name]NameUnavailableReason`.
 - PUT/PATCH optional body parameters should be required.
 - Discriminator base models should be `abstract`.
@@ -111,6 +112,7 @@ Contextual type naming:
 
 Naming fix recommendation:
 - If the symbol is defined in TypeSpec, recommend `@@clientName(..., "csharp")` in `client.tsp`, e.g. `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`.
+- For exact enum member names, recommend `@@clientName(..., Azure.ClientGenerator.Core.exact("Old_Name"), "csharp")`.
 - If not defined in TypeSpec, recommend SDK customization such as `[CodeGenType("OriginalGeneratedName")]` on a renamed partial class.
 - For migration PRs, compare against previous GA API first. If the generated name is a rename of shipped API, restore the shipped name rather than inventing a third stylistic name.
 

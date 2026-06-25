@@ -81,21 +81,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AppServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HostingEnvironmentWorkerPoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceEnvironmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentWorkerPoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResource"/> object. </returns>
-        public static AppServiceEnvironmentResource GetAppServiceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource"/> object. </returns>
+        public static HostingEnvironmentWorkerPoolResource GetHostingEnvironmentWorkerPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetAppServiceEnvironmentResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentWorkerPoolResource(id);
         }
 
         /// <summary>
@@ -171,21 +171,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AppServiceEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HostingEnvironmentMultiRolePoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceEnvironmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppServiceEnvironmentResource"/> object. </returns>
-        public static AppServiceEnvironmentResource GetAppServiceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource"/> object. </returns>
+        public static HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetAppServiceEnvironmentResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentMultiRolePoolResource(id);
         }
 
         /// <summary>
@@ -207,39 +207,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteRecommendationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RecommendationResource"/> object. </returns>
-        public static RecommendationResource GetRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
+        public static SiteRecommendationResource GetSiteRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetRecommendationResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteRecommendationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetRecommendationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentRecommendationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RecommendationResource"/> object. </returns>
-        public static RecommendationResource GetRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
+        public static HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetRecommendationResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentRecommendationResource(id);
         }
 
         /// <summary>
@@ -495,75 +495,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public static SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public static SiteSlotHybridConnectionNamespaceRelayResource GetSiteSlotHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
@@ -603,6 +567,42 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public static SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteSlotVirtualNetworkConnectionGatewayResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public static SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteVirtualNetworkConnectionGatewayResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="WebSiteResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -621,39 +621,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteBackupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteBackupResource"/> object. </returns>
+        public static SiteBackupResource GetSiteBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteBackupResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotBackupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotBackupResource"/> object. </returns>
+        public static SiteSlotBackupResource GetSiteSlotBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotBackupResource(id);
         }
 
         /// <summary>
@@ -675,21 +675,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> object. </returns>
+        public static ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetScmSiteBasicPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
@@ -711,75 +711,75 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
+        public static ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetScmSiteSlotBasicPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WebSiteAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteAuthSettingsV2Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteAuthSettingsV2Resource"/> object. </returns>
+        public static WebSiteAuthSettingsV2Resource GetWebSiteAuthSettingsV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteAuthSettingsV2Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WebSiteSlotAuthSettingsV2Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotAuthSettingsV2Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSiteSlotAuthSettingsV2Resource"/> object. </returns>
+        public static WebSiteSlotAuthSettingsV2Resource GetWebSiteSlotAuthSettingsV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotAuthSettingsV2Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebSiteConfigAppSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteConfigAppsettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteConfigAppSettingResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteConfigAppsettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebSiteConfigAppSettingResource"/> object. </returns>
-        public static WebSiteConfigAppSettingResource GetWebSiteConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigAppsettingResource"/> object. </returns>
+        public static SiteConfigAppsettingResource GetSiteConfigAppsettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebSiteConfigAppSettingResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteConfigAppsettingResource(id);
         }
 
         /// <summary>
@@ -837,39 +837,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LogsSiteConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetLogsSiteConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteConfigResource"/> object. </returns>
+        public static LogsSiteConfigResource GetLogsSiteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetLogsSiteConfigResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LogsSiteSlotConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetLogsSiteSlotConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
+        public static LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetLogsSiteSlotConfigResource(id);
         }
 
         /// <summary>
@@ -909,21 +909,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteConfigSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteConfigSnapshotResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteConfigSnapshotResource"/> object. </returns>
+        public static SiteConfigSnapshotResource GetSiteConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteConfigSnapshotResource(id);
         }
 
         /// <summary>
@@ -945,21 +945,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotConfigSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotConfigSnapshotResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource"/> object. </returns>
+        public static SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotConfigSnapshotResource(id);
         }
 
         /// <summary>
@@ -999,255 +999,255 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDeploymentStatusResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDeploymentStatusResource"/> object. </returns>
+        public static SiteDeploymentStatusResource GetSiteDeploymentStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDeploymentStatusResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDeploymentStatusResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDeploymentStatusResource"/> object. </returns>
+        public static SiteSlotDeploymentStatusResource GetSiteSlotDeploymentStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDeploymentStatusResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDeploymentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDeploymentResource"/> object. </returns>
+        public static SiteDeploymentResource GetSiteDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDeploymentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDeploymentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDeploymentResource"/> object. </returns>
+        public static SiteSlotDeploymentResource GetSiteSlotDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDeploymentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource"/> object. </returns>
+        public static SiteDomainOwnershipIdentifierResource GetSiteDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDomainOwnershipIdentifierResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource"/> object. </returns>
+        public static SiteSlotDomainOwnershipIdentifierResource GetSiteSlotDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDomainOwnershipIdentifierResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteExtensionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteExtensionResource"/> object. </returns>
+        public static SiteExtensionResource GetSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteExtensionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteInstanceExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceExtensionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceExtensionResource"/> object. </returns>
+        public static SiteInstanceExtensionResource GetSiteInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceExtensionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotExtensionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
+        public static SiteSlotExtensionResource GetSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotExtensionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotInstanceExtensionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceExtensionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource"/> object. </returns>
+        public static SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceExtensionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteFunctionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteFunctionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteFunctionResource"/> object. </returns>
+        public static SiteFunctionResource GetSiteFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteFunctionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotFunctionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotFunctionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotFunctionResource"/> object. </returns>
+        public static SiteSlotFunctionResource GetSiteSlotFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotFunctionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteHostNameBindingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHostNameBindingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteHostNameBindingResource"/> object. </returns>
+        public static SiteHostNameBindingResource GetSiteHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteHostNameBindingResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotHostNameBindingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotHostNameBindingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource"/> object. </returns>
+        public static SiteSlotHostNameBindingResource GetSiteSlotHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotHostNameBindingResource(id);
         }
 
         /// <summary>
@@ -1287,39 +1287,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteInstanceResource"/> object. </returns>
+        public static SiteInstanceResource GetSiteInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotInstanceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotInstanceResource"/> object. </returns>
+        public static SiteSlotInstanceResource GetSiteSlotInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceResource(id);
         }
 
         /// <summary>
@@ -1467,129 +1467,129 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteMigrateMySqlStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteMigrateMySqlStatusResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteMigrateMySqlStatusResource"/> object. </returns>
+        public static SiteMigrateMySqlStatusResource GetSiteMigrateMySqlStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteMigrateMySqlStatusResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MigrateMySqlStatusResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetMigrateMySqlStatusResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
+        public static MigrateMySqlStatusResource GetMigrateMySqlStatusResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetMigrateMySqlStatusResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteNetworkConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteNetworkConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkConfigResource"/> object. </returns>
+        public static SiteNetworkConfigResource GetSiteNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteNetworkConfigResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotNetworkConfigResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotNetworkConfigResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
+        public static SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotNetworkConfigResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteNetworkFeatureResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteNetworkFeatureResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkFeatureResource"/> object. </returns>
+        public static SiteNetworkFeatureResource GetSiteNetworkFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteNetworkFeatureResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetworkFeatureResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebAppResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetNetworkFeatureResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebAppResource"/> object. </returns>
-        public static WebAppResource GetWebAppResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFeatureResource"/> object. </returns>
+        public static NetworkFeatureResource GetNetworkFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetNetworkFeatureResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebSitePremierAddOnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WebSitePremierAddonResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSitePremierAddOnResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSitePremierAddonResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebSitePremierAddOnResource"/> object. </returns>
-        public static WebSitePremierAddOnResource GetWebSitePremierAddOnResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebSitePremierAddonResource"/> object. </returns>
+        public static WebSitePremierAddonResource GetWebSitePremierAddonResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebSitePremierAddOnResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSitePremierAddonResource(id);
         }
 
         /// <summary>
@@ -1647,21 +1647,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebSitePublicCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SitePublicCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSitePublicCertificateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSitePublicCertificateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebSitePublicCertificateResource"/> object. </returns>
-        public static WebSitePublicCertificateResource GetWebSitePublicCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SitePublicCertificateResource"/> object. </returns>
+        public static SitePublicCertificateResource GetSitePublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetWebSitePublicCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetSitePublicCertificateResource(id);
         }
 
         /// <summary>
@@ -1953,21 +1953,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AppServicePlanResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppServicePlanResource"/> object. </returns>
-        public static AppServicePlanResource GetAppServicePlanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource"/> object. </returns>
+        public static AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetAppServicePlanResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
@@ -1989,24 +1989,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AppServicePlanResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppServicePlanResource"/> object. </returns>
-        public static AppServicePlanResource GetAppServicePlanResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetAppServicePlanResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="AppServicePlanVirtualNetworkConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2025,21 +2007,39 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetCertificateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CertificateResource"/> object. </returns>
-        public static CertificateResource GetCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource"/> object. </returns>
+        public static AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanVirtualNetworkConnectionGatewayResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AppCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppCertificateResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetAppCertificateResource(id);
         }
 
         /// <summary>
@@ -2061,21 +2061,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteCertificateResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotCertificateResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
-        public static SiteCertificateResource GetSiteCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
+        public static SiteSlotCertificateResource GetSiteSlotCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotCertificateResource(id);
         }
 
         /// <summary>
@@ -2097,165 +2097,165 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDetectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
+        public static SiteDetectorResource GetSiteDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentDetectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
+        public static HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDetectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
+        public static SiteSlotDetectorResource GetSiteSlotDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
+        public static SiteDiagnosticResource GetSiteDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
+        public static SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticAnalysisResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
+        public static SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticAnalysisResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
+        public static SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticAnalysisResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticDetectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
+        public static SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDiagnosticResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticResource"/> object. </returns>
-        public static DiagnosticResource GetDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
+        public static SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticDetectorResource(id);
         }
 
         /// <summary>
@@ -2713,27 +2713,27 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a collection of Certificates in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of AppCertificates in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificates()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificates()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Certificates and their operations over a CertificateResource. </returns>
-        public static CertificateCollection GetCertificates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppCertificates and their operations over a AppCertificateResource. </returns>
+        public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificates();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificates();
         }
 
         /// <summary>
         /// Description for Get a certificate.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificateAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificateAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2741,18 +2741,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CertificateResource>> GetCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificateAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Get a certificate.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetCertificate(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificate(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2760,11 +2760,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CertificateResource> GetCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetCertificate(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificate(name, cancellationToken);
         }
 
         /// <summary>
@@ -3218,38 +3218,38 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get all certificates for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCertificatesAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificatesAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CertificateResource> GetCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCertificatesAsync(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// Description for Get all certificates for a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCertificates(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificates(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CertificateResource> GetCertificates(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppCertificateResource> GetAppCertificates(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCertificates(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificates(filter, cancellationToken);
         }
 
         /// <summary>

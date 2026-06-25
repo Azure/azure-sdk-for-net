@@ -502,14 +502,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateResource> GetCertificatesAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetAllAsyncCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
+            return new AsyncPageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetAllAsyncCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -531,14 +531,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateResource> GetCertificates(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppCertificateResource> GetAppCertificates(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppCertificateData, CertificateResource>(new CertificatesGetAllCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetCertificates"), data => new CertificateResource(Client, data));
+            return new PageableWrapper<AppCertificateData, AppCertificateResource>(new CertificatesGetAllCollectionResultOfT(CertificatesRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAppServiceSubscriptionResource.GetAppCertificates"), data => new AppCertificateResource(Client, data));
         }
 
         /// <summary>

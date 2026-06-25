@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ManagedInstanceLicenseType : IEquatable<ManagedInstanceLicenseType>
     {
         private readonly string _value;
+        /// <summary> LicenseIncluded. </summary>
+        private const string LicenseIncludedValue = "LicenseIncluded";
+        /// <summary> BasePrice. </summary>
+        private const string BasePriceValue = "BasePrice";
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedInstanceLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LicenseIncludedValue = "LicenseIncluded";
-        private const string BasePriceValue = "BasePrice";
+            _value = value;
+        }
 
         /// <summary> LicenseIncluded. </summary>
         public static ManagedInstanceLicenseType LicenseIncluded { get; } = new ManagedInstanceLicenseType(LicenseIncludedValue);
+
         /// <summary> BasePrice. </summary>
         public static ManagedInstanceLicenseType BasePrice { get; } = new ManagedInstanceLicenseType(BasePriceValue);
+
         /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedInstanceLicenseType left, ManagedInstanceLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedInstanceLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedInstanceLicenseType left, ManagedInstanceLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedInstanceLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedInstanceLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedInstanceLicenseType(string value) => new ManagedInstanceLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedInstanceLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedInstanceLicenseType?(string value) => value == null ? null : new ManagedInstanceLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedInstanceLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedInstanceLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

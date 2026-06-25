@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AmazonRedshiftTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AmazonRedshiftTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "AmazonRedshiftTable";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,28 +23,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> This property will be retired. Please consider using schema + table properties instead. </param>
-        /// <param name="table"> The Amazon Redshift table name. Type: string (or Expression with resultType string). </param>
-        /// <param name="schemaTypePropertiesSchema"> The Amazon Redshift schema name. Type: string (or Expression with resultType string). </param>
-        internal AmazonRedshiftTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> table, DataFactoryElement<string> schemaTypePropertiesSchema) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Amazon Redshift table dataset properties. </param>
+        internal AmazonRedshiftTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, AmazonRedshiftTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            Table = table;
-            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
-            DatasetType = datasetType ?? "AmazonRedshiftTable";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftTableDataset"/> for deserialization. </summary>
-        internal AmazonRedshiftTableDataset()
-        {
-        }
+        /// <summary> Amazon Redshift table dataset properties. </summary>
+        internal AmazonRedshiftTableDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        public DataFactoryElement<string> TableName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftTableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
+        }
+
         /// <summary> The Amazon Redshift table name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftTableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
+
         /// <summary> The Amazon Redshift schema name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
+        public DataFactoryElement<string> SchemaTypePropertiesSchema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SchemaTypePropertiesSchema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AmazonRedshiftTableDatasetTypeProperties();
+                }
+                TypeProperties.SchemaTypePropertiesSchema = value;
+            }
+        }
     }
 }

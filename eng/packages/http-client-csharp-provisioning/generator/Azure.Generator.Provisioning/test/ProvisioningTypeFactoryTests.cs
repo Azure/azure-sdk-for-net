@@ -20,7 +20,7 @@ namespace Azure.Generator.Provisioning.Tests
         [SetUp]
         public void SetUp()
         {
-            _factory = ProvisioningMockHelpers.LoadMockGenerator().TypeFactory;
+            _factory = ProvisioningMockHelpers.LoadMockPlugin().Object.TypeFactory;
         }
 
         [TestCaseSource(nameof(PrimitiveTypeCases))]

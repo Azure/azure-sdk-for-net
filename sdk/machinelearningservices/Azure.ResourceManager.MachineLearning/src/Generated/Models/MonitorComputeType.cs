@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct MonitorComputeType : IEquatable<MonitorComputeType>
     {
         private readonly string _value;
+        /// <summary> Serverless Spark compute. </summary>
+        private const string ServerlessSparkValue = "ServerlessSpark";
 
         /// <summary> Initializes a new instance of <see cref="MonitorComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorComputeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServerlessSparkValue = "ServerlessSpark";
+            _value = value;
+        }
 
         /// <summary> Serverless Spark compute. </summary>
         public static MonitorComputeType ServerlessSpark { get; } = new MonitorComputeType(ServerlessSparkValue);
+
         /// <summary> Determines if two <see cref="MonitorComputeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorComputeType left, MonitorComputeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorComputeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorComputeType left, MonitorComputeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorComputeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorComputeType(string value) => new MonitorComputeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorComputeType?(string value) => value == null ? null : new MonitorComputeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorComputeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorComputeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

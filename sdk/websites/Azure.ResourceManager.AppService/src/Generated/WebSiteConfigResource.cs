@@ -479,11 +479,11 @@ namespace Azure.ResourceManager.AppService
                 "WebSiteConfigResource.GetConfigurationSnapshotInfo");
         }
 
-        /// <summary> Gets a collection of WebApps in the <see cref="WebSiteConfigResource"/>. </summary>
-        /// <returns> An object representing collection of WebApps and their operations over a WebAppResource. </returns>
-        public virtual WebAppCollection GetWebApps()
+        /// <summary> Gets a collection of SiteConfigSnapshots in the <see cref="WebSiteConfigResource"/>. </summary>
+        /// <returns> An object representing collection of SiteConfigSnapshots and their operations over a SiteConfigSnapshotResource. </returns>
+        public virtual SiteConfigSnapshotCollection GetSiteConfigSnapshots()
         {
-            return this.GetCachedClient(client => new WebAppCollection(client, Id));
+            return GetCachedClient(client => new SiteConfigSnapshotCollection(client, Id));
         }
 
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
@@ -492,11 +492,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WebAppResource>> GetWebAppAsync(string snapshotId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteConfigSnapshotResource>> GetSiteConfigSnapshotAsync(string snapshotId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            return await GetWebApps().GetAsync(snapshotId, cancellationToken).ConfigureAwait(false);
+            return await GetSiteConfigSnapshots().GetAsync(snapshotId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Description for Gets a snapshot of the configuration of an app at a previous point in time. </summary>
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WebAppResource> GetWebApp(string snapshotId, CancellationToken cancellationToken = default)
+        public virtual Response<SiteConfigSnapshotResource> GetSiteConfigSnapshot(string snapshotId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotId, nameof(snapshotId));
 
-            return GetWebApps().Get(snapshotId, cancellationToken);
+            return GetSiteConfigSnapshots().Get(snapshotId, cancellationToken);
         }
     }
 }

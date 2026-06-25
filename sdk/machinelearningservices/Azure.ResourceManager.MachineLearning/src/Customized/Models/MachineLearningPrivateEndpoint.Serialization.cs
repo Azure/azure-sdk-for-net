@@ -11,11 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    // Customized: serialize ResourceIdentifier-backed private endpoint ids as their wire strings.
+    // The TypeSpec generator does not preserve the previous SDK ResourceIdentifier customization here,
+    // so this serializer keeps the GA property types while matching the service payload.
     public partial class MachineLearningPrivateEndpoint : IUtf8JsonSerializable, IJsonModel<MachineLearningPrivateEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningPrivateEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningPrivateEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -23,7 +33,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -34,9 +43,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("subnetArmId"u8);
                 writer.WriteStringValue(SubnetArmId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
@@ -49,10 +58,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
-        MachineLearningPrivateEndpoint IJsonModel<MachineLearningPrivateEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MachineLearningPrivateEndpoint IJsonModel<MachineLearningPrivateEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        protected virtual MachineLearningPrivateEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -105,20 +115,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningPrivateEndpoint(id, subnetArmId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MachineLearningPrivateEndpoint>.Write(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                    return ModelReaderWriter.Write(this, options, Azure.ResourceManager.MachineLearning.AzureResourceManagerMachineLearningContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MachineLearningPrivateEndpoint IPersistableModel<MachineLearningPrivateEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MachineLearningPrivateEndpoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        protected virtual MachineLearningPrivateEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
@@ -133,6 +145,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     throw new FormatException($"The model {nameof(MachineLearningPrivateEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
+
+        MachineLearningPrivateEndpoint IPersistableModel<MachineLearningPrivateEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         string IPersistableModel<MachineLearningPrivateEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }

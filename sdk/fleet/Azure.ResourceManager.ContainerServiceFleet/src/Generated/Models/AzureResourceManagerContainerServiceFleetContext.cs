@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     [ModelReaderWriterBuildable(typeof(NodeImageVersion))]
     [ModelReaderWriterBuildable(typeof(PropertySelector))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpdateRunListResult))]
     [ModelReaderWriterBuildable(typeof(UpdateRunProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerServiceFleetContext : ModelReaderWriterContext
     {
     }

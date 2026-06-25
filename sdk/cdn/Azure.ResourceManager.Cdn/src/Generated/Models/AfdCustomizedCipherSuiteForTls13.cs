@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct AfdCustomizedCipherSuiteForTls13 : IEquatable<AfdCustomizedCipherSuiteForTls13>
     {
         private readonly string _value;
-        private const string TLSAES128GCMSHA256Value = "TLS_AES_128_GCM_SHA256";
-        private const string TLSAES256GCMSHA384Value = "TLS_AES_256_GCM_SHA384";
+        private const string Tls_Aes_128_Gcm_Sha256Value = "TLS_AES_128_GCM_SHA256";
+        private const string Tls_Aes_256_Gcm_Sha384Value = "TLS_AES_256_GCM_SHA384";
 
         /// <summary> Initializes a new instance of <see cref="AfdCustomizedCipherSuiteForTls13"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Tls_Aes_128_Gcm_Sha256. </summary>
+        public static AfdCustomizedCipherSuiteForTls13 Tls_Aes_128_Gcm_Sha256 { get; } = new AfdCustomizedCipherSuiteForTls13(Tls_Aes_128_Gcm_Sha256Value);
+
+        /// <summary> Gets the Tls_Aes_256_Gcm_Sha384. </summary>
+        public static AfdCustomizedCipherSuiteForTls13 Tls_Aes_256_Gcm_Sha384 { get; } = new AfdCustomizedCipherSuiteForTls13(Tls_Aes_256_Gcm_Sha384Value);
 
         /// <summary> Determines if two <see cref="AfdCustomizedCipherSuiteForTls13"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

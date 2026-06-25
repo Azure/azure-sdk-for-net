@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
     [ModelReaderWriterBuildable(typeof(StorageClassResourceListResult))]
     [ModelReaderWriterBuildable(typeof(StorageClassTypeProperties))]
     [ModelReaderWriterBuildable(typeof(StorageClassTypePropertiesUpdate))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownStorageClassTypeProperties))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerOrchestratorRuntimeContext : ModelReaderWriterContext
     {
     }

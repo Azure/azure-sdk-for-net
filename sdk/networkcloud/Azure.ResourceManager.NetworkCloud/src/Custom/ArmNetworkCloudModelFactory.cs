@@ -15,30 +15,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public static partial class ArmNetworkCloudModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterNode"/>. </summary>
-        /// <param name="agentPoolId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
-        /// <param name="availabilityZone"> The availability zone this node is running within. </param>
-        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts this node. </param>
-        /// <param name="cpuCores"> The number of CPU cores configured for this node, derived from the VM SKU specified. </param>
-        /// <param name="detailedStatus"> The detailed state of this node. </param>
-        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
-        /// <param name="diskSizeGB"> The size of the disk configured for this node. </param>
-        /// <param name="image"> The machine image used to deploy this node. </param>
-        /// <param name="kubernetesVersion"> The currently running version of Kubernetes and bundled features running on this node. </param>
-        /// <param name="labels"> The list of labels on this node that have been assigned to the agent pool containing this node. </param>
-        /// <param name="memorySizeGB"> The amount of memory configured for this node, derived from the vm SKU specified. </param>
-        /// <param name="mode"> The mode of the agent pool containing this node. Not applicable for control plane nodes. </param>
-        /// <param name="name"> The name of this node, as realized in the Kubernetes cluster. </param>
-        /// <param name="networkAttachments"> The NetworkAttachments made to this node. </param>
-        /// <param name="powerState"> The power state of this node. </param>
-        /// <param name="role"> The role of this node in the cluster. </param>
-        /// <param name="taints"> The list of taints that have been assigned to the agent pool containing this node. </param>
-        /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterNode"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KubernetesClusterNode KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IEnumerable<KubernetesLabel> labels, long? memorySizeGB, NetworkCloudAgentPoolMode? mode, string name, IEnumerable<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IEnumerable<KubernetesLabel> taints, string vmSkuName)
-            => KubernetesClusterNode(agentPoolId, availabilityZone, bareMetalMachineId, cpuCores, detailedStatus, detailedStatusMessage, diskSizeGB, image, kubernetesVersion, labels, memorySizeGB, mode, name, networkAttachments, powerState, role, taints, vmSkuName);
-
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

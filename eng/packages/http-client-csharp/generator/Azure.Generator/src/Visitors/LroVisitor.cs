@@ -252,6 +252,16 @@ namespace Azure.Generator.Visitors
                     return null;
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression }:
                 {
+                    // The generated FromValue convenience method body is
+                    // `return Response.FromValue((T)response, response);` so Arguments[0] is expected to be a
+                    // CastExpression we can unwrap. Bail out on unexpected shapes instead of dereferencing
+                    // a null cast result, which previously surfaced as a NullReferenceException.
+                    if (invokeMethodExpression.Arguments.Count == 0 ||
+                        invokeMethodExpression.Arguments[0] is not CastExpression castArgument)
+                    {
+                        return expressionStatement;
+                    }
+
                     var (conversionExpression, response, diagnosticsProperty, scopeName) =
                         BuildConvertCallComponents(serviceMethod, scmMethod);
 
@@ -260,7 +270,7 @@ namespace Azure.Generator.Visitors
                         methodName: "Convert",
                         arguments:
                         [
-                            (invokeMethodExpression.Arguments[0] as CastExpression)!.Inner,
+                            castArgument.Inner,
                             new FuncExpression([response.Declaration], conversionExpression),
                             diagnosticsProperty,
                             Literal(scopeName),
