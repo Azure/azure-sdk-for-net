@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ImpactReporting
     [ModelReaderWriterBuildable(typeof(InsightListResult))]
     [ModelReaderWriterBuildable(typeof(RequiredImpactProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactData))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactListResult))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactProperties))]
     [ModelReaderWriterBuildable(typeof(WorkloadImpactResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerImpactReportingContext : ModelReaderWriterContext
     {
     }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubNameUnavailableReason value) => value switch
         {
             IotHubNameUnavailableReason.Invalid => "Invalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.IotHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubNameUnavailableReason ToIotHubNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return IotHubNameUnavailableReason.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return IotHubNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return IotHubNameUnavailableReason.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return IotHubNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubNameUnavailableReason value.");
         }
     }

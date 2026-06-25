@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.ServiceBus
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicData))]
     [ModelReaderWriterBuildable(typeof(ServiceBusTopicResource))]
     [ModelReaderWriterBuildable(typeof(Subnet))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentityProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerServiceBusContext : ModelReaderWriterContext
     {
     }

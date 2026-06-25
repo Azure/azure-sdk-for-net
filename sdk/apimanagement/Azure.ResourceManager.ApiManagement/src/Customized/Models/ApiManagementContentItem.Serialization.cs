@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         void IJsonModel<ApiManagementContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementContentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             if (format != "J")
             {

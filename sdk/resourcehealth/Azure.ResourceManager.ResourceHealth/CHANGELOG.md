@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-05-01.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed the preview-only properties `ArgQuery`, `MaintenanceId`, and `MaintenanceType` from `ResourceHealthEventData`, and `ResourceName`, `ResourceGroup`, `Status`, `MaintenanceStartTime`, and `MaintenanceEndTime` from `ResourceHealthEventImpactedResourceData`. These fields are no longer returned by the `2025-05-01` API version.
 
 ### Other Changes
+
+- Migrated SDK from AutoRest/Swagger to TypeSpec-based generation.
 
 ## 1.1.0-beta.5 (2025-08-21)
 

@@ -1,0 +1,32 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.MachineLearning
+{
+    // Customized: preserve GA MachineLearnin-prefixed child resource accessors over shorter generated
+    // registry child-resource accessors, which are not standalone REST operations that client.tsp can rename.
+    public partial class MachineLearninRegistryComponentContainerResource
+    {
+        // Customized: keep the historical MachineLearnin* typo in method names for source compatibility.
+        public virtual MachineLearninRegistryComponentVersionCollection GetMachineLearninRegistryComponentVersions() => new MachineLearninRegistryComponentVersionCollection(Client, Id);
+        /// <summary> Gets a registry component version. </summary>
+        [ForwardsClientCalls]
+        public virtual Task<Response<MachineLearninRegistryComponentVersionResource>> GetMachineLearninRegistryComponentVersionAsync(string version, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentVersions().GetAsync(version, cancellationToken);
+        /// <summary> Gets a registry component version. </summary>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearninRegistryComponentVersionResource> GetMachineLearninRegistryComponentVersion(string version, CancellationToken cancellationToken = default) => GetMachineLearninRegistryComponentVersions().Get(version, cancellationToken);
+    }
+}
