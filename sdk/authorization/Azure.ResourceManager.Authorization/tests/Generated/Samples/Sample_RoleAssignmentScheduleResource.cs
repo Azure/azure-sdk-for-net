@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoleAssignmentScheduleByName()
         {
-            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleByName.json
+            // Generated from example definition: specification/authorization/resource-manager/Microsoft.Authorization/Authorization/stable/2020-10-01/examples/GetRoleAssignmentScheduleByName.json
             // this example is just showing the usage of "RoleAssignmentSchedules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

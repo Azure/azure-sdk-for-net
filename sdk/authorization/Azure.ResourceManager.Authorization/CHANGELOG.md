@@ -117,7 +117,7 @@ Polishing since last public beta release:
 - Prepended `Authorization` / `RoleManagement` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
