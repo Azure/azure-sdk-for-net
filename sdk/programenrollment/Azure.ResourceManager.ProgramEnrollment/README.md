@@ -1,6 +1,6 @@
-# Microsoft Azure ProgramEnrollment management client library for .NET
+# Microsoft Azure Program Enrollment management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library provides a .NET SDK for managing Program Enrollment resources in Azure Resource Manager. It enables clients to create, update, list, and delete enrollment resources and related entities through the ARM control plane.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
