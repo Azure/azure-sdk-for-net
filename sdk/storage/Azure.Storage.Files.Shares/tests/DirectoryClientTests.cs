@@ -819,7 +819,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Files (four entries — all Uid/Gid/Mode the same, different Names/Ids/Sizes/LinkCounts).
             // Regular <File> entries don't carry a <FileType> element, so FileType stays null.
             List<ShareFileItem> files = items
-                .Where(i => !i.IsDirectory && i.FileType == null)
+                .Where(i => !i.IsDirectory && i.FileType == NfsFileType.Regular)
                 .OrderBy(i => i.Name)
                 .ToList();
             Assert.AreEqual(4, files.Count);
