@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A message which indicates a problem in data connection validation. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

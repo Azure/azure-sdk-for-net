@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -32,9 +33,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Follower database definition. </summary>
+        [WirePath("properties")]
         internal FollowerDatabaseProperties Properties { get; }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
+        [WirePath("properties.clusterResourceId")]
         public ResourceIdentifier ClusterResourceId
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource name of the attached database configuration in the follower cluster. </summary>
+        [WirePath("properties.attachedDatabaseConfigurationName")]
         public string AttachedDatabaseConfigurationName
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("properties.tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties
         {
             get
@@ -71,6 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The origin of the following setup. </summary>
+        [WirePath("properties.databaseShareOrigin")]
         public KustoDatabaseShareOrigin? DatabaseShareOrigin
         {
             get

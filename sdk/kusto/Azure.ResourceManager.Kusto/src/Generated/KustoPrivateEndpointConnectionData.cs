@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public KustoPrivateLinkServiceConnectionStateProperty ConnectionState
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Group id of the private endpoint. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Provisioning state of the private endpoint. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -76,6 +80,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Resource id of the private endpoint. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get

@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Principal Assignment resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of resource, Microsoft.Kusto/clusters/principalAssignments. </summary>
+        [WirePath("type")]
         public KustoClusterPrincipalAssignmentType ResourceType { get; }
     }
 }

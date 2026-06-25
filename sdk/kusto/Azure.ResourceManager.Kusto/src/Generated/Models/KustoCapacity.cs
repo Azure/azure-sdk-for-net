@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -45,15 +46,19 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Scale type. </summary>
+        [WirePath("scaleType")]
         public KustoScaleType ScaleType { get; }
 
         /// <summary> Minimum allowed capacity. </summary>
+        [WirePath("minimum")]
         public int Minimum { get; }
 
         /// <summary> Maximum allowed capacity. </summary>
+        [WirePath("maximum")]
         public int Maximum { get; }
 
         /// <summary> The default capacity that would be used. </summary>
+        [WirePath("default")]
         public int Default { get; }
     }
 }

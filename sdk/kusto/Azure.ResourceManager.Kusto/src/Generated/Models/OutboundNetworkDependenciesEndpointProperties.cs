@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("category")]
         public string Category { get; set; }
 
         /// <summary> The endpoints that the Kusto Service Environment reaches the service at. </summary>
+        [WirePath("endpoints")]
         public IList<EndpointDependency> Endpoints { get; } = new ChangeTrackingList<EndpointDependency>();
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

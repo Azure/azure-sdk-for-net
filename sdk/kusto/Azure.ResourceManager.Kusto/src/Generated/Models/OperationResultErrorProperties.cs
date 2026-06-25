@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The code of the error. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

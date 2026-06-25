@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of Kusto database principal assignments. </summary>
+        [WirePath("value")]
         public IList<KustoDatabasePrincipalAssignmentData> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

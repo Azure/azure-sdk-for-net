@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IList<KustoPrivateLinkResourceData> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

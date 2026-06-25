@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Kusto
     {
         // TODO: Rename this in spec after fixed: https://github.com/Azure/azure-sdk-for-net/issues/60237
         /// <summary> The list of language extensions. </summary>
+        [WirePath("properties.languageExtensions.value")]
         public IList<KustoLanguageExtension> LanguageExtensionsValue => Value;
     }
 }

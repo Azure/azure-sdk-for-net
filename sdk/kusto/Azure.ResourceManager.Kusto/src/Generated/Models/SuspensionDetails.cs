@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
+        [WirePath("suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -39,12 +40,15 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> SKU name. </summary>
+        [WirePath("name")]
         public KustoSkuName Name { get; set; }
 
         /// <summary> The number of instances of the cluster. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
 
         /// <summary> SKU tier. </summary>
+        [WirePath("tier")]
         public KustoSkuTier Tier { get; set; }
     }
 }

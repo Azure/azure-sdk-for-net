@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -45,30 +46,39 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> ID of the resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> status of the Operation result. </summary>
+        [WirePath("status")]
         public Status? Status { get; }
 
         /// <summary> The operation start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The operation end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Percentage completed. </summary>
+        [WirePath("percentComplete")]
         public double? PercentComplete { get; }
 
         /// <summary> Properties of the operation results. </summary>
+        [WirePath("properties")]
         internal OperationResultProperties Properties { get; }
 
         /// <summary> Object that contains the error code and message if the operation failed. </summary>
+        [WirePath("error")]
         internal OperationResultErrorProperties Error { get; }
 
         /// <summary> The kind of the operation. </summary>
+        [WirePath("properties.operationKind")]
         public string OperationKind
         {
             get
@@ -78,6 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -87,6 +98,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The state of the operation. </summary>
+        [WirePath("properties.operationState")]
         public string OperationState
         {
             get
@@ -96,6 +108,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The code of the error. </summary>
+        [WirePath("error.code")]
         public string Code
         {
             get
@@ -105,6 +118,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The error message. </summary>
+        [WirePath("error.message")]
         public string Message
         {
             get

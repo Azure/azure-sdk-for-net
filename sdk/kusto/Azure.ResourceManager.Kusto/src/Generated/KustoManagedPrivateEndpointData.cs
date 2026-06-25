@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A managed private endpoint. </summary>
+        [WirePath("properties")]
         internal ManagedPrivateEndpointProperties Properties { get; set; }
 
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is created. </summary>
+        [WirePath("properties.privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The region of the resource to which the managed private endpoint is created. </summary>
+        [WirePath("properties.privateLinkResourceRegion")]
         public string PrivateLinkResourceRegion
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The groupId in which the managed private endpoint is created. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The user request message. </summary>
+        [WirePath("properties.requestMessage")]
         public string RequestMessage
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get

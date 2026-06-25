@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Array of private endpoint connections. </summary>
+        [WirePath("value")]
         public IList<KustoPrivateEndpointConnectionData> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

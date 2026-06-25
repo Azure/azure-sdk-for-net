@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -51,39 +52,51 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        [WirePath("softDeletePeriod")]
         public TimeSpan? SoftDeletePeriod { get; }
 
         /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        [WirePath("hotCachePeriod")]
         public TimeSpan? HotCachePeriod { get; set; }
 
         /// <summary> The statistics of the database. </summary>
+        [WirePath("statistics")]
         internal DatabaseStatistics Statistics { get; }
 
         /// <summary> The name of the leader cluster. </summary>
+        [WirePath("leaderClusterResourceId")]
         public string LeaderClusterResourceId { get; }
 
         /// <summary> The name of the attached database configuration cluster. </summary>
+        [WirePath("attachedDatabaseConfigurationName")]
         public string AttachedDatabaseConfigurationName { get; }
 
         /// <summary> The principals modification kind of the database. </summary>
+        [WirePath("principalsModificationKind")]
         public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind { get; }
 
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; }
 
         /// <summary> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </summary>
+        [WirePath("originalDatabaseName")]
         public string OriginalDatabaseName { get; }
 
         /// <summary> The origin of the following setup. </summary>
+        [WirePath("databaseShareOrigin")]
         public KustoDatabaseShareOrigin? DatabaseShareOrigin { get; }
 
         /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
+        [WirePath("suspensionDetails")]
         internal SuspensionDetails SuspensionDetails { get; }
 
         /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        [WirePath("statistics.size")]
         public float? StatisticsSize
         {
             get
@@ -93,6 +106,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
+        [WirePath("suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
             get

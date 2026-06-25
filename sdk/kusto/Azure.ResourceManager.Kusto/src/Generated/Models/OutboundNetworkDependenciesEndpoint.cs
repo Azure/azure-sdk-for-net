@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -40,12 +41,15 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The outbound environment endpoint properties. </summary>
+        [WirePath("properties")]
         internal OutboundNetworkDependenciesEndpointProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> The type of service accessed by the Kusto Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("properties.category")]
         public string Category
         {
             get
@@ -63,6 +67,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The endpoints that the Kusto Service Environment reaches the service at. </summary>
+        [WirePath("properties.endpoints")]
         public IList<EndpointDependency> Endpoints
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get

@@ -34,9 +34,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the data connection. </summary>
+        [WirePath("dataConnectionName")]
         public string DataConnectionName { get; set; }
 
         /// <summary> The data connection properties to validate. </summary>
+        [WirePath("properties")]
         public KustoDataConnectionData Properties { get; set; }
     }
 }

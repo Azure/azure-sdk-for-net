@@ -49,18 +49,23 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is created. </summary>
+        [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
 
         /// <summary> The region of the resource to which the managed private endpoint is created. </summary>
+        [WirePath("privateLinkResourceRegion")]
         public string PrivateLinkResourceRegion { get; set; }
 
         /// <summary> The groupId in which the managed private endpoint is created. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; set; }
 
         /// <summary> The user request message. </summary>
+        [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

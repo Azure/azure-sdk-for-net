@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Sandbox custom image resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of resource, for instance Microsoft.Kusto/clusters/sandboxCustomImages. </summary>
+        [WirePath("type")]
         public SandboxCustomImageType ImageType { get; }
     }
 }

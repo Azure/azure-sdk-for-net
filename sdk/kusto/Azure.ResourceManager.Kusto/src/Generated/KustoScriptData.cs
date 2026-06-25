@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The database script. </summary>
+        [WirePath("properties")]
         internal ScriptProperties Properties { get; set; }
 
         /// <summary> The url to the KQL script blob file. Must not be used together with scriptContent property. </summary>
+        [WirePath("properties.scriptUrl")]
         public Uri ScriptUri
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The SaS token that provide read access to the file which contain the script. Must be provided when using scriptUrl property. </summary>
+        [WirePath("properties.scriptUrlSasToken")]
         public string ScriptUriSasToken
         {
             get
@@ -75,6 +78,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The script content. This property should be used when the script is provide inline and not through file in a SA. Must not be used together with scriptUrl and scriptUrlSasToken properties. </summary>
+        [WirePath("properties.scriptContent")]
         public string ScriptContent
         {
             get
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A unique string. If changed the script will be applied again. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag
         {
             get
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Flag that indicates whether to continue if one of the command fails. </summary>
+        [WirePath("properties.continueOnErrors")]
         public bool? ShouldContinueOnErrors
         {
             get
@@ -126,6 +132,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -135,6 +142,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </summary>
+        [WirePath("properties.scriptLevel")]
         public KustoScriptLevel? ScriptLevel
         {
             get
@@ -152,6 +160,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Indicates if the permissions for the script caller are kept following completion of the script. </summary>
+        [WirePath("properties.principalPermissionsAction")]
         public PrincipalPermissionsAction? PrincipalPermissionsAction
         {
             get
@@ -169,6 +178,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </summary>
+        [WirePath("properties.managedIdentityResourceId")]
         public ResourceIdentifier ManagedIdentityResourceId
         {
             get

@@ -90,87 +90,115 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The state of the resource. </summary>
+        [WirePath("state")]
         public KustoClusterState? State { get; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The cluster URI. </summary>
+        [WirePath("uri")]
         public Uri ClusterUri { get; }
 
         /// <summary> The cluster data ingestion URI. </summary>
+        [WirePath("dataIngestionUri")]
         public Uri DataIngestionUri { get; }
 
         /// <summary> The reason for the cluster's current state. </summary>
+        [WirePath("stateReason")]
         public string StateReason { get; }
 
         /// <summary> The cluster's external tenants. </summary>
+        [WirePath("trustedExternalTenants")]
         public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants { get; } = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
 
         /// <summary> Optimized auto scale definition. </summary>
+        [WirePath("optimizedAutoscale")]
         public OptimizedAutoscale OptimizedAutoscale { get; set; }
 
         /// <summary> A boolean value that indicates if the cluster's disks are encrypted. </summary>
+        [WirePath("enableDiskEncryption")]
         public bool? IsDiskEncryptionEnabled { get; set; }
 
         /// <summary> A boolean value that indicates if the streaming ingest is enabled. </summary>
+        [WirePath("enableStreamingIngest")]
         public bool? IsStreamingIngestEnabled { get; set; }
 
         /// <summary> Virtual network definition. </summary>
+        [WirePath("virtualNetworkConfiguration")]
         public KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get; set; }
 
         /// <summary> KeyVault properties for the cluster encryption. </summary>
+        [WirePath("keyVaultProperties")]
         public KustoKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
+        [WirePath("enablePurge")]
         public bool? IsPurgeEnabled { get; set; }
 
         /// <summary> List of the cluster's language extensions. </summary>
+        [WirePath("languageExtensions")]
         internal KustoLanguageExtensionList LanguageExtensions { get; set; }
 
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
+        [WirePath("enableDoubleEncryption")]
         public bool? IsDoubleEncryptionEnabled { get; set; }
 
         /// <summary> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </summary>
+        [WirePath("publicNetworkAccess")]
         public KustoClusterPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The list of ips in the format of CIDR allowed to connect to the cluster. </summary>
+        [WirePath("allowedIpRangeList")]
         public IList<string> AllowedIPRangeList { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The engine type. </summary>
+        [WirePath("engineType")]
         public KustoClusterEngineType? EngineType { get; set; }
 
         /// <summary> The cluster's accepted audiences. </summary>
+        [WirePath("acceptedAudiences")]
         public IList<AcceptedAudience> AcceptedAudiences { get; } = new ChangeTrackingList<AcceptedAudience>();
 
         /// <summary> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </summary>
+        [WirePath("enableAutoStop")]
         public bool? IsAutoStopEnabled { get; set; }
 
         /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("restrictOutboundNetworkAccess")]
         public KustoClusterNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
 
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </summary>
+        [WirePath("allowedFqdnList")]
         public IList<string> AllowedFqdnList { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of callout policies for egress from Cluster. </summary>
+        [WirePath("calloutPolicies")]
         public IList<KustoCalloutPolicy> CalloutPolicies { get; } = new ChangeTrackingList<KustoCalloutPolicy>();
 
         /// <summary> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </summary>
+        [WirePath("publicIPType")]
         public KustoClusterPublicIPType? PublicIPType { get; set; }
 
         /// <summary> Virtual Cluster graduation properties. </summary>
+        [WirePath("virtualClusterGraduationProperties")]
         public string VirtualClusterGraduationProperties { get; set; }
 
         /// <summary> A list of private endpoint connections. </summary>
+        [WirePath("privateEndpointConnections")]
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
 
         /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
+        [WirePath("migrationCluster")]
         public MigrationClusterProperties MigrationCluster { get; }
 
         /// <summary> Indicates whether the cluster is zonal or non-zonal. </summary>
+        [WirePath("zoneStatus")]
         public KustoClusterZoneStatus? ZoneStatus { get; }
 
         /// <summary> The list of language extensions. </summary>
+        [WirePath("languageExtensions.value")]
         public IList<KustoLanguageExtension> Value
         {
             get
@@ -184,6 +212,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The link to the next page of resources. </summary>
+        [WirePath("languageExtensions.nextLink")]
         public string NextLink
         {
             get

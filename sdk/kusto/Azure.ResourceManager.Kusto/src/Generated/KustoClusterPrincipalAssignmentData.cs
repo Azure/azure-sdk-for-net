@@ -38,9 +38,11 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster principal. </summary>
+        [WirePath("properties")]
         internal ClusterPrincipalProperties Properties { get; set; }
 
         /// <summary> The principal ID assigned to the cluster principal. It can be a user email, application ID, or security group name. </summary>
+        [WirePath("properties.principalId")]
         public string ClusterPrincipalId
         {
             get
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Cluster principal role. </summary>
+        [WirePath("properties.role")]
         public KustoClusterPrincipalRole? Role
         {
             get
@@ -78,6 +81,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The tenant id of the principal. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId
         {
             get
@@ -95,6 +99,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Principal type. </summary>
+        [WirePath("properties.principalType")]
         public KustoPrincipalAssignmentType? PrincipalType
         {
             get
@@ -115,6 +120,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The tenant name of the principal. </summary>
+        [WirePath("properties.tenantName")]
         public string TenantName
         {
             get
@@ -124,6 +130,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The principal name. </summary>
+        [WirePath("properties.principalName")]
         public string PrincipalName
         {
             get
@@ -133,6 +140,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -142,6 +150,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The service principal object id in AAD (Azure active directory). </summary>
+        [WirePath("properties.aadObjectId")]
         public Guid? AadObjectId
         {
             get

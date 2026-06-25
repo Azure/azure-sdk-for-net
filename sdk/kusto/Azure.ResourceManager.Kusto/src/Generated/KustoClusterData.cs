@@ -56,21 +56,27 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster properties. </summary>
+        [WirePath("properties")]
         internal ClusterProperties Properties { get; set; }
 
         /// <summary> The SKU of the cluster. </summary>
+        [WirePath("sku")]
         public KustoSku Sku { get; set; }
 
         /// <summary> The availability zones. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
 
         /// <summary> The identity of the cluster, if configured. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
 
         /// <summary> The state of the resource. </summary>
+        [WirePath("properties.state")]
         public KustoClusterState? State
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -89,6 +96,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster URI. </summary>
+        [WirePath("properties.uri")]
         public Uri ClusterUri
         {
             get
@@ -98,6 +106,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster data ingestion URI. </summary>
+        [WirePath("properties.dataIngestionUri")]
         public Uri DataIngestionUri
         {
             get
@@ -107,6 +116,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The reason for the cluster's current state. </summary>
+        [WirePath("properties.stateReason")]
         public string StateReason
         {
             get
@@ -116,6 +126,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster's external tenants. </summary>
+        [WirePath("properties.trustedExternalTenants")]
         public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants
         {
             get
@@ -129,6 +140,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Optimized auto scale definition. </summary>
+        [WirePath("properties.optimizedAutoscale")]
         public OptimizedAutoscale OptimizedAutoscale
         {
             get
@@ -146,6 +158,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A boolean value that indicates if the cluster's disks are encrypted. </summary>
+        [WirePath("properties.enableDiskEncryption")]
         public bool? IsDiskEncryptionEnabled
         {
             get
@@ -163,6 +176,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A boolean value that indicates if the streaming ingest is enabled. </summary>
+        [WirePath("properties.enableStreamingIngest")]
         public bool? IsStreamingIngestEnabled
         {
             get
@@ -180,6 +194,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Virtual network definition. </summary>
+        [WirePath("properties.virtualNetworkConfiguration")]
         public KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration
         {
             get
@@ -197,6 +212,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> KeyVault properties for the cluster encryption. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public KustoKeyVaultProperties KeyVaultProperties
         {
             get
@@ -214,6 +230,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
+        [WirePath("properties.enablePurge")]
         public bool? IsPurgeEnabled
         {
             get
@@ -231,6 +248,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
+        [WirePath("properties.enableDoubleEncryption")]
         public bool? IsDoubleEncryptionEnabled
         {
             get
@@ -248,6 +266,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public KustoClusterPublicNetworkAccess? PublicNetworkAccess
         {
             get
@@ -265,6 +284,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The list of ips in the format of CIDR allowed to connect to the cluster. </summary>
+        [WirePath("properties.allowedIpRangeList")]
         public IList<string> AllowedIPRangeList
         {
             get
@@ -278,6 +298,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The engine type. </summary>
+        [WirePath("properties.engineType")]
         public KustoClusterEngineType? EngineType
         {
             get
@@ -295,6 +316,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The cluster's accepted audiences. </summary>
+        [WirePath("properties.acceptedAudiences")]
         public IList<AcceptedAudience> AcceptedAudiences
         {
             get
@@ -308,6 +330,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </summary>
+        [WirePath("properties.enableAutoStop")]
         public bool? IsAutoStopEnabled
         {
             get
@@ -325,6 +348,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.restrictOutboundNetworkAccess")]
         public KustoClusterNetworkAccessFlag? RestrictOutboundNetworkAccess
         {
             get
@@ -342,6 +366,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </summary>
+        [WirePath("properties.allowedFqdnList")]
         public IList<string> AllowedFqdnList
         {
             get
@@ -355,6 +380,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> List of callout policies for egress from Cluster. </summary>
+        [WirePath("properties.calloutPolicies")]
         public IList<KustoCalloutPolicy> CalloutPolicies
         {
             get
@@ -368,6 +394,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </summary>
+        [WirePath("properties.publicIPType")]
         public KustoClusterPublicIPType? PublicIPType
         {
             get
@@ -385,6 +412,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Virtual Cluster graduation properties. </summary>
+        [WirePath("properties.virtualClusterGraduationProperties")]
         public string VirtualClusterGraduationProperties
         {
             get
@@ -402,6 +430,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> A list of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
@@ -415,6 +444,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
+        [WirePath("properties.migrationCluster")]
         public MigrationClusterProperties MigrationCluster
         {
             get
@@ -424,6 +454,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Indicates whether the cluster is zonal or non-zonal. </summary>
+        [WirePath("properties.zoneStatus")]
         public KustoClusterZoneStatus? ZoneStatus
         {
             get
@@ -433,6 +464,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The list of language extensions. </summary>
+        [WirePath("properties.languageExtensions.value")]
         public IList<KustoLanguageExtension> Value
         {
             get
@@ -446,6 +478,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The link to the next page of resources. </summary>
+        [WirePath("properties.languageExtensions.nextLink")]
         public string NextLink
         {
             get

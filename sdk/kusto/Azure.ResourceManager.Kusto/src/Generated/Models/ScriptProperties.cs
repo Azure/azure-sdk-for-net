@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -48,30 +49,39 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The url to the KQL script blob file. Must not be used together with scriptContent property. </summary>
+        [WirePath("scriptUrl")]
         public Uri ScriptUri { get; set; }
 
         /// <summary> The SaS token that provide read access to the file which contain the script. Must be provided when using scriptUrl property. </summary>
+        [WirePath("scriptUrlSasToken")]
         public string ScriptUriSasToken { get; set; }
 
         /// <summary> The script content. This property should be used when the script is provide inline and not through file in a SA. Must not be used together with scriptUrl and scriptUrlSasToken properties. </summary>
+        [WirePath("scriptContent")]
         public string ScriptContent { get; set; }
 
         /// <summary> A unique string. If changed the script will be applied again. </summary>
+        [WirePath("forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
 
         /// <summary> Flag that indicates whether to continue if one of the command fails. </summary>
+        [WirePath("continueOnErrors")]
         public bool? ShouldContinueOnErrors { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </summary>
+        [WirePath("scriptLevel")]
         public KustoScriptLevel? ScriptLevel { get; set; }
 
         /// <summary> Indicates if the permissions for the script caller are kept following completion of the script. </summary>
+        [WirePath("principalPermissionsAction")]
         public PrincipalPermissionsAction? PrincipalPermissionsAction { get; set; }
 
         /// <summary> The resource identifier of the managed identity to be used. When provided, the managed identity will be used to read the script content from the scriptUrl. </summary>
+        [WirePath("managedIdentityResourceId")]
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
     }
 }

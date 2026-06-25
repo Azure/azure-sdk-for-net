@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        [WirePath("size")]
         public float? Size { get; }
     }
 }

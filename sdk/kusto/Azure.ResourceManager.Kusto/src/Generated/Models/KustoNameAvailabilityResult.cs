@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
 
         /// <summary> The name that was checked. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Message providing the reason why the given name is invalid. </summary>
+        [WirePath("reason")]
         public KustoNameUnavailableReason? Reason { get; }
     }
 }

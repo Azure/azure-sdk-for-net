@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The list of Kusto cluster principal assignments. </summary>
+        [WirePath("value")]
         public IList<KustoClusterPrincipalAssignmentData> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

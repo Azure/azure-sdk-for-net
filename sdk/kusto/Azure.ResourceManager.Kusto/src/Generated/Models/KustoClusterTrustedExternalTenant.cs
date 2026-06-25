@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> GUID representing an external tenant. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

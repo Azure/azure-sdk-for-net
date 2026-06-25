@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database properties. </summary>
+        [WirePath("properties")]
         internal ReadWriteDatabaseProperties Properties { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        [WirePath("properties.softDeletePeriod")]
         public TimeSpan? SoftDeletePeriod
         {
             get
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        [WirePath("properties.hotCachePeriod")]
         public TimeSpan? HotCachePeriod
         {
             get
@@ -82,6 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Indicates whether the database is followed. </summary>
+        [WirePath("properties.isFollowed")]
         public bool? IsFollowed
         {
             get
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> KeyVault properties for the database encryption. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public KustoKeyVaultProperties KeyVaultProperties
         {
             get
@@ -108,6 +114,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        [WirePath("properties.statistics.size")]
         public float? StatisticsSize
         {
             get
@@ -117,6 +124,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
+        [WirePath("properties.suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
             get

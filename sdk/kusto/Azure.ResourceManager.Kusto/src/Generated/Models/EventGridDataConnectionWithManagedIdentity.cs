@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The properties of the Event Grid data connection with mandatory managed identity. </summary>
+        [WirePath("properties")]
         internal EventGridConnectionWithManagedIdentityProperties Properties { get; set; }
 
         /// <summary> The resource ID of the storage account where the data resides. </summary>
+        [WirePath("properties.storageAccountResourceIdForManagedIdentity")]
         public ResourceIdentifier StorageAccountResourceIdForManagedIdentity
         {
             get
@@ -56,6 +58,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of the event hub that is subscribed to the storage account events. </summary>
+        [WirePath("properties.eventHubResourceIdForManagedIdentity")]
         public ResourceIdentifier EventHubResourceIdForManagedIdentity
         {
             get
@@ -73,6 +76,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID where the event grid is configured to send events. </summary>
+        [WirePath("properties.eventGridResourceId")]
         public ResourceIdentifier EventGridResourceId
         {
             get
@@ -90,6 +94,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The event hub consumer group. </summary>
+        [WirePath("properties.consumerGroup")]
         public string ConsumerGroup
         {
             get
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
+        [WirePath("properties.tableName")]
         public string TableName
         {
             get
@@ -124,6 +130,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
+        [WirePath("properties.mappingRuleName")]
         public string MappingRuleName
         {
             get
@@ -141,6 +148,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
+        [WirePath("properties.dataFormat")]
         public KustoEventGridDataFormat? DataFormat
         {
             get
@@ -158,6 +166,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </summary>
+        [WirePath("properties.ignoreFirstRecord")]
         public bool? ShouldIgnoreFirstRecord
         {
             get
@@ -175,6 +184,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of blob storage event type to process. </summary>
+        [WirePath("properties.blobStorageEventType")]
         public BlobStorageEventType? BlobStorageEventType
         {
             get
@@ -192,6 +202,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub and storage account. </summary>
+        [WirePath("properties.managedIdentityResourceId")]
         public ResourceIdentifier ManagedIdentityResourceId
         {
             get
@@ -209,6 +220,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The object ID of managedIdentityResourceId. </summary>
+        [WirePath("properties.managedIdentityObjectId")]
         public Guid? ManagedIdentityObjectId
         {
             get
@@ -218,6 +230,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Indication for database routing information from the data connection, by default only database routing information is allowed. </summary>
+        [WirePath("properties.databaseRouting")]
         public KustoDatabaseRouting? DatabaseRouting
         {
             get
@@ -235,6 +248,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The language extension name. </summary>
+        [WirePath("languageExtensionName")]
         public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
 
         /// <summary> The language extension image name. </summary>
+        [WirePath("languageExtensionImageName")]
         public KustoLanguageExtensionImageName? LanguageExtensionImageName { get; set; }
 
         /// <summary> The sandbox custom image name that should be enabled as the active language extension. Sandbox custom image is a cluster sub resource. When this property is set, LanguageExtensionImageName should be set to 'PythonCustomImage'. </summary>
+        [WirePath("languageExtensionCustomImageName")]
         public string LanguageExtensionCustomImageName { get; set; }
     }
 }

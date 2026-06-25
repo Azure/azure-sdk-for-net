@@ -36,9 +36,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database properties. </summary>
+        [WirePath("properties")]
         internal ReadOnlyFollowingDatabaseProperties Properties { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public KustoProvisioningState? ProvisioningState
         {
             get
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        [WirePath("properties.softDeletePeriod")]
         public TimeSpan? SoftDeletePeriod
         {
             get
@@ -57,6 +60,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        [WirePath("properties.hotCachePeriod")]
         public TimeSpan? HotCachePeriod
         {
             get
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the leader cluster. </summary>
+        [WirePath("properties.leaderClusterResourceId")]
         public string LeaderClusterResourceId
         {
             get
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the attached database configuration cluster. </summary>
+        [WirePath("properties.attachedDatabaseConfigurationName")]
         public string AttachedDatabaseConfigurationName
         {
             get
@@ -92,6 +98,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The principals modification kind of the database. </summary>
+        [WirePath("properties.principalsModificationKind")]
         public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("properties.tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties
         {
             get
@@ -110,6 +118,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </summary>
+        [WirePath("properties.originalDatabaseName")]
         public string OriginalDatabaseName
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The origin of the following setup. </summary>
+        [WirePath("properties.databaseShareOrigin")]
         public KustoDatabaseShareOrigin? DatabaseShareOrigin
         {
             get
@@ -128,6 +138,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        [WirePath("properties.statistics.size")]
         public float? StatisticsSize
         {
             get
@@ -137,6 +148,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
+        [WirePath("properties.suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
             get

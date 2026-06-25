@@ -35,9 +35,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The collection of available SKUs for an existing resource. </summary>
+        [WirePath("value")]
         public IList<KustoAvailableSkuDetails> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

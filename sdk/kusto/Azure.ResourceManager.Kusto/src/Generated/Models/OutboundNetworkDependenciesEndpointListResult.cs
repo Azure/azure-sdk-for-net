@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -36,9 +37,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The OutboundNetworkDependenciesEndpoint items on this page. </summary>
+        [WirePath("value")]
         public IList<OutboundNetworkDependenciesEndpoint> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

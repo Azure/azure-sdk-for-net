@@ -41,9 +41,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Cluster name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The type of resource, Microsoft.Kusto/clusters. </summary>
+        [WirePath("type")]
         public KustoClusterType ResourceType { get; }
     }
 }

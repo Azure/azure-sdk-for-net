@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The kind of the operation. </summary>
+        [WirePath("operationKind")]
         public string OperationKind { get; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The state of the operation. </summary>
+        [WirePath("operationState")]
         public string OperationState { get; }
     }
 }

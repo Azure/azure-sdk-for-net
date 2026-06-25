@@ -58,27 +58,35 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The name of the database which you would like to attach, use * if you want to follow all current and future databases. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary> The resource id of the cluster where the databases you would like to attach reside. </summary>
+        [WirePath("clusterResourceId")]
         public ResourceIdentifier ClusterResourceId { get; set; }
 
         /// <summary> The list of databases from the clusterResourceId which are currently attached to the cluster. </summary>
+        [WirePath("attachedDatabaseNames")]
         public IReadOnlyList<string> AttachedDatabaseNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The default principals modification kind. </summary>
+        [WirePath("defaultPrincipalsModificationKind")]
         public KustoDatabaseDefaultPrincipalsModificationKind DefaultPrincipalsModificationKind { get; set; }
 
         /// <summary> Table level sharing specifications. </summary>
+        [WirePath("tableLevelSharingProperties")]
         public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
 
         /// <summary> Overrides the original database name. Relevant only when attaching to a specific database. </summary>
+        [WirePath("databaseNameOverride")]
         public string DatabaseNameOverride { get; set; }
 
         /// <summary> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </summary>
+        [WirePath("databaseNamePrefix")]
         public string DatabaseNamePrefix { get; set; }
     }
 }

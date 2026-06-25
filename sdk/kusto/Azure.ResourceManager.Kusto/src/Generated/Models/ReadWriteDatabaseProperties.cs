@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -43,27 +44,35 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        [WirePath("softDeletePeriod")]
         public TimeSpan? SoftDeletePeriod { get; set; }
 
         /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        [WirePath("hotCachePeriod")]
         public TimeSpan? HotCachePeriod { get; set; }
 
         /// <summary> The statistics of the database. </summary>
+        [WirePath("statistics")]
         internal DatabaseStatistics Statistics { get; }
 
         /// <summary> Indicates whether the database is followed. </summary>
+        [WirePath("isFollowed")]
         public bool? IsFollowed { get; }
 
         /// <summary> KeyVault properties for the database encryption. </summary>
+        [WirePath("keyVaultProperties")]
         public KustoKeyVaultProperties KeyVaultProperties { get; set; }
 
         /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
+        [WirePath("suspensionDetails")]
         internal SuspensionDetails SuspensionDetails { get; }
 
         /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        [WirePath("statistics.size")]
         public float? StatisticsSize
         {
             get
@@ -73,6 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The starting date and time of the suspension state. </summary>
+        [WirePath("suspensionDetails.suspensionStartDate")]
         public DateTimeOffset? SuspensionStartOn
         {
             get

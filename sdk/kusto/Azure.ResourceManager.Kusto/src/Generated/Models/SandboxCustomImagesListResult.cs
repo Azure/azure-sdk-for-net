@@ -37,9 +37,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The SandboxCustomImage items on this page. </summary>
+        [WirePath("value")]
         public IList<SandboxCustomImageData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

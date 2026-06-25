@@ -47,18 +47,23 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> The tier of the SKU. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
 
         /// <summary> The set of locations that the SKU is available. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
 
         /// <summary> Locations and zones. </summary>
+        [WirePath("locationInfo")]
         public IReadOnlyList<KustoSkuLocationInfoItem> LocationInfo { get; }
 
         /// <summary>
@@ -87,6 +92,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("restrictions")]
         public IReadOnlyList<BinaryData> Restrictions { get; }
     }
 }

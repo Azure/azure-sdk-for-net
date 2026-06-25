@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -39,18 +40,23 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The name of the key vault key. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; set; }
 
         /// <summary> The version of the key vault key. </summary>
+        [WirePath("keyVersion")]
         public string KeyVersion { get; set; }
 
         /// <summary> The Uri of the key vault. </summary>
+        [WirePath("keyVaultUri")]
         public Uri KeyVaultUri { get; set; }
 
         /// <summary> The user assigned identity (ARM resource id) that has access to the key. The identity must have 'Get', 'Wrap Key', and 'Unwrap Key' permissions on the Key Vault key, or be assigned the 'Key Vault Crypto Service Encryption User' role. </summary>
+        [WirePath("userIdentity")]
         public string UserIdentity { get; set; }
 
         /// <summary> The application (client) ID of the multi-tenant Microsoft Entra application. Used for cross-tenant customer-managed key scenarios where the encryption key is stored in a different tenant than the cluster. The application must be configured with the user-assigned managed identity as a federated identity credential. </summary>
+        [WirePath("federatedIdentityClientId")]
         public string FederatedIdentityClientId { get; set; }
     }
 }

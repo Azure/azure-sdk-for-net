@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -33,9 +34,11 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The port an endpoint is connected to. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
 
         /// <summary> The ip address of the endpoint. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; set; }
     }
 }

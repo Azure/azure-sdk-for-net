@@ -55,27 +55,35 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The principal ID assigned to the cluster principal. It can be a user email, application ID, or security group name. </summary>
+        [WirePath("principalId")]
         public string ClusterPrincipalId { get; set; }
 
         /// <summary> Cluster principal role. </summary>
+        [WirePath("role")]
         public KustoClusterPrincipalRole Role { get; set; }
 
         /// <summary> The tenant id of the principal. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
 
         /// <summary> Principal type. </summary>
+        [WirePath("principalType")]
         public KustoPrincipalAssignmentType PrincipalType { get; set; }
 
         /// <summary> The tenant name of the principal. </summary>
+        [WirePath("tenantName")]
         public string TenantName { get; }
 
         /// <summary> The principal name. </summary>
+        [WirePath("principalName")]
         public string PrincipalName { get; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
 
         /// <summary> The service principal object id in AAD (Azure active directory). </summary>
+        [WirePath("aadObjectId")]
         public Guid? AadObjectId { get; }
     }
 }

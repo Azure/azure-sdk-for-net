@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -41,18 +42,23 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The language name, for example Python. </summary>
+        [WirePath("language")]
         public SandboxCustomImageLanguage Language { get; set; }
 
         /// <summary> The version of the language. Either this property or baseImageName should be specified. </summary>
+        [WirePath("languageVersion")]
         public string LanguageVersion { get; set; }
 
         /// <summary> The base image name on which the custom image is built on top of. It can be one of the LanguageExtensionImageName (e.g.: 'Python3_10_8', 'Python3_10_8_DL') or the name of an existing custom image. Either this property or languageVersion should be specified. </summary>
+        [WirePath("baseImageName")]
         public string BaseImageName { get; set; }
 
         /// <summary> The requirements file content. </summary>
+        [WirePath("requirementsFileContent")]
         public string RequirementsFileContent { get; set; }
 
         /// <summary> The provisioned state of the resource. </summary>
+        [WirePath("provisioningState")]
         public KustoProvisioningState? ProvisioningState { get; }
     }
 }

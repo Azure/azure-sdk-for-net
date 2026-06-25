@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -37,15 +38,19 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> The resource ID of the cluster. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The public URL of the cluster. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; }
 
         /// <summary> The public data ingestion URL of the cluster. </summary>
+        [WirePath("dataIngestionUri")]
         public Uri DataIngestionUri { get; }
 
         /// <summary> The role of the cluster in the migration process. </summary>
+        [WirePath("role")]
         public MigrationClusterRole? Role { get; }
     }
 }
