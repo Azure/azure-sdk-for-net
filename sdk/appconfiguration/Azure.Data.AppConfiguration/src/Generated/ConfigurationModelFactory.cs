@@ -17,6 +17,74 @@ namespace Azure.Data.AppConfiguration
     public static partial class ConfigurationModelFactory
     {
 
+        /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
+        /// <param name="name"> The name of the snapshot. </param>
+        /// <param name="status"> The current status of the snapshot. </param>
+        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
+        /// <param name="snapshotComposition">
+        /// The composition type describes how the key-values within the snapshot are
+        /// composed. The 'key' composition type ensures there are no two key-values
+        /// containing the same key. The 'key_label' composition type ensures there are no
+        /// two key-values containing the same key and label.
+        /// </param>
+        /// <param name="createdOn"> The time that the snapshot was created. </param>
+        /// <param name="expiresOn"> The time that the snapshot will expire. </param>
+        /// <param name="retentionPeriod">
+        /// The amount of time, in seconds, that a snapshot will remain in the archived
+        /// state before expiring. This property is only writable during the creation of a
+        /// snapshot. If not specified, the default lifetime of key-value revisions will be
+        /// used.
+        /// </param>
+        /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
+        /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
+        /// <param name="tags"> The tags of the snapshot. </param>
+        /// <param name="description"> The description of the snapshot. </param>
+        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
+        /// <returns> A new <see cref="AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
+        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, string description = default, ETag eTag = default)
+        {
+            filters ??= new ChangeTrackingList<ConfigurationSettingsFilter>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfigurationSnapshot(
+                name,
+                status,
+                filters.ToList(),
+                snapshotComposition,
+                createdOn,
+                expiresOn,
+                retentionPeriod,
+                sizeInBytes,
+                itemCount,
+                tags,
+                description,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Enables filtering of key-values. Syntax reference:
+        /// https://aka.ms/azconfig/docs/restapisnapshots
+        /// </summary>
+        /// <param name="key"> Filters key-values by their key field. </param>
+        /// <param name="label"> Filters key-values by their label field. </param>
+        /// <param name="tags"> Filters key-values by their tags field. </param>
+        /// <returns> A new <see cref="AppConfiguration.ConfigurationSettingsFilter"/> instance for mocking. </returns>
+        public static ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = default, string label = default, IEnumerable<string> tags = default)
+        {
+            tags ??= new ChangeTrackingList<string>();
+
+            return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Labels are used to group key values or feature flags. </summary>
+        /// <param name="name"> The name of the label. </param>
+        /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
+        public static SettingLabel SettingLabel(string name = default)
+        {
+            return new SettingLabel(name, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A feature flag. </summary>
         /// <param name="name"> The name of the feature flag. </param>
         /// <param name="enabled"> The enabled state of the feature flag. </param>
@@ -156,85 +224,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="snapshotComposition">
         /// The composition type describes how the key-values within the snapshot are
-        /// composed. The 'key' composition type ensures there are no two key-values
-        /// containing the same key. The 'key_label' composition type ensures there are no
-        /// two key-values containing the same key and label.
+        ///                         composed. The 'key' composition type ensures there are no two key-values
+        ///                         containing the same key. The 'key_label' composition type ensures there are no
+        ///                         two key-values containing the same key and label.
         /// </param>
         /// <param name="createdOn"> The time that the snapshot was created. </param>
         /// <param name="expiresOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod">
         /// The amount of time, in seconds, that a snapshot will remain in the archived
-        /// state before expiring. This property is only writable during the creation of a
-        /// snapshot. If not specified, the default lifetime of key-value revisions will be
-        /// used.
-        /// </param>
-        /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
-        /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
-        /// <param name="tags"> The tags of the snapshot. </param>
-        /// <param name="description"> The description of the snapshot. </param>
-        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
-        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, string description = default, ETag eTag = default)
-        {
-            filters ??= new ChangeTrackingList<ConfigurationSettingsFilter>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfigurationSnapshot(
-                name,
-                status,
-                filters.ToList(),
-                snapshotComposition,
-                createdOn,
-                expiresOn,
-                retentionPeriod,
-                sizeInBytes,
-                itemCount,
-                tags,
-                description,
-                eTag,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Enables filtering of key-values. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapisnapshots
-        /// </summary>
-        /// <param name="key"> Filters key-values by their key field. </param>
-        /// <param name="label"> Filters key-values by their label field. </param>
-        /// <param name="tags"> Filters key-values by their tags field. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSettingsFilter"/> instance for mocking. </returns>
-        public static ConfigurationSettingsFilter ConfigurationSettingsFilter(string key = default, string label = default, IEnumerable<string> tags = default)
-        {
-            tags ??= new ChangeTrackingList<string>();
-
-            return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Labels are used to group key values or feature flags. </summary>
-        /// <param name="name"> The name of the label. </param>
-        /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
-        public static SettingLabel SettingLabel(string name = default)
-        {
-            return new SettingLabel(name, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-        /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="status"> The current status of the snapshot. </param>
-        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <param name="snapshotComposition">
-        /// The composition type describes how the key-values within the snapshot are
-        ///             composed. The 'key' composition type ensures there are no two key-values
-        ///             containing the same key. The 'key_label' composition type ensures there are no
-        ///             two key-values containing the same key and label.
-        /// </param>
-        /// <param name="createdOn"> The time that the snapshot was created. </param>
-        /// <param name="expiresOn"> The time that the snapshot will expire. </param>
-        /// <param name="retentionPeriod">
-        /// The amount of time, in seconds, that a snapshot will remain in the archived
-        ///             state before expiring. This property is only writable during the creation of a
-        ///             snapshot. If not specified, the default lifetime of key-value revisions will be
-        ///             used.
+        ///                         state before expiring. This property is only writable during the creation of a
+        ///                         snapshot. If not specified, the default lifetime of key-value revisions will be
+        ///                         used.
         /// </param>
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>

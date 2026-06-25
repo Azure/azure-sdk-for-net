@@ -7,16 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT : AsyncPageable<FeatureFlag>
+    internal partial class FeatureFlagClientGetFeatureFlagRevisionsCollectionResultOfT : Pageable<FeatureFlag>
     {
-        private readonly ConfigurationClient _client;
+        private readonly FeatureFlagClient _client;
         private readonly string _name;
         private readonly string _label;
         private readonly string _after;
@@ -27,8 +26,8 @@ namespace Azure.Data.AppConfiguration
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConfigurationClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of FeatureFlagClientGetFeatureFlagRevisionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The FeatureFlagClient client used to send requests. </param>
         /// <param name="name"> A filter used to match names. </param>
         /// <param name="label">
         /// A filter used to match labels. Syntax reference:
@@ -47,7 +46,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT(ConfigurationClient client, string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeatureFlagClientGetFeatureFlagRevisionsCollectionResultOfT(FeatureFlagClient client, string name, string label, string after, IEnumerable<string> @select, IEnumerable<string> tags, string syncToken, MatchConditions matchConditions, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _name = name;
@@ -61,16 +60,16 @@ namespace Azure.Data.AppConfiguration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FeatureFlagClientGetFeatureFlagRevisionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetFeatureFlagRevisionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FeatureFlag>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of FeatureFlagClientGetFeatureFlagRevisionsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<FeatureFlag>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -89,14 +88,14 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetFeatureFlagRevisionsRequest(nextLink, _name, _label, _after, _select, _tags, _syncToken, _matchConditions, _context) : _client.CreateGetFeatureFlagRevisionsRequest(_name, _label, _after, _select, _tags, _syncToken, _matchConditions, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

@@ -6,16 +6,18 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetFeatureFlagsCollectionResultOfT : Pageable<FeatureFlag>
+    internal partial class FeatureFlagClientGetFeatureFlagsAsyncCollectionResult : AsyncPageable<BinaryData>
     {
-        private readonly ConfigurationClient _client;
+        private readonly FeatureFlagClient _client;
         private readonly string _name;
         private readonly string _label;
         private readonly string _syncToken;
@@ -27,8 +29,8 @@ namespace Azure.Data.AppConfiguration
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetFeatureFlagsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConfigurationClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of FeatureFlagClientGetFeatureFlagsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The FeatureFlagClient client used to send requests. </param>
         /// <param name="name"> A filter used to match feature flag names. </param>
         /// <param name="label">
         /// A filter used to match labels. Syntax reference:
@@ -51,7 +53,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConfigurationClientGetFeatureFlagsCollectionResultOfT(ConfigurationClient client, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeatureFlagClientGetFeatureFlagsAsyncCollectionResult(FeatureFlagClient client, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _name = name;
@@ -66,22 +68,27 @@ namespace Azure.Data.AppConfiguration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetFeatureFlagsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FeatureFlagClientGetFeatureFlagsAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetFeatureFlagsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<FeatureFlag>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of FeatureFlagClientGetFeatureFlagsAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
                 FeatureFlagListResult result = (FeatureFlagListResult)response;
-                yield return Page<FeatureFlag>.FromValues((IReadOnlyList<FeatureFlag>)result.Items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in result.Items)
+                {
+                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureDataAppConfigurationContext.Default));
+                }
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -94,14 +101,14 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetFeatureFlagsRequest(nextLink, _name, _label, _syncToken, _after, _acceptDatetime, _select, _matchConditions, _tags, _context) : _client.CreateGetFeatureFlagsRequest(_name, _label, _syncToken, _after, _acceptDatetime, _select, _matchConditions, _tags, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -181,9 +181,9 @@ namespace Azure.Data.AppConfiguration.Samples
             #region Snippet:SetFeatureFlag
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
             FeatureFlag flag = client.SetFeatureFlag("some_feature", enabled: true);
             Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
@@ -198,16 +198,16 @@ namespace Azure.Data.AppConfiguration.Samples
             var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
-            var setupClient = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
             setupClient.SetFeatureFlag("some_feature", enabled: true);
 #endif
 
             #region Snippet:GetFeatureFlag
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
             FeatureFlag flag = client.GetFeatureFlag("some_feature");
             Console.WriteLine($"Feature flag '{flag.Name}' is enabled: {flag.Enabled}");
@@ -222,16 +222,16 @@ namespace Azure.Data.AppConfiguration.Samples
             var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
-            var setupClient = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
             setupClient.SetFeatureFlag("some_feature", enabled: true);
 #endif
 
             #region Snippet:GetFeatureFlags
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
             var selector = new FeatureFlagSelector { NameFilter = "some_*" };
             foreach (FeatureFlag flag in client.GetFeatureFlags(selector))
@@ -249,16 +249,16 @@ namespace Azure.Data.AppConfiguration.Samples
             var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
 
             // Make sure a feature flag exists.
-            var setupClient = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var setupClient = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
             setupClient.SetFeatureFlag("some_feature", enabled: true);
 #endif
 
             #region Snippet:DeleteFeatureFlag
 #if SNIPPET
             string endpoint = "<endpoint>";
-            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new FeatureFlagClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
-            var client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
+            var client = new FeatureFlagClient(new Uri(endpoint), TestEnvironment.Credential, options);
 #endif
             client.DeleteFeatureFlag("some_feature");
             #endregion Snippet:DeleteFeatureFlag
@@ -295,7 +295,7 @@ namespace Azure.Data.AppConfiguration.Samples
             var options = new ConfigurationClientOptions { Audience = TestEnvironment.GetAudience() };
             ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), TestEnvironment.Credential, options);
             await client.DeleteConfigurationSettingAsync("some_key");
-            await client.DeleteFeatureFlagAsync("some_feature");
+            await client.GetFeatureFlagClient().DeleteFeatureFlagAsync("some_feature");
         }
     }
 }

@@ -14,9 +14,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT : AsyncPageable<FeatureFlag>
+    internal partial class FeatureFlagClientGetFeatureFlagsAsyncCollectionResultOfT : AsyncPageable<FeatureFlag>
     {
-        private readonly ConfigurationClient _client;
+        private readonly FeatureFlagClient _client;
         private readonly string _name;
         private readonly string _label;
         private readonly string _syncToken;
@@ -28,8 +28,8 @@ namespace Azure.Data.AppConfiguration
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ConfigurationClient client used to send requests. </param>
+        /// <summary> Initializes a new instance of FeatureFlagClientGetFeatureFlagsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The FeatureFlagClient client used to send requests. </param>
         /// <param name="name"> A filter used to match feature flag names. </param>
         /// <param name="label">
         /// A filter used to match labels. Syntax reference:
@@ -52,7 +52,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT(ConfigurationClient client, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public FeatureFlagClientGetFeatureFlagsAsyncCollectionResultOfT(FeatureFlagClient client, string name, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, MatchConditions matchConditions, IEnumerable<string> tags, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _name = name;
@@ -67,10 +67,10 @@ namespace Azure.Data.AppConfiguration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FeatureFlagClientGetFeatureFlagsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetFeatureFlagsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of FeatureFlagClientGetFeatureFlagsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<FeatureFlag>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
