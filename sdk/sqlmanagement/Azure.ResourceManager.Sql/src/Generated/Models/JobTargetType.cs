@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct JobTargetType : IEquatable<JobTargetType>
     {
         private readonly string _value;
+        /// <summary> TargetGroup. </summary>
+        private const string TargetGroupValue = "TargetGroup";
+        /// <summary> SqlDatabase. </summary>
+        private const string SqlDatabaseValue = "SqlDatabase";
+        /// <summary> SqlElasticPool. </summary>
+        private const string SqlElasticPoolValue = "SqlElasticPool";
+        /// <summary> SqlShardMap. </summary>
+        private const string SqlShardMapValue = "SqlShardMap";
+        /// <summary> SqlServer. </summary>
+        private const string SqlServerValue = "SqlServer";
 
         /// <summary> Initializes a new instance of <see cref="JobTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobTargetType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TargetGroupValue = "TargetGroup";
-        private const string SqlDatabaseValue = "SqlDatabase";
-        private const string SqlElasticPoolValue = "SqlElasticPool";
-        private const string SqlShardMapValue = "SqlShardMap";
-        private const string SqlServerValue = "SqlServer";
+            _value = value;
+        }
 
         /// <summary> TargetGroup. </summary>
         public static JobTargetType TargetGroup { get; } = new JobTargetType(TargetGroupValue);
+
         /// <summary> SqlDatabase. </summary>
         public static JobTargetType SqlDatabase { get; } = new JobTargetType(SqlDatabaseValue);
+
         /// <summary> SqlElasticPool. </summary>
         public static JobTargetType SqlElasticPool { get; } = new JobTargetType(SqlElasticPoolValue);
+
         /// <summary> SqlShardMap. </summary>
         public static JobTargetType SqlShardMap { get; } = new JobTargetType(SqlShardMapValue);
+
         /// <summary> SqlServer. </summary>
         public static JobTargetType SqlServer { get; } = new JobTargetType(SqlServerValue);
+
         /// <summary> Determines if two <see cref="JobTargetType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobTargetType left, JobTargetType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobTargetType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobTargetType left, JobTargetType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobTargetType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobTargetType(string value) => new JobTargetType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobTargetType?(string value) => value == null ? null : new JobTargetType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobTargetType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobTargetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

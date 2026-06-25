@@ -6,21 +6,22 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DicomServiceAuthenticationConfiguration))]
     [ModelReaderWriterBuildable(typeof(Models.DicomServiceCollection))]
     [ModelReaderWriterBuildable(typeof(DicomServiceCorsConfiguration))]
     [ModelReaderWriterBuildable(typeof(DicomServiceData))]
     [ModelReaderWriterBuildable(typeof(DicomServicePatch))]
+    [ModelReaderWriterBuildable(typeof(DicomServiceProperties))]
     [ModelReaderWriterBuildable(typeof(DicomServiceResource))]
     [ModelReaderWriterBuildable(typeof(Encryption))]
     [ModelReaderWriterBuildable(typeof(EncryptionCustomerManagedKeyEncryption))]
@@ -32,19 +33,25 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(FhirServiceExportConfiguration))]
     [ModelReaderWriterBuildable(typeof(FhirServiceImportConfiguration))]
     [ModelReaderWriterBuildable(typeof(FhirServicePatch))]
+    [ModelReaderWriterBuildable(typeof(FhirServiceProperties))]
     [ModelReaderWriterBuildable(typeof(FhirServiceResource))]
     [ModelReaderWriterBuildable(typeof(FhirServiceResourceVersionPolicyConfiguration))]
+    [ModelReaderWriterBuildable(typeof(Models.HealthcareApisIotConnectorCollection))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotConnectorData))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotConnectorEventHubIngestionConfiguration))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotConnectorPatch))]
+    [ModelReaderWriterBuildable(typeof(HealthcareApisIotConnectorProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotConnectorResource))]
+    [ModelReaderWriterBuildable(typeof(Models.HealthcareApisIotFhirDestinationCollection))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotFhirDestinationData))]
+    [ModelReaderWriterBuildable(typeof(HealthcareApisIotFhirDestinationProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotFhirDestinationResource))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotMappingProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisResourceTags))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisServiceAccessPolicyEntry))]
@@ -68,19 +75,31 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(HealthcareApisWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(ImplementationGuidesConfiguration))]
-    [ModelReaderWriterBuildable(typeof(IotConnectorCollection))]
-    [ModelReaderWriterBuildable(typeof(IotFhirDestinationCollection))]
+    [ModelReaderWriterBuildable(typeof(IotDestinationProperties))]
+    [ModelReaderWriterBuildable(typeof(ListOperations))]
+    [ModelReaderWriterBuildable(typeof(LogSpecification))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MetricDimension))]
+    [ModelReaderWriterBuildable(typeof(MetricSpecification))]
+    [ModelReaderWriterBuildable(typeof(OperationDetail))]
+    [ModelReaderWriterBuildable(typeof(OperationDisplay))]
+    [ModelReaderWriterBuildable(typeof(OperationProperties))]
+    [ModelReaderWriterBuildable(typeof(OperationResultsDescription))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionListResultDescription))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceListResultDescription))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceExportConfigurationInfo))]
     [ModelReaderWriterBuildable(typeof(ServicesDescriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(ServiceSpecification))]
+    [ModelReaderWriterBuildable(typeof(ServicesPropertiesUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderApplication))]
     [ModelReaderWriterBuildable(typeof(SmartIdentityProviderConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(StorageIndexingConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WorkspaceList))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerHealthcareApisContext : ModelReaderWriterContext
     {
     }
