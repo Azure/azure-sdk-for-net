@@ -7,30 +7,47 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents IoT requirements check request. </summary>
-    public partial class IotCheckRequirements : DataConnectorsCheckRequirements
+    public partial class IoTCheckRequirements : DataConnectorsCheckRequirements
     {
-        /// <summary> Initializes a new instance of <see cref="IotCheckRequirements"/>. </summary>
-        public IotCheckRequirements()
+        /// <summary> Initializes a new instance of <see cref="IoTCheckRequirements"/>. </summary>
+        public IoTCheckRequirements() : base(DataConnectorKind.IOT)
         {
-            Kind = DataConnectorKind.IOT;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotCheckRequirements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IoTCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
-        internal IotCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string subscriptionId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> IoT requirements check properties. </param>
+        internal IoTCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            SubscriptionId = subscriptionId;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> IoT requirements check properties. </summary>
+        [WirePath("properties")]
+        internal IoTCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The subscription id to connect to, and get the data from. </summary>
         [WirePath("properties.subscriptionId")]
-        public string SubscriptionId { get; set; }
+        public string SubscriptionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubscriptionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTCheckRequirementsProperties();
+                }
+                Properties.SubscriptionId = value;
+            }
+        }
     }
 }

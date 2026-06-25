@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsIncidentOwnerType : IEquatable<SecurityInsightsIncidentOwnerType>
     {
         private readonly string _value;
+        /// <summary> The hunt owner type is unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> The hunt owner type is an AAD user. </summary>
+        private const string UserValue = "User";
+        /// <summary> The hunt owner type is an AAD group. </summary>
+        private const string GroupValue = "Group";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsIncidentOwnerType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string UserValue = "User";
-        private const string GroupValue = "Group";
+            _value = value;
+        }
 
         /// <summary> The hunt owner type is unknown. </summary>
         public static SecurityInsightsIncidentOwnerType Unknown { get; } = new SecurityInsightsIncidentOwnerType(UnknownValue);
+
         /// <summary> The hunt owner type is an AAD user. </summary>
         public static SecurityInsightsIncidentOwnerType User { get; } = new SecurityInsightsIncidentOwnerType(UserValue);
+
         /// <summary> The hunt owner type is an AAD group. </summary>
         public static SecurityInsightsIncidentOwnerType Group { get; } = new SecurityInsightsIncidentOwnerType(GroupValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentOwnerType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsIncidentOwnerType left, SecurityInsightsIncidentOwnerType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsIncidentOwnerType(string value) => new SecurityInsightsIncidentOwnerType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentOwnerType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsIncidentOwnerType?(string value) => value == null ? null : new SecurityInsightsIncidentOwnerType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsIncidentOwnerType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsIncidentOwnerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

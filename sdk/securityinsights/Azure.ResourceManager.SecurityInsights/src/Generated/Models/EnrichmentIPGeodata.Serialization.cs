@@ -8,17 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EnrichmentIPGeodata : IUtf8JsonSerializable, IJsonModel<EnrichmentIPGeodata>
+    /// <summary> Geodata information for a given IP address. </summary>
+    public partial class EnrichmentIpGeodata : IJsonModel<EnrichmentIpGeodata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentIPGeodata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnrichmentIpGeodata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentIpGeodata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnrichmentIpGeodata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnrichmentIpGeodata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
-        void IJsonModel<EnrichmentIPGeodata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentIpGeodata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnrichmentIpGeodata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnrichmentIpGeodata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnrichmentIpGeodata IPersistableModel<EnrichmentIpGeodata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnrichmentIpGeodata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnrichmentIpGeodata"/> from. </param>
+        internal static EnrichmentIpGeodata FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEnrichmentIpGeodata(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<EnrichmentIpGeodata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,12 +77,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPGeodata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentIpGeodata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentIPGeodata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentIpGeodata)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
@@ -50,10 +97,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(CityCf))
+            if (Optional.IsDefined(CityConfidenceFactor))
             {
-                writer.WritePropertyName("cityCf"u8);
-                writer.WriteNumberValue(CityCf.Value);
+                writer.WritePropertyName("cityConfidenceFactor"u8);
+                writer.WriteNumberValue(CityConfidenceFactor.Value);
             }
             if (Optional.IsDefined(Continent))
             {
@@ -65,20 +112,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(CountryCf))
+            if (Optional.IsDefined(CountryConfidenceFactor))
             {
-                writer.WritePropertyName("countryCf"u8);
-                writer.WriteNumberValue(CountryCf.Value);
+                writer.WritePropertyName("countryConfidenceFactor"u8);
+                writer.WriteNumberValue(CountryConfidenceFactor.Value);
             }
-            if (Optional.IsDefined(IPAddr))
+            if (Optional.IsDefined(IpAddr))
             {
                 writer.WritePropertyName("ipAddr"u8);
-                writer.WriteStringValue(IPAddr);
+                writer.WriteStringValue(IpAddr);
             }
-            if (Optional.IsDefined(IPRoutingType))
+            if (Optional.IsDefined(IpRoutingType))
             {
                 writer.WritePropertyName("ipRoutingType"u8);
-                writer.WriteStringValue(IPRoutingType);
+                writer.WriteStringValue(IpRoutingType);
             }
             if (Optional.IsDefined(Latitude))
             {
@@ -110,25 +157,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(StateCf))
+            if (Optional.IsDefined(StateConfidenceFactor))
             {
-                writer.WritePropertyName("stateCf"u8);
-                writer.WriteNumberValue(StateCf.Value);
+                writer.WritePropertyName("stateConfidenceFactor"u8);
+                writer.WriteNumberValue(StateConfidenceFactor.Value);
             }
             if (Optional.IsDefined(StateCode))
             {
                 writer.WritePropertyName("stateCode"u8);
                 writer.WriteStringValue(StateCode);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -137,22 +184,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        EnrichmentIPGeodata IJsonModel<EnrichmentIPGeodata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnrichmentIpGeodata IJsonModel<EnrichmentIpGeodata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnrichmentIpGeodata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPGeodata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentIpGeodata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentIPGeodata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentIpGeodata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEnrichmentIPGeodata(document.RootElement, options);
+            return DeserializeEnrichmentIpGeodata(document.RootElement, options);
         }
 
-        internal static EnrichmentIPGeodata DeserializeEnrichmentIPGeodata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EnrichmentIpGeodata DeserializeEnrichmentIpGeodata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,10 +212,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string asn = default;
             string carrier = default;
             string city = default;
-            int? cityCf = default;
+            int? cityConfidenceFactor = default;
             string continent = default;
             string country = default;
-            int? countryCf = default;
+            int? countryConfidenceFactor = default;
             string ipAddr = default;
             string ipRoutingType = default;
             string latitude = default;
@@ -172,123 +224,121 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string organizationType = default;
             string region = default;
             string state = default;
-            int? stateCf = default;
+            int? stateConfidenceFactor = default;
             string stateCode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("asn"u8))
+                if (prop.NameEquals("asn"u8))
                 {
-                    asn = property.Value.GetString();
+                    asn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("carrier"u8))
+                if (prop.NameEquals("carrier"u8))
                 {
-                    carrier = property.Value.GetString();
+                    carrier = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("city"u8))
+                if (prop.NameEquals("city"u8))
                 {
-                    city = property.Value.GetString();
+                    city = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cityCf"u8))
+                if (prop.NameEquals("cityConfidenceFactor"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cityCf = property.Value.GetInt32();
+                    cityConfidenceFactor = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("continent"u8))
+                if (prop.NameEquals("continent"u8))
                 {
-                    continent = property.Value.GetString();
+                    continent = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("country"u8))
+                if (prop.NameEquals("country"u8))
                 {
-                    country = property.Value.GetString();
+                    country = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("countryCf"u8))
+                if (prop.NameEquals("countryConfidenceFactor"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    countryCf = property.Value.GetInt32();
+                    countryConfidenceFactor = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipAddr"u8))
+                if (prop.NameEquals("ipAddr"u8))
                 {
-                    ipAddr = property.Value.GetString();
+                    ipAddr = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipRoutingType"u8))
+                if (prop.NameEquals("ipRoutingType"u8))
                 {
-                    ipRoutingType = property.Value.GetString();
+                    ipRoutingType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latitude"u8))
+                if (prop.NameEquals("latitude"u8))
                 {
-                    latitude = property.Value.GetString();
+                    latitude = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("longitude"u8))
+                if (prop.NameEquals("longitude"u8))
                 {
-                    longitude = property.Value.GetString();
+                    longitude = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organization"u8))
+                if (prop.NameEquals("organization"u8))
                 {
-                    organization = property.Value.GetString();
+                    organization = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("organizationType"u8))
+                if (prop.NameEquals("organizationType"u8))
                 {
-                    organizationType = property.Value.GetString();
+                    organizationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("region"u8))
+                if (prop.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    state = property.Value.GetString();
+                    state = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateCf"u8))
+                if (prop.NameEquals("stateConfidenceFactor"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateCf = property.Value.GetInt32();
+                    stateConfidenceFactor = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stateCode"u8))
+                if (prop.NameEquals("stateCode"u8))
                 {
-                    stateCode = property.Value.GetString();
+                    stateCode = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EnrichmentIPGeodata(
+            return new EnrichmentIpGeodata(
                 asn,
                 carrier,
                 city,
-                cityCf,
+                cityConfidenceFactor,
                 continent,
                 country,
-                countryCf,
+                countryConfidenceFactor,
                 ipAddr,
                 ipRoutingType,
                 latitude,
@@ -297,424 +347,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 organizationType,
                 region,
                 state,
-                stateCf,
+                stateConfidenceFactor,
                 stateCode,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Asn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  asn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Asn))
-                {
-                    builder.Append("  asn: ");
-                    if (Asn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Asn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Asn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Carrier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  carrier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Carrier))
-                {
-                    builder.Append("  carrier: ");
-                    if (Carrier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Carrier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Carrier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(City), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  city: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(City))
-                {
-                    builder.Append("  city: ");
-                    if (City.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{City}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{City}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CityCf), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cityCf: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CityCf))
-                {
-                    builder.Append("  cityCf: ");
-                    builder.AppendLine($"{CityCf.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Continent), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  continent: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Continent))
-                {
-                    builder.Append("  continent: ");
-                    if (Continent.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Continent}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Continent}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  country: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Country))
-                {
-                    builder.Append("  country: ");
-                    if (Country.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Country}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Country}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryCf), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  countryCf: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountryCf))
-                {
-                    builder.Append("  countryCf: ");
-                    builder.AppendLine($"{CountryCf.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipAddr: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAddr))
-                {
-                    builder.Append("  ipAddr: ");
-                    if (IPAddr.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPAddr}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPAddr}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRoutingType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipRoutingType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPRoutingType))
-                {
-                    builder.Append("  ipRoutingType: ");
-                    if (IPRoutingType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPRoutingType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPRoutingType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  latitude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Latitude))
-                {
-                    builder.Append("  latitude: ");
-                    if (Latitude.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Latitude}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Latitude}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  longitude: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Longitude))
-                {
-                    builder.Append("  longitude: ");
-                    if (Longitude.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Longitude}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Longitude}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Organization), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  organization: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Organization))
-                {
-                    builder.Append("  organization: ");
-                    if (Organization.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Organization}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Organization}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OrganizationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  organizationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OrganizationType))
-                {
-                    builder.Append("  organizationType: ");
-                    if (OrganizationType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OrganizationType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OrganizationType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  region: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Region))
-                {
-                    builder.Append("  region: ");
-                    if (Region.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Region}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Region}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    if (State.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{State}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{State}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StateCf), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stateCf: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StateCf))
-                {
-                    builder.Append("  stateCf: ");
-                    builder.AppendLine($"{StateCf.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StateCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stateCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StateCode))
-                {
-                    builder.Append("  stateCode: ");
-                    if (StateCode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StateCode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StateCode}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EnrichmentIPGeodata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPGeodata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EnrichmentIPGeodata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EnrichmentIPGeodata IPersistableModel<EnrichmentIPGeodata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentIPGeodata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEnrichmentIPGeodata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnrichmentIPGeodata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EnrichmentIPGeodata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

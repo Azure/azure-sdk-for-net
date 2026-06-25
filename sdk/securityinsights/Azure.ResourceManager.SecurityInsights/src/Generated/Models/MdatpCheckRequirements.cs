@@ -7,30 +7,50 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) requirements check request. </summary>
-    public partial class MdatpCheckRequirements : DataConnectorsCheckRequirements
+    public partial class MDATPCheckRequirements : DataConnectorsCheckRequirements
     {
-        /// <summary> Initializes a new instance of <see cref="MdatpCheckRequirements"/>. </summary>
-        public MdatpCheckRequirements()
+        /// <summary> Initializes a new instance of <see cref="MDATPCheckRequirements"/>. </summary>
+        public MDATPCheckRequirements() : base(DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection)
         {
-            Kind = DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MdatpCheckRequirements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MDATPCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal MdatpCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> MDATP (Microsoft Defender Advanced Threat Protection) requirements check properties. </param>
+        internal MDATPCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MDATPCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> MDATP (Microsoft Defender Advanced Threat Protection) requirements check properties. </summary>
+        [WirePath("properties")]
+        internal MDATPCheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new MDATPCheckRequirementsProperties();
+                    }
+                    Properties.TenantId = value.Value;
+                }
+            }
+        }
     }
 }

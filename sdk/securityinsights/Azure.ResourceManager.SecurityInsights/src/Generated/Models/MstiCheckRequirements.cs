@@ -7,30 +7,50 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents Microsoft Threat Intelligence requirements check request. </summary>
-    public partial class MstiCheckRequirements : DataConnectorsCheckRequirements
+    public partial class MSTICheckRequirements : DataConnectorsCheckRequirements
     {
-        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirements"/>. </summary>
-        public MstiCheckRequirements()
+        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirements"/>. </summary>
+        public MSTICheckRequirements() : base(DataConnectorKind.MicrosoftThreatIntelligence)
         {
-            Kind = DataConnectorKind.MicrosoftThreatIntelligence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MstiCheckRequirements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MSTICheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal MstiCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Microsoft Threat Intelligence requirements check properties. </param>
+        internal MSTICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MSTICheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> Microsoft Threat Intelligence requirements check properties. </summary>
+        [WirePath("properties")]
+        internal MSTICheckRequirementsProperties Properties { get; set; }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new MSTICheckRequirementsProperties();
+                    }
+                    Properties.TenantId = value.Value;
+                }
+            }
+        }
     }
 }
