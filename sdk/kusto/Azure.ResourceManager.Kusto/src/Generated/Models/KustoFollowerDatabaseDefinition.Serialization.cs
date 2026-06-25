@@ -8,16 +8,72 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoFollowerDatabaseDefinition : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabaseDefinition>
+    /// <summary> A class representing follower database request. </summary>
+    public partial class KustoFollowerDatabaseDefinition : IJsonModel<KustoFollowerDatabaseDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabaseDefinition"/> for deserialization. </summary>
+        internal KustoFollowerDatabaseDefinition()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoFollowerDatabaseDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKustoFollowerDatabaseDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KustoFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoFollowerDatabaseDefinition IPersistableModel<KustoFollowerDatabaseDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoFollowerDatabaseDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="kustoFollowerDatabaseDefinition"> The <see cref="KustoFollowerDatabaseDefinition"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(KustoFollowerDatabaseDefinition kustoFollowerDatabaseDefinition)
+        {
+            if (kustoFollowerDatabaseDefinition == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(kustoFollowerDatabaseDefinition, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoFollowerDatabaseDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +85,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("clusterResourceId"u8);
             writer.WriteStringValue(ClusterResourceId);
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
@@ -54,15 +109,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("databaseShareOrigin"u8);
                 writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +126,27 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        KustoFollowerDatabaseDefinition IJsonModel<KustoFollowerDatabaseDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoFollowerDatabaseDefinition IJsonModel<KustoFollowerDatabaseDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KustoFollowerDatabaseDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKustoFollowerDatabaseDefinition(document.RootElement, options);
         }
 
-        internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,195 +156,54 @@ namespace Azure.ResourceManager.Kusto.Models
             string databaseName = default;
             KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
             KustoDatabaseShareOrigin? databaseShareOrigin = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("clusterResourceId"u8))
+                if (prop.NameEquals("clusterResourceId"u8))
                 {
-                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
+                    clusterResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("attachedDatabaseConfigurationName"u8))
+                if (prop.NameEquals("attachedDatabaseConfigurationName"u8))
                 {
-                    attachedDatabaseConfigurationName = property.Value.GetString();
+                    attachedDatabaseConfigurationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tableLevelSharingProperties"u8))
+                if (prop.NameEquals("tableLevelSharingProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value, options);
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("databaseShareOrigin"u8))
+                if (prop.NameEquals("databaseShareOrigin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseShareOrigin = new KustoDatabaseShareOrigin(property.Value.GetString());
+                    databaseShareOrigin = new KustoDatabaseShareOrigin(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new KustoFollowerDatabaseDefinition(
                 clusterResourceId,
                 attachedDatabaseConfigurationName,
                 databaseName,
                 tableLevelSharingProperties,
                 databaseShareOrigin,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clusterResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterResourceId))
-                {
-                    builder.Append("  clusterResourceId: ");
-                    builder.AppendLine($"'{ClusterResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AttachedDatabaseConfigurationName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  attachedDatabaseConfigurationName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AttachedDatabaseConfigurationName))
-                {
-                    builder.Append("  attachedDatabaseConfigurationName: ");
-                    if (AttachedDatabaseConfigurationName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AttachedDatabaseConfigurationName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AttachedDatabaseConfigurationName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  databaseName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseName))
-                {
-                    builder.Append("  databaseName: ");
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabaseName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableLevelSharingProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableLevelSharingProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableLevelSharingProperties))
-                {
-                    builder.Append("  tableLevelSharingProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, TableLevelSharingProperties, options, 2, false, "  tableLevelSharingProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseShareOrigin), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  databaseShareOrigin: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseShareOrigin))
-                {
-                    builder.Append("  databaseShareOrigin: ");
-                    builder.AppendLine($"'{DatabaseShareOrigin.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<KustoFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KustoFollowerDatabaseDefinition IPersistableModel<KustoFollowerDatabaseDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKustoFollowerDatabaseDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KustoFollowerDatabaseDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

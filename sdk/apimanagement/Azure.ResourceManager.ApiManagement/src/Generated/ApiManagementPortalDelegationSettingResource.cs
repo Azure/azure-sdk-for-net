@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementPortalDelegationSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementPortalDelegationSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementPortalDelegationSettingResource method.
+    /// A class representing a ApiManagementPortalDelegationSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApiManagementPortalDelegationSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementPortalDelegationSetting method.
     /// </summary>
     public partial class ApiManagementPortalDelegationSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApiManagementPortalDelegationSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serviceName"> The serviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics;
-        private readonly DelegationSettingsRestOperations _apiManagementPortalDelegationSettingDelegationSettingsRestClient;
+        private readonly ClientDiagnostics _delegationSettingsClientDiagnostics;
+        private readonly DelegationSettings _delegationSettingsRestClient;
         private readonly ApiManagementPortalDelegationSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/portalsettings";
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiManagementPortalDelegationSettingResource for mocking. </summary>
         protected ApiManagementPortalDelegationSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementPortalDelegationSettingResource(ArmClient client, ApiManagementPortalDelegationSettingData data) : this(client, data.Id)
@@ -54,71 +44,206 @@ namespace Azure.ResourceManager.ApiManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementPortalDelegationSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalDelegationSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementPortalDelegationSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementPortalDelegationSettingDelegationSettingsApiVersion);
-            _apiManagementPortalDelegationSettingDelegationSettingsRestClient = new DelegationSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPortalDelegationSettingDelegationSettingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string apiManagementPortalDelegationSettingApiVersion);
+            _delegationSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            _delegationSettingsRestClient = new DelegationSettings(_delegationSettingsClientDiagnostics, Pipeline, Endpoint, apiManagementPortalDelegationSettingApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApiManagementPortalDelegationSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
+        }
+
+        /// <summary>
+        /// Create or Update Delegation settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Create or update parameters. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ApiManagementPortalDelegationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ApiManagementPortalDelegationSettingData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementPortalDelegationSettingData> response = Response.FromValue(ApiManagementPortalDelegationSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource> operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or Update Delegation settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Create or update parameters. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ApiManagementPortalDelegationSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ApiManagementPortalDelegationSettingData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementPortalDelegationSettingData> response = Response.FromValue(ApiManagementPortalDelegationSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource> operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Get Delegation Settings for the Portal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementPortalDelegationSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiManagementPortalDelegationSettingData> response = Response.FromValue(ApiManagementPortalDelegationSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +257,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get Delegation Settings for the Portal.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementPortalDelegationSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiManagementPortalDelegationSettingData> response = Response.FromValue(ApiManagementPortalDelegationSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,36 +305,43 @@ namespace Azure.ResourceManager.ApiManagement
         /// Update Delegation settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update Delegation settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(ETag ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> UpdateAsync(string ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, ApiManagementPortalDelegationSettingData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -215,135 +355,44 @@ namespace Azure.ResourceManager.ApiManagement
         /// Update Delegation settings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update Delegation settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response Update(ETag ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Update(string ifMatch, ApiManagementPortalDelegationSettingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, ifMatch, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, ifMatch, ApiManagementPortalDelegationSettingData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or Update Delegation settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Create or update parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementPortalDelegationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create or Update Delegation settings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Create or update parameters. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementPortalDelegationSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalDelegationSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch, cancellationToken);
-                var uri = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ApiManagementPortalDelegationSettingResource>(Response.FromValue(new ApiManagementPortalDelegationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -356,31 +405,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the secret validation key of the DelegationSettings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation/listSecrets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation/listSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_ListSecrets</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_ListSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PortalSettingValidationKeyContract>> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PortalSettingValidationKeyContract> response = Response.FromValue(PortalSettingValidationKeyContract.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -394,107 +453,41 @@ namespace Azure.ResourceManager.ApiManagement
         /// Gets the secret validation key of the DelegationSettings.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation/listSecrets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation/listSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_ListSecrets</description>
+        /// <term> Operation Id. </term>
+        /// <description> DelegationSettings_ListSecrets. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApiManagementPortalDelegationSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PortalSettingValidationKeyContract> GetSecrets(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
+            using DiagnosticScope scope = _delegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetSecrets");
             scope.Start();
             try
             {
-                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the DelegationSettings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the entity state (Etag) version of the DelegationSettings.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DelegationSettings_GetEntityTag</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementPortalDelegationSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementPortalDelegationSettingDelegationSettingsClientDiagnostics.CreateScope("ApiManagementPortalDelegationSettingResource.GetEntityTag");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementPortalDelegationSettingDelegationSettingsRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _delegationSettingsRestClient.CreateGetSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PortalSettingValidationKeyContract> response = Response.FromValue(PortalSettingValidationKeyContract.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

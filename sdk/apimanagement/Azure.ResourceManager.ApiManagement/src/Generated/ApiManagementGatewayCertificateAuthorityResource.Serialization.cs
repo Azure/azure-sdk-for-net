@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiManagementGatewayCertificateAuthorityResource : IJsonModel<ApiManagementGatewayCertificateAuthorityData>
     {
-        private static ApiManagementGatewayCertificateAuthorityData s_dataDeserializationInstance;
-        private static ApiManagementGatewayCertificateAuthorityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiManagementGatewayCertificateAuthorityData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiManagementGatewayCertificateAuthorityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiManagementGatewayCertificateAuthorityData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayCertificateAuthorityData>)Data).Write(writer, options);
 
-        ApiManagementGatewayCertificateAuthorityData IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementGatewayCertificateAuthorityData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiManagementGatewayCertificateAuthorityData IJsonModel<ApiManagementGatewayCertificateAuthorityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiManagementGatewayCertificateAuthorityData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiManagementGatewayCertificateAuthorityData IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementGatewayCertificateAuthorityData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementGatewayCertificateAuthorityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiManagementGatewayCertificateAuthorityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
