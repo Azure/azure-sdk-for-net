@@ -59,8 +59,8 @@ namespace Azure.Security.KeyVault.Certificates
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSecurityKeyVaultCertificatesContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
+                yield return Page<BinaryData>.FromValues(items, string.IsNullOrEmpty(nextPageString) ? null : nextPageString, response);
                 if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;

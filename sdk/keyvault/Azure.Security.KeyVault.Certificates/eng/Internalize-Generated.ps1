@@ -22,6 +22,13 @@
                  Accept header).
                  Tracking: Azure/azure-sdk-for-net#60162.
 
+    Patch 6: continuation-token off-by-one in generated AsPages() loops.
+             The emitter yields the URI used to fetch the current page as
+             that page's ContinuationToken, rather than result.NextLink for
+             the next page. Reorder the yield so callers persisting/resuming
+             continuation tokens get correct behavior.
+             Tracking: Azure/azure-sdk-for-net#60274.
+
   Once the upstream emitter fixes ship and we bump the library-local emitter
   pin, the corresponding patches (and eventually this whole script) can be
   deleted.
@@ -132,5 +139,44 @@ if ($restClient) {
     if ($text -ne $original) {
         [System.IO.File]::WriteAllText($restClient.FullName, $text)
         Write-Host '  patched: KeyVaultCertificatesClient.RestClient.cs (wire-shape fixups)'
+    }
+}
+
+# --- Patch 6: continuation-token off-by-one in generated paging code ---------
+#
+# The emitter writes the loop body of AsPages() as:
+#     Response response = GetNextResponse(pageSizeHint, nextPage);
+#     ...
+#     yield return Page<T>.FromValues(items, nextPage?.AbsoluteUri ..., response);
+#     string nextPageString = result.NextLink;
+#     nextPage = new Uri(nextPageString, ...);
+#
+# This exposes the URI used to FETCH the current page as the current page's
+# ContinuationToken, instead of result.NextLink (the URI for the NEXT page).
+# Effect: page 1 has ContinuationToken == null even when the service returned
+# a nextLink; subsequent pages are off by one. Callers persisting the token
+# and resuming via AsPages(token) end up always one page behind.
+#
+# Legacy KeyVaultPipeline.GetPage* exposed response.NextLink, so we reorder
+# the loop to read NextLink BEFORE yielding and pass that into FromValues.
+# Tracking: Azure/azure-sdk-for-net#60274 (emitter bug).
+$collectionDir = Join-Path $GeneratedRoot 'CollectionResults'
+if (Test-Path $collectionDir) {
+    $buggyPattern = [regex] @"
+(?ms)                yield return Page<BinaryData>\.FromValues\(items, nextPage\?\.IsAbsoluteUri == true \? nextPage\.AbsoluteUri : nextPage\?\.OriginalString, response\);\r?\n                string nextPageString = result\.NextLink;\r?\n                if \(string\.IsNullOrEmpty\(nextPageString\)\)\r?\n                \{\r?\n                    yield break;\r?\n                \}\r?\n                nextPage = new Uri\(nextPageString, UriKind\.RelativeOrAbsolute\);
+"@
+    $fixedReplacement = @"
+                string nextPageString = result.NextLink;`r`n                yield return Page<BinaryData>.FromValues(items, string.IsNullOrEmpty(nextPageString) ? null : nextPageString, response);`r`n                if (string.IsNullOrEmpty(nextPageString))`r`n                {`r`n                    yield break;`r`n                }`r`n                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+"@
+    foreach ($file in (Get-ChildItem -Path $collectionDir -Recurse -Filter '*CollectionResult.cs' -File)) {
+        $t  = [System.IO.File]::ReadAllText($file.FullName)
+        $t2 = $buggyPattern.Replace($t, $fixedReplacement)
+        if ($t2 -ne $t) {
+            [System.IO.File]::WriteAllText($file.FullName, $t2)
+            Write-Host "  patched: $($file.Name) (continuation-token off-by-one)"
+        }
+        elseif ($t -match 'yield return Page<BinaryData>\.FromValues\(items, nextPage\?\.IsAbsoluteUri') {
+            Write-Warning "Patch 6 (continuation-token reorder) failed to apply on $($file.Name) - verify AsPages loop shape."
+        }
     }
 }

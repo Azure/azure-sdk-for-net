@@ -102,9 +102,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         public static System.Collections.Generic.IEnumerable<CertificateClientOptions.ServiceVersion> AllServiceVersions()
             => (CertificateClientOptions.ServiceVersion[])Enum.GetValues(typeof(CertificateClientOptions.ServiceVersion));
 
-        // C3: CertificatePolicyAction(null) and the implicit operator(null)
-        // must both throw ArgumentNullException — the legacy contract that
-        // Patch 6 restores by removing the generated nullable operator.
+        // C3: CertificatePolicyAction(null) must throw ArgumentNullException — the
+        // legacy contract preserved by the handwritten ctor in src/CertificatePolicyAction.cs.
+        // The emitter-generated nullable implicit operator (returning
+        // CertificatePolicyAction?) returns null instead of throwing, which is
+        // intentional .NET design (Azure/azure-sdk-for-net#60163), so this test
+        // only covers the ctor and the non-nullable implicit conversion.
         [Test]
         public void CertificatePolicyAction_NullStringCtor_Throws()
         {

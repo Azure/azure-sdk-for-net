@@ -21,14 +21,18 @@ namespace Azure.Security.KeyVault.Certificates
     /// enabled key vault.
     /// </summary>
     /// <remarks>
-    /// Internally, all transport - request building, response parsing, paging, model
-    /// (de)serialization, and LRO polling - is delegated to the TypeSpec-generated
-    /// <c>KeyVaultCertificatesClient</c> (internal). Public method signatures, return
-    /// types, exception contracts and recorded HTTP traffic match every previously
-    /// shipped 4.x version of this package, so adopting this build is a no-op for
-    /// existing consumers. The legacy hand-written transport layer
-    /// (KeyVaultPipeline.SendRequest&lt;T&gt;) is retained only for DownloadCertificate
-    /// because that API hits the Secrets endpoint, not the Certificates endpoint.
+    /// Internally, request building, transport, paging continuation, and LRO
+    /// polling for the Certificates endpoint are delegated to the TypeSpec-
+    /// generated <c>KeyVaultCertificatesClient</c> (internal). Request-body
+    /// composition and public model (de)serialization continue to be performed
+    /// by <c>CertificateMapper</c> and the handwritten model types, so the
+    /// wire payload shapes and public model surfaces are unchanged. Public
+    /// method signatures, return types, exception contracts and recorded HTTP
+    /// traffic match every previously shipped 4.x version of this package, so
+    /// adopting this build is a no-op for existing consumers. The legacy
+    /// hand-written transport layer (KeyVaultPipeline.SendRequest&lt;T&gt;)
+    /// is retained only for DownloadCertificate because that API hits the
+    /// Secrets endpoint, not the Certificates endpoint.
     /// </remarks>
     public class CertificateClient
     {
