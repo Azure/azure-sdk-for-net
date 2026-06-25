@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.AgentServer.Optimization" Version="1.0.0-beta.1" />
+    <ProjectReference Include="..\..\..\sdk\agentserver\Azure.AI.AgentServer.Optimization\src\Azure.AI.AgentServer.Optimization.csproj" />
     <PackageReference Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.21" />
     <PackageReference Include="Azure.AI.AgentServer.Responses" Version="1.0.0-beta.1" />
     <PackageReference Include="Azure.AI.OpenAI" Version="2.8.0-beta.1" />

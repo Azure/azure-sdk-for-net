@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,22 +16,70 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary> The AgentOptimizationJobs sub-client. </summary>
-    public partial class AgentOptimizationJobs
+    public partial class AgentOptimizationClient
     {
         private readonly Uri _endpoint;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of AgentOptimizationJobs for mocking. </summary>
-        protected AgentOptimizationJobs()
+        protected AgentOptimizationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
+        /// <summary> Initializes a new instance of AgentOptimizationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentOptimizationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AgentOptimizationClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AgentOptimizationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AgentOptimizationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AgentOptimizationClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AgentOptimizationClient(Uri endpoint, TokenCredential credential, AgentOptimizationClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationClient from a <see cref="AgentOptimizationClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AgentOptimizationClient. </param>
+        [Experimental("SCME0002")]
+        public AgentOptimizationClient(AgentOptimizationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationClient. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentOptimizationJobs(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal AgentOptimizationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -61,7 +110,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response Create(RequestContent content, string foundryFeatures = default, string operationId = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Create");
             scope.Start();
             try
             {
@@ -94,7 +143,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateAsync(RequestContent content, string foundryFeatures = default, string operationId = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Create");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Create");
             scope.Start();
             try
             {
@@ -157,7 +206,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response Get(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Get");
             scope.Start();
             try
             {
@@ -190,7 +239,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetAsync(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Get");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Get");
             scope.Start();
             try
             {
@@ -280,7 +329,7 @@ namespace Azure.AI.AgentServer.Optimization
                 status,
                 agentName,
                 context,
-                "AgentOptimizationJobs.GetAll");
+                "AgentOptimizationClient.GetAll");
         }
 
         /// <summary>
@@ -327,7 +376,7 @@ namespace Azure.AI.AgentServer.Optimization
                 status,
                 agentName,
                 context,
-                "AgentOptimizationJobs.GetAll");
+                "AgentOptimizationClient.GetAll");
         }
 
         /// <summary> List optimization jobs. Supports cursor pagination and optional `status` / `agent_name` filters. </summary>
@@ -366,7 +415,7 @@ namespace Azure.AI.AgentServer.Optimization
                 status?.ToString(),
                 agentName,
                 cancellationToken.ToRequestContext(),
-                "AgentOptimizationJobs.GetAll");
+                "AgentOptimizationClient.GetAll");
         }
 
         /// <summary> List optimization jobs. Supports cursor pagination and optional `status` / `agent_name` filters. </summary>
@@ -405,7 +454,7 @@ namespace Azure.AI.AgentServer.Optimization
                 status?.ToString(),
                 agentName,
                 cancellationToken.ToRequestContext(),
-                "AgentOptimizationJobs.GetAll");
+                "AgentOptimizationClient.GetAll");
         }
 
         /// <summary>
@@ -425,7 +474,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response Cancel(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Cancel");
             scope.Start();
             try
             {
@@ -458,7 +507,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CancelAsync(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Cancel");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Cancel");
             scope.Start();
             try
             {
@@ -521,7 +570,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response Delete(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Delete");
             scope.Start();
             try
             {
@@ -554,7 +603,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteAsync(string jobId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.Delete");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.Delete");
             scope.Start();
             try
             {
@@ -633,7 +682,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCandidates(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidates");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidates");
             scope.Start();
             try
             {
@@ -684,7 +733,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCandidatesAsync(string jobId, string foundryFeatures, int? limit, string order, string after, string before, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidates");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidates");
             scope.Start();
             try
             {
@@ -784,7 +833,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCandidate(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidate");
             scope.Start();
             try
             {
@@ -819,7 +868,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCandidateAsync(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidate");
             scope.Start();
             try
             {
@@ -888,7 +937,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCandidateConfig(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateConfig");
             scope.Start();
             try
             {
@@ -923,7 +972,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCandidateConfigAsync(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateConfig");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateConfig");
             scope.Start();
             try
             {
@@ -992,7 +1041,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCandidateResults(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateResults");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateResults");
             scope.Start();
             try
             {
@@ -1027,7 +1076,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCandidateResultsAsync(string jobId, string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateResults");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateResults");
             scope.Start();
             try
             {
@@ -1095,7 +1144,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetCandidateConfigFlat(string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateConfigFlat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateConfigFlat");
             scope.Start();
             try
             {
@@ -1128,7 +1177,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetCandidateConfigFlatAsync(string candidateId, string foundryFeatures, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationJobs.GetCandidateConfigFlat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentOptimizationClient.GetCandidateConfigFlat");
             scope.Start();
             try
             {

@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Optimization
 {
     internal partial class AgentOptimizationJobsGetAllAsyncCollectionResultOfT : AsyncPageable<OptimizationJob>
     {
-        private readonly AgentOptimizationJobs _client;
+        private readonly AgentOptimizationClient _client;
         private readonly string _foundryFeatures;
         private readonly int? _limit;
         private readonly string _order;
@@ -28,7 +28,7 @@ namespace Azure.AI.AgentServer.Optimization
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AgentOptimizationJobsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AgentOptimizationJobs client used to send requests. </param>
+        /// <param name="client"> The AgentOptimizationClient client used to send requests. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
@@ -52,7 +52,7 @@ namespace Azure.AI.AgentServer.Optimization
         /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AgentOptimizationJobsGetAllAsyncCollectionResultOfT(AgentOptimizationJobs client, string foundryFeatures, int? limit, string order, string after, string before, string status, string agentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AgentOptimizationJobsGetAllAsyncCollectionResultOfT(AgentOptimizationClient client, string foundryFeatures, int? limit, string order, string after, string before, string status, string agentName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _foundryFeatures = foundryFeatures;

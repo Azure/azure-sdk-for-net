@@ -13,8 +13,7 @@ const string EvalModel = "gpt-5";
 const int MaxIterations = 3; // Force multiple candidates
 
 var credential = new DefaultAzureCredential();
-var projectsClient = new ProjectsClient(new Uri(ProjectEndpoint), credential);
-var jobsClient = projectsClient.GetAgentOptimizationJobsClient();
+var client = new AgentOptimizationClient(new Uri(ProjectEndpoint), credential);
 
 Console.WriteLine("═══════════════════════════════════════════════════════════");
 Console.WriteLine("  Live API Test: Typed Convenience Methods");
@@ -25,7 +24,7 @@ Console.WriteLine("\n── Step 1: List Existing Jobs (typed GetAllAsync) ─�
 try
 {
     int count = 0;
-    await foreach (OptimizationJob job in jobsClient.GetAllAsync())
+    await foreach (OptimizationJob job in client.GetAllAsync())
     {
         Console.WriteLine($"  {job.Id} | {job.Status} | Agent: {job.Inputs?.Agent?.AgentName ?? "?"}");
         count++;
@@ -65,7 +64,7 @@ var newJob = new OptimizationJob
 string? createdJobId = null;
 try
 {
-    Response<OptimizationJob> createResponse = await jobsClient.CreateAsync(newJob);
+    Response<OptimizationJob> createResponse = await client.CreateAsync(newJob);
     createdJobId = createResponse.Value.Id;
     Console.WriteLine($"  ✓ Created job: {createdJobId} | Status: {createResponse.Value.Status}");
 }
@@ -96,7 +95,7 @@ while (sw.Elapsed.TotalMinutes < MaxPollMinutes)
 {
     try
     {
-        Response<OptimizationJob> getResponse = await jobsClient.GetAsync(createdJobId);
+        Response<OptimizationJob> getResponse = await client.GetAsync(createdJobId);
         var status = getResponse.Value.Status.ToString();
         if (status != lastStatus)
         {
@@ -140,7 +139,7 @@ Console.WriteLine("\n── Step 4: List Candidates (typed GetCandidatesAsync) �
 try
 {
     Response<AgentsPagedResultOptimizationCandidate> candidatesResponse =
-        await jobsClient.GetCandidatesAsync(createdJobId);
+        await client.GetCandidatesAsync(createdJobId);
 
     Console.WriteLine($"  Found {candidatesResponse.Value.Data.Count} candidate(s):");
     foreach (var candidate in candidatesResponse.Value.Data)
@@ -155,7 +154,7 @@ try
         Console.WriteLine($"\n  Getting deploy config for candidate: {bestCandidate.CandidateId}");
 
         Response<CandidateDeployConfig> configResponse =
-            await jobsClient.GetCandidateConfigAsync(createdJobId, bestCandidate.CandidateId);
+            await client.GetCandidateConfigAsync(createdJobId, bestCandidate.CandidateId);
         Console.WriteLine($"    ✓ Deploy config retrieved: model={configResponse.Value.Model ?? "?"}, instructionsLen={configResponse.Value.Instructions?.Length ?? 0}");
     }
 }
@@ -172,7 +171,7 @@ catch (Exception ex)
 Console.WriteLine("\n── Step 5: Final Job List (verify new job appears) ──");
 try
 {
-    await foreach (OptimizationJob job in jobsClient.GetAllAsync(agentName: AgentName, limit: 3))
+    await foreach (OptimizationJob job in client.GetAllAsync(agentName: AgentName, limit: 3))
     {
         Console.WriteLine($"  {job.Id} | {job.Status} | Created: {job.CreatedAt:u}");
     }

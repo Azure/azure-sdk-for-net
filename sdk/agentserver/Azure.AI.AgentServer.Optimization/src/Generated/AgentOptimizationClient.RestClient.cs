@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.AgentServer.Optimization
 {
     /// <summary></summary>
-    public partial class AgentOptimizationJobs
+    public partial class AgentOptimizationClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier201;

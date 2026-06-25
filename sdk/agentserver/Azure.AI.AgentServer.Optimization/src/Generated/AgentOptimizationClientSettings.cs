@@ -12,15 +12,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AgentServer.Optimization
 {
-    /// <summary> Represents the settings used to configure a <see cref="ProjectsClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="AgentOptimizationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class ProjectsClientSettings : ClientSettings
+    public partial class AgentOptimizationClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
-        public ProjectsClientOptions Options { get; set; }
+        public AgentOptimizationClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.AgentServer.Optimization
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new ProjectsClientOptions(optionsSection);
+                Options = new AgentOptimizationClientOptions(optionsSection);
             }
         }
     }

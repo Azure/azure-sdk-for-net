@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 // ──────────────────────────────────────────────────────────────────────
 // 1. Load optimization config at startup. The resolver API path (Priority 1)
-//    uses the generated ProjectsClient/AgentOptimizationJobs under the hood.
+//    uses the generated AgentOptimizationClient under the hood.
 // ──────────────────────────────────────────────────────────────────────
 var credential = new DefaultAzureCredential();
 
@@ -31,7 +31,7 @@ if (config?.SkillsDirectory is not null)
 }
 
 // ──────────────────────────────────────────────────────────────────────
-// 2. (Optional) Use the generated ProjectsClient directly to manage
+// 2. (Optional) Use the generated AgentOptimizationClient directly to manage
 //    optimization jobs — create, list, get status, list candidates.
 // ──────────────────────────────────────────────────────────────────────
 string? projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT")
@@ -39,8 +39,7 @@ string? projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_EN
 
 if (!string.IsNullOrEmpty(projectEndpoint))
 {
-    var projectsClient = new ProjectsClient(new Uri(projectEndpoint), credential);
-    AgentOptimizationJobs jobsClient = projectsClient.GetAgentOptimizationJobsClient();
+    var jobsClient = new AgentOptimizationClient(new Uri(projectEndpoint), credential);
 
     Console.Error.WriteLine("[Startup] ── Optimization Jobs (via generated client) ──");
     try

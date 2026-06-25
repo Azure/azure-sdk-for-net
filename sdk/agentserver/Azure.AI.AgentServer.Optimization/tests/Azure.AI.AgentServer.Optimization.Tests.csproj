@@ -15,6 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Microsoft.ClientModel.TestFramework\src\Microsoft.ClientModel.TestFramework.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="LiveApiTest\**\*.cs" />
+  </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <ProjectReference Include="..\src\Azure.AI.AgentServer.Optimization.csproj" />
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
 /// Resolves candidate configs from the optimization service API using the
-/// generated <see cref="AgentOptimizationJobs"/> client.
+/// generated <see cref="AgentOptimizationClient"/> client.
 /// </summary>
 internal static class CandidateResolver
 {
@@ -29,10 +29,9 @@ internal static class CandidateResolver
                 "A credential must be provided when using the resolver API.");
         }
 
-        var client = new ProjectsClient(new Uri(endpoint), credential);
-        var jobsClient = client.GetAgentOptimizationJobsClient();
+        var client = new AgentOptimizationClient(new Uri(endpoint), credential);
 
-        Response<CandidateDeployConfig> response = await jobsClient.GetCandidateConfigFlatAsync(
+        Response<CandidateDeployConfig> response = await client.GetCandidateConfigFlatAsync(
             candidateId,
             cancellationToken: cancellationToken).ConfigureAwait(false);
 

@@ -12,14 +12,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AgentServer.Optimization
 {
-    /// <summary> Client options for <see cref="ProjectsClient"/>. </summary>
-    public partial class ProjectsClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="AgentOptimizationClient"/>. </summary>
+    public partial class AgentOptimizationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-        /// <summary> Initializes a new instance of ProjectsClientOptions. </summary>
+        /// <summary> Initializes a new instance of AgentOptimizationClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ProjectsClientOptions(ServiceVersion version = LatestVersion)
+        public AgentOptimizationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -29,10 +29,10 @@ namespace Azure.AI.AgentServer.Optimization
             ConfigureLogging();
         }
 
-        /// <summary> Initializes a new instance of ProjectsClientOptions from configuration. </summary>
+        /// <summary> Initializes a new instance of AgentOptimizationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal ProjectsClientOptions(IConfigurationSection section) : base(section, null)
+        internal AgentOptimizationClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "v1";
             if (section is null || !section.Exists())

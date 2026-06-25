@@ -13,7 +13,7 @@ public class AgentOptimizationJobsClientTests
     [Test]
     public void ProjectsClient_CanInstantiate()
     {
-        var options = new ProjectsClientOptions();
+        var options = new AgentOptimizationClientOptions();
         Assert.That(options, Is.Not.Null);
     }
 
