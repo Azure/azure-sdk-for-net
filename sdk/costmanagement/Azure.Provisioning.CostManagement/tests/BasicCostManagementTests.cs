@@ -50,12 +50,15 @@ public class BasicCostManagementTests
         await using Trycep test = CreateCostManagementExportTest();
         test.Compare(
             """
-            resource export 'Microsoft.CostManagement/exports@2023-03-01' = {
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource export 'Microsoft.CostManagement/exports@2025-03-01' = {
               name: take('export${uniqueString(resourceGroup().id)}', 24)
               properties: {
-                definition: {
-                  type: 'ActualCost'
-                  timeframe: 'MonthToDate'
+                schedule: {
+                  status: 'Active'
+                  recurrence: 'Weekly'
                 }
                 deliveryInfo: {
                   destination: {
@@ -63,11 +66,12 @@ public class BasicCostManagementTests
                     rootFolderPath: 'cost-data'
                   }
                 }
-                schedule: {
-                  status: 'Active'
-                  recurrence: 'Weekly'
+                definition: {
+                  type: 'ActualCost'
+                  timeframe: 'MonthToDate'
                 }
               }
+              location: location
             }
             """);
     }
