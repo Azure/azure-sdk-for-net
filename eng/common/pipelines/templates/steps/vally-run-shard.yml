@@ -68,14 +68,27 @@ steps:
       cp -r "$(Pipeline.Workspace)/${{ parameters.mcpArtifact }}/." "$(Build.SourcesDirectory)/${{ parameters.mcpStageRoot }}/"
     displayName: 'Stage MCP server(s) at expected path'
 
-  # Clone the git fixtures the workflow evals reference. init-eval-git-fixtures.js
-  # scans each eval's `environment.git` block for its (repo, ref) pairs and clones
-  # them into the cache the fixtures expect — Vally won't do this itself ('git
-  # worktree add' needs the source already on disk). No-op for unit-only shards.
+  # Clone the git fixtures THIS shard's evals reference. init-eval-git-fixtures.js scans
+  # each eval's `environment.git` block for its (repo, ref) pairs and clones them into the
+  # cache the fixtures expect — Vally won't do this itself ('git worktree add' needs the
+  # source already on disk). We turn the matrix's `-e <file>` args into `--pattern <file>`
+  # so the scan targets exactly the evals this shard runs (not a fixed default set), which
+  # keeps custom/live/scattered suites correct and avoids cloning fixtures a shard never
+  # uses. No-op for unit-only shards. set -f keeps the paths literal for the script.
   - script: |
+      patterns=()
+      set -f
+      for tok in $EVAL_ARGS; do
+        [ "$tok" = "-e" ] && continue
+        patterns+=(--pattern "$tok")
+      done
+      set +f
       node "$(Build.SourcesDirectory)/${{ parameters.scriptDir }}/init-eval-git-fixtures.js" \
-        --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}"
+        --eval-root "$(Build.SourcesDirectory)/${{ parameters.vallyRoot }}" \
+        "${patterns[@]}"
     displayName: 'Prime eval git fixtures (scan + clone)'
+    env:
+      EVAL_ARGS: $(evalArgs)
 
   # Gate on the eval verdict, not the `vally` exit code (see header comment). The live
   # tier wraps the same command in AzureCLI@2 so the agent's MCP DevOps calls inherit the
@@ -110,24 +123,20 @@ steps:
         env:
           GITHUB_TOKEN: $(${{ parameters.githubTokenVariable }})
 
-  # Always publish just the JUnit (a few KB) — all the Summary stage consumes — so
-  # green runs stay tiny. Heavy LLM transcripts publish separately, only on failure.
+  # Always stage just the JUnit (a few KB) — all the Summary stage consumes — so green
+  # runs stay tiny. The host job publishes this dir as 'eval-result-$(shardName)' via 1ES
+  # templateContext.outputs. Heavy LLM transcripts stage separately, only on failure.
   - script: |
       mkdir -p "$(Build.ArtifactStagingDirectory)/junit"
       find "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" -name '*.junit.xml' -exec cp {} "$(Build.ArtifactStagingDirectory)/junit/" \;
     displayName: 'Collect $(shardName) JUnit'
     condition: always()
 
-  - publish: '$(Build.ArtifactStagingDirectory)/junit'
-    artifact: 'eval-result-$(shardName)'
-    displayName: 'Publish $(shardName) JUnit'
-    condition: always()
-
-  # On a GENUINE failure (shard exited non-zero — an eval fell below threshold),
-  # keep the full Vally output for debugging: transcripts, results.jsonl, etc. Strip
-  # the JUnit from this copy so the Summary download (which globs **/*.junit.xml)
-  # can't double-count. A passing verdict that merely hit Vally's teardown timeout
-  # exits 0 and skips this step.
+  # On a GENUINE failure (shard exited non-zero — an eval fell below threshold), keep the
+  # full Vally output for debugging: transcripts, results.jsonl, etc. Strip the JUnit from
+  # this copy so the Summary download (which globs **/*.junit.xml) can't double-count. A
+  # passing verdict that merely hit Vally's teardown timeout exits 0 and skips this step.
+  # The host job publishes this dir as 'eval-debug-$(shardName)' on failure.
   - script: |
       src="$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)"
       dest="$(Build.ArtifactStagingDirectory)/debug"
@@ -137,9 +146,4 @@ steps:
         find "$dest" -name '*.junit.xml' -delete
       fi
     displayName: 'Collect $(shardName) transcripts (on failure)'
-    condition: failed()
-
-  - publish: '$(Build.ArtifactStagingDirectory)/debug'
-    artifact: 'eval-debug-$(shardName)'
-    displayName: 'Publish $(shardName) transcripts (on failure)'
     condition: failed()

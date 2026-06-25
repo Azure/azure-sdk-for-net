@@ -151,6 +151,11 @@ export function buildMatrix({
   for (const area of [...byArea.keys()].sort()) {
     const shardName = `area_${area}`.replace(SANITIZE, "_");
     const evalArgs = byArea.get(area).map((relative) => `-e ${relative}`).join(" ");
+    if (Object.prototype.hasOwnProperty.call(matrix, shardName)) {
+      throw new Error(
+        `Duplicate shard name '${shardName}' (from area '${area}'). Shard names must be unique.`
+      );
+    }
     matrix[shardName] = { shardName, evalArgs };
   }
 

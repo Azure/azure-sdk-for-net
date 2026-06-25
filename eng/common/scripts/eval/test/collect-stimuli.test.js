@@ -149,6 +149,26 @@ describe("collect-stimuli (shardBy area)", () => {
       assert.doesNotMatch(entry.evalArgs, /live\//);
     }
   });
+
+  it("throws when two area tags collide after sanitization", () => {
+    const collideRoot = fs.mkdtempSync(path.join(os.tmpdir(), "vally-matrix-area-collide-"));
+    try {
+      writeFile(
+        path.join(collideRoot, "evals/tools/a.eval.yaml"),
+        "tags:\n  area: release-plan"
+      );
+      writeFile(
+        path.join(collideRoot, "evals/tools/b.eval.yaml"),
+        "tags:\n  area: release_plan"
+      );
+      assert.throws(
+        () => buildMatrix({ roots: [collideRoot], shardBy: "area" }),
+        /Duplicate shard name 'area_release_plan'/
+      );
+    } finally {
+      fs.rmSync(collideRoot, { recursive: true, force: true });
+    }
+  });
 });
 
 describe("collect-stimuli (shardBy area with an untagged eval)", () => {
