@@ -120,5 +120,61 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string s = null;
             Assert.Throws<ArgumentNullException>(() => { CertificatePolicyAction a = s; });
         }
+
+        // Patch 6 (regression guard for Azure/azure-sdk-for-net#60274):
+        // Generated AsPages() loops used to expose the URI we used to fetch
+        // the CURRENT page as that page's ContinuationToken, rather than
+        // result.NextLink (the URI for the NEXT page). The post-emit reorder
+        // makes page.ContinuationToken == result.NextLink so customers persisting
+        // tokens and resuming with AsPages(token) advance correctly.
+        [Test]
+        public async Task GetPropertiesOfCertificates_AsPages_ContinuationTokenIsNextLink()
+        {
+            const string nextLink = "https://example.vault.azure.net/certificates?api-version=7.5&$skiptoken=PG_TOKEN_2";
+            var page1 = new MockResponse(200).WithJson(
+                "{\"value\":[{\"id\":\"https://example.vault.azure.net/certificates/c1\"}],\"nextLink\":\"" + nextLink + "\"}");
+            var page2 = new MockResponse(200).WithJson(
+                "{\"value\":[{\"id\":\"https://example.vault.azure.net/certificates/c2\"}]}");
+            var transport = new MockTransport(page1, page2);
+            var client = new CertificateClient(TestVault, new MockCredential(),
+                new CertificateClientOptions { Transport = transport });
+
+            var pages = new System.Collections.Generic.List<Azure.Page<CertificateProperties>>();
+            await foreach (Azure.Page<CertificateProperties> p in client.GetPropertiesOfCertificatesAsync().AsPages())
+            {
+                pages.Add(p);
+            }
+
+            Assert.AreEqual(2, pages.Count, "Two pages expected from two mocked responses.");
+            Assert.AreEqual(nextLink, pages[0].ContinuationToken,
+                "Page 1's ContinuationToken must equal the upstream nextLink (the URL to fetch page 2), not the URL used to fetch page 1.");
+            Assert.IsNull(pages[1].ContinuationToken,
+                "Final page's ContinuationToken must be null when the service didn't return a nextLink.");
+        }
+
+        // M4 (review gap): DeleteCertificateOperation.HasCompleted must be true
+        // immediately when the service response carries no recoveryId (purge-only
+        // vault, soft-delete disabled), so no polling round-trips happen.
+        [Test]
+        public async Task StartDeleteCertificate_NoRecoveryId_OperationCompletesImmediately()
+        {
+            var response = new MockResponse(200).WithJson(
+                "{\"id\":\"https://example.vault.azure.net/certificates/x/1\"," +
+                "\"deletedDate\":1700000000,\"scheduledPurgeDate\":1700000000}");
+            var (client, _) = NewClient(response);
+
+            DeleteCertificateOperation op = await client.StartDeleteCertificateAsync("x");
+
+            Assert.IsTrue(op.HasCompleted,
+                "When the DELETE response has no recoveryId, the LRO must complete immediately and not require any polling.");
+            Assert.IsNotNull(op.Value, "Value must be populated when HasCompleted is true.");
+        }
+
+        // M3 (legacy-parity, "clearing all tags is a no-op"): pinned by
+        // CertificateMapperTests.WriteUpdateBody_TagsClearedToZero_DoesNotEmitTags
+        // and WriteUpdateBody_TagsRead_ButEmpty_DoesNotEmitTags. The behavior is
+        // byte-identical to the legacy CertificateUpdateParameters serializer
+        // (HasTags && Count > 0 guard); customers could never clear tags via
+        // this PATCH and that's preserved on purpose.
     }
 }
