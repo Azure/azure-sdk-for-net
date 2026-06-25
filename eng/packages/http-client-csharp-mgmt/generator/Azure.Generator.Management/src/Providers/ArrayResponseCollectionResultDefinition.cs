@@ -109,6 +109,8 @@ namespace Azure.Generator.Management.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
 
+        protected override IReadOnlyList<string> BuildHelperDependencyNames() => [_restClient.Name];
+
         protected override CSharpType[] BuildImplements()
         {
             var baseType = _isAsync
@@ -140,7 +142,7 @@ namespace Azure.Generator.Management.Providers
             var signature = new ConstructorSignature(
                 Type,
                 $"Initializes a new instance of {Name}, which is used to iterate over the pages of a collection.",
-                MethodSignatureModifiers.Public,
+                MethodSignatureModifiers.Internal,
                 parameters);
 
             var bodyStatements = new List<MethodBodyStatement>

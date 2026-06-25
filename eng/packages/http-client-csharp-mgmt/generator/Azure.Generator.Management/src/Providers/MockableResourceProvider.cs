@@ -132,6 +132,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
 
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementProviderBodyDependencyHelper.GetBodyDependencyTypes(Methods);
+
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
         protected override ConstructorProvider[] BuildConstructors()
