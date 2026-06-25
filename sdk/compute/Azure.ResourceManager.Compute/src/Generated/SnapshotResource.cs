@@ -643,12 +643,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Immutability policy data supplied in the body of the update immutability policy operation. </param>
+        /// <param name="content"> Immutability policy data supplied in the body of the update immutability policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SnapshotResource>> UpdateImmutabilityPolicyAsync(WaitUntil waitUntil, ImmutabilityPolicyData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SnapshotResource>> UpdateImmutabilityPolicyAsync(WaitUntil waitUntil, ImmutabilityPolicyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("SnapshotResource.UpdateImmutabilityPolicy");
             scope.Start();
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),
@@ -702,12 +702,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Immutability policy data supplied in the body of the update immutability policy operation. </param>
+        /// <param name="content"> Immutability policy data supplied in the body of the update immutability policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SnapshotResource> UpdateImmutabilityPolicy(WaitUntil waitUntil, ImmutabilityPolicyData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SnapshotResource> UpdateImmutabilityPolicy(WaitUntil waitUntil, ImmutabilityPolicyContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("SnapshotResource.UpdateImmutabilityPolicy");
             scope.Start();
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),
@@ -761,12 +761,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Immutability policy data supplied in the body of the update immutability policy lock operation. </param>
+        /// <param name="content"> Immutability policy data supplied in the body of the update immutability policy lock operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SnapshotResource>> UpdateImmutabilityPolicyLockAsync(WaitUntil waitUntil, ImmutabilityPolicyLockData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SnapshotResource>> UpdateImmutabilityPolicyLockAsync(WaitUntil waitUntil, ImmutabilityPolicyLockContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("SnapshotResource.UpdateImmutabilityPolicyLock");
             scope.Start();
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyLockRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyLockData.ToRequestContent(data), context);
+                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyLockRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyLockContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),
@@ -820,12 +820,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Immutability policy data supplied in the body of the update immutability policy lock operation. </param>
+        /// <param name="content"> Immutability policy data supplied in the body of the update immutability policy lock operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SnapshotResource> UpdateImmutabilityPolicyLock(WaitUntil waitUntil, ImmutabilityPolicyLockData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SnapshotResource> UpdateImmutabilityPolicyLock(WaitUntil waitUntil, ImmutabilityPolicyLockContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("SnapshotResource.UpdateImmutabilityPolicyLock");
             scope.Start();
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyLockRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyLockData.ToRequestContent(data), context);
+                HttpMessage message = _snapshotsRestClient.CreateUpdateImmutabilityPolicyLockRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ImmutabilityPolicyLockContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotResourceOperationSource(Client),

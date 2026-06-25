@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetProperties"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<LifecycleHook> lifecycleHooks = default, ExternalHealthPolicy externalHealthPolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static VirtualMachineScaleSetProperties VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy = default, ScheduledEventsPolicy scheduledEventsPolicy = default, AutomaticRepairsPolicy automaticRepairsPolicy = default, VirtualMachineScaleSetVmProfile virtualMachineProfile = default, string provisioningState = default, bool? overprovision = default, bool? doNotRunExtensionsOnOverprovisionedVms = default, string uniqueId = default, bool? singlePlacementGroup = default, bool? zoneBalance = default, int? platformFaultDomainCount = default, ResourceIdentifier proximityPlacementGroupId = default, ResourceIdentifier hostGroupId = default, AdditionalCapabilities additionalCapabilities = default, ScaleInPolicy scaleInPolicy = default, OrchestrationMode? orchestrationMode = default, SpotRestorePolicy spotRestorePolicy = default, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy = default, DateTimeOffset? timeCreated = default, bool? isMaximumCapacityConstrained = default, ResiliencyPolicy resiliencyPolicy = default, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default, ComputeSkuProfile skuProfile = default, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default, IEnumerable<LifecycleHook> lifecycleHooks = default, ComputeExternalHealthPolicy externalHealthPolicy = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetOSDisk VirtualMachineScaleSetOSDisk(string name = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, SupportedOperatingSystemType? osType = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineScaleSetOSDisk VirtualMachineScaleSetOSDisk(string name = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, SupportedOperatingSystemType? osType = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
             vhdContainers ??= new ChangeTrackingList<string>();
 
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskMBpsReadWrite"> Specifies the bandwidth in MB per second for the managed disk. Should be used only when StorageAccountType is UltraSSD_LRS. If not specified, a default value would be assigned based on diskSizeGB. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only).&lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the data disk is deleted when the VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the data disk is retained after VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetDataDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetDataDisk VirtualMachineScaleSetDataDisk(string name = default, int lun = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineScaleSetManagedDisk managedDisk = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineScaleSetDataDisk VirtualMachineScaleSetDataDisk(string name = default, int lun = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineScaleSetManagedDisk managedDisk = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, DiskDeleteOptionType? deleteOption = default)
         {
             return new VirtualMachineScaleSetDataDisk(
                 name,
@@ -977,10 +977,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enabled"> If true, external health is enabled for this scale set. Cannot be set to true on instances where another health monitoring source is active (ApplicationHealth extension or SLB). Defaults to false. </param>
         /// <param name="expiryDuration"> Defines how long the health status set by External Health API will last on the VM. If a signal is not received/updated within this time, the VM Health will be marked as "unknown". Uses the ISO 8601 format. Minimum: 5 minutes (PT5M), Maximum: 3 hours (PT3H). </param>
         /// <param name="gracePeriod"> Grace period for newly created VMs or when the External Health policy is first applied on VMSS. Uses the ISO 8601 format. Minimum: 5 minutes (PT5M), Maximum: 4 hours (PT4H). </param>
-        /// <returns> A new <see cref="Models.ExternalHealthPolicy"/> instance for mocking. </returns>
-        public static ExternalHealthPolicy ExternalHealthPolicy(bool? enabled = default, TimeSpan? expiryDuration = default, TimeSpan? gracePeriod = default)
+        /// <returns> A new <see cref="Models.ComputeExternalHealthPolicy"/> instance for mocking. </returns>
+        public static ComputeExternalHealthPolicy ComputeExternalHealthPolicy(bool? enabled = default, TimeSpan? expiryDuration = default, TimeSpan? gracePeriod = default)
         {
-            return new ExternalHealthPolicy(enabled, expiryDuration, gracePeriod, default);
+            return new ComputeExternalHealthPolicy(enabled, expiryDuration, gracePeriod, default);
         }
 
         /// <param name="zonePlacementPolicyType"> Specifies the policy for resource's placement in availability zone. Possible values are: <b>Any</b> (used for Virtual Machines), <b>Auto</b> (used for Virtual Machine Scale Sets) - An availability zone will be automatically picked by system as part of resource creation. </param>
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; <b>Delete</b> If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; <b>Detach</b> If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to <b>Delete</b>. For an Ephemeral OS Disk, the default value is set to <b>Delete</b>. User cannot change the delete option for Ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdateOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetUpdateOSDisk VirtualMachineScaleSetUpdateOSDisk(CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineScaleSetUpdateOSDisk VirtualMachineScaleSetUpdateOSDisk(CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, int? diskSizeGB = default, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, Uri imageUri = default, IEnumerable<string> vhdContainers = default, VirtualMachineScaleSetManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
             vhdContainers ??= new ChangeTrackingList<string>();
 
@@ -1849,7 +1849,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="storageAlignmentStatus"> Specifies the storage alignment status for the disk. </param>
         /// <returns> A new <see cref="Models.DiskInstanceView"/> instance for mocking. </returns>
-        public static DiskInstanceView DiskInstanceView(string name = default, IEnumerable<DiskEncryptionSettings> encryptionSettings = default, IEnumerable<InstanceViewStatus> statuses = default, StorageAlignmentStatus? storageAlignmentStatus = default)
+        public static DiskInstanceView DiskInstanceView(string name = default, IEnumerable<DiskEncryptionSettings> encryptionSettings = default, IEnumerable<InstanceViewStatus> statuses = default, ComputeStorageAlignmentStatus? storageAlignmentStatus = default)
         {
             encryptionSettings ??= new ChangeTrackingList<DiskEncryptionSettings>();
             statuses ??= new ChangeTrackingList<InstanceViewStatus>();
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the OS disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the os disk is retained after VM is deleted. The default value is set to <b>Detach</b>. For an ephemeral OS Disk, the default value is set to <b>Delete</b>. The user cannot change the delete option for an ephemeral OS Disk. </param>
         /// <returns> A new <see cref="Models.VirtualMachineOSDisk"/> instance for mocking. </returns>
-        public static VirtualMachineOSDisk VirtualMachineOSDisk(SupportedOperatingSystemType? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineOSDisk VirtualMachineOSDisk(SupportedOperatingSystemType? osType = default, DiskEncryptionSettings encryptionSettings = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiffDiskSettings diffDiskSettings = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineManagedDisk managedDisk = default, DiskDeleteOptionType? deleteOption = default)
         {
             return new VirtualMachineOSDisk(
                 osType,
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: <b>ForceDetach.</b> detachOption: <b>ForceDetach</b> is applicable only for managed data disks. If a previous detachment attempt of the data disk did not complete due to an unexpected failure from the virtual machine and the disk is still not released then use force-detach as a last resort option to detach the disk forcibly from the VM. All writes might not have been flushed when using this detach behavior. <b>This feature is still in preview</b>. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
         /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </param>
         /// <returns> A new <see cref="Models.VirtualMachineDataDisk"/> instance for mocking. </returns>
-        public static VirtualMachineDataDisk VirtualMachineDataDisk(int lun = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineManagedDisk managedDisk = default, ResourceIdentifier sourceResourceId = default, bool? toBeDetached = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, DiskDetachOptionType? detachOption = default, DiskDeleteOptionType? deleteOption = default)
+        public static VirtualMachineDataDisk VirtualMachineDataDisk(int lun = default, string name = default, Uri vhdUri = default, Uri imageUri = default, CachingType? caching = default, bool? writeAcceleratorEnabled = default, DiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default, VirtualMachineManagedDisk managedDisk = default, ResourceIdentifier sourceResourceId = default, bool? toBeDetached = default, long? diskIopsReadWrite = default, long? diskMBpsReadWrite = default, DiskDetachOptionType? detachOption = default, DiskDeleteOptionType? deleteOption = default)
         {
             return new VirtualMachineDataDisk(
                 lun,
@@ -4401,11 +4401,11 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="securityType"> Specifies the SecurityType of the VM. Applicable for OS disks only. </param>
         /// <param name="secureVmDiskEncryptionSetId"> ResourceId of the disk encryption set associated to Confidential VM supported disk encrypted with customer managed key. </param>
-        /// <param name="confidentialVMVersion"> Indicates the version of Confidential VM for the resource. </param>
+        /// <param name="confidentialVmVersion"> Indicates the version of Confidential VM for the resource. </param>
         /// <returns> A new <see cref="Models.DiskSecurityProfile"/> instance for mocking. </returns>
-        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = default, ResourceIdentifier secureVmDiskEncryptionSetId = default, ConfidentialVMVersion? confidentialVMVersion = default)
+        public static DiskSecurityProfile DiskSecurityProfile(DiskSecurityType? securityType = default, ResourceIdentifier secureVmDiskEncryptionSetId = default, ConfidentialVmVersion? confidentialVmVersion = default)
         {
-            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, confidentialVMVersion, default);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, confidentialVmVersion, default);
         }
 
         /// <param name="name"> The sku name. </param>
@@ -4836,18 +4836,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
         /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
-        /// <returns> A new <see cref="Models.ImmutabilityPolicyData"/> instance for mocking. </returns>
-        public static ImmutabilityPolicyData ImmutabilityPolicyData(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
+        /// <returns> A new <see cref="Models.ImmutabilityPolicyContent"/> instance for mocking. </returns>
+        public static ImmutabilityPolicyContent ImmutabilityPolicyContent(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
         {
-            return new ImmutabilityPolicyData(immutabilityDurationDays, @type, default);
+            return new ImmutabilityPolicyContent(immutabilityDurationDays, @type, default);
         }
 
         /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
         /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
-        /// <returns> A new <see cref="Models.ImmutabilityPolicyLockData"/> instance for mocking. </returns>
-        public static ImmutabilityPolicyLockData ImmutabilityPolicyLockData(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
+        /// <returns> A new <see cref="Models.ImmutabilityPolicyLockContent"/> instance for mocking. </returns>
+        public static ImmutabilityPolicyLockContent ImmutabilityPolicyLockContent(int immutabilityDurationDays = default, ImmutabilityPolicyType @type = default)
         {
-            return new ImmutabilityPolicyLockData(immutabilityDurationDays, @type, default);
+            return new ImmutabilityPolicyLockContent(immutabilityDurationDays, @type, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

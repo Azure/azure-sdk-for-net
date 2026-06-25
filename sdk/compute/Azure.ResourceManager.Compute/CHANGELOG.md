@@ -1,26 +1,19 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.15.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.15.0-beta.1 (2026-04-24)
-
-### Features Added
-
-- Upgraded api-version tag to `package-2025-11-01-with-cloudservice`.
+- Upgraded api-version tags: `Compute` to `2026-03-01`, `ComputeDisk` to `2026-03-02`, and `ComputeGallery` to `2025-12-03`.
+- Added snapshot immutability policy support, including `SnapshotResource.UpdateImmutabilityPolicy`, `SnapshotResource.UpdateImmutabilityPolicyLock`, `ImmutabilityPolicy`, `ImmutabilityPolicyType`, `ImmutabilityPolicyContent`, and `ImmutabilityPolicyLockContent`.
+- Added shared gallery invite accept/reject extension methods.
+- Added `ConfidentialVmVersion` on `DiskSecurityProfile`.
+- Added `ImmutabilityPolicy` on `SnapshotProperties`.
 - Added new resource type `VmScaleSetLifecycleHookEvent` along with its corresponding `VmScaleSetLifecycleHookEventResource`, `VmScaleSetLifecycleHookEventCollection`, and `VmScaleSetLifecycleHookEventData` classes for managing Virtual Machine Scale Set lifecycle hook events.
 - Added new classes to support lifecycle hooks on Virtual Machine Scale Sets: `LifecycleHook`, `LifecycleHooksProfile`, `VmScaleSetLifecycleHookEventProperties`, `VmScaleSetLifecycleHookEventAdditionalContext`, `VirtualMachineScaleSetLifecycleHookEventTarget`, and `VirtualMachineScaleSetLifecycleHookEventPatch`.
 - Added new enums `LifecycleHookAction`, `LifecycleHookActionState`, `VmScaleSetLifecycleHookEventType`, and `VmScaleSetLifecycleHookEventState`.
-- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, and `ZoneMovement` for configuring VM Scale Set resiliency and recovery behavior.
-- Added new class `ExternalHealthPolicy`.
-- Added new enums `StorageFaultDomainAlignmentType` and `StorageAlignmentStatus`.
+- Added new classes `ResiliencyProfile`, `OperationRecoverySettings`, `ReimageRecoveryPolicy`, `RestartRecoveryPolicy`, `StartRecoveryPolicy`, `ZoneMovement`, and `ComputeExternalHealthPolicy` for configuring VM Scale Set resiliency, recovery, and health behavior.
+- Added new enums `ComputeStorageFaultDomainAlignmentType` and `ComputeStorageAlignmentStatus`.
 - Added `LifecycleHooks` and `ExternalHealthPolicy` properties to `VirtualMachineScaleSetProperties` class.
 - Added `LifecycleHooks` property to `VirtualMachineScaleSetPatchProperties` class.
 - Added `Placement` property to `VirtualMachineScaleSetPatch` class.

@@ -15,66 +15,66 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Data used for updating the immutability policy of a snapshot. </summary>
-    public partial class ImmutabilityPolicyData : IJsonModel<ImmutabilityPolicyData>
+    public partial class ImmutabilityPolicyContent : IJsonModel<ImmutabilityPolicyContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyData"/> for deserialization. </summary>
-        internal ImmutabilityPolicyData()
+        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyContent"/> for deserialization. </summary>
+        internal ImmutabilityPolicyContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImmutabilityPolicyData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ImmutabilityPolicyContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImmutabilityPolicyData(document.RootElement, options);
+                        return DeserializeImmutabilityPolicyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilityPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutabilityPolicyContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilityPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutabilityPolicyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImmutabilityPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImmutabilityPolicyContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImmutabilityPolicyData IPersistableModel<ImmutabilityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImmutabilityPolicyContent IPersistableModel<ImmutabilityPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImmutabilityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImmutabilityPolicyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="immutabilityPolicyData"> The <see cref="ImmutabilityPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ImmutabilityPolicyData immutabilityPolicyData)
+        /// <param name="immutabilityPolicyContent"> The <see cref="ImmutabilityPolicyContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ImmutabilityPolicyContent immutabilityPolicyContent)
         {
-            if (immutabilityPolicyData == null)
+            if (immutabilityPolicyContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(immutabilityPolicyData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(immutabilityPolicyContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImmutabilityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImmutabilityPolicyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilityPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutabilityPolicyContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("immutabilityDurationDays"u8);
             writer.WriteNumberValue(ImmutabilityDurationDays);
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImmutabilityPolicyData IJsonModel<ImmutabilityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImmutabilityPolicyContent IJsonModel<ImmutabilityPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImmutabilityPolicyData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ImmutabilityPolicyContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilityPolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilityPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutabilityPolicyContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImmutabilityPolicyData(document.RootElement, options);
+            return DeserializeImmutabilityPolicyContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImmutabilityPolicyData DeserializeImmutabilityPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImmutabilityPolicyContent DeserializeImmutabilityPolicyContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImmutabilityPolicyData(immutabilityDurationDays, @type, additionalBinaryDataProperties);
+            return new ImmutabilityPolicyContent(immutabilityDurationDays, @type, additionalBinaryDataProperties);
         }
     }
 }

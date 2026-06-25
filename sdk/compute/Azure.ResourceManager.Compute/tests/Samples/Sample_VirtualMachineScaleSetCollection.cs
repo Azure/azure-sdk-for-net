@@ -475,7 +475,7 @@ EnableIPForwarding = true,
                             OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                             {
                                 Caching = CachingType.ReadWrite,
-                                StorageFaultDomainAlignment = StorageFaultDomainAlignmentType.BestEffortAligned,
+                                StorageFaultDomainAlignment = ComputeStorageFaultDomainAlignmentType.BestEffortAligned,
                                 ManagedDisk = new VirtualMachineScaleSetManagedDisk
                                 {
                                     StorageAccountType = StorageAccountType.StandardLrs,
@@ -3875,7 +3875,7 @@ EnableIPForwarding = true,
                         },
                     },
                     Overprovision = true,
-                    ExternalHealthPolicy = new ExternalHealthPolicy
+                    ExternalHealthPolicy = new ComputeExternalHealthPolicy
                     {
                         Enabled = true,
                         ExpiryDuration = XmlConvert.ToTimeSpan("PT10M"),

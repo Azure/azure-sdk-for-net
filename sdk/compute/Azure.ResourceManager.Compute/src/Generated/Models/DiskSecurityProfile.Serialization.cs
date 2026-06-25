@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidentialVMVersion))
+            if (options.Format != "W" && Optional.IsDefined(ConfidentialVmVersion))
             {
                 writer.WritePropertyName("confidentialVMVersion"u8);
-                writer.WriteStringValue(ConfidentialVMVersion.Value.ToString());
+                writer.WriteStringValue(ConfidentialVmVersion.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             DiskSecurityType? securityType = default;
             ResourceIdentifier secureVmDiskEncryptionSetId = default;
-            ConfidentialVMVersion? confidentialVMVersion = default;
+            ConfidentialVmVersion? confidentialVmVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    confidentialVMVersion = new ConfidentialVMVersion(prop.Value.GetString());
+                    confidentialVmVersion = new ConfidentialVmVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, confidentialVMVersion, additionalBinaryDataProperties);
+            return new DiskSecurityProfile(securityType, secureVmDiskEncryptionSetId, confidentialVmVersion, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Indicates the version of Confidential VM for the resource. </summary>
-    public readonly partial struct ConfidentialVMVersion : IEquatable<ConfidentialVMVersion>
+    public readonly partial struct ConfidentialVmVersion : IEquatable<ConfidentialVmVersion>
     {
         private readonly string _value;
         /// <summary> V1 indicates the resource does not have an associated Virtual Machine Metadata. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> V2 indicates the resource has an associated Virtual Machine Metadata. </summary>
         private const string V2Value = "V2";
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialVMVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialVmVersion"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialVMVersion(string value)
+        public ConfidentialVmVersion(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> V1 indicates the resource does not have an associated Virtual Machine Metadata. </summary>
-        public static ConfidentialVMVersion V1 { get; } = new ConfidentialVMVersion(V1Value);
+        public static ConfidentialVmVersion V1 { get; } = new ConfidentialVmVersion(V1Value);
 
         /// <summary> V2 indicates the resource has an associated Virtual Machine Metadata. </summary>
-        public static ConfidentialVMVersion V2 { get; } = new ConfidentialVMVersion(V2Value);
+        public static ConfidentialVmVersion V2 { get; } = new ConfidentialVmVersion(V2Value);
 
-        /// <summary> Determines if two <see cref="ConfidentialVMVersion"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ConfidentialVmVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ConfidentialVMVersion left, ConfidentialVMVersion right) => left.Equals(right);
+        public static bool operator ==(ConfidentialVmVersion left, ConfidentialVmVersion right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConfidentialVMVersion"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ConfidentialVmVersion"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ConfidentialVMVersion left, ConfidentialVMVersion right) => !left.Equals(right);
+        public static bool operator !=(ConfidentialVmVersion left, ConfidentialVmVersion right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialVMVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ConfidentialVmVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialVMVersion(string value) => new ConfidentialVMVersion(value);
+        public static implicit operator ConfidentialVmVersion(string value) => new ConfidentialVmVersion(value);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialVMVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ConfidentialVmVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialVMVersion?(string value) => value == null ? null : new ConfidentialVMVersion(value);
+        public static implicit operator ConfidentialVmVersion?(string value) => value == null ? null : new ConfidentialVmVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConfidentialVMVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is ConfidentialVmVersion other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ConfidentialVMVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConfidentialVmVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

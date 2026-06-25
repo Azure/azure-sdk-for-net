@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Data used for updating the immutability policy of a snapshot. </summary>
-    public partial class ImmutabilityPolicyData
+    public partial class ImmutabilityPolicyContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyContent"/>. </summary>
         /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
         /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
-        public ImmutabilityPolicyData(int immutabilityDurationDays, ImmutabilityPolicyType @type)
+        public ImmutabilityPolicyContent(int immutabilityDurationDays, ImmutabilityPolicyType @type)
         {
             ImmutabilityDurationDays = immutabilityDurationDays;
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilityPolicyContent"/>. </summary>
         /// <param name="immutabilityDurationDays"> The immutability duration for the snapshot, in number of days. </param>
         /// <param name="type"> The type of the immutability policy. 'Unlocked' allows the policy to be modified by privileged users; 'Locked' prevents reduction of the immutability duration but allows extension of the lock period. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImmutabilityPolicyData(int immutabilityDurationDays, ImmutabilityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImmutabilityPolicyContent(int immutabilityDurationDays, ImmutabilityPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImmutabilityDurationDays = immutabilityDurationDays;
             Type = @type;
