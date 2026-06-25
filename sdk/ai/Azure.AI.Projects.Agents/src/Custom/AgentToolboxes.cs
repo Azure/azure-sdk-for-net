@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentToolboxes
 {
     /// <summary> List all versions of a toolbox. </summary>
-    /// <param name="toolboxName"> The name of the toolbox to list versions for. </param>
+    /// <param name="name"> The name of the toolbox to list versions for. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -33,12 +33,12 @@ public partial class AgentToolboxes
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<ToolboxVersion> GetToolboxVersions(string toolboxName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ToolboxVersion> GetToolboxVersions(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         return new InternalOpenAICollectionResultOfT<ToolboxVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -50,12 +50,12 @@ public partial class AgentToolboxes
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
             dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ToolboxVersion>(e, o),
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [toolboxName]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name]),
             cancellationToken.ToRequestOptions());
     }
 
     /// <summary> List all versions of a toolbox. </summary>
-    /// <param name="toolboxName"> The name of the toolbox to list versions for. </param>
+    /// <param name="name"> The name of the toolbox to list versions for. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -75,12 +75,12 @@ public partial class AgentToolboxes
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ToolboxVersion> GetToolboxVersionsAsync(string toolboxName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ToolboxVersion> GetToolboxVersionsAsync(string name, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         return new InternalOpenAIAsyncCollectionResultOfT<ToolboxVersion>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -92,7 +92,7 @@ public partial class AgentToolboxes
                     localCollectionOptions.BeforeId,
                     localRequestOptions),
             dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<ToolboxVersion>(e, o),
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [toolboxName]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [name]),
             cancellationToken.ToRequestOptions());
     }
 
@@ -178,22 +178,22 @@ public partial class AgentToolboxes
     /// </item>
     /// </list>
     /// </summary>
-    /// <param name="toolboxName"> The name of the toolbox to update. </param>
+    /// <param name="name"> The name of the toolbox to update. </param>
     /// <param name="defaultVersion"> The new default version of a toolbox. </param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="defaultVersion"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual ClientResult<ToolboxRecord> UpdateToolbox(string toolboxName, string defaultVersion, RequestOptions options = null)
+    public virtual ClientResult<ToolboxRecord> UpdateToolbox(string name, string defaultVersion, RequestOptions options = null)
     {
-        Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
-        UpdateToolboxRequest request = new(toolboxName, defaultVersion);
+        UpdateToolboxRequest request = new(name, defaultVersion);
         BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
-        ClientResult result = UpdateToolbox(toolboxName, content);
+        ClientResult result = UpdateToolbox(name, content);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
     }
 
@@ -205,22 +205,22 @@ public partial class AgentToolboxes
     /// </item>
     /// </list>
     /// </summary>
-    /// <param name="toolboxName"> The name of the toolbox to update. </param>
+    /// <param name="name"> The name of the toolbox to update. </param>
     /// <param name="defaultVersion"> The new default version of a toolbox. </param>
     /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="toolboxName"/> or <paramref name="defaultVersion"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="toolboxName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="defaultVersion"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<ToolboxRecord>> UpdateToolboxAsync(string toolboxName, string defaultVersion, RequestOptions options = null)
+    public virtual async Task<ClientResult<ToolboxRecord>> UpdateToolboxAsync(string name, string defaultVersion, RequestOptions options = null)
     {
-        Argument.AssertNotNullOrEmpty(toolboxName, nameof(toolboxName));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
-        UpdateToolboxRequest request = new(toolboxName, defaultVersion);
+        UpdateToolboxRequest request = new(name, defaultVersion);
         BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
-        ClientResult result = await UpdateToolboxAsync(toolboxName, content).ConfigureAwait(false);
+        ClientResult result = await UpdateToolboxAsync(name, content).ConfigureAwait(false);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
     }
 }

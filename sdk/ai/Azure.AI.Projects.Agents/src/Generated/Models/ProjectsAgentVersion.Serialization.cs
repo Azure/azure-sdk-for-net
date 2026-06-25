@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceIdentity))
             {
@@ -267,7 +267,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToAgentVersionStatus();
+                    status = new AgentVersionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("instance_identity"u8))

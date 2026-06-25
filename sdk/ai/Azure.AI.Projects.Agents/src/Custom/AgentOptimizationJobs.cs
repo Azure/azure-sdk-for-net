@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(JobStatus?), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(JobStatus?), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(JobStatus?), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(JobStatus?), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentOptimizationJobs

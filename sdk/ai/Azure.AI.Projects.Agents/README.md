@@ -357,41 +357,22 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
 It is also possible to upload the files to the session store, so that it will only be accessible inside its session.
 To use this feature we need to create the `AgentSessionFiles` client:
 
-```C# Snippet:Sample_CreateClient_SessionFiles
-var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
-var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
-```
-
-We can use it to upload the files.
-
-```C# Snippet:Sample_Upload_SessionFiles_Async
-string filePath = "sample_file_for_upload1.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-SessionFileWriteResponse writeResponse = await sessionClient.UploadSessionFileAsync(
-        agentName: agentVersion.Name,
-        sessionId: session.AgentSessionId,
-        sessionStoragePath: filePath,
-        localPath: filePath
-    );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
-filePath = "sample_file_for_upload2.txt";
-File.WriteAllText(
-    path: filePath,
-    contents: "The word 'grape' uses the code 111222, while the word 'mango' uses the code 222111.");
-writeResponse = await sessionClient.UploadSessionFileAsync(
+```C# Snippet:Sample_CreateAgentAndSession_SessionFiles_Async
+ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
+    agentName: hostedAgentName,
+    agentVersion: hostedAgentVersion);
+string sessionId = Guid.NewGuid().ToString("N");
+ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
-    sessionId: session.AgentSessionId,
-    sessionStoragePath: $"{filePath}",
-    localPath: filePath
+    agentSessionId: sessionId,
+    versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
-Console.WriteLine($"The file was written to path {writeResponse.Path}, file length is {writeResponse.BytesWritten}.");
-File.Delete(filePath);
+AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles(agentVersion.Name, session.AgentSessionId);
+while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+}
 ```
 
 ### Skills

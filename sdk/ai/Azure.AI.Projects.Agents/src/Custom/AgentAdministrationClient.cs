@@ -59,7 +59,6 @@ public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
     private ProjectAgentSkills _cachedAgentSkills;
-    private AgentSessionFiles _cachedAgentSessionFiles;
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
@@ -1020,9 +1019,15 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary> Gets the lazily-initialized agent session files sub-client. </summary>
-    public virtual AgentSessionFiles GetAgentSessionFiles()
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session ID. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    public virtual AgentSessionFiles GetAgentSessionFiles(string agentName, string sessionId)
     {
-        return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
+        return new AgentSessionFiles(Pipeline, _endpoint, _apiVersion, agentName, sessionId);
     }
 
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>

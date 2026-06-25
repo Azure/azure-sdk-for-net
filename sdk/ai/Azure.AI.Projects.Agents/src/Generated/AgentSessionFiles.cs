@@ -243,5 +243,37 @@ namespace Azure.AI.Projects.Agents
             using PipelineMessage message = CreateDeleteSessionFileRequest(agentName, agentSessionId, path, recursive, userIsolationKey, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
+
+        /// <summary>
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
+        /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult DeleteSessionFile(string agentName, string agentSessionId, string path, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        {
+            return DeleteSessionFile(agentName, agentSessionId, path, recursive, userIsolationKey, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Deletes the specified file or directory from the session sandbox.
+        /// When `recursive` is false, deleting a non-empty directory returns 409 Conflict.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="agentSessionId"> The session ID. </param>
+        /// <param name="path"> The file or directory path to delete, relative to the session home directory. </param>
+        /// <param name="recursive"> Whether to recursively delete directory contents. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string agentSessionId, string path, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
+        {
+            return await DeleteSessionFileAsync(agentName, agentSessionId, path, recursive, userIsolationKey, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        }
     }
 }

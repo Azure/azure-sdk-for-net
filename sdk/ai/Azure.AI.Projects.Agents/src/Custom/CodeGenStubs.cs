@@ -20,6 +20,8 @@ public partial class ProjectsAgentRecord
 
 // Internal types
 [CodeGenType("ApproximateLocation")] internal partial class InternalApproximateLocation { }
+[CodeGenType("AgentVersionStatus ")] public partial struct AgentVersionStatus { }
+[CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("CodeInterpreterTool")] internal partial class InternalCodeInterpreterTool { }
 [CodeGenType("CodeInterpreterToolAuto")] internal partial class InternalCodeInterpreterToolAuto { }
 [CodeGenType("CodeInterpreterToolCallItemParam")] internal partial class InternalCodeInterpreterToolCallItemParam { }
