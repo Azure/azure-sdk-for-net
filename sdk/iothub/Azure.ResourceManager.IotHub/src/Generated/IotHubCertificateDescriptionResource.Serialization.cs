@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotHub
 {
+    /// <summary></summary>
     public partial class IotHubCertificateDescriptionResource : IJsonModel<IotHubCertificateDescriptionData>
     {
-        private static IotHubCertificateDescriptionData s_dataDeserializationInstance;
-        private static IotHubCertificateDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotHubCertificateDescriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotHubCertificateDescriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotHubCertificateDescriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubCertificateDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)Data).Write(writer, options);
 
-        IotHubCertificateDescriptionData IJsonModel<IotHubCertificateDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubCertificateDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubCertificateDescriptionData IJsonModel<IotHubCertificateDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotHubCertificateDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubCertificateDescriptionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotHubCertificateDescriptionData IPersistableModel<IotHubCertificateDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubCertificateDescriptionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
-        string IPersistableModel<IotHubCertificateDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubCertificateDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubCertificateDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
