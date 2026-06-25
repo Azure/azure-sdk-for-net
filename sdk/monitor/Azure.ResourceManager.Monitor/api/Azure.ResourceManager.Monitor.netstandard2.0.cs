@@ -1073,10 +1073,10 @@ namespace Azure.ResourceManager.Monitor
     public partial class MonitorPrivateLinkScopedResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopedResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopedResourceData>
     {
         public MonitorPrivateLinkScopedResourceData() { }
-        public Azure.ResourceManager.Monitor.Models.ScopedResourceKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind? Kind { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LinkedResourceId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState? ScopedResourceProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState? ScopedResourceProvisioningState { get { throw null; } }
         public Azure.Core.AzureLocation? SubscriptionLocation { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1712,21 +1712,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.AlertSeverity left, Azure.ResourceManager.Monitor.Models.AlertSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ApplicationInsights : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>
-    {
-        public ApplicationInsights(Azure.Core.ResourceIdentifier resourceId, string name) { }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Monitor.Models.ApplicationInsights JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Monitor.Models.ApplicationInsights PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Monitor.Models.ApplicationInsights System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.ApplicationInsights System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ApplicationInsights>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ArmMonitorModelFactory
     {
         public static Azure.ResourceManager.Monitor.ActionGroupData ActionGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string groupShortName = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers = null) { throw null; }
@@ -1745,7 +1730,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.AlertRuleLeafCondition AlertRuleLeafCondition(string field = null, string equalsValue = null, System.Collections.Generic.IEnumerable<string> containsAny = null) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported.", false)]
         public static Azure.ResourceManager.Monitor.Models.AlertRulePatch AlertRulePatch(System.Collections.Generic.IDictionary<string, string> tags, string name, string description, string provisioningState, bool? isEnabled, Azure.ResourceManager.Monitor.Models.AlertRuleCondition condition, Azure.ResourceManager.Monitor.Models.AlertRuleAction action, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.AlertRuleAction> actions, System.DateTimeOffset? lastUpdatedOn) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ApplicationInsights ApplicationInsights(Azure.Core.ResourceIdentifier resourceId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.AutoscaleNotification AutoscaleNotification(Azure.ResourceManager.Monitor.Models.MonitorOperationType operation = default(Azure.ResourceManager.Monitor.Models.MonitorOperationType), Azure.ResourceManager.Monitor.Models.EmailNotification email = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.WebhookNotification> webhooks = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.AutoscaleProfile AutoscaleProfile(string name = null, Azure.ResourceManager.Monitor.Models.MonitorScaleCapacity capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.AutoscaleRule> rules = null, Azure.ResourceManager.Monitor.Models.MonitorTimeWindow fixedDate = null, Azure.ResourceManager.Monitor.Models.MonitorRecurrence recurrence = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.AutoscaleRule AutoscaleRule(Azure.ResourceManager.Monitor.Models.MetricTrigger metricTrigger = null, Azure.ResourceManager.Monitor.Models.MonitorScaleAction scaleAction = null) { throw null; }
@@ -1779,7 +1763,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleMetadata DataCollectionRuleMetadata(string provisionedBy = null, string provisionedByResourceId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleMetadata DataCollectionRuleMetadata(string provisionedBy = null, string provisionedByResourceId = null, string provisionedByImmutableId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRulePrivateLinkScopedResourceInfo DataCollectionRulePrivateLinkScopedResourceInfo(Azure.Core.ResourceIdentifier resourceId = null, string scopeId = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleReferences DataCollectionRuleReferences(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ApplicationInsights> applicationInsights = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleReferences DataCollectionRuleReferences(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference> applicationInsights = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata DataCollectionRuleRelatedResourceMetadata(string provisionedBy = null, string provisionedByResourceId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleRelatedResourceMetadata DataCollectionRuleRelatedResourceMetadata(string provisionedBy = null, string provisionedByResourceId = null, string provisionedByImmutableId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.DataCollectionRuleResourceSku DataCollectionRuleResourceSku(string name = null, Azure.ResourceManager.Monitor.Models.MonitorSkuTier? tier = default(Azure.ResourceManager.Monitor.Models.MonitorSkuTier?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
@@ -1834,6 +1818,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MetricSettings MetricSettings(System.TimeSpan? timeGrain = default(System.TimeSpan?), string category = null, bool isEnabled = false, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricTrigger MetricTrigger(string metricName = null, string metricNamespace = null, Azure.Core.ResourceIdentifier metricResourceId = null, Azure.Core.AzureLocation? metricResourceLocation = default(Azure.Core.AzureLocation?), System.TimeSpan timeGrain = default(System.TimeSpan), Azure.ResourceManager.Monitor.Models.MetricStatisticType statistic = Azure.ResourceManager.Monitor.Models.MetricStatisticType.Average, System.TimeSpan timeWindow = default(System.TimeSpan), Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType timeAggregation = Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType.Average, Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator comparisonOperator = Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator.Equals, double threshold = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.AutoscaleRuleMetricDimension> dimensions = null, bool? isDividedPerInstance = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MicrosoftFabricDestination MicrosoftFabricDestination(string tenantId = null, string artifactId = null, string databaseName = null, string ingestionUri = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference MonitorApplicationInsightsReference(Azure.Core.ResourceIdentifier resourceId = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver MonitorArmRoleReceiver(string name = null, string roleId = null, bool? useCommonAlertSchema = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver MonitorAutomationRunbookReceiver(Azure.Core.ResourceIdentifier automationAccountId = null, string runbookName = null, Azure.Core.ResourceIdentifier webhookResourceId = null, bool isGlobalRunbook = false, string name = null, System.Uri serviceUri = null, bool? useCommonAlertSchema = default(bool?), string managedIdentity = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver MonitorAzureAppPushReceiver(string name = null, string emailAddress = null) { throw null; }
@@ -1858,12 +1843,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricSingleDimension MonitorMetricSingleDimension(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricsResult MonitorMetricsResult(int? cost = default(int?), string timespan = null, string interval = null, string @namespace = null, string resourceregion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorMetric> value = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorMetricValue MonitorMetricValue(System.DateTimeOffset timeStamp = default(System.DateTimeOffset), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter MonitorNetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, System.Guid? perimeterGuid = default(System.Guid?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule MonitorNetworkSecurityPerimeterConfigurationAccessRule(string name = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, System.Collections.Generic.IEnumerable<string> phoneNumbers = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties MonitorNetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile profile = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(string name = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueType? issueType = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueType?), Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueSeverity? severity = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueSeverity?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> suggestedResourceIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule> suggestedAccessRules = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation MonitorNetworkSecurityPerimeterConfigurationResourceAssociation(string name = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile MonitorNetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettings MonitorPrivateLinkAccessModeSettings(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode queryAccessMode = default(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode), Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode ingestionAccessMode = default(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettingsExclusion> exclusions = null) { throw null; }
@@ -1872,7 +1860,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Monitor.Models.PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default(Azure.ResourceManager.Monitor.Models.PrivateLinkScopeProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettings accessModeSettings = null) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkAccessModeSettings accessModeSettings = null) { throw null; }
         public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier linkedResourceId = null, string provisioningState = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.ScopedResourceKind? kind = default(Azure.ResourceManager.Monitor.Models.ScopedResourceKind?), Azure.Core.ResourceIdentifier linkedResourceId = null, Azure.Core.AzureLocation? subscriptionLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState? scopedResourceProvisioningState = default(Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind? kind = default(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind?), Azure.Core.ResourceIdentifier linkedResourceId = null, Azure.Core.AzureLocation? subscriptionLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState? scopedResourceProvisioningState = default(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState?)) { throw null; }
         [System.ObsoleteAttribute("This API is no longer supported.", false)]
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id, string name, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, string status, Azure.ResponseError error) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch MonitorPrivateLinkScopePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
@@ -1903,10 +1891,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData MonitorWorkspaceResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? eTag, string accountId, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics metrics, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? provisioningState, Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess? publicNetworkAccess) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MultiMetricCriteria MultiMetricCriteria(string criterionType = null, string name = null, string metricName = null, string metricNamespace = null, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation = default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricDimension> dimensions = null, bool? skipMetricValidation = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria MultiPromQLCriteria(string criterionType = null, string name = null, string query = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(Azure.Core.ResourceIdentifier id = null, System.Guid? perimeterGuid = default(System.Guid?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = null, Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile profile = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile NetworkSecurityProfile(string name = null, int? accessRulesVersion = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = null, int? diagnosticSettingsVersion = default(int?), System.Collections.Generic.IEnumerable<string> enabledLogCategories = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationActionDetail NotificationActionDetail(string mechanismType = null, string name = null, string status = null, string subState = null, System.DateTimeOffset? sendOn = default(System.DateTimeOffset?), string detail = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationContent NotificationContent(string alertType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.NotificationContent NotificationContent(string alertType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEmailReceiver> emailReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorSmsReceiver> smsReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver> webhookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorItsmReceiver> itsmReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureAppPushReceiver> azureAppPushReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorVoiceReceiver> voiceReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorLogicAppReceiver> logicAppReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorAzureFunctionReceiver> azureFunctionReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver> armRoleReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorEventHubReceiver> eventHubReceivers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.IncidentReceiver> incidentReceivers = null) { throw null; }
@@ -1930,13 +1915,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.PrometheusForwarderDataSource PrometheusForwarderDataSource(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams = null, System.Collections.Generic.IDictionary<string, string> labelIncludeFilter = null, System.Collections.Generic.IEnumerable<System.BinaryData> customVMScrapeConfig = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.PromQLCriteria PromQLCriteria(System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, System.TimeSpan? failingPeriodsFor = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria> allOf = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.RecurrentSchedule RecurrentSchedule(string timeZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorDayOfWeek> days = null, System.Collections.Generic.IEnumerable<int> hours = null, System.Collections.Generic.IEnumerable<int> minutes = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ReferencesSpec ReferencesSpec(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ApplicationInsights> applicationInsights = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.ReferencesSpec ReferencesSpec(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference> applicationInsights = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.ResolveConfiguration ResolveConfiguration(bool isAutoResolved = false, System.TimeSpan? timeToResolve = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.ResourceForUpdate ResourceForUpdate(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.RetentionPolicy RetentionPolicy(bool isEnabled = false, int days = 0) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration RuleResolveConfiguration(bool? isAutoResolved = default(bool?), System.TimeSpan? timeToResolve = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleActions ScheduledQueryRuleActions(System.Collections.Generic.IEnumerable<string> actionGroups = null, System.Collections.Generic.IDictionary<string, string> customProperties = null, System.Collections.Generic.IDictionary<string, string> actionProperties = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition ScheduledQueryRuleCondition(Azure.ResourceManager.Monitor.Models.CriterionType? criterionType = default(Azure.ResourceManager.Monitor.Models.CriterionType?), string query = null, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType? timeAggregation = default(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType?), string metricMeasureColumn = null, string resourceIdColumn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorDimension> dimensions = null, Azure.ResourceManager.Monitor.Models.MonitorConditionOperator? @operator = default(Azure.ResourceManager.Monitor.Models.MonitorConditionOperator?), double? threshold = default(double?), string alertSensitivity = null, System.DateTimeOffset? ignoreDataBefore = default(System.DateTimeOffset?), Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods failingPeriods = null, string metricName = null, long? minRecurrenceCount = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition ScheduledQueryRuleCondition(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType? criterionType = default(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType?), string query = null, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType? timeAggregation = default(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType?), string metricMeasureColumn = null, string resourceIdColumn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MonitorDimension> dimensions = null, Azure.ResourceManager.Monitor.Models.MonitorConditionOperator? @operator = default(Azure.ResourceManager.Monitor.Models.MonitorConditionOperator?), double? threshold = default(double?), string alertSensitivity = null, System.DateTimeOffset? ignoreDataBefore = default(System.DateTimeOffset?), Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods failingPeriods = null, string metricName = null, long? minRecurrenceCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.Monitor.ScheduledQueryRuleData ScheduledQueryRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind? kind = default(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind?), Azure.ETag? etag = default(Azure.ETag?), string createdWithApiVersion = null, bool? isLegacyLogAnalyticsRule = default(bool?), string description = null, string displayName = null, Azure.ResourceManager.Monitor.Models.AlertSeverity? severity = default(Azure.ResourceManager.Monitor.Models.AlertSeverity?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), System.TimeSpan? overrideQueryTimeRange = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> targetResourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition> criteriaAllOf = null, System.TimeSpan? muteActionsDuration = default(System.TimeSpan?), Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleActions actions = null, bool? isWorkspaceAlertsStorageConfigured = default(bool?), bool? checkWorkspaceAlertsStorageConfigured = default(bool?), bool? skipQueryValidation = default(bool?), bool? autoMitigate = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Monitor.ScheduledQueryRuleData ScheduledQueryRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string createdWithApiVersion = null, bool? isLegacyLogAnalyticsRule = default(bool?), string description = null, string displayName = null, Azure.ResourceManager.Monitor.Models.AlertSeverity? severity = default(Azure.ResourceManager.Monitor.Models.AlertSeverity?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), System.TimeSpan? overrideQueryTimeRange = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> targetResourceTypes = null, System.TimeSpan? muteActionsDuration = default(System.TimeSpan?), Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleActions actions = null, bool? isWorkspaceAlertsStorageConfigured = default(bool?), bool? checkWorkspaceAlertsStorageConfigured = default(bool?), bool? skipQueryValidation = default(bool?), bool? autoMitigate = default(bool?), Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition> criteriaAllOf = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind? kind = default(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePatch ScheduledQueryRulePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, string createdWithApiVersion = null, bool? isLegacyLogAnalyticsRule = default(bool?), string description = null, string displayName = null, Azure.ResourceManager.Monitor.Models.AlertSeverity? severity = default(Azure.ResourceManager.Monitor.Models.AlertSeverity?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> scopes = null, System.TimeSpan? evaluationFrequency = default(System.TimeSpan?), System.TimeSpan? windowSize = default(System.TimeSpan?), System.TimeSpan? overrideQueryTimeRange = default(System.TimeSpan?), System.Collections.Generic.IEnumerable<string> targetResourceTypes = null, System.TimeSpan? muteActionsDuration = default(System.TimeSpan?), Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleActions actions = null, bool? isWorkspaceAlertsStorageConfigured = default(bool?), bool? checkWorkspaceAlertsStorageConfigured = default(bool?), bool? skipQueryValidation = default(bool?), bool? autoMitigate = default(bool?), Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration resolveConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition> criteriaAllOf = null) { throw null; }
@@ -2103,23 +2088,6 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CriterionType : System.IEquatable<Azure.ResourceManager.Monitor.Models.CriterionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CriterionType(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.CriterionType DynamicThresholdCriterion { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.CriterionType StaticThresholdCriterion { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.CriterionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.CriterionType left, Azure.ResourceManager.Monitor.Models.CriterionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.CriterionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.CriterionType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.CriterionType left, Azure.ResourceManager.Monitor.Models.CriterionType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class DataCollectionEndpointFailoverConfiguration : Azure.ResourceManager.Monitor.Models.DataCollectionRuleBcdrFailoverConfigurationSpec, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataCollectionEndpointFailoverConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataCollectionEndpointFailoverConfiguration>
     {
@@ -3732,6 +3700,21 @@ namespace Azure.ResourceManager.Monitor.Models
         Maximum = 4,
         Total = 5,
     }
+    public partial class MonitorApplicationInsightsReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>
+    {
+        public MonitorApplicationInsightsReference(Azure.Core.ResourceIdentifier resourceId, string name) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorArmRoleReceiver : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver>
     {
         public MonitorArmRoleReceiver(string name, string roleId) { }
@@ -4287,6 +4270,22 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification left, Azure.ResourceManager.Monitor.Models.MonitorNamespaceClassification right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MonitorNetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>
+    {
+        internal MonitorNetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Guid? PerimeterGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorNetworkSecurityPerimeterConfigurationAccessRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule>
     {
         internal MonitorNetworkSecurityPerimeterConfigurationAccessRule() { }
@@ -4326,7 +4325,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? Direction { get { throw null; } }
         public System.Collections.Generic.IList<string> EmailAddresses { get { throw null; } }
         public System.Collections.Generic.IList<string> FullyQualifiedDomainNames { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IList<string> PhoneNumbers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> Subscriptions { get { throw null; } }
         protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4389,6 +4388,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueType left, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationIssueType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MonitorNetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>
+    {
+        internal MonitorNetworkSecurityPerimeterConfigurationProperties() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile Profile { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation ResourceAssociation { get { throw null; } }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>
     {
         internal MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue() { }
@@ -4422,6 +4439,28 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorNetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorNetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MonitorNetworkSecurityPerimeterConfigurationResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation>
     {
         internal MonitorNetworkSecurityPerimeterConfigurationResourceAssociation() { }
@@ -4454,6 +4493,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode left, Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class MonitorNetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>
+    {
+        internal MonitorNetworkSecurityProfile() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule> AccessRules { get { throw null; } }
+        public int? AccessRulesVersion { get { throw null; } }
+        public int? DiagnosticSettingsVersion { get { throw null; } }
+        public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorOperationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorOperationType>
@@ -4714,6 +4771,42 @@ namespace Azure.ResourceManager.Monitor.Models
         ExactCount = 2,
         ServiceAllowedNextValue = 3,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorScopedResourceKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorScopedResourceKind(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind Metrics { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind Resource { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind left, Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind left, Azure.ResourceManager.Monitor.Models.MonitorScopedResourceKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorScopedResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorScopedResourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorScopedResourceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MonitorSingleBaseline : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorSingleBaseline>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorSingleBaseline>
     {
         internal MonitorSingleBaseline() { }
@@ -4970,6 +5063,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MultiMetricCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>
     {
+        public MultiMetricCriteria(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType criterionType, string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
         public MultiMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricDimension> Dimensions { get { throw null; } }
@@ -5003,26 +5097,10 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>
-    {
-        internal NetworkSecurityPerimeter() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public System.Guid? PerimeterGuid { get { throw null; } }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class NetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration>
     {
         internal NetworkSecurityPerimeterConfiguration() { }
-        public Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5032,64 +5110,6 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>
-    {
-        internal NetworkSecurityPerimeterConfigurationProperties() { }
-        public Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile Profile { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> ProvisioningIssues { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation ResourceAssociation { get { throw null; } }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.Monitor.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NetworkSecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>
-    {
-        internal NetworkSecurityProfile() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule> AccessRules { get { throw null; } }
-        public int? AccessRulesVersion { get { throw null; } }
-        public int? DiagnosticSettingsVersion { get { throw null; } }
-        public System.Collections.Generic.IList<string> EnabledLogCategories { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NetworkSecurityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NotificationActionDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationActionDetail>
     {
@@ -5535,7 +5555,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class ReferencesSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ReferencesSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ReferencesSpec>
     {
         public ReferencesSpec() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.ApplicationInsights> ApplicationInsights { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorApplicationInsightsReference> ApplicationInsights { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.DataCollectionRuleEnrichmentStorageBlob> EnrichmentDataStorageBlobs { get { throw null; } }
         protected virtual Azure.ResourceManager.Monitor.Models.ReferencesSpec JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5717,7 +5737,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public ScheduledQueryRuleCondition() { }
         public string AlertSensitivity { get { throw null; } set { } }
-        public Azure.ResourceManager.Monitor.Models.CriterionType? CriterionType { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType? CriterionType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MonitorDimension> Dimensions { get { throw null; } }
         public Azure.ResourceManager.Monitor.Models.ConditionFailingPeriods FailingPeriods { get { throw null; } set { } }
         public System.DateTimeOffset? IgnoreDataBefore { get { throw null; } set { } }
@@ -5738,6 +5758,23 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScheduledQueryRuleCriterionType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScheduledQueryRuleCriterionType(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType DynamicThresholdCriterion { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType StaticThresholdCriterion { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleCriterionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledQueryRuleKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleKind>
@@ -5809,42 +5846,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType left, Azure.ResourceManager.Monitor.Models.ScheduledQueryRuleTimeAggregationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScopedResourceKind : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScopedResourceKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScopedResourceKind(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceKind Metrics { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceKind Resource { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.ScopedResourceKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScopedResourceKind left, Azure.ResourceManager.Monitor.Models.ScopedResourceKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ScopedResourceKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ScopedResourceKind? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScopedResourceKind left, Azure.ResourceManager.Monitor.Models.ScopedResourceKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScopedResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScopedResourceProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState left, Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState left, Azure.ResourceManager.Monitor.Models.ScopedResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SenderAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.SenderAuthorization>

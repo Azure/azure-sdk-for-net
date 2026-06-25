@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The kind of scoped Azure monitor resource. </summary>
-    public readonly partial struct ScopedResourceKind : IEquatable<ScopedResourceKind>
+    public readonly partial struct MonitorScopedResourceKind : IEquatable<MonitorScopedResourceKind>
     {
         private readonly string _value;
         /// <summary> Resource. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Metrics. </summary>
         private const string MetricsValue = "Metrics";
 
-        /// <summary> Initializes a new instance of <see cref="ScopedResourceKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorScopedResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScopedResourceKind(string value)
+        public MonitorScopedResourceKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Resource. </summary>
-        public static ScopedResourceKind Resource { get; } = new ScopedResourceKind(ResourceValue);
+        public static MonitorScopedResourceKind Resource { get; } = new MonitorScopedResourceKind(ResourceValue);
 
         /// <summary> Metrics. </summary>
-        public static ScopedResourceKind Metrics { get; } = new ScopedResourceKind(MetricsValue);
+        public static MonitorScopedResourceKind Metrics { get; } = new MonitorScopedResourceKind(MetricsValue);
 
-        /// <summary> Determines if two <see cref="ScopedResourceKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorScopedResourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ScopedResourceKind left, ScopedResourceKind right) => left.Equals(right);
+        public static bool operator ==(MonitorScopedResourceKind left, MonitorScopedResourceKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScopedResourceKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorScopedResourceKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ScopedResourceKind left, ScopedResourceKind right) => !left.Equals(right);
+        public static bool operator !=(MonitorScopedResourceKind left, MonitorScopedResourceKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScopedResourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorScopedResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopedResourceKind(string value) => new ScopedResourceKind(value);
+        public static implicit operator MonitorScopedResourceKind(string value) => new MonitorScopedResourceKind(value);
 
-        /// <summary> Converts a string to a <see cref="ScopedResourceKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorScopedResourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScopedResourceKind?(string value) => value == null ? null : new ScopedResourceKind(value);
+        public static implicit operator MonitorScopedResourceKind?(string value) => value == null ? null : new MonitorScopedResourceKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScopedResourceKind other && Equals(other);
+        public override bool Equals(object obj) => obj is MonitorScopedResourceKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ScopedResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MonitorScopedResourceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

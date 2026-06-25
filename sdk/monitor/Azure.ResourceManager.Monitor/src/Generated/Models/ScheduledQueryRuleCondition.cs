@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricName"> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </param>
         /// <param name="minRecurrenceCount"> The minimum results count that should be found for triggering an alert. Relevant only for rules of the kind SimpleLogAlert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleCondition(CriterionType? criterionType, string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, string alertSensitivity, DateTimeOffset? ignoreDataBefore, ConditionFailingPeriods failingPeriods, string metricName, long? minRecurrenceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledQueryRuleCondition(ScheduledQueryRuleCriterionType? criterionType, string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, string alertSensitivity, DateTimeOffset? ignoreDataBefore, ConditionFailingPeriods failingPeriods, string metricName, long? minRecurrenceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CriterionType = criterionType;
             Query = query;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Specifies the type of threshold criteria. </summary>
-        public CriterionType? CriterionType { get; set; }
+        public ScheduledQueryRuleCriterionType? CriterionType { get; set; }
 
         /// <summary> Log query alert. </summary>
         public string Query { get; set; }

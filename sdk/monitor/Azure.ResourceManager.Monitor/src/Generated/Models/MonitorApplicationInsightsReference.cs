@@ -12,17 +12,17 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The ApplicationInsights. </summary>
-    public partial class ApplicationInsights
+    /// <summary> The MonitorApplicationInsightsReference. </summary>
+    public partial class MonitorApplicationInsightsReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorApplicationInsightsReference"/>. </summary>
         /// <param name="resourceId"> Id of the application insights resource. </param>
         /// <param name="name"> The name of the reference used as an alias when referencing this application insights in Otel data sources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="name"/> is null. </exception>
-        public ApplicationInsights(ResourceIdentifier resourceId, string name)
+        public MonitorApplicationInsightsReference(ResourceIdentifier resourceId, string name)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(name, nameof(name));
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorApplicationInsightsReference"/>. </summary>
         /// <param name="resourceId"> Id of the application insights resource. </param>
         /// <param name="name"> The name of the reference used as an alias when referencing this application insights in Otel data sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsights(ResourceIdentifier resourceId, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorApplicationInsightsReference(ResourceIdentifier resourceId, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             Name = name;

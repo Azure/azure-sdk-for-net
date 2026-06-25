@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -20,12 +21,31 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
+        /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
+        public MultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(metricName, nameof(metricName));
+
+            CriterionType = criterionType;
+            Name = name;
+            MetricName = metricName;
+            TimeAggregation = timeAggregation;
+            Dimensions = new ChangeTrackingList<MetricDimension>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
+        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
+        /// <param name="name"> Name of the criteria. </param>
+        /// <param name="metricName"> Name of the metric. </param>
         /// <param name="metricNamespace"> Namespace of the metric. </param>
         /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"></param>
-        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
+        internal MultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
         {
             CriterionType = criterionType;
             Name = name;
@@ -38,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
-        internal CriterionType CriterionType { get; set; }
+        internal ScheduledQueryRuleCriterionType CriterionType { get; set; }
 
         /// <summary> Name of the criteria. </summary>
         public string Name { get; set; }

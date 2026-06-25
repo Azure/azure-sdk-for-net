@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSecurityPerimeter item in NetworkSecurityPerimeters)
+                foreach (MonitorNetworkSecurityPerimeter item in NetworkSecurityPerimeters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IList<MonitorNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<MonitorNetworkSecurityPerimeter> array = new List<MonitorNetworkSecurityPerimeter>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                        array.Add(MonitorNetworkSecurityPerimeter.DeserializeMonitorNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),

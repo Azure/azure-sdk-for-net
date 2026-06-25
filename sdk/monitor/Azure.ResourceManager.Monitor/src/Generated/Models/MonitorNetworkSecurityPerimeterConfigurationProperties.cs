@@ -12,25 +12,25 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Network security configuration properties. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationProperties
+    public partial class MonitorNetworkSecurityPerimeterConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"></param>
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationProperties(MonitorNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues, MonitorNetworkSecurityPerimeter networkSecurityPerimeter, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation, MonitorNetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
         public IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public MonitorNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Gets the ResourceAssociation. </summary>
         public MonitorNetworkSecurityPerimeterConfigurationResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Gets the Profile. </summary>
-        public NetworkSecurityProfile Profile { get; }
+        public MonitorNetworkSecurityProfile Profile { get; }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="ReferencesSpec"/>. </summary>
         public ReferencesSpec()
         {
-            ApplicationInsights = new ChangeTrackingList<ApplicationInsights>();
+            ApplicationInsights = new ChangeTrackingList<MonitorApplicationInsightsReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReferencesSpec"/>. </summary>
         /// <param name="enrichmentData"> All the enrichment data sources referenced in data flows. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReferencesSpec(ReferencesSpecEnrichmentData enrichmentData, IList<ApplicationInsights> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReferencesSpec(ReferencesSpecEnrichmentData enrichmentData, IList<MonitorApplicationInsightsReference> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnrichmentData = enrichmentData;
             ApplicationInsights = applicationInsights;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal ReferencesSpecEnrichmentData EnrichmentData { get; set; }
 
         /// <summary> Application Insights references to be used on OTel metrics/logs enrichment. </summary>
-        public IList<ApplicationInsights> ApplicationInsights { get; }
+        public IList<MonitorApplicationInsightsReference> ApplicationInsights { get; }
 
         /// <summary> All the storage blobs used as enrichment data sources. </summary>
         public IList<DataCollectionRuleEnrichmentStorageBlob> EnrichmentDataStorageBlobs

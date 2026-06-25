@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ScopedResourceKind? kind = default;
+            MonitorScopedResourceKind? kind = default;
             ResourceIdentifier linkedResourceId = default;
             AzureLocation? subscriptionLocation = default;
-            ScopedResourceProvisioningState? scopedResourceProvisioningState = default;
+            MonitorScopedResourceProvisioningState? scopedResourceProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    kind = new ScopedResourceKind(prop.Value.GetString());
+                    kind = new MonitorScopedResourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("linkedResourceId"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    scopedResourceProvisioningState = new ScopedResourceProvisioningState(prop.Value.GetString());
+                    scopedResourceProvisioningState = new MonitorScopedResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

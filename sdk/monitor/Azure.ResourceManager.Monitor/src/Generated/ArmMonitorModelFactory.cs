@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNetworkSecurityPerimeterConfigurationProperties properties = default)
         {
             return new NetworkSecurityPerimeterConfiguration(
                 id,
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="networkSecurityPerimeter"></param>
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationProperties MonitorNetworkSecurityPerimeterConfigurationProperties(MonitorNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = default, MonitorNetworkSecurityPerimeter networkSecurityPerimeter = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = default, MonitorNetworkSecurityProfile profile = default)
         {
             provisioningIssues ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>();
 
-            return new NetworkSecurityPerimeterConfigurationProperties(
+            return new MonitorNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
                 (provisioningIssues ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>()).ToList(),
                 networkSecurityPerimeter,
@@ -296,11 +296,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties"/> instance for mocking. </returns>
-        public static MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        public static MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = default, IEnumerable<MonitorNetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
             subscriptions ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>();
-            networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
+            networkSecurityPerimeters ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
             phoneNumbers ??= new ChangeTrackingList<string>();
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 direction,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
                 (subscriptions ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>()).ToList(),
-                (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>()).ToList(),
+                (networkSecurityPerimeters ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeter>()).ToList(),
                 (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
                 (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeter MonitorNetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
-            return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
+            return new MonitorNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
         /// <param name="name"> Name of the resource association. </param>
@@ -345,13 +345,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityProfile"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityProfile MonitorNetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
             accessRules ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
-            return new NetworkSecurityProfile(
+            return new MonitorNetworkSecurityProfile(
                 name,
                 accessRulesVersion,
                 (accessRules ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>()).ToList(),
@@ -491,21 +491,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleReferences"/> instance for mocking. </returns>
-        public static DataCollectionRuleReferences DataCollectionRuleReferences(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
+        public static DataCollectionRuleReferences DataCollectionRuleReferences(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
         {
-            applicationInsights ??= new ChangeTrackingList<ApplicationInsights>();
+            applicationInsights ??= new ChangeTrackingList<MonitorApplicationInsightsReference>();
 
-            return new DataCollectionRuleReferences(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
+            return new DataCollectionRuleReferences(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
         }
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <returns> A new <see cref="Models.ReferencesSpec"/> instance for mocking. </returns>
-        public static ReferencesSpec ReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
+        public static ReferencesSpec ReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<MonitorApplicationInsightsReference> applicationInsights = default)
         {
-            applicationInsights ??= new ChangeTrackingList<ApplicationInsights>();
+            applicationInsights ??= new ChangeTrackingList<MonitorApplicationInsightsReference>();
 
-            return new ReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
+            return new ReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Resource Id of the storage account that hosts the blob. </param>
@@ -520,10 +520,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="resourceId"> Id of the application insights resource. </param>
         /// <param name="name"> The name of the reference used as an alias when referencing this application insights in Otel data sources. </param>
-        /// <returns> A new <see cref="Models.ApplicationInsights"/> instance for mocking. </returns>
-        public static ApplicationInsights ApplicationInsights(ResourceIdentifier resourceId = default, string name = default)
+        /// <returns> A new <see cref="Models.MonitorApplicationInsightsReference"/> instance for mocking. </returns>
+        public static MonitorApplicationInsightsReference MonitorApplicationInsightsReference(ResourceIdentifier resourceId = default, string name = default)
         {
-            return new ApplicationInsights(resourceId, name, default);
+            return new MonitorApplicationInsightsReference(resourceId, name, default);
         }
 
         /// <param name="name">
@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="subscriptionLocation"> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </param>
         /// <param name="scopedResourceProvisioningState"> State of the Azure monitor resource. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, ResourceIdentifier linkedResourceId = default, AzureLocation? subscriptionLocation = default, ScopedResourceProvisioningState? scopedResourceProvisioningState = default)
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorScopedResourceKind? kind = default, ResourceIdentifier linkedResourceId = default, AzureLocation? subscriptionLocation = default, MonitorScopedResourceProvisioningState? scopedResourceProvisioningState = default)
         {
             return new MonitorPrivateLinkScopedResourceData(
                 id,
@@ -2643,7 +2643,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricName"> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </param>
         /// <param name="minRecurrenceCount"> The minimum results count that should be found for triggering an alert. Relevant only for rules of the kind SimpleLogAlert. </param>
         /// <returns> A new <see cref="Models.ScheduledQueryRuleCondition"/> instance for mocking. </returns>
-        public static ScheduledQueryRuleCondition ScheduledQueryRuleCondition(CriterionType? criterionType = default, string query = default, ScheduledQueryRuleTimeAggregationType? timeAggregation = default, string metricMeasureColumn = default, string resourceIdColumn = default, IEnumerable<MonitorDimension> dimensions = default, MonitorConditionOperator? @operator = default, double? threshold = default, string alertSensitivity = default, DateTimeOffset? ignoreDataBefore = default, ConditionFailingPeriods failingPeriods = default, string metricName = default, long? minRecurrenceCount = default)
+        public static ScheduledQueryRuleCondition ScheduledQueryRuleCondition(ScheduledQueryRuleCriterionType? criterionType = default, string query = default, ScheduledQueryRuleTimeAggregationType? timeAggregation = default, string metricMeasureColumn = default, string resourceIdColumn = default, IEnumerable<MonitorDimension> dimensions = default, MonitorConditionOperator? @operator = default, double? threshold = default, string alertSensitivity = default, DateTimeOffset? ignoreDataBefore = default, ConditionFailingPeriods failingPeriods = default, string metricName = default, long? minRecurrenceCount = default)
         {
             dimensions ??= new ChangeTrackingList<MonitorDimension>();
 

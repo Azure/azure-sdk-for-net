@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
-    public readonly partial struct CriterionType : IEquatable<CriterionType>
+    public readonly partial struct ScheduledQueryRuleCriterionType : IEquatable<ScheduledQueryRuleCriterionType>
     {
         private readonly string _value;
         /// <summary> StaticThresholdCriterion. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> DynamicThresholdCriterion. </summary>
         private const string DynamicThresholdCriterionValue = "DynamicThresholdCriterion";
 
-        /// <summary> Initializes a new instance of <see cref="CriterionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCriterionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CriterionType(string value)
+        public ScheduledQueryRuleCriterionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> StaticThresholdCriterion. </summary>
-        public static CriterionType StaticThresholdCriterion { get; } = new CriterionType(StaticThresholdCriterionValue);
+        public static ScheduledQueryRuleCriterionType StaticThresholdCriterion { get; } = new ScheduledQueryRuleCriterionType(StaticThresholdCriterionValue);
 
         /// <summary> DynamicThresholdCriterion. </summary>
-        public static CriterionType DynamicThresholdCriterion { get; } = new CriterionType(DynamicThresholdCriterionValue);
+        public static ScheduledQueryRuleCriterionType DynamicThresholdCriterion { get; } = new ScheduledQueryRuleCriterionType(DynamicThresholdCriterionValue);
 
-        /// <summary> Determines if two <see cref="CriterionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ScheduledQueryRuleCriterionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CriterionType left, CriterionType right) => left.Equals(right);
+        public static bool operator ==(ScheduledQueryRuleCriterionType left, ScheduledQueryRuleCriterionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CriterionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ScheduledQueryRuleCriterionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CriterionType left, CriterionType right) => !left.Equals(right);
+        public static bool operator !=(ScheduledQueryRuleCriterionType left, ScheduledQueryRuleCriterionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScheduledQueryRuleCriterionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CriterionType(string value) => new CriterionType(value);
+        public static implicit operator ScheduledQueryRuleCriterionType(string value) => new ScheduledQueryRuleCriterionType(value);
 
-        /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScheduledQueryRuleCriterionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CriterionType?(string value) => value == null ? null : new CriterionType(value);
+        public static implicit operator ScheduledQueryRuleCriterionType?(string value) => value == null ? null : new ScheduledQueryRuleCriterionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CriterionType other && Equals(other);
+        public override bool Equals(object obj) => obj is ScheduledQueryRuleCriterionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CriterionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScheduledQueryRuleCriterionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

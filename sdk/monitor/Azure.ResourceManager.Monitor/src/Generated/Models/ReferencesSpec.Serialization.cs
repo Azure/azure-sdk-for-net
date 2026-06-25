@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartArray();
-                foreach (ApplicationInsights item in ApplicationInsights)
+                foreach (MonitorApplicationInsightsReference item in ApplicationInsights)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             ReferencesSpecEnrichmentData enrichmentData = default;
-            IList<ApplicationInsights> applicationInsights = default;
+            IList<MonitorApplicationInsightsReference> applicationInsights = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<ApplicationInsights> array = new List<ApplicationInsights>();
+                    List<MonitorApplicationInsightsReference> array = new List<MonitorApplicationInsightsReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.ApplicationInsights.DeserializeApplicationInsights(item, options));
+                        array.Add(MonitorApplicationInsightsReference.DeserializeMonitorApplicationInsightsReference(item, options));
                     }
                     applicationInsights = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReferencesSpec(enrichmentData, applicationInsights ?? new ChangeTrackingList<ApplicationInsights>(), additionalBinaryDataProperties);
+            return new ReferencesSpec(enrichmentData, applicationInsights ?? new ChangeTrackingList<MonitorApplicationInsightsReference>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="metricName"/> or <paramref name="failingPeriods"/> is null. </exception>
-        public DynamicMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(CriterionType.DynamicThresholdCriterion, name, metricName, timeAggregation)
+        public DynamicMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods) : base(ScheduledQueryRuleCriterionType.DynamicThresholdCriterion, name, metricName, timeAggregation)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(metricName, nameof(metricName));
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. </param>
         /// <param name="ignoreDataBefore"> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). </param>
-        internal DynamicMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, DateTimeOffset? ignoreDataBefore) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
+        internal DynamicMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, DynamicThresholdOperator @operator, DynamicThresholdSensitivity alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, DateTimeOffset? ignoreDataBefore) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
             Operator = @operator;
             AlertSensitivity = alertSensitivity;

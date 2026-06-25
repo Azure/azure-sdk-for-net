@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMultiPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(criterionType != default ? criterionType : "unknown", name, query, additionalBinaryDataProperties)
+        internal UnknownMultiPromQLCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(criterionType != default ? criterionType : "unknown", name, query, additionalBinaryDataProperties)
         {
         }
     }

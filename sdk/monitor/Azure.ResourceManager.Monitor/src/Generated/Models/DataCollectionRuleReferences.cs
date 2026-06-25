@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="enrichmentData"> All the enrichment data sources referenced in data flows. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleReferences(ReferencesSpecEnrichmentData enrichmentData, IList<ApplicationInsights> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(enrichmentData, applicationInsights, additionalBinaryDataProperties)
+        internal DataCollectionRuleReferences(ReferencesSpecEnrichmentData enrichmentData, IList<MonitorApplicationInsightsReference> applicationInsights, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(enrichmentData, applicationInsights, additionalBinaryDataProperties)
         {
         }
     }

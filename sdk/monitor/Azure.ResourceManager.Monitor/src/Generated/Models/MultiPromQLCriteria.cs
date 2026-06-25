@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        private protected MultiPromQLCriteria(CriterionType criterionType, string name, string query)
+        private protected MultiPromQLCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string query)
         {
             CriterionType = criterionType;
             Name = name;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiPromQLCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CriterionType = criterionType;
             Name = name;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
-        internal CriterionType CriterionType { get; set; }
+        internal ScheduledQueryRuleCriterionType CriterionType { get; set; }
 
         /// <summary> Name of the criteria. </summary>
         public string Name { get; set; }

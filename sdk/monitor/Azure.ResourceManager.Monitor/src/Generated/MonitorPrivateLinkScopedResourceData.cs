@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         internal ScopedResourceProperties Properties { get; set; }
 
         /// <summary> The kind of scoped Azure monitor resource. </summary>
-        public ScopedResourceKind? Kind
+        public MonitorScopedResourceKind? Kind
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> State of the Azure monitor resource. </summary>
-        public ScopedResourceProvisioningState? ScopedResourceProvisioningState
+        public MonitorScopedResourceProvisioningState? ScopedResourceProvisioningState
         {
             get
             {

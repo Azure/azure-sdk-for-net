@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="subscriptionLocation"> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </param>
         /// <param name="scopedResourceProvisioningState"> State of the Azure monitor resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScopedResourceProperties(ScopedResourceKind? kind, ResourceIdentifier linkedResourceId, AzureLocation? subscriptionLocation, ScopedResourceProvisioningState? scopedResourceProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScopedResourceProperties(MonitorScopedResourceKind? kind, ResourceIdentifier linkedResourceId, AzureLocation? subscriptionLocation, MonitorScopedResourceProvisioningState? scopedResourceProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             LinkedResourceId = linkedResourceId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The kind of scoped Azure monitor resource. </summary>
-        public ScopedResourceKind? Kind { get; set; }
+        public MonitorScopedResourceKind? Kind { get; set; }
 
         /// <summary> The resource id of the scoped Azure monitor resource. </summary>
         public ResourceIdentifier LinkedResourceId { get; set; }
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public AzureLocation? SubscriptionLocation { get; set; }
 
         /// <summary> State of the Azure monitor resource. </summary>
-        public ScopedResourceProvisioningState? ScopedResourceProvisioningState { get; }
+        public MonitorScopedResourceProvisioningState? ScopedResourceProvisioningState { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"></param>
-        internal UnknownMultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType != default ? criterionType : "unknown", name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
+        internal UnknownMultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType != default ? criterionType : "unknown", name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
         }
     }

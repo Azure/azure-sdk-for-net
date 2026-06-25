@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<MonitorNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction, IList<string> addressPrefixes, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction, IList<string> addressPrefixes, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions, IList<MonitorNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
-        public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IList<MonitorNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully qualified domain names (FQDN) for outbound rules. </summary>
         public IList<string> FullyQualifiedDomainNames { get; }

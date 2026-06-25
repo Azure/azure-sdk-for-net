@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            CriterionType criterionType = default;
+            ScheduledQueryRuleCriterionType criterionType = default;
             string name = default;
             string metricName = default;
             string metricNamespace = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("criterionType"u8))
                 {
-                    criterionType = new CriterionType(prop.Value.GetString());
+                    criterionType = new ScheduledQueryRuleCriterionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

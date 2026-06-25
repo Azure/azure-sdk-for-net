@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            CriterionType? criterionType = default;
+            ScheduledQueryRuleCriterionType? criterionType = default;
             string query = default;
             ScheduledQueryRuleTimeAggregationType? timeAggregation = default;
             string metricMeasureColumn = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    criterionType = new CriterionType(prop.Value.GetString());
+                    criterionType = new ScheduledQueryRuleCriterionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("query"u8))

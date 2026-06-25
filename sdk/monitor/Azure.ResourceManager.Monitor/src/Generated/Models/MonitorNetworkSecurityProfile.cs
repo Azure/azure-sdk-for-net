@@ -12,26 +12,26 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Network security perimeter configuration profile. </summary>
-    public partial class NetworkSecurityProfile
+    public partial class MonitorNetworkSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
-        internal NetworkSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityProfile"/>. </summary>
+        internal MonitorNetworkSecurityProfile()
         {
             AccessRules = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityProfile"/>. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityProfile(string name, int? accessRulesVersion, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            NetworkSecurityPerimeterConfigurationProperties properties = default;
+            MonitorNetworkSecurityPerimeterConfigurationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    properties = NetworkSecurityPerimeterConfigurationProperties.DeserializeNetworkSecurityPerimeterConfigurationProperties(prop.Value, options);
+                    properties = MonitorNetworkSecurityPerimeterConfigurationProperties.DeserializeMonitorNetworkSecurityPerimeterConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

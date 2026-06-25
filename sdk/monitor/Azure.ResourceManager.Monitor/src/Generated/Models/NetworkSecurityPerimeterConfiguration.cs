@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorNetworkSecurityPerimeterConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Properties. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationProperties Properties { get; }
     }
 }

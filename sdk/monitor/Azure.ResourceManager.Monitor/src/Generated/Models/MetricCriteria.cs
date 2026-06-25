@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> The criteria operator. Previously undocumented values might be returned. </param>
         /// <param name="threshold"> The criteria threshold value that activates the alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, MetricCriteriaOperator @operator, double threshold) : base(CriterionType.StaticThresholdCriterion, name, metricName, timeAggregation)
+        public MetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, MetricCriteriaOperator @operator, double threshold) : base(ScheduledQueryRuleCriterionType.StaticThresholdCriterion, name, metricName, timeAggregation)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(metricName, nameof(metricName));
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="additionalProperties"></param>
         /// <param name="operator"> The criteria operator. Previously undocumented values might be returned. </param>
         /// <param name="threshold"> The criteria threshold value that activates the alert. </param>
-        internal MetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, MetricCriteriaOperator @operator, double threshold) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
+        internal MetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, MetricCriteriaOperator @operator, double threshold) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
             Operator = @operator;
             Threshold = threshold;
