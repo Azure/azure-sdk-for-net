@@ -12,14 +12,14 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers;
 
-internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttributeDefinition
+internal sealed class CodeGenTagPatchHookAttributeDefinition : CustomCodeAttributeDefinition
 {
-    public const string AttributeName = "CodeGenResourceDataAttribute";
-    private readonly FieldProvider _dataTypeField;
+    public const string AttributeName = "CodeGenTagPatchHookAttribute";
+    private readonly FieldProvider _methodNameField;
 
-    public CodeGenResourceDataAttributeDefinition()
+    public CodeGenTagPatchHookAttributeDefinition()
     {
-        _dataTypeField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Type), "_dataType", this);
+        _methodNameField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_methodName", this);
     }
 
     protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");
@@ -32,13 +32,13 @@ internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttribu
 
     protected override CSharpType[] BuildImplements() => [typeof(Attribute)];
 
-    protected override FieldProvider[] BuildFields() => [_dataTypeField];
+    protected override FieldProvider[] BuildFields() => [_methodNameField];
 
     protected override PropertyProvider[] BuildProperties()
     {
         return
         [
-            new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(Type), "DataType", new ExpressionPropertyBody(_dataTypeField), this)
+            new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(string), "MethodName", new ExpressionPropertyBody(_methodNameField), this)
         ];
     }
 
@@ -52,9 +52,9 @@ internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttribu
 
     protected override ConstructorProvider[] BuildConstructors()
     {
-        var dataTypeParameter = new ParameterProvider("dataType", $"The resource data type.", typeof(Type));
-        var ctorSignature = new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [dataTypeParameter]);
-        var ctor = new ConstructorProvider(ctorSignature, _dataTypeField.Assign(dataTypeParameter).Terminate(), this);
+        var methodNameParameter = new ParameterProvider("methodName", $"The tag patch hook method name.", typeof(string));
+        var ctorSignature = new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [methodNameParameter]);
+        var ctor = new ConstructorProvider(ctorSignature, _methodNameField.Assign(methodNameParameter).Terminate(), this);
 
         return [ctor];
     }

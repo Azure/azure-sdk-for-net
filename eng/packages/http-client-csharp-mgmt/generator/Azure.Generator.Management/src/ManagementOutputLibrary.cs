@@ -39,6 +39,9 @@ namespace Azure.Generator.Management
         private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
         internal CustomCodeAttributeDefinition CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
 
+        private CodeGenTagPatchHookAttributeDefinition? _codeGenTagPatchHookAttributeProvider;
+        internal CustomCodeAttributeDefinition CodeGenTagPatchHookAttributeDefinition => _codeGenTagPatchHookAttributeProvider ??= new CodeGenTagPatchHookAttributeDefinition();
+
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ManagementModelReaderWriterContextDefinition().Type;
 
