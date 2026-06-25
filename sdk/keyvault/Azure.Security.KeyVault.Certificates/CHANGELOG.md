@@ -1,14 +1,10 @@
 # Release History
 
-## 4.10.0-beta.2 (Unreleased)
+## 4.10.0-beta.2 (2026-06-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.10.0-beta.1 (2026-06-04)
 
