@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class SecurityAlertsPolicyStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityAlertsPolicyState value) => value switch
         {
             SecurityAlertsPolicyState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsPolicyState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityAlertsPolicyState ToSecurityAlertsPolicyState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SecurityAlertsPolicyState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SecurityAlertsPolicyState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return SecurityAlertsPolicyState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return SecurityAlertsPolicyState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityAlertsPolicyState value.");
         }
     }

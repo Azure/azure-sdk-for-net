@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetJsonFormat : IUtf8JsonSerializable, IJsonModel<DatasetJsonFormat>
+    /// <summary> The data stored in JSON format. </summary>
+    public partial class DatasetJsonFormat : DatasetStorageFormat, IJsonModel<DatasetJsonFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetJsonFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatasetStorageFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatasetJsonFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatasetJsonFormat IPersistableModel<DatasetJsonFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatasetJsonFormat)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatasetJsonFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatasetJsonFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,20 +70,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(FilePattern);
+                writer.WriteRawValue(FilePattern);
 #else
-                using (JsonDocument document = JsonDocument.Parse(FilePattern, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(FilePattern))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -51,37 +91,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                JsonSerializer.Serialize(writer, NestingSeparator);
+                writer.WriteObjectValue<DataFactoryElement<string>>(NestingSeparator, options);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                JsonSerializer.Serialize(writer, EncodingName);
+                writer.WriteObjectValue<DataFactoryElement<string>>(EncodingName, options);
             }
             if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
-                JsonSerializer.Serialize(writer, JsonNodeReference);
+                writer.WriteObjectValue<DataFactoryElement<string>>(JsonNodeReference, options);
             }
             if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(JsonPathDefinition);
+                writer.WriteRawValue(JsonPathDefinition);
 #else
-                using (JsonDocument document = JsonDocument.Parse(JsonPathDefinition, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(JsonPathDefinition))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -89,111 +117,94 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        DatasetJsonFormat IJsonModel<DatasetJsonFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatasetJsonFormat IJsonModel<DatasetJsonFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatasetJsonFormat)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DatasetStorageFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatasetJsonFormat(document.RootElement, options);
         }
 
-        internal static DatasetJsonFormat DeserializeDatasetJsonFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatasetJsonFormat DeserializeDatasetJsonFormat(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string datasetStorageFormatType = "JsonFormat";
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BinaryData filePattern = default;
             DataFactoryElement<string> nestingSeparator = default;
             DataFactoryElement<string> encodingName = default;
             DataFactoryElement<string> jsonNodeReference = default;
             BinaryData jsonPathDefinition = default;
-            string type = default;
-            DataFactoryElement<string> serializer = default;
-            DataFactoryElement<string> deserializer = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("filePattern"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    datasetStorageFormatType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serializer"u8))
+                {
+                    ReadSerializer(prop, ref serializer);
+                    continue;
+                }
+                if (prop.NameEquals("deserializer"u8))
+                {
+                    ReadDeserializer(prop, ref deserializer);
+                    continue;
+                }
+                if (prop.NameEquals("filePattern"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filePattern = BinaryData.FromString(property.Value.GetRawText());
+                    filePattern = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("nestingSeparator"u8))
+                if (prop.NameEquals("nestingSeparator"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    ReadNestingSeparator(prop, ref nestingSeparator);
+                    continue;
+                }
+                if (prop.NameEquals("encodingName"u8))
+                {
+                    ReadEncodingName(prop, ref encodingName);
+                    continue;
+                }
+                if (prop.NameEquals("jsonNodeReference"u8))
+                {
+                    ReadJsonNodeReference(prop, ref jsonNodeReference);
+                    continue;
+                }
+                if (prop.NameEquals("jsonPathDefinition"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nestingSeparator = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    jsonPathDefinition = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("encodingName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("jsonNodeReference"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jsonNodeReference = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("jsonPathDefinition"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jsonPathDefinition = BinaryData.FromString(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serializer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("deserializer"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new DatasetJsonFormat(
-                type,
+                datasetStorageFormatType,
                 serializer,
                 deserializer,
                 additionalProperties,
@@ -203,36 +214,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 jsonNodeReference,
                 jsonPathDefinition);
         }
-
-        BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DatasetJsonFormat IPersistableModel<DatasetJsonFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatasetJsonFormat(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DatasetJsonFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

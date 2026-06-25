@@ -14,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 // https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/source-generation
 // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-source-generator/
 [JsonSerializable(typeof(VmMetadataResponse))]
+[JsonSerializable(typeof(SdkStatsConfigResponse))]
 [JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(IngestionResponseHelper.ResponseObject))]
 [JsonSerializable(typeof(IngestionResponseHelper.ErrorObject))]

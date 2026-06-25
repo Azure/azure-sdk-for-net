@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct CertificateStatus : IEquatable<CertificateStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CertificateStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CertificateStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CompletedValue = "Completed";
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> Completed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CertificateStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Completed. </summary>
         public static CertificateStatus Completed { get; } = new CertificateStatus(CompletedValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CertificateStatus Failed { get; } = new CertificateStatus(FailedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> Gets the InProgress. </summary>
         public static CertificateStatus InProgress { get; } = new CertificateStatus(InProgressValue);
+
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CertificateStatus left, CertificateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CertificateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CertificateStatus left, CertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CertificateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CertificateStatus(string value) => new CertificateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CertificateStatus?(string value) => value == null ? null : new CertificateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CertificateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CertificateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

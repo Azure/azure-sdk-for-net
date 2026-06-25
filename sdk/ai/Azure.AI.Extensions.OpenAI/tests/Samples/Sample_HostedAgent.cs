@@ -73,7 +73,10 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {
@@ -135,7 +138,10 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = { AgentEndpointProtocol.Responses }
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
         };
         PatchAgentOptions patchOptions = new()
         {

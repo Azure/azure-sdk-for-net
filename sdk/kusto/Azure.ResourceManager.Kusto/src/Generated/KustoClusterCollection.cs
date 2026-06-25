@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kusto
@@ -25,75 +26,85 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoClusterCollection : ArmCollection, IEnumerable<KustoClusterResource>, IAsyncEnumerable<KustoClusterResource>
     {
-        private readonly ClientDiagnostics _kustoClusterClustersClientDiagnostics;
-        private readonly ClustersRestOperations _kustoClusterClustersRestClient;
+        private readonly ClientDiagnostics _clustersClientDiagnostics;
+        private readonly Clusters _clustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="KustoClusterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of KustoClusterCollection for mocking. </summary>
         protected KustoClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="KustoClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KustoClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _kustoClusterClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(KustoClusterResource.ResourceType, out string kustoClusterClustersApiVersion);
-            _kustoClusterClustersRestClient = new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterClustersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(KustoClusterResource.ResourceType, out string kustoClusterApiVersion);
+            _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="data"> The Kusto cluster parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> The ETag of the cluster. Omit this value to always overwrite the current cluster. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new cluster to be created, but to prevent updating an existing cluster. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, KustoClusterData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<KustoClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, KustoClusterData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _kustoClusterClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
+                    new KustoClusterResourceOperationSource(Client),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,44 +118,52 @@ namespace Azure.ResourceManager.Kusto
         /// Create or update a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="data"> The Kusto cluster parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="ifMatch"> The ETag of the cluster. Omit this value to always overwrite the current cluster. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new cluster to be created, but to prevent updating an existing cluster. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<KustoClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, KustoClusterData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<KustoClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, KustoClusterData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _kustoClusterClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new KustoArmOperation<KustoClusterResource>(new KustoClusterOperationSource(Client), _kustoClusterClustersClientDiagnostics, Pipeline, _kustoClusterClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
+                    new KustoClusterResourceOperationSource(Client),
+                    _clustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +177,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<KustoClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _kustoClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +226,42 @@ namespace Azure.ResourceManager.Kusto
         /// Gets a Kusto cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<KustoClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.Get");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.Get");
             scope.Start();
             try
             {
-                var response = _kustoClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,49 +275,44 @@ namespace Azure.ResourceManager.Kusto
         /// Lists all Kusto clusters within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupAsyncCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Kusto clusters within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,44 +320,61 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoClusterResource(Client, KustoClusterData.DeserializeKustoClusterData(e)), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<KustoClusterData, KustoClusterResource>(new ClustersGetByResourceGroupCollectionResultOfT(_clustersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "KustoClusterCollection.GetAll"), data => new KustoClusterResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.Exists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _kustoClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -349,36 +388,50 @@ namespace Azure.ResourceManager.Kusto
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.Exists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _kustoClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -392,38 +445,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<KustoClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _kustoClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<KustoClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,38 +506,54 @@ namespace Azure.ResourceManager.Kusto
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-13</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="KustoClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-14. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<KustoClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterCollection.GetIfExists");
+            using DiagnosticScope scope = _clustersClientDiagnostics.CreateScope("KustoClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _kustoClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<KustoClusterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(KustoClusterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((KustoClusterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<KustoClusterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new KustoClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -488,6 +573,7 @@ namespace Azure.ResourceManager.Kusto
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<KustoClusterResource> IAsyncEnumerable<KustoClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

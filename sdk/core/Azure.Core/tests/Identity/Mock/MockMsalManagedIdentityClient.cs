@@ -19,6 +19,13 @@ namespace Azure.Core.Tests.Identity.Mock
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
 
+        /// <summary>
+        /// When set, this is invoked by <see cref="GetManagedIdentityCapabilitiesAsync"/> to produce the
+        /// capabilities result (or throw). Tests use this to simulate the MSAL IMDS source/capability probe
+        /// failing — for example, when the IMDS endpoint is unreachable on a developer machine.
+        /// </summary>
+        public Func<TokenRequestContext, CancellationToken, ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFactory { get; set; }
+
         private Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource _detectedSource;
         private ManagedIdentityId _azureManagedIdentityId;
 
@@ -70,6 +77,15 @@ namespace Azure.Core.Tests.Identity.Mock
 
         public override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
+            if (GetManagedIdentityCapabilitiesFactory != null)
+            {
+                // Allows tests to simulate the MSAL source/capability probe (which throws when IMDS is
+                // unreachable). The factory may return a value or throw.
+                ManagedIdentityCapabilities capabilities = GetManagedIdentityCapabilitiesFactory(context, cancellationToken);
+                _detectedSource = capabilities.Source;
+                return new ValueTask<ManagedIdentityCapabilities>(capabilities);
+            }
+
             // Use the static method to avoid real network probing in tests.
 #pragma warning disable CS0618 // GetManagedIdentitySource is obsolete
             _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();

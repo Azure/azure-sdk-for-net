@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiOperationResource : IJsonModel<ApiOperationData>
     {
-        private static ApiOperationData s_dataDeserializationInstance;
-        private static ApiOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiOperationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiOperationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiOperationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiOperationData>)Data).Write(writer, options);
 
-        ApiOperationData IJsonModel<ApiOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiOperationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiOperationData IJsonModel<ApiOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiOperationData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiOperationData IPersistableModel<ApiOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiOperationData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

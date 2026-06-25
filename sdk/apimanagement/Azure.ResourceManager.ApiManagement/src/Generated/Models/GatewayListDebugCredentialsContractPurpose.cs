@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct GatewayListDebugCredentialsContractPurpose : IEquatable<GatewayListDebugCredentialsContractPurpose>
     {
         private readonly string _value;
+        /// <summary> The tracing purpose. </summary>
+        private const string TracingValue = "tracing";
 
         /// <summary> Initializes a new instance of <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GatewayListDebugCredentialsContractPurpose(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TracingValue = "tracing";
+            _value = value;
+        }
 
         /// <summary> The tracing purpose. </summary>
         public static GatewayListDebugCredentialsContractPurpose Tracing { get; } = new GatewayListDebugCredentialsContractPurpose(TracingValue);
+
         /// <summary> Determines if two <see cref="GatewayListDebugCredentialsContractPurpose"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GatewayListDebugCredentialsContractPurpose left, GatewayListDebugCredentialsContractPurpose right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GatewayListDebugCredentialsContractPurpose"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GatewayListDebugCredentialsContractPurpose left, GatewayListDebugCredentialsContractPurpose right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GatewayListDebugCredentialsContractPurpose(string value) => new GatewayListDebugCredentialsContractPurpose(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GatewayListDebugCredentialsContractPurpose"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GatewayListDebugCredentialsContractPurpose?(string value) => value == null ? null : new GatewayListDebugCredentialsContractPurpose(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GatewayListDebugCredentialsContractPurpose other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GatewayListDebugCredentialsContractPurpose other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

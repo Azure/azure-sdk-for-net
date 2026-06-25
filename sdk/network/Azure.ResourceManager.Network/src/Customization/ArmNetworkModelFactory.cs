@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="asPath"> The route's AS path sequence. </param>
         /// <param name="weight"> The route's weight. </param>
         /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
         public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
         {
             return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubRoutingSource : IEquatable<IotHubRoutingSource>
     {
         private readonly string _value;
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> DeviceMessages. </summary>
+        private const string DeviceMessagesValue = "DeviceMessages";
+        /// <summary> TwinChangeEvents. </summary>
+        private const string TwinChangeEventsValue = "TwinChangeEvents";
+        /// <summary> DeviceLifecycleEvents. </summary>
+        private const string DeviceLifecycleEventsValue = "DeviceLifecycleEvents";
+        /// <summary> DeviceJobLifecycleEvents. </summary>
+        private const string DeviceJobLifecycleEventsValue = "DeviceJobLifecycleEvents";
+        /// <summary> DigitalTwinChangeEvents. </summary>
+        private const string DigitalTwinChangeEventsValue = "DigitalTwinChangeEvents";
+        /// <summary> DeviceConnectionStateEvents. </summary>
+        private const string DeviceConnectionStateEventsValue = "DeviceConnectionStateEvents";
+        /// <summary> MqttBrokerMessages. </summary>
+        private const string MqttBrokerMessagesValue = "MqttBrokerMessages";
 
         /// <summary> Initializes a new instance of <see cref="IotHubRoutingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubRoutingSource(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string DeviceMessagesValue = "DeviceMessages";
-        private const string TwinChangeEventsValue = "TwinChangeEvents";
-        private const string DeviceLifecycleEventsValue = "DeviceLifecycleEvents";
-        private const string DeviceJobLifecycleEventsValue = "DeviceJobLifecycleEvents";
-        private const string DigitalTwinChangeEventsValue = "DigitalTwinChangeEvents";
-        private const string DeviceConnectionStateEventsValue = "DeviceConnectionStateEvents";
-        private const string MqttBrokerMessagesValue = "MqttBrokerMessages";
+            _value = value;
+        }
 
         /// <summary> Invalid. </summary>
         public static IotHubRoutingSource Invalid { get; } = new IotHubRoutingSource(InvalidValue);
+
         /// <summary> DeviceMessages. </summary>
         public static IotHubRoutingSource DeviceMessages { get; } = new IotHubRoutingSource(DeviceMessagesValue);
+
         /// <summary> TwinChangeEvents. </summary>
         public static IotHubRoutingSource TwinChangeEvents { get; } = new IotHubRoutingSource(TwinChangeEventsValue);
+
         /// <summary> DeviceLifecycleEvents. </summary>
         public static IotHubRoutingSource DeviceLifecycleEvents { get; } = new IotHubRoutingSource(DeviceLifecycleEventsValue);
+
         /// <summary> DeviceJobLifecycleEvents. </summary>
         public static IotHubRoutingSource DeviceJobLifecycleEvents { get; } = new IotHubRoutingSource(DeviceJobLifecycleEventsValue);
+
         /// <summary> DigitalTwinChangeEvents. </summary>
         public static IotHubRoutingSource DigitalTwinChangeEvents { get; } = new IotHubRoutingSource(DigitalTwinChangeEventsValue);
+
         /// <summary> DeviceConnectionStateEvents. </summary>
         public static IotHubRoutingSource DeviceConnectionStateEvents { get; } = new IotHubRoutingSource(DeviceConnectionStateEventsValue);
+
         /// <summary> MqttBrokerMessages. </summary>
         public static IotHubRoutingSource MqttBrokerMessages { get; } = new IotHubRoutingSource(MqttBrokerMessagesValue);
+
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubRoutingSource left, IotHubRoutingSource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubRoutingSource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubRoutingSource left, IotHubRoutingSource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubRoutingSource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubRoutingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubRoutingSource(string value) => new IotHubRoutingSource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubRoutingSource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubRoutingSource?(string value) => value == null ? null : new IotHubRoutingSource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubRoutingSource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubRoutingSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

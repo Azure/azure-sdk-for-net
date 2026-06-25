@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningSynapseSparkProperties. </summary>
     public partial class MachineLearningSynapseSparkProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSynapseSparkProperties"/>. </summary>
         public MachineLearningSynapseSparkProperties()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceGroup"> Name of the resource group in which workspace is located. </param>
         /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
         /// <param name="poolName"> Pool name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningSynapseSparkProperties(MachineLearningAutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningSynapseSparkProperties(MachineLearningAutoScaleProperties autoScaleProperties, MachineLearningAutoPauseProperties autoPauseProperties, string sparkVersion, int? nodeCount, string nodeSize, string nodeSizeFamily, string subscriptionId, string resourceGroup, string workspaceName, string poolName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleProperties = autoScaleProperties;
             AutoPauseProperties = autoPauseProperties;
@@ -74,36 +46,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ResourceGroup = resourceGroup;
             WorkspaceName = workspaceName;
             PoolName = poolName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Auto scale properties. </summary>
         [WirePath("autoScaleProperties")]
         public MachineLearningAutoScaleProperties AutoScaleProperties { get; set; }
+
         /// <summary> Auto pause properties. </summary>
         [WirePath("autoPauseProperties")]
         public MachineLearningAutoPauseProperties AutoPauseProperties { get; set; }
+
         /// <summary> Spark version. </summary>
         [WirePath("sparkVersion")]
         public string SparkVersion { get; set; }
+
         /// <summary> The number of compute nodes currently assigned to the compute. </summary>
         [WirePath("nodeCount")]
         public int? NodeCount { get; set; }
+
         /// <summary> Node size. </summary>
         [WirePath("nodeSize")]
         public string NodeSize { get; set; }
+
         /// <summary> Node size family. </summary>
         [WirePath("nodeSizeFamily")]
         public string NodeSizeFamily { get; set; }
+
         /// <summary> Azure subscription identifier. </summary>
         [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
+
         /// <summary> Name of the resource group in which workspace is located. </summary>
         [WirePath("resourceGroup")]
         public string ResourceGroup { get; set; }
+
         /// <summary> Name of Azure Machine Learning workspace. </summary>
         [WirePath("workspaceName")]
         public string WorkspaceName { get; set; }
+
         /// <summary> Pool name. </summary>
         [WirePath("poolName")]
         public string PoolName { get; set; }

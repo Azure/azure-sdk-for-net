@@ -28,13 +28,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateVersionContent"/>. </summary>
+        /// <param name="safeguardMode"> Specifies how safeguards are applied during the update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </param>
         /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpdateVersionContent(string targetClusterVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterUpdateVersionContent(ClusterUpdateVersionSafeguardMode? safeguardMode, string targetClusterVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            SafeguardMode = safeguardMode;
             TargetClusterVersion = targetClusterVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Specifies how safeguards are applied during the update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </summary>
+        public ClusterUpdateVersionSafeguardMode? SafeguardMode { get; set; }
 
         /// <summary> The version to be applied to the cluster during update. </summary>
         public string TargetClusterVersion { get; }

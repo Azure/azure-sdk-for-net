@@ -187,6 +187,22 @@ namespace Azure.Storage.Blobs.Tests
             Assert.That(response.Value.Details.ContentCrc, Is.EqualTo(dataCrc));
             Assert.That(response.Value.Content.ToArray(), Is.EqualTo(data));
         }
+
+        [TestCaseSource(nameof(GetValidationAlgorithms))]
+        public virtual async Task ParallelUploadEmptySuccess(StorageChecksumAlgorithm algorithm)
+        {
+            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
+
+            var validationOptions = new UploadTransferValidationOptions
+            {
+                ChecksumAlgorithm = algorithm
+            };
+            var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: 0, createResource: false, options: ClientBuilder.GetOptions());
+
+            await ParallelUploadAsync(client, new MemoryStream(), validationOptions, default);
+
+            Assert.That((await client.ExistsAsync()).Value);
+        }
         #endregion
     }
 }

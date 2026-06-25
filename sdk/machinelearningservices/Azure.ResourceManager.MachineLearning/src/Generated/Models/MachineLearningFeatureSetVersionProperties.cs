@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,51 +22,61 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="properties"> The asset property dictionary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="specification"> Specifies the feature spec details. </param>
-        /// <param name="materializationSettings"> Specifies the materialization settings. </param>
-        /// <param name="stage"> Specifies the asset stage. </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="entities"> Specifies list of entities. </param>
+        /// <param name="materializationSettings"> Specifies the materialization settings. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
-        internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, bool? isAnonymous, FeaturesetSpecification specification, MaterializationSettings materializationSettings, string stage, IList<string> entities, RegistryAssetProvisioningState? provisioningState) : base(description, tags, properties, serializedAdditionalRawData, isArchived, isAnonymous)
+        /// <param name="specification"> Specifies the feature spec details. </param>
+        /// <param name="stage"> Specifies the asset stage. </param>
+        internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isAnonymous, bool? isArchived, IList<string> entities, MaterializationSettings materializationSettings, RegistryAssetProvisioningState? provisioningState, FeaturesetSpecification specification, string stage) : base(description, properties, tags, additionalBinaryDataProperties, isAnonymous, isArchived)
         {
-            Specification = specification;
-            MaterializationSettings = materializationSettings;
-            Stage = stage;
             Entities = entities;
+            MaterializationSettings = materializationSettings;
             ProvisioningState = provisioningState;
+            Specification = specification;
+            Stage = stage;
         }
 
-        /// <summary> Specifies the feature spec details. </summary>
-        internal FeaturesetSpecification Specification { get; set; }
-        /// <summary> Specifies the spec path. </summary>
-        [WirePath("specification.path")]
-        public string SpecificationPath
-        {
-            get => Specification is null ? default : Specification.Path;
-            set
-            {
-                if (Specification is null)
-                    Specification = new FeaturesetSpecification();
-                Specification.Path = value;
-            }
-        }
+        /// <summary> Specifies list of entities. </summary>
+        [WirePath("entities")]
+        public IList<string> Entities { get; set; }
 
         /// <summary> Specifies the materialization settings. </summary>
         [WirePath("materializationSettings")]
         public MaterializationSettings MaterializationSettings { get; set; }
-        /// <summary> Specifies the asset stage. </summary>
-        [WirePath("stage")]
-        public string Stage { get; set; }
-        /// <summary> Specifies list of entities. </summary>
-        [WirePath("entities")]
-        public IList<string> Entities { get; set; }
+
         /// <summary> Provisioning state for the featureset version container. </summary>
         [WirePath("provisioningState")]
         public RegistryAssetProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Specifies the feature spec details. </summary>
+        [WirePath("specification")]
+        internal FeaturesetSpecification Specification { get; set; }
+
+        /// <summary> Specifies the asset stage. </summary>
+        [WirePath("stage")]
+        public string Stage { get; set; }
+
+        /// <summary> Specifies the spec path. </summary>
+        [WirePath("specification.path")]
+        public string SpecificationPath
+        {
+            get
+            {
+                return Specification is null ? default : Specification.Path;
+            }
+            set
+            {
+                if (Specification is null)
+                {
+                    Specification = new FeaturesetSpecification();
+                }
+                Specification.Path = value;
+            }
+        }
     }
 }

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of PendingUploadCredentialDto. </summary>
     internal partial class UnknownPendingUploadCredentialDto : PendingUploadCredentialDto
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPendingUploadCredentialDto"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownPendingUploadCredentialDto(PendingUploadCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialType, serializedAdditionalRawData)
-        {
-            CredentialType = credentialType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownPendingUploadCredentialDto"/> for deserialization. </summary>
-        internal UnknownPendingUploadCredentialDto()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownPendingUploadCredentialDto(PendingUploadCredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(credentialType != default ? credentialType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

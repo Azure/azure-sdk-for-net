@@ -281,11 +281,13 @@ Toolboxes allow us to store tools in Azure so that they can be retrieved and use
 
 In the example below we create two versions of MCP tool and save it to Azure.
 ```C# Snippet:Sample_CreateToolbox_ToolboxesAgentsCRUD_Async
-ProjectsAgentTool tool = ProjectsAgentTool.AsProjectTool(ResponseTool.CreateMcpTool(
-    serverLabel: "api-specs",
-    serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-    toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
-));
+MCPToolboxTool tool = new(serverLabel: "api-specs")
+{
+    Name = "mcp-tool",
+    Description = "Sample MCP tool",
+    ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+    ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+};
 ToolboxVersion toolBox1 = await toolboxClient.CreateToolboxVersionAsync(
     name: toolboxName,
     tools: [tool],
@@ -455,14 +457,17 @@ SkillInlineContent content = new(
 SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
-3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
+3. We will create configure hosted agent so that it will use the 74% of traffic to the endpoint and will also
 make it aware of the skill we have created.
 
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-    Protocols = {AgentEndpointProtocol.Responses}
+    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    ProtocolConfiguration = new()
+    {
+        Responses = new()
+    }
 };
 AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()

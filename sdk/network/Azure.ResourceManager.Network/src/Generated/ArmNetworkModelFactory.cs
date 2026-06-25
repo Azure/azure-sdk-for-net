@@ -15299,8 +15299,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>
@@ -15357,8 +15357,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupDraftData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -16886,8 +16886,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
-        ///             
-        ///              - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
+        ///                         
+        ///                          - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
         /// </param>
         /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
         /// <param name="routeTargetAddress"> Route Target address of Service gateway. </param>
@@ -19571,8 +19571,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection Group resource. </param>
         /// <param name="ruleCollections">
         /// Group of Firewall Policy rule collections.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy rule collection group resource. </param>
         /// <returns> A new <see cref="Network.FirewallPolicyRuleCollectionGroupData"/> instance for mocking. </returns>

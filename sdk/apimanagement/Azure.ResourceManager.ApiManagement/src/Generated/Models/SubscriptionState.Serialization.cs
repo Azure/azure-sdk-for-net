@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class SubscriptionStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SubscriptionState value) => value switch
         {
             SubscriptionState.Suspended => "suspended",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SubscriptionState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SubscriptionState ToSubscriptionState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "suspended")) return SubscriptionState.Suspended;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active")) return SubscriptionState.Active;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired")) return SubscriptionState.Expired;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "submitted")) return SubscriptionState.Submitted;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rejected")) return SubscriptionState.Rejected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return SubscriptionState.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "suspended"))
+            {
+                return SubscriptionState.Suspended;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "active"))
+            {
+                return SubscriptionState.Active;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired"))
+            {
+                return SubscriptionState.Expired;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "submitted"))
+            {
+                return SubscriptionState.Submitted;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rejected"))
+            {
+                return SubscriptionState.Rejected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled"))
+            {
+                return SubscriptionState.Cancelled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SubscriptionState value.");
         }
     }

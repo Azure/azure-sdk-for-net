@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The JobLimitsType. </summary>
+    /// <summary></summary>
     internal readonly partial struct JobLimitsType : IEquatable<JobLimitsType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobLimitsType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobLimitsType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CommandValue = "Command";
         private const string SweepValue = "Sweep";
 
-        /// <summary> Command. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobLimitsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobLimitsType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Command. </summary>
         public static JobLimitsType Command { get; } = new JobLimitsType(CommandValue);
-        /// <summary> Sweep. </summary>
+
+        /// <summary> Gets the Sweep. </summary>
         public static JobLimitsType Sweep { get; } = new JobLimitsType(SweepValue);
+
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobLimitsType left, JobLimitsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobLimitsType left, JobLimitsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobLimitsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobLimitsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobLimitsType(string value) => new JobLimitsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobLimitsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobLimitsType?(string value) => value == null ? null : new JobLimitsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobLimitsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobLimitsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

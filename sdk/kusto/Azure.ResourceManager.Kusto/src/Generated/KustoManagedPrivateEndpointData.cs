@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary>
-    /// A class representing the KustoManagedPrivateEndpoint data model.
-    /// Class representing a managed private endpoint.
-    /// </summary>
+    /// <summary> Class representing a managed private endpoint. </summary>
     public partial class KustoManagedPrivateEndpointData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
         public KustoManagedPrivateEndpointData()
@@ -57,40 +25,102 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Initializes a new instance of <see cref="KustoManagedPrivateEndpointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateLinkResourceId"> The ARM resource ID of the resource for which the managed private endpoint is created. </param>
-        /// <param name="privateLinkResourceRegion"> The region of the resource to which the managed private endpoint is created. </param>
-        /// <param name="groupId"> The groupId in which the managed private endpoint is created. </param>
-        /// <param name="requestMessage"> The user request message. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateLinkResourceId, string privateLinkResourceRegion, string groupId, string requestMessage, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A managed private endpoint. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KustoManagedPrivateEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedPrivateEndpointProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PrivateLinkResourceId = privateLinkResourceId;
-            PrivateLinkResourceRegion = privateLinkResourceRegion;
-            GroupId = groupId;
-            RequestMessage = requestMessage;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> A managed private endpoint. </summary>
+        [WirePath("properties")]
+        internal ManagedPrivateEndpointProperties Properties { get; set; }
 
         /// <summary> The ARM resource ID of the resource for which the managed private endpoint is created. </summary>
         [WirePath("properties.privateLinkResourceId")]
-        public ResourceIdentifier PrivateLinkResourceId { get; set; }
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointProperties();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
         /// <summary> The region of the resource to which the managed private endpoint is created. </summary>
         [WirePath("properties.privateLinkResourceRegion")]
-        public string PrivateLinkResourceRegion { get; set; }
+        public string PrivateLinkResourceRegion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceRegion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointProperties();
+                }
+                Properties.PrivateLinkResourceRegion = value;
+            }
+        }
+
         /// <summary> The groupId in which the managed private endpoint is created. </summary>
         [WirePath("properties.groupId")]
-        public string GroupId { get; set; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointProperties();
+                }
+                Properties.GroupId = value;
+            }
+        }
+
         /// <summary> The user request message. </summary>
         [WirePath("properties.requestMessage")]
-        public string RequestMessage { get; set; }
+        public string RequestMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestMessage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedPrivateEndpointProperties();
+                }
+                Properties.RequestMessage = value;
+            }
+        }
+
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public KustoProvisioningState? ProvisioningState { get; }
+        public KustoProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
