@@ -539,7 +539,6 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(SubscriptionKeyParameterNamesContract))]
     [ModelReaderWriterBuildable(typeof(SubscriptionKeysContract))]
     [ModelReaderWriterBuildable(typeof(SubscriptionUpdateParameterProperties))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TagApiLinkCollection))]
     [ModelReaderWriterBuildable(typeof(TagApiLinkContractData))]
     [ModelReaderWriterBuildable(typeof(TagApiLinkContractProperties))]
@@ -596,6 +595,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(WorkspaceLinksBaseProperties))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(X509CertificateName))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerApiManagementContext : ModelReaderWriterContext
     {
     }
