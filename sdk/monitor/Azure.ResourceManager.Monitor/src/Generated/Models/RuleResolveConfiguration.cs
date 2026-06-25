@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleResolveConfiguration"/>. </summary>
-        /// <param name="autoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
+        /// <param name="isAutoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
         /// <param name="timeToResolve"> The duration a rule must evaluate as healthy before the fired alert is automatically resolved represented in ISO 8601 duration format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleResolveConfiguration(bool? autoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuleResolveConfiguration(bool? isAutoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutoResolved = autoResolved;
+            IsAutoResolved = isAutoResolved;
             TimeToResolve = timeToResolve;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The flag that indicates whether or not to auto resolve a fired alert. </summary>
-        public bool? AutoResolved { get; set; }
+        public bool? IsAutoResolved { get; set; }
 
         /// <summary> The duration a rule must evaluate as healthy before the fired alert is automatically resolved represented in ISO 8601 duration format. </summary>
         public TimeSpan? TimeToResolve { get; set; }

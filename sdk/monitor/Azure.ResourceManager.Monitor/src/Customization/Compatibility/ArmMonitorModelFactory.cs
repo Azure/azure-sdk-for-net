@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> the resource identifier of the metric definition. </param>
         /// <param name="dimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <returns> A new <see cref="Models.MonitorMetricDefinition"/> instance for mocking. </returns>
-        [Obsolete("This API is no longer supported. Use the MonitorMetricDefinition overload that takes AggregationType primaryAggregationKind and IEnumerable<AggregationType> supportedAggregationKinds instead.", false)]
+        [Obsolete("This API is no longer supported. Use the MonitorMetricDefinition overload that takes MonitorMetricAggregationType primaryAggregationKind and IEnumerable<MonitorMetricAggregationType> supportedAggregationKinds instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
             => MonitorMetricDefinition(

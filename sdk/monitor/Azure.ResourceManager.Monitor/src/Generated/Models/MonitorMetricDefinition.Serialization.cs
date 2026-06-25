@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
-                foreach (AggregationType item in SupportedAggregationKinds)
+                foreach (MonitorMetricAggregationType item in SupportedAggregationKinds)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string category = default;
             MonitorMetricClass? metricClass = default;
             MonitorMetricUnit? unit = default;
-            AggregationType? primaryAggregationKind = default;
-            IList<AggregationType> supportedAggregationKinds = default;
+            MonitorMetricAggregationType? primaryAggregationKind = default;
+            IList<MonitorMetricAggregationType> supportedAggregationKinds = default;
             IReadOnlyList<MonitorMetricAvailability> metricAvailabilities = default;
             string id = default;
             IReadOnlyList<MonitorLocalizableString> dimensions = default;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    primaryAggregationKind = prop.Value.GetString().ToAggregationType();
+                    primaryAggregationKind = prop.Value.GetString().ToMonitorMetricAggregationType();
                     continue;
                 }
                 if (prop.NameEquals("supportedAggregationTypes"u8))
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<AggregationType> array = new List<AggregationType>();
+                    List<MonitorMetricAggregationType> array = new List<MonitorMetricAggregationType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAggregationType());
+                        array.Add(item.GetString().ToMonitorMetricAggregationType());
                     }
                     supportedAggregationKinds = array;
                     continue;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricClass,
                 unit,
                 primaryAggregationKind,
-                supportedAggregationKinds ?? new ChangeTrackingList<AggregationType>(),
+                supportedAggregationKinds ?? new ChangeTrackingList<MonitorMetricAggregationType>(),
                 metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
                 id,
                 dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),

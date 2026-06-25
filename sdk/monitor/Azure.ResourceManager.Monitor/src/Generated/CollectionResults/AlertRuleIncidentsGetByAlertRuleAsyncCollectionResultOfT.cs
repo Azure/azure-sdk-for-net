@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT : AsyncPageable<Incident>
+    internal partial class AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT : AsyncPageable<MonitorAlertRuleIncident>
     {
         private readonly AlertRuleIncidents _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Incident>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MonitorAlertRuleIncident>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 IncidentListResult result = IncidentListResult.FromResponse(response);
-                yield return Page<Incident>.FromValues((IReadOnlyList<Incident>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorAlertRuleIncident>.FromValues((IReadOnlyList<MonitorAlertRuleIncident>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

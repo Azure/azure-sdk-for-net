@@ -11,10 +11,11 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary></summary>
+    /// <summary> Monitor autoscale operation type. </summary>
     public readonly partial struct MonitorOperationType : IEquatable<MonitorOperationType>
     {
         private readonly string _value;
+        /// <summary> Scale operation. </summary>
         private const string ScaleValue = "Scale";
 
         /// <summary> Initializes a new instance of <see cref="MonitorOperationType"/>. </summary>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value;
         }
 
-        /// <summary> Gets the Scale. </summary>
+        /// <summary> Scale operation. </summary>
         public static MonitorOperationType Scale { get; } = new MonitorOperationType(ScaleValue);
 
         /// <summary> Determines if two <see cref="MonitorOperationType"/> values are the same. </summary>

@@ -11,16 +11,23 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary></summary>
+    /// <summary> Days of the week accepted by Monitor recurring schedules. </summary>
     public readonly partial struct MonitorDayOfWeek : IEquatable<MonitorDayOfWeek>
     {
         private readonly string _value;
+        /// <summary> Sunday. </summary>
         private const string SundayValue = "Sunday";
+        /// <summary> Monday. </summary>
         private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
         private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
         private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
         private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
         private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
         private const string SaturdayValue = "Saturday";
 
         /// <summary> Initializes a new instance of <see cref="MonitorDayOfWeek"/>. </summary>
@@ -33,25 +40,25 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value;
         }
 
-        /// <summary> Gets the Sunday. </summary>
+        /// <summary> Sunday. </summary>
         public static MonitorDayOfWeek Sunday { get; } = new MonitorDayOfWeek(SundayValue);
 
-        /// <summary> Gets the Monday. </summary>
+        /// <summary> Monday. </summary>
         public static MonitorDayOfWeek Monday { get; } = new MonitorDayOfWeek(MondayValue);
 
-        /// <summary> Gets the Tuesday. </summary>
+        /// <summary> Tuesday. </summary>
         public static MonitorDayOfWeek Tuesday { get; } = new MonitorDayOfWeek(TuesdayValue);
 
-        /// <summary> Gets the Wednesday. </summary>
+        /// <summary> Wednesday. </summary>
         public static MonitorDayOfWeek Wednesday { get; } = new MonitorDayOfWeek(WednesdayValue);
 
-        /// <summary> Gets the Thursday. </summary>
+        /// <summary> Thursday. </summary>
         public static MonitorDayOfWeek Thursday { get; } = new MonitorDayOfWeek(ThursdayValue);
 
-        /// <summary> Gets the Friday. </summary>
+        /// <summary> Friday. </summary>
         public static MonitorDayOfWeek Friday { get; } = new MonitorDayOfWeek(FridayValue);
 
-        /// <summary> Gets the Saturday. </summary>
+        /// <summary> Saturday. </summary>
         public static MonitorDayOfWeek Saturday { get; } = new MonitorDayOfWeek(SaturdayValue);
 
         /// <summary> Determines if two <see cref="MonitorDayOfWeek"/> values are the same. </summary>

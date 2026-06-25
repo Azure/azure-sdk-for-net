@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="EnrichmentData"/>. </summary>
         public EnrichmentData()
         {
-            StorageBlobs = new ChangeTrackingList<StorageBlob>();
+            StorageBlobs = new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentData"/>. </summary>
         /// <param name="storageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentData(IList<StorageBlob> storageBlobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrichmentData(IList<DataCollectionRuleEnrichmentStorageBlob> storageBlobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageBlobs = storageBlobs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> All the storage blobs used as enrichment data sources. </summary>
-        public IList<StorageBlob> StorageBlobs { get; }
+        public IList<DataCollectionRuleEnrichmentStorageBlob> StorageBlobs { get; }
     }
 }

@@ -239,13 +239,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
         {
-            provisioningIssues ??= new ChangeTrackingList<ProvisioningIssue>();
+            provisioningIssues ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                (provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>()).ToList(),
+                (provisioningIssues ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>()).ToList(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = default, ProvisioningIssueProperties properties = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(string name = default, MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties properties = default)
         {
-            return new ProvisioningIssue(name, properties, default);
+            return new MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(name, properties, default);
         }
 
         /// <param name="issueType"> Type of issue. </param>
@@ -265,27 +265,27 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties(MonitorNetworkSecurityPerimeterConfigurationIssueType? issueType = default, MonitorNetworkSecurityPerimeterConfigurationIssueSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            suggestedAccessRules ??= new ChangeTrackingList<AccessRule>();
+            suggestedAccessRules ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
 
-            return new ProvisioningIssueProperties(
+            return new MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
                 (suggestedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                (suggestedAccessRules ?? new ChangeTrackingList<AccessRule>()).ToList(),
+                (suggestedAccessRules ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>()).ToList(),
                 default);
         }
 
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
-        public static AccessRule AccessRule(string name = default, AccessRuleProperties properties = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationAccessRule MonitorNetworkSecurityPerimeterConfigurationAccessRule(string name = default, MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties properties = default)
         {
-            return new AccessRule(name, properties, default);
+            return new MonitorNetworkSecurityPerimeterConfigurationAccessRule(name, properties, default);
         }
 
         /// <param name="direction"></param>
@@ -295,20 +295,20 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
-        /// <returns> A new <see cref="Models.AccessRuleProperties"/> instance for mocking. </returns>
-        public static AccessRuleProperties AccessRuleProperties(AccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<AccessRulePropertiesSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            subscriptions ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>();
             networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
             phoneNumbers ??= new ChangeTrackingList<string>();
 
-            return new AccessRuleProperties(
+            return new MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(
                 direction,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (subscriptions ?? new ChangeTrackingList<AccessRulePropertiesSubscription>()).ToList(),
+                (subscriptions ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>()).ToList(),
                 (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>()).ToList(),
                 (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
                 (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -317,10 +317,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
-        /// <returns> A new <see cref="Models.AccessRulePropertiesSubscription"/> instance for mocking. </returns>
-        public static AccessRulePropertiesSubscription AccessRulePropertiesSubscription(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(ResourceIdentifier id = default)
         {
-            return new AccessRulePropertiesSubscription(id, default);
+            return new MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(id, default);
         }
 
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"></param>
-        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
-        public static ResourceAssociation ResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
+        /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation"/> instance for mocking. </returns>
+        public static MonitorNetworkSecurityPerimeterConfigurationResourceAssociation MonitorNetworkSecurityPerimeterConfigurationResourceAssociation(string name = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode? accessMode = default)
         {
-            return new ResourceAssociation(name, accessMode, default);
+            return new MonitorNetworkSecurityPerimeterConfigurationResourceAssociation(name, accessMode, default);
         }
 
         /// <param name="name"> Name of the profile. </param>
@@ -346,15 +346,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<AccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
-            accessRules ??= new ChangeTrackingList<AccessRule>();
+            accessRules ??= new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
             return new NetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                (accessRules ?? new ChangeTrackingList<AccessRule>()).ToList(),
+                (accessRules ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>()).ToList(),
                 diagnosticSettingsVersion,
                 (enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -491,31 +491,31 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <returns> A new <see cref="Models.DataCollectionRuleReferences"/> instance for mocking. </returns>
-        public static DataCollectionRuleReferences DataCollectionRuleReferences(IEnumerable<StorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
+        public static DataCollectionRuleReferences DataCollectionRuleReferences(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
         {
             applicationInsights ??= new ChangeTrackingList<ApplicationInsights>();
 
-            return new DataCollectionRuleReferences(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<StorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
+            return new DataCollectionRuleReferences(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
         }
 
         /// <param name="enrichmentDataStorageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="applicationInsights"> Application Insights references to be used on OTel metrics/logs enrichment. </param>
         /// <returns> A new <see cref="Models.ReferencesSpec"/> instance for mocking. </returns>
-        public static ReferencesSpec ReferencesSpec(IEnumerable<StorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
+        public static ReferencesSpec ReferencesSpec(IEnumerable<DataCollectionRuleEnrichmentStorageBlob> enrichmentDataStorageBlobs = default, IEnumerable<ApplicationInsights> applicationInsights = default)
         {
             applicationInsights ??= new ChangeTrackingList<ApplicationInsights>();
 
-            return new ReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<StorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
+            return new ReferencesSpec(enrichmentDataStorageBlobs is null ? default : new ReferencesSpecEnrichmentData((enrichmentDataStorageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>()).ToList(), default), (applicationInsights ?? new ChangeTrackingList<ApplicationInsights>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Resource Id of the storage account that hosts the blob. </param>
         /// <param name="blobUri"> Url of the storage blob. </param>
         /// <param name="lookupType"> The type of lookup to perform on the blob. </param>
         /// <param name="name"> The name of the enrichment data source used as an alias when referencing this data source in data flows. </param>
-        /// <returns> A new <see cref="Models.StorageBlob"/> instance for mocking. </returns>
-        public static StorageBlob StorageBlob(string resourceId = default, string blobUri = default, KnownStorageBlobLookupType? lookupType = default, string name = default)
+        /// <returns> A new <see cref="Models.DataCollectionRuleEnrichmentStorageBlob"/> instance for mocking. </returns>
+        public static DataCollectionRuleEnrichmentStorageBlob DataCollectionRuleEnrichmentStorageBlob(string resourceId = default, string blobUri = default, KnownStorageBlobLookupType? lookupType = default, string name = default)
         {
-            return new StorageBlob(resourceId, blobUri, lookupType, name, default);
+            return new DataCollectionRuleEnrichmentStorageBlob(resourceId, blobUri, lookupType, name, default);
         }
 
         /// <param name="resourceId"> Id of the application insights resource. </param>
@@ -900,13 +900,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceAttributeRouting"> Specifies the routing policy based on OTLP payload resource attributes to route subset of the payload according to matching resource attribute. </param>
         /// <param name="enrichWithResourceAttributes"> Specifies the list of resource attributes that need to be added as labels/dimensions to the telemetry data for further enrichment. </param>
         /// <param name="enrichWithReference"> Specifies the reference alias to enrich the telemetry signal with. </param>
-        /// <param name="replaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
+        /// <param name="shouldReplaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.OtelLogsDataSource"/> instance for mocking. </returns>
-        public static OtelLogsDataSource OtelLogsDataSource(IEnumerable<KnownOtelLogsDataSourceStreams> streams = default, OtelLogsDataSourceResourceAttributeRouting resourceAttributeRouting = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? replaceResourceIdWithReference = default, string name = default)
+        public static OtelLogsDataSource OtelLogsDataSource(IEnumerable<KnownOtelLogsDataSourceStreams> streams = default, OtelLogsDataSourceResourceAttributeRouting resourceAttributeRouting = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? shouldReplaceResourceIdWithReference = default, string name = default)
         {
             streams ??= new ChangeTrackingList<KnownOtelLogsDataSourceStreams>();
             enrichWithResourceAttributes ??= new ChangeTrackingList<string>();
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceAttributeRouting,
                 (enrichWithResourceAttributes ?? new ChangeTrackingList<string>()).ToList(),
                 enrichWithReference,
-                replaceResourceIdWithReference,
+                shouldReplaceResourceIdWithReference,
                 name,
                 default);
         }
@@ -944,13 +944,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceAttributeRouting"> Specifies the routing policy based on OTLP payload resource attributes to route subset of the payload according to matching resource attribute. </param>
         /// <param name="enrichWithResourceAttributes"> Specifies the list of resource attributes that need to be added as labels/dimensions to the telemetry data for further enrichment. </param>
         /// <param name="enrichWithReference"> Specifies the reference to enrich the telemetry signal with. </param>
-        /// <param name="replaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
+        /// <param name="shouldReplaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.OtelTracesDataSource"/> instance for mocking. </returns>
-        public static OtelTracesDataSource OtelTracesDataSource(IEnumerable<KnownOtelTracesDataSourceStreams> streams = default, OtelTracesDataSourceResourceAttributeRouting resourceAttributeRouting = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? replaceResourceIdWithReference = default, string name = default)
+        public static OtelTracesDataSource OtelTracesDataSource(IEnumerable<KnownOtelTracesDataSourceStreams> streams = default, OtelTracesDataSourceResourceAttributeRouting resourceAttributeRouting = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? shouldReplaceResourceIdWithReference = default, string name = default)
         {
             streams ??= new ChangeTrackingList<KnownOtelTracesDataSourceStreams>();
             enrichWithResourceAttributes ??= new ChangeTrackingList<string>();
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceAttributeRouting,
                 (enrichWithResourceAttributes ?? new ChangeTrackingList<string>()).ToList(),
                 enrichWithReference,
-                replaceResourceIdWithReference,
+                shouldReplaceResourceIdWithReference,
                 name,
                 default);
         }
@@ -1076,13 +1076,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
         /// <param name="enrichWithResourceAttributes"> Specifies the list of resource attributes that need to be added as labels/dimensions to the telemetry data for further enrichment. </param>
         /// <param name="enrichWithReference"> Specifies the reference to enrich the telemetry signal with. </param>
-        /// <param name="replaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
+        /// <param name="shouldReplaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.OtelLogsDirectDataSource"/> instance for mocking. </returns>
-        public static OtelLogsDirectDataSource OtelLogsDirectDataSource(IEnumerable<KnownOtelLogsDirectDataSourceStreams> streams = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? replaceResourceIdWithReference = default, string name = default)
+        public static OtelLogsDirectDataSource OtelLogsDirectDataSource(IEnumerable<KnownOtelLogsDirectDataSourceStreams> streams = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? shouldReplaceResourceIdWithReference = default, string name = default)
         {
             streams ??= new ChangeTrackingList<KnownOtelLogsDirectDataSourceStreams>();
             enrichWithResourceAttributes ??= new ChangeTrackingList<string>();
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 (streams ?? new ChangeTrackingList<KnownOtelLogsDirectDataSourceStreams>()).ToList(),
                 (enrichWithResourceAttributes ?? new ChangeTrackingList<string>()).ToList(),
                 enrichWithReference,
-                replaceResourceIdWithReference,
+                shouldReplaceResourceIdWithReference,
                 name,
                 default);
         }
@@ -1102,13 +1102,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </param>
         /// <param name="enrichWithResourceAttributes"> Specifies the list of resource attributes that need to be added as labels/dimensions to the telemetry data for further enrichment. </param>
         /// <param name="enrichWithReference"> Specifies the reference to enrich the telemetry signal with. </param>
-        /// <param name="replaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
+        /// <param name="shouldReplaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.OtelTracesDirectDataSource"/> instance for mocking. </returns>
-        public static OtelTracesDirectDataSource OtelTracesDirectDataSource(IEnumerable<KnownOtelTracesDirectDataSourceStreams> streams = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? replaceResourceIdWithReference = default, string name = default)
+        public static OtelTracesDirectDataSource OtelTracesDirectDataSource(IEnumerable<KnownOtelTracesDirectDataSourceStreams> streams = default, IEnumerable<string> enrichWithResourceAttributes = default, string enrichWithReference = default, bool? shouldReplaceResourceIdWithReference = default, string name = default)
         {
             streams ??= new ChangeTrackingList<KnownOtelTracesDirectDataSourceStreams>();
             enrichWithResourceAttributes ??= new ChangeTrackingList<string>();
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 (streams ?? new ChangeTrackingList<KnownOtelTracesDirectDataSourceStreams>()).ToList(),
                 (enrichWithResourceAttributes ?? new ChangeTrackingList<string>()).ToList(),
                 enrichWithReference,
-                replaceResourceIdWithReference,
+                shouldReplaceResourceIdWithReference,
                 name,
                 default);
         }
@@ -1310,9 +1310,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="transformKql"> The KQL query to transform stream data. </param>
         /// <param name="outputStream"> The output stream of the transform. Only required if the transform changes data to a different stream. </param>
         /// <param name="builtInTransform"> The builtIn transform to transform stream data. </param>
-        /// <param name="captureOverflow"> Flag to enable overflow column in LA destinations. </param>
+        /// <param name="shouldCaptureOverflow"> Flag to enable overflow column in LA destinations. </param>
         /// <returns> A new <see cref="Models.DataFlow"/> instance for mocking. </returns>
-        public static DataFlow DataFlow(IEnumerable<DataFlowStream> streams = default, IEnumerable<string> destinations = default, string transformKql = default, string outputStream = default, string builtInTransform = default, bool? captureOverflow = default)
+        public static DataFlow DataFlow(IEnumerable<DataFlowStream> streams = default, IEnumerable<string> destinations = default, string transformKql = default, string outputStream = default, string builtInTransform = default, bool? shouldCaptureOverflow = default)
         {
             streams ??= new ChangeTrackingList<DataFlowStream>();
             destinations ??= new ChangeTrackingList<string>();
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 transformKql,
                 outputStream,
                 builtInTransform,
-                captureOverflow,
+                shouldCaptureOverflow,
                 default);
         }
 
@@ -1829,9 +1829,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <returns> A new <see cref="Models.MonitorMetricDefinition"/> instance for mocking. </returns>
-        public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, AggregationType? primaryAggregationKind = default, IEnumerable<AggregationType> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
+        public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorMetricAggregationType? primaryAggregationKind = default, IEnumerable<MonitorMetricAggregationType> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
-            supportedAggregationKinds ??= new ChangeTrackingList<AggregationType>();
+            supportedAggregationKinds ??= new ChangeTrackingList<MonitorMetricAggregationType>();
             metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
             dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
@@ -1845,7 +1845,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricClass,
                 unit,
                 primaryAggregationKind,
-                (supportedAggregationKinds ?? new ChangeTrackingList<AggregationType>()).ToList(),
+                (supportedAggregationKinds ?? new ChangeTrackingList<MonitorMetricAggregationType>()).ToList(),
                 (metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>()).ToList(),
                 id,
                 (dimensions ?? new ChangeTrackingList<MonitorLocalizableString>()).ToList(),
@@ -1981,10 +1981,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricNamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
-        /// <returns> A new <see cref="Models.SubscriptionScopeMetricsRequestBodyParameters"/> instance for mocking. </returns>
-        public static SubscriptionScopeMetricsRequestBodyParameters SubscriptionScopeMetricsRequestBodyParameters(string timespan = default, string interval = default, string metricNames = default, string aggregation = default, string filter = default, int? top = default, string orderBy = default, string rollUpBy = default, MonitorMetricResultType? resultType = default, string metricNamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default)
+        /// <returns> A new <see cref="Models.SubscriptionScopeMetricsContent"/> instance for mocking. </returns>
+        public static SubscriptionScopeMetricsContent SubscriptionScopeMetricsContent(string timespan = default, string interval = default, string metricNames = default, string aggregation = default, string filter = default, int? top = default, string orderBy = default, string rollUpBy = default, MonitorMetricResultType? resultType = default, string metricNamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default)
         {
-            return new SubscriptionScopeMetricsRequestBodyParameters(
+            return new SubscriptionScopeMetricsContent(
                 timespan,
                 interval,
                 metricNames,
@@ -2090,10 +2090,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
         /// <param name="activatedOn"> The time at which the incident was activated in ISO8601 format. </param>
         /// <param name="resolvedOn"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
-        /// <returns> A new <see cref="Models.Incident"/> instance for mocking. </returns>
-        public static Incident Incident(string name = default, string ruleName = default, bool? isActive = default, DateTimeOffset? activatedOn = default, DateTimeOffset? resolvedOn = default)
+        /// <returns> A new <see cref="Models.MonitorAlertRuleIncident"/> instance for mocking. </returns>
+        public static MonitorAlertRuleIncident MonitorAlertRuleIncident(string name = default, string ruleName = default, bool? isActive = default, DateTimeOffset? activatedOn = default, DateTimeOffset? resolvedOn = default)
         {
-            return new Incident(
+            return new MonitorAlertRuleIncident(
                 name,
                 ruleName,
                 isActive,
@@ -2490,12 +2490,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 ignoreDataBefore);
         }
 
-        /// <param name="autoResolved"> Indicates whether the alert should be auto resolved. </param>
+        /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
         /// <param name="timeToResolve"> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </param>
         /// <returns> A new <see cref="Models.ResolveConfiguration"/> instance for mocking. </returns>
-        public static ResolveConfiguration ResolveConfiguration(bool autoResolved = default, TimeSpan? timeToResolve = default)
+        public static ResolveConfiguration ResolveConfiguration(bool isAutoResolved = default, TimeSpan? timeToResolve = default)
         {
-            return new ResolveConfiguration(autoResolved, timeToResolve, default);
+            return new ResolveConfiguration(isAutoResolved, timeToResolve, default);
         }
 
         /// <param name="actionGroupId"> The id of the action group to use. </param>
@@ -2733,12 +2733,12 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ScheduledQueryRuleActions((actionGroups ?? new ChangeTrackingList<string>()).ToList(), customProperties ?? new ChangeTrackingDictionary<string, string>(), actionProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="autoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
+        /// <param name="isAutoResolved"> The flag that indicates whether or not to auto resolve a fired alert. </param>
         /// <param name="timeToResolve"> The duration a rule must evaluate as healthy before the fired alert is automatically resolved represented in ISO 8601 duration format. </param>
         /// <returns> A new <see cref="Models.RuleResolveConfiguration"/> instance for mocking. </returns>
-        public static RuleResolveConfiguration RuleResolveConfiguration(bool? autoResolved = default, TimeSpan? timeToResolve = default)
+        public static RuleResolveConfiguration RuleResolveConfiguration(bool? isAutoResolved = default, TimeSpan? timeToResolve = default)
         {
-            return new RuleResolveConfiguration(autoResolved, timeToResolve, default);
+            return new RuleResolveConfiguration(isAutoResolved, timeToResolve, default);
         }
 
         /// <param name="identity"> The identity of the resource. </param>

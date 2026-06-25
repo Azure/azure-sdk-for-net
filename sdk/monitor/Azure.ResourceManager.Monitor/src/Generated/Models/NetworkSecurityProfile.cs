@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
         internal NetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<AccessRule>();
+            AccessRules = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<AccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public int? AccessRulesVersion { get; }
 
         /// <summary> List of Access Rules. </summary>
-        public IList<AccessRule> AccessRules { get; }
+        public IList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
         public int? DiagnosticSettingsVersion { get; }

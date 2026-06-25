@@ -33,18 +33,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
         /// <param name="enrichWithResourceAttributes"> Specifies the list of resource attributes that need to be added as labels/dimensions to the telemetry data for further enrichment. </param>
         /// <param name="enrichWithReference"> Specifies the reference to enrich the telemetry signal with. </param>
-        /// <param name="replaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
+        /// <param name="shouldReplaceResourceIdWithReference"> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OtelLogsDirectDataSource(IList<KnownOtelLogsDirectDataSourceStreams> streams, IList<string> enrichWithResourceAttributes, string enrichWithReference, bool? replaceResourceIdWithReference, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OtelLogsDirectDataSource(IList<KnownOtelLogsDirectDataSourceStreams> streams, IList<string> enrichWithResourceAttributes, string enrichWithReference, bool? shouldReplaceResourceIdWithReference, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Streams = streams;
             EnrichWithResourceAttributes = enrichWithResourceAttributes;
             EnrichWithReference = enrichWithReference;
-            ReplaceResourceIdWithReference = replaceResourceIdWithReference;
+            ShouldReplaceResourceIdWithReference = shouldReplaceResourceIdWithReference;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string EnrichWithReference { get; set; }
 
         /// <summary> Specifies whether to replace the default resourceId in the log record with the resourceId of the referenced resource being used for enrichment. </summary>
-        public bool? ReplaceResourceIdWithReference { get; set; }
+        public bool? ShouldReplaceResourceIdWithReference { get; set; }
 
         /// <summary>
         /// A friendly name for the data source.

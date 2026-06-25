@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The StorageBlob. </summary>
-    public partial class StorageBlob
+    /// <summary> The DataCollectionRuleEnrichmentStorageBlob. </summary>
+    public partial class DataCollectionRuleEnrichmentStorageBlob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageBlob"/>. </summary>
-        public StorageBlob()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEnrichmentStorageBlob"/>. </summary>
+        public DataCollectionRuleEnrichmentStorageBlob()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageBlob"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEnrichmentStorageBlob"/>. </summary>
         /// <param name="resourceId"> Resource Id of the storage account that hosts the blob. </param>
         /// <param name="blobUri"> Url of the storage blob. </param>
         /// <param name="lookupType"> The type of lookup to perform on the blob. </param>
         /// <param name="name"> The name of the enrichment data source used as an alias when referencing this data source in data flows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageBlob(string resourceId, string blobUri, KnownStorageBlobLookupType? lookupType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleEnrichmentStorageBlob(string resourceId, string blobUri, KnownStorageBlobLookupType? lookupType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             BlobUri = blobUri;

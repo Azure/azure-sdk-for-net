@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
-    public partial class ProvisioningIssue
+    public partial class MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        internal ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(string name, MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get; }
 
         /// <summary> Gets the Properties. </summary>
-        public ProvisioningIssueProperties Properties { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties Properties { get; }
     }
 }

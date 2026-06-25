@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="transformKql"> The KQL query to transform stream data. </param>
         /// <param name="outputStream"> The output stream of the transform. Only required if the transform changes data to a different stream. </param>
         /// <param name="builtInTransform"> The builtIn transform to transform stream data. </param>
-        /// <param name="captureOverflow"> Flag to enable overflow column in LA destinations. </param>
+        /// <param name="shouldCaptureOverflow"> Flag to enable overflow column in LA destinations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream, string builtInTransform, bool? captureOverflow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream, string builtInTransform, bool? shouldCaptureOverflow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Streams = streams;
             Destinations = destinations;
             TransformKql = transformKql;
             OutputStream = outputStream;
             BuiltInTransform = builtInTransform;
-            CaptureOverflow = captureOverflow;
+            ShouldCaptureOverflow = shouldCaptureOverflow;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string BuiltInTransform { get; set; }
 
         /// <summary> Flag to enable overflow column in LA destinations. </summary>
-        public bool? CaptureOverflow { get; set; }
+        public bool? ShouldCaptureOverflow { get; set; }
     }
 }

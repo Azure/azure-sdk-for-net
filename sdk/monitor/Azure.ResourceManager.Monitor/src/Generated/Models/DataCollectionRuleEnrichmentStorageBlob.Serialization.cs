@@ -13,52 +13,52 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The StorageBlob. </summary>
-    public partial class StorageBlob : IJsonModel<StorageBlob>
+    /// <summary> The DataCollectionRuleEnrichmentStorageBlob. </summary>
+    public partial class DataCollectionRuleEnrichmentStorageBlob : IJsonModel<DataCollectionRuleEnrichmentStorageBlob>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageBlob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleEnrichmentStorageBlob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageBlob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStorageBlob(document.RootElement, options);
+                        return DeserializeDataCollectionRuleEnrichmentStorageBlob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageBlob)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEnrichmentStorageBlob)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageBlob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StorageBlob)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEnrichmentStorageBlob)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageBlob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageBlob IPersistableModel<StorageBlob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataCollectionRuleEnrichmentStorageBlob IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageBlob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StorageBlob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionRuleEnrichmentStorageBlob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageBlob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageBlob)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEnrichmentStorageBlob)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -113,24 +113,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StorageBlob IJsonModel<StorageBlob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataCollectionRuleEnrichmentStorageBlob IJsonModel<DataCollectionRuleEnrichmentStorageBlob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageBlob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleEnrichmentStorageBlob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageBlob>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEnrichmentStorageBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageBlob)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEnrichmentStorageBlob)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStorageBlob(document.RootElement, options);
+            return DeserializeDataCollectionRuleEnrichmentStorageBlob(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageBlob DeserializeStorageBlob(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataCollectionRuleEnrichmentStorageBlob DeserializeDataCollectionRuleEnrichmentStorageBlob(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageBlob(resourceId, blobUri, lookupType, name, additionalBinaryDataProperties);
+            return new DataCollectionRuleEnrichmentStorageBlob(resourceId, blobUri, lookupType, name, additionalBinaryDataProperties);
         }
     }
 }

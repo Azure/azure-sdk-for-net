@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<ApplicationInsights> ApplicationInsights { get; }
 
         /// <summary> All the storage blobs used as enrichment data sources. </summary>
-        public IList<StorageBlob> EnrichmentDataStorageBlobs
+        public IList<DataCollectionRuleEnrichmentStorageBlob> EnrichmentDataStorageBlobs
         {
             get
             {

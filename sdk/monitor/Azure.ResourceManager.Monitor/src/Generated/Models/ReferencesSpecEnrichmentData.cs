@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="ReferencesSpecEnrichmentData"/>. </summary>
         /// <param name="storageBlobs"> All the storage blobs used as enrichment data sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReferencesSpecEnrichmentData(IList<StorageBlob> storageBlobs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(storageBlobs, additionalBinaryDataProperties)
+        internal ReferencesSpecEnrichmentData(IList<DataCollectionRuleEnrichmentStorageBlob> storageBlobs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(storageBlobs, additionalBinaryDataProperties)
         {
         }
     }

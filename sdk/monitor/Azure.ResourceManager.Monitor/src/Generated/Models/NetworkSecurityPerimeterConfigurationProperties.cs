@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationProperties()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation, NetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Monitor.Models
         public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of provisioning issues, if any. </summary>
-        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Gets the NetworkSecurityPerimeter. </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Gets the ResourceAssociation. </summary>
-        public ResourceAssociation ResourceAssociation { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationResourceAssociation ResourceAssociation { get; }
 
         /// <summary> Gets the Profile. </summary>
         public NetworkSecurityProfile Profile { get; }

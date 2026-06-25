@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(ResolveConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("autoResolved"u8);
-            writer.WriteBooleanValue(AutoResolved);
+            writer.WriteBooleanValue(IsAutoResolved);
             if (Optional.IsDefined(TimeToResolve))
             {
                 writer.WritePropertyName("timeToResolve"u8);
@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            bool autoResolved = default;
+            bool isAutoResolved = default;
             TimeSpan? timeToResolve = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("autoResolved"u8))
                 {
-                    autoResolved = prop.Value.GetBoolean();
+                    isAutoResolved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("timeToResolve"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResolveConfiguration(autoResolved, timeToResolve, additionalBinaryDataProperties);
+            return new ResolveConfiguration(isAutoResolved, timeToResolve, additionalBinaryDataProperties);
         }
     }
 }

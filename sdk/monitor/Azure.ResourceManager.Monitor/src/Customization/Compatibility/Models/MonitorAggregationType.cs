@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
 #pragma warning disable CS0618 // This file intentionally restores and bridges the obsolete enum surface.
     /// <summary> The aggregation type of the metric. </summary>
-    [Obsolete("This API is no longer supported. Use AggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
+    [Obsolete("This API is no longer supported. Use MonitorMetricAggregationType for MonitorMetricDefinition and MonitorAggregationKind for SubscriptionScopeMetricDefinition instead.", false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MonitorAggregationType
     {
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Monitor.Models
 #pragma warning disable SA1649 // Keep the compatibility helper next to the restored enum shim.
     internal static class MonitorAggregationTypeHelper
     {
-        public static MonitorAggregationType? ToLegacyAggregationType(AggregationType? value)
+        public static MonitorAggregationType? ToLegacyAggregationType(MonitorMetricAggregationType? value)
             => value.HasValue ? ToLegacyAggregationType(value.Value) : null;
 
-        public static MonitorAggregationType ToLegacyAggregationType(AggregationType value) => value.ToString() switch
+        public static MonitorAggregationType ToLegacyAggregationType(MonitorMetricAggregationType value) => value.ToString() switch
         {
             "Average" => MonitorAggregationType.Average,
             "Count" => MonitorAggregationType.Count,
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => MonitorAggregationType.None
         };
 
-        public static IReadOnlyList<MonitorAggregationType> ToLegacyAggregationTypes(IEnumerable<AggregationType> values)
+        public static IReadOnlyList<MonitorAggregationType> ToLegacyAggregationTypes(IEnumerable<MonitorMetricAggregationType> values)
         {
             if (values is null)
             {
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             List<MonitorAggregationType> result = new List<MonitorAggregationType>();
-            foreach (AggregationType value in values)
+            foreach (MonitorMetricAggregationType value in values)
             {
                 result.Add(ToLegacyAggregationType(value));
             }
             return result;
         }
 
-        public static AggregationType? FromLegacyAggregationType(MonitorAggregationType? value)
+        public static MonitorMetricAggregationType? FromLegacyAggregationType(MonitorAggregationType? value)
             => value.HasValue ? FromLegacyAggregationType(value.Value) : null;
 
-        public static AggregationType FromLegacyAggregationType(MonitorAggregationType value) => value switch
+        public static MonitorMetricAggregationType FromLegacyAggregationType(MonitorAggregationType value) => value switch
         {
-            MonitorAggregationType.Average => AggregationType.Average,
-            MonitorAggregationType.Count => AggregationType.Count,
-            MonitorAggregationType.Minimum => AggregationType.Minimum,
-            MonitorAggregationType.Maximum => AggregationType.Maximum,
-            MonitorAggregationType.Total => AggregationType.Total,
-            _ => AggregationType.None
+            MonitorAggregationType.Average => MonitorMetricAggregationType.Average,
+            MonitorAggregationType.Count => MonitorMetricAggregationType.Count,
+            MonitorAggregationType.Minimum => MonitorMetricAggregationType.Minimum,
+            MonitorAggregationType.Maximum => MonitorMetricAggregationType.Maximum,
+            MonitorAggregationType.Total => MonitorMetricAggregationType.Total,
+            _ => MonitorMetricAggregationType.None
         };
 
-        public static IEnumerable<AggregationType> FromLegacyAggregationTypes(IEnumerable<MonitorAggregationType> values)
+        public static IEnumerable<MonitorMetricAggregationType> FromLegacyAggregationTypes(IEnumerable<MonitorAggregationType> values)
         {
             if (values is null)
             {
                 return default;
             }
 
-            List<AggregationType> result = new List<AggregationType>();
+            List<MonitorMetricAggregationType> result = new List<MonitorMetricAggregationType>();
             foreach (MonitorAggregationType value in values)
             {
                 result.Add(FromLegacyAggregationType(value));

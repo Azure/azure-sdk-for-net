@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Monitor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
-        /// <param name="autoResolved"> Indicates whether the alert should be auto resolved. </param>
-        public ResolveConfiguration(bool autoResolved)
+        /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
+        public ResolveConfiguration(bool isAutoResolved)
         {
-            AutoResolved = autoResolved;
+            IsAutoResolved = isAutoResolved;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResolveConfiguration"/>. </summary>
-        /// <param name="autoResolved"> Indicates whether the alert should be auto resolved. </param>
+        /// <param name="isAutoResolved"> Indicates whether the alert should be auto resolved. </param>
         /// <param name="timeToResolve"> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResolveConfiguration(bool autoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResolveConfiguration(bool isAutoResolved, TimeSpan? timeToResolve, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutoResolved = autoResolved;
+            IsAutoResolved = isAutoResolved;
             TimeToResolve = timeToResolve;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the alert should be auto resolved. </summary>
-        public bool AutoResolved { get; set; }
+        public bool IsAutoResolved { get; set; }
 
         /// <summary> The time (in ISO 8601 duration format) after which the alert should be auto resolved. </summary>
         public TimeSpan? TimeToResolve { get; set; }

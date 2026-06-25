@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationsGetByResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DataCollectionRuleAssociations client used to send requests. </param>
-        /// <param name="resourceUri"> The identifier of the resource. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public DataCollectionRuleAssociationsGetByResourceCollectionResultOfT(DataCollectionRuleAssociations client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

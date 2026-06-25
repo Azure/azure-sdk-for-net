@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The AccessRulePropertiesSubscription. </summary>
-    public partial class AccessRulePropertiesSubscription
+    /// <summary> we add this model  in order to replace subscriptions model in CommonTypes with this model via alternateType decorator. </summary>
+    public partial class MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRulePropertiesSubscription"/>. </summary>
-        internal AccessRulePropertiesSubscription()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRulePropertiesSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRulePropertiesSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

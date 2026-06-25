@@ -15,61 +15,61 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
-    public partial class SubscriptionScopeMetricsRequestBodyParameters : IJsonModel<SubscriptionScopeMetricsRequestBodyParameters>
+    public partial class SubscriptionScopeMetricsContent : IJsonModel<SubscriptionScopeMetricsContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionScopeMetricsRequestBodyParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SubscriptionScopeMetricsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSubscriptionScopeMetricsRequestBodyParameters(document.RootElement, options);
+                        return DeserializeSubscriptionScopeMetricsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricsRequestBodyParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricsContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricsRequestBodyParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SubscriptionScopeMetricsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionScopeMetricsRequestBodyParameters IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SubscriptionScopeMetricsContent IPersistableModel<SubscriptionScopeMetricsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SubscriptionScopeMetricsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="subscriptionScopeMetricsRequestBodyParameters"> The <see cref="SubscriptionScopeMetricsRequestBodyParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SubscriptionScopeMetricsRequestBodyParameters subscriptionScopeMetricsRequestBodyParameters)
+        /// <param name="subscriptionScopeMetricsContent"> The <see cref="SubscriptionScopeMetricsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SubscriptionScopeMetricsContent subscriptionScopeMetricsContent)
         {
-            if (subscriptionScopeMetricsRequestBodyParameters == null)
+            if (subscriptionScopeMetricsContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(subscriptionScopeMetricsRequestBodyParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(subscriptionScopeMetricsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SubscriptionScopeMetricsRequestBodyParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SubscriptionScopeMetricsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricsRequestBodyParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeMetricsContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Timespan))
             {
@@ -164,24 +164,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SubscriptionScopeMetricsRequestBodyParameters IJsonModel<SubscriptionScopeMetricsRequestBodyParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SubscriptionScopeMetricsContent IJsonModel<SubscriptionScopeMetricsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SubscriptionScopeMetricsRequestBodyParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SubscriptionScopeMetricsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsRequestBodyParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricsRequestBodyParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeMetricsContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionScopeMetricsRequestBodyParameters(document.RootElement, options);
+            return DeserializeSubscriptionScopeMetricsContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SubscriptionScopeMetricsRequestBodyParameters DeserializeSubscriptionScopeMetricsRequestBodyParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static SubscriptionScopeMetricsContent DeserializeSubscriptionScopeMetricsContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SubscriptionScopeMetricsRequestBodyParameters(
+            return new SubscriptionScopeMetricsContent(
                 timespan,
                 interval,
                 metricNames,

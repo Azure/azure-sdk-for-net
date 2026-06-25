@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("enrichWithReference"u8);
                 writer.WriteStringValue(EnrichWithReference);
             }
-            if (Optional.IsDefined(ReplaceResourceIdWithReference))
+            if (Optional.IsDefined(ShouldReplaceResourceIdWithReference))
             {
                 writer.WritePropertyName("replaceResourceIdWithReference"u8);
-                writer.WriteBooleanValue(ReplaceResourceIdWithReference.Value);
+                writer.WriteBooleanValue(ShouldReplaceResourceIdWithReference.Value);
             }
             if (Optional.IsDefined(Name))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
             OtelLogsDataSourceResourceAttributeRouting resourceAttributeRouting = default;
             IList<string> enrichWithResourceAttributes = default;
             string enrichWithReference = default;
-            bool? replaceResourceIdWithReference = default;
+            bool? shouldReplaceResourceIdWithReference = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    replaceResourceIdWithReference = prop.Value.GetBoolean();
+                    shouldReplaceResourceIdWithReference = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceAttributeRouting,
                 enrichWithResourceAttributes ?? new ChangeTrackingList<string>(),
                 enrichWithReference,
-                replaceResourceIdWithReference,
+                shouldReplaceResourceIdWithReference,
                 name,
                 additionalBinaryDataProperties);
         }

@@ -12,23 +12,23 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class AccessRuleProperties
+    public partial class MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
-        internal AccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            Subscriptions = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties"/>. </summary>
         /// <param name="direction"></param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRuleProperties(AccessRuleDirection? direction, IList<string> addressPrefixes, IList<AccessRulePropertiesSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties(MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? direction, IList<string> addressPrefixes, IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> subscriptions, IList<NetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Gets the Direction. </summary>
-        public AccessRuleDirection? Direction { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Subscriptions for inbound rules. </summary>
-        public IList<AccessRulePropertiesSubscription> Subscriptions { get; }
+        public IList<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
         public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }

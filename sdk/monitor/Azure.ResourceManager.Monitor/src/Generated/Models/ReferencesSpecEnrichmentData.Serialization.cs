@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<StorageBlob> storageBlobs = default;
+            IList<DataCollectionRuleEnrichmentStorageBlob> storageBlobs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<StorageBlob> array = new List<StorageBlob>();
+                    List<DataCollectionRuleEnrichmentStorageBlob> array = new List<DataCollectionRuleEnrichmentStorageBlob>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(StorageBlob.DeserializeStorageBlob(item, options));
+                        array.Add(DataCollectionRuleEnrichmentStorageBlob.DeserializeDataCollectionRuleEnrichmentStorageBlob(item, options));
                     }
                     storageBlobs = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReferencesSpecEnrichmentData(storageBlobs ?? new ChangeTrackingList<StorageBlob>(), additionalBinaryDataProperties);
+            return new ReferencesSpecEnrichmentData(storageBlobs ?? new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>(), additionalBinaryDataProperties);
         }
     }
 }

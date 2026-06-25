@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("builtInTransform"u8);
                 writer.WriteStringValue(BuiltInTransform);
             }
-            if (Optional.IsDefined(CaptureOverflow))
+            if (Optional.IsDefined(ShouldCaptureOverflow))
             {
                 writer.WritePropertyName("captureOverflow"u8);
-                writer.WriteBooleanValue(CaptureOverflow.Value);
+                writer.WriteBooleanValue(ShouldCaptureOverflow.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string transformKql = default;
             string outputStream = default;
             string builtInTransform = default;
-            bool? captureOverflow = default;
+            bool? shouldCaptureOverflow = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    captureOverflow = prop.Value.GetBoolean();
+                    shouldCaptureOverflow = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 transformKql,
                 outputStream,
                 builtInTransform,
-                captureOverflow,
+                shouldCaptureOverflow,
                 additionalBinaryDataProperties);
         }
     }

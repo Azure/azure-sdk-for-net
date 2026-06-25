@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
-    public partial class SubscriptionScopeMetricsRequestBodyParameters
+    public partial class SubscriptionScopeMetricsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricsRequestBodyParameters"/>. </summary>
-        public SubscriptionScopeMetricsRequestBodyParameters()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricsContent"/>. </summary>
+        public SubscriptionScopeMetricsContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricsRequestBodyParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricsContent"/>. </summary>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval">
         /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionScopeMetricsRequestBodyParameters(string timespan, string interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionScopeMetricsContent(string timespan, string interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timespan = timespan;
             Interval = interval;

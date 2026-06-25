@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class MonitorNetworkSecurityPerimeterConfigurationAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRule"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationAccessRule(string name, MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get; }
 
         /// <summary> Gets the Properties. </summary>
-        public AccessRuleProperties Properties { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties Properties { get; }
     }
 }

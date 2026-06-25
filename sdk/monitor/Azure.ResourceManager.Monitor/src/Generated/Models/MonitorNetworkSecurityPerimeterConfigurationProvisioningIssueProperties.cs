@@ -13,26 +13,26 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class ProvisioningIssueProperties
+    public partial class MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
-        internal ProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties"/>. </summary>
+        internal MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SuggestedAccessRules = new ChangeTrackingList<AccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssueProperties(IssueType? issueType, Severity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<AccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties(MonitorNetworkSecurityPerimeterConfigurationIssueType? issueType, MonitorNetworkSecurityPerimeterConfigurationIssueSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Type of issue. </summary>
-        public IssueType? IssueType { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationIssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
-        public Severity? Severity { get; }
+        public MonitorNetworkSecurityPerimeterConfigurationIssueSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         public string Description { get; }
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public IReadOnlyList<ResourceIdentifier> SuggestedResourceIds { get; }
 
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
-        public IReadOnlyList<AccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> SuggestedAccessRules { get; }
     }
 }

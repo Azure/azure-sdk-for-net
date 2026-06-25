@@ -14,52 +14,52 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The AccessRulePropertiesSubscription. </summary>
-    public partial class AccessRulePropertiesSubscription : IJsonModel<AccessRulePropertiesSubscription>
+    /// <summary> we add this model  in order to replace subscriptions model in CommonTypes with this model via alternateType decorator. </summary>
+    public partial class MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription : IJsonModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+                        return DeserializeMonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessRulePropertiesSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IPersistableModel<AccessRulePropertiesSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessRulePropertiesSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessRulePropertiesSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -99,24 +99,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IJsonModel<AccessRulePropertiesSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription IJsonModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+            return DeserializeMonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessRulePropertiesSubscription DeserializeAccessRulePropertiesSubscription(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription DeserializeMonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties);
+            return new MonitorNetworkSecurityPerimeterConfigurationAccessRuleSubscription(id, additionalBinaryDataProperties);
         }
     }
 }

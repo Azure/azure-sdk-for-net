@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
-                foreach (ProvisioningIssue item in ProvisioningIssues)
+                foreach (MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue item in ProvisioningIssues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<ProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = default;
             NetworkSecurityPerimeter networkSecurityPerimeter = default;
-            ResourceAssociation resourceAssociation = default;
+            MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = default;
             NetworkSecurityProfile profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                    List<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> array = new List<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item, options));
+                        array.Add(MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue.DeserializeMonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resourceAssociation = ResourceAssociation.DeserializeResourceAssociation(prop.Value, options);
+                    resourceAssociation = MonitorNetworkSecurityPerimeterConfigurationResourceAssociation.DeserializeMonitorNetworkSecurityPerimeterConfigurationResourceAssociation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("profile"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,

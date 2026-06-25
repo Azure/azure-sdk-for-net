@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The aggregation type of the metric. </summary>
-    public enum AggregationType
+    public enum MonitorMetricAggregationType
     {
         /// <summary> None. </summary>
         None,

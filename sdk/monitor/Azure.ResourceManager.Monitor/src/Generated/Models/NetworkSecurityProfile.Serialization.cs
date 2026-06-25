@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
-                foreach (AccessRule item in AccessRules)
+                foreach (MonitorNetworkSecurityPerimeterConfigurationAccessRule item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<AccessRule> accessRules = default;
+            IList<MonitorNetworkSecurityPerimeterConfigurationAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<AccessRule> array = new List<AccessRule>();
+                    List<MonitorNetworkSecurityPerimeterConfigurationAccessRule> array = new List<MonitorNetworkSecurityPerimeterConfigurationAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AccessRule.DeserializeAccessRule(item, options));
+                        array.Add(MonitorNetworkSecurityPerimeterConfigurationAccessRule.DeserializeMonitorNetworkSecurityPerimeterConfigurationAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<AccessRule>(),
+                accessRules ?? new ChangeTrackingList<MonitorNetworkSecurityPerimeterConfigurationAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

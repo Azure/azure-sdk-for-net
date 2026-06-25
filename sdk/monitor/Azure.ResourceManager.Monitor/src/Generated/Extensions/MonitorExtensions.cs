@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Incident>> GetAsync(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorAlertRuleIncident>> GetAsync(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Incident> Get(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static Response<MonitorAlertRuleIncident> Get(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1083,8 +1083,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Incident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorAlertRuleIncident"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorAlertRuleIncident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1102,8 +1102,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Incident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorAlertRuleIncident"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorAlertRuleIncident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Monitor
         /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPostAsync(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPostAsync(string, SubscriptionScopeMetricsContent, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<MonitorMetricsResult>> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorMetricsResult>> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsContent content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1670,7 +1670,7 @@ namespace Azure.ResourceManager.Monitor
         /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost(string, SubscriptionScopeMetricsContent, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1704,7 +1704,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<MonitorMetricsResult> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static Response<MonitorMetricsResult> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsContent content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
