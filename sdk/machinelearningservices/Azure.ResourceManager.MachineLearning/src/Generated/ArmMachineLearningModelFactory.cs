@@ -8586,23 +8586,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Outbound Rule for the managed network of a machine learning workspace. </param>
-        /// <returns> A new <see cref="MachineLearning.ManagedNetworkOutboundRuleBasicResourceData"/> instance for mocking. </returns>
-        public static ManagedNetworkOutboundRuleBasicResourceData ManagedNetworkOutboundRuleBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MachineLearningOutboundRule properties = default)
-        {
-            return new ManagedNetworkOutboundRuleBasicResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the managed network settings of a machine learning workspace. </param>
         /// <returns> A new <see cref="MachineLearning.MachineLearningManagedNetworkSettingsData"/> instance for mocking. </returns>
         public static MachineLearningManagedNetworkSettingsData MachineLearningManagedNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedNetworkSettingsProperties properties = default)

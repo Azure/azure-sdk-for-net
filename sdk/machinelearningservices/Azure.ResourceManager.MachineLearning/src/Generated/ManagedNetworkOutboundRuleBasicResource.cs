@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning
     {
         private readonly ClientDiagnostics _outboundRuleClientDiagnostics;
         private readonly OutboundRule _outboundRuleRestClient;
-        private readonly ManagedNetworkOutboundRuleBasicResourceData _data;
+        private readonly MachineLearningOutboundRuleBasicData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/managedNetworks/outboundRules";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkOutboundRuleBasicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedNetworkOutboundRuleBasicResource(ArmClient client, ManagedNetworkOutboundRuleBasicResourceData data) : this(client, data.Id)
+        internal ManagedNetworkOutboundRuleBasicResource(ArmClient client, MachineLearningOutboundRuleBasicData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ManagedNetworkOutboundRuleBasicResourceData Data
+        public virtual MachineLearningOutboundRuleBasicData Data
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Get");
             scope.Start();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ManagedNetworkOutboundRuleBasicResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ManagedNetworkOutboundRuleBasicResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Get");
             scope.Start();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Delete");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Delete");
             scope.Start();
@@ -310,8 +310,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation<ManagedNetworkOutboundRuleBasicResource>> UpdateAsync(WaitUntil waitUntil, ManagedNetworkOutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ManagedNetworkOutboundRuleBasicResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Update");
             scope.Start();
             try
@@ -320,7 +323,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedNetworkOutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource>(
                     new ManagedNetworkOutboundRuleBasicResourceOperationSource(Client),
@@ -366,8 +369,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation<ManagedNetworkOutboundRuleBasicResource> Update(WaitUntil waitUntil, ManagedNetworkOutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ManagedNetworkOutboundRuleBasicResource> Update(WaitUntil waitUntil, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicResource.Update");
             scope.Start();
             try
@@ -376,7 +382,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ManagedNetworkOutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource>(
                     new ManagedNetworkOutboundRuleBasicResourceOperationSource(Client),

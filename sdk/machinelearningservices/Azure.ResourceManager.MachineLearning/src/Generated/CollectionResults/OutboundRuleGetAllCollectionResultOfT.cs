@@ -14,7 +14,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class OutboundRuleGetAllCollectionResultOfT : Pageable<ManagedNetworkOutboundRuleBasicResourceData>
+    internal partial class OutboundRuleGetAllCollectionResultOfT : Pageable<MachineLearningOutboundRuleBasicData>
     {
         private readonly OutboundRule _client;
         private readonly string _subscriptionId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OutboundRuleGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedNetworkOutboundRuleBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MachineLearningOutboundRuleBasicData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     yield break;
                 }
-                ManagedNetworkOutboundRuleListResult result = ManagedNetworkOutboundRuleListResult.FromResponse(response);
-                yield return Page<ManagedNetworkOutboundRuleBasicResourceData>.FromValues((IReadOnlyList<ManagedNetworkOutboundRuleBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                OutboundRuleListResult result = OutboundRuleListResult.FromResponse(response);
+                yield return Page<MachineLearningOutboundRuleBasicData>.FromValues((IReadOnlyList<MachineLearningOutboundRuleBasicData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

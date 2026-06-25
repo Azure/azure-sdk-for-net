@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    public partial class ManagedNetworkOutboundRuleBasicResource : IJsonModel<ManagedNetworkOutboundRuleBasicResourceData>
+    public partial class ManagedNetworkOutboundRuleBasicResource : IJsonModel<MachineLearningOutboundRuleBasicData>
     {
-        private static IJsonModel<ManagedNetworkOutboundRuleBasicResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MachineLearningOutboundRuleBasicData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ManagedNetworkOutboundRuleBasicResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedNetworkOutboundRuleBasicResourceData();
+        private static IJsonModel<MachineLearningOutboundRuleBasicData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningOutboundRuleBasicData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedNetworkOutboundRuleBasicResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkOutboundRuleBasicResourceData>)Data).Write(writer, options);
+        void IJsonModel<MachineLearningOutboundRuleBasicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningOutboundRuleBasicData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkOutboundRuleBasicResourceData IJsonModel<ManagedNetworkOutboundRuleBasicResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MachineLearningOutboundRuleBasicData IJsonModel<MachineLearningOutboundRuleBasicData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedNetworkOutboundRuleBasicResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkOutboundRuleBasicResourceData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
+        BinaryData IPersistableModel<MachineLearningOutboundRuleBasicData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningOutboundRuleBasicData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedNetworkOutboundRuleBasicResourceData IPersistableModel<ManagedNetworkOutboundRuleBasicResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkOutboundRuleBasicResourceData>(data, options, AzureResourceManagerMachineLearningContext.Default);
+        MachineLearningOutboundRuleBasicData IPersistableModel<MachineLearningOutboundRuleBasicData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningOutboundRuleBasicData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedNetworkOutboundRuleBasicResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningOutboundRuleBasicData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

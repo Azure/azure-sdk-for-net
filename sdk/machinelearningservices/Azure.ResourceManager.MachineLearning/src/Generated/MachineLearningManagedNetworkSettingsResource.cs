@@ -426,18 +426,26 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace. </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        internal virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetManagedNetworkOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetManagedNetworkOutboundRuleBasicAsync(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             return await GetManagedNetworkOutboundRuleBasics().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The GET API for retrieveing a single outbound rule of the managed network associated with the machine learning workspace. </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        internal virtual Response<ManagedNetworkOutboundRuleBasicResource> GetManagedNetworkOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedNetworkOutboundRuleBasicResource> GetManagedNetworkOutboundRuleBasic(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             return GetManagedNetworkOutboundRuleBasics().Get(ruleName, cancellationToken);
         }
     }

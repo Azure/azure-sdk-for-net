@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning
         ManagedNetworkOutboundRuleBasicResource IOperationSource<ManagedNetworkOutboundRuleBasicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ManagedNetworkOutboundRuleBasicResourceData data = ManagedNetworkOutboundRuleBasicResourceData.DeserializeManagedNetworkOutboundRuleBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MachineLearningOutboundRuleBasicData data = MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedNetworkOutboundRuleBasicResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
         async ValueTask<ManagedNetworkOutboundRuleBasicResource> IOperationSource<ManagedNetworkOutboundRuleBasicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ManagedNetworkOutboundRuleBasicResourceData data = ManagedNetworkOutboundRuleBasicResourceData.DeserializeManagedNetworkOutboundRuleBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MachineLearningOutboundRuleBasicData data = MachineLearningOutboundRuleBasicData.DeserializeMachineLearningOutboundRuleBasicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedNetworkOutboundRuleBasicResource(_client, data);
         }
     }

@@ -508,8 +508,6 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(ManagedIdentityCredential))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkOutboundRuleBasicResource))]
-    [ModelReaderWriterBuildable(typeof(ManagedNetworkOutboundRuleBasicResourceData))]
-    [ModelReaderWriterBuildable(typeof(ManagedNetworkOutboundRuleListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkProvisionContent))]
     [ModelReaderWriterBuildable(typeof(ManagedNetworkProvisionStatus))]
     [ModelReaderWriterBuildable(typeof(Models.ManagedNetworkSettings))]

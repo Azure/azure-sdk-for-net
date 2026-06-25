@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create a ManagedNetworkOutboundRuleBasicResource
+        /// Create a OutboundRuleBasicResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -75,8 +75,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation<ManagedNetworkOutboundRuleBasicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, ManagedNetworkOutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ManagedNetworkOutboundRuleBasicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -85,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, ManagedNetworkOutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource>(
                     new ManagedNetworkOutboundRuleBasicResourceOperationSource(Client),
@@ -108,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Create a ManagedNetworkOutboundRuleBasicResource
+        /// Create a OutboundRuleBasicResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -128,8 +133,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation<ManagedNetworkOutboundRuleBasicResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, ManagedNetworkOutboundRuleBasicResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ManagedNetworkOutboundRuleBasicResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, MachineLearningOutboundRuleBasicData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(data, nameof(data));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.CreateOrUpdate");
             scope.Start();
             try
@@ -138,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, ManagedNetworkOutboundRuleBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _outboundRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, MachineLearningOutboundRuleBasicData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource> operation = new MachineLearningArmOperation<ManagedNetworkOutboundRuleBasicResource>(
                     new ManagedNetworkOutboundRuleBasicResourceOperationSource(Client),
@@ -179,8 +189,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ManagedNetworkOutboundRuleBasicResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.Get");
             scope.Start();
             try
@@ -191,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -224,8 +238,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<ManagedNetworkOutboundRuleBasicResource> Get(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ManagedNetworkOutboundRuleBasicResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.Get");
             scope.Start();
             try
@@ -236,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningOutboundRuleBasicData> response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,13 +287,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedNetworkOutboundRuleBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual AsyncPageable<ManagedNetworkOutboundRuleBasicResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedNetworkOutboundRuleBasicResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedNetworkOutboundRuleBasicResourceData, ManagedNetworkOutboundRuleBasicResource>(new OutboundRuleGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningOutboundRuleBasicData, ManagedNetworkOutboundRuleBasicResource>(new OutboundRuleGetAllAsyncCollectionResultOfT(
                 _outboundRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -304,13 +322,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedNetworkOutboundRuleBasicResource"/> that may take multiple service requests to iterate over. </returns>
-        internal virtual Pageable<ManagedNetworkOutboundRuleBasicResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedNetworkOutboundRuleBasicResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedNetworkOutboundRuleBasicResourceData, ManagedNetworkOutboundRuleBasicResource>(new OutboundRuleGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningOutboundRuleBasicData, ManagedNetworkOutboundRuleBasicResource>(new OutboundRuleGetAllCollectionResultOfT(
                 _outboundRuleRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -339,8 +357,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.Exists");
             scope.Start();
             try
@@ -352,14 +374,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = default;
+                Response<MachineLearningOutboundRuleBasicData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkOutboundRuleBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningOutboundRuleBasicData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -392,8 +414,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.Exists");
             scope.Start();
             try
@@ -405,14 +431,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = default;
+                Response<MachineLearningOutboundRuleBasicData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkOutboundRuleBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningOutboundRuleBasicData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -445,8 +471,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<NullableResponse<ManagedNetworkOutboundRuleBasicResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ManagedNetworkOutboundRuleBasicResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.GetIfExists");
             scope.Start();
             try
@@ -458,14 +488,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = default;
+                Response<MachineLearningOutboundRuleBasicData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkOutboundRuleBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningOutboundRuleBasicData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -502,8 +532,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="ruleName"> Name of the workspace managed network outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual NullableResponse<ManagedNetworkOutboundRuleBasicResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ManagedNetworkOutboundRuleBasicResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
             using DiagnosticScope scope = _outboundRuleClientDiagnostics.CreateScope("ManagedNetworkOutboundRuleBasicCollection.GetIfExists");
             scope.Start();
             try
@@ -515,14 +549,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _outboundRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ManagedNetworkOutboundRuleBasicResourceData> response = default;
+                Response<MachineLearningOutboundRuleBasicData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ManagedNetworkOutboundRuleBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningOutboundRuleBasicData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ManagedNetworkOutboundRuleBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningOutboundRuleBasicData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

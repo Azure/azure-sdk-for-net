@@ -21,52 +21,52 @@ namespace Azure.ResourceManager.MachineLearning
     {
         /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static AsyncPageable<MachineLearningResourceQuota> GetMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningQuotasAsync(location, cancellationToken);
 
         /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static Pageable<MachineLearningResourceQuota> GetMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningQuotas(location, cancellationToken);
 
         /// <summary> Gets the usages for the location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static AsyncPageable<MachineLearningUsage> GetMachineLearningUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningUsagesAsync(location, cancellationToken);
 
         /// <summary> Gets the usages for the location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static Pageable<MachineLearningUsage> GetMachineLearningUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningUsages(location, cancellationToken);
 
         /// <summary> Returns supported VM Sizes in a location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningVmSizesAsync(location, cancellationToken);
 
         /// <summary> Returns supported VM Sizes in a location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public static Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningVmSizes(location, cancellationToken);
 
         /// <summary> Update quota for each VM family in workspace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken)
+        public static AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).UpdateMachineLearningQuotasAsync(location, content, cancellationToken);
 
         /// <summary> Update quota for each VM family in workspace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken)
+        public static Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(this SubscriptionResource subscriptionResource, AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).UpdateMachineLearningQuotas(location, content, cancellationToken);
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken)
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(resourceGroupName, cancellationToken);
 
         /// <summary> Gets all machine learning workspaces in a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken)
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string resourceGroupName, CancellationToken cancellationToken = default)
             => GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(resourceGroupName, cancellationToken);
 
         // The service now has both workspace-level and managed-network outbound rule routes. TypeSpec resource hierarchy fixes preserve the
