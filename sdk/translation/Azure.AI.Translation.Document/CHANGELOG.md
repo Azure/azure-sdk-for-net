@@ -14,10 +14,6 @@
 - Removed the `V2024_11_01_Preview` and `V2025_12_01_Preview` preview service versions from `DocumentTranslationClientOptions.ServiceVersion`. Use the stable `V2026_03_01` version instead.
 - Added a `deploymentName` parameter (positioned after `category`) to the `SingleDocumentTranslationClient.Translate` and `TranslateAsync` overloads. This is a binary-breaking change for existing callers.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 2.0.0 (2024-11-15)
 
 ### Features Added
