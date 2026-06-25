@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated SDK code generation from AutoRest to TypeSpec.
+
 ## 1.2.0-beta.3 (2026-06-13)
 
 ### Other Changes
