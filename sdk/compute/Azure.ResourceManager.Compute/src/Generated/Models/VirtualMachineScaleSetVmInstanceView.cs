@@ -43,9 +43,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osName"> The Operating System running on the hybrid machine. </param>
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
-        /// <param name="interconnectInstanceView"> The Interconnect runtime view of the Scale Set VM instance. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IReadOnlyList<InstanceViewStatus> statuses, ResourceIdentifier assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, InterconnectInstanceView interconnectInstanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IReadOnlyList<InstanceViewStatus> statuses, ResourceIdentifier assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -63,7 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
             OSName = osName;
             OSVersion = osVersion;
             HyperVGeneration = hyperVGeneration;
-            InterconnectInstanceView = interconnectInstanceView;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -115,24 +113,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The hypervisor generation of the Virtual Machine [V1, V2]. </summary>
         public HyperVGeneration? HyperVGeneration { get; }
 
-        /// <summary> The Interconnect runtime view of the Scale Set VM instance. Minimum api-version: 2026-03-01. </summary>
-        internal InterconnectInstanceView InterconnectInstanceView { get; }
-
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus
         {
             get
             {
                 return VmHealth is null ? default : VmHealth.Status;
-            }
-        }
-
-        /// <summary> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </summary>
-        public string InterconnectSubgroupId
-        {
-            get
-            {
-                return InterconnectInstanceView is null ? default : InterconnectInstanceView.InterconnectSubgroupId;
             }
         }
     }

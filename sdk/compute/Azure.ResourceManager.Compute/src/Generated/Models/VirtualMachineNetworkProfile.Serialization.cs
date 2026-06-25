@@ -99,11 +99,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InterconnectGroupProfile))
-            {
-                writer.WritePropertyName("interconnectGroupProfile"u8);
-                writer.WriteObjectValue(InterconnectGroupProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -149,7 +144,6 @@ namespace Azure.ResourceManager.Compute.Models
             IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
             NetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
-            InterconnectGroupProfile interconnectGroupProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,21 +184,12 @@ namespace Azure.ResourceManager.Compute.Models
                     networkInterfaceConfigurations = array;
                     continue;
                 }
-                if (prop.NameEquals("interconnectGroupProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    interconnectGroupProfile = InterconnectGroupProfile.DeserializeInterconnectGroupProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), interconnectGroupProfile, additionalBinaryDataProperties);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

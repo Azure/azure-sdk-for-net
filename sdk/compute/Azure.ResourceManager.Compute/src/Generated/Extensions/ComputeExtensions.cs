@@ -381,24 +381,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="InterconnectBlockResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetInterconnectBlockResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InterconnectBlockResource"/> object. </returns>
-        public static InterconnectBlockResource GetInterconnectBlockResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableComputeArmClient(client).GetInterconnectBlockResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="VirtualMachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -1214,63 +1196,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets a collection of InterconnectBlocks in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetInterconnectBlocks()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of InterconnectBlocks and their operations over a InterconnectBlockResource. </returns>
-        public static InterconnectBlockCollection GetInterconnectBlocks(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetInterconnectBlocks();
-        }
-
-        /// <summary>
-        /// Retrieves information about an Interconnect Block.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetInterconnectBlockAsync(string, InterconnectBlockExpandTypes?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="interconnectBlockName"> The name of the Interconnect Block. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties of the Interconnect Block that is managed by the platform and can change outside of control plane operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<InterconnectBlockResource>> GetInterconnectBlockAsync(this ResourceGroupResource resourceGroupResource, string interconnectBlockName, InterconnectBlockExpandTypes? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetInterconnectBlockAsync(interconnectBlockName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about an Interconnect Block.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetInterconnectBlock(string, InterconnectBlockExpandTypes?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="interconnectBlockName"> The name of the Interconnect Block. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties of the Interconnect Block that is managed by the platform and can change outside of control plane operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<InterconnectBlockResource> GetInterconnectBlock(this ResourceGroupResource resourceGroupResource, string interconnectBlockName, InterconnectBlockExpandTypes? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetInterconnectBlock(interconnectBlockName, expand, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets a collection of ManagedDisks in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -1946,42 +1871,6 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroups(expand, resourceIdsOnly, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the Interconnect Blocks in the subscription. Use the nextLink property in the response to get the next page of Interconnect Blocks.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetInterconnectBlocksAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="InterconnectBlockResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InterconnectBlockResource> GetInterconnectBlocksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetInterconnectBlocksAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the Interconnect Blocks in the subscription. Use the nextLink property in the response to get the next page of Interconnect Blocks.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetInterconnectBlocks(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="InterconnectBlockResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InterconnectBlockResource> GetInterconnectBlocks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetInterconnectBlocks(cancellationToken);
         }
 
         /// <summary>
