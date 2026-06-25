@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Kusto.Models
     // GA had a public parameterless constructor,
     // but the generator emits the parameterless ctor as internal (deserialization-only) and only
     // a public (value) ctor. Suppress the generated internal parameterless ctor and provide the public one.
-    [CodeGenSuppress("CalloutPoliciesList")]
     public partial class CalloutPoliciesList
     {
         /// <summary> Initializes a new instance of <see cref="CalloutPoliciesList"/>. </summary>
